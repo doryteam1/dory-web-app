@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root{
+    --morado:#6685B4;
+    --azul1:#26A5B8;
+    --azul2:#A7CFCF;
+    --gris:#C3C4BE;
+    --gris2:#C8BAA0;
+    --white:#FFFFFF;
+}
+
+
+.btn-outline-blue{
+    background-color: var(--white);
+    border-radius: 20px;
+    border: 1px solid var(--azul1);
+    color:var(--azul1);
+    width: 150px;
+    height: 40px; 
+}
+
+.btn-rounded-blue{
+    background-color: var(--azul1);
+    border-radius: 20px;
+    border: 1px solid var(--azul1);
+    color:var(--white);
+    width: 150px;
+    height: 40px; 
+}
+
+.btn-square-blue{
+    background-color: var(--azul1);
+    border-radius: 7px;
+    border: 1px solid var(--azul1);
+    color:var(--white);
+    font-weight: 700;
+    width: 200px;
+    height: 45px; 
+}
