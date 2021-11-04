@@ -1,0 +1,65 @@
+<div class="data-container">
+    <div class="container">
+        <img class="container__icon" src="assets/icons/build.svg">
+        <div class="container__info">
+            <h3 class="container__title container__title--color-blue">Municipio</h3>
+            <span class="container__description">Caimito</span>    
+        </div>
+    </div>
+    
+    <div class="container">
+        <img class="container__icon" src="assets/icons/group-circle-solid.svg">
+        <div class="container__info">
+            <h3 class="container__title container__title--color-morado">Población</h3>
+            <span class="container__description">13.331</span>    
+        </div>
+    </div>
+    
+    <div class="container">
+        <img class="container__icon" src="assets/icons/fish.svg">
+        <div class="container__info">
+            <h3 class="container__title container__title--color-blue-2"># granjas</h3>
+            <span class="container__description">9</span>    
+        </div>
+    </div>    
+</div>
+
+<div class="granjas-container">
+    <div>
+        <div class="filters-container">
+            <button class="filters-container__button btn-outline-black">
+                Mayor Area
+            </button>
+            <button class="filters-container__button  btn-outline-black">
+                Menor Area
+            </button>
+            <button class="filters-container__button  btn-outline-black">
+                Calificación
+            </button>
+            <button class="filters-container__button  btn-outline-black">
+                Más filtros
+            </button>
+        </div>
+        
+        <div class="card" *ngFor="let granja of granjas">
+            <img class="card__image" src="https://d178ivhysawugh.cloudfront.net/media/l/920x561/1591126307/render-2.jpg">
+            
+            <h3 class="card__title">Granja Piscilandia</h3>
+            <p class="card__description">
+                En nuestra granja tenemos diferentes tipos de peces: cachama, bocachico, mojarra, tilapia  roja, tilapia negra, moncholo, viejito, trucha
+            </p>
+            
+            <div class="card__rating-container">
+                <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+                <span class="card__rating">4.73</span>
+                <span class="card__rating__detail">(34 reseñas)</span>
+            </div>
+            
+            <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.esFavorita" (click)="changeFavorite()">
+            <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.esFavorita">
+            <span class="card__data">101250 m²</span>
+        </div>
+    </div>
+
+    <img class="granjas-container__map" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0TF1reqN9gMbay1JCmIIWdpratJDD6kzYiw&usqp=CAU">
+</div>

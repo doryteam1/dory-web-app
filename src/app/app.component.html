@@ -1,6 +1,12 @@
+<div class="alert-container" *ngIf="hasAlert">
+  <div class="alert-container__message">
+    😀¡Productores ! ¡Aprende <a class="alert-container__link" target="_blank" href="https://www.mininterior.gov.co/sites/default/files/noticias/cartilla_ley_organica_de_ordenamiento_territorial.pdf">sistemas eficientes para pesca</a> con el especialista  Emanuel  Fernandez el 30 de octubre! No te lo pierdas  ️
+  </div>
+  <img class="alert-container__close-button" src="assets/icons/close.svg" (click)="changeAlertState()">
+</div>
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
-    <img src="assets/images/logo.svg" width="130" heigth="130">
+    <img class="logo" src="assets/images/logo.svg" width="130" heigth="130">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -21,18 +27,24 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/eventos">Eventos</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/normatividad">Normatividad</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Normatividad
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/normatividad">Leyes</a></li>
+            <li><a class="dropdown-item" routerLink="/normatividad">Estatutos</a></li>
+            <li><a class="dropdown-item" routerLink="/normatividad">Decretos</a></li>
+            <li><a class="dropdown-item" routerLink="/normatividad">Resoluciones</a></li>
+          </ul>
         </li>
         <li class="nav-item">
-          <button class="btn-outline-blue ms-5" routerLink="/registro">Registrarme</button>
+          <button class="btn-outline-blue boton-registro" routerLink="/registro">Registrarme</button>
         </li>
         <li class="nav-item">
           <button class="btn-rounded-blue ms-2">Descargar App</button>
         </li>
       </ul>
-      
-      
     </div>
   </div>
 </nav>

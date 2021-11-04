@@ -1,0 +1,36 @@
+.container-normatividades{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+.container{
+    width: 409px;
+    height: auto;
+    margin-top:40px;
+}
+
+.container__title{
+    text-align: center;
+}
+
+.container__description{
+    text-align: start;
+    font-size: 13px;
+    line-height:22px;
+}
+
+.container__button{
+    margin:0 auto;
+    display:inline;
+    text-align: center;
+    line-height: 34px;
+    text-decoration: none;
+}
+
+.filters-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 103px;
+    margin-bottom: 108px;
+}

@@ -1,11 +1,35 @@
-.statics_col{
-    margin-left: -250px;
-}
-
 .container-statics{
-    margin-top:90px;
+    display:flex;
+    justify-content: space-evenly;
+    box-shadow: 6px 8px 11px -2px #BAC1EF;
+    width: 970px;
+    height:96px;
+    margin: 0 auto;
+    margin-top:70px;
+    border-radius: 10px;
+    line-height: 15px;
+    align-items: center;
 }
 
-.container-information{
-    margin-top:60px;
+.container-statics__card{
+    display: flex;
+}
+
+.container-statics__icon{
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+}
+
+.container-statics__data{
+}
+
+.container-statics__value{
+    font-size:20px;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+
+.container-statics__value-description{
+    font-size:15px;
 }

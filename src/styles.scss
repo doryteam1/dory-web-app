@@ -9,6 +9,7 @@
     --gris3:#9E9FA3;
     --white:#FFFFFF;
     --black:#000000;
+    --high-blue:#0D0C22;
 }
 
 
@@ -17,6 +18,15 @@
     border-radius: 20px;
     border: 1px solid var(--azul1);
     color:var(--azul1);
+    width: 150px;
+    height: 40px; 
+}
+
+.btn-outline-black{
+    background-color: var(--white);
+    border-radius: 20px;
+    border: 1px solid var(--black);
+    color:var(--black);
     width: 150px;
     height: 40px; 
 }

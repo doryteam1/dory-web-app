@@ -1,0 +1,130 @@
+.data-container{
+    display:flex;
+    margin-top: 200px;
+    justify-content: center;
+}
+.container{
+    display:flex;
+    justify-content: center;
+}
+
+.container__icon{
+    width:40px;
+    height:40px;
+}
+
+.container__info{
+    display: flex;
+    flex-direction: column;
+    margin-left:20px;
+}
+
+.container__title{
+    font-size: 20px;
+}
+
+.container__description{
+    align-self: center;   
+}
+
+.container__title--color-morado{
+    color:var(--morado)
+}
+
+.container__title--color-blue{
+    color:var(--azul1)
+}
+
+.container__title--color-blue-2{
+    color:var(--azul2)
+}
+
+.filters-container{
+    margin-left: 40px;
+    margin-bottom: 90px;
+}
+
+.filters-container__button{
+    margin-right: 10px;
+}
+
+.card{
+    display:grid;
+    grid-template-columns: [c-l-one] 260px [c-l-two] 293px [c-l-three] 35px [c-l-four];
+    grid-template-rows: [r-l-one] 30px [r-l-two]120px [r-l-three] 50px [r-l-four];
+    grid-template-areas: 
+        "image title favorite"
+        "image description ."
+        ". data data";
+    column-gap:30px;
+    margin-left: 40px;
+    margin-top: 100px;
+    border:0;
+}
+
+.card__image{
+    grid-area: image;
+    width: 262px;
+    height: 198px;
+    border-radius: 15px;;
+}
+
+.card__title{
+    grid-area: title;
+    font-size:24px;
+}
+
+.card__icon-favorite{
+    grid-area: favorite;
+    width: 24px;
+    height: 24px;
+    justify-self: end;
+    align-self: end;
+}
+
+.card__description{
+    grid-area: description;
+    font-size: 16px;
+    margin-top: 12px;
+}
+
+.card__rating-container{
+    grid-area:data;
+    align-self:end;
+}
+
+.card__icon-rating{
+    height: 24px;
+    width: 24px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.card__rating{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.card__rating__detail{
+    
+}
+
+.card__data{
+    grid-area:data;
+    justify-self: end;
+    align-self: end;
+    font-size:22px;
+    font-weight: 700;
+}
+
+.granjas-container{
+    display:flex;
+    justify-content: space-evenly;
+    margin-top: 133px;
+}
+
+.granjas-container__map{
+    align-self: start;
+    width:546px;
+    margin-left:18px;
+}

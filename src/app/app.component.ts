@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'web-app-dory';
+  hasAlert:boolean = true;
+
+  changeAlertState(){
+    this.hasAlert = !this.hasAlert;
+  }
 }

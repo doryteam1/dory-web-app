@@ -2,7 +2,7 @@
     <div class="novedad mt-5" *ngFor="let novedad of novedades">
         <div>
             <img class="novedad__foto-autor" src="https://indiehoy.com/wp-content/uploads/2021/02/martin-lopez-lam-1200x900.jpg">
-            <h4 class="novedad__nombre-autor">Martin Lopez</h4>
+            <h4 class="novedad__nombre-autor">{{novedad.nombre_autor}}</h4>
         </div>
         <div class="mb-4">
             <button class="novedad__share-button"><img class="novedad__button_icon" src="assets/icons/share.svg">Compartir</button>
@@ -16,7 +16,7 @@
         </div>
         <div></div>
         <div class="novedad__foto-container">
-            <img class="novedad__foto" src="https://colombia.unmissions.org/sites/default/files/styles/full_width_image/public/field/image/whatsapp_image_2018-07-17_at_7.09.16_pm_0.jpeg?itok=i52PZfZV">
+            <img class="novedad__foto" [src]="novedad.url_foto_novedad">
         </div>
         <div class="novedad__titular-container">
             <h2 class="novedad__titular">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</h2>
@@ -37,39 +37,3 @@
         </div>
     </div>    
 </div>
-
-<!--<div class="novedad">
-    <div class="row mb-4">
-        <div class="col-3">
-            <img class="novedad__foto-autor" src="https://indiehoy.com/wp-content/uploads/2021/02/martin-lopez-lam-1200x900.jpg">
-            <h4 class="novedad__nombre-autor">Martin Lopez</h4>
-        </div>
-        <div class="col-3">
-            <button class="novedad__share-button"><img class="novedad__button_icon" src="assets/icons/share.svg">Compartir</button>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-3">           
-                <span  class="novedad__categoria">PRODUCTORES</span>
-                <span  class="novedad__categoria">PRODUCTORES</span>
-                <span  class="novedad__categoria">PRODUCTORES</span>
-                <span  class="novedad__categoria">PRODUCTORES</span>
-                <span  class="novedad__categoria">PRODUCTORES</span>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-3">
-            <img class="novedad__foto" src="https://colombia.unmissions.org/sites/default/files/styles/full_width_image/public/field/image/whatsapp_image_2018-07-17_at_7.09.16_pm_0.jpeg?itok=i52PZfZV">
-        </div>
-    </div>
-    
-    <h2 class="novedad__titular">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</h2>
-    <p class="novedad__cuerpo">Lorem Ipsum es simplemente texto de relleno de la industria de la impresión y la composición tipográfica. Lorem Ipsum ha sido el texto de relleno estándar de la industria desde la década de 1500, cuando un impresor desconocido tomó una galera de tipos y la mezcló...</p>
-    <img class="novedad__like-icon" src="assets/icons/happy-face.svg">
-    <span class="novedad__like-count">1k</span>
-    <span class="novedad__visitas">11k  vistas</span>
-    <span class="novedad__fecha">- 6 meses</span>    
-</div> 
--->
