@@ -1,19 +1,187 @@
 .container{
-    margin-top: 100px;
+    margin-top: 30px;
+    text-align: center;
+    position:absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
 }
 
 .container__title{
-    text-align: center;
     font-size:30px;
 }
 
 .container__description{
-    text-align: center;
     margin-top: 20px;
 }
 
 .container__image{
-    width: 1024px;
-    height: 537px;
     margin-top: 30px;
+    margin-bottom: 100px;
+    position:relative;
+    left: 50%;
+    transform: translateX(-50%);
+    /*position:absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;*/
+}
+
+.container__red-point-san-onofre{
+    position: relative;
+    right: 170px;
+    top: -271px;
+}
+
+.container__red-point-tolu{
+    position: relative;
+    right: 230px;
+    top: -135px;
+}
+
+.container__red-point-tolu-viejo{
+    position: relative;
+    right: -197px;
+    top: 331px;
+}
+
+.container__red-point-covenas{
+    position: relative;
+    right: -156px;
+    top: 354px;
+    width: 30px;
+    height: 30px;
+}
+
+.container__red-point-coloso{
+    position: relative;
+    right: -260px;
+    top: 312px;
+}
+
+.container__red-point-chalan{
+    position: relative;
+    right: -233px;
+    top: 282px;
+}
+
+.container__red-point-ovejas{
+    position: relative;
+    right: -248px;
+    top: 290px;
+}
+
+.container__red-point-palmito{
+    position: relative;
+    right: 167px;
+    top: 384px;
+}
+
+.container__red-point-sincelejo{
+    position: relative;
+    right: -40px;
+    top: 397px;
+}
+.container__red-point-morroa{
+    position: relative;
+    right: 63px;
+    top: 358px;
+}
+
+.container__red-point-los-palmitos{
+    position: relative;
+    right: 54px;
+    top: 342px;
+}
+
+.container__red-point-san-pedro{
+    position: relative;
+    right: 20px;
+    top: 355px;
+}
+
+.container__red-point-sampues{
+    position: relative;
+    right: 230px;
+    top: 449px;
+}
+
+.container__red-point-corozal{
+    position: relative;
+    right: 195px;
+    top: 467px;
+}
+
+.container__red-point-san-juan-de-betulia{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-since{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-buenavista{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-el-roble{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-galeras{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-san-benito-abad{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-la-union{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-caimito{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-sucre{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-san-marcos{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-majagual{
+    position: relative;
+    right: 0px;
+    top: 0px;
+}
+
+.container__red-point-guaranda{
+    position: relative;
+    right: 0px;
+    top: 0px;
 }
