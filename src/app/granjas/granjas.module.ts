@@ -5,7 +5,7 @@ import { GranjasRoutingModule } from './granjas-routing.module';
 import { GranjasComponent } from './components/granjas/granjas.component';
 import { GranjasMunicipioComponent } from './components/granjas-municipio/granjas-municipio.component';
 import { GranjaDetalleComponent } from './components/granja-detalle/granja-detalle.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,8 @@ import { GranjaDetalleComponent } from './components/granja-detalle/granja-detal
   ],
   imports: [
     CommonModule,
-    GranjasRoutingModule
+    GranjasRoutingModule,
+    NgbModule
   ]
 })
 export class GranjasModule { }
