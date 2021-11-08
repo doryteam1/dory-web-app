@@ -1,31 +1,70 @@
 <div class="container">
     <h4 class="container__title">Granjas productoras en Sucre</h4>
-    <p class="container__description">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</p>
+    <p class="container__description">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</p>    
     <img class="container__image" src="assets/images/sucre-map.svg">
-    <img class="container__red-point-san-onofre" src="assets/images/red-point.svg" *ngIf="sanOnofreActive" ngbTooltip="San Onofre" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-tolu" src="assets/images/red-point.svg" *ngIf="toluActive" ngbTooltip="Tolú" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-tolu-viejo" src="assets/images/red-point.svg" *ngIf="toluViejoActive" ngbTooltip="Tolú Viejo" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-covenas" src="assets/images/red-point.svg" *ngIf="covenasActive" ngbTooltip="Coveñas" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-coloso" src="assets/images/red-point.svg" *ngIf="colosoActive" ngbTooltip="Colosó" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-chalan" src="assets/images/red-point.svg" *ngIf="chalanActive" ngbTooltip="Chalán" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-ovejas" src="assets/images/red-point.svg" *ngIf="ovejasActive" ngbTooltip="Ovejas" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-palmito" src="assets/images/red-point.svg" *ngIf="palmitoActive" ngbTooltip="Palmito" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-sincelejo" src="assets/images/red-point.svg" *ngIf="sincelejoActive" ngbTooltip="Sincelejo" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-morroa" src="assets/images/red-point.svg" *ngIf="morroaActive" ngbTooltip="Morroa" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-los-palmitos" src="assets/images/red-point.svg" *ngIf="losPalmitosActive" ngbTooltip="Los Palmitos" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-san-pedro" src="assets/images/red-point.svg" *ngIf="sanPedroActive" ngbTooltip="San Pedro" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-sampues" src="assets/images/red-point.svg" *ngIf="sampuesActive" ngbTooltip="Sampues" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-corozal" src="assets/images/red-point.svg" *ngIf="corozalActive" ngbTooltip="Corozal" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-san-juan-de-betulia" src="assets/images/red-point.svg" *ngIf="sanJuanDeBetuliaActive" ngbTooltip="San Juan de Betulia" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-since" src="assets/images/red-point.svg" *ngIf="sinceActive" ngbTooltip="Sincé" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-buenavista" src="assets/images/red-point.svg" *ngIf="buenaVistaActive" ngbTooltip="Buenavista" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-el-roble" src="assets/images/red-point.svg" *ngIf="elRobleActive" ngbTooltip="El Roble" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-galeras" src="assets/images/red-point.svg" *ngIf="galerasActive" ngbTooltip="Galeras" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-san-benito-abad" src="assets/images/red-point.svg" *ngIf="sanBenitoAbadActive" ngbTooltip="San Benito Abad" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-la-union" src="assets/images/red-point.svg" *ngIf="laUnionActive" ngbTooltip="La Unión" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-caimito" src="assets/images/red-point.svg" *ngIf="caimitoActive" ngbTooltip="Caimito" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-sucre" src="assets/images/red-point.svg" *ngIf="sucreActive" ngbTooltip="Sucre" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-san-marcos" src="assets/images/red-point.svg" *ngIf="sanMarcosActive" ngbTooltip="San Marcos" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-majagual" src="assets/images/red-point.svg" *ngIf="majagualActive" ngbTooltip="Majagual" [openDelay]="300" [closeDelay]="500">
-    <img class="container__red-point-guaranda" src="assets/images/red-point.svg" *ngIf="guarandaActive" ngbTooltip="Guaranda" [openDelay]="300" [closeDelay]="500">
+    <img class="container__red-point-san-onofre" src="assets/images/red-point.svg" *ngIf="sanOnofreActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70713)">
+    <img class="container__red-point-tolu" src="assets/images/red-point.svg" *ngIf="toluActive"[ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70820)">
+    <img class="container__red-point-tolu-viejo" src="assets/images/red-point.svg" *ngIf="toluViejoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70823)">
+    <img class="container__red-point-covenas" src="assets/images/red-point.svg" *ngIf="covenasActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70221)">
+    <img class="container__red-point-coloso" src="assets/images/red-point.svg" *ngIf="colosoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70204)">
+    <img class="container__red-point-chalan" src="assets/images/red-point.svg" *ngIf="chalanActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70230)">
+    <img class="container__red-point-ovejas" src="assets/images/red-point.svg" *ngIf="ovejasActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70508)">
+    <img class="container__red-point-palmito" src="assets/images/red-point.svg" *ngIf="palmitoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70523)">
+    <img class="container__red-point-sincelejo" src="assets/images/red-point.svg" *ngIf="sincelejoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70001)">
+    <img class="container__red-point-morroa" src="assets/images/red-point.svg" *ngIf="morroaActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70473)">
+    <img class="container__red-point-los-palmitos" src="assets/images/red-point.svg" *ngIf="losPalmitosActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70418)">
+    <img class="container__red-point-san-pedro" src="assets/images/red-point.svg" *ngIf="sanPedroActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70717)">
+    <img class="container__red-point-sampues" src="assets/images/red-point.svg" *ngIf="sampuesActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70670)">
+    <img class="container__red-point-corozal" src="assets/images/red-point.svg" *ngIf="corozalActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70215)">
+    <img class="container__red-point-san-juan-de-betulia" src="assets/images/red-point.svg" *ngIf="sanJuanDeBetuliaActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70702)">
+    <img class="container__red-point-since" src="assets/images/red-point.svg" *ngIf="sinceActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70742)">
+    <img class="container__red-point-buenavista" src="assets/images/red-point.svg" *ngIf="buenaVistaActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70110)">
+    <img class="container__red-point-el-roble" src="assets/images/red-point.svg" *ngIf="elRobleActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70233)">
+    <img class="container__red-point-galeras" src="assets/images/red-point.svg" *ngIf="galerasActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70235)">
+    <img class="container__red-point-san-benito-abad" src="assets/images/red-point.svg" *ngIf="sanBenitoAbadActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70678)">
+    <img class="container__red-point-la-union" src="assets/images/red-point.svg" *ngIf="laUnionActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70400)">
+    <img class="container__red-point-caimito" src="assets/images/red-point.svg" *ngIf="caimitoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70124)">
+    <img class="container__red-point-sucre" src="assets/images/red-point.svg" *ngIf="sucreActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70771)">
+    <img class="container__red-point-san-marcos" src="assets/images/red-point.svg" *ngIf="sanMarcosActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70708)">
+    <img class="container__red-point-majagual" src="assets/images/red-point.svg" *ngIf="majagualActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70429)">
+    <img class="container__red-point-guaranda" src="assets/images/red-point.svg" *ngIf="guarandaActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="500" (mouseenter)="changeSelected(70265)">
+
+    <div class="stats">
+        <div class="data-container">
+            <div class="stats-container">
+                <img class="stats-container__icon" src="assets/icons/build.svg">
+                <div class="stats-container__info">
+                    <h3 class="stats-container__title container__title--color-blue">Departamento</h3>
+                    <span class="stats-container__description">Sucre</span>    
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <img class="stats-container__icon" src="assets/icons/group-circle-solid.svg">
+                <div class="stats-container__info">
+                    <h3 class="stats-container__title container__title--color-morado">Población</h3>
+                    <span class="stats-container__description">{{poblacion | number:'':'es'}}</span>    
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <img class="stats-container__icon" src="assets/icons/fish.svg">
+                <div class="stats-container__info">
+                    <h3 class="stats-container__title container__title--color-blue-2"># granjas</h3>
+                    <span class="stats-container__description">{{granjas | number:'':'es'}}</span>    
+                </div>
+            </div>    
+        </div>
+    </div>
+    <div class="test">
+        <h1>Hola</h1>
+    </div>
 </div>
+
+<ng-template #tipContent>
+    <div class="tip-content">
+        <h5 class="tip-content__title">{{municSeleccionado.municipio}}</h5>
+        <span class="tip-content__description">Población {{municSeleccionado.poblacion | number:'':'es'}}</span><br>
+        <span class="tip-content__description"># Granjas {{municSeleccionado.granjas}}</span>
+    </div>
+</ng-template>
