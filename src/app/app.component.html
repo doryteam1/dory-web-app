@@ -4,14 +4,15 @@
   </div>
   <img class="alert-container__close-button" src="assets/icons/close.svg" (click)="changeAlertState()">
 </div>
-<nav class="navbar navbar-expand-lg navbar-light">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <img class="logo" src="assets/images/logo.svg" width="130" heigth="130">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+    <img class="logo" src="assets/images/logo.svg">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarScroll">
-      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" aria-current="page" routerLink="/home">Inicio</a>
         </li>
@@ -38,14 +39,15 @@
             <li><a class="dropdown-item" routerLink="/normatividad">Resoluciones</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <button class="btn-outline-blue boton-registro" routerLink="/registro">Registrarme</button>
-        </li>
-        <li class="nav-item">
-          <button class="btn-rounded-blue ms-2">Descargar App</button>
-        </li>
       </ul>
+      <!-- <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> -->
+      <button class="btn-outline-blue boton-registro" routerLink="/registro">Registrarme</button>
+      <button class="btn-rounded-blue ms-2">Descargar App</button>
     </div>
   </div>
 </nav>
+
 <router-outlet></router-outlet>

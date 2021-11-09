@@ -13,7 +13,7 @@ const routes: Routes = [
     component:GranjasMunicipioComponent,
   },
   {
-    path:'municipio/detalle-granja',
+    path:'municipio/detalle',
     component:GranjaDetalleComponent
   }
 ];
