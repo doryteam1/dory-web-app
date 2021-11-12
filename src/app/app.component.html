@@ -25,8 +25,15 @@
         <li class="nav-item">
           <a class="nav-link"  routerLink="/novedades">Novedades y Actualidad</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/eventos">Eventos</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Eventos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/eventos">Cursos</a></li>
+            <li><a class="dropdown-item" routerLink="/eventos">Capacitaciones</a></li>
+            <li><a class="dropdown-item" routerLink="/eventos">Congresos</a></li>
+          </ul>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -49,5 +56,59 @@
     </div>
   </div>
 </nav>
-
 <router-outlet></router-outlet>
+<!-- <footer class="footer">
+  <div class="container-footer">
+    <div class="container-footer__box">
+        <img class="container-footer__icon" src="assets/images/logo.svg" alt="">
+    </div>
+
+    <div class="container-footer_box">
+      <h2 class="container-footer__title">Lorem ipsum</h2>
+      <a class="container-footer_link" href="">Minciencias</a>
+      <a class="container-footer_link" href="">Minambiente</a>
+      <a class="container-footer_link" href="">Minagricultura</a>
+      <a class="container-footer_link" href="">Mintics</a>
+      <a class="container-footer_link" href="">Mincomercio</a>
+      <a class="container-footer_link" href="">SGR(Sistema general de regalias)</a>
+      <a class="container-footer_link" href="">Agencia de desarrollo rural</a>
+    </div>
+
+    <div class="container-footer_box">
+      <h2 class="container-footer__title">Lorem ipsum</h2>
+      <a class="container-footer_link" href="">Gobernación de Sucre</a>
+      <a class="container-footer_link" href="">Universidad de Sucre</a>
+      <a class="container-footer_link" href="">Facultad de ingeniería</a>
+      <a class="container-footer_link" href="">Programa de electrónica</a>
+      <a class="container-footer_link" href="">Acuerdo o resolución(Minciencias)</a>
+      <a class="container-footer_link" href="https://scienti.minciencias.gov.co/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000015135" target="_blank">Resolución del grupo de investigación</a>
+    </div>
+
+    <div class="container-footer_box">
+      <h2 class="container-footer__title">Grupo de Investigación</h2>
+      <a class="container-footer_link" href="">Grupo de Investigación e <br>Innovación en Electrónica (GINELECT) (Categoría C)</a>
+      <a class="container-footer_link" href="https://scienti.minciencias.gov.co/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000015135">Reconocimiento del grupo de investigación</a>
+      <a class="container-footer_link" href="https://minciencias.gov.co/convocatorias/plan-bienal-convocatorias-fctei/convocatoria-del-fondo-ctei-del-sgr-para-el-0">Listado de los elegibles de mincinecias de la <br>convocatoria donde aprueban el proyecto: </a>
+    </div>
+
+    <div class="container-footer_box">
+      <h2 class="container-footer__title">Lorem ipsum</h2>
+      <a class="container-footer_link" href="">Universidad de Sucre</a>
+      <a class="container-footer_link" href="">Cra 25...</a>
+      <a class="container-footer_link" href="">Horario de atención</a>
+      <a class="container-footer_link" href="">8:12 - 2-6 pm</a>
+      <a class="container-footer_link" href="">Correo electronico</a>
+      <a class="container-footer_link" href="">Tel Universidad</a>
+    </div>
+
+  </div>
+  <div class="line"></div>
+  <div class="social-container">
+    <span class="social-container__copy">©2021 Dory</span>
+    <div class="social-container__box">
+      <img src="assets/images/facebook.svg" alt="" class="social-container__icon">
+      <img src="assets/images/twitter.svg" alt="" class="social-container__icon">
+      <img src="assets/images/instagram.svg" alt="" class="social-container__icon">
+    </div>
+  </div>
+</footer> -->

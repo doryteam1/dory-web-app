@@ -27,8 +27,63 @@
 
 }
 
+.footer{
+    margin-top: 100px;
+}
+
 .logo{
     width: 50px;
     height:50px;
     margin-right: 15px;
+}
+
+.container-footer{
+    display:flex;
+    justify-content: space-evenly;
+}
+
+.container-footer__icon{
+    width: 120x;
+    height: 120px;
+}
+
+.container-footer_box{
+    display:flex;
+    flex-direction: column;
+    line-height: 25px;
+}
+
+.container-footer__title{
+    font-size: 20px;
+}
+
+.container-footer_link{
+    text-decoration: none;
+    color:var(--black);
+    font-size: 14px;
+}
+
+.line{
+    border-top:  1px solid var(--black);
+    margin-top:30px;
+}
+
+.social-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 130px;
+}
+
+.social-container__copy{
+    font-size: 20px;
+}
+
+.social-container__box{
+    display: flex;
+    justify-content:space-evenly;
+    width: 200px;
+}
+.social-container__icon{
+    width: 30px;
+    height: 30px;
 }
