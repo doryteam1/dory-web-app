@@ -4,8 +4,14 @@ import { EventosComponent } from './components/eventos/eventos.component';
 
 const routes: Routes = [
   {
-    path:'',component:EventosComponent
-  }
+    path:'cursos',component:EventosComponent
+  },
+  {
+    path:'capacitaciones',component:EventosComponent
+  },
+  {
+    path:'congresos',component:EventosComponent
+  },
 ];
 
 @NgModule({

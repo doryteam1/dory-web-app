@@ -1,38 +1,44 @@
 <div class="container">
-    <div class="novedad mt-5" *ngFor="let novedad of novedades">
-        <div>
-            <img class="novedad__foto-autor" src="https://indiehoy.com/wp-content/uploads/2021/02/martin-lopez-lam-1200x900.jpg">
-            <h4 class="novedad__nombre-autor">{{novedad.nombre_autor}}</h4>
-        </div>
-        <div class="mb-4">
-            <button class="novedad__share-button"><img class="novedad__button_icon" src="assets/icons/share.svg">Compartir</button>
-        </div>
-        <div>
-            
-        </div>
-        <div>
-            <span  class="novedad__categoria">PRODUCTORES</span>
-            <span  class="novedad__categoria">PRODUCTORES</span>
-        </div>
-        <div></div>
-        <div class="novedad__foto-container">
-            <img class="novedad__foto" [src]="novedad.url_foto_novedad">
-        </div>
-        <div class="novedad__titular-container">
-            <h2 class="novedad__titular">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</h2>
-        </div>
-        <div class="novedad__cuerpo-container">
-            <p class="novedad__cuerpo">Lorem Ipsum es simplemente texto de relleno de la industria de la impresión y la composición tipográfica. Lorem Ipsum ha sido el texto de relleno estándar de la industria desde la década de 1500, cuando un impresor desconocido tomó una galera de tipos y la mezcló...</p>
-        </div>
-        <div></div>
-        <div class="novedad__container_stats">
-            <div>
-                <img class="novedad__like-icon" src="assets/icons/happy-face.svg">
-                <span class="novedad__like-count">1k</span>
+    <div *ngFor="let novedad of novedades">
+            <div class="novedad">
+            <div class="novedad__header">
+                <div class="row">
+                    <div class="col-2">
+                        <img class="novedad__foto-autor" [src]="novedad.url_foto_autor">
+                    </div>
+                    <div class="novedad__title-box col-10"><h4 class="novedad__nombre-autor">{{novedad.nombre_autor}}</h4></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <button class="novedad__share-button"><img class="novedad__button_icon" src="assets/icons/share.svg">Compartir</button>
             </div>
             <div>
-                <span class="novedad__visitas">11k  vistas</span>
-                <span class="novedad__fecha"> - 6 meses</span>
+                
+            </div>
+            <div>
+                <span  class="novedad__categoria">PRODUCTORES</span>
+                <span  class="novedad__categoria">PRODUCTORES</span>
+            </div>
+            <div></div>
+            <div class="novedad__foto-container">
+                <a href={{novedad.url}} target="_blank"><img class="novedad__foto" [src]="novedad.url_foto_novedad"></a>
+            </div>
+            <div class="novedad__titular-container">
+                <a href={{novedad.url}} target="_blank"><h2 class="novedad__titular">{{ novedad.titulo | shorter:80 }}</h2></a>
+            </div>
+            <div class="novedad__cuerpo-container">
+                <a href={{novedad.url}}><p class="novedad__cuerpo">{{ novedad.resumen | shorter:264 }}</p></a>
+            </div>
+            <div></div>
+            <div class="novedad__container_stats">
+                <div>
+                    <img class="novedad__like-icon" src="assets/icons/happy-face.svg">
+                    <span class="novedad__like-count">1k</span>
+                </div>
+                <div>
+                    <span class="novedad__visitas">11k  vistas</span>
+                    <span class="novedad__fecha"> - 6 meses</span>
+                </div>
             </div>
         </div>
     </div>    

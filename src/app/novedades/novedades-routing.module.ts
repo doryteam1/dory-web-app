@@ -4,7 +4,16 @@ import { NovedadesComponent } from './components/novedades/novedades.component';
 
 const routes: Routes = [
   {
-    path:'', component:NovedadesComponent
+    path:'articulos', component:NovedadesComponent
+  },
+  {
+    path:'articulos-colombia', component:NovedadesComponent
+  },
+  {
+    path:'revistas', component:NovedadesComponent
+  },
+  {
+    path:'noticias', component:NovedadesComponent
   }
 ];
 

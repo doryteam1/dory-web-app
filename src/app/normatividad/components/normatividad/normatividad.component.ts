@@ -115,6 +115,36 @@ export class NormatividadComponent implements OnInit {
       contenido:"Por la cual se declaran unas especies exóticas como invasoras y se señalan las especies introducidas irregularmente al país que pueden ser objeto de cría en ciclo cerrado y se adoptan otras determinaciones.",
       url_descarga:"https://www.icbf.gov.co/cargues/avance/docs/resolucion_minambientevdt_0848_2008.htm",
       tipo:"resolucion"
+    },
+    {
+      nombre:"Ley 811 de 2003",
+      contenido:"Por medio de la cual se modifica la Ley 101 de 1993, se crean las organizaciones de cadenas en el sector agropecuario, pesquero, forestal, acuícola, las Sociedades Agrarias de Transformación, SAT, y se dictan otras disposiciones.",
+      url_descarga:"https://www.ica.gov.co/normatividad/normas-nacionales/leyes/2003/2003l811",
+      tipo:"ley"
+    },
+    {
+      nombre:"Ley 101 de 1993",
+      contenido:"Ley General de Desarrollo Agropecuario y Pesquero.",
+      url_descarga:"https://www.minagricultura.gov.co/Normatividad/Leyes/Ley%20101%20de%201993.pdf",
+      tipo:"ley"
+    },
+    {
+      nombre:"Decreto 1985 de 2013",
+      contenido:"Por el cual se modifica la estructura del Ministerio de Agricultura y Desarrollo Rural y se determinan las funciones de sus dependencias.",
+      url_descarga:"http://www.suin-juriscol.gov.co/viewDocument.asp?ruta=Decretos/1381213",
+      tipo:"decreto"
+    },
+    {
+      nombre:"Decreto 3800 de 2006",
+      contenido:"Por el cual se reglamenta parcialmente la Ley 811 de 2003 modificatoria de la Ley 101 de 1993, sobre Organizaciones de Cadenas en el Sector Agropecuario, Pesquero, Forestal y Acuícola.",
+      url_descarga:"https://www.minagricultura.gov.co/Normatividad/Decretos/Decreto%20No.%203800%20de%202006.pdf",
+      tipo:"decreto"
+    },
+    {
+      nombre:"Resolución 186 de 2018",
+      contenido:"Por la cual se reglamenta parcialmente la Ley 811 de 2003 y el Decreto 3800 de 2006 sobre la inscripción de las organizaciones de cadena en el Sector Agropecuario, Forestal, Acuícola y Pesquero ante el Ministerio de Agricultura y Desarrollo Rural. ",
+      url_descarga:"https://www.ica.gov.co/normatividad/normas-nacionales/resoluciones/2008/2008r0186",
+      tipo:"resolucion"
     }
   ];
 

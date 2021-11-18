@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { Evento } from 'src/models/evento.model';
 
 @Component({
@@ -17,9 +19,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa inscripción)",
       hora:"",
       organizador:"Plataforma de formación online",
-      costo:0,
+      costo:"Gratuito",
       imagen:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0xH64LdRmZb_YPcfpCeoxAGfM2CiuJqxSlQ&usqp=CAU",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"http://sis.senavirtual.edu.co/compartel/infocurso.php?semid=573",
@@ -30,9 +33,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa inscripción)",
       hora:"",
       organizador:"Comunidad de aprendizaje, Sena virtual",
-      costo:0,
+      costo:"Gratuito",
       imagen:"https://i2.wp.com/panoramaacuicola.com/wp-content/uploads/2018/11/acuicultura_agrofy_news_2.jpg?fit=620%2C375&ssl=1",
-      duracion:"40 Horas"
+      duracion:"40 Horas",
+      tipo:"curso"
     },
     {
       url:"http://cursacuicultura.webs.upv.es/?gclid=CjwKCAjwoP6LBhBlEiwAvCcthJrRx6rlebIn7xS-3szBhaOKgOpKaLQzyX6vtbzAOufMK-V_1RAAPhoCovcQAvD_BwE",
@@ -43,9 +47,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa inscripción)",
       hora:"",
       organizador:"Universidad Politécnica de Valencia",
-      costo:0,
+      costo:"Sin definir",
       imagen:"https://elproductor.com/wp-content/uploads/2017/07/acuicola.jpg",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://www.pisciculturaglobal.com/curso-sistemas-de-aireacion/",
@@ -56,9 +61,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa inscripción)",
       hora:"",
       organizador:"Piscicultura Global. ING. FLAVIO GONZÁLEZ",
-      costo:0,
+      costo:"Sin definir",
       imagen:"https://gt.kaeser.com/Media/Aeration-and-protection_48-70237-460x258.jpg",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://www.pisciculturaglobal.com/curso-como-organizar-su-empresa-piscicola-en-10-pasos/",
@@ -69,9 +75,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa inscripción) ",
       hora:"",
       organizador:"Piscicultura Global. MsG. Francisca Scarso",
-      costo:0,
+      costo:"Sin definir",
       imagen:"https://images.pexels.com/photos/374016/pexels-photo-374016.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://www.pisciculturaglobal.com/curso-biofloc-implementacion-y-manejo/",
@@ -82,9 +89,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa inscripción)",
       hora:"",
       organizador:"Piscicultura Global",
-      costo:0,
+      costo:"Sin definir",
       imagen:"https://agrotendencia.tv/agropedia/wp-content/uploads/2020/06/agrotendencia-agropedia-bio-floc-39.jpg",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://www.pisciculturaglobal.com/curso-principios-de-la-acuicultura/",
@@ -95,9 +103,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa inscripción) ",
       hora:"",
       organizador:"Piscicultura Global",
-      costo:0,
+      costo:"Sin definir",
       imagen:"https://www.gob.mx/cms/uploads/article/main_image/40238/granja.jpg",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://www.pisciculturaglobal.com/curso-produccion-de-alevines-de-tilapia-con-interes-comercial/",
@@ -108,9 +117,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa inscripción)",
       hora:"",
       organizador:"Piscicultura Global",
-      costo:0,
+      costo:"Sin definir",
       imagen:"https://www.laopinion.com.co/sites/default/files/2019/07/27/imagen/tilapias1.jpg",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://www.pisciculturaglobal.com/curso-alimentacion-y-nutricion-en-la-acuicultura/",
@@ -121,9 +131,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa inscripción)",
       hora:"",
       organizador:"Piscicultura Global",
-      costo:0,
+      costo:"Sin definir",
       imagen:"https://www.globalseafood.org/wp-content/uploads/2017/04/BOYD-Pic-0_resize-1-960x720.jpg",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://www.pisciculturaglobal.com/curso%20calidad%20de%20agua%20en%20la%20acuicultura/",
@@ -134,9 +145,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa inscripción)",
       hora:"",
       organizador:"Piscicultura Global",
-      costo:0,
+      costo:"Sin definir",
       imagen:"https://cdn-blog1.fibrasynormasdecolombia.com/wp-content/uploads/2021/02/laboratorio-toma-de-muestras-de-agua-en-rio-depuradora-coronovirus-810x456.jpg",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://www.cultivodetilapiamojarraroja.com/cursos-biofloc-para-piscicultura/",
@@ -147,9 +159,10 @@ export class EventosComponent implements OnInit {
       fecha:"Sin definir (Previa Inscripción)",
       hora:"",
       organizador:"Acuicultura Sostenible",
-      costo:100000,
+      costo:"Sin definir",
       imagen:"https://www.cultivodetilapiamojarraroja.com/wp-content/uploads/2019/01/Cursos-Biofloc.png",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://www.educaweb.mx/curso/piscicultura-distancia-226375/",
@@ -160,9 +173,10 @@ export class EventosComponent implements OnInit {
       fecha:"",
       hora:"",
       organizador:"",
-      costo:0,
+      costo:"Sin definir",
       imagen:"https://www.aquahoy.com/images/Peces/Red-Drum-Broofish.jpg",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://cursos.com/cursos/veterinaria/piscicultura/",
@@ -173,9 +187,10 @@ export class EventosComponent implements OnInit {
       fecha:"",
       hora:"",
       organizador:"",
-      costo:0,
+      costo:"Sin definir",
       imagen:"https://cursos.com/wp-content/uploads/2021/03/curso-piscicultura-1536x566.jpg.webp",
-      duracion:""
+      duracion:"",
+      tipo:"curso"
     },
     {
       url:"https://repositorio.sena.edu.co/bitstream/handle/11404/3698/mod_02_cultivo_peces_estanques.PDF?sequence=1",
@@ -186,9 +201,10 @@ export class EventosComponent implements OnInit {
       fecha:"",
       hora:"",
       organizador:"",
-      costo:0,
+      costo:"Gratuito",
       imagen:"https://www.foodnewslatam.com/images/stories/2021/Julio/peces_mas_grandes.jpg",
-      duracion:""
+      duracion:"",
+      tipo:"capacitacion"
     },
     {
       url:"http://redmujeres.org/wp-content/uploads/2019/01/capacitacion_piscicultura_tropical.pdf",
@@ -199,14 +215,107 @@ export class EventosComponent implements OnInit {
       fecha:"",
       hora:"",
       organizador:"",
-      costo:0,
+      costo:"Gratuito",
       imagen:"assets/images/manual.svg",
-      duracion:""
+      duracion:"",
+      tipo:"capacitacion"
     },
+    {
+      url:"https://www.bioaquafloc.com/alimento-predigerido/?fbclid=IwAR01dlvVKueyV2g5RJprqb9zUJhvzcEelvqvTV781xvqmLGGW6B6EIzp08Y",
+      resumen:"Esta capacitación tiene como objeto entrenarlos para generar alimento predigerido. Con este alimento se obtienen altas tasas de conversión, gran ahorro en costes en alimentación y beneficios en la salud de los organismos. El alimento predigerido por bacterias aporta un gran número de enzimas, ácidos orgánicos y probióticos.  Además en esta capacitación mostraremos los nuevos avances sobre cómo obtener oligopéptidos a partir de predigerido, qué sucede con las aminas biógenas y entregaremos un protocolo específico de predigerido con formación de péptidos funcionales",
+      dirigidoa:"Al sector piscícola",
+      nombre:"Alimento predigerido y péptidos bioactivos",
+      modalidad:"Online",
+      fecha:"11/Noviembre/2021",
+      hora:"",
+      organizador:"Bioaquafloc - PhD Manuel David Celdran Sabater",
+      costo:"35 USD",
+      imagen:"https://www.bioaquafloc.com/wp-content/uploads/2021/09/Captura-de-pantalla-2021-09-25-a-las-18.16.20-768x506.png",
+      duracion:"",
+      tipo:"capacitacion"
+    },
+    {
+      url:"https://acuaraucania.cl/",
+      resumen:"Sin definir",
+      dirigidoa:"Al sector piscícola",
+      nombre:"Acuicultura",
+      modalidad:"Virtual",
+      fecha:"29 de Nov al 03 de Dic 2021",
+      hora:"",
+      organizador:"Acuaraucania, Universidad Católica de Temuco y la Sociedad Chilena de Acuicultura.",
+      costo:"Si",
+      imagen:"assets/images/eventos/congresos/congreso-acuamarina1.svg",
+      duracion:"",
+      tipo:"congreso"
+    },
+    {
+      url:"http://www.internationalfishcongress.com.br/",
+      resumen:"III International Fish Congress & Fish Expo Brasil 2021 - Evento presencial com Congresso Internacional com mais de 40 conferencistas de 18 países, Feira de Negócios com mais de 100 estandes, Rodada de Negócios SEBRAE. Especialistas nacionais e internacionais com tradução simultânea.",
+      dirigidoa:"Al sector piscícola",
+      nombre:"III Congreso Internacional de Pesca",
+      modalidad:"Presencial",
+      fecha:"24, 25, 26 Noviembre",
+      hora:"",
+      organizador:"IFC internationalfish - Erik Díaz, Marco Rozas, Thiago Soligo, Leonardo Gil, Fabiana Pilarski, José Pedreira",
+      costo:"Sin definir",
+      imagen:"assets/images/eventos/congresos/ifc2021.svg",
+      duracion:"",
+      tipo:"congreso"
+    },
+    {
+      url:"https://www.aquafuturespain.com/",
+      resumen:"Sin definir",
+      dirigidoa:"Al sector piscícola",
+      nombre:"Industria Acuícola",
+      modalidad:"Presencial",
+      fecha:"23, 24, Y 25 Marzo 2022",
+      hora:"",
+      organizador:"MORENOT - Empresas y demás entidades vinculadas a la cadena de valor de la acuicultura",
+      costo:"Sin definir",
+      imagen:"assets/images/eventos/congresos/acua-future-spain-22.svg",
+      duracion:"",
+      tipo:"congreso"
+    },
+    {
+      url:"https://cienciasagrarias.medellin.unal.edu.co/copaco2022/",
+      resumen:"Sin definir",
+      dirigidoa:"Al sector piscícola",
+      nombre:"Producción Animal",
+      modalidad:"Sin definir",
+      fecha:"Julio 21 al 23 de 2022",
+      hora:"",
+      organizador:"COPACO - Ricardo Pereira Ribeiro",
+      costo:"Sin definir",
+      imagen:"assets/images/eventos/congresos/produccion-animal.svg",
+      duracion:"",
+      tipo:"congreso"
+    },
+    {
+      url:"http://www.cedaf.org.do/eventos/adoa_2021/es/conadoa.html",
+      resumen:"Sin definir",
+      dirigidoa:"Al sector piscícola",
+      nombre:"Acuicultura Regional: Presente y Futuro",
+      modalidad:"Presencial",
+      fecha:"Del 24 al 26 de agosto 2022, República Dominicana",
+      hora:"",
+      organizador:"CONADOA - CONADOA, CEDAF, A.D.A",
+      costo:"Sin definir",
+      imagen:"assets/images/eventos/congresos/conadoa1.svg",
+      duracion:"",
+      tipo:"congreso"
+    }
   ];
-  constructor() { }
+  
+  eventsFiltered:Array<Evento> = [];
+
+  constructor(private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    let eventType:string = this.activatedRoute.snapshot.url[0].path;
+    
+    this.eventsFiltered = this.eventos.filter((value) => {
+      return eventType == "capacitaciones" ? value.tipo == eventType.substring(0,eventType.length - 2) : value.tipo == eventType.substring(0,eventType.length - 1)
+    }); 
   }
 
 }

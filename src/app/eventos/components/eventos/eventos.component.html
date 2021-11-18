@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="card" *ngFor="let evento of eventos">
+    <div class="card" *ngFor="let evento of eventsFiltered">
         <a class="card__link" href="{{evento.url}}">
             <img class="card__image" src={{evento.imagen}}>
             <h4 class="card__title">{{evento.nombre}}</h4>
@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <img class="card__icon" src="assets/icons/dollar.svg">
-                    <h5 class="card__sub-title">{{evento.costo == 0 ? 'Gratis' : '$' + evento.costo}}</h5>
+                    <h5 class="card__sub-title">{{evento.costo}}</h5>
                 </div>
             </div>
             

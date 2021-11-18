@@ -19,26 +19,43 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" routerLink="/nosotros">¿Quienes Sómos?</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" routerLink="/granjas">Piscicultores</a>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Productores
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/granjas">Piscicultores</a></li>
+            <li><a class="dropdown-item" routerLink="/">Pescadores</a></li>
+            <li><a class="dropdown-item" routerLink="/">Asociaciones</a></li>
+          </ul>
         </li>
+
+
         <li class="nav-item">
-          <a class="nav-link active" routerLink="/">Pescadores</a>
+          <a class="nav-link"  routerLink="/novedades"></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" routerLink="/">Asociaciones</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"  routerLink="/novedades">Novedades y Actualidad</a>
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Novedades y Actualidad
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/novedades/articulos">Articulos</a></li>
+            <li><a class="dropdown-item" routerLink="/novedades/articulos-colombia">Articulos Colombia</a></li>
+            <li><a class="dropdown-item" routerLink="/novedades/revistas">Revistas</a></li>
+            <li><a class="dropdown-item" routerLink="/novedades/noticias">Noticias</a></li>
+          </ul>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Eventos
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" routerLink="/eventos">Cursos</a></li>
-            <li><a class="dropdown-item" routerLink="/eventos">Capacitaciones</a></li>
-            <li><a class="dropdown-item" routerLink="/eventos">Congresos</a></li>
+            <li><a class="dropdown-item" routerLink="/eventos/cursos">Cursos</a></li>
+            <li><a class="dropdown-item" routerLink="/eventos/capacitaciones">Capacitaciones</a></li>
+            <li><a class="dropdown-item" routerLink="/eventos/congresos">Congresos</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -95,18 +112,21 @@
       <a class="container-footer_link" href="https://minciencias.gov.co/convocatorias/plan-bienal-convocatorias-fctei/convocatoria-del-fondo-ctei-del-sgr-para-el-0">Plan Bienal OCAD FCIeI</a>
     </div>
 
-    <div class="container-footer_box">
+    <div class="container-footer_contact-box">
       <h2 class="container-footer__title">Contacto</h2>
-      <a class="container-footer_link" href="">Universidad de Sucre</a>
-      <a class="container-footer_link" href="">Cra 25...</a>
-      <a class="container-footer_link" href="">Horario de atención</a>
-      <a class="container-footer_link" href="">8:12 - 2-6 pm</a>
-      <a class="container-footer_link" href="">ginelect@unisucre.edu.co</a>
-      <a class="container-footer_link" href="">Linea Gratuita: 01-8000-945268</a>
+      <a class="container-footer_link" href="">Universidad de Sucre</a><br>
+      <span class="container-footer__subtitle">Direccion: </span>
+      <span class="container-footer__description" href="">Cra 28 # 5-267 <br>Barrio Puerta Roja - Sincelejo (Sucre)</span><br>
+      <span class="container-footer__subtitle">Horario de atención: </span>
+      <span class="container-footer__description" href="">8:12 - 2-6 pm</span><br>
+      <span class="container-footer__subtitle">Email: </span>
+      <span class="container-footer__description" href="">ginelect@unisucre.edu.co</span><br>
+      <span class="container-footer__subtitle">Linea Gratuita: </span>
+      <span class="container-footer__description" href="">01-8000-945268</span><br>
     </div>
-
   </div>
-  <div class="line"></div>
+  <hr>
+
   <div class="social-container">
     <span class="social-container__copy">©2021 Dory</span>
     <div class="social-container__box">

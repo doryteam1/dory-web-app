@@ -7,7 +7,8 @@ export interface Evento{
     fecha:string;
     hora:string;
     organizador:string;
-    costo:number;
+    costo:string;
     imagen:string;
     duracion:string;
+    tipo:string;
 }
