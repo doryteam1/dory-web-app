@@ -507,10 +507,18 @@ export class NovedadesComponent implements OnInit {
     }
   ];
 
+  novedadesFiltered:Array<Novedad> = [];
+
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    console.log(this.activatedRoute.snapshot.url)
+    console.log(this.activatedRoute.snapshot.url[0].path)
+    this.novedadesFiltered = this.novedades.filter((value)=> {
+      if(this.activatedRoute.snapshot.url[0].path == "articulos-colombia"){
+        return value.tipo == "articulo-colombia";
+      }
+      return value.tipo == this.activatedRoute.snapshot.url[0].path.substring(0, this.activatedRoute.snapshot.url[0].path.length - 1);
+    });
   }
 
 }
