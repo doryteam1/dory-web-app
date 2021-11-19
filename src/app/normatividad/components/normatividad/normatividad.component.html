@@ -6,7 +6,7 @@
 </div>
 
 <div class="container-normatividades">
-    <div class="container" *ngFor="let normatividad of normatividades">
+    <div class="container" *ngFor="let normatividad of normatividadesFiltered">
         <h5 class="container__title">{{normatividad.nombre}}</h5>
         <p class="container__description">{{normatividad.contenido}}<a class="container__button" target="_blank" [href]="normatividad.url_descarga"> Leer más...</a></p>
         

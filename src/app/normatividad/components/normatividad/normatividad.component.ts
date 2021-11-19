@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Normatividad } from 'src/models/normatividad.model';
 
 @Component({
@@ -12,13 +13,13 @@ export class NormatividadComponent implements OnInit {
       nombre:"Ley 13 de 1990 de 2015",
       contenido:"Por la cual se dicta el estatuto general de pesca.",
       url_descarga:"https://www.funcionpublica.gov.co/eva/gestornormativo/norma_pdf.php?i=66783",
-      tipo:"decreto"
+      tipo:"ley"
     },
     {
       nombre:"Ley 1131 de 2007",
       contenido:"Por medio de la cual se aprueba el “Acuerdo entre Ecuador y Colombia sobre Pesca Artesanal”, firmado en la ciudad de Popayán, a los trece (13) días del mes de mayo de mil novecientos noventa y cuatro (1994). ",
       url_descarga:"http://www.secretariasenado.gov.co/senado/basedoc/ley_1131_2007.html",
-      tipo:"decreto"
+      tipo:"ley"
     },
     {
       nombre:"Decreto número 1780 de 2015",
@@ -148,9 +149,21 @@ export class NormatividadComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  normatividadesFiltered:Array<Normatividad> = [];
+
+  constructor(private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    console.log(this.activatedRoute.snapshot.url[0].path.substring(0, this.activatedRoute.snapshot.url[0].path.length - 1));
+    this.normatividadesFiltered = this.normatividades.filter((value)=>{
+      if(this.activatedRoute.snapshot.url[0].path == "resoluciones"){
+        return value.tipo == "resolucion" 
+      }
+      if(this.activatedRoute.snapshot.url[0].path == "leyes"){
+        return value.tipo == "ley"
+      }
+      return value.tipo == this.activatedRoute.snapshot.url[0].path.substring(0, this.activatedRoute.snapshot.url[0].path.length - 1);
+    });
   }
 
 }
