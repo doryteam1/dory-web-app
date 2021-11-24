@@ -49,5 +49,24 @@
     width: 200px;
     height: 45px; 
 }
+
+.btn-square-white{
+    background-color: var(--white);
+    border-radius: 7px;
+    border: 1px solid var(--white);
+    color:var(--black);
+    font-weight: 700;
+    width: 200px;
+    height: 45px;
+    -webkit-box-shadow: 2px 3px 14px -8px #000000; 
+    box-shadow: 2px 3px 14px -8px #000000;
+}
+
+.form-input-text-square{
+    border: 1px solid #8692A6;
+    border-radius: 8px;
+    width: 360px;
+    height: 40px;
+}
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

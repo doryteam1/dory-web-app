@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PiscicultoresComponent } from './piscicultores/components/piscicultores/piscicultores.component';
+import { RegistroModule } from './registro/registro.module';
+import { RegistroComponent } from './registro/components/registro/registro.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,7 @@ import { PiscicultoresComponent } from './piscicultores/components/piscicultores
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RegistroModule,
     NgbModule
   ],
   providers: [],

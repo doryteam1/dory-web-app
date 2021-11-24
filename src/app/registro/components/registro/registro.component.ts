@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-registro',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registro.component.scss']
 })
 export class RegistroComponent implements OnInit {
-
+  @Output() exit: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  exiting(event:any){
+    console.log("exit reg")
+    this.exit.emit(true)
+  }
 }

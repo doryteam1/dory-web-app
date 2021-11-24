@@ -1,11 +1,11 @@
-<div class="alert-container" *ngIf="hasAlert">
+<div class="alert-container" *ngIf="hasAlert && !isRegistering">
   <div class="alert-container__message">
     😀¡Productores ! ¡Aprende <a class="alert-container__link" target="_blank" href="https://www.mininterior.gov.co/sites/default/files/noticias/cartilla_ley_organica_de_ordenamiento_territorial.pdf">sistemas eficientes para pesca</a> con el especialista  Emanuel  Fernandez el 30 de octubre! No te lo pierdas  ️
   </div>
   <img class="alert-container__close-button" src="assets/icons/close.svg" (click)="changeAlertState()">
 </div>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="!isRegistering">
   <div class="container-fluid">
     <img class="logo" src="assets/images/logo.svg">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,8 +43,8 @@
             Novedades y Actualidad
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" routerLink="/novedades/articulos">Articulos</a></li>
-            <li><a class="dropdown-item" routerLink="/novedades/articulos-colombia">Articulos Colombia</a></li>
+            <li><a class="dropdown-item" routerLink="/novedades/articulos">Artículos</a></li>
+            <li><a class="dropdown-item" routerLink="/novedades/articulos-colombia">Artículos Colombianos</a></li>
             <li><a class="dropdown-item" routerLink="/novedades/revistas">Revistas</a></li>
             <li><a class="dropdown-item" routerLink="/novedades/noticias">Noticias</a></li>
           </ul>
@@ -75,13 +75,13 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form> -->
-      <button class="btn-outline-blue boton-registro" routerLink="/registro">Registrarme</button>
+      <button class="btn-outline-blue boton-registro" (click)="isRegistering=true">Registrarme</button>
       <button class="btn-rounded-blue ms-2">Descargar App</button>
     </div>
   </div>
 </nav>
-<router-outlet></router-outlet>
-<footer class="footer">
+<router-outlet *ngIf="!isRegistering"></router-outlet>
+<footer class="footer" *ngIf="!isRegistering">
   <div class="container-footer">
     <div class="container-footer__box">
         <img class="container-footer__icon" src="assets/images/logo.svg" alt="">
@@ -94,9 +94,9 @@
       <a class="container-footer_link" href="https://www.minagricultura.gov.co/paginas/default.aspx">Minagricultura</a>
       <a class="container-footer_link" href="https://mintic.gov.co/portal/inicio/">Mintics</a>
       <a class="container-footer_link" href="https://www.mincit.gov.co/">Mincomercio</a>
-      <a class="container-footer_link" href="https://www.sgr.gov.co/">SGR(Sistema general de regalias)</a>
+      <a class="container-footer_link" href="https://www.sgr.gov.co/">Sistema general de regalias</a>
       <a class="container-footer_link" href="https://www.adr.gov.co/">Agencia de desarrollo rural</a>
-      <a class="container-footer_link" href="https://www.dnp.gov.co/">DNP</a>
+      <a class="container-footer_link" href="https://www.dnp.gov.co/">Departamento nacional de planeación</a>
     </div>
 
     <div class="container-footer_box">
@@ -118,8 +118,9 @@
       <a class="container-footer_link" href="">Universidad de Sucre</a><br>
       <span class="container-footer__subtitle">Direccion: </span>
       <span class="container-footer__description" href="">Cra 28 # 5-267 <br>Barrio Puerta Roja - Sincelejo (Sucre)</span><br>
-      <span class="container-footer__subtitle">Horario de atención: </span>
-      <span class="container-footer__description" href="">8:12 - 2-6 pm</span><br>
+      <span class="container-footer__subtitle">Horario de atención: </span><br>
+      <span class="container-footer__description">08:00 am - 12:00 pm</span><br>
+      <span class="container-footer__description">02:00 pm - 06:00 pm</span><br>
       <span class="container-footer__subtitle">Email: </span>
       <span class="container-footer__description" href="">ginelect@unisucre.edu.co</span><br>
       <span class="container-footer__subtitle">Linea Gratuita: </span>
@@ -137,3 +138,4 @@
     </div>
   </div>
 </footer>
+<app-registro *ngIf="isRegistering" (exit)="exit($event)"></app-registro>

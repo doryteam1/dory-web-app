@@ -1,6 +1,6 @@
 <div class="container">
     <div class="card" *ngFor="let evento of eventsFiltered">
-        <a class="card__link" href="{{evento.url}}">
+        <a class="card__link" href="{{evento.url}}" target="_blank">
             <img class="card__image" src={{evento.imagen}}>
             <h4 class="card__title">{{evento.nombre}}</h4>
             <h5 class="card__sub-title">Resumen</h5>

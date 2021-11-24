@@ -1,1 +1,60 @@
-<p>registro works!</p>
+<div class="container">
+    <div class="container__message-box">
+        <img class="container__logo"src="assets/images/logo-white.svg">
+        <p class="container__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+        <span class="container__autor">Lorem ipsum</span>
+    </div>
+    <div class="container__form-box">
+        <div class="container__back-button">
+            <img src="assets/icons/arrow-back-ios.svg" (click)="exiting($event)">
+            <span class="container__back-button-label" (click)="exiting($event)">Regresar</span>
+        </div>
+        <h4 class="container__title">Registrate</h4>
+        <p class="container__message-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+        <div class="container-form">
+
+            <div class="container-form__box1">
+                <span class="container-form__label">Nombre completo*</span>
+                <input class="container-form__input form-input-text-square" type="text" placeholder="    Nombre completo">
+                    
+                <span class="container-form__label">Fecha de nacimiento</span>
+                <input class="container-form__input form-input-text-square" type="text" placeholder="    01/01/1970">
+    
+                <span class="container-form__label">Celular</span>
+                <input class="container-form__input form-input-text-square" type="text" placeholder="    Tu numero de celular">
+    
+                <span class="container-form__label">Departamento</span>
+                <input class="container-form__input form-input-text-square" type="text" placeholder="    Departamento">
+    
+                <span class="container-form__label">Municipio</span>
+                <input class="container-form__input form-input-text-square" type="text" placeholder="    Municipio">
+    
+                <span class="container-form__label">Vereda</span>
+                <input class="container-form__input form-input-text-square" type="text" placeholder="    Vereda">        
+            </div>
+            
+            <div class="container-form__box2">
+                <span class="container-form__label">Correo electrónico*</span>
+                <input class="container-form__input form-input-text-square" type="text" placeholder="    Ingresa tu correo electronico">
+                    
+                <span class="container-form__label">Crea una contraseña*</span>
+                <input class="container-form__input form-input-text-square" type="text" placeholder="    Contraseña">
+                
+                <span class="container-form__label">Ingresa nuevamente la contraseña*</span>
+                <input class="container-form__input form-input-text-square" type="text" placeholder="    Contraseña">    
+                 
+                <div class="container-form__terms-box">
+                    <input class="container-form__checkbox" type="checkbox">
+                    <span>Acepta los terminos  y  condiciones</span>
+                </div>
+                
+                <button class="container-form__button btn-square-blue">Registrar una cuenta</button>
+        
+                <p class="container-form__label2">ó</p>
+                <button class="container-form__button-white btn-square-white"><img src="assets/icons/google-icon.svg"><span class="container-form__button-text">Registrate con Google</span></button>
+            
+            </div>
+        
+        </div>
+    </div>
+</div>
