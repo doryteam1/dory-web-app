@@ -1,29 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { Granja } from 'src/models/granja.model';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 @Component({
   selector: 'app-granjas-municipio',
   templateUrl: './granjas-municipio.component.html',
   styleUrls: ['./granjas-municipio.component.scss']
 })
 export class GranjasMunicipioComponent implements OnInit {
+  apiLoaded: Observable<boolean>;
   granjas:Array<Granja> = [
     {
-      nombre:"Granja Piscilandia",
+      nombre:"Granja las cachamas",
       area:250,
       numero_trabajadores:5,
       produccion_estimada_mes:1000,
       direccion:"Cr 34A # 3 - 2",
-      latitud:8.790897,
-      longitud:-75.110648,
+      latitud:9.285910,
+      longitud:-75.142071,
       descripcion:"",
       departamento:"Sucre",
-      municipio:"Caimito",
+      municipio:"Since",
       corregimiento:"",
       vereda:"",
       puntuacion:4.5,
       numero_reseñas:34,
-      propietario:"Rafael Hernandez Muñoz ",
+      propietario:"Rafael Hernandez Muñoz",
       propietario_celular:3021234567,
       propietario_direccion:"Cra 23A # 12 - 45 ",
       fotos:[
@@ -53,16 +56,16 @@ export class GranjasMunicipioComponent implements OnInit {
       esFavorita:true
   },
   {
-    nombre:"Granja Piscilandia",
+    nombre:"Tilapias del paraiso",
     area:250,
     numero_trabajadores:5,
     produccion_estimada_mes:1000,
     direccion:"Cr 34A # 3 - 2",
-    latitud:8.790897,
-    longitud:-75.110648,
+    latitud:9.267168,
+    longitud:-75.055113,
     descripcion:"",
     departamento:"Sucre",
-    municipio:"Caimito",
+    municipio:"Since",
     corregimiento:"",
     vereda:"",
     puntuacion:4.5,
@@ -97,16 +100,16 @@ export class GranjasMunicipioComponent implements OnInit {
     esFavorita:false
 },
 {
-  nombre:"Granja Piscilandia",
+  nombre:"Granja Buenos Aires",
   area:250,
   numero_trabajadores:5,
   produccion_estimada_mes:1000,
   direccion:"Cr 34A # 3 - 2",
-  latitud:8.790897,
-  longitud:-75.110648,
+  latitud:9.198108,
+  longitud:-75.154065,
   descripcion:"",
   departamento:"Sucre",
-  municipio:"Caimito",
+  municipio:"Sincé",
   corregimiento:"",
   vereda:"",
   puntuacion:4.5,
@@ -142,11 +145,39 @@ export class GranjasMunicipioComponent implements OnInit {
 }
 
   ];
-  constructor() { }
 
-  ngOnInit(): void {
+  
+  options: google.maps.MapOptions = {
+    center: { lat: 9.214145, lng:-75.188469 },
+    zoom:6
   }
 
+  markerPosition : google.maps.LatLngLiteral = { lat: 9.214145, lng:-75.188469 };
+  markerPositions: google.maps.LatLngLiteral[] = [];
+  markersInfo: any[] = [];
+  markerOptions: google.maps.MarkerOptions = {draggable: false};
+
+  constructor(httpClient: HttpClient) {
+    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
+        .pipe(
+          map(() => true),
+          catchError(() => of(false)),
+        );
+   }
+
+  ngOnInit(): void {
+    this.extractLatLong();
+  }
+
+  extractLatLong(){
+    this.granjas.forEach(
+      (granja : Granja)=>{
+        let markerPosition: google.maps.LatLngLiteral = { lat:granja.latitud, lng:granja.longitud };
+        this.markerPositions.push(markerPosition);
+        this.markersInfo.push({markerPosition: markerPosition, title: granja.nombre});
+      }
+    );
+  }
   changeFavorite(){
     
   }

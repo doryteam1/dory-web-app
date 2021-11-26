@@ -3,7 +3,7 @@
         <img class="container__icon" src="assets/icons/build.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue">Municipio</h3>
-            <span class="container__description">Caimito</span>    
+            <span class="container__description">Sincé</span>    
         </div>
     </div>
     
@@ -11,7 +11,7 @@
         <img class="container__icon" src="assets/icons/group-circle-solid.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-morado">Población</h3>
-            <span class="container__description">13.331</span>    
+            <span class="container__description">33.688</span>    
         </div>
     </div>
     
@@ -61,5 +61,10 @@
         </div>
     </div>
 
-    <img class="granjas-container__map" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0TF1reqN9gMbay1JCmIIWdpratJDD6kzYiw&usqp=CAU">
+    <!--<img class="granjas-container__map" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0TF1reqN9gMbay1JCmIIWdpratJDD6kzYiw&usqp=CAU">-->
+    <div *ngIf="apiLoaded | async">
+        <google-map [options]="options">
+            <map-marker *ngFor="let markerInfo of markersInfo" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title"></map-marker>
+        </google-map>
+    </div>
 </div>

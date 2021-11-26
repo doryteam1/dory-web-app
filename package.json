@@ -23,6 +23,7 @@
     "@angular/compiler-cli": "~12.1.1",
     "@angular/core": "~12.1.1",
     "@angular/forms": "~12.1.1",
+    "@angular/google-maps": "^13.0.2",
     "@angular/localize": "~12.1.1",
     "@angular/platform-browser": "~12.1.1",
     "@angular/platform-browser-dynamic": "~12.1.1",
