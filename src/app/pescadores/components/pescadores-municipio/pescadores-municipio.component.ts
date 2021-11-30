@@ -3,13 +3,12 @@ import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { GranjasService } from '../../services/granjas.service';
 @Component({
-  selector: 'app-granjas-municipio',
-  templateUrl: './granjas-municipio.component.html',
-  styleUrls: ['./granjas-municipio.component.scss']
+  selector: 'app-pescadores-municipio',
+  templateUrl: './pescadores-municipio.component.html',
+  styleUrls: ['./pescadores-municipio.component.scss']
 })
-export class GranjasMunicipioComponent implements OnInit {
+export class PescadoresMunicipioComponent implements OnInit {
   apiLoaded: Observable<boolean>;
   granjas:Array<Granja> = [
     {
@@ -202,7 +201,7 @@ export class GranjasMunicipioComponent implements OnInit {
   markersInfo: any[] = [];
   markerOptions: google.maps.MarkerOptions = {draggable: false};
 
-  constructor(httpClient: HttpClient, private granjasService:GranjasService) {
+  constructor(httpClient: HttpClient) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
         .pipe(
           map(() => true),
@@ -212,7 +211,6 @@ export class GranjasMunicipioComponent implements OnInit {
 
   ngOnInit(): void {
     this.extractLatLong();
-    this.granjasService.getGranjas();
   }
 
   extractLatLong(){

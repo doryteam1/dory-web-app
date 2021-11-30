@@ -32,6 +32,14 @@ const routes: Routes = [
   {
     path:'registro',
     loadChildren: () => import('./registro/registro.module').then(m => m.RegistroModule)
+  },
+  {
+    path:'piscicultores',
+    loadChildren: () => import('./piscicultores/piscicultores.module').then(m => m.PiscicultoresModule)
+  },
+  {
+    path:'pescadores',
+    loadChildren: () => import('./pescadores/pescadores.module').then(m => m.PescadoresModule)
   }
 ];
 

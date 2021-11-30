@@ -1,0 +1,105 @@
+.data-container{
+    display:flex;
+    margin-top: 77px;
+    justify-content: center;
+}
+.container{
+    display:flex;
+    justify-content: center;
+}
+
+.container__icon{
+    width:40px;
+    height:40px;
+}
+
+.container__info{
+    display: flex;
+    flex-direction: column;
+    margin-left:20px;
+}
+
+.container__title{
+    font-size: 20px;
+}
+
+.container__description{
+    align-self: center;   
+}
+
+.container__title--color-morado{
+    color:var(--morado)
+}
+
+.container__title--color-blue{
+    color:var(--azul1)
+}
+
+.container__title--color-blue-2{
+    color:var(--azul2)
+}
+
+.filters-container{
+    margin-bottom: 90px;
+}
+
+.filters-container__button{
+    margin-right: 10px;
+}
+
+.card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border: 0;
+    margin-bottom: 30px;
+}
+
+.card-box{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+.card__image{
+    width: 169px;
+    height: 137px;
+}
+
+.card__title{
+    font-size:20px;
+}
+
+.card__title2{
+    grid-area: title;
+    font-size:16px;
+}
+
+.card__icon{
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+}
+
+.card__phone{
+    font-size: 16px;
+}
+
+.card__description1{
+    font-size: 16px;
+}
+
+.card__description2{
+    font-size: 16px;
+}
+
+.granjas-container{
+    display:flex;
+    justify-content: space-evenly;
+    margin-top: 80px;
+}
+
+.granjas-container__map{
+    align-self: start;
+    width:546px;
+    margin-left:18px;
+}

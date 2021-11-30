@@ -7,6 +7,8 @@ import { GranjaDetalleComponent } from './components/granja-detalle/granja-detal
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { GranjasService } from './services/granjas.service';
+import { HttpsService } from '../services/https.service';
 @NgModule({
   declarations: [
     GranjasComponent,
@@ -20,6 +22,10 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     HttpClientJsonpModule,
     GranjasRoutingModule,
     NgbModule
+  ],
+  providers: [
+    GranjasService,
+    HttpsService
   ]
 })
 export class GranjasModule { }

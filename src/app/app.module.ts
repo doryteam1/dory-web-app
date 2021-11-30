@@ -4,14 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PiscicultoresComponent } from './piscicultores/components/piscicultores/piscicultores.component';
 import { RegistroModule } from './registro/registro.module';
-import { RegistroComponent } from './registro/components/registro/registro.component';
+import { HttpsService } from './services/https.service';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PiscicultoresComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +18,9 @@ import { RegistroComponent } from './registro/components/registro/registro.compo
     RegistroModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    HttpsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

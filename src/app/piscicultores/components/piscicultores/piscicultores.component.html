@@ -1,1 +1,69 @@
-<p>piscicultores works!</p>
+<div class="stats">
+    <div class="data-container">
+        <div class="stats-container">
+            <img class="stats-container__icon" src="assets/icons/build.svg">
+            <div class="stats-container__info">
+                <h3 class="stats-container__title container__title--color-blue">Departamento</h3>
+                <span class="stats-container__description">Sucre</span>    
+            </div>
+        </div>
+        
+        <div class="stats-container">
+            <img class="stats-container__icon" src="assets/icons/group-circle-solid.svg">
+            <div class="stats-container__info">
+                <h3 class="stats-container__title container__title--color-morado">Población</h3>
+                <span class="stats-container__description">{{poblacion | number:'':'es'}}</span>    
+            </div>
+        </div>
+        
+        <div class="stats-container">
+            <img class="stats-container__icon" src="assets/icons/fish.svg">
+            <div class="stats-container__info">
+                <h3 class="stats-container__title container__title--color-blue-2"># piscicultores</h3>
+                <span class="stats-container__description">{{piscicultores| number:'':'es'}}</span>    
+            </div>
+        </div>    
+    </div>
+</div>
+
+<div class="container">
+    <h4 class="container__title">Piscicultores en Sucre</h4>
+    <p class="container__description">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</p>    
+    <div class="container_box">
+        <img class="container__image" src="assets/images/sucre-map.svg">
+        <img class="container__red-point-san-onofre" src="assets/images/red-point.svg" *ngIf="sanOnofreActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70713)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-tolu" src="assets/images/red-point.svg" *ngIf="toluActive"[ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70820)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-tolu-viejo" src="assets/images/red-point.svg" *ngIf="toluViejoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70823)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-covenas" src="assets/images/red-point.svg" *ngIf="covenasActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70221)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-coloso" src="assets/images/red-point.svg" *ngIf="colosoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70204)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-chalan" src="assets/images/red-point.svg" *ngIf="chalanActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70230)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-ovejas" src="assets/images/red-point.svg" *ngIf="ovejasActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70508)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-palmito" src="assets/images/red-point.svg" *ngIf="palmitoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70523)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-sincelejo" src="assets/images/red-point.svg" *ngIf="sincelejoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70001)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-morroa" src="assets/images/red-point.svg" *ngIf="morroaActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70473)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-los-palmitos" src="assets/images/red-point.svg" *ngIf="losPalmitosActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70418)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-san-pedro" src="assets/images/red-point.svg" *ngIf="sanPedroActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70717)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-sampues" src="assets/images/red-point.svg" *ngIf="sampuesActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70670)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-corozal" src="assets/images/red-point.svg" *ngIf="corozalActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70215)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-san-juan-de-betulia" src="assets/images/red-point.svg" *ngIf="sanJuanDeBetuliaActive" [ngbTooltip]="tipContent" [openDelay]="0" [closeDelay]="0" (mouseenter)="changeSelected(70702)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-since" src="assets/images/red-point.svg" *ngIf="sinceActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70742)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-buenavista" src="assets/images/red-point.svg" *ngIf="buenaVistaActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70110)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-el-roble" src="assets/images/red-point.svg" *ngIf="elRobleActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70233)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-galeras" src="assets/images/red-point.svg" *ngIf="galerasActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70235)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-san-benito-abad" src="assets/images/red-point.svg" *ngIf="sanBenitoAbadActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70678)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-la-union" src="assets/images/red-point.svg" *ngIf="laUnionActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70400)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-caimito" src="assets/images/red-point.svg" *ngIf="caimitoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70124)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-sucre" src="assets/images/red-point.svg" *ngIf="sucreActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70771)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-san-marcos" src="assets/images/red-point.svg" *ngIf="sanMarcosActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70708)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-majagual" src="assets/images/red-point.svg" *ngIf="majagualActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70429)" routerLink="/piscicultores/municipio">
+        <img class="container__red-point-guaranda" src="assets/images/red-point.svg" *ngIf="guarandaActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70265)" routerLink="/piscicultores/municipio">
+    </div>
+</div>
+
+<ng-template #tipContent>
+    <div class="tip-content">
+        <h5 class="tip-content__title">{{municSeleccionado.municipio}}</h5>
+        <span class="tip-content__description">Población {{municSeleccionado.poblacion | number:'':'es'}}</span><br>
+        <span class="tip-content__description"># Piscicultores {{municSeleccionado.piscicultores}}</span>
+    </div>
+</ng-template>
