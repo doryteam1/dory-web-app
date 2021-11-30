@@ -44,7 +44,7 @@
         <div class="card" *ngFor="let granja of granjas">
             <img class="card__image" src="https://d178ivhysawugh.cloudfront.net/media/l/920x561/1591126307/render-2.jpg" routerLink="/granjas/municipio/detalle">
             
-            <h3 class="card__title" routerLink="/granjas/municipio/detalle">Granja Piscilandia</h3>
+            <h3 class="card__title" routerLink="/granjas/municipio/detalle">{{granja.nombre}}</h3>
             <p class="card__description" routerLink="/granjas/municipio/detalle">
                 En nuestra granja tenemos diferentes tipos de peces: cachama, bocachico, mojarra, tilapia  roja, tilapia negra, moncholo, viejito, trucha
             </p>
