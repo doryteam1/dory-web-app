@@ -3,7 +3,7 @@
         <img class="container__icon" src="assets/icons/build.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue">Municipio</h3>
-            <span class="container__description">Sincé</span>    
+            <span class="container__description">Sincelejo</span>    
         </div>
     </div>
     
@@ -24,47 +24,57 @@
     </div>    
 </div>
 
-<div class="granjas-container">
-    <div>
-        <div class="filters-container">
-            <button class="filters-container__button btn-outline-black">
-                Mayor Area
-            </button>
-            <button class="filters-container__button  btn-outline-black">
-                Menor Area
-            </button>
-            <button class="filters-container__button  btn-outline-black">
-                Calificación
-            </button>
-            <button class="filters-container__button  btn-outline-black">
-                Más filtros
-            </button>
-        </div>
-        
-        <div class="card" *ngFor="let granja of granjas">
-            <img class="card__image" src="https://d178ivhysawugh.cloudfront.net/media/l/920x561/1591126307/render-2.jpg" routerLink="/granjas/municipio/detalle">
-            
-            <h3 class="card__title" routerLink="/granjas/municipio/detalle">{{granja.nombre}}</h3>
-            <p class="card__description" routerLink="/granjas/municipio/detalle">
-                En nuestra granja tenemos diferentes tipos de peces: cachama, bocachico, mojarra, tilapia  roja, tilapia negra, moncholo, viejito, trucha
-            </p>
-            
-            <div class="card__rating-container">
-                <img class="card__icon-rating" src="assets/icons/star-filled.svg">
-                <span class="card__rating">4.73</span>
-                <span class="card__rating__detail">(34 reseñas)</span>
-            </div>
-            
-            <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.esFavorita" (click)="changeFavorite()">
-            <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.esFavorita">
-            <span class="card__data">101250 m²</span>
-        </div>
-    </div>
+<div class="filters-container">
+    <button class="filters-container__button btn-outline-black">
+        Mayor Area
+    </button>
+    <button class="filters-container__button  btn-outline-black">
+        Menor Area
+    </button>
+    <button class="filters-container__button  btn-outline-black">
+        Calificación
+    </button>
+    <button class="filters-container__button  btn-outline-black">
+        Más filtros
+    </button>
+</div>
 
-    <!--<img class="granjas-container__map" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0TF1reqN9gMbay1JCmIIWdpratJDD6kzYiw&usqp=CAU">-->
-    <div *ngIf="apiLoaded | async">
-        <google-map [options]="options">
-            <map-marker *ngFor="let markerInfo of markersInfo" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title"></map-marker>
-        </google-map>
+<div class="search-container" *ngIf="granjas.length < 1">
+    <div class="search-container__box">
+        <img class="search-container__image" src="assets/images/searching.svg">
+        <h3>No se han encontrado resultados</h3>
+        <p>No encontramos granjas en este municipio </p>
     </div>
+    
+</div>
+
+
+<div class="granjas-container">
+        <div class="cards-container overflow-auto" *ngIf="granjas.length > 1">
+            <div class="card" *ngFor="let granja of granjas; index as i" (mouseover)="onMouseCard(i)">
+                <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}" routerLink="{{granjaDetailRoute}}">
+                
+                <h3 class="card__title" routerLink="/granjas/municipio/detalle">{{granja.nombre}}</h3>
+                <p class="card__description" routerLink="/granjas/municipio/detalle">
+                    {{granja.descripcion}}
+                </p>
+                
+                <div class="card__rating-container">
+                    <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+                    <span class="card__rating">{{granja.puntuacion ? granja.puntuacion : 'S/C'}}</span>
+                    <span class="card__rating__detail">(34 reseñas)</span>
+                </div>
+                
+                <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.esFavorita" (click)="changeFavorite()">
+                <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.esFavorita">
+                <span class="card__data">{{granja.area | number:'':'es'}} m²</span>
+            </div>
+        </div>
+            <div *ngIf="granjas.length > 1 && (apiLoaded | async)">
+                <google-map height="600px"
+                            width="600px" 
+                            [options]="options">
+                    <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"></map-marker>
+                </google-map>
+            </div>
 </div>

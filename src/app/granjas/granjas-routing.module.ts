@@ -13,7 +13,15 @@ const routes: Routes = [
     component:GranjasMunicipioComponent,
   },
   {
+    path:'municipio/:id',
+    component:GranjasMunicipioComponent,
+  },
+  {
     path:'municipio/detalle',
+    component:GranjaDetalleComponent
+  },
+  {
+    path:'municipio/:id/detalle',
     component:GranjaDetalleComponent
   }
 ];

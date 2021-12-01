@@ -1,0 +1,7 @@
+{
+    "/granjas": {
+      "target": "https://dory-api-rest.herokuapp.com/",
+      "secure": true,
+      "changeOrigin": true
+    }
+  }

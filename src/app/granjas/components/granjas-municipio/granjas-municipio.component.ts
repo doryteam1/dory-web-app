@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GranjasService } from '../../services/granjas.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-granjas-municipio',
   templateUrl: './granjas-municipio.component.html',
@@ -11,7 +12,7 @@ import { GranjasService } from '../../services/granjas.service';
 })
 export class GranjasMunicipioComponent implements OnInit {
   apiLoaded: Observable<boolean>;
-  granjas:Array<Granja> = [
+  /* granjas:Array<Granja> = [
     {
       nombre:"Granja las cachamas",
       area:250,
@@ -191,18 +192,22 @@ export class GranjasMunicipioComponent implements OnInit {
 
   ];
 
-  
+ */  
+  granjas:any[] = [];
+
   options: google.maps.MapOptions = {
     center: { lat: 9.214145, lng:-75.188469 },
-    zoom:6
+    zoom:10
   }
 
   markerPosition : google.maps.LatLngLiteral = { lat: 9.214145, lng:-75.188469 };
   markerPositions: google.maps.LatLngLiteral[] = [];
   markersInfo: any[] = [];
   markerOptions: google.maps.MarkerOptions = {draggable: false};
+  indexSelected:number = -1;
+  granjaDetailRoute:string = "";
 
-  constructor(httpClient: HttpClient, private granjasService:GranjasService) {
+  constructor(httpClient: HttpClient, private granjasService:GranjasService, private activatedRoute:ActivatedRoute) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
         .pipe(
           map(() => true),
@@ -211,14 +216,21 @@ export class GranjasMunicipioComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.extractLatLong();
-    this.granjasService.getGranjas();
+    this.granjaDetailRoute = "/granjas/municipio/" + this.activatedRoute.snapshot.url[1] +"/detalle";
+    console.log(this.activatedRoute.snapshot.url[1])
+    this.granjasService.getGranjasMunicipio(Number(this.activatedRoute.snapshot.url[1])).subscribe(
+      (response)=>{
+        console.log(response.data)
+        this.granjas = response.data;
+        this.extractLatLong();
+      }
+    );
   }
 
   extractLatLong(){
     this.granjas.forEach(
       (granja : Granja)=>{
-        let markerPosition: google.maps.LatLngLiteral = { lat:granja.latitud, lng:granja.longitud };
+        let markerPosition: google.maps.LatLngLiteral = { lat:Number(granja.latitud), lng:Number(granja.longitud) };
         this.markerPositions.push(markerPosition);
         this.markersInfo.push({markerPosition: markerPosition, title: granja.nombre});
       }
@@ -226,5 +238,15 @@ export class GranjasMunicipioComponent implements OnInit {
   }
   changeFavorite(){
     
+  }
+
+  onMouseCard(indexSelected:number){
+    this.indexSelected = indexSelected;
+    console.log(indexSelected);
+    /* this.options = {
+      center: { lat: Number(granja.latitud), lng:Number(granja.longitud) },
+      zoom:15
+    }
+    console.log(granja); */
   }
 }

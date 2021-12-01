@@ -11,10 +11,10 @@ export class GranjasService {
   }
 
   getGranjas(){
-    this.https.get("https://dory-api-rest.herokuapp.com/granjas").subscribe(
-      (response)=>{
-        console.log(response);
-      }
-    );
+    return this.https.get("https://dory-api-rest.herokuapp.com/granjas");
+  }
+
+  getGranjasMunicipio(idMunicipio:number){
+    return this.https.get("https://dory-api-rest.herokuapp.com/api/granjas/municipio/"+idMunicipio);
   }
 }
