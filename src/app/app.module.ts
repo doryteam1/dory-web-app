@@ -10,7 +10,7 @@ import { HttpsService } from './services/https.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

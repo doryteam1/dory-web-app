@@ -40,6 +40,10 @@ const routes: Routes = [
   {
     path:'pescadores',
     loadChildren: () => import('./pescadores/pescadores.module').then(m => m.PescadoresModule)
+  },
+  {
+    path:'asociaciones',
+    loadChildren: () => import('./asociaciones/asociaciones.module').then(m => m.AsociacionesModule)
   }
 ];
 

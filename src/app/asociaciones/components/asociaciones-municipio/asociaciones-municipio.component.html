@@ -1,0 +1,39 @@
+<div class="search-container" *ngIf="asociaciones.length < 1">
+    <div class="search-container__box">
+        <img class="search-container__image" src="assets/images/searching.svg">
+        <h3>No se han encontrado resultados</h3>
+        <p>No encontramos granjas en este municipio </p>
+    </div>
+    
+</div>
+
+
+<div class="asociaciones-container">
+        <div class="cards-container overflow-auto" *ngIf="asociaciones.length > 1">
+            <div class="card" *ngFor="let asociacion of asociaciones; index as i" (mouseover)="onMouseCard(i)">
+                <div class="card__box">
+                    <h4 class="card__title">Asociación de piscicultores</h4>
+                    <span class="card__description">Asopescadores</span>
+                    <h5 class="card__title2">Información basica</h5>
+                    <span class="card__description">Caimito Sincelejo Sucre</span>
+                    <span class="card__description">Cra 23A # 12 - 45</span>
+                    <span class="card__description">Constituida: SI</span>
+                    <span class="card__description">Fecha renovación: 10/12/2021</span>
+                    <h5 class="card__title2">Representante legal</h5>
+                    <span class="card__description">Mauricio Tamara</span>
+                    <h4 class="card__link">Ver piscicultores</h4>
+                </div>
+                <div class="card__box-image">
+                    <img class="card__image" src="https://admin.moodyyc.com/img/no-image.png">
+                    <img class="card__icon" src="assets/icons/download.svg">
+                </div>
+            </div>
+        </div>
+        <div *ngIf="asociaciones.length > 1 && (apiLoaded | async)">
+            <google-map height="600px"
+                        width="600px" 
+                        [options]="options">
+                <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"></map-marker>
+            </google-map>
+        </div>
+</div>
