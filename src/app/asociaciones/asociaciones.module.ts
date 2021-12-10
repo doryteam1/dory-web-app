@@ -6,7 +6,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { AsociacionesRoutingModule } from './asociaciones-routing.module';
 import { AsociacionesComponent } from './components/asociaciones/asociaciones.component';
 import { AsociacionesMunicipioComponent } from './components/asociaciones-municipio/asociaciones-municipio.component';
-import { AsociacionesService } from './servicios/asociaciones.service';
+import { AsociacionesService } from './services/asociaciones.service';
 import { HttpsService } from '../services/https.service';
 
 

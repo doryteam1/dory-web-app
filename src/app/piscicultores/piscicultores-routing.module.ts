@@ -9,7 +9,10 @@ const routes: Routes = [
     path:"", component:PiscicultoresComponent
   },
   {
-    path:"municipio", component:PiscicultoresMunicipioComponent
+    path:"municipio/:id", component:PiscicultoresMunicipioComponent
+  },
+  {
+    path:"asociacion/:id", component:PiscicultoresMunicipioComponent
   }
 ];
 

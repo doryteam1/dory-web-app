@@ -1,9 +1,9 @@
-<div class="data-container">
+<div class="data-container" *ngIf="piscicultores.length > 0">
     <div class="container">
         <img class="container__icon" src="assets/icons/build.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue">Municipio</h3>
-            <span class="container__description">Sincé</span>    
+            <span class="container__description">{{piscicultores[0].municipio}}</span>    
         </div>
     </div>
     
@@ -19,48 +19,32 @@
         <img class="container__icon" src="assets/icons/fish.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue-2"># piscicultores</h3>
-            <span class="container__description">9</span>    
+            <span class="container__description">{{piscicultores.length}}</span>    
         </div>
     </div>    
 </div>
 
-<div class="granjas-container">
-    <div>
-        <!--<div class="filters-container">
-            <button class="filters-container__button btn-outline-black">
-                Mayor Area
-            </button>
-            <button class="filters-container__button  btn-outline-black">
-                Menor Area
-            </button>
-            <button class="filters-container__button  btn-outline-black">
-                Calificación
-            </button>
-            <button class="filters-container__button  btn-outline-black">
-                Más filtros
-            </button>
-        </div>
-    -->
-        <div class="card" *ngFor="let granja of granjas">
-            <img class="card__image" src="/assets/images/avatar-person-square.png" routerLink="/granjas/municipio/detalle">
+<div class="piscicultores-container">
+    <div class="cards-container overflow-auto">
+        <div class="card" *ngFor="let piscicultor of piscicultores">
+            <img class="card__image" src="/assets/images/avatar-person-square.png" routerLink="/piscicultores/municipio/detalle">
             
             <div class="card-box">
-                <h3 class="card__title">Rafael Hernandez Muñoz  Correa</h3>
-                <span class="card__title2">Asopiscicolas</span>
+                <h3 class="card__title">{{piscicultor.nombre}}</h3>
+                <span class="card__title2">{{piscicultor.nombre_asociacion}}</span>
                 <div>
                     <img class="card__icon" src="assets/icons/whatsapp.svg">
-                    <span class="card__phone">3021234567</span>
+                    <span class="card__phone">{{piscicultor.celular}}</span>
                 </div>            
-                <span class="card__description1">Cra 23A # 12 - 45</span>
-                <span class="card__description2">Sincelejo - Sucre</span>
+                <span class="card__description1">{{piscicultor.direccion}}</span>
+                <span class="card__description2">{{piscicultor.municipio}}</span>
             </div>
             
         </div>
     </div>
 
-    <!--<img class="granjas-container__map" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0TF1reqN9gMbay1JCmIIWdpratJDD6kzYiw&usqp=CAU">-->
     <div *ngIf="apiLoaded | async">
-        <google-map [options]="options">
+        <google-map [options]="options" width="800px" height="600px">
             <map-marker *ngFor="let markerInfo of markersInfo" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title"></map-marker>
         </google-map>
     </div>

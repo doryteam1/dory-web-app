@@ -6,6 +6,7 @@ import { PescadoresComponent } from './components/pescadores/pescadores.componen
 import { PescadoresMunicipioComponent } from './components/pescadores-municipio/pescadores-municipio.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { PescadoresService } from './services/pescadores.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,9 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     HttpClientModule,
     HttpClientJsonpModule,
     NgbModule
-  ]
+  ],
+  providers:[
+    PescadoresService
+  ]  
 })
 export class PescadoresModule { }

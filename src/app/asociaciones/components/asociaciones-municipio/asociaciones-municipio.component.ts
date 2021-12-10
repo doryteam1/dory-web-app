@@ -3,7 +3,7 @@ import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AsociacionesService } from '../../servicios/asociaciones.service';
+import { AsociacionesService } from '../../services/asociaciones.service';
 @Component({
   selector: 'app-asociaciones-municipio',
   templateUrl: './asociaciones-municipio.component.html',

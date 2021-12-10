@@ -5,6 +5,8 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GranjasService } from '../../services/granjas.service';
 import { ActivatedRoute } from '@angular/router';
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
 @Component({
   selector: 'app-granjas-municipio',
   templateUrl: './granjas-municipio.component.html',
@@ -216,11 +218,12 @@ export class GranjasMunicipioComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    registerLocaleData( es );
     this.granjaDetailRoute = "/granjas/municipio/" + this.activatedRoute.snapshot.url[1] +"/detalle";
     console.log(this.activatedRoute.snapshot.url[1])
     this.granjasService.getGranjasMunicipio(Number(this.activatedRoute.snapshot.url[1])).subscribe(
       (response)=>{
-        console.log(response.data)
+        console.log("Granjas por municipio "+ this.activatedRoute.snapshot.url[1]+ " " + JSON.stringify(response.data))
         this.granjas = response.data;
         this.extractLatLong();
       }

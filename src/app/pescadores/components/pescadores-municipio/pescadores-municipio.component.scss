@@ -47,12 +47,19 @@
     margin-right: 10px;
 }
 
+.cards-container{
+    width: 750px;
+    height: 600px;
+    border: none;
+}
+
 .card{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     border: 0;
     margin-bottom: 30px;
+    padding-left:20px;
 }
 
 .card-box{
@@ -92,14 +99,12 @@
     font-size: 16px;
 }
 
-.granjas-container{
+.pescadores-container{
     display:flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-top: 80px;
 }
 
-.granjas-container__map{
-    align-self: start;
-    width:546px;
-    margin-left:18px;
+.pescadores-container__map{
+    
 }

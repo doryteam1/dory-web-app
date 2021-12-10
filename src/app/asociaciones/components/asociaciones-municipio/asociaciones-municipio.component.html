@@ -21,7 +21,8 @@
                     <span class="card__description">Fecha renovación: 10/12/2021</span>
                     <h5 class="card__title2">Representante legal</h5>
                     <span class="card__description">Mauricio Tamara</span>
-                    <h4 class="card__link">Ver piscicultores</h4>
+                    <h4 class="card__link" routerLink="/piscicultores/asociacion/92505376">Ver piscicultores</h4>
+                    <h4 class="card__link" routerLink="/pescadores/asociacion/64567432">Ver pescadores</h4>
                 </div>
                 <div class="card__box-image">
                     <img class="card__image" src="https://admin.moodyyc.com/img/no-image.png">
@@ -33,7 +34,7 @@
             <google-map height="600px"
                         width="600px" 
                         [options]="options">
-                <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"></map-marker>
+                <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/house-red.svg' : 'assets/icons/house.svg' }}"></map-marker>
             </google-map>
         </div>
 </div>

@@ -6,6 +6,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PiscicultoresMunicipioComponent } from './components/piscicultores-municipio/piscicultores-municipio.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { PiscicultoresService } from './services/piscicultores.service';
+import { HttpsService } from '../services/https.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,10 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     HttpClientModule,
     HttpClientJsonpModule,
     NgbModule
+  ],
+  providers: [
+    PiscicultoresService,
+    HttpsService
   ]
 })
 export class PiscicultoresModule { }

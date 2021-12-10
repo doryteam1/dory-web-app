@@ -9,9 +9,13 @@ const routes: Routes = [
     path:"", component:PescadoresComponent
   },
   {
-    path:'municipio',
+    path:'municipio/:id',
     component:PescadoresMunicipioComponent,
   },
+  {
+    path:'asociacion/:id',
+    component:PescadoresMunicipioComponent,
+  }
 ];
 
 @NgModule({
