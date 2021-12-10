@@ -26,7 +26,7 @@
 
 <div class="piscicultores-container">
     <div class="cards-container overflow-auto">
-        <div class="card" *ngFor="let piscicultor of piscicultores">
+        <div class="card" *ngFor="let piscicultor of piscicultores; index as i" (mouseover)="onMouseCard(i)">
             <img class="card__image" src="/assets/images/avatar-person-square.png" routerLink="/piscicultores/municipio/detalle">
             
             <div class="card-box">
@@ -45,7 +45,7 @@
 
     <div *ngIf="apiLoaded | async">
         <google-map [options]="options" width="800px" height="600px">
-            <map-marker *ngFor="let markerInfo of markersInfo" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title"></map-marker>
+            <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/person-solid-red.svg' : 'assets/icons/person-outline.svg' }}"></map-marker>
         </google-map>
     </div>
 </div>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -12,7 +11,6 @@ import { PescadoresService } from 'src/app/pescadores/services/pescadores.servic
 })
 export class PescadoresMunicipioComponent implements OnInit {
   apiLoaded: Observable<boolean>;
-  granjas:Array<Granja> = [];
 
   
   options: google.maps.MapOptions = {
@@ -26,28 +24,10 @@ export class PescadoresMunicipioComponent implements OnInit {
   markerOptions: google.maps.MarkerOptions = {draggable: false};
 
   pescadores:any[] = [];
-
+  indexSelected:number = -1;
+  
   constructor(httpClient: HttpClient, private activatedRoute: ActivatedRoute, private pescadoresService:PescadoresService) {
-    let path = this.activatedRoute.snapshot.url[0].path;
-    let id = this.activatedRoute.snapshot.params.id;
-
-    if(path == 'asociacion'){
-      this.pescadoresService.getPescadoresAsociacion(id).subscribe(
-        (response:any)=>{
-          console.log(response);
-          this.pescadores = response.data;
-        }
-      );
-    }else if(path == 'municipio'){
-      this.pescadoresService.getPescadoresMunicipio(id).subscribe(
-        (response:any)=>{
-          console.log(response);
-          this.pescadores = response.data;
-        }
-      );
-    }
-    console.log(this.activatedRoute.snapshot.url[0].path);
-
+   
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
         .pipe(
           map(() => true),
@@ -56,19 +36,50 @@ export class PescadoresMunicipioComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.extractLatLong();
+    let path = this.activatedRoute.snapshot.url[0].path;
+    let id = this.activatedRoute.snapshot.params.id;
+
+    if(path == 'asociacion'){
+      this.pescadoresService.getPescadoresAsociacion(id).subscribe(
+        (response:any)=>{
+          console.log(response);
+          this.pescadores = response.data;
+          this.extractLatLong();
+        }
+      );
+    }else if(path == 'municipio'){
+      this.pescadoresService.getPescadoresMunicipio(id).subscribe(
+        (response:any)=>{
+          console.log(response);
+          this.pescadores = response.data;
+          this.extractLatLong();
+        }
+      );
+    }
+    console.log(this.activatedRoute.snapshot.url[0].path);
   }
 
   extractLatLong(){
-    this.granjas.forEach(
-      (granja : Granja)=>{
-        let markerPosition: google.maps.LatLngLiteral = { lat:granja.latitud, lng:granja.longitud };
+    this.pescadores.forEach(
+      (pescador : any)=>{
+        let markerPosition: google.maps.LatLngLiteral = { lat:Number(pescador.latitud), lng:Number(pescador.longitud) };
         this.markerPositions.push(markerPosition);
-        this.markersInfo.push({markerPosition: markerPosition, title: granja.nombre});
+        this.markersInfo.push({markerPosition: markerPosition, title: pescador.nombre});
       }
     );
+    console.log(JSON.stringify(this.markersInfo));
   }
   changeFavorite(){
     
+  }
+
+  onMouseCard(indexSelected:number){
+    this.indexSelected = indexSelected;
+    console.log(indexSelected);
+    /* this.options = {
+      center: { lat: Number(granja.latitud), lng:Number(granja.longitud) },
+      zoom:15
+    }
+    console.log(granja); */
   }
 }

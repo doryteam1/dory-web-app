@@ -24,7 +24,8 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   markerOptions: google.maps.MarkerOptions = {draggable: false};
 
   piscicultores:any[] = [];
-
+  indexSelected:number = -1;
+  
   constructor(httpClient: HttpClient, private activatedRoute:ActivatedRoute, private piscicultoresService:PiscicultoresService) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
         .pipe(
@@ -41,28 +42,42 @@ export class PiscicultoresMunicipioComponent implements OnInit {
       this.piscicultoresService.getPiscicultoresAsociacion(id).subscribe(
         (response)=>{
           this.piscicultores = response.data;
+          this.extractLatLong();
         }
       );
     }else if(path == "municipio"){
       this.piscicultoresService.getPiscicultoresMunicipio(id).subscribe(
         (response)=>{
           this.piscicultores = response.data;
+          this.extractLatLong();
         }
       );
     }
-    this.extractLatLong();
+    
   }
 
   extractLatLong(){
     this.piscicultores.forEach(
       (piscicultor : any)=>{
-        let markerPosition: google.maps.LatLngLiteral = { lat:piscicultor.latitud, lng:piscicultor.longitud };
+        let markerPosition: google.maps.LatLngLiteral = { lat:Number(piscicultor.latitud), lng:Number(piscicultor.longitud) };
         this.markerPositions.push(markerPosition);
         this.markersInfo.push({markerPosition: markerPosition, title: piscicultor.nombre});
       }
     );
+
+    console.log(JSON.stringify(this.markersInfo));
   }
   changeFavorite(){
     
+  }
+
+  onMouseCard(indexSelected:number){
+    this.indexSelected = indexSelected;
+    console.log(indexSelected);
+    /* this.options = {
+      center: { lat: Number(granja.latitud), lng:Number(granja.longitud) },
+      zoom:15
+    }
+    console.log(granja); */
   }
 }
