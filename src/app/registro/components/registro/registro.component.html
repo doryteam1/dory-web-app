@@ -68,6 +68,17 @@
                 </div>
                 
                 <div class="container-form__box2">
+                    <span class="container-form__label">Cedula</span>
+                    <input class="container-form__input form-input-text-square" [ngClass]="invalid('cedula') ? 'invalid-input' : ''" type="text" placeholder="    Ingresa tu cedula" formControlName="cedula">
+                    <div *ngIf="invalid('cedula')" class="danger-message">
+                        <div *ngIf="cedula?.errors?.['required']">
+                            Escribe tu cedula
+                        </div>
+                        <div *ngIf="cedula?.errors?.['pattern']">
+                            Solo debes escribir numeros
+                        </div>
+                    </div>      
+
                     <span class="container-form__label">Correo electrónico*</span>
                     <input class="container-form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="    Ingresa tu correo electronico" formControlName="email">
                     <div *ngIf="invalid('email')" class="danger-message">

@@ -10,6 +10,7 @@ import { PlacesService } from 'src/app/services/places.service';
 export class RegistroComponent implements OnInit {
   @Output() exit: EventEmitter<any> = new EventEmitter();
   form:FormGroup = new FormGroup({
+    cedula:new FormControl('',[Validators.required, Validators.pattern(/([0-9])+/)]),
     nombreCompleto:new FormControl('',Validators.required),
     email:new FormControl('',[Validators.required, Validators.email]),
     fechaNac:new FormControl('',Validators.required),
@@ -142,6 +143,8 @@ export class RegistroComponent implements OnInit {
   }
   onSubmit(){
     console.warn(this.form.value)
+    this.form.get('fechaNac')?.setValue(this.fechaNac?.value.year+"-"+this.fechaNac?.value.month+"-"+this.fechaNac?.value.day)
+    console.warn(this.form.value)
     console.log("valid = ",this.form.valid)
   }
 
@@ -167,5 +170,9 @@ export class RegistroComponent implements OnInit {
 
   get fechaNac(){
     return this.form.get('fechaNac');
+  }
+
+  get cedula(){
+    return this.form.get('cedula');
   }
 }
