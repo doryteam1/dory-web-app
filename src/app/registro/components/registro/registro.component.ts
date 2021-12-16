@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { PlacesService } from 'src/app/services/places.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-registro',
@@ -23,7 +24,7 @@ export class RegistroComponent implements OnInit {
     vereda:new FormControl('',),
     terms:new FormControl('',Validators.required),
   });
-  constructor(private places:PlacesService) { 
+  constructor(private places:PlacesService, private usuarioService:UsuarioService) { 
     console.log(this.form.value);
   }
 
@@ -143,9 +144,16 @@ export class RegistroComponent implements OnInit {
   }
   onSubmit(){
     console.warn(this.form.value)
-    this.form.get('fechaNac')?.setValue(this.fechaNac?.value.year+"-"+this.fechaNac?.value.month+"-"+this.fechaNac?.value.day)
     console.warn(this.form.value)
     console.log("valid = ",this.form.valid)
+    if(this.form.valid){
+      this.form.get('fechaNac')?.setValue(this.fechaNac?.value.year+"-"+this.fechaNac?.value.month+"-"+this.fechaNac?.value.day)
+      this.usuarioService.registrarUsuario(this.form.valid).subscribe(
+        (response)=>{
+          console.log("termino registro",response);
+        }
+      );
+    }
   }
 
   get nombreCompleto(){

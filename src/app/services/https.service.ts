@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,4 +28,22 @@ export class HttpsService {
     };
     return this.http.get(endpoint, httpOptions);
   }
+
+  post(endpoint:string, data: any): Observable<any> {
+    let httpParams = new HttpParams();
+
+    for (const key in data) {
+      httpParams = httpParams.append(key, data[key]);
+    }
+
+  return this.http.post(endpoint,
+    httpParams.toString(),
+    {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+    }
+  );
+
+}
+
 }

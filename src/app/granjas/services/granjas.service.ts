@@ -17,4 +17,8 @@ export class GranjasService {
   getGranjasMunicipio(idMunicipio:number){
     return this.https.get("https://dory-api-rest.herokuapp.com/api/granjas/municipio/"+idMunicipio);
   }
+
+  getGranja(id:number){
+    return this.https.get("https://dory-api-rest.herokuapp.com/api/granja/"+id);
+  }
 }
