@@ -36,7 +36,7 @@
 
     .container__message-2{
         text-align: center;
-        margin-bottom: 25px;
+        margin-bottom: 19px;
     }
     .container__form-box{
         //background-color: yellowgreen;
@@ -65,8 +65,8 @@
 
     .container-form__label2{
         align-self: center;
-        margin-top:7px;
-        margin-bottom: 3px;
+        margin-top:0px;
+        margin-bottom: 0px;
     }
     .container-form__button-text{
         margin-left: 24px;
@@ -74,13 +74,13 @@
 
     .container-form__button{
         width: 256px;
-        margin-top: 39px;
+        margin-top: 16px;
         padding-left: 10px;
     }
 
     .container-form__button-white{
         width: 256px;
-        margin-top: 10px;
+        margin-top: 0px;
         align-self: center;
         font-weight: 400;
     }
@@ -92,6 +92,22 @@
     .container-form__input{
         width: 256px;
         margin-top: 8px;
+    }
+
+    .container-form__input--scroll{
+        height: 300px;
+        overflow-y: scroll;
+    }
+    .container-form__input-container{
+        position:relative;
+    }
+
+    .container-form__input-img{
+        position:absolute;
+        width: 25px;
+        height: 25px;
+        right: 10px;
+        bottom: 7px;
     }
 
     .container-form__white-button-box{

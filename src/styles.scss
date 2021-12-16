@@ -10,6 +10,7 @@
     --white:#FFFFFF;
     --black:#000000;
     --high-blue:#0D0C22;
+    --red-danger:#D93025;
 }
 
 
@@ -67,6 +68,14 @@
     border-radius: 8px;
     width: 360px;
     height: 40px;
+}
+
+.invalid-input{
+    border:1px solid var(--red-danger);
+}
+
+.danger-message{
+    color:var(--red-danger)
 }
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
