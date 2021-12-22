@@ -11,11 +11,11 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class RegistroComponent implements OnInit {
   @Output() exit: EventEmitter<any> = new EventEmitter();
   form:FormGroup = new FormGroup({
-    cedula:new FormControl('',[Validators.required, Validators.pattern(/([0-9])+/)]),
+    cedula:new FormControl('',[Validators.required, Validators.pattern(/^([0-9]+)$/)]),
     nombreCompleto:new FormControl('',Validators.required),
     email:new FormControl('',[Validators.required, Validators.email]),
-    fechaNac:new FormControl('',Validators.required),
-    celular:new FormControl('',[Validators.required, Validators.maxLength(10), Validators.pattern(/([0-9])+/)]),
+    fechaNac:new FormControl(''),
+    celular:new FormControl('',[Validators.required, Validators.maxLength(10), Validators.pattern(/^([0-9]+)$/)]),
     password:new FormControl('',Validators.required),
     matchPassword:new FormControl('',Validators.required),
     departamento:new FormControl(''),
@@ -148,7 +148,7 @@ export class RegistroComponent implements OnInit {
     console.log("valid = ",this.form.valid)
     if(this.form.valid){
       this.form.get('fechaNac')?.setValue(this.fechaNac?.value.year+"-"+this.fechaNac?.value.month+"-"+this.fechaNac?.value.day)
-      this.usuarioService.registrarUsuario(this.form.valid).subscribe(
+      this.usuarioService.registrarUsuario(this.form.value).subscribe(
         (response)=>{
           console.log("termino registro",response);
         }

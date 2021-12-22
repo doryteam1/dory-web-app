@@ -30,20 +30,6 @@ export class HttpsService {
   }
 
   post(endpoint:string, data: any): Observable<any> {
-    let httpParams = new HttpParams();
-
-    for (const key in data) {
-      httpParams = httpParams.append(key, data[key]);
-    }
-
-  return this.http.post(endpoint,
-    httpParams.toString(),
-    {
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/x-www-form-urlencoded')
-    }
-  );
-
-}
-
+    return this.http.post(endpoint, data);
+  }
 }

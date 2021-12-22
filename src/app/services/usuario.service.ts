@@ -31,6 +31,7 @@ export class UsuarioService {
         latitud:0,
         longitud:0
     }
+    console.log("usuario service registrar ", body)
     return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/usuarios',body);
   }
 }
