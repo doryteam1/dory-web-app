@@ -11,11 +11,13 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class RegistroComponent implements OnInit {
   @Output() exit: EventEmitter<any> = new EventEmitter();
   form:FormGroup = new FormGroup({
-    cedula:new FormControl('',[Validators.required, Validators.pattern(/^([0-9]+)$/)]),
-    nombreCompleto:new FormControl('',Validators.required),
+    cedula:new FormControl(''),
+    nombres:new FormControl(''),
+    apellidos:new FormControl(''),
     email:new FormControl('',[Validators.required, Validators.email]),
+    tipoUsuario:new FormControl('',[Validators.required]),
     fechaNac:new FormControl(''),
-    celular:new FormControl('',[Validators.required, Validators.maxLength(10), Validators.pattern(/^([0-9]+)$/)]),
+    celular:new FormControl('',),
     password:new FormControl('',Validators.required),
     matchPassword:new FormControl('',Validators.required),
     departamento:new FormControl(''),
@@ -24,40 +26,18 @@ export class RegistroComponent implements OnInit {
     vereda:new FormControl('',),
     terms:new FormControl('',Validators.required),
   });
-  constructor(private places:PlacesService, private usuarioService:UsuarioService) { 
-    console.log(this.form.value);
+
+  tipoUsuarios:any[]=[];
+
+  constructor(private usuarioService:UsuarioService) { 
   }
 
-  departamentos:any[] = [];
-  municipios:any[] = [];
-  corregimientos:any[] = [];
-  veredas:any[] = [];
-
-  dptoSelec:any = {
-    id:-1,
-    nombre:'Selecciona un departamento'
-  };
-
-  municSelec:any = {
-    id:-1,
-    nombre:'Selecciona un municipio'
-  };
-
-  corregimientoSelec:any = {
-    id:-1,
-    nombre:'Selecciona un corregimiento'
-  };
-
-  veredaSelec:any = {
-    id:-1,
-    nombre:'Selecciona un vereda'
-  };
 
   ngOnInit(): void {
-    this.places.getDepartamentos().subscribe(
+    this.usuarioService.getTiposUsuario().subscribe(
       (response)=>{
         console.warn(response.data);
-        this.departamentos = response.data;
+        this.tipoUsuarios = response.data;
       }
     );
   }
@@ -75,79 +55,10 @@ export class RegistroComponent implements OnInit {
     return this.password?.value != this.matchPassword?.value && (this.matchPassword?.dirty || this.matchPassword?.touched);
   }
 
-  dptoSelecc(dpto:any){
-    this.dptoSelec.id = dpto.id_departamento;
-    this.dptoSelec.nombre = dpto.nombre_departamento;
-    this.form.get('departamento')?.setValue(this.dptoSelec.id);
-    this.resetMunic();
-    this.resetCorreg();
-    this.resetVereda();
-    this.places.getMunicipiosDepartamentos(this.dptoSelec.id).subscribe(
-      (response)=>{
-        this.municipios = response.data;
-      }
-    );
-  }
-
-  municSelecc(municipio:any){
-    this.municSelec.id = municipio.id_municipio;
-    this.municSelec.nombre = municipio.nombre;
-    this.form.get('municipio')?.setValue(this.municSelec.id);
-    this.resetCorreg();
-    this.resetVereda();
-    this.places.getCorregimientosMunicipio(this.municSelec.id).subscribe(
-      (response)=>{
-        this.corregimientos = response.data;
-      }
-    );
-    this.places.getVeredasMunicipio(this.municSelec.id).subscribe(
-      (response)=>{
-        this.veredas = response.data;
-      }
-    );
-  }
-
-  corregSelecc(corregimiento:any){
-    this.corregimientoSelec.id = corregimiento.id_corregimiento;
-    this.corregimientoSelec.nombre = corregimiento.nombre;
-    this.form.get('corregimiento')?.setValue(this.corregimientoSelec.id);
-  }
-
-  veredaSelecc(vereda:any){
-    this.veredaSelec.id = vereda.id_vereda;
-    this.veredaSelec.nombre = vereda.nombre;
-    this.form.get('vereda')?.setValue(this.veredaSelec.id);
-  }
-
-  resetMunic(){
-    this.municSelec = {
-      id:-1,
-      nombre:'Selecciona un municipio'
-    };
-    this.form.get('municipio')?.setValue('');
-  }
-
-  resetCorreg(){
-    this.corregimientoSelec = {
-      id:-1,
-      nombre:'Selecciona un corregimiento'
-    };
-    this.form.get('corregimiento')?.setValue('');
-  }
-
-  resetVereda(){
-    this.veredaSelec = {
-      id:-1,
-      nombre:'Selecciona un vereda'
-    };
-    this.form.get('vereda')?.setValue('');
-  }
   onSubmit(){
-    console.warn(this.form.value)
     console.warn(this.form.value)
     console.log("valid = ",this.form.valid)
     if(this.form.valid){
-      this.form.get('fechaNac')?.setValue(this.fechaNac?.value.year+"-"+this.fechaNac?.value.month+"-"+this.fechaNac?.value.day)
       this.usuarioService.registrarUsuario(this.form.value).subscribe(
         (response)=>{
           console.log("termino registro",response);
@@ -172,15 +83,8 @@ export class RegistroComponent implements OnInit {
     return this.form.get('matchPassword');
   }
 
-  get celular(){
-    return this.form.get('celular');
+  get tipoUsuario(){
+    return this.form.get('tipoUsuario');
   }
 
-  get fechaNac(){
-    return this.form.get('fechaNac');
-  }
-
-  get cedula(){
-    return this.form.get('cedula');
-  }
 }

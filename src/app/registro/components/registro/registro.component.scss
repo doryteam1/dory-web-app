@@ -1,8 +1,11 @@
     .container{
         display: flex;
-        justify-content:start;
+        justify-content:space-between;
         margin-left: 0;
         padding-left: 0;
+        width: 100vw;
+        height: 100vh;
+        max-width: 100%;
     }
 
     .container__logo{
@@ -13,10 +16,11 @@
     }
 
     .container__message-box{
-        background-image: url("https://images.pexels.com/photos/2182206/pexels-photo-2182206.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+        background-image: url("https://cr00.epimg.net/radio/imagenes/2020/11/21/al_campo/1605916279_295105_1605956382_noticia_normal.jpg");
         background-size:cover;
-        box-shadow:inset 0 0 0 2000px #26A5B88C;
-        width:auto;
+        //box-shadow:inset 0 0 0 2000px #26A5B88C;
+        width:50vw;
+        height: 100vh;
         background-position: 45% 51%;
     }
     .container__message{
@@ -29,19 +33,29 @@
         text-justify: inter-word;
     }
 
+    .container-form__box-title{
+        width:400px;
+    }
+
     .container__title{
-        text-align: center;
-        margin-top: 6px;
+        text-align: start;
+        margin-top: 25px;
+        font-size: 24px;
     }
 
     .container__message-2{
-        text-align: center;
+        text-align: start;
         margin-bottom: 19px;
+        margin-right: 15px;
+        margin-top: 15px;
     }
     .container__form-box{
         //background-color: yellowgreen;
         //padding: 0px 50px 0px 100px;
-        padding-left: 100px;
+        width: 50vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .container-form{
@@ -60,7 +74,8 @@
     }
     .container-form__label{
         display: block;
-        margin-top: 8px;
+        margin-top: 14px;
+        font-weight: 500;
     }
 
     .container-form__label2{
@@ -73,16 +88,14 @@
     }
 
     .container-form__button{
-        width: 256px;
+        width: 400px;
         margin-top: 16px;
         padding-left: 10px;
     }
 
     .container-form__button-white{
-        width: 256px;
+        width: 400px;
         margin-top: 0px;
-        align-self: center;
-        font-weight: 400;
     }
 
     .container-form__checkbox{
@@ -90,7 +103,7 @@
     }
 
     .container-form__input{
-        width: 256px;
+        width: 400px;
         margin-top: 8px;
     }
 
@@ -113,7 +126,7 @@
     .container-form__white-button-box{
         display: flex;
         flex-direction: column;
-        
+        width: 400px;
     }
     .container-form__terms-box{
         margin-top: 19px;

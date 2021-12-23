@@ -12,14 +12,14 @@ export class UsuarioService {
   registrarUsuario(usuario:any):Observable<any>{
     let body = {
         cedula : usuario.cedula,
-        nombres : usuario.nombreCompleto, 
-        apellidos : usuario.nombreCompleto,
+        nombres : usuario.nombres, 
+        apellidos : usuario.apellidos,
         celular: usuario.celular,
         direccion: '', 
         id_tipo_usuario : 7,
         email: usuario.email,
         password: usuario.password, 
-        id_area_experticia:1,
+        id_area_experticia:'',
         nombre_negocio:'',
         foto:'', 
         fecha_registro:'',
@@ -33,5 +33,9 @@ export class UsuarioService {
     }
     console.log("usuario service registrar ", body)
     return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/usuarios',body);
+  }
+
+  getTiposUsuario(){
+    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/tipos-usuarios');
   }
 }

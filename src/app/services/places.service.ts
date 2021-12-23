@@ -9,7 +9,7 @@ export class PlacesService {
   constructor(private https:HttpsService) { }
 
   getDepartamentos(){
-    return this.https.get("https://dory-api-rest.herokuapp.com/departamentos");
+    return this.https.get("https://dory-api-rest.herokuapp.com/api/departamentos");
   }
 
   getMunicipiosDepartamentos(idDepartamento:number){

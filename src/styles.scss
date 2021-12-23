@@ -32,6 +32,32 @@
     height: 40px; 
 }
 
+.btn-square{
+    border-radius: 7px;
+    width: 200px;
+    height: 45px; 
+}
+
+.btn-rounded{
+    border-radius: 20px;
+    width: 150px;
+    height: 40px; 
+}
+
+.btn--morado{
+    background-color: var(--morado);
+    border: 1px solid var(--morado);
+    color:var(--white);
+    font-weight: 700;
+}
+
+.btn--white{
+    background-color: var(--white);
+    border: 0.5px solid var(--black);
+    color:var(--black);
+    font-weight: 700;
+}
+
 .btn-rounded-blue{
     background-color: var(--azul1);
     border-radius: 20px;
@@ -43,12 +69,22 @@
 
 .btn-square-blue{
     background-color: var(--azul1);
-    border-radius: 7px;
+    border-radius: 20px;
     border: 1px solid var(--azul1);
     color:var(--white);
     font-weight: 700;
     width: 200px;
     height: 45px; 
+}
+
+.btn-rounded-white{
+    background-color: var(--white);
+    border-radius: 7px;
+    border: 1px solid var(--black);
+    color:var(--black);
+    font-weight: 700;
+    width: 200px;
+    height: 45px;
 }
 
 .btn-square-white{

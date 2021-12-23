@@ -1,84 +1,21 @@
 <div class="container">
     <div class="container__message-box">
-        <img class="container__logo"src="assets/images/logo-white.svg">
+        <!--<img class="container__logo"src="assets/images/logo-white.svg">
         <p class="container__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-        <span class="container__autor">Lorem ipsum</span>
+        <span class="container__autor">Lorem ipsum</span>-->
     </div>
     <div class="container__form-box">
-        <div class="container__back-button">
+        <!--<div class="container__back-button">
             <img src="assets/icons/arrow-back-ios.svg" (click)="exiting($event)">
             <span class="container__back-button-label" (click)="exiting($event)">Regresar</span>
+        </div>-->
+        <div class="container-form__box-title">
+            <h4 class="container__title">Registrate</h4>
+            <p class="container__message-2">Ya estás registrado? ingresa por <a href="#">aquí</a></p>
         </div>
-        <h4 class="container__title">Registrate</h4>
-        <p class="container__message-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="container-form">
                 <div class="container-form__box1">
-                    <span class="container-form__label">Nombre completo*</span>
-                    <input class="container-form__input form-input-text-square" [ngClass]="invalid('nombreCompleto') ? 'invalid-input' : ''" type="text" placeholder="    Nombre completo" formControlName="nombreCompleto">
-                    <div *ngIf="invalid('nombreCompleto')" class="danger-message">
-                        <div *ngIf="nombreCompleto?.errors?.['required']">
-                            No haz escrito tu nombre:(
-                        </div>
-                    </div>   
-                    <span class="container-form__label">Fecha de nacimiento</span>
-                    <div class="container-form__input-container">
-                        <input class="container-form__input form-input-text-square" type="text" placeholder="    Ej. 1980-12-01" ngbDatepicker #d="ngbDatepicker" formControlName="fechaNac" readonly>
-                        <img class="container-form__input-img" src="assets/icons/calendar.svg"  (click)="d.open()" >
-                    </div>
-                    <span class="container-form__label">Celular</span>
-                    <input class="container-form__input form-input-text-square" [ngClass]="invalid('celular') ? 'invalid-input' : ''" type="text" maxlength="10" placeholder="    Tu numero de celular" formControlName="celular">
-                    <div *ngIf="invalid('celular')" class="danger-message">
-                        <div *ngIf="celular?.errors?.['required']">
-                            Escribe un numero de celular
-                        </div>
-                        <div *ngIf="celular?.errors?.['maxLength']">
-                            Parece que tienes algunos numeros de mas:(
-                        </div>
-                        <div *ngIf="celular?.errors?.['pattern']">
-                            Solo debes escribir numeros
-                        </div>
-                    </div>   
-                    <span class="container-form__label">Departamento</span>
-                    <!--<input class="container-form__input form-input-text-square" type="text" placeholder="    Departamento">-->
-                    <div ngbDropdown class="d-inline-block">
-                        <button class="container-form__input form-input-text-square" id="dropdownBasic1" ngbDropdownToggle>{{ dptoSelec.nombre }} </button>
-                        <div class="container-form__input container-form__input--scroll" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                          <button *ngFor="let departamento of departamentos" ngbDropdownItem (click)="dptoSelecc(departamento)">{{ departamento.nombre_departamento }}</button>
-                        </div>
-                    </div>
-
-                    <span class="container-form__label">Municipio</span>
-                    <!--<input class="container-form__input form-input-text-square" type="text" placeholder="    Municipio">-->
-                    <div ngbDropdown class="d-inline-block">
-                        <button class="container-form__input form-input-text-square" id="dropdownBasic1" ngbDropdownToggle>{{ municSelec.nombre }} </button>
-                        <div class="container-form__input container-form__input--scroll" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                          <button *ngFor="let municipio of municipios" ngbDropdownItem (click)="municSelecc(municipio)">{{ municipio.nombre }}</button>
-                        </div>
-                    </div>
-
-                    <span class="container-form__label">Corregimiento</span>
-                    <!--<input class="container-form__input form-input-text-square" type="text" placeholder="    Corregimiento">-->
-                    <div ngbDropdown class="d-inline-block">
-                        <button class="container-form__input form-input-text-square" id="dropdownBasic1" ngbDropdownToggle>{{ corregimientoSelec.nombre }} </button>
-                        <div class="container-form__input container-form__input--scroll" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                          <button *ngFor="let corregimiento of corregimientos" ngbDropdownItem (click)="corregSelecc(corregimiento)">{{ corregimiento.nombre }}</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="container-form__box2">
-                    <span class="container-form__label">Cedula*</span>
-                    <input class="container-form__input form-input-text-square" [ngClass]="invalid('cedula') ? 'invalid-input' : ''" type="text" placeholder="    Ingresa tu cedula" formControlName="cedula">
-                    <div *ngIf="invalid('cedula')" class="danger-message">
-                        <div *ngIf="cedula?.errors?.['required']">
-                            Escribe tu cedula
-                        </div>
-                        <div *ngIf="cedula?.errors?.['pattern']">
-                            Solo debes escribir numeros
-                        </div>
-                    </div>      
-
                     <span class="container-form__label">Correo electrónico*</span>
                     <input class="container-form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="    Ingresa tu correo electronico" formControlName="email">
                     <div *ngIf="invalid('email')" class="danger-message">
@@ -88,7 +25,19 @@
                         <div *ngIf="email?.errors?.['email']">
                             Escribe un email correcto!
                         </div>
-                    </div>      
+                    </div>
+                    <label class="container-form__label" for="cars">Como quieres usar la plataforma?*</label>
+                    <select class="container-form__input form-input-text-square" name="cars" id="cars" formControlName="tipoUsuario">
+                    <optgroup label="Eres un">
+                        <option hidden="hidden" selected="selected">Escoje uno</option>
+                        <option *ngFor="let tipo of tipoUsuarios" value="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>
+                    </optgroup>
+                    </select>
+                    <div *ngIf="invalid('tipoUsuario')" class="danger-message">
+                        <div *ngIf="tipoUsuario?.errors?.['required']">
+                            Escoje un tipo de usuario
+                        </div>
+                    </div>
                     <span class="container-form__label">Crea una contraseña*</span>
                     <input class="container-form__input form-input-text-square" [ngClass]="invalid('password') ? 'invalid-input' : ''" type="password" placeholder="    Contraseña" formControlName="password">
                     <div *ngIf="invalid('password')" class="danger-message">
@@ -107,23 +56,15 @@
                         </div>
                     </div>
 
-                    <span class="container-form__label">Veredas</span>
-                    <div ngbDropdown class="d-inline-block">
-                        <button class="container-form__input form-input-text-square" id="dropdownBasic1" ngbDropdownToggle>{{ veredaSelec.nombre }} </button>
-                        <div class="container-form__input container-form__input--scroll" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                          <button *ngFor="let vereda of veredas" ngbDropdownItem (click)="veredaSelecc(vereda)">{{ vereda.nombre }}</button>
-                        </div>
-                    </div>
-
                     <div class="container-form__terms-box">
                         <input class="container-form__checkbox" type="checkbox" formControlName="terms">
                         <span>Acepta los terminos  y  condiciones</span>
                     </div>
                     
-                    <button class="container-form__button btn-square-blue" type="submit">Registrar una cuenta</button>
+                    <button class="container-form__button btn-rounded btn--morado" type="submit">Registrar una cuenta</button>
             
                     <p class="container-form__label2">ó</p>
-                    <button class="container-form__button-white btn-square-white"><img src="assets/icons/google-icon.svg"><span class="container-form__button-text">Registrate con Google</span></button>
+                    <button class="container-form__button-white btn-rounded btn--white"><img src="assets/icons/google-icon.svg"><span class="container-form__button-text">Registrate con Google</span></button>
                 </div>
             </div>
         </form>
