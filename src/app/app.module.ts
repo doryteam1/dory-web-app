@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegistroModule } from './registro/registro.module';
 import { HttpsService } from './services/https.service';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -18,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule,
     RegistroModule,
-    NgbModule
+    NgbModule,
+    NgxSpinnerModule
   ],
   providers: [
     HttpsService

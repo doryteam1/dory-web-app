@@ -4,11 +4,14 @@
         <p class="container__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
         <span class="container__autor">Lorem ipsum</span>-->
     </div>
-    <div class="container__form-box">
+    <div class="container__form-box overflow-scroll">
         <!--<div class="container__back-button">
             <img src="assets/icons/arrow-back-ios.svg" (click)="exiting($event)">
             <span class="container__back-button-label" (click)="exiting($event)">Regresar</span>
         </div>-->
+        <div class="container-form__alert alert alert-danger" role="alert" *ngIf="error != ''">
+           {{error}}
+        </div>
         <div class="container-form__box-title">
             <h4 class="container__title">Registrate</h4>
             <p class="container__message-2">Ya estás registrado? ingresa por <a href="#">aquí</a></p>
@@ -17,7 +20,7 @@
             <div class="container-form">
                 <div class="container-form__box1">
                     <span class="container-form__label">Correo electrónico*</span>
-                    <input class="container-form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="    Ingresa tu correo electronico" formControlName="email">
+                    <input class="container-form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="    Ingresa tu correo electronico" formControlName="email" (input)="onChange()">
                     <div *ngIf="invalid('email')" class="danger-message">
                         <div *ngIf="email?.errors?.['required']">
                             No haz escrito tu email:(
@@ -69,4 +72,5 @@
             </div>
         </form>
     </div>
+    <ngx-spinner type="square-jelly-box"></ngx-spinner>
 </div>

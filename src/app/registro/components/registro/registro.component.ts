@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { PlacesService } from 'src/app/services/places.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -28,8 +29,9 @@ export class RegistroComponent implements OnInit {
   });
 
   tipoUsuarios:any[]=[];
+  error:string='';
 
-  constructor(private usuarioService:UsuarioService) { 
+  constructor(private usuarioService:UsuarioService, private spinner: NgxSpinnerService) { 
   }
 
 
@@ -59,12 +61,23 @@ export class RegistroComponent implements OnInit {
     console.warn(this.form.value)
     console.log("valid = ",this.form.valid)
     if(this.form.valid){
+      this.spinner.show();
       this.usuarioService.registrarUsuario(this.form.value).subscribe(
         (response)=>{
-          console.log("termino registro",response);
+          this.spinner.hide();
+        },(err)=>{
+          this.error = err.error.message;
+          this.spinner.hide();
         }
       );
+    }else{
+      this.form.markAllAsTouched();
     }
+  }
+
+  onChange(){
+    console.log('on change');
+    this.error='';
   }
 
   get nombreCompleto(){

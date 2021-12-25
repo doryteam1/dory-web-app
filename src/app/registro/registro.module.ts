@@ -6,7 +6,9 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlacesService } from '../services/places.service';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,10 @@ import { PlacesService } from '../services/places.service';
     CommonModule,
     RegistroRoutingModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    NgxSpinnerModule,
+    BrowserModule,
+    BrowserAnimationsModule
   ],
   exports: [
     RegistroComponent
