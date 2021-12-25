@@ -9,11 +9,13 @@ import { HttpsService } from './services/https.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { PoliticaComponent } from './components/politica/politica.component';
+import { CondicionesComponent } from './components/condiciones/condiciones.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PoliticaComponent
+    PoliticaComponent,
+    CondicionesComponent
   ],
   imports: [
     BrowserModule,

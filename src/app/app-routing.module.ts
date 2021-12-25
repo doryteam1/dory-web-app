@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PoliticaComponent } from './components/politica/politica.component';
+import { CondicionesComponent } from './components/condiciones/condiciones.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,9 @@ const routes: Routes = [
   },
   {
     path:'politica', component:PoliticaComponent
+  },
+  {
+    path:'condiciones', component:CondicionesComponent
   }
 ];
 
