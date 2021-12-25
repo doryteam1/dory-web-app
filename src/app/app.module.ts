@@ -8,10 +8,12 @@ import { RegistroModule } from './registro/registro.module';
 import { HttpsService } from './services/https.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { PoliticaComponent } from './components/politica/politica.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PoliticaComponent
   ],
   imports: [
     BrowserModule,

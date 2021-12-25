@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PoliticaComponent } from './components/politica/politica.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,9 @@ const routes: Routes = [
   {
     path:'asociaciones',
     loadChildren: () => import('./asociaciones/asociaciones.module').then(m => m.AsociacionesModule)
+  },
+  {
+    path:'politica', component:PoliticaComponent
   }
 ];
 
