@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -10,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { PoliticaComponent } from './components/politica/politica.component';
 import { CondicionesComponent } from './components/condiciones/condiciones.component';
+import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -23,10 +23,23 @@ import { CondicionesComponent } from './components/condiciones/condiciones.compo
     HttpClientModule,
     RegistroModule,
     NgbModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    SocialLoginModule
   ],
   providers: [
-    HttpsService
+    HttpsService,
+    {
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: true, //keeps the user signed in
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider('534130932792-ejgt03avjabc24j3h5jbtp5m7urpqvr6.apps.googleusercontent.com') // your client id
+        }
+      ]
+    }
+  }
   ],
   bootstrap: [AppComponent]
 })

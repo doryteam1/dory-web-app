@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
+import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PlacesService } from 'src/app/services/places.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -31,7 +33,7 @@ export class RegistroComponent implements OnInit {
   tipoUsuarios:any[]=[];
   error:string='';
 
-  constructor(private usuarioService:UsuarioService, private spinner: NgxSpinnerService) { 
+  constructor(private usuarioService:UsuarioService, private spinner: NgxSpinnerService, private router:Router, private socialAuthService:SocialAuthService) { 
   }
 
 
@@ -80,6 +82,10 @@ export class RegistroComponent implements OnInit {
     this.error='';
   }
 
+  loginWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then(() => this.router.navigate(['normatividad']));
+  }
   get nombreCompleto(){
     return this.form.get('nombreCompleto')
   }
