@@ -84,7 +84,33 @@ export class RegistroComponent implements OnInit {
 
   loginWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
-      .then(() => this.router.navigate(['normatividad']));
+      .then(() => {
+
+      }).catch((err)=>{
+          console.log(err);
+          this.error = "No pudimos ingresar con google"
+      });
+
+    this.socialAuthService.authState.subscribe(
+      (response)=>{
+        console.log(response);
+        this.usuarioService.registrarUsuario({
+          nombres:response.firstName,
+          apellidos:response.lastName,
+          email:response.email,
+          foto:response.photoUrl
+        }).subscribe(
+          (response)=>{
+            console.log(response);
+          },(err)=>{
+            this.error = err.error.message
+          }
+        );
+      },(err)=>{
+        console.log(err);
+        this.error = "No pudimos ingresar con google"
+      }
+    );
   }
   get nombreCompleto(){
     return this.form.get('nombreCompleto')

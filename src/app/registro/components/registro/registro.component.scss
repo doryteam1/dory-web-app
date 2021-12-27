@@ -67,6 +67,7 @@
     .container-form{
         display: flex;
         justify-content: space-between;
+        flex-direction: column;
     }
 
     .container-form__box1{

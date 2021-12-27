@@ -16,8 +16,9 @@
             <h4 class="container__title">Registrate</h4>
             <p class="container__message-2">Ya estás registrado? ingresa por <a href="#">aquí</a></p>
         </div>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        
             <div class="container-form">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <div class="container-form__box1">
                     <span class="container-form__label">Correo electrónico*</span>
                     <input class="container-form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="    Ingresa tu correo electronico" formControlName="email" (input)="onChange()">
@@ -67,10 +68,10 @@
                     <button class="container-form__button btn-rounded btn--morado" type="submit">Registrar una cuenta</button>
             
                     <p class="container-form__label2">ó</p>
-                    <button class="container-form__button-white btn-rounded btn--white" (click)="loginWithGoogle()"><img src="assets/icons/google-icon.svg"><span class="container-form__button-text">Registrate con Google</span></button>
                 </div>
+                </form>
+                <button class="container-form__button-white btn-rounded btn--white" (click)="loginWithGoogle()"><img src="assets/icons/google-icon.svg"><span class="container-form__button-text">Registrate con Google</span></button>
             </div>
-        </form>
     </div>
     <ngx-spinner type="square-jelly-box"></ngx-spinner>
 </div>
