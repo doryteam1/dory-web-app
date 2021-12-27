@@ -34,7 +34,7 @@
                     <select class="container-form__input form-input-text-square" name="cars" id="cars" formControlName="tipoUsuario">
                     <optgroup label="Eres un">
                         <option hidden="hidden" selected="selected">Escoje uno</option>
-                        <option *ngFor="let tipo of tipoUsuarios" value="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>
+                        <option *ngFor="let tipo of tipoUsuarios" [ngValue]="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>
                     </optgroup>
                     </select>
                     <div *ngIf="invalid('tipoUsuario')" class="danger-message">

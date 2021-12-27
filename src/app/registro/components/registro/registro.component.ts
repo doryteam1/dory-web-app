@@ -85,12 +85,17 @@ export class RegistroComponent implements OnInit {
   loginWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then(() => {
-
+        console.log("signed in with google")
+        this.regUserAuthGoogle();
       }).catch((err)=>{
           console.log(err);
           this.error = "No pudimos ingresar con google"
       });
 
+    
+  }
+
+  regUserAuthGoogle(){
     this.socialAuthService.authState.subscribe(
       (response)=>{
         console.log(response);
