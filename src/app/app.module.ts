@@ -10,6 +10,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { PoliticaComponent } from './components/politica/politica.component';
 import { CondicionesComponent } from './components/condiciones/condiciones.component';
 import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     RegistroModule,

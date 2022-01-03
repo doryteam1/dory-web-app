@@ -7,13 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'web-app-dory';
-  hasAlert:boolean = true;
   isRegistering:boolean = false;
 
-  changeAlertState(){
-    this.hasAlert = !this.hasAlert;
-  }
-
+ 
   exit(event:any){
     console.log("exit app");
     this.isRegistering = false;

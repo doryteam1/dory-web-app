@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="stats">
     <div class="data-container">
         <div class="stats-container">
@@ -59,7 +60,7 @@
         <img class="container__red-point-guaranda" src="assets/images/red-point.svg" *ngIf="guarandaActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70265)" routerLink="/granjas/municipio/70265">
     </div>
 </div>
-
+<app-footer></app-footer>
 <ng-template #tipContent>
     <div class="tip-content">
         <h5 class="tip-content__title">{{municSeleccionado.municipio}}</h5>

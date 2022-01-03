@@ -8,6 +8,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { PiscicultoresService } from './services/piscicultores.service';
 import { HttpsService } from '../services/https.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,13 @@ import { HttpsService } from '../services/https.service';
     GoogleMapsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    NgbModule
+    NgbModule,
+    SharedModule
   ],
   providers: [
     PiscicultoresService,
-    HttpsService
+    HttpsService,
+    SharedModule
   ]
 })
 export class PiscicultoresModule { }

@@ -9,6 +9,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { GranjasService } from './services/granjas.service';
 import { HttpsService } from '../services/https.service';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     GranjasComponent,
@@ -21,7 +22,8 @@ import { HttpsService } from '../services/https.service';
     HttpClientModule,
     HttpClientJsonpModule,
     GranjasRoutingModule,
-    NgbModule
+    NgbModule,
+    SharedModule
   ],
   providers: [
     GranjasService,

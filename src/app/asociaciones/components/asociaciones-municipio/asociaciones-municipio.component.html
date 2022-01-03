@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="search-container" *ngIf="asociaciones.length < 1">
     <div class="search-container__box">
         <img class="search-container__image" src="assets/images/searching.svg">
@@ -6,7 +7,6 @@
     </div>
     
 </div>
-
 
 <div class="asociaciones-container">
         <div class="cards-container overflow-auto" *ngIf="asociaciones.length > 1">
@@ -38,3 +38,4 @@
             </google-map>
         </div>
 </div>
+<app-footer></app-footer>

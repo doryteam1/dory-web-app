@@ -8,6 +8,7 @@ import { AsociacionesComponent } from './components/asociaciones/asociaciones.co
 import { AsociacionesMunicipioComponent } from './components/asociaciones-municipio/asociaciones-municipio.component';
 import { AsociacionesService } from './services/asociaciones.service';
 import { HttpsService } from '../services/https.service';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { HttpsService } from '../services/https.service';
     GoogleMapsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    NgbModule
+    NgbModule,
+    SharedModule
   ],
   providers:[
     AsociacionesService,

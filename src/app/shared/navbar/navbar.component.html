@@ -1,0 +1,82 @@
+<div class="alert-container">
+    <div class="alert-container__message">
+      😀¡Productores ! ¡Aprende <a class="alert-container__link" target="_blank" href="https://www.mininterior.gov.co/sites/default/files/noticias/cartilla_ley_organica_de_ordenamiento_territorial.pdf">sistemas eficientes para pesca</a> con el especialista  Emanuel  Fernandez el 30 de octubre! No te lo pierdas  ️
+    </div>
+    <img class="alert-container__close-button" src="assets/icons/close.svg" (click)="changeAlertState()">
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <img class="logo" src="assets/images/logo.svg">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="/home">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="/nosotros">¿Quienes Sómos?</a>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Productores
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" routerLink="/granjas">Granjas</a></li>
+              <li><a class="dropdown-item" routerLink="/piscicultores">Piscicultores</a></li>
+              <li><a class="dropdown-item" routerLink="/pescadores">Pescadores</a></li>
+              <li><a class="dropdown-item" routerLink="/asociaciones">Asociaciones</a></li>
+            </ul>
+          </li>
+  
+  
+          <li class="nav-item">
+            <a class="nav-link"  routerLink="/novedades"></a>
+          </li>
+  
+  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Novedades y Actualidad
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" routerLink="/novedades/articulos">Artículos</a></li>
+              <li><a class="dropdown-item" routerLink="/novedades/articulos-colombia">Artículos Colombianos</a></li>
+              <li><a class="dropdown-item" routerLink="/novedades/revistas">Revistas</a></li>
+              <li><a class="dropdown-item" routerLink="/novedades/noticias">Noticias</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Eventos
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" routerLink="/eventos/cursos">Cursos</a></li>
+              <li><a class="dropdown-item" routerLink="/eventos/capacitaciones">Capacitaciones</a></li>
+              <li><a class="dropdown-item" routerLink="/eventos/congresos">Congresos</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Normatividad
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" routerLink="/normatividad/leyes">Leyes</a></li>
+              <li><a class="dropdown-item" routerLink="/normatividad/estatutos">Estatutos</a></li>
+              <li><a class="dropdown-item" routerLink="/normatividad/decretos">Decretos</a></li>
+              <li><a class="dropdown-item" routerLink="/normatividad/resoluciones">Resoluciones</a></li>
+            </ul>
+          </li>
+        </ul>
+        <!-- <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form> -->
+        <button class="btn-outline-blue boton-registro" routerLink="/registro">Registrarme</button>
+        <button class="btn-rounded-blue ms-2">Descargar App</button>
+      </div>
+    </div>
+  </nav>

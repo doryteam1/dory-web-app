@@ -107,6 +107,7 @@ export class RegistroComponent implements OnInit {
         }).subscribe(
           (response)=>{
             console.log(response);
+            this.router.navigateByUrl('/dashboard');
           },(err)=>{
             this.error = err.error.message
           }

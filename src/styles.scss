@@ -11,8 +11,20 @@
     --black:#000000;
     --high-blue:#0D0C22;
     --red-danger:#D93025;
+
+    --light: #ececece5;
+    --yellow: #FFD200;
+    --red: #FF0F00;
+    --grey:#ABACAE;
 }
 
+.mt-40{
+    margin-top: 40px;
+}
+
+.p-small{
+    font-size: 12px;
+}
 
 .btn-outline-blue{
     background-color: var(--white);

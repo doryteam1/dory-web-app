@@ -48,6 +48,10 @@ const routes: Routes = [
     loadChildren: () => import('./asociaciones/asociaciones.module').then(m => m.AsociacionesModule)
   },
   {
+    path:'dashboard',
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+  },
+  {
     path:'politica', component:PoliticaComponent
   },
   {
