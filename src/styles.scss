@@ -11,7 +11,7 @@
     --black:#000000;
     --high-blue:#0D0C22;
     --red-danger:#D93025;
-
+    --green:#1b8d06;
     --light: #ececece5;
     --yellow: #FFD200;
     --red: #FF0F00;
@@ -124,6 +124,17 @@
 
 .danger-message{
     color:var(--red-danger)
+}
+
+.success{
+    color:var(--green);
+    font-weight: 500; 
+}
+
+.link { 
+    background:none; 
+    border:none;
+    color:var(--azul1) 
 }
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

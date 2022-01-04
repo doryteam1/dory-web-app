@@ -9,15 +9,20 @@
             <img src="assets/icons/arrow-back-ios.svg" (click)="exiting($event)">
             <span class="container__back-button-label" (click)="exiting($event)">Regresar</span>
         </div>-->
-        <div class="container-form__alert alert alert-danger" role="alert" *ngIf="error != ''">
-           {{error}}
-        </div>
-        <div class="container-form__box-title">
-            <h4 class="container__title">Registrate</h4>
-            <p class="container__message-2">Ya estás registrado? ingresa por <a href="#">aquí</a></p>
-        </div>
+        
         
             <div class="container-form">
+
+                <div class="container-form__alert alert alert-danger" role="alert" *ngIf="error != ''">
+                    {{error}}
+                 </div>
+                 <div class="container-form__alert alert alert alert-success" role="alert" *ngIf="success">
+                     Registro exitoso!
+                   </div>
+                 <div class="container-form__box-title">
+                     <h4 class="container__title">Registrate</h4>
+                     <p class="container__message-2">Ya estás registrado? ingresa por <a href="#">aquí</a></p>
+                 </div> 
                 <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <div class="container-form__box1">
                     <span class="container-form__label">Correo electrónico*</span>
@@ -44,6 +49,11 @@
                     </div>
                     <span class="container-form__label">Crea una contraseña*</span>
                     <input class="container-form__input form-input-text-square" [ngClass]="invalid('password') ? 'invalid-input' : ''" type="password" placeholder="    Contraseña" formControlName="password">
+                    <span class="container-form__title">Debe tener al menos: </span>
+                    <span class="container-form__label3" [ngClass]="eigthChar(password?.value) ? 'success': ''">8 caracteres</span>
+                    <span class="container-form__label3" [ngClass]="capitalcase(password?.value) ? 'success': ''">Una mayuscula</span>
+                    <span class="container-form__label3" [ngClass]="lowercase(password?.value) ? 'success': ''">Una minuscula</span>
+                    <span class="container-form__label3" [ngClass]="number(password?.value) ? 'success': ''">Un numero de cero a 9</span>
                     <div *ngIf="invalid('password')" class="danger-message">
                         <div *ngIf="password?.errors?.['required']">
                             Escribe una contraseña
@@ -62,7 +72,8 @@
 
                     <div class="container-form__terms-box">
                         <input class="container-form__checkbox" type="checkbox" formControlName="terms">
-                        <span>Acepta los terminos  y  condiciones</span>
+                        <!--<span>He leido, entendido y acepto los <button class="link" (click)="openScrollableContent()">terminos  y  condiciones</button></span>-->
+                        <ngbd-modal-options></ngbd-modal-options>
                     </div>
                     <div *ngIf="invalid('terms')" class="danger-message">
                         <div *ngIf="!terms?.value">

@@ -12,11 +12,12 @@ import { CondicionesComponent } from './components/condiciones/condiciones.compo
 import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     PoliticaComponent,
-    CondicionesComponent
+    CondicionesComponent,
   ],
   imports: [
     BrowserModule,

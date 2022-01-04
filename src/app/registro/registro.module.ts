@@ -6,9 +6,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlacesService } from '../services/places.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgbdModalOptions } from '../modals/modal-options/modal-options.component';
 @NgModule({
   declarations: [
-    RegistroComponent,
+    RegistroComponent,NgbdModalOptions
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,71 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Modal title</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>One fine body&hellip;</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
+    </div>
+  </ng-template>
+  
+  <ng-template #longContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Terminos y condiciones</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <h6 class="terms-title">TERMINOS Y CONDICIONES DE LA PLATAFORMA WEB DORY
+        CUALQUIER PERSONA QUE NO ACEPTE ESTOS TÉRMINOS Y CONDICIONES GENERALES,
+        LOS CUALES TIENEN UN CARÁCTER OBLIGATORIO Y VINCULANTE, DEBERÁ ABSTENERSE
+        DE UTILIZAR EL SITIO Y/O LOS SERVICIOS.</h6>
+        
+        <p>Es requisito necesario para la adquisición de los servicios suministrados que ofrece este
+        sitio Web, que lea, entienda y acepte los siguientes términos y condiciones establecidos
+        de privacidad de la Plataforma Web que a continuación se redactan.
+        El uso de los servicios prestados por la Plataforma Web Dory, como la información acerca
+        del sector piscícola y todo lo relacionado a la misma como los cursos, capacitaciones,
+        congresos, entre otros y las normatividades correspondientes al mismo, implicara que
+        usted ha leído y aceptado los términos y condiciones de uso en el presente documento.
+        Todos los servicios que son ofrecidos por la página web y para poder adquirirlos, será
+        necesario realizar un registro por parte del usuario, con ingreso de datos personales
+        fidedignos y por ende la definición de una contraseña, dentro del sitio web https://dory-
+        web-app-tests.herokuapp.com/
+        El usuario puede elegir y cambiar la clave para su acceso de administración de la cuenta
+        en cualquier momento, en caso de que se haya registrado y en caso de que sea necesario
+        para la compra de algunos de los servicios que son ofertados por la página, como cursos,
+        congresos o capacitaciones, no se asume la responsabilidad en caso de que entregue
+        dicha clave a terceros, por ende, ccualquier persona que desee acceder o usar el sitio, o
+        los servicios que la pagina entrega, podrá hacerlo sujetándose a los términos y
+        condiciones generales, junto a las demás políticas y principios que rige la plataforma web
+        Dory.
+        Es obligatorio completar el formulario de inscripción en todos sus campos con datos
+        válidos, debe tener al menos, el municipio, nombre completo, fecha de nacimiento, correo
+        electrónico, como un acuerdo de vinculación, para poder utilizar los servicios que brinda la
+        Plataforma Dory, el usuario deberá completarlo con su información personal de manera
+        exacta, precisa y verdadera (Datos personales) y asumirá el compromiso de actualizar los
+        datos personales conforme resulte necesario. La Plataforma Web Dory, podrá utilizar
+        diversos medios para identificar a sus usuarios, pero la Plataforma Web Dory, NO se
+        responsabilizará por la certeza de los datos personales provistos por sus usuarios. Los
+        usuarios garantizan y responden, en cualquier caso, de la veracidad, exactitud, vigencia y
+        autenticidad de los datos personales ingresados.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
+    </div>
+  </ng-template>
+  
+  <!--<button class="btn btn-outline-primary mb-2 mr-2" (click)="openWindowCustomClass(content)">Modal with window custom class</button>
+  <button class="btn btn-outline-primary mb-2 mr-2" (click)="openBackDropCustomClass(content)">Modal with backdrop custom class</button>
+  <button class="btn btn-outline-primary mb-2 mr-2" (click)="openSm(content)">Small modal</button>
+  <button class="btn btn-outline-primary mb-2 mr-2" (click)="openLg(content)">Large modal</button>
+  <button class="btn btn-outline-primary mb-2 mr-2" (click)="openXl(content)">Extra large modal</button>
+  <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)">Modal vertically centered</button>
+  <button class="btn btn-outline-primary mb-2 mr-2" (click)="openModalDialogCustomClass(content)">Modal with dialog custom class</button>-->
+  He leido, entendido y acepto los <button class="link" (click)="openScrollableContent(longContent)">terminos  y  condiciones</button>
