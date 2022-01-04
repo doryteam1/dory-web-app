@@ -1,0 +1,28 @@
+.container{
+    display: flex;
+    justify-content: start;
+    margin-top: 50px;
+}
+
+.container__image{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin-right: 30px;
+}
+
+.container__info{
+    display: flex;
+    flex-direction: column;
+}
+
+.container-detail{
+    display: flex;
+    margin-top: 50px;
+}
+
+.container-detail__box{
+    display: flex;
+    flex-direction: column;
+    margin-right: 50px;
+}

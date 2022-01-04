@@ -67,6 +67,7 @@ export class RegistroComponent implements OnInit {
       this.usuarioService.registrarUsuario(this.form.value).subscribe(
         (response)=>{
           this.spinner.hide();
+          this.router.navigateByUrl('/dashboard')
         },(err)=>{
           this.error = err.error.message;
           this.spinner.hide();
