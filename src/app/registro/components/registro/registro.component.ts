@@ -62,7 +62,7 @@ export class RegistroComponent implements OnInit {
   onSubmit(){
     console.warn(this.form.value)
     console.log("valid = ",this.form.valid)
-    if(this.form.valid){
+    if(this.form.valid && this.terms?.value){
       this.spinner.show();
       this.usuarioService.registrarUsuario(this.form.value).subscribe(
         (response)=>{
@@ -133,6 +133,10 @@ export class RegistroComponent implements OnInit {
 
   get matchPassword(){
     return this.form.get('matchPassword');
+  }
+
+  get terms(){
+    return this.form.get('terms');
   }
 
   get tipoUsuario(){

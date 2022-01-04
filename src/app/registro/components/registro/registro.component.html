@@ -30,7 +30,7 @@
                             Escribe un email correcto!
                         </div>
                     </div>
-                    <label class="container-form__label" for="cars">Como quieres usar la plataforma?*</label>
+                    <label class="container-form__label" for="cars">Cual es tu rol en la plataforma?*</label>
                     <select class="container-form__input form-input-text-square" name="cars" id="cars" formControlName="tipoUsuario">
                     <optgroup label="Eres un">
                         <option hidden="hidden" selected="selected">Escoje uno</option>
@@ -63,6 +63,11 @@
                     <div class="container-form__terms-box">
                         <input class="container-form__checkbox" type="checkbox" formControlName="terms">
                         <span>Acepta los terminos  y  condiciones</span>
+                    </div>
+                    <div *ngIf="invalid('terms')" class="danger-message">
+                        <div *ngIf="!terms?.value">
+                            Debes aceptar los terminos
+                        </div>
                     </div>
                     
                     <button class="container-form__button btn-rounded btn--morado" type="submit">Registrar una cuenta</button>
