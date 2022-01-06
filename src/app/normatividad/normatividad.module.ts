@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { NormatividadRoutingModule } from './normatividad-routing.module';
 import { NormatividadComponent } from './components/normatividad/normatividad.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { NormatividadComponent } from './components/normatividad/normatividad.co
   ],
   imports: [
     CommonModule,
-    NormatividadRoutingModule
+    NormatividadRoutingModule,
+    SharedModule
   ]
 })
 export class NormatividadModule { }

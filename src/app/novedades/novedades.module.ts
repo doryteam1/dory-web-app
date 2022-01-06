@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NovedadesRoutingModule } from './novedades-routing.module';
 import { NovedadesComponent } from './components/novedades/novedades.component';
 import { ShorterPipe } from '../pipes/shorter.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ShorterPipe } from '../pipes/shorter.pipe';
   ],
   imports: [
     CommonModule,
-    NovedadesRoutingModule
+    NovedadesRoutingModule,
+    SharedModule
   ]
 })
 export class NovedadesModule { }

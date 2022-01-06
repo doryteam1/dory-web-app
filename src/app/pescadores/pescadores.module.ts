@@ -7,6 +7,7 @@ import { PescadoresMunicipioComponent } from './components/pescadores-municipio/
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { PescadoresService } from './services/pescadores.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PescadoresService } from './services/pescadores.service';
     GoogleMapsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    NgbModule
+    NgbModule,
+    SharedModule
   ],
   providers:[
     PescadoresService

@@ -6,21 +6,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlacesService } from '../services/places.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { NgbdModalOptions } from '../modals/modal-options/modal-options.component';
 @NgModule({
   declarations: [
-    RegistroComponent,
+    RegistroComponent,NgbdModalOptions
   ],
   imports: [
     CommonModule,
     RegistroRoutingModule,
     ReactiveFormsModule,
     NgbModule,
-    NgxSpinnerModule,
-    BrowserModule,
-    BrowserAnimationsModule
+    NgxSpinnerModule
   ],
   exports: [
     RegistroComponent
