@@ -27,7 +27,7 @@
                 <div class="container-form__box1">
                     <span class="container-form__label">Correo electrónico*</span>
                     <input class="container-form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="    Ingresa tu correo electronico" formControlName="email" (input)="onChange()">
-                    <div *ngIf="invalid('email')" class="danger-message">
+                    <div *ngIf="invalid('email')" class="container__alert-msg danger-message">
                         <div *ngIf="email?.errors?.['required']">
                             No haz escrito tu email:(
                         </div>
@@ -42,26 +42,31 @@
                         <option *ngFor="let tipo of tipoUsuarios" [ngValue]="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>
                     </optgroup>
                     </select>
-                    <div *ngIf="invalid('tipoUsuario')" class="danger-message">
+                    <div *ngIf="invalid('tipoUsuario')" class="container__alert-msg danger-message">
                         <div *ngIf="tipoUsuario?.errors?.['required']">
                             Escoje un tipo de usuario
                         </div>
                     </div>
                     <span class="container-form__label">Crea una contraseña*</span>
                     <input class="container-form__input form-input-text-square" [ngClass]="invalid('password') ? 'invalid-input' : ''" type="password" placeholder="    Contraseña" formControlName="password">
-                    <span class="container-form__title">Debe tener al menos: </span>
-                    <span class="container-form__label3" [ngClass]="eigthChar(password?.value) ? 'success': ''">8 caracteres</span>
-                    <span class="container-form__label3" [ngClass]="capitalcase(password?.value) ? 'success': ''">Una mayuscula</span>
-                    <span class="container-form__label3" [ngClass]="lowercase(password?.value) ? 'success': ''">Una minuscula</span>
-                    <span class="container-form__label3" [ngClass]="number(password?.value) ? 'success': ''">Un numero de cero a 9</span>
+                    <div *ngIf="invalid('password')" class="container__alert-msg danger-message">
+                        <div *ngIf="password?.errors?.['pattern']">
+                            <p>Introduce una contraseña segura: <span [ngClass]="eigthChar(password?.value) ? 'success': ''">Al menos 8 caracteres</span> que contengan <span [ngClass]="capitalcase(password?.value) ? 'success': ''">letras mayúsculas,</span> <span [ngClass]="lowercase(password?.value) ? 'success': ''">minúsculas</span> <span [ngClass]="number(password?.value) ? 'success': ''"> y números.</span></p>
+                        </div>
+                    </div>
                     <div *ngIf="invalid('password')" class="danger-message">
                         <div *ngIf="password?.errors?.['required']">
                             Escribe una contraseña
                         </div>
                     </div>
+                    <!--<span class="container-form__label3" [ngClass]="eigthChar(password?.value) ? 'success': ''">8 caracteres</span>
+                    <span class="container-form__label3" [ngClass]="capitalcase(password?.value) ? 'success': ''">Una mayúscula</span>
+                    <span class="container-form__label3" [ngClass]="lowercase(password?.value) ? 'success': ''">Una minúscula</span>
+                    <span class="container-form__label3" [ngClass]="number(password?.value) ? 'success': ''">Un número de 0 a 9</span>-->
+                    
                     <span class="container-form__label">Ingresa nuevamente la contraseña*</span>
                     <input class="container-form__input form-input-text-square" [ngClass]="invalid('matchPassword') ? 'invalid-input' : ''" type="password" placeholder="    Contraseña" formControlName="matchPassword">    
-                    <div *ngIf="invalid('matchPassword') || noMatchingPasswords()" class="danger-message">
+                    <div *ngIf="invalid('matchPassword') || noMatchingPasswords()" class="container__alert-msg danger-message">
                         <div *ngIf="matchPassword?.errors?.['required']">
                             Escribe nuevamente la contraseña
                         </div>
@@ -75,9 +80,9 @@
                         <!--<span>He leido, entendido y acepto los <button class="link" (click)="openScrollableContent()">terminos  y  condiciones</button></span>-->
                         <ngbd-modal-options></ngbd-modal-options>
                     </div>
-                    <div *ngIf="invalid('terms')" class="danger-message">
+                    <div *ngIf="invalid('terms')" class="container__alert-msg danger-message">
                         <div *ngIf="!terms?.value">
-                            Debes aceptar los terminos
+                            Debes aceptar los términos
                         </div>
                     </div>
                     
