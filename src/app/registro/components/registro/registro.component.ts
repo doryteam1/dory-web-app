@@ -77,6 +77,7 @@ export class RegistroComponent implements OnInit {
         (response)=>{
           this.success = true;
           this.spinner.hide();
+          localStorage.setItem('email',this.email?.value);
           this.router.navigateByUrl('/dashboard')
         },(err)=>{
           this.error = err.error.message;
@@ -107,9 +108,11 @@ export class RegistroComponent implements OnInit {
   }
 
   regUserAuthGoogle(){
+    let email:string;
     this.socialAuthService.authState.subscribe(
       (response)=>{
         console.log(response);
+        email = response.email;
         this.usuarioService.registrarUsuario({
           nombres:response.firstName,
           apellidos:response.lastName,
@@ -119,6 +122,7 @@ export class RegistroComponent implements OnInit {
           (response)=>{
             console.log(response);
             this.success = true;
+            localStorage.setItem('email',email);
             this.router.navigateByUrl('/dashboard');
           },(err)=>{
             this.error = err.error.message

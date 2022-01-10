@@ -38,4 +38,8 @@ export class UsuarioService {
   getTiposUsuario(){
     return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/tipos-usuarios');
   }
+
+  getUsuarioByEmail(email:string | null){
+    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/buscar/usuario/email/'+email); 
+  }
 }
