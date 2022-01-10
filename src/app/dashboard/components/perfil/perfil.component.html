@@ -1,16 +1,16 @@
 <div class="container">
     <div class="container__box-image">    
-        <img class="container__image" [src]="usuario?.foto">
+        <img class="container__image" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
         <img class="container__image2" src="assets/icons/camera.svg">
     </div>
     <div class="container__info">
-        <span class="container__title">{{usuario?.nombre_completo}}({{usuario?.tipo_usuario}})</span>
-        <span class="container__title2">Area de experticia:{{usuario?.area_experticia}}</span>
-        <span class="container__email">{{usuario?.email}}</span>
+        <span class="container__title">{{usuario?.nombre_completo ? usuario?.nombre_completo : '____' }}({{usuario?.tipo_usuario ? usuario?.tipo_usuario : '____'}})</span>
+        <span class="container__title2">Area de experticia: {{usuario?.area_experticia ? usuario?.area_experticia : '____'}}</span>
+        <span class="container__email">Email: {{usuario?.email ? usuario?.email : '____'}}</span>
         
         <div>
             <span class="container__title2">Fecha de nacimiento: </span>
-            <span class="container__content">{{usuario?.fecha_nacimiento}}</span>
+            <span class="container__content">{{usuario?.fecha_nacimiento ? usuario?.fecha_nacimiento : '____'}}</span>
         </div>
         <a href="">Editar</a>
     </div>
@@ -18,15 +18,15 @@
 
 <div class="container-detail">
     <div class="container-detail__box">
-        <span>Cel: {{usuario?.celular}}</span>
-        <span>Departamento: {{usuario?.departamento}}</span>
-        <span>Municipio: {{usuario?.municipio}}</span>
-        <span>Corregimiento: {{usuario?.corregimiento}}</span>
+        <span>Cel: {{usuario?.celular ? usuario?.celular : '____'}}</span>
+        <span>Departamento: {{usuario?.departamento ? usuario?.departamento : '____'}}</span>
+        <span>Municipio: {{usuario?.municipio ? usuario?.municipio : '____'}}</span>
+        <span>Corregimiento: {{usuario?.corregimiento ? usuario?.municipio : '____'}}</span>
     </div>
     <div class="container-detail__box">
-        <span>Vereda: {{usuario?.vereda}}</span>
+        <span>Vereda: {{usuario?.vereda ? usuario?.vereda : '____'}}</span>
         <span> Ubicacion mapa: <img class="container-detail__image" src="assets/icons/marker-red.svg"></span> 
-        <span class="container_email">Dirección:{{usuario?.direccion}} </span>
+        <span class="container_email">Dirección:{{usuario?.direccion ? usuario?.direccion : '____'}} </span>
         <a href="">Editar</a>
     </div>
 </div>
