@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { MisGranjasComponent } from './components/mis-granjas/mis-granjas.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { MisGranjasComponent } from './components/mis-granjas/mis-granjas.compon
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    NgxSpinnerModule
   ]
 })
 export class DashboardModule { }

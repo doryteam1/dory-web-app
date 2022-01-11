@@ -12,7 +12,6 @@
             <span class="container__title2">Fecha de nacimiento: </span>
             <span class="container__content">{{usuario?.fecha_nacimiento ? usuario?.fecha_nacimiento : '____'}}</span>
         </div>
-        <a href="">Editar</a>
     </div>
 </div>
 
@@ -27,6 +26,48 @@
         <span>Vereda: {{usuario?.vereda ? usuario?.vereda : '____'}}</span>
         <span> Ubicacion mapa: <img class="container-detail__image" src="assets/icons/marker-red.svg"></span> 
         <span class="container_email">Dirección:{{usuario?.direccion ? usuario?.direccion : '____'}} </span>
-        <a href="">Editar</a>
     </div>
 </div>
+
+<!--<button class="btn-outline-blue" (click)="isEditing=true">Editar</button>-->
+
+<div class="form" *ngIf="isEditing">
+    <div class="form__box">
+        <span class="form__label">Nombres</span>
+        <input class="form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="Nombres" formControlName="nombres">
+        <div *ngIf="invalid('nombres')" class="danger-message">
+            <div *ngIf="nombres?.errors?.['required']">
+                No haz escrito tu nombre
+            </div>
+        </div>
+    </div>
+
+    <div class="form__box">
+        <label class="form__label">Cual es tu area de experticia?*</label>
+        <select class="form__input form-input-text-square">
+        <optgroup label="Area">
+            <option hidden="hidden" selected="selected">Escoje una</option>
+            <!--<option *ngFor="let tipo of tipoUsuarios" [ngValue]="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>-->
+        </optgroup>
+        </select>
+        <!--<div *ngIf="invalid('tipoUsuario')" class="container__alert-msg danger-message">
+            <div *ngIf="tipoUsuario?.errors?.['required']">
+                Escoje un tipo de usuario
+        </di<v>-->
+    </div>
+    <div class="form__box">
+        <span class="form__label">Fecha de nacimiento</span>
+        <input class="form__input form-input-text-square" [ngClass]="invalid('fechaNac') ? 'invalid-input' : ''" type="text" placeholder="Fecha de nacimiento" formControlName="fechaNac">
+        <div *ngIf="invalid('fechaNac')" class="danger-message">
+            <div *ngIf="fechaNac?.errors?.['required']">
+                No dejes en blanco tu fecha de nacimiento
+            </div>
+        </div>
+    </div>
+    <div class="form__box">
+        <span class="form__label">Celular</span>
+        <input class="form__input form-input-text-square" [ngClass]="invalid('fechaNac') ? 'invalid-input' : ''" type="text" placeholder="Celular">
+    </div>
+</div>
+<ngx-spinner type="square-jelly-box"></ngx-spinner>
+    
