@@ -101,6 +101,7 @@ export class RegistroComponent implements OnInit {
         this.regUserAuthGoogle();
       }).catch((err)=>{
           console.log(err);
+          this.form.markAsUntouched();
           this.error = "No pudimos ingresar con google"
       });
 
@@ -125,11 +126,13 @@ export class RegistroComponent implements OnInit {
             localStorage.setItem('email',email);
             this.router.navigateByUrl('/dashboard');
           },(err)=>{
+            this.form.markAsUntouched();
             this.error = err.error.message
           }
         );
       },(err)=>{
         console.log(err);
+        this.form.markAsUntouched();
         this.error = "No pudimos ingresar con google"
       }
     );

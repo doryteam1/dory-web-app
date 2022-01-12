@@ -7,9 +7,13 @@ html, body {
     width: 100vw;
     height: 100vh;
     display: flex;
+    max-width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #F3F3F4;
+    background-image: url("https://revistas.unimagdalena.edu.co/public/journals/2/article_3292_cover_es_ES.jpg");
+    background-repeat: no-repeat;
 }
 
 .container-form{
@@ -17,9 +21,12 @@ html, body {
     justify-content: center;
     flex-direction: column;
     max-width: fit-content;
-    max-height: fit-content;
+    max-height: 100vh;
     padding: 20px;
-    border-radius: 8px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 40px;
+    border-radius: 12px;
     background-color:var(--white);
     border: 0.5px solid var(--grey)
 }
