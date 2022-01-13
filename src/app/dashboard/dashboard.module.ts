@@ -14,7 +14,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     HomeComponent,
     NavbarComponent,
     PerfilComponent,
-    MisGranjasComponent
+    MisGranjasComponent,
   ],
   imports: [
     CommonModule,

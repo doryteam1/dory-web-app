@@ -1,0 +1,27 @@
+    <div class="container">
+        <h3>Hola {{nombres}} {{apellidos}}, ¡Bienvenido a Dory!</h3>
+        <img class="container__image" src="assets/images/party.svg">   
+        <div class="container__box">
+            <div class="container__box" *ngIf="isFillName">
+                <span class="container__title">Antes de seguir cuentanos cual es tu nombre?</span>
+                <input class="container__input form-input-text-square" type="text" [(ngModel)]="nombres" (ngModelChange)="resetErrors()">
+                <span class="container__title">Y tus apellidos?</span>
+                <input class="container__input form-input-text-square" type="text" [(ngModel)]="apellidos" (ngModelChange)="resetErrors()">
+            </div>
+            
+            <span class="container__title" *ngIf="isFillUserType">Antes de seguir cuentanos a que te dedicas?</span>
+            <div *ngIf="isFillUserType">
+                <select class="container-form__input form-input-text-square" [(ngModel)]="idTipo" (ngModelChange)="resetErrors()">
+                    <optgroup label="Eres un">
+                        <option hidden="hidden" selected="selected">Escoje uno</option>
+                        <option *ngFor="let tipo of tipos" [ngValue]="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div *ngIf="error" class="container__alert-msg danger-message">
+                    {{error}}
+            </div>
+        </div>
+        <button class="btn-outline-blue" (click)="next()" *ngIf="isFillName">Listo</button>
+        <button class="btn-outline-blue" (click)="next()" *ngIf="isFillUserType">Listo</button>
+    </div>

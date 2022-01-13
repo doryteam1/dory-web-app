@@ -11,6 +11,9 @@ import { PoliticaComponent } from './components/politica/politica.component';
 import { CondicionesComponent } from './components/condiciones/condiciones.component';
 import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -18,10 +21,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     PoliticaComponent,
     CondicionesComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     RegistroModule,

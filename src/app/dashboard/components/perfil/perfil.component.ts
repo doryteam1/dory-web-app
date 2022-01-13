@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { RegExpUtils } from 'src/app/utilities/regexps';
 
@@ -27,7 +28,7 @@ export class PerfilComponent implements OnInit {
     terms:new FormControl('',Validators.required),
   });
 
-  constructor(private us:UsuarioService) { }
+  constructor(private us:UsuarioService, private router:Router) { }
 
   ngOnInit(): void {
     let email:string | null = localStorage.getItem('email');
@@ -36,6 +37,9 @@ export class PerfilComponent implements OnInit {
       (response)=>{
         this.usuario = response.data[0];
         console.log(response);
+        if(!this.usuario.tipo_usuario || !(this.usuario.nombres && this.usuario.apellidos)){
+          this.router.navigate(['/welcome',this.usuario]);  
+        }
       },(err)=>{
         console.log(err);
       }

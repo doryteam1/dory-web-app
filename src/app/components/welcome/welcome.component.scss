@@ -1,0 +1,28 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100vh;
+}
+
+.container__image{
+    width: 300px;
+    height: 300px;
+}
+
+.container__box{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-bottom:11px;
+}
+
+.container__input{
+    
+}
+
+.container__title{
+    margin-bottom: 5px;
+    font-weight: 500;
+}

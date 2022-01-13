@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PoliticaComponent } from './components/politica/politica.component';
 import { CondicionesComponent } from './components/condiciones/condiciones.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+
 
 const routes: Routes = [
   {
@@ -56,7 +58,8 @@ const routes: Routes = [
   },
   {
     path:'condiciones', component:CondicionesComponent
-  }
+  },
+  { path: 'welcome', component:WelcomeComponent }
 ];
 
 @NgModule({
