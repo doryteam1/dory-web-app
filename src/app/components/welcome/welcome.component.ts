@@ -79,7 +79,7 @@ export class WelcomeComponent implements OnInit {
 
     this.us.actualizarUsuario(parseInt(this.id as string),usuario).subscribe(
       (response)=>{
-        console.log("Usuario actualizado ",response);
+        console.log("Usuario actualizado... ",response);
         this.router.navigateByUrl('/dashboard');
       },err=>{
         console.log(err);
