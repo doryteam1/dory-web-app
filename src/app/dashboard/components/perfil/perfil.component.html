@@ -1,73 +1,66 @@
 <div class="container">
-    <div class="container__box-image">    
-        <img class="container__image" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
-        <img class="container__image2" src="assets/icons/camera.svg">
-    </div>
-    <div class="container__info">
-        <span class="container__title">{{usuario?.nombre_completo ? usuario?.nombre_completo : '____' }}({{usuario?.tipo_usuario ? usuario?.tipo_usuario : '____'}})</span>
-        <span class="container__title2">Area de experticia: {{usuario?.area_experticia ? usuario?.area_experticia : '____'}}</span>
-        <span class="container__email">Email: {{usuario?.email ? usuario?.email : '____'}}</span>
-        
+    
+    <div class="container__box-row">
+        <div class="container__box-image">    
+            <img class="container__image" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
+            <img class="container__image2" src="assets/icons/camera.svg">
+        </div>
         <div>
-            <span class="container__title2">Fecha de nacimiento: </span>
-            <span class="container__content">{{usuario?.fecha_nacimiento ? usuario?.fecha_nacimiento : '____'}}</span>
+            <span class="container__title">{{usuario?.nombres ? usuario?.nombres : '____' }} {{usuario?.apellidos ? usuario?.apellidos : '____' }}</span>
+            <span class="container__title">{{usuario?.tipo_usuario ? usuario?.tipo_usuario : '____'}}</span>
         </div>
     </div>
-</div>
-
-<div class="container-detail">
-    <div class="container-detail__box">
-        <span>Cel: {{usuario?.celular ? usuario?.celular : '____'}}</span>
-        <span>Departamento: {{usuario?.departamento ? usuario?.departamento : '____'}}</span>
-        <span>Municipio: {{usuario?.municipio ? usuario?.municipio : '____'}}</span>
-        <span>Corregimiento: {{usuario?.corregimiento ? usuario?.municipio : '____'}}</span>
-    </div>
-    <div class="container-detail__box">
-        <span>Vereda: {{usuario?.vereda ? usuario?.vereda : '____'}}</span>
-        <span> Ubicacion mapa: <img class="container-detail__image" src="assets/icons/marker-red.svg"></span> 
-        <span class="container_email">Dirección:{{usuario?.direccion ? usuario?.direccion : '____'}} </span>
-    </div>
-</div>
-
-<!--<button class="btn-outline-blue" (click)="isEditing=true">Editar</button>-->
-
-<div class="form" *ngIf="isEditing">
-    <div class="form__box">
-        <span class="form__label">Nombres</span>
-        <input class="form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="Nombres" formControlName="nombres">
-        <div *ngIf="invalid('nombres')" class="danger-message">
-            <div *ngIf="nombres?.errors?.['required']">
-                No haz escrito tu nombre
-            </div>
-        </div>
-    </div>
-
-    <div class="form__box">
-        <label class="form__label">Cual es tu area de experticia?*</label>
-        <select class="form__input form-input-text-square">
-        <optgroup label="Area">
-            <option hidden="hidden" selected="selected">Escoje una</option>
-            <!--<option *ngFor="let tipo of tipoUsuarios" [ngValue]="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>-->
-        </optgroup>
+    <span class="container__title">Area de experticia</span>
+    <div>
+        <select class="container__input form-input-text-square" [(ngModel)]="areaExp" (ngModelChange)="resetErrors()">
+            <optgroup label="Eres un">
+                <option hidden="hidden" selected="selected">Escoje un area</option>
+                <option *ngFor="let area of areas" [ngValue]="area.id_area">{{area.nombre}}</option>
+            </optgroup>
         </select>
-        <!--<div *ngIf="invalid('tipoUsuario')" class="container__alert-msg danger-message">
-            <div *ngIf="tipoUsuario?.errors?.['required']">
-                Escoje un tipo de usuario
-        </di<v>-->
     </div>
-    <div class="form__box">
-        <span class="form__label">Fecha de nacimiento</span>
-        <input class="form__input form-input-text-square" [ngClass]="invalid('fechaNac') ? 'invalid-input' : ''" type="text" placeholder="Fecha de nacimiento" formControlName="fechaNac">
-        <div *ngIf="invalid('fechaNac')" class="danger-message">
-            <div *ngIf="fechaNac?.errors?.['required']">
-                No dejes en blanco tu fecha de nacimiento
-            </div>
-        </div>
+    <span class="container__label">Correo electrónico*</span>
+    <input class="container__input form-input-text-square"  type="text" [(ngModel)]="email">
+    <span class="container__title">Fecha de nacimiento: </span>
+    <input class="container__input form-input-text-square" type="date" [(ngModel)]="fechaNac">
+    <span class="container__title">Cel: </span>
+    <input class="container__input form-input-text-square" type="text" [(ngModel)]="cel">
+    <span class="container__title">Departamento</span>
+    <div>
+        <select class="container__input form-input-text-square" [(ngModel)]="dpto" (ngModelChange)="resetErrors()">
+            <optgroup label="Eres un">
+                <option hidden="hidden" selected="selected">Escoje un departamento</option>
+                <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
+            </optgroup>
+        </select>
     </div>
-    <div class="form__box">
-        <span class="form__label">Celular</span>
-        <input class="form__input form-input-text-square" [ngClass]="invalid('fechaNac') ? 'invalid-input' : ''" type="text" placeholder="Celular">
+    <span class="container__title">Municipio</span>
+    <div>
+        <select class="container__input form-input-text-square" [(ngModel)]="areaExp" (ngModelChange)="resetErrors()">
+            <optgroup label="Eres un">
+                <option hidden="hidden" selected="selected">Escoje un area</option>
+                <option *ngFor="let area of areas" [ngValue]="area.id_area">{{area.nombre}}</option>
+            </optgroup>
+        </select>
     </div>
+    <span class="container__title">Corregimiento</span>
+    <div>
+        <select class="container__input form-input-text-square" [(ngModel)]="areaExp" (ngModelChange)="resetErrors()">
+            <optgroup label="Eres un">
+                <option hidden="hidden" selected="selected">Escoje un area</option>
+                <option *ngFor="let area of areas" [ngValue]="area.id_area">{{area.nombre}}</option>
+            </optgroup>
+        </select>
+    </div>
+    <span class="container__title">Vereda</span>
+    <input class="container__input form-input-text-square"  type="text">
+    <span class="container__title">Ubicacion mapa:</span>
+    <span class="container__title">Latitud:</span>
+    <input class="container__input form-input-text-square"  type="text">
+    <span class="container__title">Longitud:</span>
+    <input class="container__input form-input-text-square"  type="text" >        
+    <span class="container__title2">Dirección: </span>
+    <input class="container__input form-input-text-square"  type="text">
 </div>
 <ngx-spinner type="square-jelly-box"></ngx-spinner>
     

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { RegExpUtils } from 'src/app/utilities/regexps';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
@@ -16,8 +16,9 @@ export class WelcomeComponent implements OnInit {
   nombres:string | null= '';
   apellidos:string | null = '';
   error:string = '';
+  id:string | null = '';
 
-  constructor(private ar:ActivatedRoute, private us:UsuarioService) {
+  constructor(private ar:ActivatedRoute, private us:UsuarioService, private router:Router) {
     this.us.getTiposUsuario().subscribe(
       (response)=>{
         this.tipos = response.data;
@@ -33,6 +34,8 @@ export class WelcomeComponent implements OnInit {
     let tipoUsuario = this.ar.snapshot.paramMap.get('tipo_usuario')
     this.nombres = this.ar.snapshot.paramMap.get('nombres');
     this.apellidos = this.ar.snapshot.paramMap.get('apellidos');
+    this.id = this.ar.snapshot.paramMap.get('id');
+
 
     if(tipoUsuario){
       console.log("Tiene tipo de usuario ",tipoUsuario);
@@ -67,11 +70,21 @@ export class WelcomeComponent implements OnInit {
     }else if(this.isFillName){
       if(!this.isOkNomApell()){
         this.error = 'Mmm al parecer falta tu nombre o apellido...';
-        return
+        return;
       }
       usuario.nombres = this.nombres;
       usuario.apellidos = this.apellidos;
+
     }
+
+    this.us.actualizarUsuario(parseInt(this.id as string),usuario).subscribe(
+      (response)=>{
+        console.log("Usuario actualizado ",response);
+        this.router.navigateByUrl('/dashboard');
+      },err=>{
+        console.log(err);
+      }
+    );
     console.log("actualizando usuario ",usuario);
   }
 

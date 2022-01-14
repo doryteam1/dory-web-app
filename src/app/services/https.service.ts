@@ -32,4 +32,8 @@ export class HttpsService {
   post(endpoint:string, data: any): Observable<any> {
     return this.http.post(endpoint, data,{observe: 'response'});
   }
+
+  put(endpoint:string, data: any): Observable<any> {
+    return this.http.put(endpoint, data,{observe: 'response'});
+  }
 }

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AreasExperticiaService } from 'src/app/services/areas-experticia.service';
+import { PlacesService } from 'src/app/services/places.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { RegExpUtils } from 'src/app/utilities/regexps';
-
+import { Utilities } from 'src/app/utilities/utilities';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -12,23 +14,15 @@ import { RegExpUtils } from 'src/app/utilities/regexps';
 export class PerfilComponent implements OnInit {
   usuario:any;
   isEditing:boolean = false;
+  areaExp:number = 0;
+  areas:Array<any> = [];
+  email:string = '';
+  fechaNac:string = '';
+  cel:string = '';
+  dpto:number = -1;
+  departamentos:Array<any> = [];
 
-  form:FormGroup = new FormGroup({
-    cedula:new FormControl(''),
-    nombres:new FormControl(''),
-    apellidos:new FormControl(''),
-    email:new FormControl('',[Validators.required, Validators.email]),
-    tipoUsuario:new FormControl('',[Validators.required]),
-    fechaNac:new FormControl(''),
-    celular:new FormControl('',),
-    departamento:new FormControl(''),
-    municipio:new FormControl('',),
-    corregimiento:new FormControl('',),
-    vereda:new FormControl('',),
-    terms:new FormControl('',Validators.required),
-  });
-
-  constructor(private us:UsuarioService, private router:Router) { }
+  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService) { }
 
   ngOnInit(): void {
     let email:string | null = localStorage.getItem('email');
@@ -37,6 +31,11 @@ export class PerfilComponent implements OnInit {
       (response)=>{
         this.usuario = response.data[0];
         console.log(response);
+        this.email = this.usuario.email;
+        this.areaExp = this.usuario.id_area_experticia;
+        this.fechaNac = Utilities.dateToISOString(this.usuario.fecha_nacimiento);
+        this.cel = this.usuario.celular;
+        this.dpto = this.usuario.departamento;
         if(!this.usuario.tipo_usuario || !(this.usuario.nombres && this.usuario.apellidos)){
           this.router.navigate(['/welcome',this.usuario]);  
         }
@@ -44,26 +43,25 @@ export class PerfilComponent implements OnInit {
         console.log(err);
       }
     );
+
+    this.aes.getAreasDeExperticia().subscribe(
+      (response)=>{
+        this.areas = response.data;
+      },(err)=>{
+        console.log(err);
+      }
+    );
+
+    this.places.getDepartamentos().subscribe(
+      (response)=>{
+        this.departamentos = response.data;
+      },err=>{
+        console.log(err);
+      }
+    );
   }
 
-  invalid(controlFormName:string){;
-    return this.form.get(controlFormName)?.invalid && (this.form.get(controlFormName)?.dirty || this.form.get(controlFormName)?.touched)
-  }
+  resetErrors(){
 
-  get nombres(){
-    return this.form.get('nombres');
   }
-
-  get email(){
-    return this.form.get('email');
-  }
-
-  get tipoUsuario(){
-    return this.form.get('tipoUsuario');
-  }
-
-  get fechaNac(){
-    return this.form.get('fechaNac');
-  }
-
 }

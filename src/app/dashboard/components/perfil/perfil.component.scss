@@ -1,14 +1,22 @@
 .container{
     display: flex;
-    justify-content: start;
-    margin-top: 50px;
-    margin-left: 50px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    margin-top: 30px;
 }
 
+.container__box{
+    align-self: center;
+}
+
+.container__box-row{
+    display: flex;
+    flex-direction: row;
+}
 .container__box-image{
     width: 100px;
     height: 100px;
-    margin-right: 30px;
     position: relative;
 }
 
@@ -51,6 +59,7 @@
 
 .container__title{
     font-weight: 700;
+    display: block;
 }
 
 .container__title2{
@@ -60,4 +69,8 @@
 .form__box{
     display: flex;
     flex-direction: column;
+}
+
+.container__input{
+    margin-bottom: 15px;
 }

@@ -7,6 +7,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { MisGranjasComponent } from './components/mis-granjas/mis-granjas.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     DashboardRoutingModule,
     NgxSpinnerModule
   ]
