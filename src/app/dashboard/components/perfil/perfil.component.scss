@@ -4,10 +4,12 @@
     justify-content: space-between;
     align-items: start;
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .container__box{
-    align-self: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .container__box-row{
@@ -73,4 +75,24 @@
 
 .container__input{
     margin-bottom: 15px;
+    margin-right: 5px;
+}
+
+.container_link{
+    font-weight: 300;
+    cursor:pointer;
+    color:var(--azul1);
+}
+
+.container__btn{
+    border-radius: 6px;
+    height: 40px;
+    width: 100px;
+    background-color: white;
+    border:0.5px solid var(--black)
+}
+
+.container__spinner{
+    width: 20px;
+    height: 20px;
 }
