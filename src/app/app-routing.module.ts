@@ -54,6 +54,10 @@ const routes: Routes = [
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
+    path:'equipo',
+    loadChildren: () => import('./equipo-trabajo/equipo-trabajo.module').then(m => m.EquipoTrabajoModule)
+  },
+  {
     path:'politica', component:PoliticaComponent
   },
   {

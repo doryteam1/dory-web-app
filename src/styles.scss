@@ -12,11 +12,23 @@
     --black:#000000;
     --high-blue:#0D0C22;
     --red-danger:#D93025;
+    --rosa:#F7CACC;
     --green:#1b8d06;
     --light: #ececece5;
     --yellow: #FFD200;
     --red: #FF0F00;
     --grey:#ABACAE;
+}
+
+/*Fonts*/
+@font-face {   
+    font-family: 'OpenSans-Regular';    //This is what we are going to call
+    src: url('./assets/fonts/OpenSans-Regular.ttf');
+}
+
+@font-face {   
+    font-family: 'JosefinSans-Regular';    //This is what we are going to call
+    src: url('./assets/fonts/JosefinSans-Regular.ttf');
 }
 
 .mt-40{
