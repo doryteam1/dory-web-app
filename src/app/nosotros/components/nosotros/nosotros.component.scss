@@ -1,16 +1,18 @@
 .container{
     text-align: center;
     margin-bottom: 0px;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .container__title{
     margin-bottom:30px;
     font-size: 40px;
+    color:var(--azul1);
 }
 
 .container__description{
-    text-align:center;
+    text-align:justify;
+    color:var(--gris-oscuro);
 }
 
 .container__image{
