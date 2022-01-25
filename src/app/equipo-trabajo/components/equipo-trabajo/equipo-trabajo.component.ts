@@ -17,7 +17,7 @@ export class EquipoTrabajoComponent implements OnInit {
     },
     {
       name:'Yaneth Romero',
-      position:'Coordinador de transferencia de tecnología',
+      position:'Coordinadora de transferencia de tecnología',
       profession:'Ingeniera Industrial - MsC en Finanzas',
       activities:'Coordinar las actividades de transferencia de tecnología',
       cvlac:'https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001358474',
