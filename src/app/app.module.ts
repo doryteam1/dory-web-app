@@ -13,6 +13,7 @@ import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
 
 
 
@@ -32,7 +33,8 @@ import { FormsModule } from '@angular/forms';
     RegistroModule,
     NgbModule,
     NgxSpinnerModule,
-    SocialLoginModule
+    SocialLoginModule,
+    SharedModule
   ],
   providers: [
     HttpsService,
