@@ -6,13 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  hasAlert:boolean = true;
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  changeAlertState(){
-    this.hasAlert = !this.hasAlert;
   }
 }

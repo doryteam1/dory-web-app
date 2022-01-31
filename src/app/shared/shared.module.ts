@@ -4,6 +4,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { FloatingBtnComponent } from './components/floating-btn/floating-btn.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
 
 
 
@@ -11,7 +13,9 @@ import { FloatingBtnComponent } from './components/floating-btn/floating-btn.com
   declarations: [
     FooterComponent,
     NavbarComponent,
-    FloatingBtnComponent
+    FloatingBtnComponent,
+    SearchBarComponent,
+    NotificationBarComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +24,9 @@ import { FloatingBtnComponent } from './components/floating-btn/floating-btn.com
   exports:[
     NavbarComponent,
     FooterComponent,
-    FloatingBtnComponent
+    FloatingBtnComponent,
+    SearchBarComponent,
+    NotificationBarComponent
   ]
 })
 export class SharedModule { }

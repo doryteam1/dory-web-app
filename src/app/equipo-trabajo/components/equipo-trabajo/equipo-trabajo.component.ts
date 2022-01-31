@@ -60,7 +60,7 @@ export class EquipoTrabajoComponent implements OnInit {
       name:'Luis Pontón',
       position:'Desarrollador 2',
       profession:'Ingeniero de Sistemas',
-      activities:'Desarrollar el Backend de la de la plataforma',
+      activities:'Desarrollar el Backend de la plataforma',
       linkedIn:'https://www.linkedin.com/in/luis-alberto-pont%C3%B3n-mercado-43171820/',
       photo:'assets/images/photos/luis.png'
     },
