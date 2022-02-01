@@ -1,9 +1,12 @@
 .container{
-    background-color: var(--gris);
+    background-color: var(--white);
     width: 100%;
-    height: 120px;
+    height: 100px;
     max-width: 100%;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
 }
 
 .container__input{
@@ -16,12 +19,9 @@
     border-radius: 133px;
     width: 512px;
     height: 64px;
-    position: absolute;
-    left: 25vw;
-    bottom: -30px;
     border:0.5px solid var(--gris4);
     border-left: 30px solid var(--white);
-    -webkit-box-shadow: 1px 9px 9px 1px #F3F3F4; 
-    box-shadow: 1px 9px 9px 1px #F3F3F4;
+    -webkit-box-shadow: -1px 3px 8px 3px rgba(0,0,0,0.14); 
+    box-shadow: -1px 3px 8px 3px rgba(0,0,0,0.14);
     outline: none;
 }
