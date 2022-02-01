@@ -20,7 +20,7 @@ export class EventosComponent implements OnInit {
       hora:"",
       organizador:"Plataforma de formación online",
       costo:"Gratuito",
-      imagen:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0xH64LdRmZb_YPcfpCeoxAGfM2CiuJqxSlQ&usqp=CAU",
+      imagen:"assets/images/test.png",
       duracion:"",
       tipo:"curso"
     },
@@ -34,7 +34,7 @@ export class EventosComponent implements OnInit {
       hora:"",
       organizador:"Comunidad de aprendizaje, Sena virtual",
       costo:"Gratuito",
-      imagen:"https://i2.wp.com/panoramaacuicola.com/wp-content/uploads/2018/11/acuicultura_agrofy_news_2.jpg?fit=620%2C375&ssl=1",
+      imagen:"assets/images/test2.png",
       duracion:"40 Horas",
       tipo:"curso"
     },
