@@ -6,13 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./floating-btn.component.scss']
 })
 export class FloatingBtnComponent implements OnInit {
-  
+  in:boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   onClick(){
+    this.in = !this.in;
     console.log("Submit");
   }
 

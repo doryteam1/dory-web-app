@@ -5,4 +5,40 @@ input{
     border-radius: 50%;
     width: 65px;
     height: 65px;
+    shape-outside: border-box;
+}
+
+.floating-btn{
+    position:fixed;
+    left: 20px;
+    bottom: 20px;
+    border-radius: 50%;
+    width: fit-content;
+    height: fit-content;
+}
+
+.demo {
+    -webkit-transition: width 2s ease;
+    -moz-transition: width 2s ease;
+    -o-transition: width 2s ease;
+    transition: width 2s ease;
+    
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    background: var(--azul1);
+    vertical-align: middle;
+    height: fit-content;
+    border-radius: 20px;
+    width: 0px;
+    position: fixed;
+    left: 85px;
+    bottom: 20px;
+}
+.in {
+    width: 200px;
+}
+
+.btn1{
+    border-radius: 20px;
 }
