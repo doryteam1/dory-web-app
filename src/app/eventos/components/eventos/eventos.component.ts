@@ -22,7 +22,7 @@ export class EventosComponent implements OnInit {
       hora:"",
       organizador:"Plataforma de formación online",
       costo:"Gratuito",
-      imagen:"assets/images/test.png",
+      imagen:"assets/images/eventos/cursos/curso1.png",
       duracion:"",
       tipo:"curso"
     },
@@ -325,7 +325,7 @@ export class EventosComponent implements OnInit {
   }
 
   onSearch(event:string){
-    console.log(event);
+    console.log("event: ",event);
     let obser:Observable<any>;
 
     if(event == ''){
