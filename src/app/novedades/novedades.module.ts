@@ -5,6 +5,7 @@ import { NovedadesRoutingModule } from './novedades-routing.module';
 import { NovedadesComponent } from './components/novedades/novedades.component';
 import { ShorterPipe } from '../pipes/shorter.pipe';
 import { SharedModule } from '../shared/shared.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     NovedadesRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ]
 })
 export class NovedadesModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { NovedadesService } from 'src/app/services/novedades.service';
 import { Novedad } from 'src/models/novedad.model';
 
@@ -510,10 +511,12 @@ export class NovedadesComponent implements OnInit {
 
   novedadesFiltered:Array<Novedad> = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private nService:NovedadesService) { }
+  constructor(private activatedRoute: ActivatedRoute, private nService:NovedadesService, private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.cargarTodos();
+    this.spinner.hide();
   }
 
   cargarTodos(){
@@ -528,7 +531,6 @@ export class NovedadesComponent implements OnInit {
   onSearch(event:string){
     console.log("event: ",event);
     if(event == ''){
-      console.log("vacio cargando todos");
       this.cargarTodos();
       return;
     }
