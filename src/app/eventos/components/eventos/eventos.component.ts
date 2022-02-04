@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { EventosService } from 'src/app/services/eventos.service';
 import { Evento } from 'src/models/evento.model';
+
 
 @Component({
   selector: 'app-eventos',
@@ -315,15 +315,23 @@ export class EventosComponent implements OnInit {
   ngOnInit(): void {
     let eventType:string = this.activatedRoute.snapshot.url[0].path;
     this.eventType = eventType;
+    this.cargarTodos();
+  }
+
+  cargarTodos(){    
     this.eventsFiltered = this.eventos.filter((value) => {
-      return eventType == "capacitaciones" ? value.tipo == eventType.substring(0,eventType.length - 2) : value.tipo == eventType.substring(0,eventType.length - 1)
-    }); 
+      return this.eventType == "capacitaciones" ? value.tipo == this.eventType.substring(0,this.eventType.length - 2) : value.tipo == this.eventType.substring(0,this.eventType.length - 1)
+    });
   }
 
   onSearch(event:string){
     console.log(event);
     let obser:Observable<any>;
 
+    if(event == ''){
+      this.cargarTodos();
+      return;
+    }
     if(this.eventType == 'cursos'){
       obser = this.eService.getCursosByString(event);
     }else if(this.eventType == 'congresos'){
@@ -338,7 +346,8 @@ export class EventosComponent implements OnInit {
       (response)=>{
         this.eventsFiltered = response.data;
       },err=>{
-        console.log(err);
+        console.log("Error ",err);
+        this.eventsFiltered.length = 0;
       }
     );
   }

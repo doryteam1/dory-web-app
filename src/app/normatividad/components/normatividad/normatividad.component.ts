@@ -156,6 +156,10 @@ export class NormatividadComponent implements OnInit {
   constructor(private activatedRoute:ActivatedRoute, private nService: NormatividadService, private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.cargarTodos();
+  }
+
+  cargarTodos(){
     this.normatividadesFiltered = this.normatividades.filter((value)=>{
       if(this.activatedRoute.snapshot.url[0].path == "resoluciones"){
         return value.tipo == "resolucion"
@@ -168,13 +172,19 @@ export class NormatividadComponent implements OnInit {
   }
 
   onSearch(event:string){
+    console.log("event: ",event);
     this.spinner.show();
+    if(event == ''){
+      this.cargarTodos();
+      return;
+    }
     this.nService.getNormatividadesByString(event).subscribe(
       (response)=>{
         this.normatividadesFiltered = response.data;
         this.spinner.hide();
       },err=>{
-        console.log(err);
+        console.log("err ",err);
+        this.normatividadesFiltered.length = 0;
         this.spinner.hide();
       }
     );

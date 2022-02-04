@@ -14,8 +14,6 @@ export class SearchComponent implements OnInit {
   }
 
   onEnterKey(){
-    if(this.text && this.text != ''){
       this.textSearch.emit(this.text);
-    }
   }
 }

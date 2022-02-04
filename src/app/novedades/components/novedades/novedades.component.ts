@@ -513,7 +513,10 @@ export class NovedadesComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private nService:NovedadesService) { }
 
   ngOnInit(): void {
-    console.log(this.activatedRoute.snapshot.url[0].path)
+    this.cargarTodos();
+  }
+
+  cargarTodos(){
     this.novedadesFiltered = this.novedades.filter((value)=> {
       if(this.activatedRoute.snapshot.url[0].path == "articulos-colombia"){
         return value.tipo == "articulo-colombia";
@@ -523,10 +526,17 @@ export class NovedadesComponent implements OnInit {
   }
 
   onSearch(event:string){
+    console.log("event: ",event);
+    if(event == ''){
+      console.log("vacio cargando todos");
+      this.cargarTodos();
+      return;
+    }
     this.nService.getNovedadesByString(event).subscribe(
       (response)=>{
         this.novedadesFiltered = response.data;
       },err=>{
+        this.novedadesFiltered.length = 0;
         console.log(err);
       }
     );
