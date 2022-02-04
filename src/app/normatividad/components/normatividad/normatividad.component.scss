@@ -3,7 +3,7 @@
     flex-direction: row;
     flex-wrap:wrap;
     margin-top:10px;
-    margin-bottom: 173px;
+    /* margin-bottom: 173px; */
 }
 .container{
     width: 409px;
@@ -36,4 +36,19 @@
     justify-content: center;
     margin-top: 50px;
     margin-bottom: 28px;
+}
+
+.search-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.search-container__box{
+    text-align: center;
+}
+
+.search-container__image{
+    width:1024px;
+    height: 370px;
 }

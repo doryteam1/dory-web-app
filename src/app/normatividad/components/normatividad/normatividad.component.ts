@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NormatividadService } from 'src/app/services/normatividad.service';
 import { Normatividad } from 'src/models/normatividad.model';
 
 @Component({
@@ -151,19 +153,31 @@ export class NormatividadComponent implements OnInit {
 
   normatividadesFiltered:Array<Normatividad> = [];
 
-  constructor(private activatedRoute:ActivatedRoute) { }
+  constructor(private activatedRoute:ActivatedRoute, private nService: NormatividadService, private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
-    console.log(this.activatedRoute.snapshot.url[0].path.substring(0, this.activatedRoute.snapshot.url[0].path.length - 1));
     this.normatividadesFiltered = this.normatividades.filter((value)=>{
       if(this.activatedRoute.snapshot.url[0].path == "resoluciones"){
-        return value.tipo == "resolucion" 
+        return value.tipo == "resolucion"
       }
       if(this.activatedRoute.snapshot.url[0].path == "leyes"){
         return value.tipo == "ley"
       }
       return value.tipo == this.activatedRoute.snapshot.url[0].path.substring(0, this.activatedRoute.snapshot.url[0].path.length - 1);
     });
+  }
+
+  onSearch(event:string){
+    this.spinner.show();
+    this.nService.getNormatividadesByString(event).subscribe(
+      (response)=>{
+        this.normatividadesFiltered = response.data;
+        this.spinner.hide();
+      },err=>{
+        console.log(err);
+        this.spinner.hide();
+      }
+    );
   }
 
 }

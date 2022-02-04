@@ -1,5 +1,5 @@
 export interface Novedad{
-    nombre_autor: string;
+    autor: string;
     email_autor:string;
     url_foto_autor:string;
     url_foto_novedad:string;
@@ -7,10 +7,10 @@ export interface Novedad{
     cuerpo:string;
     resumen:string;
     fecha_creacion:string;
-    visitas:number;
-    cant_likes:number;
+    cant_visitas:number;
+    likes:number;
     categorias:Array<string>;
-    url:string;
+    url_novedad:string;
     canal:string;
     tipo:string
 }

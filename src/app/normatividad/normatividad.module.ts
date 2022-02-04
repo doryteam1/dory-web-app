@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NormatividadRoutingModule } from './normatividad-routing.module';
 import { NormatividadComponent } from './components/normatividad/normatividad.component';
 import { SharedModule } from '../shared/shared.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     NormatividadRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ]
 })
 export class NormatividadModule { }

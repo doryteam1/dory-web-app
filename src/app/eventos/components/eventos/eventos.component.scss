@@ -64,11 +64,26 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     justify-content: center;
 }
 
 .card__link{
     text-decoration: none;
     color: var(--black);
+}
+
+.search-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.search-container__box{
+    text-align: center;
+}
+
+.search-container__image{
+    width:1024px;
+    height: 370px;
 }

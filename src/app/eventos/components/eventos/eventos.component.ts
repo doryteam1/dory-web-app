@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { EventosService } from 'src/app/services/eventos.service';
 import { Evento } from 'src/models/evento.model';
 
 @Component({
@@ -305,17 +307,39 @@ export class EventosComponent implements OnInit {
       tipo:"congreso"
     }
   ];
-  
+  eventType:string = '';
   eventsFiltered:Array<Evento> = [];
 
-  constructor(private activatedRoute:ActivatedRoute) { }
+  constructor(private activatedRoute:ActivatedRoute, private eService:EventosService) { }
 
   ngOnInit(): void {
     let eventType:string = this.activatedRoute.snapshot.url[0].path;
-    
+    this.eventType = eventType;
     this.eventsFiltered = this.eventos.filter((value) => {
       return eventType == "capacitaciones" ? value.tipo == eventType.substring(0,eventType.length - 2) : value.tipo == eventType.substring(0,eventType.length - 1)
     }); 
   }
 
+  onSearch(event:string){
+    console.log(event);
+    let obser:Observable<any>;
+
+    if(this.eventType == 'cursos'){
+      obser = this.eService.getCursosByString(event);
+    }else if(this.eventType == 'congresos'){
+      obser = this.eService.getCongresosByString(event);
+    }else if(this.eventType == 'capacitaciones'){
+      obser = this.eService.getCapacitacionesByString(event);
+    }else{
+      return;
+    }
+
+    obser.subscribe(
+      (response)=>{
+        this.eventsFiltered = response.data;
+      },err=>{
+        console.log(err);
+      }
+    );
+  }
 }

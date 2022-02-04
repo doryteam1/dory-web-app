@@ -1,7 +1,7 @@
 <app-notification-bar></app-notification-bar>
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
-<app-search></app-search>
+<app-search (textSearch)="onSearch($event)"></app-search>
 <div class="filters-container">
     <button class="btn-outline-black" routerLink="/normatividad/leyes">Leyes</button>
     <button class="btn-outline-black ms-3" routerLink="/normatividad/estatutos">Estatutos</button>
@@ -18,5 +18,14 @@
         <!--<button class="container__button btn-rounded-blue">Descargar</button>-->
         <!--<a class="container__button btn-rounded-blue" target="_blank" [href]="normatividad.url_descarga">Descargar</a>-->
     </div>    
+</div>
+
+<div class="search-container" *ngIf="normatividadesFiltered.length < 1">
+    <div class="search-container__box">
+        <img class="search-container__image" src="assets/images/searching.svg">
+        <h3>No se han encontrado resultados</h3>
+        <p>No encontramos normatividades relacionadas con la busqueda. </p>
+    </div>
+    
 </div>
 <app-footer></app-footer>

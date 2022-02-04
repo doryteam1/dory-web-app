@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search',
@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-
+  @Output() textSearch:EventEmitter<string> = new EventEmitter();
+  text:string = '';
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onEnterKey(){
+    if(this.text && this.text != ''){
+      this.textSearch.emit(this.text);
+    }
+  }
 }

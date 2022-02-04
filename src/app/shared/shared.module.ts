@@ -7,6 +7,7 @@ import { FloatingBtnComponent } from './components/floating-btn/floating-btn.com
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
 import { SearchComponent } from './components/search/search.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -21,7 +22,8 @@ import { SearchComponent } from './components/search/search.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports:[
     NavbarComponent,

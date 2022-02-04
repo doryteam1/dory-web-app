@@ -1,7 +1,7 @@
 <app-notification-bar></app-notification-bar>
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
-<app-search></app-search>
+<app-search (textSearch)="onSearch($event)"></app-search>
 <div class="container">
     <div *ngFor="let novedad of novedadesFiltered">
             <div class="novedad">
@@ -10,7 +10,7 @@
                     <div class="col-2">
                         <img class="novedad__foto-autor" [src]="novedad.url_foto_autor">
                     </div>
-                    <div class="novedad__title-box col-10"><h4 class="novedad__nombre-autor">{{novedad.nombre_autor}}</h4></div>
+                    <div class="novedad__title-box col-10"><h4 class="novedad__nombre-autor">{{novedad.autor}}</h4></div>
                 </div>
             </div>
             <div class="mb-4">
@@ -25,26 +25,33 @@
             </div>
             <div></div>
             <div class="novedad__foto-container">
-                <a href={{novedad.url}} target="_blank"><img class="novedad__foto" [src]="novedad.url_foto_novedad"></a>
+                <a href={{novedad.url_novedad}} target="_blank"><img class="novedad__foto" [src]="novedad.url_foto_novedad"></a>
             </div>
             <div class="novedad__titular-container">
-                <a href={{novedad.url}} target="_blank"><h2 class="novedad__titular">{{ novedad.titulo | shorter:80 }}</h2></a>
+                <a href={{novedad.url_novedad}} target="_blank"><h2 class="novedad__titular">{{ novedad.titulo | shorter:80 }}</h2></a>
             </div>
             <div class="novedad__cuerpo-container">
-                <a href={{novedad.url}}><p class="novedad__cuerpo">{{ novedad.resumen | shorter:264 }}</p></a>
+                <a href={{novedad.url_novedad}} target="_blank"><p class="novedad__cuerpo">{{ novedad.resumen | shorter:264 }}</p></a>
             </div>
             <div></div>
             <div class="novedad__container_stats">
                 <div>
                     <img class="novedad__like-icon" src="assets/icons/happy-face.svg">
-                    <span class="novedad__like-count">1k</span>
+                    <span class="novedad__like-count">{{novedad.likes}}</span>
                 </div>
                 <div>
-                    <span class="novedad__visitas">11k  vistas</span>
+                    <span class="novedad__visitas">{{novedad.cant_visitas}}  vistas</span>
                     <span class="novedad__fecha"> - 6 meses</span>
                 </div>
             </div>
         </div>
     </div>    
+</div>
+<div class="search-container" *ngIf="novedadesFiltered.length < 1">
+    <div class="search-container__box">
+        <img class="search-container__image" src="assets/images/searching.svg">
+        <h3>No se han encontrado resultados</h3>
+        <p>No encontramos eventos relacionadas con la busqueda. </p>
+    </div>
 </div>
 <app-footer></app-footer>

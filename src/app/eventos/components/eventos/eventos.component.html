@@ -1,7 +1,7 @@
 <app-notification-bar></app-notification-bar>
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
-<app-search></app-search>
+<app-search (textSearch)="onSearch($event)"></app-search>
 <div class="container">
     <div class="card" *ngFor="let evento of eventsFiltered">
         <a class="card__link" href="{{evento.url}}" target="_blank">
@@ -35,5 +35,13 @@
             </div>
         </a>
     </div>
+</div>
+<div class="search-container" *ngIf="eventsFiltered.length < 1">
+    <div class="search-container__box">
+        <img class="search-container__image" src="assets/images/searching.svg">
+        <h3>No se han encontrado resultados</h3>
+        <p>No encontramos eventos relacionadas con la busqueda. </p>
+    </div>
+    
 </div>
 <app-footer></app-footer>
