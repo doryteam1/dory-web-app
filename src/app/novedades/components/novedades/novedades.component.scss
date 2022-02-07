@@ -1,6 +1,6 @@
 .novedad{
     display:grid;
-    grid-template-columns: 212px 89px 71px;
+    grid-template-columns: 212px 89px 40px;
     margin-top:100px;
 }
 .novedad__foto-autor{
@@ -116,6 +116,7 @@
     flex-direction:row;
     flex-wrap: wrap;
     justify-content: center;
+    padding-left: 40px;
 }
 
 a{
