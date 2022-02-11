@@ -19,4 +19,8 @@ export class EventosService {
   getCapacitacionesByString(text:string){
     return this.https.get('https://dory-api-rest.herokuapp.com/api/buscar/evento/capacitacion/'+text)
   }
+
+  getEventoByTipo(text:string){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/buscar/evento/tipo/'+text)
+  }
 }

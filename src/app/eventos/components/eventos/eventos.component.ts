@@ -310,7 +310,9 @@ export class EventosComponent implements OnInit {
   eventType:string = '';
   eventsFiltered:Array<Evento> = [];
 
-  constructor(private activatedRoute:ActivatedRoute, private eService:EventosService) { }
+  constructor(private activatedRoute:ActivatedRoute, private eService:EventosService) { 
+    this.eventos = [];
+  }
 
   ngOnInit(): void {
     let eventType:string = this.activatedRoute.snapshot.url[0].path;
@@ -319,9 +321,18 @@ export class EventosComponent implements OnInit {
   }
 
   cargarTodos(){    
-    this.eventsFiltered = this.eventos.filter((value) => {
+    /* this.eventsFiltered = this.eventos.filter((value) => {
       return this.eventType == "capacitaciones" ? value.tipo == this.eventType.substring(0,this.eventType.length - 2) : value.tipo == this.eventType.substring(0,this.eventType.length - 1)
-    });
+    }); */
+    console.log("Cargando todos!");
+    this.eService.getEventoByTipo(this.eventType).subscribe(
+      (response)=>{
+        this.eventsFiltered = response.data;
+        console.log(this.eventsFiltered);
+      },err=>{
+        console.log(err);
+      }
+    );
   }
 
   onSearch(event:string){
