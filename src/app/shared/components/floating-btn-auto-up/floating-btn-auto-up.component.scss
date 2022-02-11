@@ -1,0 +1,17 @@
+.floating-btn{
+    position:fixed;
+    right: 20px;
+    bottom: 20px;
+    border-radius: 50%;
+    z-index: 1;
+    width: 56px;
+    height: 56px;
+}
+
+.btn{
+    border-radius:50%;
+    width: 56px;
+    height: 56px;
+    background: var(--azul1);
+    border:none;
+}
