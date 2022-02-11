@@ -48,11 +48,16 @@
         </div>
     </div>    
 </div>
-<div class="search-container" *ngIf="novedadesFiltered.length < 1">
+<div class="search-container" *ngIf="showNotFound">
     <div class="search-container__box">
         <img class="search-container__image" src="assets/images/searching.svg">
         <h3>No se han encontrado resultados</h3>
         <p>No encontramos eventos relacionadas con la busqueda. </p>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="spinner-border spinner" role="status" *ngIf="loading">
+        <span class="visually-hidden">Loading...</span>
     </div>
 </div>
 <app-footer></app-footer>

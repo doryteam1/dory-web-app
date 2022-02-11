@@ -153,5 +153,9 @@
     border:none;
     color:var(--azul1) 
 }
+
+.spinner{
+    color:var(--morado);
+}
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

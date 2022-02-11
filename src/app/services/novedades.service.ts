@@ -13,4 +13,12 @@ export class NovedadesService {
   getNovedadesByString(text:string){
     return this.https.get('https://dory-api-rest.herokuapp.com/api/buscar/novedad/'+text);
   }
+
+  getNovedadesByTipo(tipo:string){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/buscar/novedad/tipo/'+tipo);
+  }
+
+  getNovedadesByTipoCadena(tipo:string, cadena:string){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/buscar/novedad/'+tipo+'/'+cadena);
+  }
 }

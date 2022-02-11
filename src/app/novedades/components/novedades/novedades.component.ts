@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { NovedadesService } from 'src/app/services/novedades.service';
 import { Novedad } from 'src/models/novedad.model';
 
@@ -510,34 +509,62 @@ export class NovedadesComponent implements OnInit {
   ];
 
   novedadesFiltered:Array<Novedad> = [];
-  constructor(private activatedRoute: ActivatedRoute, private nService:NovedadesService, private spinner:NgxSpinnerService) { }
+  tipo!:string;
+  showNotFound:boolean = false;
+  loading:boolean = false;
+  constructor(private activatedRoute: ActivatedRoute, private nService:NovedadesService) { }
 
   ngOnInit(): void {
-    this.spinner.show();
+    if(this.activatedRoute.snapshot.url[0].path == "articulos-colombia"){
+      this.tipo == "articulo-colombia";
+    }else{
+      this.tipo =this.activatedRoute.snapshot.url[0].path.substring(0, this.activatedRoute.snapshot.url[0].path.length - 1);
+    }
+    console.log("cargar novedade de tipo ",this.tipo);
     this.cargarTodos();
-    this.spinner.hide();
   }
 
   cargarTodos(){
-    this.novedadesFiltered = this.novedades.filter((value)=> {
+    /* this.novedadesFiltered = this.novedades.filter((value)=> {
       if(this.activatedRoute.snapshot.url[0].path == "articulos-colombia"){
         return value.tipo == "articulo-colombia";
       }
       return value.tipo == this.activatedRoute.snapshot.url[0].path.substring(0, this.activatedRoute.snapshot.url[0].path.length - 1);
-    });
+    }); */
+    this.showNotFound = false;
+    this.loading = true;
+    this.nService.getNovedadesByTipo(this.tipo).subscribe(
+      (response)=>{
+        this.novedadesFiltered = response.data;
+        if(this.novedadesFiltered.length < 1){
+          this.showNotFound = true;
+        }
+        this.loading = false;
+      },err=>{
+        this.loading = false;
+        console.log(err);
+      }
+    );
   }
 
   onSearch(event:string){
     console.log("event: ",event);
+    this.showNotFound = false;
+    this.loading = true;
     if(event == ''){
       this.cargarTodos();
       return;
     }
-    this.nService.getNovedadesByString(event).subscribe(
+    this.nService.getNovedadesByTipoCadena(this.tipo,event).subscribe(
       (response)=>{
         this.novedadesFiltered = response.data;
+        if(this.novedadesFiltered.length < 1){
+          this.showNotFound = true;
+        }
+        this.loading = false;
       },err=>{
         this.novedadesFiltered.length = 0;
+        this.loading = false;
         console.log(err);
       }
     );
