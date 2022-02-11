@@ -347,7 +347,8 @@ export class EventosComponent implements OnInit {
   onSearch(event:string){
     console.log("event: ",event);
     let obser:Observable<any>;
-
+    this.showNotFound = false;
+    this.loading = true;
     if(event == ''){
       this.cargarTodos();
       return;
@@ -362,8 +363,7 @@ export class EventosComponent implements OnInit {
       return;
     }
 
-    this.showNotFound = false;
-    this.loading = true;
+    
     obser.subscribe(
       (response)=>{
         this.eventsFiltered = response.data;
