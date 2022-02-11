@@ -8,7 +8,8 @@
             <div class="novedad__header">
                 <div class="row">
                     <div class="col-2">
-                        <img class="novedad__foto-autor" [src]="novedad.url_foto_autor">
+                        <img class="novedad__foto-autor" [src]='novedad.url_foto_autor' *ngIf="novedad.url_foto_autor"/>
+                        <img class="novedad__foto-autor" src='assets/images/avatar-person.svg' *ngIf="!novedad.url_foto_autor"/>
                     </div>
                     <div class="novedad__title-box col-10"><h4 class="novedad__nombre-autor">{{novedad.autor}}</h4></div>
                 </div>

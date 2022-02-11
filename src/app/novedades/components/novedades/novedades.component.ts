@@ -510,7 +510,6 @@ export class NovedadesComponent implements OnInit {
   ];
 
   novedadesFiltered:Array<Novedad> = [];
-
   constructor(private activatedRoute: ActivatedRoute, private nService:NovedadesService, private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
