@@ -309,6 +309,8 @@ export class EventosComponent implements OnInit {
   ];
   eventType:string = '';
   eventsFiltered:Array<Evento> = [];
+  showNotFound:boolean = false;
+  loading:boolean = false;
 
   constructor(private activatedRoute:ActivatedRoute, private eService:EventosService) { 
     this.eventos = [];
@@ -325,11 +327,18 @@ export class EventosComponent implements OnInit {
       return this.eventType == "capacitaciones" ? value.tipo == this.eventType.substring(0,this.eventType.length - 2) : value.tipo == this.eventType.substring(0,this.eventType.length - 1)
     }); */
     console.log("Cargando todos!");
+    this.showNotFound = false;
+    this.loading = true;
     this.eService.getEventoByTipo(this.eventType).subscribe(
       (response)=>{
         this.eventsFiltered = response.data;
         console.log(this.eventsFiltered);
+        if(this.eventsFiltered.length < 1){
+          this.showNotFound = true;
+        }
+        this.loading = false;
       },err=>{
+        this.loading = false;
         console.log(err);
       }
     );
@@ -353,12 +362,19 @@ export class EventosComponent implements OnInit {
       return;
     }
 
+    this.showNotFound = false;
+    this.loading = true;
     obser.subscribe(
       (response)=>{
         this.eventsFiltered = response.data;
+        if(this.eventsFiltered.length < 1){
+          this.showNotFound = true;
+        }
+        this.loading = false;
       },err=>{
         console.log("Error ",err);
         this.eventsFiltered.length = 0;
+        this.loading = false;
       }
     );
   }
