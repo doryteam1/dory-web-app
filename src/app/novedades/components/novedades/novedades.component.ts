@@ -516,7 +516,7 @@ export class NovedadesComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.activatedRoute.snapshot.url[0].path == "articulos-colombia"){
-      this.tipo == "articulo-colombia";
+      this.tipo = "articulo-colombia";
     }else{
       this.tipo =this.activatedRoute.snapshot.url[0].path.substring(0, this.activatedRoute.snapshot.url[0].path.length - 1);
     }
