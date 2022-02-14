@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="container-form">
+        <h4 class="container__title">Formulario de contacto</h4>
+        <img class="container__logo" src="assets/images/logo.svg">
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="container-form__box">
+            <span class="container-form__label">Nombre y Apellido: <span class="container-form__simbol">*</span></span>
+            <input class="container-form__input" [ngClass]="invalid('nomCompleto') ? 'invalid-input' : ''" type="text" formControlName="nomCompleto" (input)="onChange()">
+            <div *ngIf="invalid('nomCompleto')" class="container__alert-msg danger-message">
+                <div *ngIf="nomCompleto?.errors?.['required']">
+                    *Campo obligatorio
+                </div>
+            </div>
+        </div>
+
+        <div class="container-form__box">
+            <span class="container-form__label">Email: <span class="container-form__simbol">*</span></span>
+            <input class="container-form__input" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" formControlName="email" (input)="onChange()">
+            <div *ngIf="invalid('email')" class="container__alert-msg danger-message">
+                <div *ngIf="email?.errors?.['required']">
+                    *Campo obligatorio
+                </div>
+                <div *ngIf="email?.errors?.['email']">
+                    Escribe un email correcto!
+                </div>
+            </div>
+        </div>
+
+        <div class="container-form__box">
+            <span class="container-form__label">Celular: <span class="container-form__simbol">*</span></span>
+            <input class="container-form__input" [ngClass]="invalid('celular') ? 'invalid-input' : ''" type="number" formControlName="celular" (input)="onChange()">
+            <div *ngIf="invalid('celular')" class="container__alert-msg danger-message">
+                <div *ngIf="celular?.errors?.['required']">
+                    *Campo obligatorio
+                </div>
+            </div>
+        </div>
+
+        <div class="container-form__box">
+            <span class="container-form__label">Asunto: <span class="container-form__simbol">*</span></span>
+            <input class="container-form__input" [ngClass]="invalid('asunto') ? 'invalid-input' : ''" type="text" formControlName="asunto" (input)="onChange()">
+            <div *ngIf="invalid('asunto')" class="container__alert-msg danger-message">
+                <div *ngIf="asunto?.errors?.['required']">
+                    *Campo obligatorio
+                </div>
+            </div>
+        </div>
+
+        <div class="container-form__box">
+            <span class="container-form__label">Mensaje: <span class="container-form__simbol">*</span></span>
+            <textarea class="container-form__input container-form__input--textarea" [ngClass]="invalid('mensaje') ? 'invalid-input' : ''" type="textarea" formControlName="mensaje" (input)="onChange()"></textarea>
+            <div *ngIf="invalid('mensaje')" class="container__alert-msg danger-message">
+                <div *ngIf="mensaje?.errors?.['required']">
+                    *Campo obligatorio
+                </div>
+            </div>
+        </div>
+
+        <div class="container-box">
+            <button class="container-form__button btn-rounded-blue" [ngClass]="form.invalid ? 'disabled' : ''" type="submit">
+                <div class="spinner-border spinner" role="status" *ngIf="loading">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <span *ngIf="!loading">Enviar</span>
+            </button>
+        </div>
+        </form>
+        
+    </div>
+    </div>
+    

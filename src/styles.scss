@@ -157,5 +157,10 @@
 .spinner{
     color:var(--morado);
 }
+
+.disabled{
+    background-color: var(--gris-oscuro);
+    border: none
+}
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

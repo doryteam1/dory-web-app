@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PoliticaComponent } from './components/politica/politica.component';
 import { CondicionesComponent } from './components/condiciones/condiciones.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { BasicMessageComponent } from './components/basic-message/basic-message.component';
 
 
 const routes: Routes = [
@@ -58,12 +59,21 @@ const routes: Routes = [
     loadChildren: () => import('./equipo-trabajo/equipo-trabajo.module').then(m => m.EquipoTrabajoModule)
   },
   {
+    path:'contacto',
+    loadChildren: () => import('./contacto/contacto.module').then(m => m.ContactoModule)
+  },
+  {
     path:'politica', component:PoliticaComponent
   },
   {
     path:'condiciones', component:CondicionesComponent
   },
-  { path: 'welcome', component:WelcomeComponent }
+  { 
+    path: 'welcome', component:WelcomeComponent 
+  },
+  {
+    path:'basic-message', component:BasicMessageComponent
+  }
 ];
 
 @NgModule({

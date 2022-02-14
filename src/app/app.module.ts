@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
+import { BasicMessageComponent } from './components/basic-message/basic-message.component';
 
 
 
@@ -22,7 +23,8 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     PoliticaComponent,
     CondicionesComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    BasicMessageComponent
   ],
   imports: [
     BrowserModule,
