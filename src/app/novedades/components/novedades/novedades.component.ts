@@ -541,20 +541,28 @@ export class NovedadesComponent implements OnInit {
         }
         this.loading = false;
       },err=>{
+        this.novedadesFiltered.length = 0;
         this.loading = false;
         console.log(err);
       }
     );
   }
 
-  onSearch(event:string){
-    console.log("event: ",event);
-    this.showNotFound = false;
-    this.loading = true;
+  textChange(event:string){
     if(event == ''){
       this.cargarTodos();
       return;
     }
+  }
+
+  onSearch(event:string){
+    console.log("event: ",event);
+    if(event == ''){
+      return;
+    }
+
+    this.showNotFound = false;
+    this.loading = true;
     this.nService.getNovedadesByTipoCadena(this.tipo,event).subscribe(
       (response)=>{
         this.novedadesFiltered = response.data;

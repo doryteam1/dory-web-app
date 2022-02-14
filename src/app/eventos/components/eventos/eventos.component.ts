@@ -344,15 +344,22 @@ export class EventosComponent implements OnInit {
     );
   }
 
-  onSearch(event:string){
-    console.log("event: ",event);
-    let obser:Observable<any>;
-    this.showNotFound = false;
-    this.loading = true;
+  textChange(event:string){
     if(event == ''){
       this.cargarTodos();
       return;
     }
+  }
+  
+  onSearch(event:string){
+    console.log("event: ",event);
+    if(event == ''){
+      return;
+    }
+
+    let obser:Observable<any>;
+    this.loading = true;
+    
     if(this.eventType == 'cursos'){
       obser = this.eService.getCursosByString(event);
     }else if(this.eventType == 'congresos'){
