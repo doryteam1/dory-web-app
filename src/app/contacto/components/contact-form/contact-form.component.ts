@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MailService } from 'src/app/services/mail.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ContactFormComponent implements OnInit {
   });
   loading:boolean = false;
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,private mailService:MailService) { }
 
   ngOnInit(): void {
   }
@@ -36,11 +37,24 @@ export class ContactFormComponent implements OnInit {
     if(this.form.invalid){
       return;
     }
-    this.router.navigateByUrl('/basic-message');
-
-    console.log(this.form.value)
-    
     this.loading = true;
+    let data:any = {
+      nombre: this.form.get('nomCompleto')?.value,
+      email: this.form.get('email')?.value,
+      asunto: this.form.get('asunto')?.value,
+      celular: this.form.get('celular')?.value,
+      mensaje: this.form.get('mensaje')?.value,
+    }
+    
+    this.mailService.contactenosSendMail(data).subscribe(
+      (response)=>{
+        this.loading = false;
+        this.router.navigateByUrl('/basic-message');    
+      },err=>{
+        this.loading = false;
+        console.log(err);
+      }
+    );
   }
 
 
