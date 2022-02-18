@@ -370,7 +370,7 @@ export class EventosComponent implements OnInit {
       return;
     }
 
-    
+    this.showNotFound = false;
     obser.subscribe(
       (response)=>{
         this.eventsFiltered = response.data;
