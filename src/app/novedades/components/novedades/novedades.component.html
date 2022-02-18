@@ -4,47 +4,57 @@
 <app-search (textSearch)="textChange($event)" (keyEnterPress)="onSearch($event)"></app-search>
 <div class="container">
     <div *ngFor="let novedad of novedadesFiltered">
-            <div class="novedad">
-            <div class="novedad__header">
-                <div class="row">
-                    <div class="col-2">
-                        <img class="novedad__foto-autor" [src]='novedad.url_foto_autor' *ngIf="novedad.url_foto_autor"/>
-                        <img class="novedad__foto-autor" src='assets/images/avatar-person.svg' *ngIf="!novedad.url_foto_autor"/>
+        <div class="container-box">
+            <div class="novedad pt-5">
+                <div class="novedad__header">
+                    <div class="row">
+                        <div class="col-2">
+                            <img class="novedad__foto-autor" [src]='novedad.url_foto_autor' *ngIf="novedad.url_foto_autor"/>
+                            <img class="novedad__foto-autor" src='assets/images/avatar-person.svg' *ngIf="!novedad.url_foto_autor"/>
+                        </div>
+                        <div class="novedad__title-box col-10"><h4 class="novedad__nombre-autor">{{novedad.autor}}</h4></div>
                     </div>
-                    <div class="novedad__title-box col-10"><h4 class="novedad__nombre-autor">{{novedad.autor}}</h4></div>
                 </div>
-            </div>
-            <div class="mb-4">
-                <button class="novedad__share-button"><img class="novedad__button_icon" src="assets/icons/share.svg">Compartir</button>
-            </div>
-            <div>
-                
-            </div>
-            <div>
-                <span  class="novedad__categoria">PRODUCTORES</span>
-                <span  class="novedad__categoria">PRODUCTORES</span>
-            </div>
-            <div></div>
-            <div class="novedad__foto-container">
-                <a href={{novedad.url_novedad}} target="_blank"><img class="novedad__foto" [src]="novedad.url_foto_novedad"></a>
-            </div>
-            <div class="novedad__titular-container">
-                <a href={{novedad.url_novedad}} target="_blank"><h2 class="novedad__titular">{{ novedad.titulo | shorter:80 }}</h2></a>
-            </div>
-            <div class="novedad__cuerpo-container">
-                <a href={{novedad.url_novedad}} target="_blank"><p class="novedad__cuerpo">{{ novedad.resumen | shorter:264 }}</p></a>
-            </div>
-            <div></div>
-            <div class="novedad__container_stats">
-                <div>
-                    <img class="novedad__like-icon" src="assets/icons/happy-face.svg">
-                    <span class="novedad__like-count">{{novedad.likes}}</span>
+                <div class="mb-4">
+                    <!--<button class="novedad__share-button"><img class="novedad__button_icon" src="assets/icons/share.svg">Compartir</button>-->
                 </div>
                 <div>
-                    <span class="novedad__visitas">{{novedad.cant_visitas}}  vistas</span>
-                    <span class="novedad__fecha"> - 6 meses</span>
+                    
+                </div>
+                <div class="pt-3">
+                    <span  class="novedad__categoria">PRODUCTORES</span>
+                    <span  class="novedad__categoria">PRODUCTORES</span>
+                </div>
+                <div></div>
+                <div class="novedad__foto-container">
+                    <a href={{novedad.url_novedad}} target="_blank"><img class="novedad__foto" [src]="novedad.url_foto_novedad"></a>
+                </div>
+                <div class="novedad__titular-container">
+                    <a href={{novedad.url_novedad}} target="_blank"><h2 class="novedad__titular">{{ novedad.titulo | shorter:80 }}</h2></a>
+                </div>
+                <div class="novedad__cuerpo-container">
+                    <a href={{novedad.url_novedad}} target="_blank"><p class="novedad__cuerpo">{{ novedad.resumen | shorter:264 }}</p></a>
+                </div>
+                <div></div>
+                <div class="novedad__container_stats">
+                    <div>
+                        <img class="novedad__like-icon" src="assets/icons/happy-face.svg">
+                        <span class="novedad__like-count">{{novedad.likes}}</span>
+                    </div>
+                    <div>
+                        <span class="novedad__visitas">{{novedad.cant_visitas}}  vistas</span>
+                        <span class="novedad__fecha"> - 6 meses</span>
+                    </div>
                 </div>
             </div>
+            <share-buttons class="pt-3" theme="circles-dark"
+                [include]="['copy', 'email','messenger', 'whatsapp']"
+                [showIcon]="true"
+                [showText]="false"
+                url={{novedad.url_novedad}}
+                description={{novedad.titulo}}
+                twitterAccount="rodrigokamada">
+            </share-buttons>
         </div>
     </div>    
 </div>

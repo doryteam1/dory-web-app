@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+
 :root{
     --morado:#6685B4;
     --azul1:#26A5B8;
@@ -164,3 +165,6 @@
 }
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+/* @import '~@ngx-share/button/styles/share-buttons.css';
+@import '~@ngx-share/button/styles/themes/default/default-theme.css'; */
+//@import '~ngx-sharebuttons/themes/default';
