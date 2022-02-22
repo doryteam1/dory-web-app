@@ -14,7 +14,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
-import { BasicMessageComponent } from './components/basic-message/basic-message.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 
@@ -23,8 +22,7 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
     AppComponent,
     PoliticaComponent,
     CondicionesComponent,
-    WelcomeComponent,
-    BasicMessageComponent
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

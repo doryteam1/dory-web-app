@@ -46,4 +46,8 @@ export class UsuarioService {
   actualizarUsuario(id:number, dataUser:any){
     return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/usuarios/parcial/'+id,dataUser);
   }
+
+  login(userData: {email:string, password:string}){
+    return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/login',userData)
+  }
 }

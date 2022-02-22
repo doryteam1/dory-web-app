@@ -9,6 +9,7 @@ import { NotificationBarComponent } from './components/notification-bar/notifica
 import { SearchComponent } from './components/search/search.component';
 import { FormsModule } from '@angular/forms';
 import { FloatingBtnAutoUpComponent } from './components/floating-btn-auto-up/floating-btn-auto-up.component';
+import { BasicMessageComponent } from '../components/basic-message/basic-message.component';
 
 
 
@@ -20,7 +21,8 @@ import { FloatingBtnAutoUpComponent } from './components/floating-btn-auto-up/fl
     SearchBarComponent,
     NotificationBarComponent,
     SearchComponent,
-    FloatingBtnAutoUpComponent
+    FloatingBtnAutoUpComponent,
+    BasicMessageComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { FloatingBtnAutoUpComponent } from './components/floating-btn-auto-up/fl
     SearchBarComponent,
     NotificationBarComponent,
     SearchComponent,
-    FloatingBtnAutoUpComponent
+    FloatingBtnAutoUpComponent,
+    BasicMessageComponent
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="container-form">
+        <h4 class="container__title">Inicia sesión</h4>
+        <img class="container__logo" src="assets/images/logo.svg">
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <div class="container-form__box">
+                <span class="container-form__label">Correo electrónico: <span class="container-form__simbol">*</span></span>
+                <input class="container-form__input" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" formControlName="email" (input)="onChange()">
+                <div *ngIf="invalid('email')" class="container__alert-msg danger-message">
+                    <div *ngIf="email?.errors?.['required']">
+                        *Campo obligatorio
+                    </div>
+                    <div *ngIf="email?.errors?.['email']">
+                        Escribe un email correcto!
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-form__box">
+                <span class="container-form__label">Contraseña: <span class="container-form__simbol">*</span></span>
+                <input class="container-form__input" [ngClass]="invalid('password') ? 'invalid-input' : ''" type="password" formControlName="password" (input)="onChange()">
+                <div *ngIf="invalid('password')" class="container__alert-msg danger-message">
+                    <div *ngIf="password?.errors?.['required']">
+                        *Campo obligatorio
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-box">
+                <button class="container-form__button btn-rounded-blue" [ngClass]="form.invalid ? 'disabled' : ''" type="submit">
+                    <div class="spinner-border spinner" role="status" *ngIf="loading">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <span *ngIf="!loading">Iniciar sesión</span>
+                </button>
+            </div>
+        </form>
+        <a class="container__link mt-4" routerLink="forgot-password">¿Haz olvidado tu contraseña?</a>
+        <a class="container__link" routerLink="/registro">¿No tienes cuenta? Regístrate</a>
+    </div>
+    </div>
+    

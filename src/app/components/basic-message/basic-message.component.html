@@ -1,11 +1,12 @@
 <div class="container">
     <div class="container-form">
         <img class="container__logo" src="assets/images/logo.svg">
-        <span class="container__title">Enviado satisfactoriamente.</span>
-        <span class="container__desc">Dele clic en “aceptar”  para volver a inicio</span>
+        <span class="container__title">{{title}}</span>
+        <p class="container__paragraph" *ngIf="message != ''">{{message}}</p>
+        <span class="container__desc">{{callToAction}}</span>
         <div class="container-box">
                 <button class="container-form__button btn-rounded-blue" type="submit" routerLink="/home">
-                <span>Aceptar</span>
+                <span>{{btnName}}</span>
             </button>
         </div>        
 </div>

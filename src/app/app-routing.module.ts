@@ -63,6 +63,10 @@ const routes: Routes = [
     loadChildren: () => import('./contacto/contacto.module').then(m => m.ContactoModule)
   },
   {
+    path:'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+  },
+  {
     path:'politica', component:PoliticaComponent
   },
   {
