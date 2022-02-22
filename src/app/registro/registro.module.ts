@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlacesService } from '../services/places.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbdModalOptions } from '../modals/modal-options/modal-options.component';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     RegistroComponent,NgbdModalOptions
@@ -16,7 +17,8 @@ import { NgbdModalOptions } from '../modals/modal-options/modal-options.componen
     RegistroRoutingModule,
     ReactiveFormsModule,
     NgbModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    SharedModule
   ],
   exports: [
     RegistroComponent
