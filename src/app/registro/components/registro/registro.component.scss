@@ -11,8 +11,9 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #F3F3F4;
-    background-image: url("https://revistas.unimagdalena.edu.co/public/journals/2/article_3292_cover_es_ES.jpg");
+    background-color: var(--azul1);
+    color:var(--gris-oscuro);
+    //background-image: url("https://revistas.unimagdalena.edu.co/public/journals/2/article_3292_cover_es_ES.jpg");
     background-repeat: no-repeat;
 }
 
@@ -139,6 +140,8 @@ html, body {
     width: 100%;
     font-size: 12px;
     margin-left: 5px;
+    color:var(--gris-oscuro);
+    border-color: var(--gris-oscuro);
 }
 
 .container-form__checkbox{
