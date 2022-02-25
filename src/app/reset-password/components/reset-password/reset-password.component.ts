@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { RegExpUtils } from 'src/app/utilities/regexps';
 
 @Component({
   selector: 'app-reset-password',
@@ -14,10 +15,12 @@ export class ResetPasswordComponent implements OnInit {
     password:new FormControl('',[Validators.required]),
   });
   loading:boolean = false;
+  token:string = '';
 
-  constructor(private router:Router, private userService:UsuarioService) { }
+  constructor(private router:Router, private userService:UsuarioService,private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.token = this.activatedRoute.snapshot.queryParamMap.get('token')!;
   }
 
   invalid(controlFormName:string){;
@@ -35,13 +38,36 @@ export class ResetPasswordComponent implements OnInit {
     }
     this.loading = true;
     let data:any = {
-      password: this.form.get('password')?.value
+      newPassword: this.form.get('password')?.value,
+      token:this.token
     }
     
-    this.success = true;
+    this.userService.updatePassword(data).subscribe(
+      (response)=>{
+        this.success = true;
+      },err=>{
+        console.log(err);
+      }
+    );
   }
 
   get password(){
     return this.form.get('password');
+  }
+
+  eigthChar(cad:string){
+    return RegExpUtils.eigthCharTest(cad);
+  }
+
+  capitalcase(cad:string){
+    return RegExpUtils.capitalcaseTest(cad);
+  }
+
+  lowercase(cad:string){
+    return RegExpUtils.lowercaseTest(cad);
+  }
+
+  number(cad:string){
+    return RegExpUtils.numberTest(cad);
   }
 }

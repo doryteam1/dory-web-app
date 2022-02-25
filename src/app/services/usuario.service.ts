@@ -50,4 +50,12 @@ export class UsuarioService {
   login(userData: {email:string, password:string}){
     return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/login',userData)
   }
+
+  recoveryPassword(email:string){
+    return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/usuario/recover/password',{email:email});
+  }
+
+  updatePassword(body:{newPassword:string, token:string}){
+    return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/usuario/update/password',body)
+  }
 }

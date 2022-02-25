@@ -34,11 +34,15 @@ export class ForgotPasswordComponent implements OnInit {
       return;
     }
     this.loading = true;
-    let data:any = {
-      email: this.form.get('email')?.value
-    }
+
+    this.userService.recoveryPassword(this.form.get('email')?.value).subscribe(
+      (respose)=>{
+        this.send = true;
+      },err=>{
+        console.log(err);
+      }
+    )
     
-    this.send = true;
   }
 
   get email(){
