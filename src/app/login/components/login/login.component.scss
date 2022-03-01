@@ -83,6 +83,11 @@ html, body {
     outline:none;
 }
 
+.container-form__checkbox{
+    display: inline;
+    margin-right: 5px;
+    margin-top:10px;
+}
 .container-form__input--textarea{
     border-radius: 20px;
 }

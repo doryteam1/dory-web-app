@@ -17,10 +17,16 @@ export class LoginComponent implements OnInit {
     password:new FormControl('',[Validators.required]),
   });
   loading:boolean = false;
+  recordarme:boolean = false;
 
   constructor(private router:Router,private mailService:MailService, private userService:UsuarioService) { }
 
   ngOnInit(): void {
+    let remEmail = localStorage.getItem('rememberEmail');
+    if(remEmail){
+      this.form.get('email')?.setValue(remEmail);
+      this.recordarme = true;
+    }
   }
 
   invalid(controlFormName:string){;
@@ -46,6 +52,11 @@ export class LoginComponent implements OnInit {
       (response)=>{
         localStorage.setItem('email',data.email);
         localStorage.setItem('token',response.body.token);
+        if(this.recordarme == true){
+          localStorage.setItem('rememberEmail',data.email)
+        }else{
+          localStorage.removeItem('rememberEmail');
+        }
         this.loading = false;
         this.router.navigateByUrl('/dashboard');    
       },err=>{
@@ -55,6 +66,10 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  recordarmeOnChange(){
+    this.recordarme = !this.recordarme;
+    console.log(this.recordarme);
+  }
   get email(){
     return this.form.get('email');
   }

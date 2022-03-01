@@ -29,6 +29,13 @@
                 </div>
             </div>
 
+            <div class="container-form__box">
+                <div>
+                    <input class="container-form__checkbox" type="checkbox" (click)="recordarmeOnChange()">
+                    <span class="container-form__label">Recordarme: </span>
+                </div>
+            </div>
+
             <div class="container-box">
                 <button class="container-form__button btn-rounded-blue" [ngClass]="form.invalid ? 'disabled' : ''" type="submit">
                     <div class="spinner-border spinner" role="status" *ngIf="loading">
