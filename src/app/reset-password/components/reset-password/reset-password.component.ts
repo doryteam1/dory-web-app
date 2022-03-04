@@ -11,8 +11,12 @@ import { RegExpUtils } from 'src/app/utilities/regexps';
 })
 export class ResetPasswordComponent implements OnInit {
   success:boolean = false;
+  visiblePass:boolean = false;
+  visibleMatchPass:boolean = false;
+  
   form:FormGroup = new FormGroup({
     password:new FormControl('',[Validators.required]),
+    matchPassword:new FormControl('',Validators.required)
   });
   loading:boolean = false;
   token:string = '';
@@ -29,6 +33,10 @@ export class ResetPasswordComponent implements OnInit {
 
   onChange(){
     console.log('on change');
+  }
+
+  noMatchingPasswords(){
+    return this.password?.value != this.matchPassword?.value && (this.matchPassword?.dirty || this.matchPassword?.touched);
   }
 
   onSubmit(){
@@ -53,6 +61,10 @@ export class ResetPasswordComponent implements OnInit {
 
   get password(){
     return this.form.get('password');
+  }
+
+  get matchPassword(){
+    return this.form.get('matchPassword');
   }
 
   eigthChar(cad:string){

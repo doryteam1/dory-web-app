@@ -163,6 +163,19 @@
     background-color: var(--gris-oscuro);
     border: none
 }
+
+.input-glyphicon{
+    position:relative;
+}
+
+.glyphicon{
+    position:absolute;
+    padding:10px;
+    cursor: pointer;
+    right: 0px;
+    top:-8px;
+}
+
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 /* @import '~@ngx-share/button/styles/share-buttons.css';
