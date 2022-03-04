@@ -60,7 +60,6 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         this.router.navigateByUrl('/dashboard');    
       },err=>{
-        console.log(err)
         if(err.status == 400){
           this.error = err.error.message;
         }else{
