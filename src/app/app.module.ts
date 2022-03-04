@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegistroModule } from './registro/registro.module';
 import { HttpsService } from './services/https.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { PoliticaComponent } from './components/politica/politica.component';
 import { CondicionesComponent } from './components/condiciones/condiciones.component';
@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,11 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
         }
       ]
     }
+  },
+  {
+    provide:HTTP_INTERCEPTORS,
+    useClass:AuthInterceptor,
+    multi:true
   }
   ],
   bootstrap: [AppComponent]

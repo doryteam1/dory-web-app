@@ -58,4 +58,15 @@ export class UsuarioService {
   updatePassword(body:{newPassword:string, token:string}){
     return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/usuario/update/password',body)
   }
+
+  isAuthenticated(){
+    let email = localStorage.getItem('email');
+    let token = localStorage.getItem('token');
+
+    if(email && token && email != '' && token != ''){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

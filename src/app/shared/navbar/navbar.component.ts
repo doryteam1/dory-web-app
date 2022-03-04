@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,16 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  constructor(private router:Router) { }
+  constructor(private router:Router,private userService:UsuarioService) { }
 
   ngOnInit(): void {
   }
 
   login(){
-    let email = localStorage.getItem('email');
-    let token = localStorage.getItem('token');
+    let isAuth = this.userService.isAuthenticated();
 
-    if(email && token && email != '' && token != ''){
+    if(isAuth){
       this.router.navigateByUrl('/dashboard');
     }else{
       this.router.navigateByUrl('/login');

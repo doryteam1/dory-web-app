@@ -108,8 +108,15 @@
     grid-column: 1 / span 2;
 }
 .novedad__like-icon{
-    width:14px;
-    height: 14px;
+    width:20px;
+    height: 20px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.novedad__like-icon--fill{
+    background:var(--azul2);
 }
 
 .novedad__like-count{
