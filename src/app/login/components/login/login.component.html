@@ -27,6 +27,9 @@
                         *Campo obligatorio
                     </div>
                 </div>
+                <div *ngIf="error" class="container__alert-msg danger-message">
+                    {{error}}
+                </div>
             </div>
 
             <div class="container-form__box">

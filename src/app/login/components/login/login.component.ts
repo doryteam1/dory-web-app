@@ -11,13 +11,13 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
   form:FormGroup = new FormGroup({
     email:new FormControl('',[Validators.required, Validators.email]),
     password:new FormControl('',[Validators.required]),
   });
   loading:boolean = false;
   recordarme:boolean = false;
+  error:string = '';
 
   constructor(private router:Router,private mailService:MailService, private userService:UsuarioService) { }
 
@@ -60,8 +60,14 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         this.router.navigateByUrl('/dashboard');    
       },err=>{
+        console.log(err)
+        if(err.status == 400){
+          this.error = err.error.message;
+        }else{
+          this.error = 'Error inesperado'
+        }
         this.loading = false;
-        console.log(err);
+        
       }
     );
   }
