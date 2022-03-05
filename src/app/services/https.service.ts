@@ -36,4 +36,8 @@ export class HttpsService {
   put(endpoint:string, data: any): Observable<any> {
     return this.http.put(endpoint, data,{observe: 'response'});
   }
+
+  delete(endpoint:string):Observable<any>{
+    return this.http.delete(endpoint)
+  }
 }

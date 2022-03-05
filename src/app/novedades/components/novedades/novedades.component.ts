@@ -75,28 +75,42 @@ export class NovedadesComponent implements OnInit {
     );
   }
 
-  onView(idNovedad:number){
+  onView(idNovedad:number, i:number){
     console.log(idNovedad)
+    this.novedadesFiltered[i].cant_visitas++;
     this.nService.addView(idNovedad).subscribe(
       (response)=>{
 
+      },err=>{
+        this.novedadesFiltered[i].cant_visitas--;
       }
     );
   }
 
-  onLike(novedad:any){
-    console.log("on like")
+  onLike(novedad:any, i:number){
+    console.log("on like ",i)
+
     if(this.userService.isAuthenticated()){
       if(novedad.me_gusta > 0){
+        this.novedadesFiltered[i].me_gusta = 0;
+        this.novedadesFiltered[i].likes--;
         this.nService.dislike(novedad.id_novedad).subscribe(
           (response)=>{
-
+            
+          },err=>{
+            this.novedadesFiltered[i].me_gusta = 1;
+            this.novedadesFiltered[i].likes++;
           }
         )
       }else{
+        this.novedadesFiltered[i].me_gusta = 1;
+        this.novedadesFiltered[i].likes++;
         this.nService.like(novedad.id_novedad).subscribe(
           (response)=>{
-
+            
+          },err=>{
+            this.novedadesFiltered[i].me_gusta = 0;
+            this.novedadesFiltered[i].likes--;
           }
         )
       }

@@ -23,7 +23,6 @@ export class AuthInterceptor implements HttpInterceptor {
         return of(token)
             .pipe(
                 switchMap(token => {
-                    console.log("token interceptor ",token);
                     if (token) {
                         request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
                         //request = request.clone({ headers: request.headers.set('Authorization', token) });

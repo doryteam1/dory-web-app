@@ -31,6 +31,6 @@ export class NovedadesService {
   }
 
   dislike(idNovedad:number){
-    return this.https.post('https://dory-api-rest.herokuapp.com/api/novedades/auth/dislike/'+idNovedad,null)
+    return this.https.delete('https://dory-api-rest.herokuapp.com/api/novedades/auth/dislike/'+idNovedad)
   }
 }

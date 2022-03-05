@@ -3,7 +3,7 @@
 <app-navbar></app-navbar>
 <app-search (textSearch)="textChange($event)" (keyEnterPress)="onSearch($event)"></app-search>
 <div class="container">
-    <div *ngFor="let novedad of novedadesFiltered">
+    <div *ngFor="let novedad of novedadesFiltered; let i=index;">
         <div class="container-box">
             <div class="novedad pt-5">
                 <div class="novedad__header">
@@ -27,18 +27,18 @@
                 </div> -->
                 <div></div>
                 <div class="novedad__foto-container">
-                    <a href={{novedad.url_novedad}} target="_blank" (click)="onView(novedad.id_novedad)"><img class="novedad__foto" [src]="novedad.url_foto_novedad"></a>
+                    <a href={{novedad.url_novedad}} target="_blank" (click)="onView(novedad.id_novedad, i)"><img class="novedad__foto" [src]="novedad.url_foto_novedad"></a>
                 </div>
                 <div class="novedad__titular-container">
-                    <a href={{novedad.url_novedad}} target="_blank" (click)="onView(novedad.id_novedad)"><h2 class="novedad__titular">{{ novedad.titulo | shorter:80 }}</h2></a>
+                    <a href={{novedad.url_novedad}} target="_blank" (click)="onView(novedad.id_novedad, i)"><h2 class="novedad__titular">{{ novedad.titulo | shorter:80 }}</h2></a>
                 </div>
                 <div class="novedad__cuerpo-container">
-                    <a href={{novedad.url_novedad}} target="_blank" (click)="onView(novedad.id_novedad)"><p class="novedad__cuerpo">{{ novedad.resumen | shorter:264 }}</p></a>
+                    <a href={{novedad.url_novedad}} target="_blank" (click)="onView(novedad.id_novedad, i)"><p class="novedad__cuerpo">{{ novedad.resumen | shorter:264 }}</p></a>
                 </div>
                 <div></div>
                 <div class="novedad__container_stats">
                     <div>
-                        <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''" src="assets/icons/happy-face.svg" (click)="onLike(novedad)">
+                        <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''" src="assets/icons/happy-face.svg" (click)="onLike(novedad, i)">
                         <span class="novedad__like-count">{{novedad.likes}}</span>
                     </div>
                     <div>
