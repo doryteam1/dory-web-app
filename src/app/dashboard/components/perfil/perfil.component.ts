@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AreasExperticiaService } from 'src/app/services/areas-experticia.service';
 import { PlacesService } from 'src/app/services/places.service';
+import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { RegExpUtils } from 'src/app/utilities/regexps';
 import { Utilities } from 'src/app/utilities/utilities';
@@ -33,13 +34,14 @@ export class PerfilComponent implements OnInit {
   update:string = ''; 
   idUsuario:number=-1;
 
-  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService) { }
+  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService, private storageService:StorageService) { }
 
   ngOnInit(): void {
     let email:string | null = localStorage.getItem('email');
     console.log('email logueado ',email);
     this.us.getUsuarioByEmail(email).subscribe(
       (response)=>{
+        console.log(response);
         this.usuario = response.data[0];
         console.log(response);
         this.email = this.usuario.email;
@@ -54,6 +56,8 @@ export class PerfilComponent implements OnInit {
         this.idUsuario = this.usuario.id;
         this.loadAreasExp();
         this.loadDptos();
+        this.storageService.add('photoUser',this.usuario.foto)
+        this.storageService.add('nomApell',this.getNomApell(this.usuario.nombres,this.usuario.apellidos))
         if(!this.usuario.tipo_usuario || !(this.usuario.nombres && this.usuario.apellidos)){
           this.router.navigate(['/welcome',this.usuario]);  
         }
@@ -61,6 +65,17 @@ export class PerfilComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  getNomApell(nombres:string,apellidos:string){
+    let nomComp:string = '';
+    if(nombres){
+      nomComp = nombres.split(' ')[0];
+    }
+    if(apellidos){
+      nomComp = nomComp +" "+ apellidos.split(' ')[0];
+    }
+    return nomComp;
   }
 
   loadAreasExp(){

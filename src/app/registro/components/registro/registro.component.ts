@@ -78,7 +78,7 @@ export class RegistroComponent implements OnInit {
           this.success = true;
           this.spinner.hide();
           localStorage.setItem('email',this.email?.value);
-          this.router.navigateByUrl('/dashboard')
+          this.router.navigateByUrl('/login')
         },(err)=>{
           this.error = err.error.message;
           this.spinner.hide();

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpsService } from './https.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  constructor(private httpsService:HttpsService) { }
+  constructor(private httpsService:HttpsService, private storageService:StorageService) { }
 
   registrarUsuario(usuario:any):Observable<any>{
     let body = {
@@ -49,6 +50,13 @@ export class UsuarioService {
 
   login(userData: {email:string, password:string}){
     return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/login',userData)
+  }
+
+  logout(){
+    localStorage.removeItem('email');
+    localStorage.removeItem('token');
+    localStorage.removeItem('photoUser');
+    localStorage.removeItem('nomApell');
   }
 
   recoveryPassword(email:string){

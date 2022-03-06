@@ -7,3 +7,21 @@
     margin-right: 15px;
     cursor:pointer;
 }
+
+.container__img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.container__button{
+    background: #F8F9FA;
+    color: var(--gris-oscuro);
+    border: none;
+    outline: none;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+  }
