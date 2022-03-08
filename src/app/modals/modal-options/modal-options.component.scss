@@ -1,3 +1,43 @@
 .terms-title{
- 
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+.modal-title{
+    text-align: center;
+}
+
+.modal-body{
+    
+}
+.list{
+
+}
+
+.list__item{
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+
+.dark-modal .modal-content {
+    background-color: #292b2c;
+    color: white;
+}
+
+.dark-modal .close {
+    color: white;
+}
+
+.light-blue-backdrop {
+    background-color: #5cb3fd;
+}
+
+.modal-content span{
+    color: white;
+    font-size: 0px;
+}
+
+.modal-content .modal-heder{
+    justify-content: space-between;
 }

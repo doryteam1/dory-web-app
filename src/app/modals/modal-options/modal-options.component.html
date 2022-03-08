@@ -15,21 +15,24 @@
   
   <ng-template #longContent let-modal>
     <div class="modal-header">
-      <h4 class="modal-title">Terminos y condiciones</h4>
+      <h4 class="modal-title">Términos y condiciones</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-        <h6 class="terms-title">TERMINOS Y CONDICIONES DE LA PLATAFORMA WEB DORY
+        <h6 class="terms-title">TÉRMINOS Y CONDICIONES DE LA PLATAFORMA WEB DORY
         CUALQUIER PERSONA QUE NO ACEPTE ESTOS TÉRMINOS Y CONDICIONES GENERALES,
         LOS CUALES TIENEN UN CARÁCTER OBLIGATORIO Y VINCULANTE, DEBERÁ ABSTENERSE
         DE UTILIZAR EL SITIO Y/O LOS SERVICIOS.</h6>
         
-        <p>Es requisito necesario para la adquisición de los servicios suministrados que ofrece este
+        <ul class="list">
+        <li class="list__item">Es requisito necesario para la adquisición de los servicios suministrados que ofrece este
         sitio Web, que lea, entienda y acepte los siguientes términos y condiciones establecidos
         de privacidad de la Plataforma Web que a continuación se redactan.
-        El uso de los servicios prestados por la Plataforma Web Dory, como la información acerca
+        </li>
+        
+        <li class="list__item">El uso de los servicios prestados por la Plataforma Web Dory, como la información acerca
         del sector piscícola y todo lo relacionado a la misma como los cursos, capacitaciones,
         congresos, entre otros y las normatividades correspondientes al mismo, implicara que
         usted ha leído y aceptado los términos y condiciones de uso en el presente documento.
@@ -37,7 +40,9 @@
         necesario realizar un registro por parte del usuario, con ingreso de datos personales
         fidedignos y por ende la definición de una contraseña, dentro del sitio web https://dory-
         web-app-tests.herokuapp.com/
-        El usuario puede elegir y cambiar la clave para su acceso de administración de la cuenta
+        </li>
+        
+        <li class="list__item">El usuario puede elegir y cambiar la clave para su acceso de administración de la cuenta
         en cualquier momento, en caso de que se haya registrado y en caso de que sea necesario
         para la compra de algunos de los servicios que son ofertados por la página, como cursos,
         congresos o capacitaciones, no se asume la responsabilidad en caso de que entregue
@@ -45,16 +50,24 @@
         los servicios que la pagina entrega, podrá hacerlo sujetándose a los términos y
         condiciones generales, junto a las demás políticas y principios que rige la plataforma web
         Dory.
-        Es obligatorio completar el formulario de inscripción en todos sus campos con datos
+        </li>
+        
+        <li class="list__item">Es obligatorio completar el formulario de inscripción en todos sus campos con datos
         válidos, debe tener al menos, el municipio, nombre completo, fecha de nacimiento, correo
         electrónico, como un acuerdo de vinculación, para poder utilizar los servicios que brinda la
         Plataforma Dory, el usuario deberá completarlo con su información personal de manera
         exacta, precisa y verdadera (Datos personales) y asumirá el compromiso de actualizar los
-        datos personales conforme resulte necesario. La Plataforma Web Dory, podrá utilizar
-        diversos medios para identificar a sus usuarios, pero la Plataforma Web Dory, NO se
-        responsabilizará por la certeza de los datos personales provistos por sus usuarios. Los
-        usuarios garantizan y responden, en cualquier caso, de la veracidad, exactitud, vigencia y
-        autenticidad de los datos personales ingresados.</p>
+        datos personales conforme resulte necesario. 
+        </li>
+        
+        <li class="list__item">La Plataforma Web Dory, podrá utilizar diversos medios para identificar a sus usuarios, pero 
+        la Plataforma Web Dory, NO se responsabilizará por la certeza de los datos personales provistos por sus usuarios. 
+        </li>
+        
+        <li class="list__item">Los usuarios garantizan y responden, en cualquier caso, de la veracidad, exactitud, vigencia y
+        autenticidad de los datos personales ingresados.
+        </li>
+      </ul>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>

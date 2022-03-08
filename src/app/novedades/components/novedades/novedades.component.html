@@ -38,7 +38,8 @@
                 <div></div>
                 <div class="novedad__container_stats">
                     <div>
-                        <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''" src="assets/icons/happy-face.svg" (click)="onLike(novedad, i)">
+                        <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''" src="assets/icons/happy-face.svg" (click)="onLike(novedad, i)" *ngIf="!novedad.me_gusta">
+                        <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''" src="assets/icons/happy-face-white.svg" (click)="onLike(novedad, i)" *ngIf="novedad.me_gusta">
                         <span class="novedad__like-count">{{novedad.likes}}</span>
                     </div>
                     <div>
