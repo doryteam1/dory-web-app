@@ -88,8 +88,6 @@ export class NovedadesComponent implements OnInit {
   }
 
   onLike(novedad:any, i:number){
-    console.log("on like ",i)
-
     if(this.userService.isAuthenticated()){
       if(novedad.me_gusta > 0){
         this.novedadesFiltered[i].me_gusta = 0;

@@ -42,4 +42,8 @@ export class NavbarComponent implements OnInit {
     this.userService.logout();
     this.router.navigateByUrl('/home')
   }
+  
+  resetPassword(){
+    this.router.navigate(['reset-password',{token:true}])
+  }
 }

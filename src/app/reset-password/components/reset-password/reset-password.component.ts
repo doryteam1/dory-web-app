@@ -15,7 +15,13 @@ export class ResetPasswordComponent implements OnInit {
   visibleMatchPass:boolean = false;
   
   form:FormGroup = new FormGroup({
-    password:new FormControl('',[Validators.required]),
+    password:new FormControl('',[
+      Validators.required,
+      Validators.pattern(RegExpUtils.eigthChar()),
+      Validators.pattern(RegExpUtils.capitalcase()),
+      Validators.pattern(RegExpUtils.lowercase()),
+      Validators.pattern(RegExpUtils.number()),
+    ]),
     matchPassword:new FormControl('',Validators.required)
   });
   loading:boolean = false;
@@ -25,6 +31,11 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.token = this.activatedRoute.snapshot.queryParamMap.get('token')!;
+    
+    if(this.activatedRoute.snapshot.paramMap.keys.length>0){
+      if(this.activatedRoute.snapshot.paramMap.get('token') == 'true')
+      this.token = localStorage.getItem('token')!;
+    }
   }
 
   invalid(controlFormName:string){;
