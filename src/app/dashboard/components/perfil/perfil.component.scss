@@ -87,9 +87,10 @@
 .container__btn{
     border-radius: 6px;
     height: 40px;
-    width: 100px;
+    width: 360px;
     background-color: white;
-    border:0.5px solid var(--black)
+    border:0.5px solid var(--black);
+    margin-top: 30px;
 }
 
 .container__spinner{

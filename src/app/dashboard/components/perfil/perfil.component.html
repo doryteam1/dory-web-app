@@ -6,146 +6,111 @@
             <img class="container__image2" src="assets/icons/camera.svg">
         </div>
         <div>
-            <span class="container__title">{{usuario?.nombres ? usuario?.nombres : '____' }} {{usuario?.apellidos ? usuario?.apellidos : '____' }}</span>
+            <span class="container__title">{{nombres?.value ? nombres?.value : '____' }} {{apellidos?.value ? apellidos?.value : '____' }}</span>
             <span class="container__title">{{usuario?.tipo_usuario ? usuario?.tipo_usuario : '____'}}</span>
         </div>
     </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <span class="container__title">Area de experticia</span>
     <div class="container__box-row">
-        <select class="container__input form-input-text-square" [(ngModel)]="areaExp" (ngModelChange)="resetErrors()">
-            <optgroup label="Eres un">
-                <option hidden="hidden" selected="selected">Escoje un area</option>
+        <select class="container__input form-input-text-square" formControlName='id_area_experticia'>
+            <optgroup label="Escoje un area">
                 <option *ngFor="let area of areas" [ngValue]="area.id_area">{{area.nombre}}</option>
             </optgroup>
         </select>
-        <button class="container__btn" (click)="updateUser('aexp')">
-            <span *ngIf="!loading || update!=='aexp'">Actualizar</span>
-            <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading && update=='aexp'">
-            </div>
-        </button>
     </div>
     <div class="container__box">
         <span class="container__label">Correo electrónico*</span>
         <div>
-            <input class="container__input form-input-text-square"  type="text" [(ngModel)]="email">
-            <button class="container__btn" (click)="updateUser('email')">
-                <span *ngIf="!loading || update!=='email'">Actualizar</span>
-                <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading && update=='email'">
-                </div>
-            </button>
+            <input class="container__input form-input-text-square"  type="text" formControlName='email'>
         </div>
     </div>
     
     <div class="container__box">
         <span class="container__title">Fecha de nacimiento: </span>
         <div>
-            <input class="container__input form-input-text-square" type="date" [(ngModel)]="fechaNac">
-            <button class="container__btn" (click)="updateUser('fechaNac')">
-                <span *ngIf="!loading || update!=='fechaNac'">Actualizar</span>
-                <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading && update=='fechaNac'">
-                </div>
-            </button>
+            <input class="container__input form-input-text-square" type="date" formControlName='fecha_nacimiento'>
         </div>
     </div>
 
     <div class="container__box">
         <span class="container__title">Cel: </span>
         <div>
-            <input class="container__input form-input-text-square" type="text" [(ngModel)]="cel">
-            <button class="container__btn" (click)="updateUser('cel')">
-                <span *ngIf="!loading || update!=='cel'">Actualizar</span>
-                <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading && update=='cel'">
-                </div>
-            </button>
+            <input class="container__input form-input-text-square" type="text" formControlName='celular'>
         </div>
     </div>
     
     <div class="container__box">
         <span class="container__title">Departamento</span>
         <div>
-            <select class="container__input form-input-text-square" [(ngModel)]="dpto" (ngModelChange)="changeDpto()">
-                <optgroup label="Escoge uno">
-                    <option hidden="hidden" selected="selected">Escoje un departamento</option>
+            <select class="container__input form-input-text-square" formControlName='id_departamento' (ngModelChange)='changeDpto()'>
+                <optgroup label="Escoje un departamento">
                     <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
                 </optgroup>
             </select>
-            <button class="container__btn" (click)="updateUser('dpto')">
-                <span *ngIf="!loading || update!=='dpto'">Actualizar</span>
-                <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading && update=='dpto'">
-                </div>
-            </button>
         </div>
     </div>
     
     <div class="container__box">
         <span class="container__title">Municipio</span>
         <div>
-            <select class="container__input form-input-text-square" [(ngModel)]="munic" (ngModelChange)="changeMunic()">
-                <optgroup label="Escoge uno">
+            <select class="container__input form-input-text-square" formControlName='id_municipio' (ngModelChange)='changeMunic()'>
+                <optgroup label="Escoge un municipio">
                     <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}</option>
                 </optgroup>
             </select>
-            <button class="container__btn" (click)="updateUser('munic')">
-                <span *ngIf="!loading || update!=='munic'">Actualizar</span>
-                <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading && update=='munic'">
-                </div>
-            </button>
         </div>
     </div>
     
     <div class="container__box">
-        <span class="container__title">Corregimiento</span>
-        <div *ngIf="corregimientos.length > 0">
-            <select class="container__input form-input-text-square" [(ngModel)]="corrId">
-                <optgroup label="Eres un">
-                    <option hidden="hidden" selected="selected">Escoje uno</option>
-                    <option *ngFor="let corregimiento of corregimientos" [ngValue]="corregimiento.id_corregimientoa">{{corregimiento.nombre}}</option>
+        <span class="container__title">Selecciona un corregimiento</span>
+        <div>
+            <select class="container__input form-input-text-square" formControlName='id_corregimiento' (ngModelChange)="corregSelected()">
+                <optgroup label="Escoje un corregimiento">
+                    <option *ngFor="let corregimiento of corregimientos" [ngValue]="corregimiento.id_corregimiento">{{corregimiento.nombre}}</option>
                 </optgroup>
             </select>
-            <button class="container__btn" (click)="updateUser('corr')">
-                <span *ngIf="!loading || update!=='corr'">Actualizar</span>
-                <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading && update=='corr'">
-                </div>
-            </button>
         </div>
     </div>
     
-    <div *ngIf="corregimientos.length<1">
-        <input class="container__input form-input-text-square" type="text" [(ngModel)]="correNomb">
-        <button class="container__btn" (click)="updateUser('corr')">
-            <span *ngIf="!loading || update!=='corr'">Actualizar</span>
-            <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading && update=='corr'">
-            </div>
-        </button>
+    <div>
+        <span class="container__title">Ó escribe su nombre</span>
+        <input class="container__input form-input-text-square" type="text" formControlName='nombre_corregimiento'>
     </div>
         
-    
+    <span class="container__title">Selecciona una vereda</span>
     <div class="container__box">
-        <span class="container__title">Vereda</span>
         <div>
-            <input class="container__input form-input-text-square"  type="text">
-            <button class="container__btn" (click)="updateUser('vereda')">
-                <span *ngIf="!loading || update!=='vereda'">Actualizar</span>
-                <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading && update=='vereda'">
-                </div>
-            </button>
+            <select class="container__input form-input-text-square" formControlName='id_vereda' (ngModelChange)='veredaSelected()'>
+                <optgroup label="Escoje una vereda">
+                    <option *ngFor="let vereda of veredas" [ngValue]="vereda.id_vereda">{{vereda.nombre}}</option>
+                </optgroup>
+            </select>
+        </div>
+    </div>
+
+    <div class="container__box">
+        <span class="container__title">Ó escribe su nombre</span>
+        <div>
+            <input class="container__input form-input-text-square"  type="text" formControlName='nombre_vereda'>
         </div>
     </div>
     
     <div class="container__box">
         <span class="container__title">Dirección: </span>
         <div>
-            <input class="container__input form-input-text-square"  type="text" [(ngModel)]="dir">
-            <button class="container__btn" (click)="updateUser('dir')">
-                <span *ngIf="!loading || update!=='dir'">Actualizar</span>
-                <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading && update=='dir'">
-                </div>
-            </button>
+            <input class="container__input form-input-text-square"  type="text" formControlName='direccion'>
         </div>
     </div>
-    
     <span class="container__title">Ubicacion mapa: <span class="container_link">Ver mapa</span></span> 
+
+    <button class="container__btn">
+        <span *ngIf="!loading">Actualizar</span>
+        <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+        </div>
+    </button>
     
+    </form>
 </div>
 <ngx-spinner type="square-jelly-box"></ngx-spinner>
     
