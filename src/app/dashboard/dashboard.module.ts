@@ -8,6 +8,7 @@ import { MisGranjasComponent } from './components/mis-granjas/mis-granjas.compon
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     DashboardRoutingModule,
     NgxSpinnerModule,
-    SharedModule
+    SharedModule,
+    GoogleMapsModule
   ]
 })
 export class DashboardModule { }

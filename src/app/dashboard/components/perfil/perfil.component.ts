@@ -1,11 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';;
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { AreasExperticiaService } from 'src/app/services/areas-experticia.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { RegExpUtils } from 'src/app/utilities/regexps';
 import { Utilities } from 'src/app/utilities/utilities';
 @Component({
   selector: 'app-perfil',
@@ -24,8 +26,8 @@ export class PerfilComponent implements OnInit {
   form:FormGroup = new FormGroup({
     id:new FormControl(''),	
     cedula:new FormControl(''),	
-    nombres:new FormControl(''),	
-    apellidos:new FormControl(''),	
+    nombres:new FormControl(''),
+    apellidos:new FormControl(''),
     celular:new FormControl(''),	
     direccion:new FormControl(''),	
     id_tipo_usuario:new FormControl(''),	
@@ -45,7 +47,56 @@ export class PerfilComponent implements OnInit {
     nombre_corregimiento:new FormControl(''),
   });
 
-  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService, private storageService:StorageService) { }
+  campos:any = {
+    proveedor:[
+      
+    ],
+    investigadorexperto:[
+
+    ],
+    transportador:[
+
+    ],
+    piscicultor:[
+
+    ],
+    consumidor:[
+
+    ],
+    comercializador:[
+
+    ],
+    asociacion:[
+
+    ],
+    pescador:[
+      'cedula',
+      'nombres',
+      'apellidos',
+      'celular',
+      'departamento',
+      'municipio',
+      'corregimiento',
+      'vereda',
+      'direccion',
+      'coordenadas'
+    ]
+  } 
+
+  options: google.maps.MapOptions = {
+    center: { lat: 9.214145, lng:-75.188469 },
+    zoom:10
+  }
+
+  apiLoaded: Observable<boolean>;
+  
+  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService, private storageService:StorageService, private httpClient:HttpClient) { 
+    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
+        .pipe(
+          map(() => true),
+          catchError(() => of(false)),
+        );
+  }
 
   ngOnInit(): void {
     let email:string | null = localStorage.getItem('email');
@@ -217,6 +268,18 @@ export class PerfilComponent implements OnInit {
 
   veredaSelected(){
     this.nomVereda?.setValue('');
+  }
+
+  mostrarPorTipo(campo:string){
+    let index=-1;
+
+    let tipoUsuario = this.usuario?.tipo_usuario;
+
+    if(tipoUsuario == 'Investigador Experto'){
+      tipoUsuario = 'investigadorexperto';
+    }
+    index = this.campos[tipoUsuario?.toLowerCase()]?.indexOf(campo);
+    return index > -1;
   }
 
   get id(){
