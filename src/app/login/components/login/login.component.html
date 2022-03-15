@@ -21,7 +21,12 @@
 
             <div class="container-form__box">
                 <span class="container-form__label">Contraseña: <span class="container-form__simbol">*</span></span>
-                <input class="container-form__input" [ngClass]="invalid('password') ? 'invalid-input' : ''" type="password" formControlName="password" (input)="onChange()">
+                <div class="input-glyphicon">
+                    <i class="glyphicon bi bi-eye-slash" (click)="visiblePass = !visiblePass" *ngIf="!visiblePass"></i>
+                    <i class="glyphicon bi bi-eye" (click)="visiblePass = !visiblePass" *ngIf="visiblePass"></i>
+                    <input class="container-form__input" [ngClass]="invalid('password') ? 'invalid-input' : ''" [type]="visiblePass  ? 'text' : 'password'" formControlName="password" (input)="onChange()">
+                </div>
+                
                 <div *ngIf="invalid('password')" class="container__alert-msg danger-message">
                     <div *ngIf="password?.errors?.['required']">
                         *Campo obligatorio

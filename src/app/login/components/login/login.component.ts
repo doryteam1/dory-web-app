@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
   loading:boolean = false;
   recordarme:boolean = false;
   error:string = '';
-
+  visiblePass:boolean = false;
+  
   constructor(private router:Router,private mailService:MailService, private userService:UsuarioService) { }
 
   ngOnInit(): void {
