@@ -93,9 +93,23 @@ export class PerfilComponent implements OnInit {
       }
     );
   }
-  
+
   nomCorregVeredasubs() {
-   
+   this.nomCorreg?.valueChanges.subscribe(
+     (response)=>{
+       console.log(response)
+       this.idCorreg?.patchValue( 0, {emitEvent: false} );
+       this.idCorreg?.updateValueAndValidity();
+     }
+   );
+
+   this.nomVereda?.valueChanges.subscribe(
+     (response)=>{
+      console.log(response)
+       this.idVereda?.patchValue( 0, {emitEvent: false} );
+       this.idVereda?.updateValueAndValidity();
+     }
+   );
   }
 
   getNomApell(nombres:string,apellidos:string){

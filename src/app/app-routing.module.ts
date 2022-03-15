@@ -71,6 +71,10 @@ const routes: Routes = [
     loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule)
   },
   {
+    path:'update-password',
+    loadChildren: () => import('./update-password/update-password.module').then(m => m.UpdatePasswordModule)
+  },
+  {
     path:'politica', component:PoliticaComponent
   },
   {

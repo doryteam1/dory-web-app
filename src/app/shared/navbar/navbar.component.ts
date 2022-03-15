@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('/home')
   }
   
-  resetPassword(){
-    this.router.navigate(['reset-password',{token:true}])
+  updatePassword(){
+    this.router.navigateByUrl('update-password')
   }
 }

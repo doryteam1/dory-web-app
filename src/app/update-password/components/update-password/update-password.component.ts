@@ -5,16 +5,17 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { RegExpUtils } from 'src/app/utilities/regexps';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  selector: 'app-update-password',
+  templateUrl: './update-password.component.html',
+  styleUrls: ['./update-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit {
+export class UpdatePasswordComponent implements OnInit {
   success:boolean = false;
   visiblePass:boolean = false;
   visibleMatchPass:boolean = false;
   
   form:FormGroup = new FormGroup({
+    oldPassword:new FormControl('',Validators.required),
     password:new FormControl('',[
       Validators.required,
       Validators.pattern(RegExpUtils.eigthChar()),
@@ -56,18 +57,6 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
     this.loading = true;
-    let data:any = {
-      newPassword: this.form.get('password')?.value,
-      token:this.token
-    }
-    
-    this.userService.resetPassword(data).subscribe(
-      (response)=>{
-        this.success = true;
-      },err=>{
-        console.log(err);
-      }
-    );
   }
 
   get password(){
@@ -76,6 +65,10 @@ export class ResetPasswordComponent implements OnInit {
 
   get matchPassword(){
     return this.form.get('matchPassword');
+  }
+
+  get oldPassword(){
+    return this.form.get('oldPassword');
   }
 
   eigthChar(cad:string){
@@ -93,4 +86,5 @@ export class ResetPasswordComponent implements OnInit {
   number(cad:string){
     return RegExpUtils.numberTest(cad);
   }
+
 }
