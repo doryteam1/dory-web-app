@@ -68,16 +68,13 @@ html, body {
 .container-form__button{
     padding-left: 40px;
     padding-right: 40px;
-    padding-top: 5px;
     padding-bottom: 5px;
-    width: fit-content;
-    height: fit-content;
+    width: 170px;
     font-size: 12px;
-    margin-top: 20px;
 }
 
 .container-form__input{
-    width: 300px;
+    width: 350px;
     border-radius: 30px;
     border:0.5px solid var(--gris3);
     outline:none;
@@ -99,6 +96,9 @@ html, body {
 .container-box{
     display: flex;
     justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .spinner{
@@ -112,4 +112,20 @@ html, body {
     color:var(--gris3);
     margin-top: 10px;
     font-size: 12px;
+}
+
+.container-form__button-white{
+    width: 170px;
+    font-size: 12px;
+    margin-left: 5px;
+    color:var(--gris-oscuro);
+    border-color: var(--gris-oscuro);
+}
+.container-form__icon{
+    width: 18px;
+    height: 18px;
+}
+
+.container-form__button-text{
+    margin-left: 8px;
 }

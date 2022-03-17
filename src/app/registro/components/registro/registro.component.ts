@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { PlacesService } from 'src/app/services/places.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegExpUtils } from '../../../utilities/regexps';

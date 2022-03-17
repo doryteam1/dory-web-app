@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MailService } from 'src/app/services/mail.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-
+import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   error:string = '';
   visiblePass:boolean = false;
   
-  constructor(private router:Router,private mailService:MailService, private userService:UsuarioService) { }
+  constructor(private router:Router,private mailService:MailService, private userService:UsuarioService,private socialAuthService:SocialAuthService) { }
 
   ngOnInit(): void {
     let remEmail = localStorage.getItem('rememberEmail');
@@ -68,6 +68,59 @@ export class LoginComponent implements OnInit {
         }
         this.loading = false;
         
+      }
+    );
+  }
+
+  loginWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then(() => {
+        console.log("signed in with google")
+        this.regUserAuthGoogle();
+      }).catch((err)=>{
+          console.log(err);
+          this.form.markAsUntouched();
+          this.error = "No pudimos ingresar con google"
+      });
+
+  }
+
+  regUserAuthGoogle(){
+    let email:string;
+    this.socialAuthService.authState.subscribe(
+      (response)=>{
+        email = response.email;
+        console.log(response);
+        localStorage.setItem('email',email);
+        this.userService.getUsuarioByEmail(email).subscribe(
+          response=>{
+            this.router.navigateByUrl('/dashboard');
+          },err=>{
+            if(err.status == 404){ // el usuario no existe
+              this.userService.registrarUsuario({
+                nombres:response.firstName,
+                apellidos:response.lastName,
+                email:response.email,
+                foto:response.photoUrl
+              }).subscribe(
+                (response)=>{
+                  console.log(response);
+                  localStorage.setItem('email',email);
+                  this.router.navigateByUrl('/dashboard');
+                },(err)=>{
+                  this.form.markAsUntouched();
+                  this.error = err.error.message
+                }
+              );
+            }
+          }
+        )
+       
+        
+      },(err)=>{
+        console.log(err);
+        this.form.markAsUntouched();
+        this.error = "No pudimos ingresar con google"
       }
     );
   }

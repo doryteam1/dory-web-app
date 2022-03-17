@@ -132,6 +132,7 @@ export class PerfilComponent implements OnInit {
 
         this.loadAreasExp();
         this.loadDptos();
+        this.loadMunic();
         this.loadCorregVeredas();
         this.nomCorregVeredasubs();
         this.storageService.add('photoUser',this.usuario.foto)
@@ -189,6 +190,16 @@ export class PerfilComponent implements OnInit {
       (response)=>{
         this.departamentos = response.data;
       },err=>{
+        console.log(err);
+      }
+    );
+  }
+
+  loadMunic(){
+    this.places.getMunicipiosDepartamentos(this.form.get('id_departamento')?.value).subscribe(
+      (response)=>{
+        this.municipios = response.data;
+      },(err)=>{
         console.log(err);
       }
     );
