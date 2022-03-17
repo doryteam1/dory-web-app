@@ -27,6 +27,7 @@ export class UpdatePasswordComponent implements OnInit {
   });
   loading:boolean = false;
   token:string = '';
+  error:string = '';
 
   constructor(private router:Router, private userService:UsuarioService,private activatedRoute:ActivatedRoute) { }
 
@@ -57,6 +58,22 @@ export class UpdatePasswordComponent implements OnInit {
       return;
     }
     this.loading = true;
+    let data = {
+      antiguoPassword : this.oldPassword?.value,
+      newPassword: this.password?.value
+    }
+    this.userService.changePassword(data).subscribe(
+      (response)=>{
+        this.success = true;
+        this.loading = false;
+        this.error = '';
+      },err=>{
+        this.error = err.error.message;
+        this.loading = false;
+        console.log(this.error)
+        console.log(err);
+      }
+    )
   }
 
   get password(){
