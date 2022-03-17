@@ -84,7 +84,7 @@
         </div>
     </div>
     
-    <div class="container__box" *ngIf="mostrarPorTipo('corregimiento')">
+    <!--<div class="container__box" *ngIf="mostrarPorTipo('corregimiento')">
         <span class="container__title">Selecciona un corregimiento</span>
         <div>
             <select class="container__input form-input-text-square" formControlName='id_corregimiento' (ngModelChange)="corregSelected()">
@@ -93,14 +93,14 @@
                 </optgroup>
             </select>
         </div>
-    </div>
+    </div>-->
     
     <div *ngIf="mostrarPorTipo('corregimiento')">
-        <span class="container__title">Ó escribe su nombre</span>
+        <span class="container__title">Corregimiento</span>
         <input class="container__input form-input-text-square" type="text" formControlName='nombre_corregimiento'>
     </div>
         
-    <span class="container__title" *ngIf="mostrarPorTipo('vereda')">Selecciona una vereda</span>
+    <!--<span class="container__title" *ngIf="mostrarPorTipo('vereda')">Selecciona una vereda</span>
     <div class="container__box" *ngIf="mostrarPorTipo('vereda')">
         <div>
             <select class="container__input form-input-text-square" formControlName='id_vereda' (ngModelChange)='veredaSelected()'>
@@ -109,10 +109,10 @@
                 </optgroup>
             </select>
         </div>
-    </div>
+    </div>-->
 
     <div class="container__box" *ngIf="mostrarPorTipo('vereda')">
-        <span class="container__title">Ó escribe su nombre</span>
+        <span class="container__title">Vereda</span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='nombre_vereda'>
         </div>

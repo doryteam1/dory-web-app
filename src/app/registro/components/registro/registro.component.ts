@@ -41,7 +41,7 @@ export class RegistroComponent implements OnInit {
   error:string='';
   success:boolean = false;
 
-  constructor(private usuarioService:UsuarioService, private spinner: NgxSpinnerService, private router:Router, private socialAuthService:SocialAuthService,private modalService: NgbModal) { 
+  constructor(private usuarioService:UsuarioService, private spinner: NgxSpinnerService, private router:Router, private socialAuthService:SocialAuthService,private modalService: NgbModal, private userService:UsuarioService) { 
     
   }
 
@@ -76,9 +76,26 @@ export class RegistroComponent implements OnInit {
       this.usuarioService.registrarUsuario(this.form.value).subscribe(
         (response)=>{
           this.success = true;
-          this.spinner.hide();
           localStorage.setItem('email',this.email?.value);
-          this.router.navigateByUrl('/login')
+          let data:any = {
+            email: this.email?.value,
+            password: this.password?.value
+          }
+          this.userService.login(data).subscribe(
+            (response)=>{
+              localStorage.setItem('email',data.email);
+              localStorage.setItem('token',response.body.token);
+              this.spinner.hide();
+              this.router.navigateByUrl('/dashboard');
+            },err=>{
+              if(err.status == 400){
+                this.error = err.error.message;
+              }else{
+                this.error = 'Error inesperado'
+              }
+              this.spinner.hide();
+            }
+          );
         },(err)=>{
           this.error = err.error.message;
           this.spinner.hide();
@@ -105,7 +122,6 @@ export class RegistroComponent implements OnInit {
           this.error = "No pudimos ingresar con google"
       });
 
-    
   }
 
   regUserAuthGoogle(){
