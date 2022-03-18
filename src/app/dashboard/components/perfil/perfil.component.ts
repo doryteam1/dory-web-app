@@ -79,7 +79,8 @@ export class PerfilComponent implements OnInit {
       'corregimiento',
       'vereda',
       'direccion',
-      'coordenadas'
+      'coordenadas',
+      'email'
     ]
   } 
 
