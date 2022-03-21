@@ -9,6 +9,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { MisProductosComponent } from './components/mis-productos/mis-productos.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
     HomeComponent,
     PerfilComponent,
     MisGranjasComponent,
+    MisProductosComponent,
   ],
   imports: [
     CommonModule,

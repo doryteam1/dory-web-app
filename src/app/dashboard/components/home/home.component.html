@@ -16,6 +16,12 @@
                 Mis granjas
               </a>
             </li>
+            <li class="nav-item" *ngIf="tipoUsuario == 'Proveedor'">
+              <a class="nav-link" [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
+                <span data-feather="file"></span>
+                Mis productos
+              </a>
+            </li>
           </ul>
         </div>
       </nav>

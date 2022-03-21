@@ -49,25 +49,69 @@ export class PerfilComponent implements OnInit {
 
   campos:any = {
     proveedor:[
-      
+      'cedula',
+      'nombres',
+      'apellidos',
+      'celular',
+      'departamento',
+      'municipio',
+      'corregimiento',
+      'direccion'
     ],
     investigadorexperto:[
-
+      'cedula',
+      'nombres',
+      'apellidos',
+      'celular',
+      'departamento',
+      'municipio',
+      'corregimiento',
+      'direccion',
+      'area_experticia'
     ],
     transportador:[
-
+      'cedula',
+      'nombres',
+      'apellidos',
+      'celular',
+      'departamento',
+      'municipio',
+      'corregimiento',
+      'direccion',
     ],
     piscicultor:[
-
+      'cedula',
+      'nombres',
+      'apellidos',
+      'celular',
+      'departamento',
+      'municipio',
+      'corregimiento',
+      'direccion',
     ],
     consumidor:[
-
+      'cedula',
+      'nombres',
+      'apellidos',
+      'celular',
+      'departamento',
+      'municipio',
+      'corregimiento',
+      'direccion',
     ],
-    comercializador:[
-
+    comerciante:[
+      'cedula',
+      'nombres',
+      'apellidos',
+      'celular',
+      'departamento',
+      'municipio',
+      'corregimiento',
+      'direccion',
+      'nombre_negocio'
     ],
     asociacion:[
-
+      
     ],
     pescador:[
       'cedula',
