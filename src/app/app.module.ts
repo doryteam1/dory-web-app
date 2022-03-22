@@ -17,13 +17,15 @@ import { SharedModule } from './shared/shared.module';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { VerifyAccountComponent } from './verify-account/verify-account.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PoliticaComponent,
     CondicionesComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    VerifyAccountComponent
   ],
   imports: [
     BrowserModule,

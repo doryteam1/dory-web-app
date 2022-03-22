@@ -4,6 +4,7 @@ import { PoliticaComponent } from './components/politica/politica.component';
 import { CondicionesComponent } from './components/condiciones/condiciones.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { BasicMessageComponent } from './components/basic-message/basic-message.component';
+import { VerifyAccountComponent } from './verify-account/verify-account.component';
 
 
 const routes: Routes = [
@@ -73,6 +74,10 @@ const routes: Routes = [
   {
     path:'update-password',
     loadChildren: () => import('./update-password/update-password.module').then(m => m.UpdatePasswordModule)
+  },
+  {
+    path:'verify-account',
+    component:VerifyAccountComponent
   },
   {
     path:'politica', component:PoliticaComponent
