@@ -28,7 +28,6 @@ export class VerifyAccountComponent implements OnInit {
         }else{
           this.error="Error inesperado";
         }
-        
       }
     )
   }
