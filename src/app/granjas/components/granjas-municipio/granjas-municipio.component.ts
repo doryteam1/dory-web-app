@@ -210,7 +210,7 @@ export class GranjasMunicipioComponent implements OnInit {
   granjaDetailRoute:string = "";
 
   constructor(httpClient: HttpClient, private granjasService:GranjasService, private activatedRoute:ActivatedRoute) {
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
+    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDmQiXg7vRGl6q4uOrhTEVNV4n5v8DX3iU', 'callback')
         .pipe(
           map(() => true),
           catchError(() => of(false)),

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-verify-account',
@@ -6,10 +8,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./verify-account.component.scss']
 })
 export class VerifyAccountComponent implements OnInit {
-
-  constructor() { }
+  error:string = '';
+  verificado:boolean = false;
+  constructor(private activatedRoute:ActivatedRoute, private userService:UsuarioService) { }
 
   ngOnInit(): void {
+    
+  }
+
+  verify(){
+    console.log("verify account...")
+    let token:string = this.activatedRoute.snapshot.queryParamMap.get('token')!;
+    this.userService.verifyAccount(token).subscribe(
+      (response)=>{
+        this.verificado = true;
+      },err=>{
+        if(err.status == '404'){
+          this.error = 'Usuario no existe';
+        }else{
+          this.error="Error inesperado";
+        }
+        
+      }
+    )
   }
 
 }

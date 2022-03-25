@@ -87,7 +87,7 @@ export class RegistroComponent implements OnInit {
               this.spinner.hide();
               this.router.navigateByUrl('/dashboard');
             },err=>{
-              if(err.status == 400){
+              if(err.status == 400 || err.status == 404){
                 this.error = err.error.message;
               }else{
                 this.error = 'Error inesperado'

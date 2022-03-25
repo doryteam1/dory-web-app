@@ -45,6 +45,9 @@ export class PerfilComponent implements OnInit {
     latitud:new FormControl(''),	
     longitud:new FormControl(''),	
     nombre_corregimiento:new FormControl(''),
+    otra_area_experticia:new FormControl(''),
+    otra_area_experticia_descripcion:new FormControl(''),
+    sobre_mi:new FormControl('')
   });
 
   campos:any = {
@@ -56,7 +59,8 @@ export class PerfilComponent implements OnInit {
       'departamento',
       'municipio',
       'corregimiento',
-      'direccion'
+      'direccion',
+      'email'
     ],
     investigadorexperto:[
       'cedula',
@@ -67,7 +71,11 @@ export class PerfilComponent implements OnInit {
       'municipio',
       'corregimiento',
       'direccion',
-      'area_experticia'
+      'area_experticia',
+      'otra_area_experticia',
+      'otra_area_experticia_descripcion',
+      'sobre_mi',
+      'email'
     ],
     transportador:[
       'cedula',
@@ -78,6 +86,7 @@ export class PerfilComponent implements OnInit {
       'municipio',
       'corregimiento',
       'direccion',
+      'email'
     ],
     piscicultor:[
       'cedula',
@@ -88,6 +97,7 @@ export class PerfilComponent implements OnInit {
       'municipio',
       'corregimiento',
       'direccion',
+      'email'
     ],
     consumidor:[
       'cedula',
@@ -98,6 +108,7 @@ export class PerfilComponent implements OnInit {
       'municipio',
       'corregimiento',
       'direccion',
+      'email'
     ],
     comerciante:[
       'cedula',
@@ -108,7 +119,8 @@ export class PerfilComponent implements OnInit {
       'municipio',
       'corregimiento',
       'direccion',
-      'nombre_negocio'
+      'nombre_negocio',
+      'email'
     ],
     asociacion:[
       
@@ -173,7 +185,8 @@ export class PerfilComponent implements OnInit {
         this.form.get('latitud')?.setValue(this.usuario.latitud),	
         this.form.get('longitud')?.setValue(this.usuario.longitud),	
         this.form.get('nombre_corregimiento')?.setValue(this.usuario.nombre_corregimiento),
-
+        this.otraAreaExp?.setValue(this.usuario.otra_area_experticia);
+        this.otraAreaExpDesc?.setValue(this.usuario.otra_area_experticia_descripcion)
 
         this.loadAreasExp();
         this.loadDptos();
@@ -326,6 +339,14 @@ export class PerfilComponent implements OnInit {
     this.nomVereda?.setValue('');
   }
 
+  onAreaExpChange(){
+    console.log("area experticia change")
+    if(this.idAreaExpert?.value !== -1){
+      this.otraAreaExp?.setValue('');
+      this.otraAreaExpDesc?.setValue('')
+    }
+  }
+
   mostrarPorTipo(campo:string){
     let index=-1;
 
@@ -422,4 +443,11 @@ export class PerfilComponent implements OnInit {
     return this.form.get('nombre_corregimiento');
   }
         
+  get otraAreaExp(){
+    return this.form.get('otra_area_experticia');
+  }
+
+  get otraAreaExpDesc(){
+    return this.form.get('otra_area_experticia_descripcion');
+  }
 }

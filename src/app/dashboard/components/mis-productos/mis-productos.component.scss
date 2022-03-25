@@ -7,3 +7,17 @@
     width: 100px;
     height: 100px;
 }
+
+.button{
+    width: 200px;
+    align-self: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.container__icon{
+    cursor: pointer;
+}

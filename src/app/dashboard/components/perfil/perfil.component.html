@@ -11,14 +11,6 @@
         </div>
     </div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <span class="container__title" *ngIf="mostrarPorTipo('area_experticia')">Area de experticia</span>
-    <div class="container__box-row" *ngIf="mostrarPorTipo('area_experticia')">
-        <select class="container__input form-input-text-square" formControlName='id_area_experticia'>
-            <optgroup label="Escoje un area">
-                <option *ngFor="let area of areas" [ngValue]="area.id_area">{{area.nombre}}</option>
-            </optgroup>
-        </select>
-    </div>
 
     <div class="container__box" *ngIf="mostrarPorTipo('cedula')">
         <span class="container__label">Cedula</span>
@@ -128,6 +120,37 @@
         <span class="container__title">Nombre del negocio: </span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='nombre_negocio'>
+        </div>
+    </div>
+
+    <span class="container__title" *ngIf="mostrarPorTipo('area_experticia')">Area de experticia</span>
+    <div class="container__box-row" *ngIf="mostrarPorTipo('area_experticia')">
+        <select class="container__input form-input-text-square" formControlName='id_area_experticia' (change)="onAreaExpChange()">
+            <optgroup label="Escoje un area">
+                <option *ngFor="let area of areas" [ngValue]="area.id_area">{{area.nombre}}</option>
+                <option ngValue=-1>Otra...</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <div *ngIf="idAreaExpert?.value ==-1">
+        <div class="container__box" *ngIf="mostrarPorTipo('otra_area_experticia')">
+            <span class="container__title">Escribe el nombre del area experticia: </span>
+            <div>
+                <input class="container__input form-input-text-square"  type="text" formControlName='otra_area_experticia'>
+            </div>
+        </div>
+        <div class="container__box" *ngIf="mostrarPorTipo('otra_area_experticia_descripcion')">
+            <span class="container__title">Cuentanos en que consiste tu area experticia: </span>
+            <div>
+                <input class="container__input form-input-text-square"  type="text" formControlName='otra_area_experticia_descripcion'>
+            </div>
+        </div>
+    </div>
+    <div class="container__box" *ngIf="mostrarPorTipo('sobre_mi')">
+        <span class="container__title">Cuentanos sobre ti: </span>
+        <div>
+            <input class="container__input form-input-text-square"  type="text" formControlName='sobre_mi'>
         </div>
     </div>
     <span class="container__title" *ngIf="mostrarPorTipo('coordenadas')">Ubicacion mapa: <span class="container_link">Ver mapa</span></span> 

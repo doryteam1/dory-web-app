@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         this.router.navigateByUrl('/dashboard');    
       },err=>{
-        if(err.status == 400){
+        if(err.status == 400 || err.status == 404){
           this.error = err.error.message;
         }else{
           this.error = 'Error inesperado'
@@ -82,13 +82,13 @@ export class LoginComponent implements OnInit {
           this.form.markAsUntouched();
           this.error = "No pudimos ingresar con google"
       });
-
   }
 
   regUserAuthGoogle(){
     let email:string;
     this.socialAuthService.authState.subscribe(
       (response)=>{
+        console.log(response)
         email = response.email;
         console.log(response);
         localStorage.setItem('email',email);

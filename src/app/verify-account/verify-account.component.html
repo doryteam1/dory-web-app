@@ -1,1 +1,3 @@
-De click <a href="#">aqui</a> para verificar su cuenta
+<span *ngIf="!verificado">De click <a class="link" (click)="verify()">aqui</a> para verificar su cuenta</span>
+<span *ngf="verificado">Su cuenta se a verificado correctamente, ahora puedes <a routerLink="/login">iniciar session</a></span><br>
+<span class="danger-message" *ngIf="error">{{error}}</span>
