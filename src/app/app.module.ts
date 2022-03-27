@@ -50,7 +50,7 @@ import { VerifyAccountComponent } from './verify-account/verify-account.componen
       providers: [
         {
           id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('534130932792-ejgt03avjabc24j3h5jbtp5m7urpqvr6.apps.googleusercontent.com') // your client id
+          provider: new GoogleLoginProvider('482318580198-co5iamkudku3b4e0p2k83okrvk9dh9os.apps.googleusercontent.com') // your client id
         }
       ]
     }
