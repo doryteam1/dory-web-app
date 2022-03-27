@@ -48,14 +48,12 @@ export class RegistroComponent implements OnInit {
   ngOnInit(): void {
     this.usuarioService.getTiposUsuario().subscribe(
       (response)=>{
-        console.warn(response.data);
         this.tipoUsuarios = response.data;
       }
     );
   }
 
   exiting(event:any){
-    console.log("exit reg")
     this.exit.emit(true)
   }
 
@@ -68,8 +66,6 @@ export class RegistroComponent implements OnInit {
   }
 
   onSubmit(){
-    console.warn(this.form.value)
-    console.log("valid = ",this.form.valid)
     if(this.form.valid && this.terms?.value){
       this.spinner.show();
       this.usuarioService.registrarUsuario(this.form.value).subscribe(
@@ -106,14 +102,12 @@ export class RegistroComponent implements OnInit {
   }
 
   onChange(){
-    console.log('on change');
     this.error='';
   }
 
   loginWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then(() => {
-        console.log("signed in with google")
         this.regUserAuthGoogle();
       }).catch((err)=>{
           console.log(err);
@@ -125,10 +119,12 @@ export class RegistroComponent implements OnInit {
 
   regUserAuthGoogle(){
     let email:string;
+    let idToken:string;
     this.socialAuthService.authState.subscribe(
       (response)=>{
-        console.log(response);
         email = response.email;
+        idToken = response.idToken;
+        localStorage.setItem('email',email);
         this.usuarioService.registrarUsuario({
           nombres:response.firstName,
           apellidos:response.lastName,
@@ -136,22 +132,37 @@ export class RegistroComponent implements OnInit {
           foto:response.photoUrl
         }).subscribe(
           (response)=>{
-            console.log(response);
             this.success = true;
-            localStorage.setItem('email',email);
-            this.router.navigateByUrl('/dashboard');
+            this.getTokenWithGoogleIdToken(idToken);
           },(err)=>{
             this.form.markAsUntouched();
-            this.error = err.error.message
+            if(err.error.message == 'El registro ya existe'){
+              this.error='El usuario ya se encuentra registrado. Intente iniciar sessión'
+            }else{
+              this.error = err.error.message
+            }
           }
         );
       },(err)=>{
         console.log(err);
         this.form.markAsUntouched();
-        this.error = "No pudimos ingresar con google"
+        this.error = "No pudimos ingresar con google. Intentelo nuevamente."
       }
     );
   }
+
+  getTokenWithGoogleIdToken(idToken:string){
+    this.userService.loginWithGoogle(idToken).subscribe(
+      (response)=>{
+        localStorage.setItem('token',response.token);
+        this.router.navigateByUrl('/dashboard');
+      },err=>{
+        console.log(err);
+        this.error = 'No se pudo iniciar sessión';
+      }
+    )
+  }
+
   get nombreCompleto(){
     return this.form.get('nombreCompleto')
   }

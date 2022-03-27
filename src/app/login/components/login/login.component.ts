@@ -86,15 +86,17 @@ export class LoginComponent implements OnInit {
 
   regUserAuthGoogle(){
     let email:string;
+    let idToken:string;
     this.socialAuthService.authState.subscribe(
       (response)=>{
+        idToken = response.idToken;
         console.log(response)
         email = response.email;
         console.log(response);
         localStorage.setItem('email',email);
         this.userService.getUsuarioByEmail(email).subscribe(
           response=>{
-            this.router.navigateByUrl('/dashboard');
+           this.getTokenWithGoogleIdToken(idToken);
           },err=>{
             if(err.status == 404){ // el usuario no existe
               this.userService.registrarUsuario({
@@ -104,9 +106,7 @@ export class LoginComponent implements OnInit {
                 foto:response.photoUrl
               }).subscribe(
                 (response)=>{
-                  console.log(response);
-                  localStorage.setItem('email',email);
-                  this.router.navigateByUrl('/dashboard');
+                  this.getTokenWithGoogleIdToken(idToken);
                 },(err)=>{
                   this.form.markAsUntouched();
                   this.error = err.error.message
@@ -115,8 +115,6 @@ export class LoginComponent implements OnInit {
             }
           }
         )
-       
-        
       },(err)=>{
         console.log(err);
         this.form.markAsUntouched();
@@ -125,6 +123,17 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  getTokenWithGoogleIdToken(idToken:string){
+    this.userService.loginWithGoogle(idToken).subscribe(
+      (response)=>{
+        localStorage.setItem('token',response.token);
+        this.router.navigateByUrl('/dashboard');
+      },err=>{
+        console.log(err);
+        this.error = 'No se pudo iniciar sessión';
+      }
+    )
+  }
   recordarmeOnChange(){
     this.recordarme = !this.recordarme;
     console.log(this.recordarme);

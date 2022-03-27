@@ -32,7 +32,6 @@ export class UsuarioService {
         latitud:usuario.latitud || 0,
         longitud:usuario.longitud || 0
     }
-    console.log("usuario service registrar ", body)
     return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/usuarios',body);
   }
 
@@ -50,6 +49,10 @@ export class UsuarioService {
 
   login(userData: {email:string, password:string}){
     return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/login',userData)
+  }
+
+  loginWithGoogle(token:string){
+    return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/login/google',{token:token})
   }
 
   logout(){
