@@ -5,7 +5,7 @@
         <p class="container__paragraph" *ngIf="message != ''">{{message}}</p>
         <span class="container__desc">{{callToAction}}</span>
         <div class="container-box">
-                <button class="container-form__button btn-rounded-blue" type="submit" routerLink="/home">
+                <button class="container-form__button btn-rounded-blue" type="submit" [routerLink]="redirectTo">
                 <span>{{btnName}}</span>
             </button>
         </div>        

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControlDirective} from '@angular/forms';
 import { Router } from '@angular/router';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -72,7 +72,9 @@ export class RegistroComponent implements OnInit {
         (response)=>{
           this.success = true;
           localStorage.setItem('email',this.email?.value);
-          let data:any = {
+          this.success = true;
+          this.spinner.hide();
+          /*let data:any = {
             email: this.email?.value,
             password: this.password?.value
           }
@@ -90,9 +92,14 @@ export class RegistroComponent implements OnInit {
               }
               this.spinner.hide();
             }
-          );
+          );*/
         },(err)=>{
-          this.error = err.error.message;
+          this.success = false;
+          if(err.error.message == 'El registro ya existe'){
+            this.error='El usuario ya se encuentra registrado. Intente iniciar sessión'
+          }else{
+            this.error = err.error.message
+          }
           this.spinner.hide();
         }
       );

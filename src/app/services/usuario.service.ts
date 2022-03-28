@@ -91,6 +91,6 @@ export class UsuarioService {
   }
 
   verifyAccount(token:string){
-    return this.httpsService.put('dory-api-rest.herokuapp.com/api/usuario/verify/account',{token:token})
+    return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/usuario/verify/account',{token:token})
   }
 }

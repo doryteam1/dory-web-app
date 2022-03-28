@@ -8,8 +8,10 @@ import { Component, Input, OnInit } from '@angular/core';
 export class BasicMessageComponent implements OnInit {
   @Input() title:string = 'Enviado satisfactoriamente.';
   @Input() message:string = '';
-  @Input() callToAction:string = 'Dele clic en “aceptar”  para volver a inicio';
+  @Input() callToAction:string = 'De clic en “aceptar”  para volver a inicio';
   @Input() btnName:string = 'Aceptar';
+  @Input() redirectTo:string = '/home';
+  
   constructor() { }
 
   ngOnInit(): void {

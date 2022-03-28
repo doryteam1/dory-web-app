@@ -13,12 +13,15 @@ export class VerifyAccountComponent implements OnInit {
   constructor(private activatedRoute:ActivatedRoute, private userService:UsuarioService) { }
 
   ngOnInit(): void {
-    
+    let token:string = this.activatedRoute.snapshot.queryParamMap.get('token')!;
+    console.log(this.activatedRoute.snapshot.queryParamMap)
+
   }
 
   verify(){
     console.log("verify account...")
     let token:string = this.activatedRoute.snapshot.queryParamMap.get('token')!;
+    console.log(token)
     this.userService.verifyAccount(token).subscribe(
       (response)=>{
         this.verificado = true;

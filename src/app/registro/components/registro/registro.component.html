@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="!success">
 <div class="container-form">
     <div class="container-form__alert alert alert-danger" role="alert" *ngIf="error != ''">
         {{error}}
@@ -88,3 +88,4 @@
 </div>
 </div>
 <ngx-spinner type="square-jelly-box"></ngx-spinner>
+<app-basic-message title='Registro exitoso' callToAction='Por favor ingresa a tu correo donde recibiras las instrucciones para verificar tu cuenta. No te olvides de revisar la bandeja de correo no deseado.' redirectTo="/login" *ngIf="success"></app-basic-message>
