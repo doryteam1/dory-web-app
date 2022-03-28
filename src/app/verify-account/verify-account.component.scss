@@ -71,8 +71,12 @@ html, body {
     padding-right: 40px;
     padding-top: 5px;
     padding-bottom: 5px;
-    width: fit-content;
+    width: 200px;
     height: fit-content;
     font-size: 12px;
 }
 
+.spinner-border{
+    width: 1.4rem;
+    height: 1.4rem;
+}
