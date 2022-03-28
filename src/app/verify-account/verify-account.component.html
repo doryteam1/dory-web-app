@@ -1,3 +1,16 @@
-<span *ngIf="!verificado">De click <a class="link" (click)="verify()">aqui</a> para verificar su cuenta</span>
-<span *ngIf="verificado">Su cuenta se a verificado correctamente, ahora puedes <a routerLink="/login">iniciar session</a></span><br>
 <span class="danger-message" *ngIf="error">{{error}}</span>
+<div class="container">
+    <div class="container-form">
+        <img class="container__logo" src="assets/images/logo.svg">
+        <span class="container__title">Verifica tu cuenta</span>
+        <p class="container__paragraph">
+            <span *ngIf="!verificado">Presiona el boton a continuacion para verificar tu cuenta</span>
+            <span *ngIf="verificado">Su cuenta se a verificado correctamente, ahora puedes iniciar session</span>
+        </p>
+        <div class="container-box">
+            <button class="container-form__button btn-rounded-blue" type="submit" (click)="verify()" *ngIf="!verificado"><span>Verificar cuenta</span></button>
+            <button class="container-form__button btn-rounded-blue" type="submit" routerLink="/login" *ngIf="verificado"><span>Iniciar sessión</span></button>
+        </div>        
+</div>
+</div>
+    
