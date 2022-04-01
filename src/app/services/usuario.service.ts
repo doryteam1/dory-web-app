@@ -86,6 +86,16 @@ export class UsuarioService {
     }
   }
 
+  authenticatedWith(){
+    let authWith = localStorage.getItem('authWith');
+
+    return authWith;
+  }
+
+  setAuthWith(method:string){
+    localStorage.setItem('authWith',method);
+  }
+
   getProductosById(userId:number){
     return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/proveedores/productos/userId/'+userId)
   }

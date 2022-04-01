@@ -37,7 +37,10 @@ export class NavbarComponent implements OnInit {
   authenticated(){
     return this.userService.isAuthenticated();
   }
-
+  
+  authWith(){
+    return this.userService.authenticatedWith();
+  }
   logout(){
     this.userService.logout();
     this.router.navigateByUrl('/home')

@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
       (response)=>{
         localStorage.setItem('email',data.email);
         localStorage.setItem('token',response.body.token);
+        this.userService.setAuthWith('email');
         if(this.recordarme == true){
           localStorage.setItem('rememberEmail',data.email)
         }else{
@@ -75,7 +76,6 @@ export class LoginComponent implements OnInit {
   loginWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then(() => {
-        console.log("signed in with google")
         this.regUserAuthGoogle();
       }).catch((err)=>{
           console.log(err);
@@ -127,6 +127,7 @@ export class LoginComponent implements OnInit {
     this.userService.loginWithGoogle(idToken).subscribe(
       (response)=>{
         localStorage.setItem('token',response.token);
+        this.userService.setAuthWith('google');
         this.router.navigateByUrl('/dashboard');
       },err=>{
         console.log(err);

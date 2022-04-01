@@ -1,11 +1,12 @@
-<span class="danger-message" *ngIf="error">{{error}}</span>
+
 <div class="container">
     <div class="container-form">
         <img class="container__logo" src="assets/images/logo.svg">
         <span class="container__title">Verifica tu cuenta</span>
         <p class="container__paragraph">
-            <span *ngIf="!verificado">Presiona el boton a continuacion para verificar tu cuenta</span>
-            <span *ngIf="verificado">Su cuenta se a verificado correctamente, ahora puedes iniciar session</span>
+            <span *ngIf="!verificado && !error">Presiona el boton a continuacion para verificar tu cuenta</span>
+            <span *ngIf="verificado && !error">Su cuenta se a verificado correctamente, ahora puedes iniciar session</span>
+            <span class="error danger-message" *ngIf="error">{{error}}</span>
         </p>
         <div class="container-box">
             <button class="container-form__button btn-rounded-blue" (click)="verify()" *ngIf="!verificado">

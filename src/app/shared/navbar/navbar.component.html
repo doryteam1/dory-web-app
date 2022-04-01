@@ -79,7 +79,7 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
             <li><button class="dropdown-item" type="button" routerLink="/dashboard">Mi cuenta</button></li>
-            <li><button class="dropdown-item" type="button" (click)="updatePassword()">Cambiar contraseña</button></li>
+            <li><button class="dropdown-item" type="button" (click)="updatePassword()" *ngIf="authWith()=='email'">Cambiar contraseña</button></li>
             <li><button class="dropdown-item" type="button" (click)="logout()">Salir</button></li>
           </ul>
         </div>
