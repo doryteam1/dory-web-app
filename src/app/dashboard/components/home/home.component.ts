@@ -12,9 +12,6 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    let token = localStorage.getItem('token');
-    this.tipoUsuario = Utilities.parseJwt(token!).rol;
-    console.log("Tipo usuario ",this.tipoUsuario)
   }
 
 }

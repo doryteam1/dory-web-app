@@ -38,6 +38,9 @@ export class NavbarComponent implements OnInit {
     return this.userService.isAuthenticated();
   }
   
+  authUserPhoto():any{
+    return this.userService.getAuthUserPhoto();
+  }
   authWith(){
     return this.userService.authenticatedWith();
   }

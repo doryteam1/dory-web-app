@@ -92,6 +92,13 @@ export class UsuarioService {
     return authWith;
   }
 
+  setAuthUserPhoto(photoUrl:string){
+    localStorage.setItem('photoUser',photoUrl);
+  }
+
+  getAuthUserPhoto(){
+    return localStorage.getItem('photoUser');
+  }
   setAuthWith(method:string){
     localStorage.setItem('authWith',method);
   }
@@ -103,4 +110,5 @@ export class UsuarioService {
   verifyAccount(token:string){
     return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/usuario/verify/account',{token:token})
   }
+
 }

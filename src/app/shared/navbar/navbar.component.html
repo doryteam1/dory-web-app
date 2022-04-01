@@ -73,7 +73,7 @@
         <button class="btn-outline-blue boton-registro" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
         <button class="btn-rounded-blue ms-2" routerLink="/registro" *ngIf="!authenticated()">Registrate</button>
         <div class="dropdown" *ngIf="authenticated()">
-          <img class="container__img" [src]="photoUser ? photoUser : '../../../assets/images/avatar-person.svg'">
+          <img class="container__img" [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'">
           <button class="container__button btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
             {{nomCom}}
           </button>

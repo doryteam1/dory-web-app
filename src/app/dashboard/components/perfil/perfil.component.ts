@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AreasExperticiaService } from 'src/app/services/areas-experticia.service';
+import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -146,8 +148,11 @@ export class PerfilComponent implements OnInit {
   }
 
   apiLoaded: Observable<boolean>;
-  
-  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService, private storageService:StorageService, private httpClient:HttpClient) { 
+  @ViewChild('fileInput') inputFileDialog!:ElementRef;
+  fileName:string = '';
+  file:any;
+
+  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService, private storageService:StorageService, private httpClient:HttpClient, private storage:FirebaseStorageService) { 
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
         .pipe(
           map(() => true),
@@ -160,10 +165,7 @@ export class PerfilComponent implements OnInit {
     console.log('email logueado ',email);
     this.us.getUsuarioByEmail(email).subscribe(
       (response)=>{
-        console.log(response);
         this.usuario = response.data[0];
-        console.log(response);
-
         this.form.get('id')?.setValue(this.usuario.id),	
         this.form.get('cedula')?.setValue(this.usuario.cedula),	
         this.form.get('nombres')?.setValue(this.usuario.nombres),	
@@ -198,10 +200,41 @@ export class PerfilComponent implements OnInit {
         if(!this.usuario.tipo_usuario || !(this.usuario.nombres && this.usuario.apellidos)){
           this.router.navigate(['/welcome',this.usuario]);  
         }
+        this.us.setAuthUserPhoto(this.usuario.foto);
       },(err)=>{
         console.log(err);
       }
     );
+  }
+
+  openAddFileDialog(){
+    const element:HTMLElement = this.inputFileDialog.nativeElement;
+    element.click();
+  }
+
+  fileChange(event:any){
+    this.fileName = '/perfil/user_'+this.id?.value;
+    this.file = event.target.files[0];
+    this.storage.cloudStorageTask(this.fileName,this.file).percentageChanges().subscribe(
+      (response)=>{
+        console.log(response)
+      }
+    );
+    this.storage.cloudStorageRef(this.fileName).getDownloadURL().subscribe(
+      (downloadUrl)=>{
+        console.log(downloadUrl)
+        this.us.actualizarUsuario(this.id?.value,{foto:downloadUrl}).subscribe(
+          (response)=>{
+            this.usuario.foto = downloadUrl;
+            this.us.setAuthUserPhoto(this.usuario.foto);
+          },err=>{
+            console.log(err)
+          }
+        )
+      },err=>{
+        console.log(err)
+      }
+    )
   }
 
   nomCorregVeredasubs() {

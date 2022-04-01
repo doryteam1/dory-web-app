@@ -18,6 +18,9 @@ import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,9 @@ import { VerifyAccountComponent } from './verify-account/verify-account.componen
     SocialLoginModule,
     SharedModule,
     ShareButtonsModule,
-    ShareIconsModule
+    ShareIconsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule
   ],
   providers: [
     HttpsService,
