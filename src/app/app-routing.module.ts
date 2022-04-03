@@ -76,6 +76,10 @@ const routes: Routes = [
     loadChildren: () => import('./update-password/update-password.module').then(m => m.UpdatePasswordModule)
   },
   {
+    path:'test',
+    loadChildren: () => import('./tests/tests.module').then(m => m.TestsModule)
+  },
+  {
     path:'verify-account',
     component:VerifyAccountComponent
   },

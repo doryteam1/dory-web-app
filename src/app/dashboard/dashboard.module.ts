@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MisProductosComponent } from './components/mis-productos/mis-productos.component';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -24,6 +25,8 @@ import { MisProductosComponent } from './components/mis-productos/mis-productos.
     FormsModule,
     ReactiveFormsModule,
     DashboardRoutingModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
     NgxSpinnerModule,
     SharedModule,
     GoogleMapsModule

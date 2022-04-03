@@ -90,9 +90,7 @@ export class LoginComponent implements OnInit {
     this.socialAuthService.authState.subscribe(
       (response)=>{
         idToken = response.idToken;
-        console.log(response)
         email = response.email;
-        console.log(response);
         localStorage.setItem('email',email);
         this.userService.getUsuarioByEmail(email).subscribe(
           response=>{
@@ -126,7 +124,7 @@ export class LoginComponent implements OnInit {
   getTokenWithGoogleIdToken(idToken:string){
     this.userService.loginWithGoogle(idToken).subscribe(
       (response)=>{
-        localStorage.setItem('token',response.token);
+        localStorage.setItem('token',response.body.token);
         this.userService.setAuthWith('google');
         this.router.navigateByUrl('/dashboard');
       },err=>{

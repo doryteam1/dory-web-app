@@ -1,48 +1,48 @@
+<div class="row">
 <div class="container">
-    
     <div class="container__box-row">
         <div class="container__box-image">    
             <img class="container__image" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
             <img class="container__image2" src="assets/icons/camera.svg" (click)="openAddFileDialog()">
             <input #fileInput type="file" name="resume" (change)='fileChange($event)' hidden>
         </div>
-        <div>
+        <div class="container__info">
             <span class="container__title">{{nombres?.value ? nombres?.value : '____' }} {{apellidos?.value ? apellidos?.value : '____' }}</span>
             <span class="container__title">{{usuario?.tipo_usuario ? usuario?.tipo_usuario : '____'}}</span>
         </div>
     </div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <div class="container__box" *ngIf="mostrarPorTipo('cedula')">
-        <span class="container__label">Cedula</span>
+    <div class="container__box mt-4" *ngIf="mostrarPorTipo('cedula')">
+        <span class="container__title">Cedula</span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='cedula'>
         </div>
     </div>
 
     <div class="container__box" *ngIf="mostrarPorTipo('nombres')">
-        <span class="container__label">Nombres</span>
+        <span class="container__title">Nombres</span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='nombres'>
         </div>
     </div>
 
     <div class="container__box" *ngIf="mostrarPorTipo('apellidos')">
-        <span class="container__label">Apellidos</span>
+        <span class="container__title">Apellidos</span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='apellidos'>
         </div>
     </div>
 
     <div class="container__box" *ngIf="mostrarPorTipo('celular')">
-        <span class="container__label">Celular</span>
+        <span class="container__title">Celular</span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='celular'>
         </div>
     </div>
 
     <div class="container__box" *ngIf="mostrarPorTipo('email')">
-        <span class="container__label">Correo electrónico</span>
+        <span class="container__title">Correo electrónico</span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='email'>
         </div>
@@ -154,7 +154,7 @@
             <input class="container__input form-input-text-square"  type="text" formControlName='sobre_mi'>
         </div>
     </div>
-    <span class="container__title" *ngIf="mostrarPorTipo('coordenadas')">Ubicacion mapa: <span class="container_link">Ver mapa</span></span> 
+    <!--<span class="container__title" *ngIf="mostrarPorTipo('coordenadas')">Ubicacion mapa: <span class="container_link" (click)="showMap = !showMap">{{showMap ? 'Ocultar Mapa' : 'Ver mapa'}}</span></span> -->
 
     <button class="container__btn">
         <span *ngIf="!loading">Actualizar</span>
@@ -163,13 +163,17 @@
     </button>
     
     </form>
-   
+</div>
+
+<div class="map">
     <div *ngIf="apiLoaded | async">
-        <google-map height="600px"
-                    width="600px" 
-                    [options]="options">
+        <google-map height="900px"
+                    width="800px" 
+                    [options]="options"
+                    (mapClick)="addMarker($event)">
+            <map-marker [position]="markerPosition" [options]="markerOptions"  title="Title"></map-marker>
         </google-map>
     </div>
 </div>
-
+</div>
 <ngx-spinner type="square-jelly-box"></ngx-spinner>

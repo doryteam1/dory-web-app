@@ -12,6 +12,9 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    let token = localStorage.getItem('token');
+    if(token && token!='undefined'){
+      this.tipoUsuario = Utilities.parseJwt(token!).rol;
+    }
   }
-
 }

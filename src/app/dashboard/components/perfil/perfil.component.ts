@@ -10,6 +10,7 @@ import { PlacesService } from 'src/app/services/places.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-perfil',
@@ -62,7 +63,8 @@ export class PerfilComponent implements OnInit {
       'municipio',
       'corregimiento',
       'direccion',
-      'email'
+      'email',
+      'coordenadas'
     ],
     investigadorexperto:[
       'cedula',
@@ -88,7 +90,8 @@ export class PerfilComponent implements OnInit {
       'municipio',
       'corregimiento',
       'direccion',
-      'email'
+      'email',
+      'coordenadas'
     ],
     piscicultor:[
       'cedula',
@@ -99,7 +102,8 @@ export class PerfilComponent implements OnInit {
       'municipio',
       'corregimiento',
       'direccion',
-      'email'
+      'email',
+      'coordenadas'
     ],
     consumidor:[
       'cedula',
@@ -122,7 +126,8 @@ export class PerfilComponent implements OnInit {
       'corregimiento',
       'direccion',
       'nombre_negocio',
-      'email'
+      'email',
+      'coordenadas'
     ],
     asociacion:[
       
@@ -142,8 +147,8 @@ export class PerfilComponent implements OnInit {
     ]
   } 
 
-  options: google.maps.MapOptions = {
-    center: { lat: 9.214145, lng:-75.188469 },
+  options: google.maps.MapOptions= {
+    center: { lat: 9.590790, lng:-75.546899 },
     zoom:10
   }
 
@@ -151,9 +156,12 @@ export class PerfilComponent implements OnInit {
   @ViewChild('fileInput') inputFileDialog!:ElementRef;
   fileName:string = '';
   file:any;
+  markerPosition : google.maps.LatLngLiteral = { lat: 9.214145, lng:-75.188469 };
+  markerOptions: google.maps.MarkerOptions = {draggable: false};
+  showMap:boolean = false;
 
-  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService, private storageService:StorageService, private httpClient:HttpClient, private storage:FirebaseStorageService) { 
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
+  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService, private storageService:StorageService, httpClient:HttpClient, private storage:FirebaseStorageService) { 
+    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
         .pipe(
           map(() => true),
           catchError(() => of(false)),
@@ -162,7 +170,6 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     let email:string | null = localStorage.getItem('email');
-    console.log('email logueado ',email);
     this.us.getUsuarioByEmail(email).subscribe(
       (response)=>{
         this.usuario = response.data[0];
@@ -201,6 +208,11 @@ export class PerfilComponent implements OnInit {
           this.router.navigate(['/welcome',this.usuario]);  
         }
         this.us.setAuthUserPhoto(this.usuario.foto);
+        this.markerPosition = { lat: parseFloat(this.latitud?.value), lng:parseFloat(this.longitud?.value) };
+        this.options = {
+          center: { lat:parseFloat(this.latitud?.value), lng:parseFloat(this.longitud?.value) },
+          zoom:10
+        }
       },(err)=>{
         console.log(err);
       }
@@ -379,6 +391,20 @@ export class PerfilComponent implements OnInit {
       this.otraAreaExpDesc?.setValue('')
     }
   }
+
+  // Metodo para adicionar una marca en el mapa
+  addMarker(event: google.maps.MapMouseEvent) {
+    console.log("event")
+    if(event.latLng){
+    this.markerPosition = event.latLng.toJSON();
+    this.latitud?.setValue(event.latLng.toJSON().lat);
+    this.longitud?.setValue(event.latLng.toJSON().lng);
+    //console.log("Latitud"+ event.latLng.toJSON().lat);
+    //console.log("Longitud"+ event.latLng.toJSON().lng);
+    }
+   
+  }
+
 
   mostrarPorTipo(campo:string){
     let index=-1;
