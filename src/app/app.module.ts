@@ -55,7 +55,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
       providers: [
         {
           id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('482318580198-co5iamkudku3b4e0p2k83okrvk9dh9os.apps.googleusercontent.com') // your client id
+          provider: new GoogleLoginProvider('170816600260-ivu404khqeskg17esu4esl9244s0dt2m.apps.googleusercontent.com') // your client id
         }
       ]
     }
