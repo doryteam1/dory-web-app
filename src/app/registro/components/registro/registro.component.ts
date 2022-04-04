@@ -136,7 +136,8 @@ export class RegistroComponent implements OnInit {
           nombres:response.firstName,
           apellidos:response.lastName,
           email:response.email,
-          foto:response.photoUrl
+          foto:response.photoUrl,
+          creadoCon:'google'
         }).subscribe(
           (response)=>{
             this.success = true;
