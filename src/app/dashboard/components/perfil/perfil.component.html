@@ -154,6 +154,18 @@
             <input class="container__input form-input-text-square"  type="text" formControlName='sobre_mi'>
         </div>
     </div>
+    <div class="container__box" *ngIf="mostrarPorTipo('coordenadas')">
+        <span class="container__title">Latitud</span>
+        <div>
+            <input class="container__input form-input-text-square"  type="text" formControlName='latitud'>
+        </div>
+    </div>
+    <div class="container__box" *ngIf="mostrarPorTipo('coordenadas')">
+        <span class="container__title">Longitud</span>
+        <div>
+            <input class="container__input form-input-text-square"  type="text" formControlName='longitud'>
+        </div>
+    </div>
     <span class="container__title" *ngIf="mostrarPorTipo('coordenadas')">Ubicacion mapa: <span class="container_link" (click)="showMap = !showMap">{{showMap ? 'Ocultar Mapa' : 'Ver mapa'}}</span></span>
 
     <button class="container__btn">

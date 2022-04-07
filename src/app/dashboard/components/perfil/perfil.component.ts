@@ -169,6 +169,9 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.latitud?.disable();
+    this.longitud?.disable();
+
     let email:string | null = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe(
       (response)=>{
