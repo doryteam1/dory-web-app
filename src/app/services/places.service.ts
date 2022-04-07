@@ -23,4 +23,8 @@ export class PlacesService {
   getVeredasMunicipio(idMunicipio:number){
     return this.https.get("https://dory-api-rest.herokuapp.com/api/veredas/municipio/"+idMunicipio);
   }
+
+  getMunicipioById(idMunicipio:number){
+    return this.https.get("https://dory-api-rest.herokuapp.com/api/municipios/"+idMunicipio);
+  }
 }

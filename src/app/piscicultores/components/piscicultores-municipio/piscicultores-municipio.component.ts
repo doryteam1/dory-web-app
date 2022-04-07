@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { PiscicultoresService } from '../../services/piscicultores.service';
 import { environment } from 'src/environments/environment';
+import { PlacesService } from 'src/app/services/places.service';
 @Component({
   selector: 'app-piscicultores-municipio',
   templateUrl: './piscicultores-municipio.component.html',
@@ -19,6 +20,11 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     zoom:11.5
   }
 
+  /*options: google.maps.MapOptions = {
+    center: { lat:9.31878300, lng:-75.29471300 },
+    zoom:14
+  }*/
+
   markerPosition : google.maps.LatLngLiteral = { lat: 9.214145, lng:-75.188469 };
   markerPositions: google.maps.LatLngLiteral[] = [];
   markersInfo: any[] = [];
@@ -27,7 +33,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   piscicultores:any[] = [];
   indexSelected:number = -1;
   
-  constructor(httpClient: HttpClient, private activatedRoute:ActivatedRoute, private piscicultoresService:PiscicultoresService) {
+  constructor(httpClient: HttpClient, private activatedRoute:ActivatedRoute, private piscicultoresService:PiscicultoresService, private placesService:PlacesService) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
         .pipe(
           map(() => true),
@@ -55,6 +61,22 @@ export class PiscicultoresMunicipioComponent implements OnInit {
       );
     }
     
+    this.placesService.getMunicipioById(id).subscribe(
+      (response)=>{
+        if(response.data.length > 0){
+          console.log(response.data[0].latitud)
+          console.log(response.data[0].longitud)
+          console.log(response)
+          this.options = {
+            center: { lat: parseFloat(response.data[0].latitud), lng:parseFloat(response.data[0].longitud)},
+            zoom:13
+          }
+        }
+      },err=>{
+        
+      }
+    )
+
   }
 
   extractLatLong(){
