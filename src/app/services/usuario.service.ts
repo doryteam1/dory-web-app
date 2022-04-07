@@ -30,7 +30,8 @@ export class UsuarioService {
         id_corregimiento:usuario.corregimiento || '',
         id_vereda:usuario.vereda || '',
         latitud:usuario.latitud || 0,
-        longitud:usuario.longitud || 0
+        longitud:usuario.longitud || 0,
+        creadoCon:usuario.creadoCon || ''
     }
     return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/usuarios',body);
   }
