@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { PiscicultoresService } from '../../services/piscicultores.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-piscicultores-municipio',
   templateUrl: './piscicultores-municipio.component.html',
@@ -15,7 +16,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   
   options: google.maps.MapOptions = {
     center: { lat: 9.214145, lng:-75.188469 },
-    zoom:6
+    zoom:11.5
   }
 
   markerPosition : google.maps.LatLngLiteral = { lat: 9.214145, lng:-75.188469 };
@@ -27,7 +28,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   indexSelected:number = -1;
   
   constructor(httpClient: HttpClient, private activatedRoute:ActivatedRoute, private piscicultoresService:PiscicultoresService) {
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
+    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
         .pipe(
           map(() => true),
           catchError(() => of(false)),
@@ -71,13 +72,13 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     
   }
 
-  onMouseCard(indexSelected:number){
+  onMouseCard(piscicultor:any, indexSelected:number){
     this.indexSelected = indexSelected;
     console.log(indexSelected);
-    /* this.options = {
-      center: { lat: Number(granja.latitud), lng:Number(granja.longitud) },
-      zoom:15
-    }
-    console.log(granja); */
+    /*this.options = {
+      center: { lat: Number(piscicultor.latitud), lng:Number(piscicultor.longitud) },
+      zoom:12
+    }*/
+
   }
 }

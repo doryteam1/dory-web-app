@@ -62,8 +62,11 @@
     margin-left: 20px;
 }
 .card__image{
-    width: 169px;
-    height: 137px;
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .card__title{
@@ -91,6 +94,10 @@
 
 .card__description2{
     font-size: 16px;
+}
+
+.card__email{
+    display: block;
 }
 
 .piscicultores-container{

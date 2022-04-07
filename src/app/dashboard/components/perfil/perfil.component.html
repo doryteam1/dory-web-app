@@ -2,8 +2,8 @@
 <div class="container">
     <div class="container__box-row">
         <div class="container__box-image">    
-            <img class="container__image" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
-            <img class="container__image2" src="assets/icons/camera.svg" (click)="openAddFileDialog()">
+            <img class="container__image img-fluid" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
+            <img class="container__image2 img-fluid" src="assets/icons/camera.svg" (click)="openAddFileDialog()">
             <input #fileInput type="file" name="resume" (change)='fileChange($event)' hidden>
         </div>
         <div class="container__info">
@@ -154,7 +154,7 @@
             <input class="container__input form-input-text-square"  type="text" formControlName='sobre_mi'>
         </div>
     </div>
-    <!--<span class="container__title" *ngIf="mostrarPorTipo('coordenadas')">Ubicacion mapa: <span class="container_link" (click)="showMap = !showMap">{{showMap ? 'Ocultar Mapa' : 'Ver mapa'}}</span></span> -->
+    <span class="container__title" *ngIf="mostrarPorTipo('coordenadas')">Ubicacion mapa: <span class="container_link" (click)="showMap = !showMap">{{showMap ? 'Ocultar Mapa' : 'Ver mapa'}}</span></span>
 
     <button class="container__btn">
         <span *ngIf="!loading">Actualizar</span>
@@ -165,7 +165,7 @@
     </form>
 </div>
 
-<div class="map">
+<div class="map" *ngIf="showMap">
     <div *ngIf="apiLoaded | async">
         <google-map height="900px"
                     width="800px" 

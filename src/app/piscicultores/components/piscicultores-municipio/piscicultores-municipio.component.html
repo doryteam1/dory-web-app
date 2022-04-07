@@ -29,28 +29,29 @@
 
 <div class="piscicultores-container">
     <div class="cards-container overflow-auto">
-        <div class="card" *ngFor="let piscicultor of piscicultores; index as i" (mouseover)="onMouseCard(i)">
-            <img class="card__image" src="/assets/images/avatar-person-square.png" routerLink="/piscicultores/municipio/detalle">
+        <div class="card" *ngFor="let piscicultor of piscicultores; index as i" (mouseover)="onMouseCard(piscicultor, i)">
+            <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}" routerLink="/piscicultores/municipio/detalle">
             
             <div class="card-box">
                 <h3 class="card__title">{{piscicultor.nombre}}</h3>
                 <span class="card__title2">{{piscicultor.nombre_asociacion}}</span>
                 <div>
-                    <img class="card__icon" src="assets/icons/whatsapp.svg">
+                    <img class="card__icon" src="assets/icons/whatsapp.svg" *ngIf="piscicultor.celular">
                     <span class="card__phone">{{piscicultor.celular}}</span>
+                    <span class="card__email">{{piscicultor.email}}</span>
                 </div>            
-                <span class="card__description1">{{piscicultor.direccion}}</span>
-                <span class="card__description2">{{piscicultor.municipio}}</span>
+                <span class="card__description1">{{piscicultor.direccion ? 'Dir.' : ''}} {{piscicultor.direccion}}</span>
+                <span class="card__description2">{{piscicultor.municipio}}-{{piscicultor.departamento}}</span>
             </div>
             
         </div>
     </div>
 
     <div *ngIf="apiLoaded | async">
-        <google-map [options]="options" width="800px" height="600px">
+        <google-map [options]="options" width="900px" height="600px">
             <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/person-solid-red.svg' : 'assets/icons/person-outline.svg' }}"></map-marker>
         </google-map>
     </div>
 </div>
-<app-footer></app-footer>
-<app-floating-btn-auto-up></app-floating-btn-auto-up>
+<!-- <app-footer></app-footer>
+ --><app-floating-btn-auto-up></app-floating-btn-auto-up>
