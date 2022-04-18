@@ -4,6 +4,11 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
+import { environment } from 'src/environments/environment';
+import { PlacesService } from 'src/app/services/places.service';
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
+
 @Component({
   selector: 'app-pescadores-municipio',
   templateUrl: './pescadores-municipio.component.html',
@@ -25,10 +30,12 @@ export class PescadoresMunicipioComponent implements OnInit {
 
   pescadores:any[] = [];
   indexSelected:number = -1;
-  
-  constructor(httpClient: HttpClient, private activatedRoute: ActivatedRoute, private pescadoresService:PescadoresService) {
+  poblacion:number = 0;
+  municipio:string = '';
+
+  constructor(httpClient: HttpClient, private activatedRoute: ActivatedRoute, private pescadoresService:PescadoresService, private placesService:PlacesService) {
    
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
+    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
         .pipe(
           map(() => true),
           catchError(() => of(false)),
@@ -36,6 +43,7 @@ export class PescadoresMunicipioComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    registerLocaleData( es );
     let path = this.activatedRoute.snapshot.url[0].path;
     let id = this.activatedRoute.snapshot.params.id;
 
@@ -56,6 +64,21 @@ export class PescadoresMunicipioComponent implements OnInit {
         }
       );
     }
+
+    this.placesService.getMunicipioById(id).subscribe(
+      (response)=>{
+        if(response.data.length > 0){
+          this.poblacion = response.data[0].poblacion;
+          this.municipio = response.data[0].nombre;
+          this.options = {
+            center: { lat: parseFloat(response.data[0].latitud), lng:parseFloat(response.data[0].longitud)},
+            zoom:13
+          }
+        }
+      },err=>{
+        
+      }
+    )
     console.log(this.activatedRoute.snapshot.url[0].path);
   }
 

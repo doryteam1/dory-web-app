@@ -39,7 +39,7 @@ export class AsociacionesComponent implements OnInit {
   granjas:number = 0;
 
   municSeleccionado:any = {
-    municipio:"Not Selected",
+    municipio:"Cargando...",
     poblacion:0,
     granjas:0
   }

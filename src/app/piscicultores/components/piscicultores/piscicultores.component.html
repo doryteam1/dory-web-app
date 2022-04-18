@@ -65,9 +65,9 @@
 <app-footer></app-footer>
 <ng-template #tipContent>
     <div class="tip-content">
-        <h5 class="tip-content__title">{{municSeleccionado.municipio}}</h5>
+        <h5 class="tip-content__title">{{municSeleccionado.nombre}}</h5>
         <span class="tip-content__description">Población {{municSeleccionado.poblacion | number:'':'es'}}</span><br>
-        <span class="tip-content__description"># Piscicultores {{municSeleccionado.piscicultores}}</span>
+        <span class="tip-content__description"># Piscicultores {{municSeleccionado.count_piscicultores}}</span>
     </div>
 </ng-template>
 <app-floating-btn-auto-up></app-floating-btn-auto-up>

@@ -47,12 +47,6 @@
     margin-right: 10px;
 }
 
-.cards-container{
-    width: 750px;
-    height: 600px;
-    border: none;
-}
-
 .card{
     display: flex;
     flex-direction: row;
@@ -68,8 +62,11 @@
     margin-left: 20px;
 }
 .card__image{
-    width: 169px;
-    height: 137px;
+    width: 170px;
+    height: 170px;
+    border-radius: 5px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .card__title{
@@ -99,12 +96,39 @@
     font-size: 16px;
 }
 
+.card__email{
+    display: block;
+}
+
 .pescadores-container{
     display:flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-top: 80px;
 }
 
 .pescadores-container__map{
-    
+    align-self: start;
+    width:546px;
+    margin-left:18px;
+}
+
+.cards-container{
+    width: 750px;
+    height: 600px;
+    border: none;
+}
+
+.search-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.search-container__box{
+    text-align: center;
+}
+
+.search-container__image{
+    width:1024px;
+    height: 628px;
 }

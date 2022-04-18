@@ -6,7 +6,7 @@
         <img class="container__icon" src="assets/icons/build.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue">Municipio</h3>
-            <span class="container__description">Sincelejo</span>    
+            <span class="container__description">{{municipio}}</span>    
         </div>
     </div>
     
@@ -14,7 +14,7 @@
         <img class="container__icon" src="assets/icons/group-circle-solid.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-morado">Población</h3>
-            <span class="container__description">33.688</span>    
+            <span class="container__description">{{poblacion | number:'':'es'}}</span>    
         </div>
     </div>
     
@@ -22,7 +22,7 @@
         <img class="container__icon" src="assets/icons/fish.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue-2"># granjas</h3>
-            <span class="container__description">9</span>    
+            <span class="container__description">{{granjas.length}}</span>    
         </div>
     </div>    
 </div>
@@ -48,9 +48,7 @@
         <h3>No se han encontrado resultados</h3>
         <p>No encontramos granjas en este municipio </p>
     </div>
-    
 </div>
-
 
 <div class="granjas-container">
         <div class="cards-container overflow-auto" *ngIf="granjas.length >= 1">
@@ -73,13 +71,13 @@
                 <span class="card__data">{{granja.area | number:'':'es'}} m²</span>
             </div>
         </div>
-            <div *ngIf="granjas.length > 1 && (apiLoaded | async)">
+            <div *ngIf="granjas.length > 0 && (apiLoaded | async)">
                 <google-map height="600px"
-                            width="600px" 
+                            width="800px" 
                             [options]="options">
                     <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"></map-marker>
                 </google-map>
             </div>
 </div>
-<app-footer></app-footer>
+<!--<app-footer></app-footer>-->
 <app-floating-btn-auto-up></app-floating-btn-auto-up>

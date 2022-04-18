@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { environment } from 'src/environments/environment';
+import { PlacesService } from 'src/app/services/places.service';
 @Component({
   selector: 'app-granjas-municipio',
   templateUrl: './granjas-municipio.component.html',
@@ -28,8 +29,10 @@ export class GranjasMunicipioComponent implements OnInit {
   markerOptions: google.maps.MarkerOptions = {draggable: false};
   indexSelected:number = -1;
   granjaDetailRoute:string = "";
+  poblacion:number = 0;
+  municipio:string = '';
 
-  constructor(httpClient: HttpClient, private granjasService:GranjasService, private activatedRoute:ActivatedRoute) {
+  constructor(httpClient: HttpClient, private granjasService:GranjasService, private activatedRoute:ActivatedRoute, private placesService:PlacesService) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
         .pipe(
           map(() => true),
@@ -46,6 +49,18 @@ export class GranjasMunicipioComponent implements OnInit {
         console.log("Granjas por municipio "+ this.activatedRoute.snapshot.url[1]+ " " + JSON.stringify(response.data))
         this.granjas = response.data;
         this.extractLatLong();
+      }
+    );
+    this.placesService.getMunicipioById(Number(this.activatedRoute.snapshot.url[1])).subscribe(
+      (response)=>{
+        if(response.data.length > 0){
+          this.poblacion = response.data[0].poblacion;
+          this.municipio = response.data[0].nombre;
+          this.options = {
+            center: { lat: parseFloat(response.data[0].latitud), lng:parseFloat(response.data[0].longitud)},
+            zoom:13
+          } 
+        }
       }
     );
   }

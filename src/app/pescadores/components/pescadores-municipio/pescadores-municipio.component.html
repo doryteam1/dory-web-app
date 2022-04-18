@@ -1,12 +1,12 @@
 <app-notification-bar></app-notification-bar>
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
-<div class="data-container" *ngIf="pescadores.length > 0">
+<div class="data-container">
     <div class="container">
         <img class="container__icon" src="assets/icons/build.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue">Municipio</h3>
-            <span class="container__description">{{pescadores[0].municipio}}</span>    
+            <span class="container__description">{{municipio}}</span>    
         </div>
     </div>
     
@@ -14,7 +14,7 @@
         <img class="container__icon" src="assets/icons/group-circle-solid.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-morado">Población</h3>
-            <span class="container__description">33.688</span>    
+            <span class="container__description">{{poblacion | number:'':'es'}}</span>    
         </div>
     </div>
     
@@ -28,26 +28,35 @@
 </div>
 
 <div class="pescadores-container">
-        <div class="cards-container overflow-auto">
+        <div class="cards-container overflow-auto" *ngIf="pescadores.length >= 1">
             <div class="card" *ngFor="let pescador of pescadores; index as i" (mouseover)="onMouseCard(i)">
-                <img class="card__image" src="/assets/images/avatar-person-square.png" routerLink="/granjas/municipio/detalle">
+                <img class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person-square.png'}}" routerLink="/pescadores/municipio/detalle">
                 <div class="card-box">
-                    <h3 class="card__title">{{pescador.nombres}}</h3>
-                    <span class="card__title2">{{pescador.nombre}}</span>
+                    <h3 class="card__title">{{pescador.nombre}}</h3>
+                    <span class="card__title2">{{pescador.nombre_asociacion}}</span>
                     <div>
-                        <img class="card__icon" src="assets/icons/whatsapp.svg">
+                        <img class="card__icon" src="assets/icons/whatsapp.svg"  *ngIf="pescador.celular">
                         <span class="card__phone">{{pescador.celular}}</span>
+                        <span class="card__email">{{pescador.email}}</span>
                     </div>            
-                    <span class="card__description1">{{pescador.direccion}}</span>
-                    <span class="card__description2">{{pescador.municipio}}</span>
+                    <span class="card__description1">{{pescador.direccion ? 'Dir.' : ''}} {{pescador.direccion}}</span>
+                    <span class="card__description2">{{pescador.municipio}}-{{pescador.departamento}}</span>
                 </div>
             </div>
         </div>
-        <div class="pescadores-container__map" *ngIf="apiLoaded | async">
-            <google-map [options]="options" width="800px" height="600px">
+        <div *ngIf="pescadores.length > 0 && (apiLoaded | async)">
+            <google-map [options]="options" width="900px" height="600px">
                 <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/person-solid-red.svg' : 'assets/icons/person-outline.svg' }}"></map-marker>
             </google-map>
         </div>
 </div>
-<app-footer></app-footer>
+
+<div class="search-container" *ngIf="pescadores.length < 1">
+    <div class="search-container__box">
+        <img class="search-container__image" src="assets/images/searching.svg">
+        <h3>No se han encontrado resultados</h3>
+        <p>No encontramos granjas en este municipio </p>
+    </div>
+</div>
+<!--<app-footer></app-footer>-->
 <app-floating-btn-auto-up></app-floating-btn-auto-up>

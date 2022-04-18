@@ -21,4 +21,8 @@ export class GranjasService {
   getGranja(id:number){
     return this.https.get("https://dory-api-rest.herokuapp.com/api/granja/"+id);
   }
+
+  getInformeGranjasPorDepartamento(){
+    return this.https.get("https://dory-api-rest.herokuapp.com/api/granjas/departamento");
+  }
 }

@@ -7,6 +7,9 @@ import { ActivatedRoute } from '@angular/router';
 import { PiscicultoresService } from '../../services/piscicultores.service';
 import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
+
 @Component({
   selector: 'app-piscicultores-municipio',
   templateUrl: './piscicultores-municipio.component.html',
@@ -32,7 +35,9 @@ export class PiscicultoresMunicipioComponent implements OnInit {
 
   piscicultores:any[] = [];
   indexSelected:number = -1;
-  
+  poblacion:number = 0;
+  municipio:string = '';
+
   constructor(httpClient: HttpClient, private activatedRoute:ActivatedRoute, private piscicultoresService:PiscicultoresService, private placesService:PlacesService) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
         .pipe(
@@ -42,6 +47,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    registerLocaleData( es );
     let path = this.activatedRoute.snapshot.url[0].path;
     let id = this.activatedRoute.snapshot.params.id;
 
@@ -64,9 +70,8 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     this.placesService.getMunicipioById(id).subscribe(
       (response)=>{
         if(response.data.length > 0){
-          console.log(response.data[0].latitud)
-          console.log(response.data[0].longitud)
-          console.log(response)
+          this.poblacion = response.data[0].poblacion;
+          this.municipio = response.data[0].nombre;
           this.options = {
             center: { lat: parseFloat(response.data[0].latitud), lng:parseFloat(response.data[0].longitud)},
             zoom:13
