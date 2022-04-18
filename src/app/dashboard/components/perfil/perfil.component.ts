@@ -361,7 +361,8 @@ export class PerfilComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.form.value)
+    console.log("form-->",this.form.value)
+    console.log("lat ",this.latitud?.value)
     this.loading = true;
     if(this.form.invalid){
       this.loading = false;
@@ -517,8 +518,9 @@ export class PerfilComponent implements OnInit {
     navigator.geolocation.getCurrentPosition((position) => {
       this.options = {
         center: { lat:position.coords.latitude, lng:position.coords.longitude },
-        zoom:15
-      }
+        zoom:10
+      };
+      this.markerPosition = { lat: position.coords.latitude, lng:position.coords.longitude };
     })
   }
 }
