@@ -57,6 +57,7 @@ export class NovedadesComponent implements OnInit {
     if(event == ''){
       return;
     }
+    
 
     this.showNotFound = false;
     this.loading = true;
