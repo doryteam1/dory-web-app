@@ -33,7 +33,7 @@ export class UsuarioService {
         longitud:usuario.longitud || 0,
         creadoCon:usuario.creadoCon || ''
     }
-    return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/usuarios',body);
+    return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/usuario/create',body);
   }
 
   getTiposUsuario(){
@@ -45,7 +45,7 @@ export class UsuarioService {
   }
 
   actualizarUsuario(id:number, dataUser:any){
-    return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/usuarios/parcial/'+id,dataUser);
+    return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/usuario/parcial/'+id,dataUser);
   }
 
   login(userData: {email:string, password:string}){

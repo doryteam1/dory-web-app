@@ -512,4 +512,13 @@ export class PerfilComponent implements OnInit {
   get otraAreaExpDesc(){
     return this.form.get('otra_area_experticia_descripcion');
   }
+
+  currentPosition(){
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.options = {
+        center: { lat:position.coords.latitude, lng:position.coords.longitude },
+        zoom:15
+      }
+    })
+  }
 }

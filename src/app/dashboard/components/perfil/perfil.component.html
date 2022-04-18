@@ -184,6 +184,7 @@
                     [options]="options"
                     (mapClick)="addMarker($event)">
             <map-marker [position]="markerPosition" [options]="markerOptions"  title="Title"></map-marker>
+            <button id="Logout" class="toggle-button controls button" (click)="currentPosition()">Mi ubicación</button>
         </google-map>
     </div>
 </div>
