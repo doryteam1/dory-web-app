@@ -59,7 +59,7 @@
         <span class="container__title">Departamento</span>
         <div>
             <select class="container__input form-input-text-square" formControlName='id_departamento' (ngModelChange)='changeDpto()'>
-                <optgroup label="Escoje un departamento">
+                <optgroup label="Escoje un departamento" value="70">
                     <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
                 </optgroup>
             </select>

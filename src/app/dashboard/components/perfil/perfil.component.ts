@@ -176,30 +176,35 @@ export class PerfilComponent implements OnInit {
     this.us.getUsuarioByEmail(email).subscribe(
       (response)=>{
         this.usuario = response.data[0];
-        this.form.get('id')?.setValue(this.usuario.id),	
-        this.form.get('cedula')?.setValue(this.usuario.cedula),	
-        this.form.get('nombres')?.setValue(this.usuario.nombres),	
-        this.form.get('apellidos')?.setValue(this.usuario.apellidos),	
-        this.form.get('celular')?.setValue(this.usuario.celular),	
-        this.form.get('direccion')?.setValue(this.usuario.direccion),
-        this.form.get('id_tipo_usuario')?.setValue(this.usuario.id_tipo_usuario),
-        this.form.get('email')?.setValue(this.usuario.email),
-        this.form.get('id_area_experticia')?.setValue(this.usuario.id_area_experticia),
-        this.form.get('nombre_negocio')?.setValue(this.usuario.nombre_negocio),
-        this.form.get('foto')?.setValue(this.usuario.foto),
-        this.form.get('fecha_registro')?.setValue(Utilities.dateToISOString(this.usuario.fecha_registro)),
-        this.form.get('fecha_nacimiento')?.setValue(Utilities.dateToISOString(this.usuario.fecha_nacimiento)),
-        this.form.get('nombre_vereda')?.setValue(this.usuario.nombre_vereda),	
-        this.form.get('id_departamento')?.setValue(this.usuario.id_departamento),	
-        this.form.get('id_municipio')?.setValue(this.usuario.id_municipio),	
-        this.form.get('id_corregimiento')?.setValue(this.usuario.id_corregimiento),	
-        this.form.get('id_vereda')?.setValue(this.usuario.id_vereda),	
-        this.form.get('latitud')?.setValue(this.usuario.latitud),	
-        this.form.get('longitud')?.setValue(this.usuario.longitud),	
-        this.form.get('nombre_corregimiento')?.setValue(this.usuario.nombre_corregimiento),
+        this.form.get('id')?.setValue(this.usuario.id);
+        this.form.get('cedula')?.setValue(this.usuario.cedula);	
+        this.form.get('nombres')?.setValue(this.usuario.nombres);	
+        this.form.get('apellidos')?.setValue(this.usuario.apellidos);	
+        this.form.get('celular')?.setValue(this.usuario.celular);
+        this.form.get('direccion')?.setValue(this.usuario.direccion);
+        this.form.get('id_tipo_usuario')?.setValue(this.usuario.id_tipo_usuario);
+        this.form.get('email')?.setValue(this.usuario.email);
+        this.form.get('id_area_experticia')?.setValue(this.usuario.id_area_experticia);
+        this.form.get('nombre_negocio')?.setValue(this.usuario.nombre_negocio);
+        this.form.get('foto')?.setValue(this.usuario.foto);
+        this.form.get('fecha_registro')?.setValue(Utilities.dateToISOString(this.usuario.fecha_registro));
+        this.form.get('fecha_nacimiento')?.setValue(Utilities.dateToISOString(this.usuario.fecha_nacimiento));
+        this.form.get('nombre_vereda')?.setValue(this.usuario.nombre_vereda);
+        this.form.get('id_municipio')?.setValue(this.usuario.id_municipio);
+        this.form.get('id_corregimiento')?.setValue(this.usuario.id_corregimiento);
+        this.form.get('id_vereda')?.setValue(this.usuario.id_vereda);
+        this.form.get('latitud')?.setValue(this.usuario.latitud);
+        this.form.get('longitud')?.setValue(this.usuario.longitud);	
+        this.form.get('nombre_corregimiento')?.setValue(this.usuario.nombre_corregimiento);
         this.otraAreaExp?.setValue(this.usuario.otra_area_experticia);
-        this.otraAreaExpDesc?.setValue(this.usuario.otra_area_experticia_descripcion)
+        this.otraAreaExpDesc?.setValue(this.usuario.otra_area_experticia_descripcion);
 
+        if(this.usuario.id_departamento == 0){
+          this.form.get('id_departamento')?.setValue(70);	
+        }else{
+          this.form.get('id_departamento')?.setValue(this.usuario.id_departamento);	
+        }
+        
         this.loadAreasExp();
         this.loadDptos();
         this.loadMunic();
