@@ -10,7 +10,7 @@
                 Perfil
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="tipoUsuario == 'Piscicultor'">
               <a class="nav-link" [routerLink]="['/dashboard/granjas']" routerLinkActive="active">
                 <span data-feather="file"></span>
                 Mis granjas

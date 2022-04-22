@@ -204,7 +204,7 @@ export class PerfilComponent implements OnInit {
         }else{
           this.form.get('id_departamento')?.setValue(this.usuario.id_departamento);	
         }
-        
+
         this.loadAreasExp();
         this.loadDptos();
         this.loadMunic();
@@ -368,6 +368,8 @@ export class PerfilComponent implements OnInit {
   onSubmit(){
     console.log("form-->",this.form.value)
     console.log("lat ",this.latitud?.value)
+    this.latitud?.enable();
+    this.longitud?.enable();
     this.loading = true;
     if(this.form.invalid){
       this.loading = false;
@@ -378,9 +380,13 @@ export class PerfilComponent implements OnInit {
       (response)=>{
         console.log(response);
         this.loading = false;
+        this.latitud?.disable();
+        this.longitud?.disable();
       },err=>{
         this.loading = false;
         console.log(err)
+        this.latitud?.disable();
+        this.longitud?.disable();
       }
     );
   }
@@ -526,6 +532,8 @@ export class PerfilComponent implements OnInit {
         zoom:10
       };
       this.markerPosition = { lat: position.coords.latitude, lng:position.coords.longitude };
+      this.latitud?.setValue(position.coords.latitude);
+      this.longitud?.setValue(position.coords.longitude);
     })
   }
 }
