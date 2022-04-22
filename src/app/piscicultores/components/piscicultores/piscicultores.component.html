@@ -33,7 +33,8 @@
     <h4 class="container__title">Piscicultores en Sucre</h4>
     <p class="container__description">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</p>    
     <div class="container_box">
-        <img class="container__image" src="assets/images/sucre-map.svg">
+        <app-map-sucre (munClick)="munClick($event)" (munOver)="munOver($event)" [munData]="municSeleccionado" labelTooltip="Piscicultores"></app-map-sucre>
+        <!--<img class="container__image" src="assets/images/sucre-map.svg">
         <img class="container__red-point-san-onofre" src="assets/images/red-point.svg" *ngIf="sanOnofreActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70713)" routerLink="/piscicultores/municipio/70713">
         <img class="container__red-point-tolu" src="assets/images/red-point.svg" *ngIf="toluActive"[ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70820)" routerLink="/piscicultores/municipio/70820">
         <img class="container__red-point-tolu-viejo" src="assets/images/red-point.svg" *ngIf="toluViejoActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70823)" routerLink="/piscicultores/municipio/70823">
@@ -59,7 +60,7 @@
         <img class="container__red-point-sucre" src="assets/images/red-point.svg" *ngIf="sucreActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70771)" routerLink="/piscicultores/municipio/70771">
         <img class="container__red-point-san-marcos" src="assets/images/red-point.svg" *ngIf="sanMarcosActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70708)" routerLink="/piscicultores/municipio/70708">
         <img class="container__red-point-majagual" src="assets/images/red-point.svg" *ngIf="majagualActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70429)" routerLink="/piscicultores/municipio/70429">
-        <img class="container__red-point-guaranda" src="assets/images/red-point.svg" *ngIf="guarandaActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70265)" routerLink="/piscicultores/municipio/70265">
+        <img class="container__red-point-guaranda" src="assets/images/red-point.svg" *ngIf="guarandaActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70265)" routerLink="/piscicultores/municipio/70265">-->
     </div>
 </div>
 <app-footer></app-footer>

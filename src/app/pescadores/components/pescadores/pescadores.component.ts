@@ -42,7 +42,7 @@ export class PescadoresComponent implements OnInit {
   municSeleccionado:any = {
     municipio:"Cargando...",
     poblacion:0,
-    pescadores:0
+    count:0
   }
 
   
@@ -64,7 +64,11 @@ export class PescadoresComponent implements OnInit {
   changeSelected(codigo:number){
     let index = this.resumenDepartamento.findIndex((dataMunic)=> dataMunic.id_municipio == codigo);
     if(index != -1){
-      this.municSeleccionado = this.resumenDepartamento[index];
+      this.municSeleccionado = {
+        nombre : this.resumenDepartamento[index].nombre,
+        poblacion : this.resumenDepartamento[index].poblacion,
+        count: this.resumenDepartamento[index].count_pescadores
+      }
     }
   }
 
@@ -73,5 +77,13 @@ export class PescadoresComponent implements OnInit {
       this.poblacion = this.poblacion + resum.poblacion;
       this.pescadores = this.pescadores + resum.count_pescadores;
     })
+  }
+
+  munClick(mun:number){
+    this.changeSelected(mun);
+  }
+
+  munOver(mun:number){
+    this.changeSelected(mun);
   }
 }

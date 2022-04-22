@@ -10,6 +10,8 @@ import { SearchComponent } from './components/search/search.component';
 import { FormsModule } from '@angular/forms';
 import { FloatingBtnAutoUpComponent } from './components/floating-btn-auto-up/floating-btn-auto-up.component';
 import { BasicMessageComponent } from '../components/basic-message/basic-message.component';
+import { MapSucreComponent } from './components/map-sucre/map-sucre.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -22,12 +24,14 @@ import { BasicMessageComponent } from '../components/basic-message/basic-message
     NotificationBarComponent,
     SearchComponent,
     FloatingBtnAutoUpComponent,
-    BasicMessageComponent
+    BasicMessageComponent,
+    MapSucreComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   exports:[
     NavbarComponent,
@@ -37,7 +41,8 @@ import { BasicMessageComponent } from '../components/basic-message/basic-message
     NotificationBarComponent,
     SearchComponent,
     FloatingBtnAutoUpComponent,
-    BasicMessageComponent
+    BasicMessageComponent,
+    MapSucreComponent
   ]
 })
 export class SharedModule { }
