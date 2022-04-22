@@ -23,6 +23,7 @@ export class MapSucreComponent implements OnInit {
   }
 
   munSelected(num:number){
+    console.log(num)
     this.munClick.emit(num);
   }
 
