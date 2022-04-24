@@ -15,8 +15,12 @@ export class AsociacionesService {
     return this.https.get("https://dory-api-rest.herokuapp.com/api/asociaciones");
   }
 
-  getGranjasMunicipio(idMunicipio:number){
+  getAsociacionesMunicipio(idMunicipio:number){
     //return this.https.get("https://dory-api-rest.herokuapp.com/api/asociaciones/municipio/"+idMunicipio);
+  }
+
+  getAsociacionesDpto(dptoId:number){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/asociaciones/departamento/'+dptoId);
   }
 }
 

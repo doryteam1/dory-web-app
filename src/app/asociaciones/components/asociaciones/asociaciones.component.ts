@@ -224,4 +224,11 @@ export class AsociacionesComponent implements OnInit {
     })
   }
 
+  munClick(mun:number){
+    this.changeSelected(mun);
+  }
+
+  munOver(mun:number){
+    this.changeSelected(mun);
+  }
 }
