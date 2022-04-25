@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -418,6 +419,11 @@ export class PerfilComponent implements OnInit {
     //console.log("Longitud"+ event.latLng.toJSON().lng);
     }
    
+    this.places.getDptoMunicByLatLng(event.latLng?.toJSON().lat!,event.latLng?.toJSON().lng!).subscribe(
+      (response)=>{
+        console.log("Get dpto munic by coor")
+      }
+    );
   }
 
 
