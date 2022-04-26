@@ -24,7 +24,7 @@
       </tr>
     </tbody>
   </table>
-  <button class="btn-outline-blue button">Agregar nuevo producto</button>
+  <button class="btn-outline-blue button" (click)="openModal(content)">Agregar nuevo producto</button>
 </div>
 <div class="search-container" *ngIf="showNotFound">
   <div class="search-container__box">
@@ -33,3 +33,45 @@
       <p>Aun no has registrado los productos que vendes.</p>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nuevo producto</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label for="dateOfBirth">Nombre</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombreProducto">
+          <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Descripción</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion">
+          <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Imagen</label>
+        <div class="input-group">
+          <input id="productName" type="file" class="form-control" placeholder="Seleccione una imagen" formControlName="imagen">
+          <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Precio</label>
+        <div class="input-group">
+          <input id="productName" type="number" class="form-control" placeholder="Ej. 50000" formControlName="precio">
+          <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="addProducto()">Guardar</button>
+  </div>
+</ng-template>

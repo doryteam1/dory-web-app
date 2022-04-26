@@ -172,7 +172,7 @@ export class PerfilComponent implements OnInit {
   ngOnInit(): void {
     this.latitud?.disable();
     this.longitud?.disable();
-
+    this.email?.disable();
     let email:string | null = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe(
       (response)=>{
@@ -429,22 +429,18 @@ export class PerfilComponent implements OnInit {
     this.places.geocodeLatLng(point).then(
       (response)=>{
         if(response.status == 'OK'){
-          console.log(response.results[0].address_components)
           let result =  response.results[0].address_components;
           let index = result.findIndex((element)=>element.types.includes('administrative_area_level_1'));
           let dpto = result[index].short_name;
           index = result.findIndex((element)=>element.types.includes('administrative_area_level_2'));
           let municipio = result[index].short_name;
-          console.log("Municipio ",municipio)
-          console.log("Dpto ",dpto)
           index = this.departamentos.findIndex((element)=>element.nombre_departamento == dpto);
-          console.log(this.departamentos)
-          console.log(index)
-          let idDpto = this.departamentos[index].id_departamento;
+          let idDpto = this.departamentos[index]?.id_departamento;
           index = this.municipios.findIndex((element)=>element.nombre == municipio)
-          let idMunic = this.municipios[index].id_municipio;
+          let idMunic = this.municipios[index]?.id_municipio;
           this.idDpto?.setValue(idDpto);
           this.idMunic?.setValue(idMunic);
+          this.direccion?.setValue(response.results[0].formatted_address)
         }
       }
     )

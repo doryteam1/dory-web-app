@@ -104,9 +104,7 @@ export class UsuarioService {
     localStorage.setItem('authWith',method);
   }
 
-  getProductosById(userId:number){
-    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/proveedores/productos/userId/'+userId)
-  }
+
 
   verifyAccount(token:string){
     return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/usuario/verify/account',{token:token})
