@@ -222,7 +222,7 @@ export class PerfilComponent implements OnInit {
         this.markerPosition = { lat: parseFloat(this.latitud?.value), lng:parseFloat(this.longitud?.value) };
         this.options = {
           center: { lat:parseFloat(this.latitud?.value), lng:parseFloat(this.longitud?.value) },
-          zoom:13
+          zoom:9
         }
       },(err)=>{
         console.log(err);

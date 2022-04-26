@@ -40,6 +40,11 @@ export class RegistroComponent implements OnInit {
   error:string='';
   success:boolean = false;
 
+  sucreLatLng = {
+    lat:9.176187, 
+    lng:-75.110196
+  }
+
   constructor(private usuarioService:UsuarioService, private spinner: NgxSpinnerService, private router:Router, private socialAuthService:SocialAuthService,private modalService: NgbModal, private userService:UsuarioService) { 
     
   }
@@ -68,31 +73,16 @@ export class RegistroComponent implements OnInit {
   onSubmit(){
     if(this.form.valid && this.terms?.value){
       this.spinner.show();
-      this.usuarioService.registrarUsuario(this.form.value).subscribe(
+      let newUser = this.form.getRawValue();
+      newUser.latitud = this.sucreLatLng.lat;
+      newUser.longitud = this.sucreLatLng.lng;
+
+      this.usuarioService.registrarUsuario(newUser).subscribe(
         (response)=>{
           this.success = true;
           localStorage.setItem('email',this.email?.value);
           this.success = true;
           this.spinner.hide();
-          /*let data:any = {
-            email: this.email?.value,
-            password: this.password?.value
-          }
-          this.userService.login(data).subscribe(
-            (response)=>{
-              localStorage.setItem('email',data.email);
-              localStorage.setItem('token',response.body.token);
-              this.spinner.hide();
-              this.router.navigateByUrl('/dashboard');
-            },err=>{
-              if(err.status == 400 || err.status == 404){
-                this.error = err.error.message;
-              }else{
-                this.error = 'Error inesperado'
-              }
-              this.spinner.hide();
-            }
-          );*/
         },(err)=>{
           this.success = false;
           if(err.error.message == 'El registro ya existe'){
@@ -137,6 +127,8 @@ export class RegistroComponent implements OnInit {
           apellidos:response.lastName,
           email:response.email,
           foto:response.photoUrl,
+          latitud:this.sucreLatLng.lat,
+          longitud:this.sucreLatLng.lng,
           creadoCon:'google'
         }).subscribe(
           (response)=>{

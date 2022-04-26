@@ -19,7 +19,11 @@ export class LoginComponent implements OnInit {
   recordarme:boolean = false;
   error:string = '';
   visiblePass:boolean = false;
-  
+  sucreLatLng = {
+    lat:9.176187, 
+    lng:-75.110196
+  }
+
   constructor(private router:Router,private mailService:MailService, private userService:UsuarioService,private socialAuthService:SocialAuthService) { }
 
   ngOnInit(): void {
@@ -102,6 +106,8 @@ export class LoginComponent implements OnInit {
                 apellidos:response.lastName,
                 email:response.email,
                 foto:response.photoUrl,
+                latitud:this.sucreLatLng.lat,
+                longitud:this.sucreLatLng.lng,
                 creadoCon:'google'
               }).subscribe(
                 (response)=>{
