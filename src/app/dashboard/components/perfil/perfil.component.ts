@@ -201,11 +201,13 @@ export class PerfilComponent implements OnInit {
         this.otraAreaExpDesc?.setValue(this.usuario.otra_area_experticia_descripcion);
 
         if(this.usuario.id_departamento == 0){
-          this.form.get('id_departamento')?.setValue(70);	
+          this.form.get('id_departamento')?.setValue(70);
         }else{
           this.form.get('id_departamento')?.setValue(this.usuario.id_departamento);	
         }
 
+        this.idDpto?.disable();
+        this.idMunic?.disable();
         this.loadAreasExp();
         this.loadDptos();
         this.loadMunic();
@@ -418,12 +420,34 @@ export class PerfilComponent implements OnInit {
     //console.log("Latitud"+ event.latLng.toJSON().lat);
     //console.log("Longitud"+ event.latLng.toJSON().lng);
     }
-   
-    this.places.getDptoMunicByLatLng(event.latLng?.toJSON().lat!,event.latLng?.toJSON().lng!).subscribe(
+
+    const point: google.maps.LatLngLiteral = {
+      lat: event.latLng?.toJSON().lat!,
+      lng: event.latLng?.toJSON().lng!,
+    };
+
+    this.places.geocodeLatLng(point).then(
       (response)=>{
-        console.log("Get dpto munic by coor")
+        if(response.status == 'OK'){
+          console.log(response.results[0].address_components)
+          let result =  response.results[0].address_components;
+          let index = result.findIndex((element)=>element.types.includes('administrative_area_level_1'));
+          let dpto = result[index].short_name;
+          index = result.findIndex((element)=>element.types.includes('administrative_area_level_2'));
+          let municipio = result[index].short_name;
+          console.log("Municipio ",municipio)
+          console.log("Dpto ",dpto)
+          index = this.departamentos.findIndex((element)=>element.nombre_departamento == dpto);
+          console.log(this.departamentos)
+          console.log(index)
+          let idDpto = this.departamentos[index].id_departamento;
+          index = this.municipios.findIndex((element)=>element.nombre == municipio)
+          let idMunic = this.municipios[index].id_municipio;
+          this.idDpto?.setValue(idDpto);
+          this.idMunic?.setValue(idMunic);
+        }
       }
-    );
+    )
   }
 
 

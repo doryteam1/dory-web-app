@@ -92,6 +92,7 @@ export class GranjasComponent implements OnInit {
 
   munClick(mun:number){
     this.changeSelected(mun);
+    this.router.navigate(['/granjas/municipio/'+mun])
   }
 
   munOver(mun:number){

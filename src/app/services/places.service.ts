@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpsService } from './https.service';
 import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { GeocoderResponse } from 'src/models/geocoder-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlacesService {
 
-  constructor(private https:HttpsService) { }
+  constructor(private https:HttpsService, private httpClient:HttpClient) { }
 
   getDepartamentos(){
     return this.https.get("https://dory-api-rest.herokuapp.com/api/departamentos");
@@ -30,13 +32,14 @@ export class PlacesService {
     return this.https.get("https://dory-api-rest.herokuapp.com/api/municipios/"+idMunicipio);
   }
 
-  getDptoMunicByLatLng(lat:number,lng:number){
-    return this.https.get("https://maps.googleapis.com/maps/api/geocode/json?latlng= "+lat+", "+lng+"&key="+environment.doryApiKey).pipe(
-      map(x=>console.log(x))
-    )
+  geocodeLatLng(location: google.maps.LatLngLiteral): Promise<GeocoderResponse> {
+    let geocoder = new google.maps.Geocoder();
 
-    /*return this.https.get("https://maps.googleapis.com/maps/api/geocode/json?latlng= 9.2216946, -75.2784789&key=AIzaSyDxAJesdH6yoUCT79wtRqXYKSevJsPD0TU").pipe(
-      map(x=>console.log(x))
-    )*/
+    return new Promise((resolve, reject) => {
+      geocoder.geocode({ 'location': location }, (results, status) => {
+        const response = new GeocoderResponse(status, results!);
+        resolve(response);
+      });
+    });
   }
 }
