@@ -23,7 +23,7 @@
             <img class="stats-container__icon" src="assets/icons/fish.svg">
             <div class="stats-container__info">
                 <h3 class="stats-container__title container__title--color-blue-2"># asociaciones</h3>
-                <span class="stats-container__description">{{granjas | number:'':'es'}}</span>    
+                <span class="stats-container__description">{{asociaciones | number:'':'es'}}</span>    
             </div>
         </div>    
     </div>
@@ -33,7 +33,7 @@
     <h4 class="container__title">Asociaciones productoras en Sucre</h4>
     <p class="container__description">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</p>    
     <div class="container_box">
-        <app-map-sucre (munClick)="munClick($event)" (munOver)="munOver($event)" [munData]="municSeleccionado" labelTooltip="Pescadores"></app-map-sucre>
+        <app-map-sucre (munClick)="munClick($event)" (munOver)="munOver($event)" [munData]="municSeleccionado" labelTooltip="Asociaciones"></app-map-sucre>
         <!--<img class="container__image" src="assets/images/sucre-map.svg">
         <img class="container__red-point-san-onofre" src="assets/images/red-point.svg" *ngIf="sanOnofreActive" [ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70713)" routerLink="/asociaciones/municipio/70713">
         <img class="container__red-point-tolu" src="assets/images/red-point.svg" *ngIf="toluActive"[ngbTooltip]="tipContent" [openDelay]="300" [closeDelay]="0" (mouseenter)="changeSelected(70820)" routerLink="/asociaciones/municipio/70820">
@@ -68,7 +68,7 @@
     <div class="tip-content">
         <h5 class="tip-content__title">{{municSeleccionado.municipio}}</h5>
         <span class="tip-content__description">Población {{municSeleccionado.poblacion | number:'':'es'}}</span><br>
-        <span class="tip-content__description"># Asociaciones {{municSeleccionado.granjas}}</span>
+        <span class="tip-content__description"># Asociaciones {{municSeleccionado.count}}</span>
     </div>
 </ng-template>
 <app-floating-btn></app-floating-btn>
