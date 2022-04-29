@@ -179,11 +179,13 @@
 
 <div class="map" *ngIf="showMap">
     <div *ngIf="apiLoaded | async">
-        <google-map height="900px"
+        <google-map height="610px"
                     width="800px" 
                     [options]="options"
                     (mapClick)="addMarker($event)">
             <map-marker [position]="markerPosition" [options]="markerOptions"  title="Title"></map-marker>
+            <map-polyline [path]="vertices" [options]="optionPoli">
+            </map-polyline>
             <button id="Logout" class="toggle-button controls button" (click)="currentPosition()">Mi ubicación</button>
         </google-map>
     </div>
