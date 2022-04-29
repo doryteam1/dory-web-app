@@ -6,6 +6,7 @@
 .container_img{
     width: 100px;
     height: 100px;
+    object-fit: cover;
 }
 
 .button{
@@ -35,4 +36,16 @@
 .search-container__image{
     width:1024px;
     height: 370px;
+}
+
+.modal__image{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+}
+
+.modal__box{
+    display: flex;
+    flex-direction: column;
 }

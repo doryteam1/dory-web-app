@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AsociacionesService } from '../../services/asociaciones.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-asociaciones-municipio',
   templateUrl: './asociaciones-municipio.component.html',
@@ -25,7 +26,7 @@ export class AsociacionesMunicipioComponent implements OnInit {
   indexSelected:number = -1;
 
   constructor(httpClient: HttpClient, private asociacionesService:AsociacionesService) {
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDVBMpPnWkfUkXBDDBW-vqj_Zeq8PNzYUE', 'callback')
+    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
         .pipe(
           map(() => true),
           catchError(() => of(false)),

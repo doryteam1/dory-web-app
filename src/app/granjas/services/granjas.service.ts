@@ -25,4 +25,16 @@ export class GranjasService {
   getInformeGranjasPorDepartamento(){
     return this.https.get("https://dory-api-rest.herokuapp.com/api/granjas/departamento");
   }
+
+  addGranja(newGranja:any){
+    return this.https.post('//dory-api-rest.herokuapp.com/api/granjas/',newGranja)
+  }
+
+  getGranjaByUserId(userId:string){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/granjas/user/'+userId)
+  }
+
+  anularGranja(idGranja:number){
+    return this.https.put('https://dory-api-rest.herokuapp.com/api/granjas/anular/'+idGranja, null)
+  }
 }

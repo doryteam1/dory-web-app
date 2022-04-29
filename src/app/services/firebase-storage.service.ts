@@ -15,4 +15,8 @@ export class FirebaseStorageService {
     public cloudStorageRef(fileName: string) {
       return this.storage.ref(fileName);
     }
+
+    public refFromUrl(path:string){
+      return this.storage.refFromURL(path);
+    }
 }

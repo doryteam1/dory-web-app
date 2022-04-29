@@ -1,6 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AsociacionesService } from '../../services/asociaciones.service';
 
 @Component({
@@ -47,7 +48,7 @@ export class AsociacionesComponent implements OnInit {
 
   
   resumenDepartamento:any = [];
-  constructor(private asociacionService:AsociacionesService) { }
+  constructor(private asociacionService:AsociacionesService, private router:Router) { }
 
   ngOnInit(): void {
     registerLocaleData( es );
@@ -82,6 +83,7 @@ export class AsociacionesComponent implements OnInit {
 
   munClick(mun:number){
     this.changeSelected(mun);
+    this.router.navigateByUrl('/asociaciones/municipio/'+mun)
   }
 
   munOver(mun:number){

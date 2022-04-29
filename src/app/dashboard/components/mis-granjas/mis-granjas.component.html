@@ -1,1 +1,145 @@
-<p>mis-granjas works!</p>
+<div class="container">
+    <div class="overflow-auto container__table">
+        <table class="table mt-40">
+            <thead class="table-light">
+            <tr>
+                <th>Foto</th>
+                <th>Nombre de la granja</th>
+                <th>Descripción</th>
+                <th>Area</th>
+                <th>Numero de trabajadores</th>
+                <th>Producción estimada (mes)</th>
+                <th>Tipos de infraestructura</th>
+                <th>Especies cultivadas</th>
+                <th>Dirección</th>
+                <th>Departamento</th>
+                <th>Municipio</th>
+                <th>Corregimiento</th>
+                <th>Vereda</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let granja of granjas; let i=index">
+                <td>{{granja.nombre_granja}}</td>
+                <td>{{granja.descripcion}}</td>
+                <td>{{granja.area}}</td>
+                <td>
+                    <div class="container-row">
+                        <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i>
+                        <i class="container__icon bi bi-trash text-danger" (click)="anularGranja(granja.id_granja,i)"></i>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <button class="btn-outline-blue button" (click)="openModal(content)">Agregar nueva granja</button>
+</div>
+    <div class="search-container" *ngIf="showNotFound">
+      <div class="search-container__box">
+          <img class="search-container__image" src="assets/images/searching.svg">
+          <h3>No se han encontrado resultados</h3>
+          <p>Aun no has registrado tus granjas</p>
+      </div>
+    </div>
+    
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Nueva granja</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div class="mb-3">
+            <label for="dateOfBirth">Nombre</label>
+            <div class="input-group">
+              <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre_granja">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="dateOfBirth">Descripción</label>
+            <div class="input-group">
+              <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="dateOfBirth">Area(m2)</label>
+            <div class="input-group">
+              <input id="productName" type="number" class="form-control" placeholder="Cual es el area de tu granja" (change)='fileChange($event)' formControlName="area">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="dateOfBirth">Numero de trabajadores</label>
+            <div class="input-group">
+              <input id="productName" type="number" class="form-control" placeholder="Cuantos trabajadores trabajan en tu granja" (change)='fileChange($event)' formControlName="numero_trabajadores">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+          </div>
+    
+          <div class="mb-3">
+            <label for="dateOfBirth">Produccion estimada (kg/mes)</label>
+            <div class="input-group">
+              <input id="productName" type="number" class="form-control" placeholder="Cuanto produce la granja al mes" (change)='fileChange($event)' formControlName="produccion_estimada_mes">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="dateOfBirth">Dirección</label>
+            <div class="input-group">
+              <input id="productName" class="form-control" placeholder="Dirección de la granja" (change)='fileChange($event)' formControlName="direccion">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+          </div>
+          
+          <div class="container__box mb-3">
+            <span>Departamento</span>
+            <div>
+                <select class="container__input container__input form-input-text-square" formControlName='id_departamento' (ngModelChange)='changeDpto()'>
+                    <optgroup label="Escoje un departamento" value="70">
+                        <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
+                    </optgroup>
+                </select>
+            </div>
+          </div>
+
+          <div class="container__box mb-3">
+            <span class="container__title">Municipio</span>
+            <div>
+                <select class="container__input form-input-text-square" formControlName='id_municipio'>
+                    <optgroup label="Escoge un municipio">
+                        <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}</option>
+                    </optgroup>
+                </select>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="dateOfBirth">Corregimiento</label>
+            <div class="input-group">
+              <input id="productName" class="form-control" placeholder="Corregimiento donde se ubica la granja" (change)='fileChange($event)' formControlName="corregimiento">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="dateOfBirth">Vereda</label>
+            <div class="input-group">
+              <input id="productName" class="form-control" placeholder="Vereda donde se ubica la granja" (change)='fileChange($event)' formControlName="vereda">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="addGranja()" *ngIf="modalMode=='create'">Guardar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="updateGranja()" *ngIf="modalMode=='update'">Actualizar</button>
+      </div>
+    </ng-template>

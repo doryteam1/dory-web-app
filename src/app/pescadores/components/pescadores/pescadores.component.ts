@@ -3,6 +3,7 @@ import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { createUnparsedSourceFile } from 'typescript';
 import { PescadoresService } from '../../services/pescadores.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pescadores',
@@ -47,7 +48,7 @@ export class PescadoresComponent implements OnInit {
 
   
   resumenDepartamento:Array<any> = []
-  constructor(private pService:PescadoresService) { }
+  constructor(private pService:PescadoresService, private router:Router) { }
 
   ngOnInit(): void {
     registerLocaleData( es );
@@ -81,6 +82,7 @@ export class PescadoresComponent implements OnInit {
 
   munClick(mun:number){
     this.changeSelected(mun);
+    this.router.navigateByUrl('/pescadores/municipio/'+mun)
   }
 
   munOver(mun:number){

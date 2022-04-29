@@ -34,11 +34,11 @@
         </div>
         <div *ngIf="asociaciones.length > 1 && (apiLoaded | async)">
             <google-map height="600px"
-                        width="600px" 
+                        width="800px" 
                         [options]="options">
                 <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/house-red.svg' : 'assets/icons/house.svg' }}"></map-marker>
             </google-map>
         </div>
 </div>
-<app-footer></app-footer>
+<!--<app-footer></app-footer>-->
 <app-floating-btn-auto-up></app-floating-btn-auto-up>
