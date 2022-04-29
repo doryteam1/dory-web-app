@@ -12,6 +12,7 @@ import { FloatingBtnAutoUpComponent } from './components/floating-btn-auto-up/fl
 import { BasicMessageComponent } from '../components/basic-message/basic-message.component';
 import { MapSucreComponent } from './components/map-sucre/map-sucre.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TopAlertComponent } from './components/top-alert/top-alert.component';
 
 
 
@@ -25,7 +26,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SearchComponent,
     FloatingBtnAutoUpComponent,
     BasicMessageComponent,
-    MapSucreComponent
+    MapSucreComponent,
+    TopAlertComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SearchComponent,
     FloatingBtnAutoUpComponent,
     BasicMessageComponent,
-    MapSucreComponent
+    MapSucreComponent,
+    TopAlertComponent
   ]
 })
 export class SharedModule { }

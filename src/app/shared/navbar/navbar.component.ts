@@ -11,6 +11,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class NavbarComponent implements OnInit {
   photoUser:string = '';
   nomCom:string = '';
+  successMessage = 'Mensaje de prueba'
   constructor(private router:Router,private userService:UsuarioService,private storageService:StorageService) { }
 
   ngOnInit(): void {

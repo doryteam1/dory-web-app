@@ -10,6 +10,7 @@ import { FirebaseStorageService } from 'src/app/services/firebase-storage.servic
 import { PlacesService } from 'src/app/services/places.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { TopAlertControllerService } from 'src/app/shared/services/top-alert-controller.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { environment } from 'src/environments/environment';
 
@@ -26,7 +27,6 @@ export class PerfilComponent implements OnInit {
   municipios:Array<any> = [];
   corregimientos:Array<any> = [];
   veredas:Array<any> = [];
-
   form:FormGroup = new FormGroup({
     id:new FormControl(''),	
     cedula:new FormControl(''),	
@@ -3018,7 +3018,7 @@ export class PerfilComponent implements OnInit {
     { lng: -74.5395939, lat: 8.4360142 },
     { lng: -74.5395185, lat: 8.4429741 },
   ];
-  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService, private storageService:StorageService, httpClient:HttpClient, private storage:FirebaseStorageService) { 
+  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService, private storageService:StorageService, httpClient:HttpClient, private storage:FirebaseStorageService, private topAlertController:TopAlertControllerService) { 
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
         .pipe(
           map(() => true),
@@ -3320,9 +3320,9 @@ export class PerfilComponent implements OnInit {
               this.longitud?.setValue(event.latLng.toJSON().lng);
               //console.log("Latitud"+ event.latLng.toJSON().lat);
               //console.log("Longitud"+ event.latLng.toJSON().lng);
-              }
+            }
           }else{
-            console.log("alerta usted no esta en sucre")
+            this.topAlertController.showAlertAutoDissmis('No puedes escoger una ubicación fuera del departamento de Sucre',5000);
           }
           
         }
