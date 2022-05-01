@@ -9,7 +9,7 @@ import { AlertMessage } from '../../../../models/alert-message.model';
 })
 export class TopAlertComponent implements OnInit {
   message = '';
-  show:boolean = true;
+  show:boolean = false;
   constructor(private topAlertController:TopAlertControllerService) { }
 
   ngOnInit(): void {

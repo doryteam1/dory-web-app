@@ -1,3 +1,8 @@
-<div class="container alert alert-info" role="alert" [ngClass]="show ? 'show' : 'fade'">
+<div class="container alert alert-danger" role="alert" [ngClass]="show ? 'show' : 'fade'">
     {{message}}
+    <i class="container__icon bi bi-x" (click)="show = !show"></i>
+    <!-- <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close" (click)="show = !show">
+        <span aria-hidden="true">&times;</span>
+    </button> -->
 </div>
+
