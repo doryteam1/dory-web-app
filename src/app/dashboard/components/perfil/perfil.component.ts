@@ -3258,7 +3258,7 @@ export class PerfilComponent implements OnInit {
       return;
     }
 
-    this.us.actualizarUsuario(this.form.get('id')?.value,this.form.value).subscribe(
+    this.us.actualizarUsuario(this.form.get('id')?.value,this.form.getRawValue()).subscribe(
       (response)=>{
         console.log(response);
         this.loading = false;
