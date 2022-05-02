@@ -8,13 +8,16 @@
                 <th>Area</th>
                 <th>Numero de trabajadores</th>
                 <th>Producción estimada (mes)</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let granja of granjas; let i=index">
-                <td>{{granja.nombre_granja}}</td>
+                <td>{{granja.nombre}}</td>
                 <td>{{granja.descripcion}}</td>
                 <td>{{granja.area}}</td>
+                <td>{{granja.numero_trabajadores}}</td>
+                <td>{{granja.produccion_estimada_mes}}</td>
                 <td>
                     <div class="container-row">
                         <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i>
@@ -48,43 +51,74 @@
               <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre_granja">
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
             </div>
+            <div *ngIf="invalid('nombre_granja')" class="container__alert-msg danger-message">
+              <div *ngIf="nombreGranja?.errors?.['required']">
+                  Campo requerido
+              </div>
+            </div>
           </div>
+          
           <div class="mb-3">
             <label for="dateOfBirth">Descripción</label>
             <div class="input-group">
               <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion">
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
             </div>
+            <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
+              <div *ngIf="descripcion?.errors?.['required']">
+                  Campo requerido
+              </div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="dateOfBirth">Area(m2)</label>
             <div class="input-group">
-              <input id="productName" type="number" class="form-control" placeholder="Cual es el area de tu granja" (change)='fileChange($event)' formControlName="area">
+              <input id="productName" type="number" class="form-control" placeholder="Cual es el area de tu granja" formControlName="area">
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+            <div *ngIf="invalid('area')" class="container__alert-msg danger-message">
+              <div *ngIf="area?.errors?.['required']">
+                  Campo requerido
+              </div>
             </div>
           </div>
 
           <div class="mb-3">
             <label for="dateOfBirth">Numero de trabajadores</label>
             <div class="input-group">
-              <input id="productName" type="number" class="form-control" placeholder="Cuantos trabajadores trabajan en tu granja" (change)='fileChange($event)' formControlName="numero_trabajadores">
+              <input id="productName" type="number" class="form-control" placeholder="Cuantos trabajadores trabajan en tu granja" formControlName="numero_trabajadores">
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+            <div *ngIf="invalid('numero_trabajadores')" class="container__alert-msg danger-message">
+              <div *ngIf="numeroTrabajadores?.errors?.['required']">
+                  Campo requerido
+              </div>
             </div>
           </div>
     
           <div class="mb-3">
             <label for="dateOfBirth">Produccion estimada (kg/mes)</label>
             <div class="input-group">
-              <input id="productName" type="number" class="form-control" placeholder="Cuanto produce la granja al mes" (change)='fileChange($event)' formControlName="produccion_estimada_mes">
+              <input id="productName" type="number" class="form-control" placeholder="Cuanto produce la granja al mes" formControlName="produccion_estimada_mes">
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+            <div *ngIf="invalid('produccion_estimada_mes')" class="container__alert-msg danger-message">
+              <div *ngIf="prodEstimadaMes?.errors?.['required']">
+                  Campo requerido
+              </div>
             </div>
           </div>
 
           <div class="mb-3">
             <label for="dateOfBirth">Dirección</label>
             <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Dirección de la granja" (change)='fileChange($event)' formControlName="direccion">
+              <input id="productName" class="form-control" placeholder="Dirección de la granja" formControlName="direccion">
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+            <div *ngIf="invalid('direccion')" class="container__alert-msg danger-message">
+              <div *ngIf="direccion?.errors?.['required']">
+                  Campo requerido
+              </div>
             </div>
           </div>
           
@@ -97,6 +131,11 @@
                     </optgroup>
                 </select>
             </div>
+            <div *ngIf="invalid('id_departamento')" class="container__alert-msg danger-message">
+              <div *ngIf="idDpto?.errors?.['required']">
+                  Campo requerido
+              </div>
+            </div>
           </div>
 
           <div class="container__box mb-3">
@@ -108,12 +147,17 @@
                     </optgroup>
                 </select>
             </div>
+            <div *ngIf="invalid('id_municipio')" class="container__alert-msg danger-message">
+              <div *ngIf="idMunic?.errors?.['required']">
+                  Campo requerido
+              </div>
+            </div>
           </div>
 
           <div class="mb-3">
             <label for="dateOfBirth">Corregimiento</label>
             <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Corregimiento donde se ubica la granja" (change)='fileChange($event)' formControlName="corregimiento">
+              <input id="productName" class="form-control" placeholder="Corregimiento donde se ubica la granja" formControlName="corregimiento">
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
             </div>
           </div>
@@ -121,7 +165,7 @@
           <div class="mb-3">
             <label for="dateOfBirth">Vereda</label>
             <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Vereda donde se ubica la granja" (change)='fileChange($event)' formControlName="vereda">
+              <input id="productName" class="form-control" placeholder="Vereda donde se ubica la granja" formControlName="vereda">
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
             </div>
           </div>

@@ -22,12 +22,12 @@ export class MisGranjasComponent implements OnInit {
     area:new FormControl(0,[Validators.required]),
     numero_trabajadores:new FormControl(0,[Validators.required]),
     produccion_estimada_mes:new FormControl(0,[Validators.required]),
-    direccion:new FormControl(0,[Validators.required]),
+    direccion:new FormControl('',[Validators.required]),
     latitud:new FormControl(0,[Validators.required]),
     longitud:new FormControl(0,[Validators.required]),
     descripcion:new FormControl('',[Validators.required]),
-    id_departamento:new FormControl(0,[Validators.required]),
-    id_municipio:new FormControl(0,[Validators.required]),
+    id_departamento:new FormControl(70,[Validators.required]),
+    id_municipio:new FormControl('',[Validators.required]),
     id_vereda:new FormControl(0),
     id_corregimiento:new FormControl(0),
     corregimiento:new FormControl('',[Validators.required]),
@@ -86,13 +86,14 @@ export class MisGranjasComponent implements OnInit {
 
   addGranja(){
     console.log("addGranja")
+    console.log(this.form.value)
+    console.log(this.form.controls)
     if(!this.form.valid){
       console.log("Not valid!")
       return;
     }
 
-    console.log(this.form.value)
-    this.granjaService.addGranja(this.form.value).subscribe(
+    this.granjaService.addGranja(this.form.getRawValue()).subscribe(
       (response)=>{
         console.log(response)
       },err=>{
@@ -163,6 +164,10 @@ export class MisGranjasComponent implements OnInit {
   }
 
 
+  invalid(controlFormName:string){;
+    return this.form.get(controlFormName)?.invalid && (this.form.get(controlFormName)?.dirty || this.form.get(controlFormName)?.touched)
+  }
+
   get idDpto(){
     return this.form.get('id_departamento');
   }
@@ -171,8 +176,8 @@ export class MisGranjasComponent implements OnInit {
     return this.form.get('id_municipio');
   }
 
-  get nombreGranjao(){
-    return this.form.get('nombreGranja')
+  get nombreGranja(){
+    return this.form.get('nombre_granja')
   }
 
   get descripcion(){
@@ -182,4 +187,18 @@ export class MisGranjasComponent implements OnInit {
   get area(){
     return this.form.get('area')
   }
+
+  get numeroTrabajadores(){
+    return this.form.get('numero_trabajadores')   
+  }
+
+  get prodEstimadaMes(){
+    return this.form.get('produccion_estimada_mes')
+  }
+
+  get direccion(){
+    return this.form.get('direccion')
+  }
+
+
 }
