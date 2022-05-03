@@ -1,12 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { faRupiahSign } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlacesService } from 'src/app/services/places.service';
-import { ProveedorService } from 'src/app/services/proveedor.service';
 import { Utilities } from 'src/app/utilities/utilities';
 
 @Component({
@@ -32,8 +30,8 @@ export class MisGranjasComponent implements OnInit {
     id_corregimiento:new FormControl(0),
     corregimiento:new FormControl('',[Validators.required]),
     vereda:new FormControl('',[Validators.required]),
-    arrayTiposInfraestructuras:new FormControl('[1,2]',[Validators.required]),
-    arrayEspecies:new FormControl('[1,2]',[Validators.required]),
+    arrayTiposInfraestructuras:new FormControl(null),
+    arrayEspecies:new FormControl(null),
   });
   file:any = null;
   productImagePath: string = '';
@@ -41,6 +39,7 @@ export class MisGranjasComponent implements OnInit {
   modalMode:string = 'create';
   municipios:Array<any> = [];
   departamentos:Array<any> = [];
+  loading:boolean = false;
   constructor(private granjaService:GranjasService, private modalService:NgbModal, private storage:FirebaseStorageService, private sanitizer: DomSanitizer, private places:PlacesService) { }
 
   ngOnInit(): void {
@@ -61,14 +60,43 @@ export class MisGranjasComponent implements OnInit {
     this.loadDptos();
   }
 
-  openModal(content:any, action?:string, i?:number){
+  initForm(){
+    this.nombreGranja?.setValue('');
+    this.area?.setValue(0)
+    this.numeroTrabajadores?.setValue(0);
+    this.prodEstimadaMes?.setValue(0);
+    this.direccion?.setValue(0);
+    this.latitud?.setValue(0);
+    this.longitud?.setValue(0);
+    this.descripcion?.setValue('');
+    this.idDpto?.setValue(70);
+    this.idMunic?.setValue(null);
+    this.idVereda?.setValue(0);
+    this.idCorregimiento?.setValue(0);
+    this.corregimiento?.setValue('')
+    this.vereda?.setValue('');
+  }
+
+  openModal(content:any, action:string, i?:number){
+    this.modalMode = action;
+    this.form.reset()
+    this.initForm();
+    this.idDpto?.setValue(70);
     if(action == 'update'){
-      this.modalMode = action;
-      console.log("action update")
-      //this.nombreProducto?.setValue(this.productos[i!].nombreProducto);
+      this.nombreGranja?.setValue(this.granjas[i!].nombre);
       this.descripcion?.setValue(this.granjas[i!].descripcion);
-      //this.precio?.setValue(this.productos[i!].precio);
-      this.productImagePath = this.granjas[i!].imagen;
+      this.area?.setValue(this.granjas[i!].area);
+      this.numeroTrabajadores?.setValue(this.granjas[i!].numero_trabajadores);
+      this.prodEstimadaMes?.setValue(this.granjas[i!].produccion_estimada_mes);
+      this.direccion?.setValue(this.granjas[i!].direccion);
+      this.idDpto?.setValue(this.granjas[i!].id_departamento);
+      this.idMunic?.setValue(this.granjas[i!].id_municipio);
+      this.latitud?.setValue(this.granjas[i!].latitud);
+      this.longitud?.setValue(this.granjas[i!].longitud);
+      this.idDpto?.setValue(this.granjas[i!].id_departamento);
+      this.idMunic?.setValue(this.granjas[i!].id_municipio);
+      this.idCorregimiento?.setValue(this.granjas[i!].id_corregimiento);
+      this.idVereda?.setValue(this.granjas[i!].id_vereda);
       this.itemUpdateIndex = i!;
     }
     this.modalService.open(content).result.then(
@@ -88,15 +116,22 @@ export class MisGranjasComponent implements OnInit {
     console.log("addGranja")
     console.log(this.form.value)
     console.log(this.form.controls)
+    this.loading = true;
     if(!this.form.valid){
       console.log("Not valid!")
+      this.form.markAllAsTouched();
+      this.loading = false;
       return;
     }
 
     this.granjaService.addGranja(this.form.getRawValue()).subscribe(
       (response)=>{
+        this.loading = false;
+        this.modalService.dismissAll();
+        window.location.reload();
         console.log(response)
       },err=>{
+        this.loading = false;
         console.log(err)
       }
     )
@@ -122,10 +157,25 @@ export class MisGranjasComponent implements OnInit {
   }
 
   updateGranja(){
+    this.loading = true;
     if(!this.form.valid){
+      console.log("Not valid!")
+      this.form.markAllAsTouched()
+      this.loading = false;
       return;
     }
    
+    this.granjaService.updateGranja(this.granjas[this.itemUpdateIndex].id_granja,this.form.getRawValue()).subscribe(
+      (response)=>{
+        console.log(response)
+        this.loading = false;
+        window.location.reload();
+        this.modalService.dismissAll()
+      },err=>{
+        console.log(err)
+        this.loading = false;
+      }
+    );
     //this.proveedorService.updateProducto(this.form)
   }
 
@@ -133,6 +183,7 @@ export class MisGranjasComponent implements OnInit {
     this.places.getDepartamentos().subscribe(
       (response)=>{
         this.departamentos = response.data;
+        console.log(this.departamentos)
         this.idDpto?.setValue(70);
         this.idDpto?.disable();
         this.loadMunic();
@@ -200,5 +251,27 @@ export class MisGranjasComponent implements OnInit {
     return this.form.get('direccion')
   }
 
+  get corregimiento(){
+    return this.form.get('corregimiento');
+  }
 
+  get vereda(){
+    return this.form.get('vereda');
+  }
+
+  get latitud(){
+    return this.form.get('latitud');
+  }
+
+  get longitud(){
+    return this.form.get('longitud');
+  }
+
+  get idVereda(){
+    return this.form.get('id_vereda');
+  }
+
+  get idCorregimiento(){
+    return this.form.get('id_corregimiento');
+  }
 }

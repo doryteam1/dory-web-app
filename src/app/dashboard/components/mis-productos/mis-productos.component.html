@@ -24,7 +24,7 @@
       </tr>
     </tbody>
   </table>
-  <button class="btn-outline-blue button" (click)="openModal(content)">Agregar nuevo producto</button>
+  <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar nuevo producto</button>
 </div>
 <div class="search-container" *ngIf="showNotFound">
   <div class="search-container__box">
@@ -47,6 +47,11 @@
           <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombreProducto">
           <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
         </div>
+        <div *ngIf="invalid('nombreProducto')" class="container__alert-msg danger-message">
+          <div *ngIf="nombreProducto?.errors?.['required']">
+              Campo requerido
+          </div>
+        </div>
       </div>
       <div class="mb-3">
         <label for="dateOfBirth">Descripción</label>
@@ -54,12 +59,22 @@
           <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion">
           <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
         </div>
+        <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
+          <div *ngIf="descripcion?.errors?.['required']">
+              Campo requerido
+          </div>
+        </div>
       </div>
       <div class="mb-3">
         <label for="dateOfBirth">Imagen</label>
         <div class="input-group">
           <input id="productName" type="file" class="form-control" placeholder="Seleccione una imagen" (change)='fileChange($event)' formControlName="imagen">
           <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+        </div>
+        <div *ngIf="showErrorNotImageSelected" class="container__alert-msg danger-message">
+          <div *ngIf="showErrorNotImageSelected">
+              Campo requerido
+          </div>
         </div>
       </div>
 
@@ -73,11 +88,24 @@
           <input id="productName" type="number" class="form-control" placeholder="Ej. 50000" formControlName="precio">
           <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
         </div>
+        <div *ngIf="invalid('precio')" class="container__alert-msg danger-message">
+          <div *ngIf="precio?.errors?.['required']">
+              Campo requerido
+          </div>
+        </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="addProducto()" *ngIf="modalMode=='create'">Guardar</button>
-    <button type="button" class="btn btn-outline-dark" (click)="updateProducto()" *ngIf="modalMode=='update'">Actualizar</button>
+    <button type="button" class="btn btn-outline-dark container__btn" (click)="addProducto()" *ngIf="modalMode=='create'">
+      <span *ngIf="!loading">Guardar</span>
+      <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+      </div>
+    </button>
+    <button type="button" class="btn btn-outline-dark container__btn" (click)="updateProducto()" *ngIf="modalMode=='update'">
+      <span *ngIf="!loading">Actualizar</span>
+      <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+      </div>
+    </button>
   </div>
 </ng-template>

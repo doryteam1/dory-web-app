@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="overflow-auto container__table">
+    <div class="container__table">
         <table class="table mt-40">
             <thead class="table-light">
             <tr>
@@ -20,7 +20,8 @@
                 <td>{{granja.produccion_estimada_mes}}</td>
                 <td>
                     <div class="container-row">
-                        <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i>
+                        <!-- <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i> -->
+                        <span class="container__link link" (click)="openModal(content,'update',i)">Ver detalle</span>
                         <i class="container__icon bi bi-trash text-danger" (click)="anularGranja(granja.id_granja,i)"></i>
                     </div>
                 </td>
@@ -28,7 +29,7 @@
             </tbody>
         </table>
     </div>
-    <button class="btn-outline-blue button" (click)="openModal(content)">Agregar nueva granja</button>
+    <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar nueva granja</button>
 </div>
     <div class="search-container" *ngIf="showNotFound">
       <div class="search-container__box">
@@ -61,7 +62,8 @@
           <div class="mb-3">
             <label for="dateOfBirth">Descripción</label>
             <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion">
+              <textarea class="form-control" name="textarea" rows="5" cols="50" formControlName="descripcion">Write something here</textarea>
+              <!-- <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion"> -->
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
             </div>
             <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
@@ -173,7 +175,15 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="addGranja()" *ngIf="modalMode=='create'">Guardar</button>
-        <button type="button" class="btn btn-outline-dark" (click)="updateGranja()" *ngIf="modalMode=='update'">Actualizar</button>
+        <button type="button" class="btn btn-outline-dark container__btn" (click)="addGranja()" *ngIf="modalMode=='create'">
+          <span *ngIf="!loading">Guardar</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+          </div>
+        </button>
+        <button type="button" class="btn btn-outline-dark container__btn" (click)="updateGranja()" *ngIf="modalMode=='update'">
+          <span *ngIf="!loading">Actualizar</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+          </div>
+        </button>
       </div>
     </ng-template>

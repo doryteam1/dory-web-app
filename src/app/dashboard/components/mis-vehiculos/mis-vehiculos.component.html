@@ -1,0 +1,111 @@
+<div class="container">
+  <table class="table mt-40">
+      <thead class="table-light">
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre de vehiculo</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos; let i=index">
+          <td><img class="container_img" [src]="producto.imagen"></td>
+          <td>{{producto.nombreProducto}}</td>
+          <td>{{producto.descripcion}}</td>
+          <td>{{producto.precio}}</td>
+          <td>
+              <div class="container-row">
+                  <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i>
+                  <i class="container__icon bi bi-trash text-danger" (click)="deleteProducto(producto.codigo,i)"></i>
+              </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar nuevo vehiculo</button>
+  </div>
+  <div class="search-container" *ngIf="showNotFound">
+    <div class="search-container__box">
+        <img class="search-container__image" src="assets/images/searching.svg">
+        <h3>No se han encontrado resultados</h3>
+        <p>Aun no has registrado tus vehiculos.</p>
+    </div>
+  </div>
+  
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Nuevo vehiculo</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="form">
+        <div class="mb-3">
+          <label for="dateOfBirth">Nombre</label>
+          <div class="input-group">
+            <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombreProducto">
+            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+          </div>
+          <div *ngIf="invalid('nombreProducto')" class="container__alert-msg danger-message">
+            <div *ngIf="nombreProducto?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="dateOfBirth">Descripción</label>
+          <div class="input-group">
+            <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion">
+            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+          </div>
+          <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
+            <div *ngIf="descripcion?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="dateOfBirth">Imagen</label>
+          <div class="input-group">
+            <input id="productName" type="file" class="form-control" placeholder="Seleccione una imagen" (change)='fileChange($event)' formControlName="imagen">
+            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+          </div>
+          <div *ngIf="showErrorNotImageSelected" class="container__alert-msg danger-message">
+            <div *ngIf="showErrorNotImageSelected">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+  
+        <div class="mb-3">
+          <img class="modal__image" [src]="productImagePath">
+        </div>
+        
+        <div class="mb-3">
+          <label for="dateOfBirth">Precio</label>
+          <div class="input-group">
+            <input id="productName" type="number" class="form-control" placeholder="Ej. 50000" formControlName="precio">
+            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+          </div>
+          <div *ngIf="invalid('precio')" class="container__alert-msg danger-message">
+            <div *ngIf="precio?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark container__btn" (click)="addProducto()" *ngIf="modalMode=='create'">
+        <span *ngIf="!loading">Guardar</span>
+        <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button type="button" class="btn btn-outline-dark container__btn" (click)="updateProducto()" *ngIf="modalMode=='update'">
+        <span *ngIf="!loading">Actualizar</span>
+        <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+        </div>
+      </button>
+    </div>
+  </ng-template>

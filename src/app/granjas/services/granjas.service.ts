@@ -37,4 +37,8 @@ export class GranjasService {
   anularGranja(idGranja:number){
     return this.https.put('https://dory-api-rest.herokuapp.com/api/granjas/anular/'+idGranja, null)
   }
+
+  updateGranja(id:number,updatedGranja:any){
+    return this.https.put("https://dory-api-rest.herokuapp.com/api/granjas/general/"+id,updatedGranja);
+  }
 }

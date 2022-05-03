@@ -1,18 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { faRupiahSign } from '@fortawesome/free-solid-svg-icons';
+import { DomSanitizer } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { ProveedorService } from 'src/app/services/proveedor.service';
 import { Utilities } from 'src/app/utilities/utilities';
 
 @Component({
-  selector: 'app-mis-productos',
-  templateUrl: './mis-productos.component.html',
-  styleUrls: ['./mis-productos.component.scss']
+  selector: 'app-mis-vehiculos',
+  templateUrl: './mis-vehiculos.component.html',
+  styleUrls: ['./mis-vehiculos.component.scss']
 })
-export class MisProductosComponent implements OnInit {
+export class MisVehiculosComponent implements OnInit {
   productos:Array<any> = [];
   showNotFound:boolean = false;
   form:FormGroup = new FormGroup({

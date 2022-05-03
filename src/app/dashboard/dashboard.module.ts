@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MisProductosComponent } from './components/mis-productos/mis-productos.component';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { MisVehiculosComponent } from './components/mis-vehiculos/mis-vehiculos.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
     PerfilComponent,
     MisGranjasComponent,
     MisProductosComponent,
+    MisVehiculosComponent
   ],
   imports: [
     CommonModule,
