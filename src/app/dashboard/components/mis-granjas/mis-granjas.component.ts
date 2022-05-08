@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlacesService } from 'src/app/services/places.service';
+import { ConfirmModalService } from 'src/app/shared/services/confirm-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 
 @Component({
@@ -40,7 +41,7 @@ export class MisGranjasComponent implements OnInit {
   municipios:Array<any> = [];
   departamentos:Array<any> = [];
   loading:boolean = false;
-  constructor(private granjaService:GranjasService, private modalService:NgbModal, private storage:FirebaseStorageService, private sanitizer: DomSanitizer, private places:PlacesService) { }
+  constructor(private granjaService:GranjasService, private modalService:NgbModal, private storage:FirebaseStorageService, private sanitizer: DomSanitizer, private places:PlacesService, private confirmModalService:ConfirmModalService) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');
@@ -147,11 +148,22 @@ export class MisGranjasComponent implements OnInit {
   }
 
   anularGranja(idGranja:number, i:number){
-    this.granjaService.anularGranja(idGranja).subscribe(
-      (response:any)=>{
-        this.granjas.splice(i,1);
-      },err=>{
-        console.log(err)
+    this.confirmModalService.confirm('Eliminar granja','Esta seguro que desea eliminar la granja con id','Eliminar','No estoy seguro',JSON.stringify(idGranja))
+    .then(
+      (result)=>{
+        if(result == true){
+          this.granjaService.anularGranja(idGranja).subscribe(
+            (response:any)=>{
+              this.granjas.splice(i,1);
+            },err=>{
+              console.log(err)
+            }
+          )
+          }
+        }
+    ).catch(
+      (result)=>{
+        
       }
     )
   }
