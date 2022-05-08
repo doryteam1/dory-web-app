@@ -171,6 +171,10 @@ export class MisVehiculosComponent implements OnInit {
             )
           }
         }
+    ).catch(
+      (result)=>{
+        
+      }
     )
   }
 

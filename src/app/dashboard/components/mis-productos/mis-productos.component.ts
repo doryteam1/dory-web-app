@@ -5,6 +5,7 @@ import { faRupiahSign } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { ProveedorService } from 'src/app/services/proveedor.service';
+import { ConfirmModalService } from 'src/app/shared/services/confirm-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 
 @Component({
@@ -28,7 +29,7 @@ export class MisProductosComponent implements OnInit {
   modalMode:string = 'create';
   loading:boolean = false;
   showErrorNotImageSelected:boolean = false;
-  constructor(private proveedorService:ProveedorService, private modalService:NgbModal, private storage:FirebaseStorageService, private sanitizer: DomSanitizer, private cd:ChangeDetectorRef) { }
+  constructor(private proveedorService:ProveedorService, private modalService:NgbModal, private storage:FirebaseStorageService, private sanitizer: DomSanitizer, private cd:ChangeDetectorRef, private confirmModalService:ConfirmModalService) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');
@@ -144,11 +145,22 @@ export class MisProductosComponent implements OnInit {
   }
 
   deleteProducto(codigo:number, i:number){
-    this.proveedorService.deleteProducto(codigo).subscribe(
-      (response)=>{
-        this.productos.splice(i,1);
-      },err=>{
-        console.log(err)
+    this.confirmModalService.confirm('Eliminar producto','Esta seguro que desea eliminar el producto con codigo','Eliminar','No estoy seguro',JSON.stringify(codigo))
+    .then(
+      (result)=>{
+        if(result == true){
+          this.proveedorService.deleteProducto(codigo).subscribe(
+            (response)=>{
+              this.productos.splice(i,1);
+            },err=>{
+              console.log(err)
+            }
+          )
+          }
+        }
+    ).catch(
+      (result)=>{
+        
       }
     )
   }
