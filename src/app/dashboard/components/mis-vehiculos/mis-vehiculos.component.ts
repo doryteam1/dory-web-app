@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
-import { ProveedorService } from 'src/app/services/proveedor.service';
+import { VehiculosService } from 'src/app/services/vehiculos.service';
+import { ConfirmModalService } from 'src/app/shared/services/confirm-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 
 @Component({
@@ -12,30 +13,36 @@ import { Utilities } from 'src/app/utilities/utilities';
   styleUrls: ['./mis-vehiculos.component.scss']
 })
 export class MisVehiculosComponent implements OnInit {
-  productos:Array<any> = [];
+  vehiculos:Array<any> = [];
   showNotFound:boolean = false;
   form:FormGroup = new FormGroup({
-    nombreProducto:new FormControl('',[Validators.required]),
-    descripcion:new FormControl('',[Validators.required]),
+    modelo:new FormControl('',[Validators.required]),
+    capacidad:new FormControl('',[Validators.required]),
+    transporte_alimento:new FormControl('',[Validators.required]),
     imagen:new FormControl(''),
-    precio:new FormControl(0,[Validators.required]),
   });
   file:any = null;
-  productImagePath: string = '';
+  vehiculoImagePath: string = '';
+  previewImage:SafeUrl = '';
   itemUpdateIndex:number = -1;
   modalMode:string = 'create';
   loading:boolean = false;
   showErrorNotImageSelected:boolean = false;
-  constructor(private proveedorService:ProveedorService, private modalService:NgbModal, private storage:FirebaseStorageService, private sanitizer: DomSanitizer, private cd:ChangeDetectorRef) { }
+  constructor(private vehiculosService:VehiculosService, 
+              private modalService:NgbModal, 
+              private storage:FirebaseStorageService, 
+              private sanitizer: DomSanitizer, 
+              private cd:ChangeDetectorRef,
+              private confirmModalService:ConfirmModalService) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
-    console.log("Productos del usuario ", payload.sub)
-    this.proveedorService.getProductosById(payload.sub).subscribe(
+    console.log("Vehiculos del usuario ", payload.sub)
+    this.vehiculosService.getVehiculosUser(payload.sub).subscribe(
       (respose)=>{
-        this.productos = respose.data;
-        if(this.productos.length < 1){
+        this.vehiculos = respose.data;
+        if(this.vehiculos.length < 1){
           this.showNotFound = true;
         }
       },err=>{
@@ -50,10 +57,11 @@ export class MisVehiculosComponent implements OnInit {
     this.formInit();
     if(action == 'update'){
       console.log("action update")
-      this.nombreProducto?.setValue(this.productos[i!].nombreProducto);
-      this.descripcion?.setValue(this.productos[i!].descripcion);
-      this.precio?.setValue(this.productos[i!].precio);
-      this.productImagePath = this.productos[i!].imagen;
+      this.modelo?.setValue(this.vehiculos[i!].modelo);
+      this.capacidad?.setValue(this.vehiculos[i!].capacidad);
+      this.transporteAlimento?.setValue(this.vehiculos[i!].transporte_alimento);
+      this.vehiculoImagePath = this.vehiculos[i!].imagen;
+      this.previewImage = this.vehiculoImagePath;
       this.itemUpdateIndex = i!;
     }
     this.modalService.open(content).result.then(
@@ -63,36 +71,39 @@ export class MisVehiculosComponent implements OnInit {
     ).catch(
       (err)=>{
         this.file = null;
-        this.productImagePath = '';
+        this.vehiculoImagePath = '';
         console.log(err)
       }
     )
   }
 
   formInit(){
-    this.nombreProducto?.setValue('');
-    this.descripcion?.setValue('');
+    this.modelo?.setValue('');
+    this.capacidad?.setValue('');
     this.imagen?.setValue('');
-    this.precio?.setValue(0);
-    this.productImagePath = '';
+    this.transporteAlimento?.setValue('');
+    this.vehiculoImagePath = '';
+    this.previewImage = '';
     this.itemUpdateIndex = -1;
     this.file = null;
     this.showErrorNotImageSelected = false;
   }
 
-  addProducto(){
-    console.log("addProducto")
+  addVehiculo(){
+    console.log("addVehiculo")
     this.loading = true;
     if(!this.form.valid || this.file == null){
       this.form.markAllAsTouched();
-      this.showErrorNotImageSelected = true;
+      if(this.file == null){
+        this.showErrorNotImageSelected = true;
+      }
       this.loading = false;
       return;
     }
 
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
-    let fileName = '/productos/'+'prod-'+payload.sub+'-'+new Date().getTime();
+    let fileName = '/vehiculos/'+'vehiculo-'+payload.sub+'-'+new Date().getTime();
     this.storage.cloudStorageTask(fileName,this.file).percentageChanges().subscribe(
       (response)=>{
         console.log(response)
@@ -100,18 +111,18 @@ export class MisVehiculosComponent implements OnInit {
           this.storage.cloudStorageRef(fileName).getDownloadURL().subscribe(
             (downloadUrl)=>{
               console.log(downloadUrl)
-              let newProducto = {
-                nombreProducto : this.nombreProducto?.value,
-                descripcion : this.descripcion?.value,
-                precio : this.precio?.value,
+              let newVehiculo = {
+                modelo : this.modelo?.value,
+                capacidad : this.capacidad?.value,
+                transporte_alimento : this.transporteAlimento?.value,
                 imagen : downloadUrl,
               }
-              this.proveedorService.addProducto(newProducto).subscribe(
+              this.vehiculosService.addVehiculo(newVehiculo).subscribe(
                 (response)=>{
                   console.log(response)
-                  this.productos.push(newProducto);
+                  this.vehiculos.push(newVehiculo);
                   this.file = null;
-                  this.productImagePath = '';
+                  this.vehiculoImagePath = '';
                   this.modalService.dismissAll()
                   this.loading = false;
                 },err=>{
@@ -132,45 +143,61 @@ export class MisVehiculosComponent implements OnInit {
   fileChange(event:any){
     console.log("change",event)
     this.file = event.target.files[0];
+    let objectURL = URL.createObjectURL(this.file);       
+    this.previewImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     this.showErrorNotImageSelected = false;
-    /* let productImagePath:any = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(event.target.files[0]))
-    console.log(productImagePath.changingThisBreaksApplicationSecurity) */
-    //this.productImagePath = productImagePath.changingThisBreaksApplicationSecurity;
   }
 
-  deleteProducto(codigo:number, i:number){
-    this.proveedorService.deleteProducto(codigo).subscribe(
-      (response)=>{
-        this.productos.splice(i,1);
-      },err=>{
-        console.log(err)
-      }
+/*   changePreviewImage(imageUrl:any){
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output:any = document.getElementById('output');
+      output['src'] = reader.result;
+    };
+    reader.readAsDataURL(imageUrl);
+  } */
+
+  deleteVehiculo(id:number, i:number){
+    this.confirmModalService.confirm('Eliminar vehiculo','Esta seguro que desea eliminar el vehiculo con id','Eliminar','No estoy seguro',JSON.stringify(id))
+    .then(
+      (result)=>{
+        if(result == true){
+            this.vehiculosService.deleteVehiculo(id).subscribe(
+              (response)=>{
+                this.vehiculos.splice(i,1);
+              },err=>{
+                console.log(err)
+              }
+            )
+          }
+        }
     )
   }
 
-  updateProducto(){
+  updateVehiculo(){
     this.loading = true;
+    console.log(this.form.value)
     if(!this.form.valid){
-      this.loading = false;
       this.form.markAllAsTouched();
+      this.loading = false;
       return;
     }
 
     if(!this.file){
-      let newProducto = {
-        nombreProducto : this.nombreProducto?.value,
-        descripcion : this.descripcion?.value,
-        precio : this.precio?.value,
-        imagen : this.productImagePath
+      let newVehiculo = {
+        modelo : this.modelo?.value,
+        capacidad : this.capacidad?.value,
+        transporte_alimento : this.transporteAlimento?.value,
+        imagen : this.vehiculoImagePath
       }
-      this.proveedorService.updateProducto(newProducto, this.productos[this.itemUpdateIndex].codigo).subscribe(
+      this.vehiculosService.updateVehiculo(newVehiculo, this.vehiculos[this.itemUpdateIndex].id_vehiculo).subscribe(
         (response)=>{
           console.log(response)
-          this.productos[this.itemUpdateIndex].nombreProducto = newProducto.nombreProducto;
-          this.productos[this.itemUpdateIndex].descripcion = newProducto.descripcion;
-          this.productos[this.itemUpdateIndex].precio = newProducto.precio;
+          this.vehiculos[this.itemUpdateIndex].modelo = newVehiculo.modelo;
+          this.vehiculos[this.itemUpdateIndex].capacidad = newVehiculo.capacidad;
+          this.vehiculos[this.itemUpdateIndex].transporte_alimento = newVehiculo.transporte_alimento;
           this.file = null;
-          this.productImagePath = '';
+          this.vehiculoImagePath = '';
           this.modalService.dismissAll()
           this.loading = false;
         },err=>{
@@ -179,27 +206,27 @@ export class MisVehiculosComponent implements OnInit {
         }
       )
     }else{
-      this.storage.refFromUrl(this.productImagePath).put(this.file).percentageChanges().subscribe(
+      this.storage.refFromUrl(this.vehiculoImagePath).put(this.file).percentageChanges().subscribe(
         (response)=>{
           console.log(response)
           if(response == 100){
-            this.storage.refFromUrl(this.productImagePath).getDownloadURL().subscribe(
+            this.storage.refFromUrl(this.vehiculoImagePath).getDownloadURL().subscribe(
               (downloadUrl) => {
-                this.productos[this.itemUpdateIndex].imagen = downloadUrl;
-                let newProducto = {
-                  nombreProducto : this.nombreProducto?.value,
-                  descripcion : this.descripcion?.value,
-                  precio : this.precio?.value,
+                this.vehiculos[this.itemUpdateIndex].imagen = downloadUrl;
+                let newVehiculo = {
+                  modelo : this.modelo?.value,
+                  capacidad : this.capacidad?.value,
+                  transporte_alimento : this.transporteAlimento?.value,
                   imagen : downloadUrl,
                 }
-                this.proveedorService.updateProducto(newProducto, this.productos[this.itemUpdateIndex].codigo).subscribe(
+                this.vehiculosService.updateVehiculo(newVehiculo, this.vehiculos[this.itemUpdateIndex].id_vehiculo).subscribe(
                   (response)=>{
                     console.log(response)
-                    this.productos[this.itemUpdateIndex].nombreProducto = newProducto.nombreProducto;
-                    this.productos[this.itemUpdateIndex].descripcion = newProducto.descripcion;
-                    this.productos[this.itemUpdateIndex].precio = newProducto.precio;
+                    this.vehiculos[this.itemUpdateIndex].modelo = newVehiculo.modelo;
+                    this.vehiculos[this.itemUpdateIndex].capacidad = newVehiculo.capacidad;
+                    this.vehiculos[this.itemUpdateIndex].transporte_alimento = newVehiculo.transporte_alimento;
                     this.file = null;
-                    this.productImagePath = '';
+                    this.vehiculoImagePath = '';
                     this.modalService.dismissAll()
                     this.loading = false;
                   },err=>{
@@ -225,19 +252,25 @@ export class MisVehiculosComponent implements OnInit {
     return this.form.get(controlFormName)?.invalid && (this.form.get(controlFormName)?.dirty || this.form.get(controlFormName)?.touched)
   }
   
-  get nombreProducto(){
-    return this.form.get('nombreProducto')
+
+  get modelo(){
+    return this.form.get('modelo')
   }
 
-  get descripcion(){
-    return this.form.get('descripcion')
+  get capacidad(){
+    return this.form.get('capacidad')
+  }
+
+  get transporteAlimento(){
+    return this.form.get('transporte_alimento')
+  }
+
+  get precio(){
+    return this.form.get('imagen')
   }
 
   get imagen(){
     return this.form.get('imagen')
   }
 
-  get precio(){
-    return this.form.get('precio')
-  }
 }

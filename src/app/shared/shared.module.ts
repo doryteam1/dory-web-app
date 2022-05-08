@@ -13,6 +13,8 @@ import { BasicMessageComponent } from '../components/basic-message/basic-message
 import { MapSucreComponent } from './components/map-sucre/map-sucre.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TopAlertComponent } from './components/top-alert/top-alert.component';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
+import { ConfirmModalService } from './services/confirm-modal.service';
 
 
 
@@ -27,7 +29,8 @@ import { TopAlertComponent } from './components/top-alert/top-alert.component';
     FloatingBtnAutoUpComponent,
     BasicMessageComponent,
     MapSucreComponent,
-    TopAlertComponent
+    TopAlertComponent,
+    ConfirmModalComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +48,11 @@ import { TopAlertComponent } from './components/top-alert/top-alert.component';
     FloatingBtnAutoUpComponent,
     BasicMessageComponent,
     MapSucreComponent,
-    TopAlertComponent
+    TopAlertComponent,
+    ConfirmModalComponent
+  ],
+  providers:[
+    ConfirmModalService
   ]
 })
 export class SharedModule { }

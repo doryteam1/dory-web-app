@@ -3,22 +3,22 @@
       <thead class="table-light">
         <tr>
           <th>Imagen</th>
-          <th>Nombre de vehiculo</th>
-          <th>Descripción</th>
-          <th>Precio</th>
+          <th>Modelo del vehiculo</th>
+          <th>Capacidad(TON)</th>
+          <th>Transporta alimentos(Si/No)</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let producto of productos; let i=index">
-          <td><img class="container_img" [src]="producto.imagen"></td>
-          <td>{{producto.nombreProducto}}</td>
-          <td>{{producto.descripcion}}</td>
-          <td>{{producto.precio}}</td>
+        <tr *ngFor="let vehiculo of vehiculos; let i=index">
+          <td><img class="container_img" [src]="vehiculo.imagen"></td>
+          <td>{{vehiculo.modelo}}</td>
+          <td>{{vehiculo.capacidad}}</td>
+          <td>{{vehiculo.transporte_alimento == 1 ? 'Si' : 'No'}}</td>
           <td>
               <div class="container-row">
                   <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i>
-                  <i class="container__icon bi bi-trash text-danger" (click)="deleteProducto(producto.codigo,i)"></i>
+                  <i class="container__icon bi bi-trash text-danger" (click)="deleteVehiculo(vehiculo.id_vehiculo,i)"></i>
               </div>
           </td>
         </tr>
@@ -42,25 +42,25 @@
     <div class="modal-body">
       <form [formGroup]="form">
         <div class="mb-3">
-          <label for="dateOfBirth">Nombre</label>
+          <label for="dateOfBirth">Modelo</label>
           <div class="input-group">
-            <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombreProducto">
+            <input id="modelo" class="form-control" placeholder="Modelo" formControlName="modelo">
             <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
           </div>
-          <div *ngIf="invalid('nombreProducto')" class="container__alert-msg danger-message">
-            <div *ngIf="nombreProducto?.errors?.['required']">
+          <div *ngIf="invalid('modelo')" class="container__alert-msg danger-message">
+            <div *ngIf="modelo?.errors?.['required']">
                 Campo requerido
             </div>
           </div>
         </div>
         <div class="mb-3">
-          <label for="dateOfBirth">Descripción</label>
+          <label for="dateOfBirth">Capacidad(TON)</label>
           <div class="input-group">
-            <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion">
+            <input id="capacidad" class="form-control" placeholder="Capacidad" formControlName="capacidad">
             <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
           </div>
-          <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
-            <div *ngIf="descripcion?.errors?.['required']">
+          <div *ngIf="invalid('capacidad')" class="container__alert-msg danger-message">
+            <div *ngIf="capacidad?.errors?.['required']">
                 Campo requerido
             </div>
           </div>
@@ -68,7 +68,7 @@
         <div class="mb-3">
           <label for="dateOfBirth">Imagen</label>
           <div class="input-group">
-            <input id="productName" type="file" class="form-control" placeholder="Seleccione una imagen" (change)='fileChange($event)' formControlName="imagen">
+            <input id="imagen" type="file" class="form-control" placeholder="Seleccione una imagen" (change)='fileChange($event)' formControlName="imagen">
             <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
           </div>
           <div *ngIf="showErrorNotImageSelected" class="container__alert-msg danger-message">
@@ -79,17 +79,22 @@
         </div>
   
         <div class="mb-3">
-          <img class="modal__image" [src]="productImagePath">
+          <!-- <img id="output" class="modal__image"> -->
+          <img class="modal__image" [src]="previewImage" *ngIf="previewImage">
         </div>
         
-        <div class="mb-3">
-          <label for="dateOfBirth">Precio</label>
+        <div class="container__box mb-3">
+          <span class="container__title">¿Transportas alimentos?</span>
           <div class="input-group">
-            <input id="productName" type="number" class="form-control" placeholder="Ej. 50000" formControlName="precio">
-            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+              <select class="form-control" formControlName='transporte_alimento'>
+                  <optgroup label="Escoge una opción">
+                      <option value=1>Si</option>
+                      <option value=0>No</option>
+                  </optgroup>
+              </select>
           </div>
-          <div *ngIf="invalid('precio')" class="container__alert-msg danger-message">
-            <div *ngIf="precio?.errors?.['required']">
+          <div *ngIf="invalid('transporte_alimento')" class="container__alert-msg danger-message">
+            <div *ngIf="transporteAlimento?.errors?.['required']">
                 Campo requerido
             </div>
           </div>
@@ -97,12 +102,12 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark container__btn" (click)="addProducto()" *ngIf="modalMode=='create'">
+      <button type="button" class="btn btn-outline-dark container__btn" (click)="addVehiculo()" *ngIf="modalMode=='create'">
         <span *ngIf="!loading">Guardar</span>
         <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
         </div>
       </button>
-      <button type="button" class="btn btn-outline-dark container__btn" (click)="updateProducto()" *ngIf="modalMode=='update'">
+      <button type="button" class="btn btn-outline-dark container__btn" (click)="updateVehiculo()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
         </div>

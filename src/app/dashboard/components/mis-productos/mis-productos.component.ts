@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { DomSanitizer, SafeStyle, SafeUrl } from '@angular/platform-browser';
 import { faRupiahSign } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
@@ -23,6 +23,7 @@ export class MisProductosComponent implements OnInit {
   });
   file:any = null;
   productImagePath: string = '';
+  previewImage:SafeUrl = '';
   itemUpdateIndex:number = -1;
   modalMode:string = 'create';
   loading:boolean = false;
@@ -55,6 +56,7 @@ export class MisProductosComponent implements OnInit {
       this.descripcion?.setValue(this.productos[i!].descripcion);
       this.precio?.setValue(this.productos[i!].precio);
       this.productImagePath = this.productos[i!].imagen;
+      this.previewImage = this.productImagePath;
       this.itemUpdateIndex = i!;
     }
     this.modalService.open(content).result.then(
@@ -76,6 +78,7 @@ export class MisProductosComponent implements OnInit {
     this.imagen?.setValue('');
     this.precio?.setValue(0);
     this.productImagePath = '';
+    this.previewImage = '';
     this.itemUpdateIndex = -1;
     this.file = null;
     this.showErrorNotImageSelected = false;
@@ -86,7 +89,9 @@ export class MisProductosComponent implements OnInit {
     this.loading = true;
     if(!this.form.valid || this.file == null){
       this.form.markAllAsTouched();
-      this.showErrorNotImageSelected = true;
+      if(this.file == null){
+        this.showErrorNotImageSelected = true;
+      }
       this.loading = false;
       return;
     }
@@ -133,10 +138,9 @@ export class MisProductosComponent implements OnInit {
   fileChange(event:any){
     console.log("change",event)
     this.file = event.target.files[0];
+    let objectURL = URL.createObjectURL(this.file);       
+    this.previewImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     this.showErrorNotImageSelected = false;
-    /* let productImagePath:any = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(event.target.files[0]))
-    console.log(productImagePath.changingThisBreaksApplicationSecurity) */
-    //this.productImagePath = productImagePath.changingThisBreaksApplicationSecurity;
   }
 
   deleteProducto(codigo:number, i:number){
