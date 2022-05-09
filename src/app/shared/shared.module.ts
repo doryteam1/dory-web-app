@@ -14,7 +14,10 @@ import { MapSucreComponent } from './components/map-sucre/map-sucre.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TopAlertComponent } from './components/top-alert/top-alert.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
+import { ConfirmModalMapComponent } from './components/confirm-modal-map/confirm-modal-map.component';
 import { ConfirmModalService } from './services/confirm-modal.service';
+import { ConfirmModalMapService } from './services/confirm-modal-map.service';
+
 
 
 
@@ -30,15 +33,11 @@ import { ConfirmModalService } from './services/confirm-modal.service';
     BasicMessageComponent,
     MapSucreComponent,
     TopAlertComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    ConfirmModalMapComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    NgbModule
-  ],
-  exports:[
+  imports: [CommonModule, RouterModule, FormsModule, NgbModule],
+  exports: [
     NavbarComponent,
     FooterComponent,
     FloatingBtnComponent,
@@ -49,10 +48,9 @@ import { ConfirmModalService } from './services/confirm-modal.service';
     BasicMessageComponent,
     MapSucreComponent,
     TopAlertComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    ConfirmModalMapComponent,
   ],
-  providers:[
-    ConfirmModalService
-  ]
+  providers: [ConfirmModalService, ConfirmModalMapService],
 })
-export class SharedModule { }
+export class SharedModule {}

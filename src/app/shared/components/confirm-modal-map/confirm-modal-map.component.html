@@ -1,0 +1,11 @@
+<div class="modal-header footerheadermodal">
+    <h5 class="modal-title" id="modal-title">{{title}} <span><img [src]="iconTicle" alt="icono del titulo"></span></h5>
+    <button type="button" class="btn-close btn-sm" aria-describedby="modal-title" (click)="dismiss()"></button>
+    </div>
+    <div class="modal-body">
+    <p><img [src]="icon" alt="icono del contenido"><span>{{message}}</span></p>
+    </div>
+    <div class="modal-footer footerheadermodal">
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="decline()">{{btnCancelText}}</button>
+    <button type="button" class="btn btn-danger btn-sm" (click)="accept()">{{btnOkText}}</button>
+</div>

@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -13,49 +18,51 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { TopAlertControllerService } from 'src/app/shared/services/top-alert-controller.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { environment } from 'src/environments/environment';
+import { MapGeocoder } from '@angular/google-maps';
+import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.scss']
+  styleUrls: ['./perfil.component.scss'],
 })
 export class PerfilComponent implements OnInit {
-  usuario:any;
-  loading:boolean = false; 
-  areas:Array<any> = [];
-  departamentos:Array<any> = [];
-  municipios:Array<any> = [];
-  corregimientos:Array<any> = [];
-  veredas:Array<any> = [];
-  form:FormGroup = new FormGroup({
-    id:new FormControl(''),	
-    cedula:new FormControl(''),	
-    nombres:new FormControl(''),
-    apellidos:new FormControl(''),
-    celular:new FormControl(''),	
-    direccion:new FormControl(''),	
-    id_tipo_usuario:new FormControl(''),	
-    email:new FormControl('',[Validators.required, Validators.email]),	
-    id_area_experticia:new FormControl(0),	
-    nombre_negocio:new FormControl(''),	
-    foto:new FormControl(''),	
-    fecha_registro:new FormControl(''),	
-    fecha_nacimiento:new FormControl(''),	
-    nombre_vereda:new FormControl(''),	
-    id_departamento:new FormControl(0),	
-    id_municipio:new FormControl(0),	
-    id_corregimiento:new FormControl(0),	
-    id_vereda:new FormControl(''),	
-    latitud:new FormControl(''),	
-    longitud:new FormControl(''),	
-    nombre_corregimiento:new FormControl(''),
-    otra_area_experticia:new FormControl(''),
-    otra_area_experticia_descripcion:new FormControl(''),
-    sobre_mi:new FormControl('')
+  usuario: any;
+  loading: boolean = false;
+  areas: Array<any> = [];
+  departamentos: Array<any> = [];
+  municipios: Array<any> = [];
+  corregimientos: Array<any> = [];
+  veredas: Array<any> = [];
+  form: FormGroup = new FormGroup({
+    id: new FormControl(''),
+    cedula: new FormControl(''),
+    nombres: new FormControl(''),
+    apellidos: new FormControl(''),
+    celular: new FormControl(''),
+    direccion: new FormControl(''),
+    id_tipo_usuario: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    id_area_experticia: new FormControl(0),
+    nombre_negocio: new FormControl(''),
+    foto: new FormControl(''),
+    fecha_registro: new FormControl(''),
+    fecha_nacimiento: new FormControl(''),
+    nombre_vereda: new FormControl(''),
+    id_departamento: new FormControl(0),
+    id_municipio: new FormControl(0),
+    id_corregimiento: new FormControl(0),
+    id_vereda: new FormControl(''),
+    latitud: new FormControl(''),
+    longitud: new FormControl(''),
+    nombre_corregimiento: new FormControl(''),
+    otra_area_experticia: new FormControl(''),
+    otra_area_experticia_descripcion: new FormControl(''),
+    sobre_mi: new FormControl(''),
   });
 
-  campos:any = {
-    proveedor:[
+  campos: any = {
+    proveedor: [
       'cedula',
       'nombres',
       'apellidos',
@@ -65,9 +72,9 @@ export class PerfilComponent implements OnInit {
       'corregimiento',
       'direccion',
       'email',
-      'coordenadas'
+      'coordenadas',
     ],
-    investigadorexperto:[
+    investigadorexperto: [
       'cedula',
       'nombres',
       'apellidos',
@@ -80,9 +87,9 @@ export class PerfilComponent implements OnInit {
       'otra_area_experticia',
       'otra_area_experticia_descripcion',
       'sobre_mi',
-      'email'
+      'email',
     ],
-    transportador:[
+    transportador: [
       'cedula',
       'nombres',
       'apellidos',
@@ -92,9 +99,9 @@ export class PerfilComponent implements OnInit {
       'corregimiento',
       'direccion',
       'email',
-      'coordenadas'
+      'coordenadas',
     ],
-    piscicultor:[
+    piscicultor: [
       'cedula',
       'nombres',
       'apellidos',
@@ -104,9 +111,9 @@ export class PerfilComponent implements OnInit {
       'corregimiento',
       'direccion',
       'email',
-      'coordenadas'
+      'coordenadas',
     ],
-    consumidor:[
+    consumidor: [
       'cedula',
       'nombres',
       'apellidos',
@@ -115,9 +122,9 @@ export class PerfilComponent implements OnInit {
       'municipio',
       'corregimiento',
       'direccion',
-      'email'
+      'email',
     ],
-    comerciante:[
+    comerciante: [
       'cedula',
       'nombres',
       'apellidos',
@@ -128,12 +135,10 @@ export class PerfilComponent implements OnInit {
       'direccion',
       'nombre_negocio',
       'email',
-      'coordenadas'
+      'coordenadas',
     ],
-    asociacion:[
-      
-    ],
-    pescador:[
+    asociacion: [],
+    pescador: [
       'cedula',
       'nombres',
       'apellidos',
@@ -144,31 +149,35 @@ export class PerfilComponent implements OnInit {
       'vereda',
       'direccion',
       'coordenadas',
-      'email'
-    ]
-  } 
+      'email',
+    ],
+  };
+  @ViewChild('fileInput') inputFileDialog!: ElementRef;
+  @ViewChild('grayRef')
+  grayRef!: ElementRef;
 
-  options: google.maps.MapOptions= {
+  fileName: string = '';
+  file: any;
+  buscarx: string = '';
+  fueraDirecion: boolean = false;
+  /* center: google.maps.LatLngLiteral = { lat: 9.59079, lng: -75.546899 }; */
+  /* zoom = 10; */
+  options: google.maps.MapOptions = {
     scrollwheel: true,
-    center: { lat: 9.590790, lng:-75.546899 },
-    zoom:10
-  }
-
-  apiLoaded: Observable<boolean>;
-  @ViewChild('fileInput') inputFileDialog!:ElementRef;
-  fileName:string = '';
-  file:any;
-  markerPosition : google.maps.LatLngLiteral = { lat: 9.214145, lng:-75.188469 };
-  markerOptions: google.maps.MarkerOptions = {draggable: false};
-  showMap:boolean = false;
-
+    center: { lat: 9.59079, lng: -75.546899 },
+    zoom: 10,
+  };
+  markerPosition: google.maps.LatLngLiteral = {
+    lat: 9.214145,
+    lng: -75.188469,
+  };
+  markerOptions: google.maps.MarkerOptions = { draggable: false };
   optionPoli: google.maps.PolylineOptions = {
-    strokeColor: '#2470dc',
+    strokeColor: '#494949',
     strokeOpacity: 0.8,
     strokeWeight: 3,
     visible: true,
   };
-
   vertices: google.maps.LatLngLiteral[] = [
     { lng: -74.5395185, lat: 8.4429741 },
     { lng: -74.5406343, lat: 8.4502755 },
@@ -3018,49 +3027,81 @@ export class PerfilComponent implements OnInit {
     { lng: -74.5395939, lat: 8.4360142 },
     { lng: -74.5395185, lat: 8.4429741 },
   ];
-  constructor(private us:UsuarioService, private aes:AreasExperticiaService, private router:Router, private places:PlacesService, private storageService:StorageService, httpClient:HttpClient, private storage:FirebaseStorageService, private topAlertController:TopAlertControllerService) { 
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
-        .pipe(
-          map(() => true),
-          catchError(() => of(false)),
-        );
+  apiLoaded: Observable<boolean>;
+  constructor(
+    private us: UsuarioService,
+    private aes: AreasExperticiaService,
+    private router: Router,
+    private places: PlacesService,
+    private storageService: StorageService,
+    httpClient: HttpClient,
+    private storage: FirebaseStorageService,
+    private topAlertController: TopAlertControllerService,
+    private geocoder: MapGeocoder,
+    private confirmModalMapService: ConfirmModalMapService
+  ) {
+    this.apiLoaded = httpClient
+      .jsonp(
+        'https://maps.googleapis.com/maps/api/js?key=' + environment.doryApiKey,
+        'callback'
+      )
+      .pipe(
+        map(() => true),
+        catchError(() => of(false))
+      );
   }
 
   ngOnInit(): void {
     this.latitud?.disable();
     this.longitud?.disable();
     this.email?.disable();
-    let email:string | null = localStorage.getItem('email');
+    let email: string | null = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe(
-      (response)=>{
+      (response) => {
         this.usuario = response.data[0];
         this.form.get('id')?.setValue(this.usuario.id);
-        this.form.get('cedula')?.setValue(this.usuario.cedula);	
-        this.form.get('nombres')?.setValue(this.usuario.nombres);	
-        this.form.get('apellidos')?.setValue(this.usuario.apellidos);	
+        this.form.get('cedula')?.setValue(this.usuario.cedula);
+        this.form.get('nombres')?.setValue(this.usuario.nombres);
+        this.form.get('apellidos')?.setValue(this.usuario.apellidos);
         this.form.get('celular')?.setValue(this.usuario.celular);
         this.form.get('direccion')?.setValue(this.usuario.direccion);
-        this.form.get('id_tipo_usuario')?.setValue(this.usuario.id_tipo_usuario);
+        this.form
+          .get('id_tipo_usuario')
+          ?.setValue(this.usuario.id_tipo_usuario);
         this.form.get('email')?.setValue(this.usuario.email);
-        this.form.get('id_area_experticia')?.setValue(this.usuario.id_area_experticia);
+        this.form
+          .get('id_area_experticia')
+          ?.setValue(this.usuario.id_area_experticia);
         this.form.get('nombre_negocio')?.setValue(this.usuario.nombre_negocio);
         this.form.get('foto')?.setValue(this.usuario.foto);
-        this.form.get('fecha_registro')?.setValue(Utilities.dateToISOString(this.usuario.fecha_registro));
-        this.form.get('fecha_nacimiento')?.setValue(Utilities.dateToISOString(this.usuario.fecha_nacimiento));
+        this.form
+          .get('fecha_registro')
+          ?.setValue(Utilities.dateToISOString(this.usuario.fecha_registro));
+        this.form
+          .get('fecha_nacimiento')
+          ?.setValue(Utilities.dateToISOString(this.usuario.fecha_nacimiento));
         this.form.get('nombre_vereda')?.setValue(this.usuario.nombre_vereda);
         this.form.get('id_municipio')?.setValue(this.usuario.id_municipio);
-        this.form.get('id_corregimiento')?.setValue(this.usuario.id_corregimiento);
+        this.form
+          .get('id_corregimiento')
+          ?.setValue(this.usuario.id_corregimiento);
         this.form.get('id_vereda')?.setValue(this.usuario.id_vereda);
         this.form.get('latitud')?.setValue(this.usuario.latitud);
-        this.form.get('longitud')?.setValue(this.usuario.longitud);	
-        this.form.get('nombre_corregimiento')?.setValue(this.usuario.nombre_corregimiento);
+        this.form.get('longitud')?.setValue(this.usuario.longitud);
+        this.form
+          .get('nombre_corregimiento')
+          ?.setValue(this.usuario.nombre_corregimiento);
         this.otraAreaExp?.setValue(this.usuario.otra_area_experticia);
-        this.otraAreaExpDesc?.setValue(this.usuario.otra_area_experticia_descripcion);
+        this.otraAreaExpDesc?.setValue(
+          this.usuario.otra_area_experticia_descripcion
+        );
 
-        if(this.usuario.id_departamento == 0){
+        if (this.usuario.id_departamento == 0) {
           this.form.get('id_departamento')?.setValue(70);
-        }else{
-          this.form.get('id_departamento')?.setValue(this.usuario.id_departamento);	
+        } else {
+          this.form
+            .get('id_departamento')
+            ?.setValue(this.usuario.id_departamento);
         }
 
         this.idDpto?.disable();
@@ -3070,13 +3111,22 @@ export class PerfilComponent implements OnInit {
         this.loadMunic();
         this.loadCorregVeredas();
         this.nomCorregVeredasubs();
-        this.storageService.add('photoUser',this.usuario.foto)
-        this.storageService.add('nomApell',this.getNomApell(this.usuario.nombres,this.usuario.apellidos))
-        if(!this.usuario.tipo_usuario || !(this.usuario.nombres && this.usuario.apellidos)){
-          this.router.navigate(['/welcome',this.usuario]);  
+        this.storageService.add('photoUser', this.usuario.foto);
+        this.storageService.add(
+          'nomApell',
+          this.getNomApell(this.usuario.nombres, this.usuario.apellidos)
+        );
+        if (
+          !this.usuario.tipo_usuario ||
+          !(this.usuario.nombres && this.usuario.apellidos)
+        ) {
+          this.router.navigate(['/welcome', this.usuario]);
         }
         this.us.setAuthUserPhoto(this.usuario.foto);
-        this.markerPosition = { lat: parseFloat(this.latitud?.value), lng:parseFloat(this.longitud?.value) };
+        this.markerPosition = {
+          lat: parseFloat(this.latitud?.value),
+          lng: parseFloat(this.longitud?.value),
+        };
 
         const sucreColombia = {
           north: 10.184454,
@@ -3089,361 +3139,482 @@ export class PerfilComponent implements OnInit {
             lat: parseFloat(this.latitud?.value),
             lng: parseFloat(this.longitud?.value),
           },
-          /* https://www.arcgis.com/apps/Viewer/index.html?appid=a294eaa759194c259ee22dc45b6fcc75
-          https://developers.google.com/maps/documentation/javascript/examples/control-bounds-restriction
-
-          https://developers.google.com/maps/documentation/javascript/reference/map#MapRestriction
-          */
           restriction: {
             latLngBounds: sucreColombia,
             strictBounds: false,
           },
-          zoom: 8,
+          zoom: 12,
           scrollwheel: true,
-          /*  maxZoom: this.maxZoom,
-          minZoom: this.minZoom, */
         };
-      },(err)=>{
+      },
+      (err) => {
         console.log(err);
       }
     );
   }
+  //modal ventana
 
-  openAddFileDialog(){
-    const element:HTMLElement = this.inputFileDialog.nativeElement;
+  formateocompone() {
+    this.markerPosition = {
+      lat: parseFloat(this.latitud?.value),
+      lng: parseFloat(this.longitud?.value),
+    };
+    this.options = {
+      center: {
+        lat: parseFloat(this.latitud?.value),
+        lng: parseFloat(this.longitud?.value),
+      },
+      zoom: 12,
+    };
+    this.buscarx = '';
+  }
+
+  buscar() {
+    const valor = this.buscarx;
+    if (valor.trim().length == 0) {
+      return;
+    }
+    this.geocoder
+      .geocode({
+        address: `${valor}`,
+      })
+      .subscribe(({ results }) => {
+        const point: google.maps.LatLngLiteral = {
+          lat: results[0].geometry.location.toJSON().lat!,
+          lng: results[0].geometry.location.toJSON().lng!,
+        };
+        this.places.geocodeLatLng(point).then((response) => {
+          if (response.status == 'OK') {
+            let result = response.results[0].address_components;
+            let index = result.findIndex((element) =>
+              element.types.includes('administrative_area_level_1')
+            );
+            let dpto = result[index].short_name;
+            index = result.findIndex((element) =>
+              element.types.includes('administrative_area_level_2')
+            );
+            index = this.departamentos.findIndex(
+              (element) => element.nombre_departamento == dpto
+            );
+            if (dpto == 'Sucre') {
+              /* this.idDpto?.setValue(idDpto);
+              this.idMunic?.setValue(idMunic);
+              this.direccion?.setValue(response.results[0].formatted_address); */
+              if (
+                results[0].geometry.location.toJSON().lat! &&
+                results[0].geometry.location.toJSON().lng!
+              ) {
+                this.options = {
+                  center: {
+                    lat: results[0].geometry.location.toJSON().lat!,
+                    lng: results[0].geometry.location.toJSON().lng!,
+                  },
+                  zoom: 13,
+                };
+                /*  this.markerPosition = {
+                  lat: results[0].geometry.location.toJSON().lat!,
+                  lng: results[0].geometry.location.toJSON().lng!,
+                };*/
+              }
+            } else {
+              this.fueraDirecion = true;
+              setTimeout(() => {
+                this.fueraDirecion = false;
+              }, 5000);
+              this.buscarx = '';
+            }
+          }
+        });
+      });
+  }
+
+  //fin modal
+  openAddFileDialog() {
+    const element: HTMLElement = this.inputFileDialog.nativeElement;
     element.click();
   }
 
-  fileChange(event:any){
-    this.fileName = '/perfil/user_'+this.id?.value;
+  fileChange(event: any) {
+    this.fileName = '/perfil/user_' + this.id?.value;
     this.file = event.target.files[0];
-    this.storage.cloudStorageTask(this.fileName,this.file).percentageChanges().subscribe(
-      (response)=>{
-        console.log(response)
-      }
-    );
-    this.storage.cloudStorageRef(this.fileName).getDownloadURL().subscribe(
-      (downloadUrl)=>{
-        console.log(downloadUrl)
-        this.us.actualizarUsuario(this.id?.value,{foto:downloadUrl}).subscribe(
-          (response)=>{
-            this.usuario.foto = downloadUrl;
-            this.us.setAuthUserPhoto(this.usuario.foto);
-          },err=>{
-            console.log(err)
-          }
-        )
-      },err=>{
-        console.log(err)
-      }
-    )
+    this.storage
+      .cloudStorageTask(this.fileName, this.file)
+      .percentageChanges()
+      .subscribe((response) => {
+        console.log(response);
+      });
+    this.storage
+      .cloudStorageRef(this.fileName)
+      .getDownloadURL()
+      .subscribe(
+        (downloadUrl) => {
+          console.log(downloadUrl);
+          this.us
+            .actualizarUsuario(this.id?.value, { foto: downloadUrl })
+            .subscribe(
+              (response) => {
+                this.usuario.foto = downloadUrl;
+                this.us.setAuthUserPhoto(this.usuario.foto);
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
   nomCorregVeredasubs() {
-   this.nomCorreg?.valueChanges.subscribe(
-     (response)=>{
-       console.log(response)
-       this.idCorreg?.patchValue( 0, {emitEvent: false} );
-       this.idCorreg?.updateValueAndValidity();
-     }
-   );
+    this.nomCorreg?.valueChanges.subscribe((response) => {
+      console.log(response);
+      this.idCorreg?.patchValue(0, { emitEvent: false });
+      this.idCorreg?.updateValueAndValidity();
+    });
 
-   this.nomVereda?.valueChanges.subscribe(
-     (response)=>{
-      console.log(response)
-       this.idVereda?.patchValue( 0, {emitEvent: false} );
-       this.idVereda?.updateValueAndValidity();
-     }
-   );
+    this.nomVereda?.valueChanges.subscribe((response) => {
+      console.log(response);
+      this.idVereda?.patchValue(0, { emitEvent: false });
+      this.idVereda?.updateValueAndValidity();
+    });
   }
 
-  getNomApell(nombres:string,apellidos:string){
-    let nomComp:string = '';
-    if(nombres){
+  getNomApell(nombres: string, apellidos: string) {
+    let nomComp: string = '';
+    if (nombres) {
       nomComp = nombres.split(' ')[0];
     }
-    if(apellidos){
-      nomComp = nomComp +" "+ apellidos.split(' ')[0];
+    if (apellidos) {
+      nomComp = nomComp + ' ' + apellidos.split(' ')[0];
     }
     return nomComp;
   }
 
-  loadAreasExp(){
+  loadAreasExp() {
     this.aes.getAreasDeExperticia().subscribe(
-      (response)=>{
+      (response) => {
         this.areas = response.data;
-      },(err)=>{
+      },
+      (err) => {
         console.log(err);
       }
     );
   }
 
-  loadDptos(){
+  loadDptos() {
     this.places.getDepartamentos().subscribe(
-      (response)=>{
+      (response) => {
         this.departamentos = response.data;
-      },err=>{
+      },
+      (err) => {
         console.log(err);
       }
     );
   }
 
-  loadMunic(){
-    this.places.getMunicipiosDepartamentos(this.form.get('id_departamento')?.value).subscribe(
-      (response)=>{
-        this.municipios = response.data;
-      },(err)=>{
-        console.log(err);
-      }
-    );
+  loadMunic() {
+    this.places
+      .getMunicipiosDepartamentos(this.form.get('id_departamento')?.value)
+      .subscribe(
+        (response) => {
+          this.municipios = response.data;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
-  changeDpto(){
+  changeDpto() {
     this.form.get('id_municipio')?.setValue(0);
-    this.places.getMunicipiosDepartamentos(this.form.get('id_departamento')?.value).subscribe(
-      (response)=>{
-        this.municipios = response.data;
-      },(err)=>{
-        console.log(err);
-      }
-    );
+    this.places
+      .getMunicipiosDepartamentos(this.form.get('id_departamento')?.value)
+      .subscribe(
+        (response) => {
+          this.municipios = response.data;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
-  changeMunic(){
+  changeMunic() {
     this.idCorreg?.setValue(0);
     this.idVereda?.setValue(0);
     this.places.getCorregimientosMunicipio(this.idMunic?.value).subscribe(
-      (response)=>{
+      (response) => {
         this.corregimientos = response.data;
-      },err=>{
+      },
+      (err) => {
         console.log(err);
       }
-    )
+    );
 
     this.places.getVeredasMunicipio(this.idMunic?.value).subscribe(
-      (response)=>{
+      (response) => {
         this.veredas = response.data;
-      },err=>{
-        console.log(err)
+      },
+      (err) => {
+        console.log(err);
       }
     );
   }
 
-  loadCorregVeredas(){
+  loadCorregVeredas() {
     this.places.getCorregimientosMunicipio(this.idMunic?.value).subscribe(
-      (response)=>{
+      (response) => {
         this.corregimientos = response.data;
-      },err=>{
+      },
+      (err) => {
         console.log(err);
       }
-    )
+    );
 
     this.places.getVeredasMunicipio(this.idMunic?.value).subscribe(
-      (response)=>{
+      (response) => {
         this.veredas = response.data;
-      },err=>{
-        console.log(err)
+      },
+      (err) => {
+        console.log(err);
       }
     );
   }
 
-  onSubmit(){
-    console.log("form-->",this.form.value)
-    console.log("lat ",this.latitud?.value)
+  onSubmit() {
+    console.log('form-->', this.form.value);
+    console.log('lat ', this.latitud?.value);
     this.latitud?.enable();
     this.longitud?.enable();
     this.loading = true;
-    if(this.form.invalid){
+    if (this.form.invalid) {
       this.loading = false;
       return;
     }
 
-    this.us.actualizarUsuario(this.form.get('id')?.value,this.form.getRawValue()).subscribe(
-      (response)=>{
-        console.log(response);
-        this.loading = false;
-        this.latitud?.disable();
-        this.longitud?.disable();
-      },err=>{
-        this.loading = false;
-        console.log(err)
-        this.latitud?.disable();
-        this.longitud?.disable();
-      }
-    );
+    this.us
+      .actualizarUsuario(this.form.get('id')?.value, this.form.getRawValue())
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.loading = false;
+          this.latitud?.disable();
+          this.longitud?.disable();
+        },
+        (err) => {
+          this.loading = false;
+          console.log(err);
+          this.latitud?.disable();
+          this.longitud?.disable();
+        }
+      );
   }
 
-  corregSelected(){
+  corregSelected() {
     this.nomCorreg?.setValue('');
   }
 
-  veredaSelected(){
+  veredaSelected() {
     this.nomVereda?.setValue('');
   }
 
-  onAreaExpChange(){
-    console.log("area experticia change")
-    if(this.idAreaExpert?.value !== -1){
+  onAreaExpChange() {
+    console.log('area experticia change');
+    if (this.idAreaExpert?.value !== -1) {
       this.otraAreaExp?.setValue('');
-      this.otraAreaExpDesc?.setValue('')
+      this.otraAreaExpDesc?.setValue('');
     }
   }
-
+  infosave:boolean=false
   // Metodo para adicionar una marca en el mapa
   addMarker(event: google.maps.MapMouseEvent) {
     const point: google.maps.LatLngLiteral = {
       lat: event.latLng?.toJSON().lat!,
       lng: event.latLng?.toJSON().lng!,
     };
+    this.places.geocodeLatLng(point).then((response) => {
+      if (response.status == 'OK') {
+        let result = response.results[0].address_components;
+        let index = result.findIndex((element) =>
+          element.types.includes('administrative_area_level_1')
+        );
+        let dpto = result[index].short_name;
+        index = result.findIndex((element) =>
+          element.types.includes('administrative_area_level_2')
+        );
+        let municipio = result[index].short_name;
 
-    this.places.geocodeLatLng(point).then(
-      (response)=>{
-        if(response.status == 'OK'){
-          let result =  response.results[0].address_components;
-          let index = result.findIndex((element)=>element.types.includes('administrative_area_level_1'));
-          let dpto = result[index].short_name;
-          index = result.findIndex((element)=>element.types.includes('administrative_area_level_2'));
-          let municipio = result[index].short_name;
+        index = this.departamentos.findIndex(
+          (element) => element.nombre_departamento == dpto
+        );
+        let idDpto = this.departamentos[index]?.id_departamento;
+        index = this.municipios.findIndex(
+          (element) => element.nombre == municipio
+        );
+        let idMunic = this.municipios[index]?.id_municipio;
 
-          index = this.departamentos.findIndex((element)=>element.nombre_departamento == dpto);
-          let idDpto = this.departamentos[index]?.id_departamento;
-          index = this.municipios.findIndex((element)=>element.nombre == municipio)
-          let idMunic = this.municipios[index]?.id_municipio;
+        if (dpto == 'Sucre') {
+          this.fueraDirecion = false
+          this.confirmModalMapService
+            .confirm(
+              '../../../../assets/icons/editar.svg',
+              '../../../../assets/icons/save.svg',
+              'Actualizar  mi ubicación',
+              'Estás a punto de cambiar tu ubicación, ¿estás seguro de realizar este cambio?',
+              'Si',
+              'No estoy seguro'
+            )
+            .then((result) => {
+              if (result == true) {
 
-          if(dpto == 'Sucre'){
-            this.idDpto?.setValue(idDpto);
-            this.idMunic?.setValue(idMunic);
-            this.direccion?.setValue(response.results[0].formatted_address);
-            if(event.latLng){
-              this.markerPosition = event.latLng.toJSON();
-              this.latitud?.setValue(event.latLng.toJSON().lat);
-              this.longitud?.setValue(event.latLng.toJSON().lng);
-              //console.log("Latitud"+ event.latLng.toJSON().lat);
-              //console.log("Longitud"+ event.latLng.toJSON().lng);
-            }
-          }else{
-            this.topAlertController.showAlertAutoDissmis('No puedes escoger una ubicación fuera del departamento de Sucre',5000);
-          }
-          
+                this.infosave=true
+                 setTimeout(() => {
+                   this.infosave = false;
+                 }, 5000);
+
+                this.idDpto?.setValue(idDpto);
+                this.idMunic?.setValue(idMunic);
+                this.direccion?.setValue(response.results[0].formatted_address);
+                if (event.latLng) {
+                  this.markerPosition = event.latLng.toJSON();
+                  this.latitud?.setValue(event.latLng.toJSON().lat);
+                  this.longitud?.setValue(event.latLng.toJSON().lng);
+                }
+                this.onSubmit()
+              }
+            })
+            .catch((result) => {});
+        } else {
+          this.fueraDirecion = true;
+          setTimeout(() => {
+            this.fueraDirecion = false;
+          }, 5000);
         }
       }
-    )
+    });
   }
 
-
-  mostrarPorTipo(campo:string){
-    let index=-1;
+  mostrarPorTipo(campo: string) {
+    let index = -1;
 
     let tipoUsuario = this.usuario?.tipo_usuario;
 
-    if(tipoUsuario == 'Investigador Experto'){
+    if (tipoUsuario == 'Investigador Experto') {
       tipoUsuario = 'investigadorexperto';
     }
     index = this.campos[tipoUsuario?.toLowerCase()]?.indexOf(campo);
     return index > -1;
   }
 
-  get id(){
+  get id() {
     return this.form.get('id');
   }
-  
-  get cedula(){
-    return this.form.get('cedula');	
+
+  get cedula() {
+    return this.form.get('cedula');
   }
 
-  get nombres(){
-    return this.form.get('nombres');	
+  get nombres() {
+    return this.form.get('nombres');
   }
-        
-  get apellidos(){
+
+  get apellidos() {
     return this.form.get('apellidos');
   }
-        
-  get celular(){
-    return this.form.get('celular');	
+
+  get celular() {
+    return this.form.get('celular');
   }
-        
-  get direccion(){
+
+  get direccion() {
     return this.form.get('direccion');
   }
-        
-  get idTipoUsuario(){
+
+  get idTipoUsuario() {
     return this.form.get('id_tipo_usuario');
   }
 
-  get email(){
+  get email() {
     return this.form.get('email');
   }
-        
-  get idAreaExpert(){
+
+  get idAreaExpert() {
     return this.form.get('id_area_experticia');
   }
-        
-  get nombreNegocio(){
+
+  get nombreNegocio() {
     return this.form.get('nombre_negocio');
   }
 
-  get foto(){
+  get foto() {
     return this.form.get('foto');
   }
-        
-  get fechaRegistro(){
+
+  get fechaRegistro() {
     return this.form.get('fecha_registro');
   }
-        
-  get fechaNac(){
+
+  get fechaNac() {
     return this.form.get('fecha_nacimiento');
   }
-        
-  get nomVereda(){
+
+  get nomVereda() {
     return this.form.get('nombre_vereda');
   }
-        
-  get idDpto(){
+
+  get idDpto() {
     return this.form.get('id_departamento');
   }
-        
-  get idMunic(){
+
+  get idMunic() {
     return this.form.get('id_municipio');
   }
-        
-  get idCorreg(){
+
+  get idCorreg() {
     return this.form.get('id_corregimiento');
   }
-        
-  get idVereda(){
+
+  get idVereda() {
     return this.form.get('id_vereda');
   }
-        
-  get latitud(){
+
+  get latitud() {
     return this.form.get('latitud');
   }
-        
-  get longitud(){
+
+  get longitud() {
     return this.form.get('longitud');
   }
-        
-  get nomCorreg(){
+
+  get nomCorreg() {
     return this.form.get('nombre_corregimiento');
   }
-        
-  get otraAreaExp(){
+
+  get otraAreaExp() {
     return this.form.get('otra_area_experticia');
   }
 
-  get otraAreaExpDesc(){
+  get otraAreaExpDesc() {
     return this.form.get('otra_area_experticia_descripcion');
   }
 
-  currentPosition(){
+  currentPosition() {
     navigator.geolocation.getCurrentPosition((position) => {
       this.options = {
-        center: { lat:position.coords.latitude, lng:position.coords.longitude },
-        zoom:10
+        center: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        },
+        zoom: 10,
       };
-      this.markerPosition = { lat: position.coords.latitude, lng:position.coords.longitude };
+      this.markerPosition = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
       this.latitud?.setValue(position.coords.latitude);
       this.longitud?.setValue(position.coords.longitude);
-    })
+    });
   }
 }
