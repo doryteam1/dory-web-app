@@ -1,7 +1,7 @@
-<div class="row">
+<div class="row" >
 <div class="container">
     <div class="container__box-row">
-        <div class="container__box-image">    
+        <div class="container__box-image">
             <img class="container__image img-fluid" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
             <img class="container__image2 img-fluid" src="assets/icons/camera.svg" (click)="openAddFileDialog()">
             <input #fileInput type="file" name="resume" (change)='fileChange($event)' hidden>
@@ -11,7 +11,7 @@
             <span class="container__title">{{usuario?.tipo_usuario ? usuario?.tipo_usuario : '____'}}</span>
         </div>
     </div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form id="CreateForm" [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="container__box mt-4" *ngIf="mostrarPorTipo('cedula')">
         <span class="container__title">Cedula</span>
@@ -47,14 +47,14 @@
             <input class="container__input form-input-text-square"  type="text" formControlName='email'>
         </div>
     </div>
-    
+
     <div class="container__box" *ngIf="mostrarPorTipo('fecha_nacimiento')">
         <span class="container__title">Fecha de nacimiento: </span>
         <div>
             <input class="container__input form-input-text-square" type="date" formControlName='fecha_nacimiento'>
         </div>
     </div>
-    
+
     <div class="container__box" *ngIf="mostrarPorTipo('departamento')">
         <span class="container__title">Departamento</span>
         <div>
@@ -65,7 +65,7 @@
             </select>
         </div>
     </div>
-    
+
     <div class="container__box" *ngIf="mostrarPorTipo('municipio')">
         <span class="container__title">Municipio</span>
         <div>
@@ -76,7 +76,7 @@
             </select>
         </div>
     </div>
-    
+
     <!--<div class="container__box" *ngIf="mostrarPorTipo('corregimiento')">
         <span class="container__title">Selecciona un corregimiento</span>
         <div>
@@ -87,12 +87,12 @@
             </select>
         </div>
     </div>-->
-    
+
     <div *ngIf="mostrarPorTipo('corregimiento')">
         <span class="container__title">Corregimiento</span>
         <input class="container__input form-input-text-square" type="text" formControlName='nombre_corregimiento'>
     </div>
-        
+
     <!--<span class="container__title" *ngIf="mostrarPorTipo('vereda')">Selecciona una vereda</span>
     <div class="container__box" *ngIf="mostrarPorTipo('vereda')">
         <div>
@@ -110,7 +110,7 @@
             <input class="container__input form-input-text-square"  type="text" formControlName='nombre_vereda'>
         </div>
     </div>
-    
+
     <div class="container__box" *ngIf="mostrarPorTipo('direccion')">
         <span class="container__title">Dirección: </span>
         <div>
@@ -166,29 +166,62 @@
             <input class="container__input form-input-text-square"  type="text" formControlName='longitud'>
         </div>
     </div>
-    <span class="container__title" *ngIf="mostrarPorTipo('coordenadas')">Ubicacion mapa: <span class="container_link" (click)="showMap = !showMap">{{showMap ? 'Ocultar Mapa' : 'Ver mapa'}}</span></span>
-
+    <span class="container__title" *ngIf="mostrarPorTipo('coordenadas')">Ubicacion mapa: <span class="container_link" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="formateocompone()">ver mapa</span></span>
     <button class="container__btn">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
         </div>
     </button>
-    
     </form>
-</div>
+ </div>
 
-<div class="map" *ngIf="showMap">
-    <div *ngIf="apiLoaded | async">
-        <google-map height="610px"
-                    width="800px" 
-                    [options]="options"
-                    (mapClick)="addMarker($event)">
-            <map-marker [position]="markerPosition" [options]="markerOptions"  title="Title"></map-marker>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered ">
+    <div class="modal-content" >
+      <div class="modal-header footerheadermodal">
+        <!-- header modal -->
+        <div class="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" (keyup.enter)="buscar()"
+            [(ngModel)]="buscarx">
+          <span type="button" class="btn btn-outline-primary" (click)="buscar()">Search</span>
+        </div>
+       <!-- button close- modal -->
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body map" *ngIf="apiLoaded | async">
+        <!-- fuera de sucre -click fuera-->
+        <div class="alert alert-danger d-flex bd-highlight  alertclass"*ngIf=" fueraDirecion" role="alert" >
+          <div class="p-2 bd-highlight">
+            <svg   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+              <path class="prefix__n-info-tri" style="animation-delay:1s" stroke="#0A0A30" stroke-width="1.5"
+                d="M11.134 6.844a1 1 0 011.732 0l5.954 10.312a1 1 0 01-.866 1.5H6.046a1 1 0 01-.866-1.5l5.954-10.312z" />
+              <g class="prefix__n-info-tri">
+                <path stroke="#265BFF" stroke-linecap="round" stroke-width="1.5" d="M12 10.284v3.206" />
+                <circle cx="12" cy="15.605" r=".832" fill="#265BFF" />
+              </g>
+            </svg>
+          </div>
+          <div class="p-2 bd-highlight">
+            No puedes escoger una ubicación fuera del departamento de Sucre
+          </div>
+          <div class="ms-auto p-2 bd-highlight" >
+            <button  type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+          <google-map
+           width="800px"
+          height="380px"
+          class="modal-dialog-centered"
+        [options]="options"
+            (mapClick)="addMarker($event)">
+            <map-marker [position]="markerPosition" [options]="markerOptions" title="Title"></map-marker>
             <map-polyline [path]="vertices" [options]="optionPoli">
             </map-polyline>
-            <!-- <button id="Logout" class="toggle-button controls button" (click)="currentPosition()">Mi ubicación</button> -->
-        </google-map>
+          </google-map>
+      </div>
     </div>
+  </div>
 </div>
-</div>
+    </div>
 <ngx-spinner type="square-jelly-box"></ngx-spinner>

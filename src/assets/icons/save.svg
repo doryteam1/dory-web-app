@@ -1,0 +1,5 @@
+ <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><style>@keyframes check {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }</style><path stroke="#0A0A30" stroke-width="1.5" d="M7.059 11.765A3.059 3.059 0 004 14.824c0 .461.42.774.882.774h14.236c.461 0 .882-.313.882-.774a3.06 3.06 0 00-3.059-3.06.182.182 0 01-.175-.132 4.943 4.943 0 00-9.532 0 .182.182 0 01-.175.133z"/><path stroke="#265BFF" stroke-linecap="round" stroke-width="1.26" d="M10.248 12.033l1.146 1.135 2.358-2.336" style="animation:check 2s infinite cubic-bezier(.99,-.1,.01,1.02)" stroke-dashoffset="100" stroke-dasharray="100"/></svg>
