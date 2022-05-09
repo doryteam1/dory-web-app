@@ -62,8 +62,8 @@
                 
                 <div class="card__rating-container">
                     <img class="card__icon-rating" src="assets/icons/star-filled.svg">
-                    <span class="card__rating">{{granja.puntuacion ? granja.puntuacion : 'S/C'}}</span>
-                    <span class="card__rating__detail">(34 reseñas)</span>
+                    <span class="card__rating">{{granja.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
+                    <span class="card__rating__detail"> ({{granja.count_resenas}} reseñas)</span>
                 </div>
                 
                 <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.esFavorita" (click)="changeFavorite()">
@@ -73,9 +73,10 @@
         </div>
             <div *ngIf="granjas.length > 0 && (apiLoaded | async)">
                 <google-map height="600px"
-                            width="800px" 
+                            width="800px"
                             [options]="options">
-                    <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"></map-marker>
+                    <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}" (mapClick)="openInfoWindow(marker,i)"></map-marker>
+                    <map-info-window>{{selectedGranja.nombre}}</map-info-window>
                 </google-map>
             </div>
 </div>

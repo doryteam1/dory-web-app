@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -9,6 +9,8 @@ import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
+import {MapInfoWindow, MapMarker} from '@angular/google-maps';
+
 @Component({
   selector: 'app-granjas-municipio',
   templateUrl: './granjas-municipio.component.html',
@@ -31,7 +33,13 @@ export class GranjasMunicipioComponent implements OnInit {
   granjaDetailRoute:string = "";
   poblacion:number = 0;
   municipio:string = '';
-
+  @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
+  selectedGranja = {
+    nombre : '',
+    propietario : {
+      nombre : ''
+    }
+  }
   constructor(httpClient: HttpClient, private granjasService:GranjasService, private activatedRoute:ActivatedRoute, private placesService:PlacesService) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
         .pipe(
@@ -86,5 +94,11 @@ export class GranjasMunicipioComponent implements OnInit {
       zoom:15
     }
     console.log(granja); */
+  }
+
+  openInfoWindow(marker: MapMarker, index:number) {
+    this.infoWindow.open(marker);
+    this.selectedGranja.nombre = this.granjas[index].nombre;
+    //this.selectedGranja.propietario.nombre = this.granjas[index].nombre;
   }
 }
