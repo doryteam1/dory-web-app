@@ -29,8 +29,8 @@ export class MisGranjasComponent implements OnInit {
     id_municipio:new FormControl('',[Validators.required]),
     id_vereda:new FormControl(0),
     id_corregimiento:new FormControl(0),
-    corregimiento:new FormControl('',[Validators.required]),
-    vereda:new FormControl('',[Validators.required]),
+    corregimiento:new FormControl(''),
+    vereda:new FormControl(''),
     arrayTiposInfraestructuras:new FormControl(null),
     arrayEspecies:new FormControl(null),
   });
@@ -98,6 +98,8 @@ export class MisGranjasComponent implements OnInit {
       this.idMunic?.setValue(this.granjas[i!].id_municipio);
       this.idCorregimiento?.setValue(this.granjas[i!].id_corregimiento);
       this.idVereda?.setValue(this.granjas[i!].id_vereda);
+      this.corregimiento?.setValue(this.granjas[i!].corregimiento);
+      this.vereda?.setValue(this.granjas[i!].vereda);
       this.itemUpdateIndex = i!;
     }
     this.modalService.open(content).result.then(
