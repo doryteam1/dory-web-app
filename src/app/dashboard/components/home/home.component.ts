@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SocialAuthService } from 'angularx-social-login';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
 
 @Component({
@@ -8,13 +10,30 @@ import { Utilities } from 'src/app/utilities/utilities';
 })
 export class HomeComponent implements OnInit {
   tipoUsuario:string = '';
-
-  constructor() { }
+  error:string = '';
+  constructor(private socialService:SocialAuthService, private userService:UsuarioService) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');
     if(token && token!='undefined'){
       this.tipoUsuario = Utilities.parseJwt(token!).rol;
+      if(!this.tipoUsuario && this.userService.authenticatedWith()=='google'){
+        this.socialService.authState.subscribe(
+          (response)=>{
+            let idToken = response.idToken;
+            this.userService.loginWithGoogle(idToken).subscribe(
+              (response)=>{
+                localStorage.setItem('token',response.body.token);
+                this.userService.setAuthWith('google');
+                this.tipoUsuario = Utilities.parseJwt(response.body.token).rol;
+              },err=>{
+                console.log(err);
+                this.error = 'No se pudo iniciar sessión';
+              }
+            )
+          }
+        )
+      }
     }
   }
 }
