@@ -121,6 +121,7 @@ export class MisProductosComponent implements OnInit {
                   this.productImagePath = '';
                   this.modalService.dismissAll()
                   this.loading = false;
+                  window.location.reload();
                 },err=>{
                   console.log(err)
                   this.loading = false;
@@ -145,7 +146,7 @@ export class MisProductosComponent implements OnInit {
   }
 
   deleteProducto(codigo:number, i:number){
-    this.confirmModalService.confirm('Eliminar producto','Esta seguro que desea eliminar el producto con codigo','Eliminar','No estoy seguro',JSON.stringify(codigo))
+    this.confirmModalService.confirm('Eliminar producto','Esta seguro que desea eliminar el producto','Eliminar','No estoy seguro',this.productos[i].nombreProducto)
     .then(
       (result)=>{
         if(result == true){

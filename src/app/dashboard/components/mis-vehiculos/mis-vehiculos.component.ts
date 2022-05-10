@@ -119,7 +119,6 @@ export class MisVehiculosComponent implements OnInit {
               this.vehiculosService.addVehiculo(newVehiculo).subscribe(
                 (response)=>{
                   console.log(response)
-
                   this.file = null;
                   this.vehiculoImagePath = '';
                   this.modalService.dismissAll()
@@ -179,8 +178,6 @@ export class MisVehiculosComponent implements OnInit {
   }
 
   updateVehiculo(){
-    console.log("index vehiculo ",this.itemUpdateIndex)
-    console.log("vehiculo ",this.vehiculos[this.itemUpdateIndex])
     this.loading = true;
     if(!this.form.valid){
       this.form.markAllAsTouched();
