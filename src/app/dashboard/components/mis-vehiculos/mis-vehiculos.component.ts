@@ -56,7 +56,6 @@ export class MisVehiculosComponent implements OnInit {
     this.form.reset();
     this.formInit();
     if(action == 'update'){
-      console.log("action update")
       this.modelo?.setValue(this.vehiculos[i!].modelo);
       this.capacidad?.setValue(this.vehiculos[i!].capacidad);
       this.transporteAlimento?.setValue(this.vehiculos[i!].transporte_alimento);
@@ -120,11 +119,12 @@ export class MisVehiculosComponent implements OnInit {
               this.vehiculosService.addVehiculo(newVehiculo).subscribe(
                 (response)=>{
                   console.log(response)
-                  this.vehiculos.push(newVehiculo);
+
                   this.file = null;
                   this.vehiculoImagePath = '';
                   this.modalService.dismissAll()
                   this.loading = false;
+                  window.location.reload();
                 },err=>{
                   console.log(err)
                   this.loading = false;
@@ -158,7 +158,7 @@ export class MisVehiculosComponent implements OnInit {
   } */
 
   deleteVehiculo(id:number, i:number){
-    this.confirmModalService.confirm('Eliminar vehiculo','Esta seguro que desea eliminar el vehiculo con id','Eliminar','No estoy seguro',JSON.stringify(id))
+    this.confirmModalService.confirm('Eliminar vehiculo','Esta seguro que desea eliminar el vehiculo con id','Eliminar','No estoy seguro',this.vehiculos[i].modelo)
     .then(
       (result)=>{
         if(result == true){
@@ -179,8 +179,9 @@ export class MisVehiculosComponent implements OnInit {
   }
 
   updateVehiculo(){
+    console.log("index vehiculo ",this.itemUpdateIndex)
+    console.log("vehiculo ",this.vehiculos[this.itemUpdateIndex])
     this.loading = true;
-    console.log(this.form.value)
     if(!this.form.valid){
       this.form.markAllAsTouched();
       this.loading = false;
@@ -194,9 +195,9 @@ export class MisVehiculosComponent implements OnInit {
         transporte_alimento : this.transporteAlimento?.value,
         imagen : this.vehiculoImagePath
       }
+      console.log(newVehiculo)
       this.vehiculosService.updateVehiculo(newVehiculo, this.vehiculos[this.itemUpdateIndex].id_vehiculo).subscribe(
         (response)=>{
-          console.log(response)
           this.vehiculos[this.itemUpdateIndex].modelo = newVehiculo.modelo;
           this.vehiculos[this.itemUpdateIndex].capacidad = newVehiculo.capacidad;
           this.vehiculos[this.itemUpdateIndex].transporte_alimento = newVehiculo.transporte_alimento;
