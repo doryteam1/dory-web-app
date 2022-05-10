@@ -21,8 +21,9 @@
                 <td>
                     <div class="container-row">
                         <!-- <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i> -->
-                        <span class="container__link link" (click)="openModal(content,'update',i)">Ver detalle</span>
-                        <i class="container__icon bi bi-trash text-danger" (click)="anularGranja(granja.id_granja,i)"></i>
+                        <!--<span class="container__link link" (click)="openModal(content,'update',i)">Ver detalle</span>-->
+                        <i class="container__icon bi bi-pencil text-success me-3"  (click)="openModal(content,'update',i)"></i>
+                        <i class="container__icon bi bi-trash text-danger" (click)="deleteGranja(granja.id_granja,i)"></i>
                     </div>
                 </td>
             </tr>
@@ -41,7 +42,7 @@
     
     <ng-template #content let-modal>
       <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Nueva granja</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nueva granja' : 'Actualizar Granja'}}</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
       <div class="modal-body">
@@ -111,19 +112,6 @@
             </div>
           </div>
 
-          <div class="mb-3">
-            <label for="dateOfBirth">Dirección</label>
-            <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Dirección de la granja" formControlName="direccion">
-              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
-            </div>
-            <div *ngIf="invalid('direccion')" class="container__alert-msg danger-message">
-              <div *ngIf="direccion?.errors?.['required']">
-                  Campo requerido
-              </div>
-            </div>
-          </div>
-          
           <div class="container__box mb-3">
             <span>Departamento</span>
             <div>
@@ -157,21 +145,45 @@
           </div>
 
           <div class="mb-3">
-            <label for="dateOfBirth">Corregimiento</label>
+            <label for="dateOfBirth">Corregimiento o vedera</label>
             <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Corregimiento donde se ubica la granja" formControlName="corregimiento">
+              <input id="productName" class="form-control" placeholder="Corregimiento donde se ubica la granja" formControlName="corregimiento_vereda">
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
             </div>
           </div>
 
           <div class="mb-3">
-            <label for="dateOfBirth">Vereda</label>
+            <label for="dateOfBirth">Dirección</label>
             <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Vereda donde se ubica la granja" formControlName="vereda">
+              <input id="productName" class="form-control" placeholder="Dirección de la granja" formControlName="direccion">
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+            <div *ngIf="invalid('direccion')" class="container__alert-msg danger-message">
+              <div *ngIf="direccion?.errors?.['required']">
+                  Campo requerido
+              </div>
             </div>
           </div>
           
+          <div class="mb-3">
+            <label class="mb-2" for="dateOfBirth">Tipos de infraestructura:</label>
+            <div *ngFor="let data of infraestructurasData; let i=index">
+              <label>
+                <input type="checkbox" [value]="data.id_infraestructura" (change)="onCheckboxChange($event,'arrayTiposInfraestructuras')" [checked]="isChecked('arrayTiposInfraestructuras', data.id_infraestructura)" />
+                {{data.nombre}}
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="mb-2" for="dateOfBirth">Especies cultivadas:</label>
+            <div *ngFor="let data of especiesData; let i=index">
+              <label>
+                <input type="checkbox" [value]="data.id_especie" (change)="onCheckboxChange($event,'arrayEspecies')" [checked]="isChecked('arrayEspecies', data.id_especie)" />
+                {{data.nombre}}
+              </label>
+            </div>
+          </div>
         </form>
       </div>
       <div class="modal-footer">

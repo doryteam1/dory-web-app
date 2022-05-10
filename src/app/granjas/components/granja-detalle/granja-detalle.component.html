@@ -3,9 +3,9 @@
 <app-navbar></app-navbar>
 <div class="container">
 <div class="header-container">
-    <h3 class="header-container__title">{{granja.nombre}}</h3>
+    <h3 class="header-container__title">{{granja?.nombre}}</h3>
     <img class="header-container__icon" src="assets/icons/star-filled.svg">
-    <span class="header-container__rating">{{granja.puntuacion}}</span> <span class="header-container__description">(34 reseñas)  Caimito, Sucre, Colombia</span>
+    <span class="header-container__rating">{{granja?.puntuacion}}</span> <span class="header-container__description">(34 reseñas)  Caimito, Sucre, Colombia</span>
 </div>
 
 
@@ -45,7 +45,7 @@
     <div class="detail-container">
         <img class="detail-container__image" src="assets/images/layers.svg">
         <div class="detail-container__data">
-            <h4 class="detail-container__title">{{granja.area}} (M²)</h4>
+            <h4 class="detail-container__title">{{granja?.area}} (M²)</h4>
             <span class="detail-container__value">250</span>    
         </div>
     </div>
@@ -62,7 +62,7 @@
         <img class="detail-container__image" src="assets/images/worker.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Trabajadores</h4>
-            <span class="detail-container__value">{{granja.numero_trabajadores}} trabajadores en total.</span>
+            <span class="detail-container__value">{{granja?.numero_trabajadores}} trabajadores en total.</span>
         </div>
     </div>
     
@@ -70,7 +70,7 @@
         <img class="detail-container__image" src="assets/images/weigth.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Producción estimada al mes (kg)</h4>
-            <span class="detail-container__value">{{granja.produccion_estimada_mes}} kg</span>    
+            <span class="detail-container__value">{{granja?.produccion_estimada_mes}} kg</span>    
         </div>
     </div>
     

@@ -41,4 +41,16 @@ export class GranjasService {
   updateGranja(id:number,updatedGranja:any){
     return this.https.put("https://dory-api-rest.herokuapp.com/api/granjas/general/"+id,updatedGranja);
   }
+
+  getInfraestructuras(){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/infraestructuras')
+  }
+
+  getEspecies(){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/especies')
+  }
+
+  getGranjaDetalle(id:number){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/granjas/detailed/'+id)
+  }
 }
