@@ -153,9 +153,6 @@ export class PerfilComponent implements OnInit {
     ],
   };
   @ViewChild('fileInput') inputFileDialog!: ElementRef;
-  @ViewChild('grayRef')
-  grayRef!: ElementRef;
-
   fileName: string = '';
   file: any;
   buscarx: string = '';
@@ -3427,7 +3424,7 @@ export class PerfilComponent implements OnInit {
       this.otraAreaExpDesc?.setValue('');
     }
   }
-  infosave:boolean=false
+
   // Metodo para adicionar una marca en el mapa
   addMarker(event: google.maps.MapMouseEvent) {
     const point: google.maps.LatLngLiteral = {
@@ -3468,12 +3465,6 @@ export class PerfilComponent implements OnInit {
             )
             .then((result) => {
               if (result == true) {
-
-                this.infosave=true
-                 setTimeout(() => {
-                   this.infosave = false;
-                 }, 5000);
-
                 this.idDpto?.setValue(idDpto);
                 this.idMunic?.setValue(idMunic);
                 this.direccion?.setValue(response.results[0].formatted_address);

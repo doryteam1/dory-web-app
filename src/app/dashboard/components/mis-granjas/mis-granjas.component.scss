@@ -69,3 +69,52 @@
 .container__btn{
     width: 100px;
 }
+/* mi  estilo */
+.search{
+  display: flex;
+width: 700px;
+}
+ .map  {
+      padding: 0px;
+      }
+.alertclass{
+        padding: 0px ;
+        margin-bottom: 0px;
+      }
+  .footerheadermodal{
+    padding: 10px;
+  }
+@keyframes n-info-tri {
+                0%,
+                to {
+                  transform: rotate(0deg);
+                  transform-origin: center
+                }
+
+                10%,
+                90% {
+                  transform: rotate(2deg)
+                }
+
+                20%,
+                40%,
+                60% {
+                  transform: rotate(-6deg)
+                }
+
+                30%,
+                50%,
+                70% {
+                  transform: rotate(6deg)
+                }
+
+                80% {
+                  transform: rotate(-2deg)
+                }
+              }
+
+              .prefix__n-info-tri {
+                animation: n-info-tri .8s cubic-bezier(.455, .03, .515, .955) both infinite
+              }
+
+/* fin mi estilo */
