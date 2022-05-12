@@ -4,7 +4,7 @@
         <h4 class="container__title">Inicia sesión</h4>
         <img class="container__logo" src="assets/images/logo-no-name.svg">
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="form">
 
             <div class="container-form__box">
                 <span class="container-form__label">Correo electrónico: <span class="container-form__simbol">*</span></span>
@@ -45,7 +45,7 @@
             </div>
 
             <div class="container-box">
-                <button class="container-form__button btn-rounded-blue" [ngClass]="form.invalid ? 'disabled' : ''" type="submit">
+                <button class="container-form__button btn-rounded-blue" [ngClass]="form.invalid ? 'disabled' : ''" type="submit" (click)="onSubmit()">
                     <div class="spinner-border spinner" role="status" *ngIf="loading">
                         <span class="visually-hidden">Loading...</span>
                     </div>
