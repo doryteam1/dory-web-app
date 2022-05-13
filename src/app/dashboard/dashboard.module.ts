@@ -14,14 +14,14 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { MisVehiculosComponent } from './components/mis-vehiculos/mis-vehiculos.component';
 
 
+
 @NgModule({
   declarations: [
     HomeComponent,
     PerfilComponent,
     MisGranjasComponent,
     MisProductosComponent,
-    MisVehiculosComponent,
-
+    MisVehiculosComponent
   ],
   imports: [
     CommonModule,

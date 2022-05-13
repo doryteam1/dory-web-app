@@ -53,4 +53,7 @@ export class GranjasService {
   getGranjaDetalle(id:number){
     return this.https.get('https://dory-api-rest.herokuapp.com/api/granjas/detailed/'+id)
   }
+  updateParcial(id:number,datos:any){
+     return this.https.put("https://dory-api-rest.herokuapp.com/api/granjas/parcial/"+id,datos);
+  }
 }

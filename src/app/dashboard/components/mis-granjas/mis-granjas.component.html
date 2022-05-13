@@ -137,9 +137,9 @@
           <div class="container__box mb-3">
             <span class="container__title">Municipio</span>
             <div>
-                <select class="container__input form-input-text-square" formControlName='id_municipio'>
+                <select  class="container__input form-input-text-square" formControlName='id_municipio'   (change)="idmunicipioselec()">
                     <optgroup label="Escoge un municipio">
-                        <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}</option>
+                        <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio"  >{{municipio.nombre}}</option>
                     </optgroup>
                 </select>
             </div>
@@ -238,14 +238,33 @@
           <div class="ms-auto p-2 bd-highlight" >
             <button  type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
+
         </div>
+          <!-- no ha guardado la ubicacion alerta -->
+          <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf="guarlatlog" role="alert">
+            <div class="p-2 bd-highlight">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+                <path class="prefix__n-info-tri" style="animation-delay:1s" stroke="#0A0A30" stroke-width="1.5"
+                  d="M11.134 6.844a1 1 0 011.732 0l5.954 10.312a1 1 0 01-.866 1.5H6.046a1 1 0 01-.866-1.5l5.954-10.312z" />
+                <g class="prefix__n-info-tri">
+                  <path stroke="#265BFF" stroke-linecap="round" stroke-width="1.5" d="M12 10.284v3.206" />
+                  <circle cx="12" cy="15.605" r=".832" fill="#265BFF" />
+                </g>
+              </svg>
+            </div>
+            <div class="p-2 bd-highlight">
+              No se ha podido guardar su ubicacion, por intente nuevamente
+            </div>
+            <div class="ms-auto p-2 bd-highlight">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          </div>
           <google-map
            width="800px"
           height="380px"
           class="modal-dialog-centered"
-
-        [options]="options"
-            (mapClick)="addMarker($event)">
+          [options]="options"
+          (mapClick)="addMarker($event)">
             <map-marker [position]="markerPosition" [options]="markerOptions" title="Title"></map-marker>
             <map-polyline [path]="vertices" [options]="optionPoli">
             </map-polyline>

@@ -31,8 +31,8 @@ export class ConfirmModalMapComponent implements OnInit {
     this._modalService.close(true)
   }
 
-  public dismiss(){
+  /* public dismiss(){
     this._modalService.dismiss()
-  }
+  } */
 }
 
