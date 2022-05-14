@@ -279,7 +279,7 @@ idmunicipioselec(){
     .then(
       (result)=>{
         if(result == true){
-          this.granjaService.anularGranja(idGranja).subscribe(
+          this.granjaService.deleteGranja(idGranja).subscribe(
             (response: any) => {
               this.granjas.splice(i, 1);
             },err=>{
