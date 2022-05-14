@@ -34,8 +34,8 @@ export class GranjasService {
     return this.https.get('https://dory-api-rest.herokuapp.com/api/granjas/user/'+userId)
   }
 
-  anularGranja(idGranja:number){
-    return this.https.put('https://dory-api-rest.herokuapp.com/api/granjas/anular/'+idGranja, null)
+  deleteGranja(idGranja:number){
+    return this.https.delete('https://dory-api-rest.herokuapp.com/api/granjas/eliminar/'+idGranja)
   }
 
   updateGranja(id:number,updatedGranja:any){
