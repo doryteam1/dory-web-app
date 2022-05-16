@@ -1,11 +1,11 @@
 <app-notification-bar></app-notification-bar>
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="!showNotFound && !showError">
 <div class="header-container">
     <h3 class="header-container__title">{{granja?.nombre}}</h3>
     <img class="header-container__icon" src="assets/icons/star-filled.svg">
-    <span class="header-container__rating">{{granja?.puntuacion}}</span> <span class="header-container__description">(34 reseñas)  Caimito, Sucre, Colombia</span>
+    <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span> <span class="header-container__description">  ({{granja?.count_resenas}} reseñas)  {{granja.nombre_municipio}}, Sucre, Colombia</span>
 </div>
 
 
@@ -31,11 +31,11 @@
 
 <div class="proprietary-container">
     <div class="proprietary-container__info">
-        <h3 class="proprietary-container__title">Propietario - Rafael Hernandez Muñoz </h3>
-        <span class="proprietary-container__description1">N° Celular  3021234567 </span>
-        <span class="proprietary-container__description2">Cra 23A # 12 - 45 </span>
+        <h3 class="proprietary-container__title">Propietario - {{granja?.propietarios[0]?.nombre_completo}} </h3>
+        <span class="proprietary-container__description1">N° Celular  {{granja?.propietarios[0]?.celular}} </span>
+        <span class="proprietary-container__description2">{{granja?.propietarios[0]?.direccion}} </span>
     </div>
-    <img class="proprietary-container__image" src="https://external-preview.redd.it/jHYCyNWB8XTKSeJ0lC8yT-Ik1B4AStiPptk3ArolSTw.jpg?auto=webp&s=39997f7c4112579377c8ceb547d381ac1218920c">    
+    <img class="proprietary-container__image" src="granja?.propietarios[0]?.foto">    
 </div>
 
 <div class="line">
@@ -45,8 +45,8 @@
     <div class="detail-container">
         <img class="detail-container__image" src="assets/images/layers.svg">
         <div class="detail-container__data">
-            <h4 class="detail-container__title">{{granja?.area}} (M²)</h4>
-            <span class="detail-container__value">250</span>    
+            <h4 class="detail-container__title">area (M²)</h4>
+            <span class="detail-container__value">{{granja?.area}}</span>    
         </div>
     </div>
     
@@ -54,7 +54,7 @@
         <img class="detail-container__image" src="assets/images/fish.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Especies cultivadas</h4>
-            <span class="detail-container__value">cachama, bocachico,  mojarra, tilapia  roja</span>
+            <span class="detail-container__value" *ngFor="let especie of granja.especies">{{especie.nombre}}</span>
         </div>
     </div>
     
@@ -78,9 +78,27 @@
         <img class="detail-container__image" src="assets/images/wave.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Tipo de infraestructura</h4>
-            <span class="detail-container__value">Estanques -  Piletas de cemento - Jaula</span>        
+            <span class="detail-container__value" *ngFor="let infraestructura of granja.infraestructuras">{{infraestructura.nombre}}</span>        
         </div>
     </div>    
 </div>
+
+<div class="search-container" *ngIf="showNotFound">
+  <div class="search-container__box">
+      <img class="search-container__image" src="assets/images/searching.svg">
+      <h3>No se han encontrado resultados</h3>
+      <p>No encontramos la granja solicitada</p>
+  </div>
+</div>
+
+<div class="search-container" *ngIf="showError">
+    <div class="search-container__box">
+        <img class="search-container__image2" src="assets/images/problem_solving.svg">
+        <h3>{{errorMessage}}</h3>
+        <p>No pudimos recuperar la granja solicitada :(</p>
+    </div>
+</div>
+
+
 <app-footer></app-footer>
 <app-floating-btn-auto-up></app-floating-btn-auto-up>

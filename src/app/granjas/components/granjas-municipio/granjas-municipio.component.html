@@ -53,7 +53,7 @@
 <div class="granjas-container">
         <div class="cards-container overflow-auto" *ngIf="granjas.length >= 1">
             <div class="card" *ngFor="let granja of granjas; index as i" (mouseover)="onMouseCard(i)">
-                <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}" routerLink="{{granjaDetailRoute}}">
+                <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}" (click)="navigate(granja.id_granja)">
                 
                 <h3 class="card__title" routerLink="/granjas/municipio/detalle">{{granja.nombre}}</h3>
                 <p class="card__description" routerLink="/granjas/municipio/detalle">

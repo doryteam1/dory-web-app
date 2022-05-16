@@ -167,3 +167,24 @@
     margin: 0 auto;
     margin-top: 100px;
 }
+
+.search-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.search-container__box{
+    text-align: center;
+}
+
+.search-container__image{
+    width:1024px;
+    height: 370px;
+}
+
+.search-container__image2{
+    width:423px;
+    height: 370px;
+}

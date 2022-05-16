@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GranjasService } from '../../services/granjas.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { environment } from 'src/environments/environment';
@@ -40,7 +40,11 @@ export class GranjasMunicipioComponent implements OnInit {
       nombre : ''
     }
   }
-  constructor(httpClient: HttpClient, private granjasService:GranjasService, private activatedRoute:ActivatedRoute, private placesService:PlacesService) {
+  constructor(httpClient: HttpClient, 
+              private granjasService:GranjasService, 
+              private activatedRoute:ActivatedRoute, 
+              private placesService:PlacesService,
+              private router:Router) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
         .pipe(
           map(() => true),
@@ -54,7 +58,6 @@ export class GranjasMunicipioComponent implements OnInit {
     console.log(this.activatedRoute.snapshot.url[1])
     this.granjasService.getGranjasMunicipio(Number(this.activatedRoute.snapshot.url[1])).subscribe(
       (response)=>{
-        console.log("Granjas por municipio "+ this.activatedRoute.snapshot.url[1]+ " " + JSON.stringify(response.data))
         this.granjas = response.data;
         this.extractLatLong();
       }
@@ -100,5 +103,9 @@ export class GranjasMunicipioComponent implements OnInit {
     this.infoWindow.open(marker);
     this.selectedGranja.nombre = this.granjas[index].nombre;
     //this.selectedGranja.propietario.nombre = this.granjas[index].nombre;
+  }
+
+  navigate(id:number){
+    this.router.navigateByUrl('/granjas/municipio/detalle/'+id)
   }
 }

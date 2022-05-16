@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { convertTypeAcquisitionFromJson } from 'typescript';
 import { GranjasService } from '../../services/granjas.service';
 
 @Component({
@@ -8,15 +10,32 @@ import { GranjasService } from '../../services/granjas.service';
 })
 export class GranjaDetalleComponent implements OnInit {
   granja:any;
-
-  constructor(private granjasService:GranjasService) { }
+  showNotFound:boolean = false;
+  showError:boolean = false;
+  selectedGranjaId:number = -1;
+  errorMessage = '';
+  constructor(private granjasService:GranjasService, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.granjasService.getGranja(3).subscribe(
+    this.selectedGranjaId = Number(this.activatedRoute.snapshot.paramMap.get('id')!);
+    this.granjasService.getGranjaDetalle(this.selectedGranjaId).subscribe(
       (response)=>{
         if(response.data.length > 0){
           this.granja = response.data[0];
-          console.log("granja ",this.granja);
+          this.showError = false;
+          this.showNotFound = false;
+        }else{
+          this.showNotFound = true;
+          this.showError = false;
+        }
+      },err=>{
+        this.showNotFound = false;
+        this.showError = false;
+        if(err.status == 404){
+          this.showNotFound = true;
+        }else{
+          this.showError = true;
+          this.errorMessage = 'Error inesperado';
         }
       }
     );

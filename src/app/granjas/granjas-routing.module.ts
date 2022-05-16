@@ -21,7 +21,7 @@ const routes: Routes = [
     component:GranjaDetalleComponent
   },
   {
-    path:'municipio/:id/detalle',
+    path:'municipio/detalle/:id',
     component:GranjaDetalleComponent
   }
 ];
