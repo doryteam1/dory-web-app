@@ -1,7 +1,7 @@
 import { Component, OnInit ,  ElementRef,
   ViewChild, } from '@angular/core';
 import { FormControl, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { DomSanitizer} from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { MapGeocoder } from '@angular/google-maps';
 import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { vertices } from '../../../global/constants';
+const _ = require('lodash');
 
 @Component({
   selector: 'app-mis-granjas',
@@ -23,10 +24,17 @@ import { vertices } from '../../../global/constants';
 })
 export class MisGranjasComponent implements OnInit {
   @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
+  @ViewChild('map') map: any;
   granjas:Array<any> = [];
   showNotFound:boolean = false;
   indicegranja!: number;
   guarlatlog: boolean=false;
+  noexistendatos:boolean=false
+  buscarx: string = '';
+  fueraDirecion: boolean = false;
+  loadingseart:boolean=false
+  borrarseart:boolean=false
+  valorbuscarx: string = '';
   form:FormGroup = new FormGroup({
     nombre_granja:new FormControl('',[Validators.required]),
     area:new FormControl(0,[Validators.required]),
@@ -55,6 +63,22 @@ export class MisGranjasComponent implements OnInit {
   infraestructurasData:Array<any> = [];
   especiesData:Array<any> = [];
   vertices = vertices;
+    options: google.maps.MapOptions = {
+    scrollwheel: true,
+    center: { lat: 0, lng: 0},
+  };
+  markerPosition: google.maps.LatLngLiteral = {
+    lat: 0,
+    lng: 0,
+  };
+  markerOptions: google.maps.MarkerOptions = { draggable: false };
+  optionPoli: google.maps.PolylineOptions = {
+    strokeColor: '#494949',
+    strokeOpacity: 0.8,
+    strokeWeight: 3,
+    visible: true,
+  };
+
   constructor(
     private granjaService: GranjasService,
     private modalService: NgbModal,
@@ -109,20 +133,6 @@ export class MisGranjasComponent implements OnInit {
         console.log(err)
       }
     )
-    /* mi codigo */
-    const sucreColombia = {
-      north: 10.184454,
-      south: 8.136442,
-      west: -75.842392,
-      east: -74.324908,
-    };
-    this.options = {
-      restriction: {
-        latLngBounds: sucreColombia,
-        strictBounds: false,
-      },
-    };
-    /* fin */
   }
 
   initForm(){
@@ -151,14 +161,13 @@ idmunicipioselec(){
          (response) => {
               if (response.data != 0) {
               if (this.form.get('id_municipio')?.value !== this.granjas[this.itemUpdateIndex ].id_municipio) {
-                console.log("id no es igual")
-                console.log(this.latitud?.value)
-                console.log(this.longitud?.value)
                 this.latitud?.setValue(response.data[0].latitud);
                 this.longitud?.setValue(response.data[0].longitud);
+                 this.direccion?.setValue(0);
               }else{
                 this.latitud?.setValue(this.granjas[this.itemUpdateIndex].latitud);
                 this.longitud?.setValue(this.granjas[this.itemUpdateIndex].longitud);
+                this.direccion?.setValue(this.granjas[this.itemUpdateIndex].direccion);
               }
            }
           },
@@ -188,6 +197,7 @@ idmunicipioselec(){
   }
 /* fin */
   openModal(content:any, action:string, i?:number){
+ console.log(this.granjas[this.granjas.length-1])
     this.modalMode = action;
     this.form.reset()
     this.initForm();
@@ -196,7 +206,6 @@ idmunicipioselec(){
       this.granjaService.getGranjaDetalle(this.granjas[i!].id_granja).subscribe(
         (granja)=>{
           let granjaDetalle = granja.data[0];
-          console.log(granjaDetalle)
           this.nombreGranja?.setValue(granjaDetalle.nombre);
           this.area?.setValue(granjaDetalle.area);
           this.numeroTrabajadores?.setValue(granjaDetalle.numero_trabajadores);
@@ -255,10 +264,13 @@ idmunicipioselec(){
 
     this.granjaService.addGranja(this.form.getRawValue()).subscribe(
       (response) => {
+        let nuevaGranjainsertId=_.clone( this.form.getRawValue())
+        nuevaGranjainsertId.id_granja=response.body.insertId
+        nuevaGranjainsertId.nombre=this.form.getRawValue().nombre_granja
         this.loading = false;
+        this.granjas.push( nuevaGranjainsertId)
         this.modalService.dismissAll();
-        window.location.reload();
-        console.log(response);
+        this.verMap(this.granjas.length-1)
       },err => {
         this.loading = false;
         console.log(err);
@@ -292,6 +304,7 @@ idmunicipioselec(){
   }
 
   updateGranja() {
+
     this.loading = true;
     if(!this.form.valid){
       console.log("Not valid!")
@@ -309,6 +322,7 @@ idmunicipioselec(){
         (response) => {
           console.log(response);
           this.loading = false;
+
           window.location.reload();
           this.modalService.dismissAll();
         },
@@ -453,59 +467,73 @@ idmunicipioselec(){
   }
   /* andres mi codigo */
 
-  buscarx: string = '';
-  fueraDirecion: boolean = false;
-  options: google.maps.MapOptions = {
-    scrollwheel: true,
-    center: { lat: 0, lng: 0},
-   /*  zoom: 1, */
-  };
-  markerPosition: google.maps.LatLngLiteral = {
-    lat: 0,
-    lng: 0,
-  };
-  markerOptions: google.maps.MarkerOptions = { draggable: false };
-  optionPoli: google.maps.PolylineOptions = {
-    strokeColor: '#494949',
-    strokeOpacity: 0.8,
-    strokeWeight: 3,
-    visible: true,
-  };
-
 
   verMap(i?: number) {
     this.indicegranja = i!
+    this.modalService.open(this.map, { size: 'xl',centered: true }).result.then((result) => {
+         console.log("se cerro modal ",result)
+        } ).catch((err) => {
+        console.log(err);
+      });
+    const sucreColombia = {
+      north: 10.184454,
+      south: 8.136442,
+      west: -75.842392,
+      east: -74.324908,
+    };
     this.markerPosition = {
       lat: parseFloat(this.granjas[i!].latitud),
       lng: parseFloat(this.granjas[i!].longitud),
     };
-    this.options = {
+
+       this.options = {
       center: {
         lat: parseFloat(this.granjas[i!].latitud),
         lng: parseFloat(this.granjas[i!].longitud),
       },
-      zoom: 12,
+      restriction: {
+        latLngBounds: sucreColombia,
+        strictBounds: false,
+      },
+      zoom: 14,
       scrollwheel: true,
     };
     this.buscarx = '';
   }
 
   buscar() {
+    this.loadingseart=true
     const valor = this.buscarx;
+    this.valorbuscarx=this.buscarx
     if (valor.trim().length == 0) {
+       this.loadingseart=false
       return;
     }
+
     this.geocoder
       .geocode({
         address: `${valor}`,
       })
       .subscribe(({ results }) => {
-        const point: google.maps.LatLngLiteral = {
+        console.log(results)
+ if (results.length === 0 ) {
+   this.loadingseart=false
+   this.noexistendatos=true
+   this.fueraDirecion=false
+   setTimeout(() => {
+     this.noexistendatos=false
+   }, 10000);
+        }else{
+          this.loadingseart=false
+          this.fueraDirecion=false
+           const point: google.maps.LatLngLiteral = {
           lat: results[0].geometry.location.toJSON().lat!,
           lng: results[0].geometry.location.toJSON().lng!,
         };
+
         this.places.geocodeLatLng(point).then((response) => {
           if (response.status == 'OK') {
+
             let result = response.results[0].address_components;
             let index = result.findIndex((element) =>
               element.types.includes('administrative_area_level_1')
@@ -518,6 +546,7 @@ idmunicipioselec(){
               (element) => element.nombre_departamento == dpto
             );
             if (dpto == 'Sucre') {
+
               if (
                 results[0].geometry.location.toJSON().lat! &&
                 results[0].geometry.location.toJSON().lng!
@@ -529,21 +558,36 @@ idmunicipioselec(){
                   },
                   zoom: 13,
                 };
-                /*  this.markerPosition = {
-                  lat: results[0].geometry.location.toJSON().lat!,
-                  lng: results[0].geometry.location.toJSON().lng!,
-                };*/
               }
             } else {
+               this.loadingseart=false
               this.fueraDirecion = true;
+               this.noexistendatos=false
               setTimeout(() => {
                 this.fueraDirecion = false;
               }, 5000);
-              this.buscarx = '';
             }
           }
-        });
-      });
+        }
+        )
+        }
+      }
+
+      )
+  }
+  borrarBusqueda(){
+     this.buscarx = ''
+     this.borrarseart=false
+     this.fueraDirecion = false;
+     this.noexistendatos=false
+  }
+   onKey(event:any){
+    if (event.target.value !== '' ) {
+      this.borrarseart=true
+    }else if(event.target.value == ''){
+
+     this.borrarseart=false
+    }
   }
   // Metodo para adicionar una marca en el mapa
   addMarker(event: google.maps.MapMouseEvent) {
@@ -632,6 +676,7 @@ idmunicipioselec(){
             })
             .catch((result) => {});
         } else {
+           this.noexistendatos=false
           this.fueraDirecion = true;
           setTimeout(() => {
             this.fueraDirecion = false;
@@ -640,26 +685,5 @@ idmunicipioselec(){
       }
     });
   }
- /*  addlatlog() {
-    console.log(this.form.getRawValue())
-    this.granjaService
-      .updateGranja(
-        this.granjas[this.indicegranja].id_granja,
-        this.form.getRawValue()
-      )
-      .subscribe(
-        (response) => {
-          console.log(response);
-          window.location.reload();
-        },
-        (err) => {
-          this.guarlatlog=true
-          setTimeout(() => {
-            this.guarlatlog=false
-          }, 5000);
 
-          console.log(err);
-        }
-      );
-  } */
 }

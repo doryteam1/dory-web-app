@@ -70,10 +70,57 @@
     width: 100px;
 }
 /* mi  estilo */
-.search{
-  display: flex;
-width: 700px;
+
+.button_close{
+  margin-left: 60px;
+  margin-right: 20px;
+
 }
+
+.search {
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  background-origin: padding-box;
+  border-radius: 133px;
+  width: 90%;
+  height: 45px;
+  border: 0.5px solid var(--gris4);
+  -webkit-box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
+  box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
+
+
+}
+.container__input2 {
+  background-size: 20px;
+  background-color: var(--white);
+  background-origin: padding-box;
+  margin-left: 10px;
+  border-radius: 133px;
+  width: 89%;
+  height: 45px;
+  border-left: 25px solid var(--white);
+  border-right: 1px solid var(--white);
+  border-bottom: 0px solid var(--white);
+  border-top: 0px solid var(--white);
+  outline: none;
+}
+
+.img-search {
+  font-size: 2em;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: rgb(158, 158, 167);
+  cursor: pointer
+}
+.img-x {
+  font-size: 2em;
+  margin-right: 12px;
+  color: rgb(158, 158, 167);
+  padding-left: 5px;
+  cursor: pointer
+}
+
  .map  {
       padding: 0px;
       }
@@ -116,5 +163,19 @@ width: 700px;
               .prefix__n-info-tri {
                 animation: n-info-tri .8s cubic-bezier(.455, .03, .515, .955) both infinite
               }
+@keyframes loader4 {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0)
+  }
 
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg)
+  }
+}
 /* fin mi estilo */
+/* prueba estilo */
+
+
+
