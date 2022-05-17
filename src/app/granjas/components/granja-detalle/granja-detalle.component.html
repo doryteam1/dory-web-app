@@ -2,12 +2,13 @@
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
 <div class="container" *ngIf="!showNotFound && !showError">
+
+<div class="container__box">
 <div class="header-container">
     <h3 class="header-container__title">{{granja?.nombre}}</h3>
     <img class="header-container__icon" src="assets/icons/star-filled.svg">
     <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span> <span class="header-container__description">  ({{granja?.count_resenas}} reseñas)  {{granja.nombre_municipio}}, Sucre, Colombia</span>
 </div>
-
 
 <div class="photo-container">
     <div class="buttons-container1">
@@ -19,14 +20,14 @@
         <a class="buttons-container__description" href="#">Guardar</a>     
     </div>
     
-    <img class="photo-container__photo1" src="https://http2.mlstatic.com/D_NQ_NP_986083-MCO43182973421_082020-V.jpg">
-    <img class="photo-container__photo2" src="https://i.pinimg.com/originals/91/19/86/9119869eacbeb1ab2ab3b305527788a4.jpg">
-    <img class="photo-container__photo3" src="https://sistemasacuicolas.com/wp-content/uploads/2017/04/anserma-risaralda-coma-pez-1.jpg">
-    <img class="photo-container__photo4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1PLjy3iQLy2wTtKUWR96IV3dEc76L849WvzOirxxdDcd7TJcr-qdrbprjydoB0dMqCAg&usqp=CAU">
-    <img class="photo-container__photo5" src="http://cdn.shopify.com/s/files/1/0400/8784/6957/articles/Produccion_acuicultura_en_mexico.png?v=1601667383">    
+    <img class="photo-container__photo1" [src]="granja?.fotos[0] ? granja?.fotos[0] : 'https://admin.moodyyc.com/img/no-image.png'">
+    <img class="photo-container__photo2" [src]="granja.fotos[1] ? granja.fotos[1] : 'https://admin.moodyyc.com/img/no-image.png'">
+    <img class="photo-container__photo3" [src]="granja?.fotos[2] ? granja?.fotos[2] : 'https://admin.moodyyc.com/img/no-image.png'">
+    <img class="photo-container__photo4" [src]="granja?.fotos[3] ? granja?.fotos[3] : 'https://admin.moodyyc.com/img/no-image.png'">
+    <img class="photo-container__photo5" [src]="granja?.fotos[4] ? granja?.fotos[4] : 'https://admin.moodyyc.com/img/no-image.png'">    
     <button class="photo-container__button btn-square-blue">Ver todas las fotos</button>
 </div>
-
+</div>
 
 
 <div class="proprietary-container">
@@ -35,14 +36,14 @@
         <span class="proprietary-container__description1">N° Celular  {{granja?.propietarios[0]?.celular}} </span>
         <span class="proprietary-container__description2">{{granja?.propietarios[0]?.direccion}} </span>
     </div>
-    <img class="proprietary-container__image" src="granja?.propietarios[0]?.foto">    
+    <img class="proprietary-container__image" [src]="granja?.propietarios[0]?.foto">    
 </div>
 
 <div class="line">
     
 </div>
 
-    <div class="detail-container">
+    <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/images/layers.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">area (M²)</h4>

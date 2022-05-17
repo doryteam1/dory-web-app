@@ -58,7 +58,7 @@
     grid-column-gap: 10px;
     column-gap: 18px;
     row-gap: 7px;
-    margin-top: 48px;
+    margin-top: 15px;
 }
 
 .photo-container__photo1{
@@ -66,12 +66,14 @@
     width: 546px;
     height: 386px;
     border-radius: 10px 0px 0px 10px;
+    object-fit: cover;
 }
 
 .photo-container__photo2{
     grid-area: photo2;
     width: 269px;
     height: 190px;
+    object-fit: cover;
 }
 
 .photo-container__photo3{
@@ -79,12 +81,14 @@
     width: 269px;
     height: 190px;
     border-radius: 0px 5px 5px 0px;
+    object-fit: cover;
 }
 
 .photo-container__photo4{
     grid-area:photo4;
     width: 269px;
-    height: 190px;  
+    height: 190px;
+    object-fit: cover;
 }
 
 .photo-container__photo5{
@@ -92,6 +96,7 @@
     width: 269px;
     height: 190px;  
     border-radius: 0px 5px 5px 0px;
+    object-fit: cover;  
 }
 
 .photo-container__button{
@@ -137,12 +142,13 @@
     height: 70px;
     border-radius: 50%;
     align-self: center;
+    object-fit: cover;
 }
 .detail-container{
     display: flex;
     margin-left: 0px;
     margin-top:30px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .detail-container__data{
@@ -164,8 +170,10 @@
 }
 
 .container{
-    margin: 0 auto;
+    //margin: 0 auto;
     margin-top: 100px;
+    display: flex;
+    flex-direction: column;
 }
 
 .search-container{
@@ -187,4 +195,8 @@
 .search-container__image2{
     width:423px;
     height: 370px;
+}
+
+.container__box{
+    align-self: center;
 }
