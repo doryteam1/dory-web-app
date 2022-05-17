@@ -10,11 +10,13 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { GranjasService } from './services/granjas.service';
 import { HttpsService } from '../services/https.service';
 import { SharedModule } from '../shared/shared.module';
+import { GranjaGalleryComponent } from './components/granja-gallery/granja-gallery.component';
 @NgModule({
   declarations: [
     GranjasComponent,
     GranjasMunicipioComponent,
-    GranjaDetalleComponent
+    GranjaDetalleComponent,
+    GranjaGalleryComponent
   ],
   imports: [
     CommonModule,

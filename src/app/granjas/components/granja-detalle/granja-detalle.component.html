@@ -1,7 +1,7 @@
 <app-notification-bar></app-notification-bar>
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
-<div class="container" *ngIf="!showNotFound && !showError">
+<div class="container" *ngIf="!showNotFound && !showError && !showGallery">
 
 <div class="container__box">
 <div class="header-container">
@@ -25,7 +25,7 @@
     <img class="photo-container__photo3" [src]="granja?.fotos[2] ? granja?.fotos[2] : 'https://admin.moodyyc.com/img/no-image.png'">
     <img class="photo-container__photo4" [src]="granja?.fotos[3] ? granja?.fotos[3] : 'https://admin.moodyyc.com/img/no-image.png'">
     <img class="photo-container__photo5" [src]="granja?.fotos[4] ? granja?.fotos[4] : 'https://admin.moodyyc.com/img/no-image.png'">    
-    <button class="photo-container__button btn-square-blue">Ver todas las fotos</button>
+    <button class="photo-container__button btn-square-blue" (click)="showGallery = !showGallery">Ver todas las fotos</button>
 </div>
 </div>
 
@@ -100,6 +100,6 @@
     </div>
 </div>
 
-
+<app-granja-gallery *ngIf="showGallery" [photos]="granja?.fotos"></app-granja-gallery>
 <app-footer></app-footer>
 <app-floating-btn-auto-up></app-floating-btn-auto-up>

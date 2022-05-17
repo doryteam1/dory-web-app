@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { convertTypeAcquisitionFromJson } from 'typescript';
 import { GranjasService } from '../../services/granjas.service';
 
 @Component({
@@ -14,6 +13,8 @@ export class GranjaDetalleComponent implements OnInit {
   showError:boolean = false;
   selectedGranjaId:number = -1;
   errorMessage = '';
+  showGallery:boolean = false;
+  
   constructor(private granjasService:GranjasService, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
