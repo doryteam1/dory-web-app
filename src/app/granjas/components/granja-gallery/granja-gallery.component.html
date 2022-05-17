@@ -1,1 +1,157 @@
-{{photos}}
+<!-- Gallery -->
+<div class="row mt-3">
+    <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+      <img
+        [src]="photos[0]"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt="Boat on Calm Water"
+      />
+  
+      <img
+        [src]="photos[1]"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt="Wintry Mountain Landscape"
+      />
+    </div>
+  
+    <div class="col-lg-4 mb-4 mb-lg-0">
+      <img
+        [src]="photos[2]"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt="Mountains in the Clouds"
+      />
+  
+      <img
+        [src]="photos[3]"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt="Boat on Calm Water"
+      />
+    </div>
+  
+    <div class="col-lg-4 mb-4 mb-lg-0">
+      <img
+        [src]="photos[4]"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt="Waves at Sea"
+      />
+  
+      <img
+        [src]="photos[5]"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt="Yosemite National Park"
+      />
+    </div>
+  </div>
+  <!-- Gallery -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</button>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Carousel wrapper -->
+<div
+id="carouselBasicExample"
+class="carousel slide carousel-fade"
+data-mdb-ride="carousel"
+>
+<!-- Indicators -->
+<div class="carousel-indicators">
+  <button
+    type="button"
+    data-mdb-target="#carouselBasicExample"
+    data-mdb-slide-to="0"
+    class="active"
+    aria-current="true"
+    aria-label="Slide 1"
+  ></button>
+  <button
+    type="button"
+    data-mdb-target="#carouselBasicExample"
+    data-mdb-slide-to="1"
+    aria-label="Slide 2"
+  ></button>
+  <button
+    type="button"
+    data-mdb-target="#carouselBasicExample"
+    data-mdb-slide-to="2"
+    aria-label="Slide 3"
+  ></button>
+</div>
+
+<!-- Inner -->
+<div class="carousel-inner">
+  <!-- Single item -->
+  <div class="carousel-item active">
+    <img
+      [src]=""
+      class="d-block w-100"
+      alt="Sunset Over the City"
+    />
+    <div class="carousel-caption d-none d-md-block">
+      <h5>First slide label</h5>
+      <p>
+        Nulla vitae elit libero, a pharetra augue mollis interdum.
+      </p>
+    </div>
+  </div>
+
+  <!-- Single item -->
+  <div class="carousel-item" *ngFor="let photo of photos">
+    <img
+      [src]="photos[0]"
+      class="d-block w-100"
+      alt="Canyon at Nigh"
+    />
+    <div class="carousel-caption d-none d-md-block">
+      <h5>Second slide label</h5>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </p>
+    </div>
+  </div>
+</div>
+<!-- Inner -->
+
+<!-- Controls -->
+<button
+  class="carousel-control-prev"
+  type="button"
+  data-mdb-target="#carouselBasicExample"
+  data-mdb-slide="prev"
+>
+  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  <span class="visually-hidden">Previous</span>
+</button>
+<button
+  class="carousel-control-next"
+  type="button"
+  data-mdb-target="#carouselBasicExample"
+  data-mdb-slide="next"
+>
+  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  <span class="visually-hidden">Next</span>
+</button>
+</div>
+<!-- Carousel wrapper -->
+Multi-item carousel
+By using a combination of available classes you can create a carousel with multiple items on each slide.
+
+If you need more advanced options and examples of multi-item carousel have a look at Multi-item Carousel Docs
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Send message</button>
+        </div>
+      </div>
+    </div>
+  </div>
