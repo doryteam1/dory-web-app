@@ -2,13 +2,13 @@
 <div class="row mt-3">
     <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
       <img
-        [src]="photos[0]"
+        [src]="photos[0] ? photos[0] : 'https://admin.moodyyc.com/img/no-image.png'"
         class="w-100 shadow-1-strong rounded mb-4"
         alt="Boat on Calm Water"
       />
   
       <img
-        [src]="photos[1]"
+        [src]="photos[1] ? photos[1] : 'https://admin.moodyyc.com/img/no-image.png'"
         class="w-100 shadow-1-strong rounded mb-4"
         alt="Wintry Mountain Landscape"
       />
@@ -16,13 +16,13 @@
   
     <div class="col-lg-4 mb-4 mb-lg-0">
       <img
-        [src]="photos[2]"
+        [src]="photos[2] ? photos[2] : 'https://admin.moodyyc.com/img/no-image.png'"
         class="w-100 shadow-1-strong rounded mb-4"
         alt="Mountains in the Clouds"
       />
   
       <img
-        [src]="photos[3]"
+        [src]="photos[3] ? photos[3] : 'https://admin.moodyyc.com/img/no-image.png'"
         class="w-100 shadow-1-strong rounded mb-4"
         alt="Boat on Calm Water"
       />
@@ -30,13 +30,13 @@
   
     <div class="col-lg-4 mb-4 mb-lg-0">
       <img
-        [src]="photos[4]"
+        [src]="photos[4] ? photos[4] : 'https://admin.moodyyc.com/img/no-image.png'"
         class="w-100 shadow-1-strong rounded mb-4"
         alt="Waves at Sea"
       />
   
       <img
-        [src]="photos[5]"
+        [src]="photos[5] ? photos[5] : 'https://admin.moodyyc.com/img/no-image.png'"
         class="w-100 shadow-1-strong rounded mb-4"
         alt="Yosemite National Park"
       />
