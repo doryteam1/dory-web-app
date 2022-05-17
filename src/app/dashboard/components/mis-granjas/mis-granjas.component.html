@@ -24,7 +24,10 @@
                         <!--<span class="container__link link" (click)="openModal(content,'update',i)">Ver detalle</span>-->
                         <i class="container__icon bi bi-pencil text-success me-2"  (click)="openModal(content,'update',i)" ngbTooltip="Crear y actualizar"></i>
                         <i class="container__icon bi bi-trash text-danger me-2" (click)="deleteGranja(granja.id_granja,i)" ngbTooltip="Eliminar"></i>
-                        <i class="container__icon bi bi-geo-alt-fill" (click)="verMap(i)"  ngbTooltip="Mi ubicación"></i>
+                        <i class="container__icon bi bi-geo-alt-fill text-danger me-2" (click)="verMap(i)"  ngbTooltip="Mi ubicación"></i>
+                        <i class="container__icon bi bi-images text-success" ngbTooltip="Actualizar fotos" (click)="openAddFileDialog()">
+                          <input #fileInput type="file" name="resume" (change)='photosUpdate($event, i)' hidden multiple>
+                        </i>
                     </div>
                 </td>
             </tr>

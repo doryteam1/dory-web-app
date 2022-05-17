@@ -25,6 +25,7 @@ const _ = require('lodash');
 export class MisGranjasComponent implements OnInit {
   @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
   @ViewChild('map') map: any;
+  @ViewChild('fileInput') inputFileDialog!: ElementRef;
   granjas:Array<any> = [];
   showNotFound:boolean = false;
   indicegranja!: number;
@@ -62,6 +63,7 @@ export class MisGranjasComponent implements OnInit {
   apiLoaded: Observable<boolean>;
   infraestructurasData:Array<any> = [];
   especiesData:Array<any> = [];
+  authUserId:number = -1;
   vertices = vertices;
     options: google.maps.MapOptions = {
     scrollwheel: true,
@@ -104,7 +106,7 @@ export class MisGranjasComponent implements OnInit {
   ngOnInit(): void {
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
-
+    this.authUserId = payload.sub;
     this.granjaService.getGranjaByUserId(payload.sub).subscribe(
       (respose) => {
         this.granjas = respose.data;
@@ -686,4 +688,37 @@ idmunicipioselec(){
     });
   }
 
+  async photosUpdate(event:any, index:number){
+    let fileNameBase = '/granjas/User'+this.authUserId+"/granja"+this.granjas[index].id_granja+"/foto";
+    let files:Array<any> = event.target.files;
+    let arrayFotos:Array<any> = []; 
+    for(let i=0; i<files.length; i++){
+      console.log(fileNameBase+JSON.stringify(i))
+      await this.storage
+      .cloudStorageTask(fileNameBase+JSON.stringify(i), files[i])
+      .percentageChanges()
+      .toPromise();
+      
+      let downloadUrl = await this.storage
+      .cloudStorageRef(fileNameBase+JSON.stringify(i))
+      .getDownloadURL()
+      .toPromise();
+
+      arrayFotos.push(downloadUrl);
+    }
+
+    console.log("arrayFotos ",arrayFotos)
+    this.granjaService.updatePhotos(this.granjas[index].id_granja,{arrayFotos: arrayFotos}).subscribe(
+      (response)=>{
+        console.log(response)
+      },err=>{
+        console.log(err)
+      }
+    )
+  }
+
+  openAddFileDialog() {
+    const element: HTMLElement = this.inputFileDialog.nativeElement;
+    element.click();
+  }
 }
