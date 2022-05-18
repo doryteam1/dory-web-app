@@ -25,9 +25,7 @@
                         <i class="container__icon bi bi-pencil text-success me-2"  (click)="openModal(content,'update',i)" ngbTooltip="Crear y actualizar"></i>
                         <i class="container__icon bi bi-trash text-danger me-2" (click)="deleteGranja(granja.id_granja,i)" ngbTooltip="Eliminar"></i>
                         <i class="container__icon bi bi-geo-alt-fill text-danger me-2" (click)="verMap(i)"  ngbTooltip="Mi ubicación"></i>
-                        <i class="container__icon bi bi-images text-success" ngbTooltip="Actualizar fotos" (click)="openAddFileDialog()">
-                          <input #fileInput type="file" name="resume" (change)='photosUpdate($event, i)' hidden multiple>
-                        </i>
+                        <i class="container__icon bi bi-images text-success" ngbTooltip="Actualizar fotos" (click)="openPhotosModal(photosModal, i)"></i>
                     </div>
                 </td>
             </tr>
@@ -116,10 +114,10 @@
             </div>
           </div>
 
-          <div class="container__box mb-3">
-            <span>Departamento</span>
+          <div class="mb-3">
+            <span class="container__title">Departamento</span>
             <div>
-                <select class="container__input container__input form-input-text-square" formControlName='id_departamento' (ngModelChange)='changeDpto()'>
+                <select class="form-control" formControlName='id_departamento' (ngModelChange)='changeDpto()'>
                     <optgroup label="Escoje un departamento" value="70">
                         <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
                     </optgroup>
@@ -132,10 +130,10 @@
             </div>
           </div>
 
-          <div class="container__box mb-3">
+          <div class="mb-3">
             <span class="container__title">Municipio</span>
             <div>
-                <select  class="container__input form-input-text-square" formControlName='id_municipio'   (change)="idmunicipioselec()">
+                <select class="form-control" formControlName='id_municipio'   (change)="idmunicipioselec()">
                     <optgroup label="Escoge un municipio">
                         <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio"  >{{municipio.nombre}}</option>
                     </optgroup>
@@ -194,13 +192,13 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark container__btn" (click)="addGranja()" *ngIf="modalMode=='create'">
-          <span *ngIf="!loading">Guardar</span>
-          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+          <span *ngIf="!loading1">Guardar</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading1">
           </div>
         </button>
         <button type="button" class="btn btn-outline-dark container__btn" (click)="updateGranja()"  *ngIf="modalMode=='update'">
-          <span *ngIf="!loading" >Actualizar</span>
-          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+          <span *ngIf="!loading1" >Actualizar</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading1">
           </div>
         </button>
       </div>
@@ -296,4 +294,41 @@
       </div>
     </ng-template>
 
+    <input #fileInput type="file" name="resume" (change)='loadPhotos($event)' hidden multiple>
 
+    <ng-template #photosModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Actualizar fotos</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container__box">
+          <div class="spinner spinner-border text-info" role="status" *ngIf="loading1">
+            <span class="sr-only"></span>
+          </div>
+
+          <div class="search-container" *ngIf="showNotFoundPhotos && photosGranjaArray.length<1">
+            <div class="search-container__box">
+                <img class="search-container__image2" src="assets/images/undraw_a_day_off_re_hedl.svg">
+                <h3>Tu granja aun no tiene fotos</h3>
+                <p>Puedes agregar algunas en el botón "Adicionar fotos"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-row mb-3 flex-wrap justify-content-center">
+          <img class="modal__image p-2" [src]="photo" *ngFor="let photo of photosGranjaArray">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary container__btn1" (click)="openAddFileDialog()">
+          <span *ngIf="!loading2">Adicionar fotos</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading2"></div>
+        </button>
+        <!-- <button type="button" class="btn btn-outline-dark container__btn2" (click)="photosUpdate()">
+          <span *ngIf="!loading3">Actualizar</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading3"></div>
+        </button> -->
+      </div>
+    </ng-template>
+    

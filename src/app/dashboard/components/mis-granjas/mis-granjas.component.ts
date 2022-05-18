@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { MapGeocoder } from '@angular/google-maps';
 import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { vertices } from '../../../global/constants';
+import { faThemeisle } from '@fortawesome/free-brands-svg-icons';
 const _ = require('lodash');
 
 @Component({
@@ -59,7 +60,9 @@ export class MisGranjasComponent implements OnInit {
   modalMode: string = 'create';
   municipios: Array<any> = [];
   departamentos: Array<any> = [];
-  loading: boolean = false;
+  loading1: boolean = false;
+  loading2: boolean = false;
+  loading3: boolean = false;
   apiLoaded: Observable<boolean>;
   infraestructurasData:Array<any> = [];
   especiesData:Array<any> = [];
@@ -80,7 +83,8 @@ export class MisGranjasComponent implements OnInit {
     strokeWeight: 3,
     visible: true,
   };
-
+  photosGranjaArray:Array<string> = [];
+  showNotFoundPhotos:boolean = false;
   constructor(
     private granjaService: GranjasService,
     private modalService: NgbModal,
@@ -256,11 +260,11 @@ idmunicipioselec(){
     console.log('addGranja');
     console.log(this.form.value);
     console.log(this.form.controls);
-    this.loading = true;
+    this.loading1 = true;
     if (!this.form.valid) {
       console.log('Not valid!');
       this.form.markAllAsTouched();
-      this.loading = false;
+      this.loading1 = false;
       return;
     }
 
@@ -269,12 +273,12 @@ idmunicipioselec(){
         let nuevaGranjainsertId=_.clone( this.form.getRawValue())
         nuevaGranjainsertId.id_granja=response.body.insertId
         nuevaGranjainsertId.nombre=this.form.getRawValue().nombre_granja
-        this.loading = false;
+        this.loading1 = false;
         this.granjas.push( nuevaGranjainsertId)
         this.modalService.dismissAll();
         this.verMap(this.granjas.length-1)
       },err => {
-        this.loading = false;
+        this.loading1 = false;
         console.log(err);
       }
     );
@@ -307,11 +311,11 @@ idmunicipioselec(){
 
   updateGranja() {
 
-    this.loading = true;
+    this.loading1 = true;
     if(!this.form.valid){
       console.log("Not valid!")
       this.form.markAllAsTouched()
-      this.loading = false;
+      this.loading1 = false;
       return;
     }
 
@@ -323,14 +327,14 @@ idmunicipioselec(){
       .subscribe(
         (response) => {
           console.log(response);
-          this.loading = false;
+          this.loading1 = false;
 
           window.location.reload();
           this.modalService.dismissAll();
         },
         (err) => {
           console.log(err);
-          this.loading = false;
+          this.loading1 = false;
         }
       );
     //this.proveedorService.updateProducto(this.form)
@@ -688,37 +692,73 @@ idmunicipioselec(){
     });
   }
 
-  async photosUpdate(event:any, index:number){
-    let fileNameBase = '/granjas/User'+this.authUserId+"/granja"+this.granjas[index].id_granja+"/foto";
-    let files:Array<any> = event.target.files;
-    let arrayFotos:Array<any> = []; 
-    for(let i=0; i<files.length; i++){
-      console.log(fileNameBase+JSON.stringify(i))
-      await this.storage
-      .cloudStorageTask(fileNameBase+JSON.stringify(i), files[i])
-      .percentageChanges()
-      .toPromise();
-      
-      let downloadUrl = await this.storage
-      .cloudStorageRef(fileNameBase+JSON.stringify(i))
-      .getDownloadURL()
-      .toPromise();
-
-      arrayFotos.push(downloadUrl);
+  async loadPhotos(event:any){
+    this.loading2 = true;
+    try{
+      let fileNameBase = '/granjas/User'+this.authUserId+"/granja"+this.granjas[this.itemUpdateIndex].id_granja+"/foto";
+      let files:Array<any> = event.target.files;
+      let arrayFotos:Array<any> = []; 
+      for(let i=0; i<files.length; i++){
+        let nowTimestamp = new Date().getTime().toString(); 
+        await this.storage
+        .cloudStorageTask(fileNameBase + nowTimestamp, files[i])
+        .percentageChanges()
+        .toPromise();
+        
+        let downloadUrl = await this.storage
+        .cloudStorageRef(fileNameBase + nowTimestamp)
+        .getDownloadURL()
+        .toPromise();
+  
+        arrayFotos.push(downloadUrl);
+      }
+      this.photosGranjaArray = this.photosGranjaArray.concat(arrayFotos);
+      this.loading2 = false;
+      this.photosUpdate();
+    }catch(err){
+      this.loading2 = false;
     }
+  }
 
-    console.log("arrayFotos ",arrayFotos)
-    this.granjaService.updatePhotos(this.granjas[index].id_granja,{arrayFotos: arrayFotos}).subscribe(
+  openAddFileDialog(){
+    const element: HTMLElement = this.inputFileDialog.nativeElement;
+    element.click();
+  }
+
+  openPhotosModal(content:any, index:number){
+    this.itemUpdateIndex = index;
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass:'modal-photo'}).result.then((result) => {
+      console.log(result)
+    }, (reason) => {
+      console.log(reason)
+    });
+    this.photosGranjaArray = [];
+    this.loading1 = true;
+    this.granjaService.getGranjaDetalle(this.granjas[index].id_granja).subscribe(
       (response)=>{
-        console.log(response)
+        this.photosGranjaArray = response.data[0].fotos;
+        this.loading1 = false;
+        this.showNotFoundPhotos= false;
+        if(this.photosGranjaArray.length < 1){
+          this.showNotFoundPhotos = true;
+        }
       },err=>{
-        console.log(err)
+        this.loading1 = false;
+        this.showNotFoundPhotos = false;
       }
     )
   }
 
-  openAddFileDialog() {
-    const element: HTMLElement = this.inputFileDialog.nativeElement;
-    element.click();
+  photosUpdate(){
+    this.loading2 = true;
+    this.granjaService.updatePhotos(this.granjas[this.itemUpdateIndex].id_granja,{arrayFotos: this.photosGranjaArray}).subscribe(
+      (response)=>{
+        this.loading2 = false;
+        console.log(response)
+      },err=>{
+        this.loading2 = false;
+        console.log(err)
+      }
+    )
   }
 }
