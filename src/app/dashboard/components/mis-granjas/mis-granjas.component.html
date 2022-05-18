@@ -317,7 +317,11 @@
         </div>
 
         <div class="d-flex flex-row mb-3 flex-wrap justify-content-center">
-          <img class="modal__image p-2" [src]="photo" *ngFor="let photo of photosGranjaArray">
+          <div class="image-box" *ngFor="let photo of photosGranjaArray">
+            <img class="modal__image p-2" [src]="photo">
+            <div class="square">
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
