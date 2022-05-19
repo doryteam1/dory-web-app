@@ -34,7 +34,7 @@
     </div>
     <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar nueva granja</button>
 </div>
-    <div class="search-container" *ngIf="showNotFound">
+    <div class="search-container" *ngIf="showNotFound || photosGranjaArray.length < 1">
       <div class="search-container__box">
           <img class="search-container__image" src="assets/images/searching.svg">
           <h3>No se han encontrado resultados</h3>
@@ -298,8 +298,12 @@
 
     <ng-template #photosModal let-modal>
       <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Actualizar fotos</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        <div class="box">
+          <button type="button" class="btn-close box__button" aria-label="Close" (click)="abortDeleting()" *ngIf="isPhotoSelectingToDel"></button>
+          <h4 class="modal-title box__title" id="modal-basic-title" *ngIf="isPhotoSelectingToDel">{{photosGranjaUrlToDel.length}} {{photosGranjaUrlToDel.length > 0 ? 'elementos seleccionados' : 'elemento seleccionado'}}</h4>
+          <h4 class="modal-title" id="modal-basic-title" *ngIf="!isPhotoSelectingToDel">Actualizar fotos</h4>
+        </div>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')" *ngIf="!isPhotoSelectingToDel"></button>
       </div>
       <div class="modal-body">
         <div class="container__box">
@@ -311,28 +315,42 @@
             <div class="search-container__box">
                 <img class="search-container__image2" src="assets/images/undraw_a_day_off_re_hedl.svg">
                 <h3>Tu granja aun no tiene fotos</h3>
-                <p>Puedes agregar algunas en el botón "Adicionar fotos"</p>
+                <p>Puedes agregar algunas con el botón "Adicionar fotos"</p>
             </div>
           </div>
         </div>
 
         <div class="d-flex flex-row mb-3 flex-wrap justify-content-center">
-          <div class="image-box" *ngFor="let photo of photosGranjaArray">
-            <img class="modal__image p-2" [src]="photo">
-            <div class="square">
+          <div class="image-box" *ngFor="let photo of photosGranjaArray; let i=index">
+            <img 
+            class="modal__image p-2" 
+            ngxLongPress2
+            [maxTime]="1000"
+            (onLongPress)="onLongPress()" [src]="photo" (click)="addPhotoToDel(photo)">
+            <div class="square" *ngIf="isPhotoSelectingToDel" (click)="addPhotoToDel(photo)">
+              <i class="square__icon bi bi-check fa-3x" *ngIf="isPhotoIncludeToDelete(photo)"></i>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-danger container__btn2" (click)="photosDelete()">
+          <span *ngIf="!loading3">Eliminar ({{photosGranjaUrlToDel.length}}) fotos</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading3"></div>
+        </button>
         <button type="button" class="btn btn-secondary container__btn1" (click)="openAddFileDialog()">
           <span *ngIf="!loading2">Adicionar fotos</span>
           <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading2"></div>
         </button>
-        <!-- <button type="button" class="btn btn-outline-dark container__btn2" (click)="photosUpdate()">
-          <span *ngIf="!loading3">Actualizar</span>
-          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading3"></div>
-        </button> -->
       </div>
     </ng-template>
+
+<!--     <button
+    ngxLongPress2
+    [maxTime]="1000"
+    (onLongPress)="onLongPress()"
+    (onLongPressing)="onLongPressing($event)"
+    (onReleasePressing)="onReleasePressing()">
+{{ this.timeLapsed1 > 0 ? this.timeLapsed1 + ' ms' : 'PRESS ME'}}
+</button>-->
     

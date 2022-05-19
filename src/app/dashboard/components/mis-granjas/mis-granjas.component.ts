@@ -15,7 +15,6 @@ import { environment } from 'src/environments/environment';
 import { MapGeocoder } from '@angular/google-maps';
 import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { vertices } from '../../../global/constants';
-import { faThemeisle } from '@fortawesome/free-brands-svg-icons';
 const _ = require('lodash');
 
 @Component({
@@ -84,7 +83,13 @@ export class MisGranjasComponent implements OnInit {
     visible: true,
   };
   photosGranjaArray:Array<string> = [];
+  photosGranjaArrayCopy:Array<string> = [];
+  photosGranjaUrlToDel:Array<string> = [];
+  isPhotoSelectingToDel:boolean = false;
+  indexSelectedToDel:Array<number> = [];
   showNotFoundPhotos:boolean = false;
+  timeLapsed1:number = 0;
+  
   constructor(
     private granjaService: GranjasService,
     private modalService: NgbModal,
@@ -758,6 +763,61 @@ idmunicipioselec(){
       },err=>{
         this.loading2 = false;
         console.log(err)
+      }
+    )
+  }
+
+  onLongPressing(event:number){
+    console.log(event)
+  }
+
+  onLongPress(){
+    this.isPhotoSelectingToDel = true;
+  }
+
+  onReleasePressing(){
+    console.log("Releasing press")
+  }
+
+  abortDeleting(){
+    this.isPhotoSelectingToDel = false;
+  }
+
+  addPhotoToDel(photoUrl:string){
+    let i = this.photosGranjaUrlToDel.indexOf(photoUrl);
+    if(i > -1){
+      this.photosGranjaUrlToDel.splice(i,1);
+    }else{
+      this.photosGranjaUrlToDel.push(photoUrl);
+    }
+  }
+
+  isPhotoIncludeToDelete(photoUrl:string){
+    return this.photosGranjaUrlToDel.includes(photoUrl);
+  }
+
+  photosDelete(){
+    this.loading3 = true;
+    console.log(this.photosGranjaArray)
+    this.photosGranjaArrayCopy = this.photosGranjaArray.slice(0);
+    this.photosGranjaUrlToDel.forEach(
+      (photo)=>{
+          let index = this.photosGranjaArrayCopy.indexOf(photo);
+          if(index > -1){
+            this.photosGranjaArrayCopy.splice(index,1);
+          }
+      }
+    )
+    console.log(this.photosGranjaArrayCopy)
+    this.granjaService.updatePhotos(this.granjas[this.itemUpdateIndex].id_granja,{arrayFotos: this.photosGranjaArrayCopy}).subscribe(
+      (response)=>{
+        this.photosGranjaArray = this.photosGranjaArrayCopy;
+        this.photosGranjaUrlToDel = [];
+        this.isPhotoSelectingToDel = false;
+        this.loading3 = false;
+      },err=>{
+        console.log(err)
+        this.loading3 = false;
       }
     )
   }

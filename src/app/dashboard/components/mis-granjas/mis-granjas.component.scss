@@ -78,7 +78,7 @@
 }
 
 .container__btn2{
-  width: 100px;
+  width: 200px;
   height: 38px;
 }
 
@@ -111,6 +111,9 @@
   height: 100%;
 }
 
+.modal-header{
+  justify-content: center;
+}
 .square{
   border: 3px solid white;
   position:absolute;
@@ -123,6 +126,26 @@
   opacity: 50%;
 }
 
+.square__icon{
+  color: white;
+  font-weight: 700;
+  font-size: 25px;
+  position: absolute;
+  right: -3px;
+  bottom: -8px;
+}
+.box{
+  display: flex;
+  justify-content: center;
+}
+
+.box__title{
+  margin-left: 15px;
+}
+
+.box__button{
+  align-self: center;
+}
 /* mi  estilo */
 
 .button_close{

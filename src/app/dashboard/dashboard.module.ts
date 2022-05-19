@@ -12,7 +12,7 @@ import { MisProductosComponent } from './components/mis-productos/mis-productos.
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { MisVehiculosComponent } from './components/mis-vehiculos/mis-vehiculos.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgxLongPress2Module } from 'ngx-long-press2'; 
 
 
 @NgModule({
@@ -33,7 +33,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgxSpinnerModule,
     SharedModule,
     GoogleMapsModule,
-    NgbModule
+    NgbModule,
+    NgxLongPress2Module
   ]
 })
 export class DashboardModule { }

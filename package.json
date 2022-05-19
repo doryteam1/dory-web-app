@@ -40,6 +40,7 @@
     "bootstrap-icons": "^1.8.1",
     "express": "^4.17.1",
     "jquery": "^3.6.0",
+    "ngx-long-press2": "^2.0.0",
     "ngx-sharebuttons": "^10.0.0",
     "ngx-spinner": "^12.0.0",
     "path": "^0.12.7",
