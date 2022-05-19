@@ -24,7 +24,7 @@
 }
 
 .container__description{
-    align-self: center;   
+    align-self: center;
 }
 
 .container__title--color-morado{
@@ -51,7 +51,7 @@
 }
 
 .cards-container{
-    width: 750px;
+    width: 800px;
     height: 600px;
 }
 
@@ -59,7 +59,7 @@
     display:grid;
     grid-template-columns: [c-l-one] 260px [c-l-two] 293px [c-l-three] 35px [c-l-four];
     grid-template-rows: [r-l-one] 30px [r-l-two]120px [r-l-three] 50px [r-l-four];
-    grid-template-areas: 
+    grid-template-areas:
         "image title favorite"
         "image description ."
         ". data data";
@@ -114,7 +114,7 @@
 }
 
 .card__rating__detail{
-    
+
 }
 
 .card__data{
@@ -152,4 +152,11 @@
     align-self: start;
     width:100%;
     margin-left:18px;
+}
+
+.mapgoogle {
+  border: 1px solid #6c6c6c;
+  border-radius: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }

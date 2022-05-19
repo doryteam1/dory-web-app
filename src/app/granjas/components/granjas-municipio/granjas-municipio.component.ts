@@ -19,30 +19,32 @@ import {MapInfoWindow, MapMarker} from '@angular/google-maps';
 export class GranjasMunicipioComponent implements OnInit {
   apiLoaded: Observable<boolean>;
   granjas:any[] = [];
-
+valor:boolean=false
   options: google.maps.MapOptions = {
     center: { lat: 9.214145, lng:-75.188469 },
-    zoom:10
+    zoom:10,
+     scrollwheel: true,
   }
 
   markerPosition : google.maps.LatLngLiteral = { lat: 9.214145, lng:-75.188469 };
   markerPositions: google.maps.LatLngLiteral[] = [];
   markersInfo: any[] = [];
-  markerOptions: google.maps.MarkerOptions = {draggable: false};
+  markerOptions: google.maps.MarkerOptions = {draggable: false,};
   indexSelected:number = -1;
   granjaDetailRoute:string = "";
   poblacion:number = 0;
   municipio:string = '';
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
+  @ViewChild("marker") marker!: MapMarker;
   selectedGranja = {
     nombre : '',
     propietario : {
       nombre : ''
     }
   }
-  constructor(httpClient: HttpClient, 
-              private granjasService:GranjasService, 
-              private activatedRoute:ActivatedRoute, 
+  constructor(httpClient: HttpClient,
+              private granjasService:GranjasService,
+              private activatedRoute:ActivatedRoute,
               private placesService:PlacesService,
               private router:Router) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key='+environment.doryApiKey, 'callback')
@@ -70,7 +72,7 @@ export class GranjasMunicipioComponent implements OnInit {
           this.options = {
             center: { lat: parseFloat(response.data[0].latitud), lng:parseFloat(response.data[0].longitud)},
             zoom:13
-          } 
+          }
         }
       }
     );
@@ -81,31 +83,48 @@ export class GranjasMunicipioComponent implements OnInit {
       (granja : Granja)=>{
         let markerPosition: google.maps.LatLngLiteral = { lat:Number(granja.latitud), lng:Number(granja.longitud) };
         this.markerPositions.push(markerPosition);
-        this.markersInfo.push({markerPosition: markerPosition, title: granja.nombre});
+        this.markersInfo.push({markerPosition: markerPosition});
       }
     );
   }
-  changeFavorite(){
-    
+  changeFavorite(i:number){
+    console.log(i)
+
   }
 
-  onMouseCard(indexSelected:number){
-    this.indexSelected = indexSelected;
-    console.log(indexSelected);
-    /* this.options = {
-      center: { lat: Number(granja.latitud), lng:Number(granja.longitud) },
-      zoom:15
-    }
-    console.log(granja); */
+  onMouseCard( indexSelected:number){
+    console.log(this.granjas)
+  this.indexSelected = indexSelected;
+  this.markerPosition = {
+   lat: Number(this.granjas[indexSelected].latitud),
+   lng:Number(this.granjas[indexSelected].longitud),
+ };
+  this.options = {
+     center: {
+       lat: Number(this.granjas[indexSelected].latitud),
+       lng:Number(this.granjas[indexSelected].longitud),
+     },
+     zoom: 14,
+   };
+  this.openInfoWindow(this.marker, indexSelected)
+  /* console.log(this.markersInfo[indexSelected].markerPosition=this.markerPosition) */
+  /*  this.markersInfo.push({markerPosition: this.markerPosition}); */
+  }
+
+  eliminInfoWindow(){
+    this.infoWindow.close()
+    this.indexSelected=-1
   }
 
   openInfoWindow(marker: MapMarker, index:number) {
     this.infoWindow.open(marker);
+
     this.selectedGranja.nombre = this.granjas[index].nombre;
-    //this.selectedGranja.propietario.nombre = this.granjas[index].nombre;
+    this.selectedGranja.propietario.nombre = this.granjas[index].propietario;
   }
 
   navigate(id:number){
     this.router.navigateByUrl('/granjas/municipio/detalle/'+id)
   }
+
 }

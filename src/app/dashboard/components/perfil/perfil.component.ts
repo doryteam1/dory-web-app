@@ -583,7 +583,7 @@ export class PerfilComponent implements OnInit {
       lat: parseFloat(this.latitud?.value),
       lng: parseFloat(this.longitud?.value),
     };
-     this.modalService.open(this.map, { size: 'xl',centered: true}
+     this.modalService.open(this.map, { size: 'xl',centered: true,windowClass: 'dark-modal'}
 
      ).result.then((result) => {
          console.log("se cerro modal ",result)

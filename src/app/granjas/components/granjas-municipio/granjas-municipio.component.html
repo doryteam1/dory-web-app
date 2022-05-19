@@ -6,25 +6,25 @@
         <img class="container__icon" src="assets/icons/build.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue">Municipio</h3>
-            <span class="container__description">{{municipio}}</span>    
+            <span class="container__description">{{municipio}}</span>
         </div>
     </div>
-    
+
     <div class="container">
         <img class="container__icon" src="assets/icons/group-circle-solid.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-morado">Población</h3>
-            <span class="container__description">{{poblacion | number:'':'es'}}</span>    
+            <span class="container__description">{{poblacion | number:'':'es'}}</span>
         </div>
     </div>
-    
+
     <div class="container">
         <img class="container__icon" src="assets/icons/fish.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue-2"># granjas</h3>
-            <span class="container__description">{{granjas.length}}</span>    
+            <span class="container__description">{{granjas.length}}</span>
         </div>
-    </div>    
+    </div>
 </div>
 
 <div class="filters-container">
@@ -50,35 +50,49 @@
     </div>
 </div>
 
-<div class="granjas-container">
+<div class="granjas-container"  >
         <div class="cards-container overflow-auto" *ngIf="granjas.length >= 1">
-            <div class="card" *ngFor="let granja of granjas; index as i" (mouseover)="onMouseCard(i)">
-                <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}" (click)="navigate(granja.id_granja)">
-                
-                <h3 class="card__title" routerLink="/granjas/municipio/detalle">{{granja.nombre}}</h3>
-                <p class="card__description" routerLink="/granjas/municipio/detalle">
-                    {{granja.descripcion}}
-                </p>
-                
-                <div class="card__rating-container">
-                    <img class="card__icon-rating" src="assets/icons/star-filled.svg">
-                    <span class="card__rating">{{granja.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
-                    <span class="card__rating__detail"> ({{granja.count_resenas}} reseñas)</span>
-                </div>
-                
-                <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.esFavorita" (click)="changeFavorite()">
-                <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.esFavorita">
-                <span class="card__data">{{granja.area | number:'':'es'}} m²</span>
+          <div class="card" *ngFor="let granja of granjas; let i =index" (mouseover)="onMouseCard(i)" (mouseout)="eliminInfoWindow()">
+            <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}"
+              (click)="navigate(granja.id_granja)">
+
+            <h3 class="card__title" routerLink="/granjas/municipio/detalle">{{granja.nombre}}</h3>
+            <p class="card__description" routerLink="/granjas/municipio/detalle">
+              {{granja.descripcion}}
+            </p>
+
+            <div class="card__rating-container">
+              <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+              <span class="card__rating">{{granja.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
+              <span class="card__rating__detail"> ({{granja.count_resenas}} reseñas)</span>
             </div>
+
+            <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.esFavorita"
+              (click)="changeFavorite(i)">
+            <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.esFavorita" (click)="changeFavorite(i)">
+            <span class="card__data">{{granja.area | number:'':'es'}} m²</span>
+
+          </div>
         </div>
-            <div *ngIf="granjas.length > 0 && (apiLoaded | async)">
-                <google-map height="600px"
-                            width="800px"
+        <div class="mapgoogle overflow-auto  " *ngIf="granjas.length > 0 && (apiLoaded | async)" >
+                <google-map  height="600px"
+                            width="700px"
                             [options]="options">
-                    <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}" (mapClick)="openInfoWindow(marker,i)"></map-marker>
-                    <map-info-window>{{selectedGranja.nombre}}</map-info-window>
+                  <map-marker   #marker="mapMarker"
+                            *ngFor="let markerInfo of markersInfo; index as i"
+                            [position]="markerInfo.markerPosition"
+                            [options]="markerOptions"
+                            icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"
+                            (mapMouseover)="openInfoWindow(marker,i)"
+                            (mapMouseout)="eliminInfoWindow()">
+                            </map-marker>
+                   <map-info-window [position]="markerPosition" >
+                      {{selectedGranja.nombre}}
+                      <br>
+                      {{selectedGranja.propietario.nombre}}
+                    </map-info-window>
                 </google-map>
-            </div>
+         </div>
 </div>
 <!--<app-footer></app-footer>-->
-<app-floating-btn-auto-up></app-floating-btn-auto-up>
+

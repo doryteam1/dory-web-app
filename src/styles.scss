@@ -1,59 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
 
-
-:root{
-    --morado:#6685B4;
-    --azul1:#26A5B8;
-    --azul2:#A7CFCF;
-    --azul3:#dbf3f3;
-    --gris:#C3C4BE;
-    --gris2:#C8BAA0;
-    --gris3:#9E9FA3;
-    --gris4:#F3F3F4;
-    --gris5:#c2c2c7;
-    --gris-oscuro:#4A4A4B;
-    --white:#FFFFFF;
-    --black:#000000;
-    --high-blue:#0D0C22;
-    --red-danger:#D93025;
-    --rosa:#F7CACC;
-    --green:#1b8d06;
-    --light: #ececece5;
-    --yellow: #FFD200;
-    --red: #FF0F00;
-    --grey:#ABACAE;
+:root {
+  --morado: #6685b4;
+  --azul1: #26a5b8;
+  --azul2: #a7cfcf;
+  --azul3: #dbf3f3;
+  --gris: #c3c4be;
+  --gris2: #c8baa0;
+  --gris3: #9e9fa3;
+  --gris4: #f3f3f4;
+  --gris5: #c2c2c7;
+  --gris-oscuro: #4a4a4b;
+  --white: #ffffff;
+  --black: #000000;
+  --high-blue: #0d0c22;
+  --red-danger: #d93025;
+  --rosa: #f7cacc;
+  --green: #1b8d06;
+  --light: #ececece5;
+  --yellow: #ffd200;
+  --red: #ff0f00;
+  --grey: #abacae;
 }
 
 /*Fonts*/
 @font-face {
-    font-family: 'OpenSans-Regular';    //This is what we are going to call
-    src: url('./assets/fonts/OpenSans-Regular.ttf');
+  font-family: "OpenSans-Regular"; //This is what we are going to call
+  src: url("./assets/fonts/OpenSans-Regular.ttf");
 }
 
 @font-face {
-    font-family: 'JosefinSans-Regular';    //This is what we are going to call
-    src: url('./assets/fonts/JosefinSans-Regular.ttf');
+  font-family: "JosefinSans-Regular"; //This is what we are going to call
+  src: url("./assets/fonts/JosefinSans-Regular.ttf");
 }
 
-.mt-40{
-    margin-top: 40px;
+.mt-40 {
+  margin-top: 40px;
 }
 
-.p-small{
-    font-size: 12px;
+.p-small {
+  font-size: 12px;
 }
 
-.btn-outline-blue{
-    background-color: var(--white);
-    border-radius: 20px;
-    border: 1px solid var(--azul1);
-    color:var(--azul1);
-    width: 150px;
-    height: 40px;
+.btn-outline-blue {
+  background-color: var(--white);
+  border-radius: 20px;
+  border: 1px solid var(--azul1);
+  color: var(--azul1);
+  width: 150px;
+  height: 40px;
 }
 /* mi estilo */
 
- /*      @media (max-width:320px){
+/*      @media (max-width:320px){
         .dark-modal .modal-content {
         width: 200px;
         height: 200px;
@@ -62,143 +61,143 @@
 } */
 
 /* fin mi etilo */
-.btn-outline-black{
-    background-color: var(--white);
-    border-radius: 20px;
-    border: 1px solid var(--black);
-    color:var(--black);
-    width: 150px;
-    height: 40px;
+.btn-outline-black {
+  background-color: var(--white);
+  border-radius: 20px;
+  border: 1px solid var(--black);
+  color: var(--black);
+  width: 150px;
+  height: 40px;
 }
 
-.btn-square{
-    border-radius: 7px;
-    width: 200px;
-    height: 45px;
+.btn-square {
+  border-radius: 7px;
+  width: 200px;
+  height: 45px;
 }
 
-.btn-rounded{
-    border-radius: 20px;
-    width: 150px;
-    height: 40px;
+.btn-rounded {
+  border-radius: 20px;
+  width: 150px;
+  height: 40px;
 }
 
-.btn--morado{
-    background-color: var(--morado);
-    border: 1px solid var(--morado);
-    color:var(--white);
-    font-weight: 700;
+.btn--morado {
+  background-color: var(--morado);
+  border: 1px solid var(--morado);
+  color: var(--white);
+  font-weight: 700;
 }
 
-.btn--white{
-    background-color: var(--white);
-    border: 0.5px solid var(--black);
-    color:var(--black);
-    font-weight: 700;
+.btn--white {
+  background-color: var(--white);
+  border: 0.5px solid var(--black);
+  color: var(--black);
+  font-weight: 700;
 }
 
-.btn-rounded-blue{
-    background-color: var(--azul1);
-    border-radius: 20px;
-    border: 1px solid var(--azul1);
-    color:var(--white);
-    width: 150px;
-    height: 40px;
-    font-weight: 500;
+.btn-rounded-blue {
+  background-color: var(--azul1);
+  border-radius: 20px;
+  border: 1px solid var(--azul1);
+  color: var(--white);
+  width: 150px;
+  height: 40px;
+  font-weight: 500;
 }
 
-.btn-square-blue{
-    background-color: var(--azul1);
-    border-radius: 20px;
-    border: 1px solid var(--azul1);
-    color:var(--white);
-    font-weight: 700;
-    width: 200px;
-    height: 45px;
+.btn-square-blue {
+  background-color: var(--azul1);
+  border-radius: 20px;
+  border: 1px solid var(--azul1);
+  color: var(--white);
+  font-weight: 700;
+  width: 200px;
+  height: 45px;
 }
 
-.btn-rounded-white{
-    background-color: var(--white);
-    border-radius: 7px;
-    border: 1px solid var(--black);
-    color:var(--black);
-    font-weight: 700;
-    width: 200px;
-    height: 45px;
+.btn-rounded-white {
+  background-color: var(--white);
+  border-radius: 7px;
+  border: 1px solid var(--black);
+  color: var(--black);
+  font-weight: 700;
+  width: 200px;
+  height: 45px;
 }
 
-.btn-square-white{
-    background-color: var(--white);
-    border-radius: 7px;
-    border: 1px solid var(--white);
-    color:var(--black);
-    font-weight: 700;
-    width: 200px;
-    height: 45px;
-    -webkit-box-shadow: 2px 3px 14px -8px #000000;
-    box-shadow: 2px 3px 14px -8px #000000;
+.btn-square-white {
+  background-color: var(--white);
+  border-radius: 7px;
+  border: 1px solid var(--white);
+  color: var(--black);
+  font-weight: 700;
+  width: 200px;
+  height: 45px;
+  -webkit-box-shadow: 2px 3px 14px -8px #000000;
+  box-shadow: 2px 3px 14px -8px #000000;
 }
 
-.form-input-text-square{
-    border: 1px solid #8692A6;
-    border-radius: 8px;
-    width: 360px;
-    height: 40px;
+.form-input-text-square {
+  border: 1px solid #8692a6;
+  border-radius: 8px;
+  width: 360px;
+  height: 40px;
 }
 
-.invalid-input{
-    border:1px solid var(--red-danger);
+.invalid-input {
+  border: 1px solid var(--red-danger);
 }
 
-.danger-message{
-    color:var(--red-danger)
+.danger-message {
+  color: var(--red-danger);
 }
 
-.success{
-    color:var(--green);
-    font-weight: 500;
+.success {
+  color: var(--green);
+  font-weight: 500;
 }
 
 .link {
-    background:none;
-    border:none;
-    color:var(--azul1);
-    cursor:pointer;
+  background: none;
+  border: none;
+  color: var(--azul1);
+  cursor: pointer;
 }
 
-.spinner{
-    color:var(--white);
-    width: 20px;
-    height: 20px;
+.spinner {
+  color: var(--white);
+  width: 20px;
+  height: 20px;
 }
 
-.disabled{
-    background-color: var(--gris-oscuro);
-    border: none
+.disabled {
+  background-color: var(--gris-oscuro);
+  border: none;
 }
 
-.input-glyphicon{
-    position:relative;
+.input-glyphicon {
+  position: relative;
 }
 
-.glyphicon{
-    position:absolute;
-    padding:10px;
-    cursor: pointer;
-    right: 0px;
-    top:-8px;
+.glyphicon {
+  position: absolute;
+  padding: 10px;
+  cursor: pointer;
+  right: 0px;
+  top: -8px;
 }
 
-.sucre{
-    fill: pink;
-    stroke: red;
-    stroke-width: 2;
+.sucre {
+  fill: pink;
+  stroke: red;
+  stroke-width: 2;
 }
 
 .on {
-    fill: pink;
-    stroke: red;
-    stroke-width: 2;
+  fill: pink;
+  stroke: red;
+  stroke-width: 2;
 }
 
 .modal-photo .modal-dialog {
@@ -207,73 +206,76 @@
 
 /* PROPIOS */
 .borderless {
-    outline: none;
+  outline: none;
+}
+
+@keyframes animate-svg-stroke-3 {
+  0% {
+    stroke-dashoffset: 31.109482869200132px;
+    stroke-dasharray: 31.109482869200132px;
   }
 
-  /* .miClase {
-    ;
-      fill: white;
-    transition: fill 0.5s;
+  100% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 31.109482869200132px;
+  }
+}
+
+@keyframes animate-svg-fill-3 {
+  0% {
+    fill: transparent;
   }
 
-  .miClase:hover {
-    fill: blue;
-  } */
-
-  @keyframes animate-svg-stroke-3 {
-    0% {
-      stroke-dashoffset: 31.109482869200132px;
-      stroke-dasharray: 31.109482869200132px;
-    }
-
-    100% {
-      stroke-dashoffset: 0;
-      stroke-dasharray: 31.109482869200132px;
-    }
+  100% {
+    fill: rgb(245, 56, 56);
   }
-
-  @keyframes animate-svg-fill-3 {
-    0% {
-      fill: transparent;
-    }
-
-    100% {
-      fill: rgb(245, 56, 56);
-    }
-  }
-  .regionhover:hover .svg-elem-3 {
-    animation: animate-svg-stroke-3 0s ease-out 0.24s infinite alternate both,
-      animate-svg-fill-3 0.2s linear 0.4s infinite alternate both;
-  }
-  /* .svg-elem-3 {
+}
+.regionhover:hover .svg-elem-3 {
+  animation: animate-svg-stroke-3 0s ease-out 0.24s infinite alternate both,
+    animate-svg-fill-3 0.2s linear 0.4s infinite alternate both;
+}
+/* .svg-elem-3 {
     animation: animate-svg-stroke-3 0s ease-out 0.24s infinite alternate both,
       animate-svg-fill-3 0.2s linear 0.4s infinite alternate both;
   } */
 
-  ::-webkit-scrollbar {
-    background: white;
-    /* background: #26a5b8; */
-    width: 13px;
-  }
+::-webkit-scrollbar {
+  background: white;
+  /* background: #26a5b8; */
+  width: 13px;
+}
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    /* box-shadow: inset 0 0 5px red; */
-    border-radius: 10px;
-  }
+/* Track */
+::-webkit-scrollbar-track {
+  /* box-shadow: inset 0 0 5px red; */
+  border-radius: 10px;
+}
 
-  /* Handle  barra pequeña*/
-  ::-webkit-scrollbar-thumb {
-    background: #c1c7d0;
-    border-radius: 10px;
-  }
+/* Handle  barra pequeña*/
+::-webkit-scrollbar-thumb {
+  background: #c1c7d0;
+  border-radius: 10px;
+}
+/*style the annoying little arrow at the bottom*/
+.gm-style div:nth-child(2) > div:nth-child(2) > div button {
+  display: none !important;
+}
 
-  /* FIN PROPIOS */
+.map-container > div > div > div:nth-child(4) {
+  border: none !important;
+}
+.dark-modal .modal-content {
+  border-radius: 10px;
+}
+
+div.map-container{
+  border-bottom-left-radius:10px 10px;
+  border-bottom-right-radius: 10px 10px
+}
+/* FIN PROPIOS */
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 /* @import '~@ngx-share/button/styles/share-buttons.css';
 @import '~@ngx-share/button/styles/themes/default/default-theme.css'; */
 //@import '~ngx-sharebuttons/themes/default';
-
-

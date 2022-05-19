@@ -481,7 +481,7 @@ idmunicipioselec(){
 
   verMap(i?: number) {
     this.indicegranja = i!
-    this.modalService.open(this.map, { size: 'xl',centered: true }).result.then((result) => {
+    this.modalService.open(this.map, { size: 'xl',centered: true,windowClass: 'dark-modal' }).result.then((result) => {
          console.log("se cerro modal ",result)
         } ).catch((err) => {
         console.log(err);
