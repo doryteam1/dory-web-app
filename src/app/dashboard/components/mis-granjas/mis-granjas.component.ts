@@ -776,14 +776,18 @@ idmunicipioselec(){
   }
 
   onReleasePressing(){
-    console.log("Releasing press")
+    this.photosGranjaUrlToDel = [];
   }
 
   abortDeleting(){
     this.isPhotoSelectingToDel = false;
+    this.photosGranjaUrlToDel = [];
   }
 
   addPhotoToDel(photoUrl:string){
+    if(!this.isPhotoSelectingToDel){
+      return;
+    }
     let i = this.photosGranjaUrlToDel.indexOf(photoUrl);
     if(i > -1){
       this.photosGranjaUrlToDel.splice(i,1);

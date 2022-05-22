@@ -34,7 +34,7 @@
     </div>
     <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar nueva granja</button>
 </div>
-    <div class="search-container" *ngIf="showNotFound || photosGranjaArray.length < 1">
+    <div class="search-container" *ngIf="showNotFound">
       <div class="search-container__box">
           <img class="search-container__image" src="assets/images/searching.svg">
           <h3>No se han encontrado resultados</h3>
@@ -324,9 +324,12 @@
           <div class="image-box" *ngFor="let photo of photosGranjaArray; let i=index">
             <img 
             class="modal__image p-2" 
+            [src]="photo"
             ngxLongPress2
             [maxTime]="1000"
-            (onLongPress)="onLongPress()" [src]="photo" (click)="addPhotoToDel(photo)">
+            (onLongPress)="onLongPress()"
+            (onReleasePressing)="onReleasePressing()"
+            (click)="addPhotoToDel(photo)">
             <div class="square" *ngIf="isPhotoSelectingToDel" (click)="addPhotoToDel(photo)">
               <i class="square__icon bi bi-check fa-3x" *ngIf="isPhotoIncludeToDelete(photo)"></i>
             </div>

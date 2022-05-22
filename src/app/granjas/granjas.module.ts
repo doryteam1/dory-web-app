@@ -6,11 +6,13 @@ import { GranjasMunicipioComponent } from './components/granjas-municipio/granja
 import { GranjaDetalleComponent } from './components/granja-detalle/granja-detalle.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { GranjasService } from './services/granjas.service';
 import { HttpsService } from '../services/https.service';
 import { SharedModule } from '../shared/shared.module';
 import { GranjaGalleryComponent } from './components/granja-gallery/granja-gallery.component';
+import { AuthInterceptor } from '../interceptors/auth.interceptor';
+
 @NgModule({
   declarations: [
     GranjasComponent,
@@ -29,7 +31,12 @@ import { GranjaGalleryComponent } from './components/granja-gallery/granja-galle
   ],
   providers: [
     GranjasService,
-    HttpsService
+    HttpsService,
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi:true
+    }
   ]
 })
 export class GranjasModule { }
