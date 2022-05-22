@@ -21,7 +21,6 @@ export class AuthInterceptor implements HttpInterceptor {
         // const token = this.authenticationService.getToke()
         
         const token = localStorage.getItem('token') || ''
-        console.log("Interceptor!!! Token ", token)
         return of(token)
             .pipe(
                 switchMap(token => {
