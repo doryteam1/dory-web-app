@@ -22,10 +22,10 @@
                     <div class="container-row">
                         <!-- <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i> -->
                         <!--<span class="container__link link" (click)="openModal(content,'update',i)">Ver detalle</span>-->
-                        <i class="container__icon bi bi-pencil text-success me-2"  (click)="openModal(content,'update',i)" ngbTooltip="Crear y actualizar"></i>
-                        <i class="container__icon bi bi-trash text-danger me-2" (click)="deleteGranja(granja.id_granja,i)" ngbTooltip="Eliminar"></i>
-                        <i class="container__icon bi bi-geo-alt-fill text-danger me-2" (click)="verMap(i)"  ngbTooltip="Mi ubicación"></i>
-                        <i class="container__icon bi bi-images text-success" ngbTooltip="Actualizar fotos" (click)="openPhotosModal(photosModal, i)"></i>
+                        <i class="container__icon1 bi bi-pencil text-success me-2"  (click)="openModal(content,'update',i)" ngbTooltip="Crear y actualizar"></i>
+                        <i class="container__icon2 bi bi-trash text-danger me-2" (click)="deleteGranja(granja.id_granja,i)" ngbTooltip="Eliminar"></i>
+                        <i class="container__icon3 bi bi-geo-alt-fill text-danger me-2" (click)="verMap(i)"  ngbTooltip="Mi ubicación"></i>
+                        <i class="container__icon4 bi bi-images text-success" ngbTooltip="Actualizar fotos" (click)="openPhotosModal(photosModal, i)"></i>
                     </div>
                 </td>
             </tr>
@@ -311,7 +311,7 @@
             <span class="sr-only"></span>
           </div>
 
-          <div class="search-container" *ngIf="showNotFoundPhotos && photosGranjaArray.length<1">
+          <div class="search-container" *ngIf="showNotFoundPhotos">
             <div class="search-container__box">
                 <img class="search-container__image2" src="assets/images/undraw_a_day_off_re_hedl.svg">
                 <h3>Tu granja aun no tiene fotos</h3>
@@ -320,7 +320,7 @@
           </div>
         </div>
 
-        <div class="d-flex flex-row mb-3 flex-wrap justify-content-center">
+        <div class="d-flex flex-row mb-3 flex-wrap d-flex justify-content-center">
           <div class="image-box" *ngFor="let photo of photosGranjaArray; let i=index">
             <img 
             class="modal__image p-2" 
@@ -337,7 +337,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger container__btn2" (click)="photosDelete()">
+        <button type="button" class="btn btn-success container__btn2" *ngIf="!isPhotoSelectingToDel" (click)="isPhotoSelectingToDel = !isPhotoSelectingToDel">
+          <span>Seleccionar fotos</span>
+        </button>
+        <button type="button" class="btn btn-danger container__btn2" (click)="photosDelete()" *ngIf="isPhotoSelectingToDel">
           <span *ngIf="!loading3">Eliminar ({{photosGranjaUrlToDel.length}}) fotos</span>
           <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading3"></div>
         </button>

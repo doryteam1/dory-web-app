@@ -51,7 +51,7 @@
 }
 
 .cards-container{
-    width: 800px;
+    width: fit-content;
     height: 600px;
 }
 
@@ -64,22 +64,31 @@
         "image description ."
         ". data data";
     column-gap:30px;
-    margin-left: 40px;
-    margin-bottom: 57px;
+    margin-left: 25px;
+    margin-bottom: 35px;
+    margin-right: 8px;
     margin-top: 0px;
     border:0;
+    background-color: var(--gris4);
+    height: 221px;
+    width: 663px;
+    padding-top: 10px;
+    border-radius: 10px;
 }
 
 .card__image{
     grid-area: image;
     width: 262px;
-    height: 198px;
-    border-radius: 15px;
+    height: 219px;
+    border-radius: 10px 0px 0px 10px;
+    cursor:pointer;
+    margin-top: -9px;
 }
 
 .card__title{
     grid-area: title;
     font-size:24px;
+    cursor: pointer;
 }
 
 .card__icon-favorite{
@@ -88,17 +97,20 @@
     height: 24px;
     justify-self: end;
     align-self: end;
+    cursor: pointer;
 }
 
 .card__description{
     grid-area: description;
     font-size: 16px;
     margin-top: 12px;
+    cursor: pointer;
 }
 
 .card__rating-container{
     grid-area:data;
     align-self:end;
+    cursor:pointer;
 }
 
 .card__icon-rating{
@@ -123,6 +135,7 @@
     align-self: end;
     font-size:22px;
     font-weight: 700;
+    cursor: pointer;
 }
 
 .granjas-container{

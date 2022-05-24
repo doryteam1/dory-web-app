@@ -718,6 +718,11 @@ idmunicipioselec(){
         arrayFotos.push(downloadUrl);
       }
       this.photosGranjaArray = this.photosGranjaArray.concat(arrayFotos);
+      if(this.photosGranjaArray.length < 1){
+        this.showNotFoundPhotos = true;
+      }else{
+        this.showNotFoundPhotos = false;
+      }
       this.loading2 = false;
       this.photosUpdate();
     }catch(err){
@@ -776,7 +781,6 @@ idmunicipioselec(){
   }
 
   onReleasePressing(){
-    this.photosGranjaUrlToDel = [];
   }
 
   abortDeleting(){
@@ -819,6 +823,9 @@ idmunicipioselec(){
         this.photosGranjaUrlToDel = [];
         this.isPhotoSelectingToDel = false;
         this.loading3 = false;
+        if(this.photosGranjaArray.length < 1){
+          this.showNotFoundPhotos = true;
+        }
       },err=>{
         console.log(err)
         this.loading3 = false;

@@ -50,14 +50,14 @@
     </div>
 </div>
 
-<div class="granjas-container"  >
+<div class="granjas-container" >
         <div class="cards-container overflow-auto" *ngIf="granjas.length >= 1">
           <div class="card" *ngFor="let granja of granjas; let i =index" (mouseover)="onMouseCard(i)" (mouseout)="eliminInfoWindow()">
             <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}"
               (click)="navigate(granja.id_granja)">
 
-            <h3 class="card__title" routerLink="/granjas/municipio/detalle">{{granja.nombre}}</h3>
-            <p class="card__description" routerLink="/granjas/municipio/detalle">
+            <h3 class="card__title" (click)="navigate(granja.id_granja)">{{granja.nombre}}</h3>
+            <p class="card__description" (click)="navigate(granja.id_granja)">
               {{granja.descripcion}}
             </p>
 
@@ -74,9 +74,9 @@
 
           </div>
         </div>
-        <div class="mapgoogle overflow-auto  " *ngIf="granjas.length > 0 && (apiLoaded | async)" >
+        <div class="mapgoogle overflow-auto  " *ngIf="granjas.length > 0 && (apiLoaded | async)">
                 <google-map  height="600px"
-                            width="700px"
+                            width="785px"
                             [options]="options">
                   <map-marker   #marker="mapMarker"
                             *ngFor="let markerInfo of markersInfo; index as i"

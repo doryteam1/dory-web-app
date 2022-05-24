@@ -94,21 +94,14 @@ valor:boolean=false
 
   onMouseCard( indexSelected:number){
     console.log(this.granjas)
-  this.indexSelected = indexSelected;
-  this.markerPosition = {
-   lat: Number(this.granjas[indexSelected].latitud),
-   lng:Number(this.granjas[indexSelected].longitud),
- };
-  this.options = {
-     center: {
-       lat: Number(this.granjas[indexSelected].latitud),
-       lng:Number(this.granjas[indexSelected].longitud),
-     },
-     zoom: 14,
-   };
-  this.openInfoWindow(this.marker, indexSelected)
-  /* console.log(this.markersInfo[indexSelected].markerPosition=this.markerPosition) */
-  /*  this.markersInfo.push({markerPosition: this.markerPosition}); */
+      this.indexSelected = indexSelected;
+      this.markerPosition = {
+      lat: Number(this.granjas[indexSelected].latitud),
+      lng:Number(this.granjas[indexSelected].longitud),
+    };
+    this.openInfoWindow(this.marker, indexSelected)
+    /* console.log(this.markersInfo[indexSelected].markerPosition=this.markerPosition) */
+    /*  this.markersInfo.push({markerPosition: this.markerPosition}); */
   }
 
   eliminInfoWindow(){
