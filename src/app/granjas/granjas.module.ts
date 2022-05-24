@@ -12,6 +12,7 @@ import { HttpsService } from '../services/https.service';
 import { SharedModule } from '../shared/shared.module';
 import { GranjaGalleryComponent } from './components/granja-gallery/granja-gallery.component';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
+import { ShorterPipe } from '../pipes/shorter.pipe';
 
 @NgModule({
   declarations: [

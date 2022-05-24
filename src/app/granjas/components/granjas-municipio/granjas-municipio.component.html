@@ -50,16 +50,16 @@
     </div>
 </div>
 
-<div class="granjas-container" >
+<div class="granjas-container">
         <div class="cards-container overflow-auto" *ngIf="granjas.length >= 1">
           <div class="box" *ngFor="let granja of granjas; let i =index">
             <div class="card" (mouseover)="onMouseCard(i)" (mouseout)="eliminInfoWindow()">
                 <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}"
                   (click)="navigate(granja.id_granja)">
     
-                <h3 class="card__title" (click)="navigate(granja.id_granja)">{{granja.nombre}}</h3>
+                <h3 class="card__title" (click)="navigate(granja.id_granja)">{{granja.nombre | shorter:20}}</h3>
                 <p class="card__description" (click)="navigate(granja.id_granja)">
-                  {{granja.descripcion}}
+                  {{granja.descripcion | shorter:200}}
                 </p>
     
                 <div class="card__rating-container">
@@ -71,10 +71,10 @@
                 <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.favorita"
                   (click)="changeFavorite(i)">
                 <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.favorita" (click)="changeFavorite(i)">
-                <span class="card__data">{{granja.area | number:'':'es'}} m²</span>
+                <span class="card__data" (click)="navigate(granja.id_granja)">{{granja.area | number:'':'es'}} m²</span>
     
               </div>    
-              <button class="box__button btn-outline-blue" (click)="navigate(granja.id_granja)">Ver más</button>
+             <!--  <button class="box__button btn-outline-blue" (click)="navigate(granja.id_granja)">Ver más</button> -->
           </div>
         </div>
         <div class="mapgoogle overflow-auto  " *ngIf="granjas.length > 0 && (apiLoaded | async)">

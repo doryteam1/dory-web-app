@@ -16,7 +16,12 @@ export class GranjaDetalleComponent implements OnInit {
   selectedGranjaId:number = -1;
   errorMessage = '';
   showGallery:boolean = false;
-
+  imgsele:boolean=false
+  indice!:number
+  tiempo:any
+  imgmauseover:boolean=false
+  showconte:boolean=false
+  imgselecmodal!:number
   constructor(private granjasService:GranjasService, private activatedRoute:ActivatedRoute,private modalService: NgbModal,) { }
 
   ngOnInit(): void {
@@ -46,16 +51,11 @@ export class GranjaDetalleComponent implements OnInit {
       }
     );
   }
-  imgsele:boolean=false
-  indice!:number
-  tiempo:any
-  imgmauseover:boolean=false
-  showconte:boolean=false
-  imgselecmodal!:number
+ 
  fotoSele(i:number,content:any){
-this.indice=i
-this.openGaleriaModal(content)
-console.log(content)
+    this.indice=i
+    this.openGaleriaModal(content)
+    console.log(content)
   }
   imgSelecionadaModal(i:number){
     this.imgselecmodal=i
@@ -80,15 +80,12 @@ console.log(content)
 
 
   changeFavorite(){
+    this.granja.favorita = this.granja.favorita == 1 ? 0 : 1;
     this.granjasService.esFavorita(this.granja.id_granja).subscribe(
       (response)=>{
-        if(this.granja.favorita == 1){
-          this.granja.favorita = 0;
-        }else{
-          this.granja.favorita = 1;
-        }
       },err=>{
         console.log(err)
+        this.granja.favorita = this.granja.favorita == 1 ? 0 : 1;
       }
     )
   }

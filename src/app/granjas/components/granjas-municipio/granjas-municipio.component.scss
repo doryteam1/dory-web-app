@@ -61,19 +61,20 @@
     grid-template-rows: [r-l-one] 30px [r-l-two]120px [r-l-three] 50px [r-l-four];
     grid-template-areas:
         "image title favorite"
-        "image description ."
+        "image description description"
         ". data data";
-    column-gap:30px;
+    column-gap:15px;
     margin-left: 25px;
-    margin-bottom: 10px;
+    margin-bottom: 35px;
     margin-right: 8px;
     margin-top: 0px;
     border:0;
     background-color: var(--gris4);
     height: 221px;
-    width: 663px;
+    width: 630px;
     padding-top: 10px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .card__image{

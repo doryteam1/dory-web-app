@@ -117,8 +117,7 @@ valor:boolean=false
     this.router.navigateByUrl('/granjas/municipio/detalle/'+id)
   }
   changeFavorite(i:number) {
-      console.log(this.granjas[i].id_granja)
-      console.log(this.granjas[i])
+    this.granjas[i].favorita = this.granjas[i].favorita == 1 ? 0 : 1;  
     this.granjasService
       .esFavorita(
         this.granjas[i].id_granja
@@ -126,15 +125,10 @@ valor:boolean=false
       .subscribe(
         (response) => {
           console.log(response);
-          if(this.granjas[i].favorita == 1){
-            this.granjas[i].favorita = 0;
-          }else{
-            this.granjas[i].favorita = 1;
-          }
         },
         (err) => {
           console.log(err);
-
+          this.granjas[i].favorita = this.granjas[i].favorita == 1 ? 0 : 1;
         }
       );
     //this.proveedorService.updateProducto(this.form)

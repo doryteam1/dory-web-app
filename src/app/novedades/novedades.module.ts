@@ -12,7 +12,6 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 @NgModule({
   declarations: [
     NovedadesComponent,
-    ShorterPipe
   ],
   imports: [
     CommonModule,
