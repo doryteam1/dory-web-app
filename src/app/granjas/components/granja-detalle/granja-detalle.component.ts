@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GranjasService } from '../../services/granjas.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-granja-detalle',
@@ -9,13 +10,14 @@ import { GranjasService } from '../../services/granjas.service';
 })
 export class GranjaDetalleComponent implements OnInit {
   granja:any;
+  fotosgranja:any;
   showNotFound:boolean = false;
   showError:boolean = false;
   selectedGranjaId:number = -1;
   errorMessage = '';
   showGallery:boolean = false;
-  
-  constructor(private granjasService:GranjasService, private activatedRoute:ActivatedRoute) { }
+
+  constructor(private granjasService:GranjasService, private activatedRoute:ActivatedRoute,private modalService: NgbModal,) { }
 
   ngOnInit(): void {
     this.selectedGranjaId = Number(this.activatedRoute.snapshot.paramMap.get('id')!);
@@ -23,6 +25,9 @@ export class GranjaDetalleComponent implements OnInit {
       (response)=>{
         if(response.data.length > 0){
           this.granja = response.data[0];
+          this.fotosgranja=response.data[0].fotos
+          console.log(this.fotosgranja)
+          console.log(this.granja)
           this.showError = false;
           this.showNotFound = false;
         }else{
@@ -41,5 +46,37 @@ export class GranjaDetalleComponent implements OnInit {
       }
     );
   }
+  imgsele:boolean=false
+  indice!:number
+  tiempo:any
+  imgmauseover:boolean=false
+  showconte:boolean=false
+  imgselecmodal!:number
+ fotoSele(i:number,content:any){
+this.indice=i
+this.openGaleriaModal(content)
+console.log(content)
+  }
+  imgSelecionadaModal(i:number){
+    this.imgselecmodal=i
+    clearInterval(this.tiempo)
+     this.indice=-1
+     this.showconte=true
+  }
+  imgMause(){
+    this.imgmauseover=true
+     this.indice=-1
+
+  }
+  openGaleriaModal(content:any){
+ this.showconte=false
+     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass:'modal-photo' , scrollable: true,centered: true}).result.then((result) => {
+      console.log(result)
+    }, (reason) => {
+      console.log(reason)
+    });
+
+  }
+
 
 }

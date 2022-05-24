@@ -5,6 +5,7 @@ import { MisGranjasComponent } from './components/mis-granjas/mis-granjas.compon
 import { MisProductosComponent } from './components/mis-productos/mis-productos.component';
 import { MisVehiculosComponent } from './components/mis-vehiculos/mis-vehiculos.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
       { path:'perfil', component:PerfilComponent},
       { path:'granjas', component:MisGranjasComponent},
       { path:'mis-productos', component:MisProductosComponent},
-      { path:'mis-vehiculos', component:MisVehiculosComponent}
+      { path:'mis-vehiculos', component:MisVehiculosComponent},
+      {path:'mis-favoritos',component:MisFavoritosComponent},
     ]
   }
 ];

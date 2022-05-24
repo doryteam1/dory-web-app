@@ -1,0 +1,60 @@
+<div class="row row-cols-1 row-cols-md-3 g-4"  >
+  <!-- <div class="col">
+    <div class="card h-100 cart-mi-estilo">
+      <img
+        src="../../../../assets/images/foto hotel.jpg"
+        class="card-img-top"
+        alt="..."
+      />
+      <div class="card-body" style="padding: 16px">
+        <div class="cart-titulo">
+          <h5 class="card-title">Titulo de la granja</h5>
+        </div>
+        <div class="div-cart-linea">
+          <p class="card-text">Calificación</p>
+        </div>
+        <div class="div-cart-linea">
+          <p class="card-text">Ubicación</p>
+        </div>
+          <div class="d-grid gap-2 mi-estilo-button-cart">
+            <a class="btn btn-primary" type="button">
+              Ver detalles de la granja
+            </a>
+          </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="col cart-colu" *ngFor="let granja of miGranjaFavorita; let i =index">
+    <div class="card h-100 cart-mi-estilo ">
+      <div class="bui-card__image-container">
+
+        <img class="bui-card__image " alt="" [src]="granja.img"
+         >
+      </div>
+      <!-- <img [src]="granja.img" class="card-img-top" alt="..." /> -->
+      <div class="card-body" style="padding: 16px">
+        <div class="cart-titulo">
+          <h5 class="card-title">{{granja.titulo}}</h5>
+        </div>
+        <div class="div-cart-linea ubicac-granja-favori">
+          <p class="card-text">{{granja.ubicacion}}</p>
+        </div>
+        <div class="div-cart-linea calificaci-granja">
+          <p class="card-text">{{granja.calificacion}}</p>
+        </div>
+        <div class="d-grid gap-2 mi-estilo-button-cart">
+          <a class="btn btn-primary btnmibutton" type="button">
+            Ver detalles de la granja
+          </a>
+        </div>
+        <a href="#" class="listview__remove_hotel_icon"  >
+          <svg width="23" height="23" viewBox="0 0 128 128" class="bk-icon -iconset-close_circle">
+            <path
+              d="M64 8a56 56 0 1 0 56 56A56 56 0 0 0 64 8zm22.2 69.8a6 6 0 1 1-8.4 8.4L64 72.5 50.2 86.2a6 6 0 0 1-8.4-8.4L55.5 64 41.8 50.2a6 6 0 0 1 8.4-8.4L64 55.5l13.8-13.7a6 6 0 0 1 8.4 8.4L72.5 64z">
+            </path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

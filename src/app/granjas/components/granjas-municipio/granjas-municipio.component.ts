@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
 import {MapInfoWindow, MapMarker} from '@angular/google-maps';
 
+
 @Component({
   selector: 'app-granjas-municipio',
   templateUrl: './granjas-municipio.component.html',
@@ -87,10 +88,7 @@ valor:boolean=false
       }
     );
   }
-  changeFavorite(i:number){
-    console.log(i)
 
-  }
 
   onMouseCard( indexSelected:number){
     console.log(this.granjas)
@@ -111,13 +109,31 @@ valor:boolean=false
 
   openInfoWindow(marker: MapMarker, index:number) {
     this.infoWindow.open(marker);
-
     this.selectedGranja.nombre = this.granjas[index].nombre;
     this.selectedGranja.propietario.nombre = this.granjas[index].propietario;
   }
 
   navigate(id:number){
     this.router.navigateByUrl('/granjas/municipio/detalle/'+id)
+  }
+  changeFavorite(i:number) {
+      console.log(this.granjas[i].id_granja)
+      console.log(this.granjas[i])
+    this.granjasService
+      .esFavorita(
+        this.granjas[i].id_granja
+      )
+      .subscribe(
+        (response) => {
+          console.log(response);
+
+        },
+        (err) => {
+          console.log(err);
+
+        }
+      );
+    //this.proveedorService.updateProducto(this.form)
   }
 
 }
