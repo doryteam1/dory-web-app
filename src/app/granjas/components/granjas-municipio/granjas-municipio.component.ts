@@ -126,7 +126,11 @@ valor:boolean=false
       .subscribe(
         (response) => {
           console.log(response);
-
+          if(this.granjas[i].favorita == 1){
+            this.granjas[i].favorita = 0;
+          }else{
+            this.granjas[i].favorita = 1;
+          }
         },
         (err) => {
           console.log(err);

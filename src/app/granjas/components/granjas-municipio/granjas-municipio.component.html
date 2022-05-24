@@ -52,26 +52,29 @@
 
 <div class="granjas-container" >
         <div class="cards-container overflow-auto" *ngIf="granjas.length >= 1">
-          <div class="card" *ngFor="let granja of granjas; let i =index" (mouseover)="onMouseCard(i)" (mouseout)="eliminInfoWindow()">
-            <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}"
-              (click)="navigate(granja.id_granja)">
-
-            <h3 class="card__title" (click)="navigate(granja.id_granja)">{{granja.nombre}}</h3>
-            <p class="card__description" (click)="navigate(granja.id_granja)">
-              {{granja.descripcion}}
-            </p>
-
-            <div class="card__rating-container">
-              <img class="card__icon-rating" src="assets/icons/star-filled.svg">
-              <span class="card__rating">{{granja.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
-              <span class="card__rating__detail"> ({{granja.count_resenas}} reseñas)</span>
-            </div>
-
-            <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.esFavorita"
-              (click)="changeFavorite(i)">
-            <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.esFavorita" (click)="changeFavorite(i)">
-            <span class="card__data">{{granja.area | number:'':'es'}} m²</span>
-
+          <div class="box" *ngFor="let granja of granjas; let i =index">
+            <div class="card" (mouseover)="onMouseCard(i)" (mouseout)="eliminInfoWindow()">
+                <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}"
+                  (click)="navigate(granja.id_granja)">
+    
+                <h3 class="card__title" (click)="navigate(granja.id_granja)">{{granja.nombre}}</h3>
+                <p class="card__description" (click)="navigate(granja.id_granja)">
+                  {{granja.descripcion}}
+                </p>
+    
+                <div class="card__rating-container">
+                  <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+                  <span class="card__rating">{{granja.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
+                  <span class="card__rating__detail"> ({{granja.count_resenas}} reseñas)</span>
+                </div>
+    
+                <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.favorita"
+                  (click)="changeFavorite(i)">
+                <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.favorita" (click)="changeFavorite(i)">
+                <span class="card__data">{{granja.area | number:'':'es'}} m²</span>
+    
+              </div>    
+              <button class="box__button btn-outline-blue" (click)="navigate(granja.id_granja)">Ver más</button>
           </div>
         </div>
         <div class="mapgoogle overflow-auto  " *ngIf="granjas.length > 0 && (apiLoaded | async)">

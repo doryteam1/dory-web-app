@@ -17,7 +17,8 @@
         <a class="buttons-container__description" href="#">Compartir</a>
       </div>
       <div>
-        <img class="buttons-container__image" src="assets/icons/heart-outline.svg">
+        <img class="buttons-container__image" src="assets/icons/heart-filled.svg" *ngIf="granja.favorita" (click)="changeFavorite()">
+        <img class="buttons-container__image" src="assets/icons/heart-outline.svg" *ngIf="!granja.favorita" (click)="changeFavorite()">
         <a class="buttons-container__description" href="#">Guardar</a>
       </div>
     </div>

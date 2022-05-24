@@ -79,4 +79,17 @@ console.log(content)
   }
 
 
+  changeFavorite(){
+    this.granjasService.esFavorita(this.granja.id_granja).subscribe(
+      (response)=>{
+        if(this.granja.favorita == 1){
+          this.granja.favorita = 0;
+        }else{
+          this.granja.favorita = 1;
+        }
+      },err=>{
+        console.log(err)
+      }
+    )
+  }
 }
