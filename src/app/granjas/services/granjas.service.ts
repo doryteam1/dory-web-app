@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpsService } from 'src/app/services/https.service';
+import { ResenasModalContentComponent } from '../components/modals/resenas-modal-content/resenas-modal-content.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GranjasService {
 
-  constructor(private https:HttpsService) {
+  constructor(private https:HttpsService, private modalService:NgbModal) {
 
   }
 
@@ -62,5 +64,24 @@ export class GranjasService {
 
   updatePhotos(idGranja:number, photos:any){
     return this.https.put('https://dory-api-rest.herokuapp.com/api/granjas/update/photos/'+idGranja, photos)
+  }
+
+  misFavoritas(){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/granjas/misfavoritas')
+  }
+
+  resenasById(id:number){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/resenas/granja/'+id)
+  }
+
+  public showResenasModal(
+    title: string,
+    btnCancelText: string = 'Cerrar',
+    granjaId: number): Promise<boolean> {
+    const modalRef = this.modalService.open(ResenasModalContentComponent);
+    modalRef.componentInstance.title = title;
+    modalRef.componentInstance.btnCancelText = btnCancelText;
+    modalRef.componentInstance.granjaId = granjaId;
+    return modalRef.result;
   }
 }

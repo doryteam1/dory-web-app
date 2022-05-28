@@ -6,7 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlacesService } from 'src/app/services/places.service';
-import { ConfirmModalService } from 'src/app/shared/services/confirm-modal.service';
+import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -96,7 +96,7 @@ export class MisGranjasComponent implements OnInit {
     private storage: FirebaseStorageService,
     private sanitizer: DomSanitizer,
     private places: PlacesService,
-    private confirmModalService: ConfirmModalService,
+    private appModalService: AppModalService,
     httpClient: HttpClient,
     private geocoder: MapGeocoder,
     private confirmModalMapService: ConfirmModalMapService
@@ -298,7 +298,7 @@ idmunicipioselec(){
   }
 
   deleteGranja(idGranja:number, i:number){
-    this.confirmModalService.confirm('Eliminar granja','Esta seguro que desea eliminar la granja','Eliminar','No estoy seguro',this.granjas[i].nombre)
+    this.appModalService.confirm('Eliminar granja','Esta seguro que desea eliminar la granja','Eliminar','No estoy seguro',this.granjas[i].nombre)
     .then(
       (result)=>{
         if(result == true){

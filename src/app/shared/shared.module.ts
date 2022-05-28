@@ -15,7 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TopAlertComponent } from './components/top-alert/top-alert.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { ConfirmModalMapComponent } from './components/confirm-modal-map/confirm-modal-map.component';
-import { ConfirmModalService } from './services/confirm-modal.service';
+import { AppModalService } from './services/app-modal.service';
 import { ConfirmModalMapService } from './services/confirm-modal-map.service';
 import { ShorterPipe } from '../pipes/shorter.pipe';
 
@@ -54,6 +54,6 @@ import { ShorterPipe } from '../pipes/shorter.pipe';
     ConfirmModalMapComponent,
     ShorterPipe
   ],
-  providers: [ConfirmModalService, ConfirmModalMapService],
+  providers: [AppModalService, ConfirmModalMapService],
 })
 export class SharedModule {}

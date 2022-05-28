@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-title">{{title}}</h4>
+    <button type="button" class="btn-close" aria-describedby="modal-title" (click)="dismiss()"></button>
+</div>
+<div class="modal-body">
+    <div class="card__rating-container">
+        <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+        <span class="card__rating">{{puntuacion !== null && puntuacion !== undefined ? (puntuacion | number:'1.1-1') : 'Sin calificación'}}</span>
+        <span class="card__rating__detail"> ({{resenas.length}} reseñas)</span>
+        <!-- <span class="card__rating">{{granja.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
+        <span class="card__rating__detail" (click)="showResenas()"> ({{granja.count_resenas}} reseñas)</span> -->
+        
+    </div>
+    <div class="container overflow-auto" *ngIf="!showNotFound && !showErrorFound">
+        <div class="card" *ngFor="let resena of resenas">
+            <div class="card__row">
+                <img src="{{ resena.foto_usuario ? resena.foto_usuario : 'assets/images/avatar-person.svg' }}" alt="" class="card__image">
+                <div class="card__box">
+                    <span class="card__title">{{resena.nombre_usuario}}</span>
+                    <div class="span card__date">{{resena.fecha}}</div>
+                </div>
+            </div>
+            <p class="card__paragh">{{resena.descripcion}}</p>
+        </div>
+    </div>
+
+    <div class="search-container" *ngIf="showNotFound">
+        <div class="search-container__box">
+            <img class="search-container__image" src="assets/images/searching.svg">
+            <h3>No se han encontrado resultados</h3>
+            <p>Aun no has registrado tus granjas</p>
+        </div>
+    </div>
+
+    <div class="search-container" *ngIf="showErrorFound">
+        <div class="search-container__box">
+            <img class="search-container__image" src="assets/images/robot-broken.svg">
+            <h3>Error inesperado</h3>
+            <p>Se ha presentado un error. Intenta nuevamente.</p>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="decline()">{{btnCancelText}}</button>
+    <!-- <button type="button" class="btn btn-danger" (click)="accept()">{{btnOkText}}</button> -->
+</div>

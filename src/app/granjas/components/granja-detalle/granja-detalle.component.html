@@ -7,7 +7,7 @@
 <div class="header-container">
     <h3 class="header-container__title">{{granja?.nombre}}</h3>
     <img class="header-container__icon" src="assets/icons/star-filled.svg">
-    <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span> <span class="header-container__description">  ({{granja?.count_resenas}} reseñas)  {{granja?.nombre_municipio}}, Sucre, Colombia</span>
+    <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span> <span class="header-container__description">  <span class="header-container__resenas" (click)="showResenas(granja.id_granja)">({{granja?.count_resenas}} reseñas) </span> {{granja?.nombre_municipio}}, Sucre, Colombia</span>
 </div>
 
 <div class="photo-container">

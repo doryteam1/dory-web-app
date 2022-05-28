@@ -53,6 +53,7 @@
 <div class="granjas-container">
         <div class="cards-container overflow-auto" *ngIf="granjas.length >= 1">
           <div class="box" *ngFor="let granja of granjas; let i =index">
+                      
             <div class="card" (mouseover)="onMouseCard(i)" (mouseout)="eliminInfoWindow()">
                 <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}"
                   (click)="navigate(granja.id_granja)">
@@ -64,8 +65,8 @@
     
                 <div class="card__rating-container">
                   <img class="card__icon-rating" src="assets/icons/star-filled.svg">
-                  <span class="card__rating">{{granja.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
-                  <span class="card__rating__detail"> ({{granja.count_resenas}} reseñas)</span>
+                  <span class="card__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ? (granja.puntuacion | number:'1.1-1') : 'Sin calificación'}}</span>
+                  <span class="card__rating__detail" (click)="showResenas(granja.id_granja)"> ({{granja.count_resenas}} reseñas)</span>
                 </div>
     
                 <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.favorita"

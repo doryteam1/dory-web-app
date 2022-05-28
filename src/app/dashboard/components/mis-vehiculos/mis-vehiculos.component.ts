@@ -4,7 +4,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { VehiculosService } from 'src/app/services/vehiculos.service';
-import { ConfirmModalService } from 'src/app/shared/services/confirm-modal.service';
+import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 
 @Component({
@@ -33,7 +33,7 @@ export class MisVehiculosComponent implements OnInit {
               private storage:FirebaseStorageService, 
               private sanitizer: DomSanitizer, 
               private cd:ChangeDetectorRef,
-              private confirmModalService:ConfirmModalService) { }
+              private appModalService:AppModalService) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');
@@ -157,7 +157,7 @@ export class MisVehiculosComponent implements OnInit {
   } */
 
   deleteVehiculo(id:number, i:number){
-    this.confirmModalService.confirm('Eliminar vehiculo','Esta seguro que desea eliminar el vehiculo con id','Eliminar','No estoy seguro',this.vehiculos[i].modelo)
+    this.appModalService.confirm('Eliminar vehiculo','Esta seguro que desea eliminar el vehiculo con id','Eliminar','No estoy seguro',this.vehiculos[i].modelo)
     .then(
       (result)=>{
         if(result == true){

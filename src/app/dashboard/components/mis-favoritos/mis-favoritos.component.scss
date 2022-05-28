@@ -35,7 +35,7 @@
   height: 23px;
   right: 15px;
   top: 15px;
-  background: #fff;
+  background: none;
   border-radius: 100%;
 }
  .listview__remove_hotel_icon svg{
@@ -48,12 +48,13 @@
 .bui-card__image-container {
   position: relative;
   border-radius: 2px 2px 0 0;
-  overflow: hidden;
-  height: auto;
+  height: 100%;
+  width: 100%;
 }
 .bui-card__image {
   width: 100%;
-  height: 100%;
+  height: 182px;
+  border-radius: 2px 2px 0 0;
   margin: 0;
   object-fit: cover;
 }

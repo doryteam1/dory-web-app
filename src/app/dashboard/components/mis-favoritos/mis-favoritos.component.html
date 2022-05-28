@@ -24,36 +24,31 @@
       </div>
     </div>
   </div> -->
-  <div class="col cart-colu" *ngFor="let granja of miGranjaFavorita; let i =index">
+  <div class="col cart-colu" *ngFor="let granja of misGranjaFavoritas; let i =index">
     <div class="card h-100 cart-mi-estilo ">
       <div class="bui-card__image-container">
-
-        <img class="bui-card__image " alt="" [src]="granja.img"
-         >
+        <img class="bui-card__image " alt="" [src]="granja.fotos[0]">
       </div>
       <!-- <img [src]="granja.img" class="card-img-top" alt="..." /> -->
       <div class="card-body" style="padding: 16px">
         <div class="cart-titulo">
-          <h5 class="card-title">{{granja.titulo}}</h5>
+          <h5 class="card-title">{{granja.nombre}}</h5>
         </div>
         <div class="div-cart-linea ubicac-granja-favori">
-          <p class="card-text">{{granja.ubicacion}}</p>
+          <p class="card-text">{{granja.descripcion | shorter:80}}</p>
         </div>
         <div class="div-cart-linea calificaci-granja">
-          <p class="card-text">{{granja.calificacion}}</p>
+          <p class="card-text">{{granja.puntuacion}}</p>
         </div>
         <div class="d-grid gap-2 mi-estilo-button-cart">
-          <a class="btn btn-primary btnmibutton" type="button">
+          <a class="btn btn-primary btnmibutton" type="button" (click)="showDetail(i)">
             Ver detalles de la granja
           </a>
         </div>
-        <a href="#" class="listview__remove_hotel_icon"  >
-          <svg width="23" height="23" viewBox="0 0 128 128" class="bk-icon -iconset-close_circle">
-            <path
-              d="M64 8a56 56 0 1 0 56 56A56 56 0 0 0 64 8zm22.2 69.8a6 6 0 1 1-8.4 8.4L64 72.5 50.2 86.2a6 6 0 0 1-8.4-8.4L55.5 64 41.8 50.2a6 6 0 0 1 8.4-8.4L64 55.5l13.8-13.7a6 6 0 0 1 8.4 8.4L72.5 64z">
-            </path>
-          </svg>
-        </a>
+        <div class="listview__remove_hotel_icon">
+          <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.esfavorita" (click)="changeFavorite(i)">
+          <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.esfavorita" (click)="changeFavorite(i)">
+        </div>  
       </div>
     </div>
   </div>

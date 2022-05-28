@@ -204,6 +204,16 @@
   max-width: 80vw;
 }
 
+.card__icon-favorite{
+  grid-area: favorite;
+  width: 24px;
+  height: 24px;
+  justify-self: end;
+  align-self: end;
+  cursor: pointer;
+}
+
+
 /* Put your css in here */
 
 

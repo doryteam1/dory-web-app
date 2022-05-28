@@ -134,4 +134,8 @@ valor:boolean=false
     //this.proveedorService.updateProducto(this.form)
   }
 
+  showResenas(idGranja:number){
+    this.granjasService.showResenasModal('Reseñas','Cerrar',idGranja);
+  }
+
 }

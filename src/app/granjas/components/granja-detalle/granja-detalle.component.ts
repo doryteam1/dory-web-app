@@ -89,4 +89,8 @@ export class GranjaDetalleComponent implements OnInit {
       }
     )
   }
+
+  showResenas(idGranja:number){
+    this.granjasService.showResenasModal('Reseñas','Cerrar',idGranja);
+  }
 }

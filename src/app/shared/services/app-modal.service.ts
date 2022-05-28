@@ -5,7 +5,7 @@ import { ConfirmModalComponent } from '../components/confirm-modal/confirm-modal
 @Injectable({
   providedIn: 'root'
 })
-export class ConfirmModalService {
+export class AppModalService {
 
   constructor(private modalService:NgbModal) { }
 

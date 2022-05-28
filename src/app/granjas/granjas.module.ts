@@ -13,13 +13,15 @@ import { SharedModule } from '../shared/shared.module';
 import { GranjaGalleryComponent } from './components/granja-gallery/granja-gallery.component';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { ShorterPipe } from '../pipes/shorter.pipe';
+import { ResenasModalContentComponent } from './components/modals/resenas-modal-content/resenas-modal-content.component';
 
 @NgModule({
   declarations: [
     GranjasComponent,
     GranjasMunicipioComponent,
     GranjaDetalleComponent,
-    GranjaGalleryComponent
+    GranjaGalleryComponent,
+    ResenasModalContentComponent,
   ],
   imports: [
     CommonModule,
