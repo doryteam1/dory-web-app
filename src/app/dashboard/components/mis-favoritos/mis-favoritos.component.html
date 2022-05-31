@@ -24,32 +24,27 @@
       </div>
     </div>
   </div> -->
-  <div class="col cart-colu" *ngFor="let granja of misGranjaFavoritas; let i =index">
-    <div class="card h-100 cart-mi-estilo ">
-      <div class="bui-card__image-container">
-        <img class="bui-card__image " alt="" [src]="granja.fotos[0]">
+
+  <div class="container">
+    <div class="card" *ngFor="let granja of misGranjaFavoritas; let i = index">
+      <img class="card__image" src="{{ granja.fotos[0] ? granja.fotos[0] : 'https://admin.moodyyc.com/img/no-image.png'}}"
+        (click)="navigate(i)">
+
+      <h3 class="card__title" (click)="navigate(i)">{{granja.nombre | shorter:20}}</h3>
+      <p class="card__description" (click)="navigate(i)">
+        {{granja.descripcion | shorter:200}}
+      </p>
+
+      <div class="card__rating-container">
+        <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+        <span class="card__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ? (granja.puntuacion | number:'1.1-1') : 'Sin calificación'}}</span>
+        <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)"> ({{granja.count_resenas}} reseñas)</span>
       </div>
-      <!-- <img [src]="granja.img" class="card-img-top" alt="..." /> -->
-      <div class="card-body" style="padding: 16px">
-        <div class="cart-titulo">
-          <h5 class="card-title">{{granja.nombre}}</h5>
-        </div>
-        <div class="div-cart-linea ubicac-granja-favori">
-          <p class="card-text">{{granja.descripcion | shorter:80}}</p>
-        </div>
-        <div class="div-cart-linea calificaci-granja">
-          <p class="card-text">{{granja.puntuacion}}</p>
-        </div>
-        <div class="d-grid gap-2 mi-estilo-button-cart">
-          <a class="btn btn-primary btnmibutton" type="button" (click)="showDetail(i)">
-            Ver detalles de la granja
-          </a>
-        </div>
-        <div class="listview__remove_hotel_icon">
-          <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.esfavorita" (click)="changeFavorite(i)">
-          <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.esfavorita" (click)="changeFavorite(i)">
-        </div>  
-      </div>
-    </div>
+
+      <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita" (click)="changeFavorite(i)">
+      <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita" (click)="changeFavorite(i)">
+      <span class="card__data" (click)="navigate(i)">{{granja.area | number:'':'es'}} m²</span>
+    </div>    
   </div>
+
 </div>

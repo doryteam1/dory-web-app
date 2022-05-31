@@ -66,3 +66,96 @@
   flex-shrink: 0;
   display: block;
 }
+
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  margin-top: 100px;
+}
+
+.card{
+  display:grid;
+  grid-template-columns: [c-l-one] 260px [c-l-two] 293px [c-l-three] 35px [c-l-four];
+  grid-template-rows: [r-l-one] 30px [r-l-two]120px [r-l-three] 50px [r-l-four];
+  grid-template-areas:
+      "image title favorite"
+      "image description description"
+      ". data data";
+  column-gap:15px;
+  margin-left: 25px;
+  margin-bottom: 35px;
+  margin-right: 8px;
+  margin-top: 0px;
+  border:0;
+  background-color: var(--gris4);
+  height: 221px;
+  width: 630px;
+  padding-top: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.card__image{
+  grid-area: image;
+  width: 262px;
+  height: 219px;
+  border-radius: 10px 0px 0px 10px;
+  cursor:pointer;
+  margin-top: -9px;
+}
+
+.card__title{
+  grid-area: title;
+  font-size:24px;
+  cursor: pointer;
+}
+
+.card__icon-favorite{
+  grid-area: favorite;
+  width: 24px;
+  height: 24px;
+  justify-self: end;
+  align-self: end;
+  cursor: pointer;
+}
+
+.card__description{
+  grid-area: description;
+  font-size: 16px;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.card__rating-container{
+  grid-area:data;
+  align-self:end;
+  cursor:pointer;
+}
+
+.card__icon-rating{
+  height: 20px;
+  width: 20px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.card__rating{
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.card__rating__detail{
+
+}
+
+.card__data{
+  grid-area:data;
+  justify-self: end;
+  align-self: end;
+  font-size:22px;
+  font-weight: 700;
+  cursor: pointer;
+}
