@@ -18,6 +18,7 @@ import { ConfirmModalMapComponent } from './components/confirm-modal-map/confirm
 import { AppModalService } from './services/app-modal.service';
 import { ConfirmModalMapService } from './services/confirm-modal-map.service';
 import { ShorterPipe } from '../pipes/shorter.pipe';
+import { StarsComponent } from './components/stars/stars.component';
 
 
 
@@ -36,7 +37,8 @@ import { ShorterPipe } from '../pipes/shorter.pipe';
     TopAlertComponent,
     ConfirmModalComponent,
     ConfirmModalMapComponent,
-    ShorterPipe
+    ShorterPipe,
+    StarsComponent
   ],
   imports: [CommonModule, RouterModule, FormsModule, NgbModule],
   exports: [
@@ -52,7 +54,8 @@ import { ShorterPipe } from '../pipes/shorter.pipe';
     TopAlertComponent,
     ConfirmModalComponent,
     ConfirmModalMapComponent,
-    ShorterPipe
+    ShorterPipe,
+    StarsComponent
   ],
   providers: [AppModalService, ConfirmModalMapService],
 })

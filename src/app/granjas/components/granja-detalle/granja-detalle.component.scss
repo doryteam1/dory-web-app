@@ -339,3 +339,110 @@ background-color: #ccc;
         max-height: 100%;
         object-fit: contain;
 }
+
+.card{
+  margin-bottom: 20px;
+  border:none;
+}
+
+.card__image{
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card__box{
+  display: flex;
+  flex-direction: column;
+}
+
+.card__title{
+  font-weight: 600;
+}
+
+.card__row{
+  display: flex;
+}
+
+.card__paragh{
+  margin-top: 15px;
+}
+
+.resenas{
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.resenas__title{
+
+}
+
+.resenas__title{
+
+}
+
+.resenas__rating{
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.resenas__button{
+  width: 251px;
+  align-self: center;
+}
+
+.qualify-modal{
+  width: 50vw;
+}
+
+.qualify-modal__container{
+  display: flex;
+  flex-direction: column;
+}
+
+.qualify-modal__button{
+  width: 12.25vw;
+  align-self: center;
+}
+
+.qualify-modal__input{
+  border: 1px solid #8692a6;
+  border-radius: 8px;
+  width: 100%;
+  height: 100px;
+  align-self: center;
+  margin-bottom: 20px;
+}
+
+.qualify-modal__stars{
+  align-self: center;
+}
+
+.qualify-modal__stars{
+  align-self: center;
+  margin-bottom: 15px
+}
+
+.qualify__spinner{
+  width: 20px;
+  height: 20px;
+}
+
+.search-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.search-container__box{
+    text-align: center;
+}
+
+.search-container__image{
+  width: 608px;
+  height: 295px;
+}
+

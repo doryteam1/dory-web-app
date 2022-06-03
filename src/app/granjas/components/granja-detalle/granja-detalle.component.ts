@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GranjasService } from '../../services/granjas.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Utilities } from 'src/app/utilities/utilities';
 
 @Component({
   selector: 'app-granja-detalle',
@@ -22,6 +23,13 @@ export class GranjaDetalleComponent implements OnInit {
   imgmauseover:boolean=false
   showconte:boolean=false
   imgselecmodal!:number
+  resenas:any = [];
+  showErrorFound: boolean = false;
+  puntuacion: any;
+  rating: number = -1;
+  descResena:string = '';
+  loading: boolean = false;
+  success:boolean = false;
   constructor(private granjasService:GranjasService, private activatedRoute:ActivatedRoute,private modalService: NgbModal,) { }
 
   ngOnInit(): void {
@@ -50,6 +58,22 @@ export class GranjaDetalleComponent implements OnInit {
         }
       }
     );
+
+    this.granjasService.resenasById(this.selectedGranjaId).subscribe(
+      (response)=>{
+        this.resenas = response.data.resenas;
+        this.puntuacion = response.data.puntaje;
+        if(this.resenas.length < 1){
+          this.showNotFound = true;
+        }else{
+          this.showNotFound = false;
+        }
+      },err=>{
+        this.showNotFound = false;
+        this.showErrorFound = true;
+        console.log(err)
+      }
+    )
   }
  
  fotoSele(i:number,content:any){
@@ -69,15 +93,21 @@ export class GranjaDetalleComponent implements OnInit {
 
   }
   openGaleriaModal(content:any){
- this.showconte=false
-     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass:'modal-photo' , scrollable: true,centered: true}).result.then((result) => {
-      console.log(result)
+    this.showconte=false
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass:'modal-photo' , scrollable: true,centered: true}).result.then((result) => {
+    console.log(result)
     }, (reason) => {
       console.log(reason)
     });
-
   }
 
+  openQualifyModal(content:any){
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass:'qualify-modal' , scrollable: true,centered: true}).result.then((result) => {
+    console.log(result)
+    }, (reason) => {
+      console.log(reason)
+    });
+  }
 
   changeFavorite(){
     this.granja.favorita = this.granja.favorita == 1 ? 0 : 1;
@@ -92,5 +122,33 @@ export class GranjaDetalleComponent implements OnInit {
 
   showResenas(idGranja:number){
     this.granjasService.showResenasModal('Reseñas','Cerrar',idGranja);
+  }
+
+  onRating(event:number){
+    console.log(event)
+    this.rating = event; 
+  }
+
+  publicarResena(){
+    let resena = {
+      id_granja:this.granja.id_granja,
+      descripcion:this.descResena,
+      fecha:Utilities.dateTimeNow()
+    }
+    this.loading = true;
+    this.granjasService.addResena(resena).subscribe(
+      (response)=>{
+        this.granjasService.calificarGranja(this.granja.id_granja,this.rating).subscribe(
+          response=>{
+            this.loading = false;
+            this.success = true;
+          },err=>{
+            this.loading = false;
+          }
+        )
+      },err=>{
+        this.loading = false;
+      }
+    )
   }
 }

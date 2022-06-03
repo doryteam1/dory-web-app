@@ -1,0 +1,13 @@
+<div class="container" (mouseleave)="mouseOut(0)">
+    <i class="container__icon" [ngClass]="[ overStar >= 1 ? 'bi-star-fill blue' : '' ,  1  >  overStar ? 'bi-star' : '']" (mouseover)="mouseOver(1)" (mouseout)="mouseOut(1)" (click)="onClick(1)" *ngIf="selectedStar == -1"></i>
+    <i class="container__icon" [ngClass]="[ overStar >= 2 ? 'bi-star-fill blue' : '' ,  2  >  overStar ? 'bi-star' : '']" (mouseover)="mouseOver(2)" (mouseout)="mouseOut(2)" (click)="onClick(2)" *ngIf="selectedStar == -1"></i>
+    <i class="container__icon" [ngClass]="[ overStar >= 3 ? 'bi-star-fill blue' : '' ,  3  >  overStar ? 'bi-star' : '']" (mouseover)="mouseOver(3)" (mouseout)="mouseOut(3)" (click)="onClick(3)" *ngIf="selectedStar == -1"></i>
+    <i class="container__icon" [ngClass]="[ overStar >= 4 ? 'bi-star-fill blue' : '' ,  4  >  overStar ? 'bi-star' : '']" (mouseover)="mouseOver(4)" (mouseout)="mouseOut(4)" (click)="onClick(4)" *ngIf="selectedStar == -1"></i>
+    <i class="container__icon" [ngClass]="[ overStar >= 5 ? 'bi-star-fill blue' : '' ,  5  >  overStar ? 'bi-star' : '']" (mouseover)="mouseOver(5)" (mouseout)="mouseOut(5)" (click)="onClick(5)" *ngIf="selectedStar == -1"></i>
+
+    <i class="container__icon" [ngClass]="[ selectedStar >= 1 ? 'bi-star-fill blue' : '' ,  1  >  selectedStar ? 'bi-star' : '']" *ngIf="selectedStar  > 0"></i>
+    <i class="container__icon" [ngClass]="[ selectedStar >= 2 ? 'bi-star-fill blue' : '' ,  2  >  selectedStar ? 'bi-star' : '']" *ngIf="selectedStar  > 0"></i>
+    <i class="container__icon" [ngClass]="[ selectedStar >= 3 ? 'bi-star-fill blue' : '' ,  3  >  selectedStar ? 'bi-star' : '']" *ngIf="selectedStar  > 0"></i>
+    <i class="container__icon" [ngClass]="[ selectedStar >= 4 ? 'bi-star-fill blue' : '' ,  4  >  selectedStar ? 'bi-star' : '']" *ngIf="selectedStar  > 0"></i>
+    <i class="container__icon" [ngClass]="[ selectedStar >= 5 ? 'bi-star-fill blue' : '' ,  5  >  selectedStar ? 'bi-star' : '']" *ngIf="selectedStar  > 0"></i>
+</div>

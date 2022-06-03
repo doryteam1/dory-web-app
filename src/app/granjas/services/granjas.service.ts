@@ -74,6 +74,10 @@ export class GranjasService {
     return this.https.get('https://dory-api-rest.herokuapp.com/api/resenas/granja/'+id)
   }
 
+  addResena(resena:any){
+    return this.https.post('https://dory-api-rest.herokuapp.com/api/resenas',resena)
+  }
+
   public showResenasModal(
     title: string,
     btnCancelText: string = 'Cerrar',
@@ -83,5 +87,9 @@ export class GranjasService {
     modalRef.componentInstance.btnCancelText = btnCancelText;
     modalRef.componentInstance.granjaId = granjaId;
     return modalRef.result;
+  }
+
+  calificarGranja(idGranja:number, calificacion:number){
+    return this.https.put('https://dory-api-rest.herokuapp.com/api/granjas/calificar/'+idGranja, {calificacion:calificacion})
   }
 }

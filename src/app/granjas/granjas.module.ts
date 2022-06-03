@@ -14,6 +14,7 @@ import { GranjaGalleryComponent } from './components/granja-gallery/granja-galle
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { ShorterPipe } from '../pipes/shorter.pipe';
 import { ResenasModalContentComponent } from './components/modals/resenas-modal-content/resenas-modal-content.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ResenasModalContentComponent } from './components/modals/resenas-modal-
     HttpClientJsonpModule,
     GranjasRoutingModule,
     NgbModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   providers: [
     GranjasService,

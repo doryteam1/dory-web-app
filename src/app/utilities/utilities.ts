@@ -16,5 +16,5 @@ export class Utilities{
         }).join(''));
       
         return JSON.parse(jsonPayload);
-      };
+      }
 }
