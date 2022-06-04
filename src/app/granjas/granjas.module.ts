@@ -10,9 +10,7 @@ import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS  } from '@an
 import { GranjasService } from './services/granjas.service';
 import { HttpsService } from '../services/https.service';
 import { SharedModule } from '../shared/shared.module';
-import { GranjaGalleryComponent } from './components/granja-gallery/granja-gallery.component';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
-import { ShorterPipe } from '../pipes/shorter.pipe';
 import { ResenasModalContentComponent } from './components/modals/resenas-modal-content/resenas-modal-content.component';
 import { FormsModule } from '@angular/forms';
 
@@ -21,7 +19,6 @@ import { FormsModule } from '@angular/forms';
     GranjasComponent,
     GranjasMunicipioComponent,
     GranjaDetalleComponent,
-    GranjaGalleryComponent,
     ResenasModalContentComponent,
   ],
   imports: [
@@ -38,10 +35,10 @@ import { FormsModule } from '@angular/forms';
     GranjasService,
     HttpsService,
     {
-      provide:HTTP_INTERCEPTORS,
-      useClass:AuthInterceptor,
-      multi:true
-    }
-  ]
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
 })
-export class GranjasModule { }
+export class GranjasModule {}

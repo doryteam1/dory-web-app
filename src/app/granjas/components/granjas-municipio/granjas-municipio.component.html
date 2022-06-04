@@ -1,6 +1,7 @@
 <app-notification-bar></app-notification-bar>
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
+
 <div class="data-container">
     <div class="container">
         <img class="container__icon" src="assets/icons/build.svg">
@@ -42,7 +43,7 @@
     </button>
 </div>
 
-<div class="search-container" *ngIf="granjas.length < 1">
+<div class="search-container" *ngIf="singranjas">
     <div class="search-container__box">
         <img class="search-container__image" src="assets/images/searching.svg">
         <h3>No se han encontrado resultados</h3>
@@ -50,53 +51,60 @@
     </div>
 </div>
 
-<div class="granjas-container">
-        <div class="cards-container overflow-auto" *ngIf="granjas.length >= 1">
-          <div class="box" *ngFor="let granja of granjas; let i =index">
-                      
-            <div class="card" (mouseover)="onMouseCard(i)" (mouseout)="eliminInfoWindow()">
-                <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}"
-                  (click)="navigate(granja.id_granja)">
-    
-                <h3 class="card__title" (click)="navigate(granja.id_granja)">{{granja.nombre | shorter:20}}</h3>
-                <p class="card__description" (click)="navigate(granja.id_granja)">
-                  {{granja.descripcion | shorter:200}}
-                </p>
-    
-                <div class="card__rating-container">
-                  <img class="card__icon-rating" src="assets/icons/star-filled.svg">
-                  <span class="card__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ? (granja.puntuacion | number:'1.1-1') : 'Sin calificación'}}</span>
-                  <span class="card__rating__detail" (click)="showResenas(granja.id_granja)"> ({{granja.count_resenas}} reseñas)</span>
-                </div>
-    
-                <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.favorita"
-                  (click)="changeFavorite(i)">
-                <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.favorita" (click)="changeFavorite(i)">
-                <span class="card__data" (click)="navigate(granja.id_granja)">{{granja.area | number:'':'es'}} m²</span>
-    
-              </div>    
-             <!--  <button class="box__button btn-outline-blue" (click)="navigate(granja.id_granja)">Ver más</button> -->
-          </div>
+<div class="container-map-car" >
+  <div class="row-map-cart">
+    <div *ngIf="granjas.length >= 1">
+      <div class="card" *ngFor="let granja of granjas; let i =index" (mouseover)="onMouseCard(i)" (mouseout)="eliminInfoWindow()">
+        <!-- <img class="card__image" src="{{ granja.imagen ? granja.imagen : 'https://admin.moodyyc.com/img/no-image.png'}}"
+          (click)="navigate(granja.id_granja)"> -->
+        <app-carrucel-img class="card__image"
+          [imagenes]="granjas[i].fotos"
+           [valorrows]="valorrows"
+          [valorcolumns]='valorcolumns'
+          [indicatorsphoto]=" indicatorsphotos"
+          [idtarge]="i"
+           (eventValueResponseClickFotoMiniSlider)="navigate(granja.id_granja)"
+           (eventValueResponseClickDivIndicadorSlider)="navigate(granja.id_granja)"
+           (eventValueResponseclickImagenItemSlider)="navigate(granja.id_granja)">
+        </app-carrucel-img>
+        <h3 class="card__title" (click)="navigate(granja.id_granja)">{{granja.nombre | shorter:20}}</h3>
+        <p class="card__description" (click)="navigate(granja.id_granja)">
+          {{granja.descripcion | shorter:200}}
+        </p>
+        <div class="card__rating-container">
+          <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+          <span class="card__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ? (granja.puntuacion |
+            number:'1.1-1') : 'Sin calificación'}}</span>
+          <span class="card__rating__detail" (click)="showResenas(granja.id_granja)"> ({{granja.count_resenas}} reseñas)</span>
         </div>
-        <div class="mapgoogle overflow-auto  " *ngIf="granjas.length > 0 && (apiLoaded | async)">
-                <google-map  height="600px"
-                            width="785px"
-                            [options]="options">
-                  <map-marker   #marker="mapMarker"
-                            *ngFor="let markerInfo of markersInfo; index as i"
-                            [position]="markerInfo.markerPosition"
-                            [options]="markerOptions"
-                            icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"
-                            (mapMouseover)="openInfoWindow(marker,i)"
-                            (mapMouseout)="eliminInfoWindow()">
-                            </map-marker>
-                   <map-info-window [position]="markerPosition" >
-                      {{selectedGranja.nombre}}
-                      <br>
-                      {{selectedGranja.propietario.nombre}}
-                    </map-info-window>
+
+        <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja.favorita"
+          (click)="changeFavorite(i)">
+        <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja.favorita"
+          (click)="changeFavorite(i)">
+        <span class="card__data" (click)="navigate(granja.id_granja)">{{granja.area | number:'':'es'}} m²</span>
+
+      </div>
+    </div>
+    <div >
+    <div  class="sticky-top" >
+    <div class="mapgoogle " *ngIf="granjas.length > 0 && (apiLoaded | async)">
+                <google-map height="650px" width="785px" [options]="options">
+                  <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i"
+                    [position]="markerInfo.markerPosition" [options]="markerOptions"
+                    icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"
+                    (mapMouseover)="openInfoWindow(marker,i)" (mapMouseout)="eliminInfoWindow()">
+                  </map-marker>
+                  <map-info-window [position]="markerPosition">
+                    {{selectedGranja.nombre}}
+                    <br>
+                    {{selectedGranja.propietario.nombre}}
+                  </map-info-window>
                 </google-map>
-         </div>
+      </div>
+      </div>
+     </div>
+  </div>
 </div>
 <!--<app-footer></app-footer>-->
 

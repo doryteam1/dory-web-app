@@ -63,7 +63,7 @@ export class MisProductosComponent implements OnInit {
     this.modalService.open(content).result.then(
       (result)=>{
         console.log("se cerro modal ",result)
-      } 
+      }
     ).catch(
       (err)=>{
         this.file = null;
@@ -140,13 +140,13 @@ export class MisProductosComponent implements OnInit {
   fileChange(event:any){
     console.log("change",event)
     this.file = event.target.files[0];
-    let objectURL = URL.createObjectURL(this.file);       
+    let objectURL = URL.createObjectURL(this.file);
     this.previewImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     this.showErrorNotImageSelected = false;
   }
 
   deleteProducto(codigo:number, i:number){
-    this.appModalService.confirm('Eliminar producto','Esta seguro que desea eliminar el producto','Eliminar','No estoy seguro',this.productos[i].nombreProducto)
+    this.appModalService.confirm('Eliminar producto','Esta seguro que desea eliminar el producto','Cancelar','No estoy seguro',this.productos[i].nombreProducto)
     .then(
       (result)=>{
         if(result == true){
@@ -161,7 +161,7 @@ export class MisProductosComponent implements OnInit {
         }
     ).catch(
       (result)=>{
-        
+
       }
     )
   }
@@ -235,14 +235,14 @@ export class MisProductosComponent implements OnInit {
           console.log(err);
           this.loading = false;
         }
-      )  
+      )
     }
   }
 
   invalid(controlFormName:string){;
     return this.form.get(controlFormName)?.invalid && (this.form.get(controlFormName)?.dirty || this.form.get(controlFormName)?.touched)
   }
-  
+
   get nombreProducto(){
     return this.form.get('nombreProducto')
   }

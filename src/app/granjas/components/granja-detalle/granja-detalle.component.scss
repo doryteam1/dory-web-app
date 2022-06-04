@@ -28,14 +28,22 @@
 }
 
 .buttons-container1{
-  display: flex;
-    grid-area: button1;
-    justify-self:start;
-    height: 43px;
-    gap: 10px;
-    padding-left: 302px;
-}
 
+    grid-area: button1;
+
+    height: 43px;
+
+    margin-left: 55px;
+}
+.buttons-container2{
+
+    grid-area: button2;
+
+    height: 43px;
+        margin-left: 20px;
+
+
+}
 
 .buttons-container__image{
     width:20px;
@@ -52,19 +60,7 @@
     color: var(--black);
 }
 
-.photo-container{
-display: grid;
-  grid-template-columns: repeat(2, 137.25px) 137.27px 137.25px repeat(2, 270px);
-  grid-template-rows: 35.4px 1fr 65.5px;
-  grid-column-gap: 18px;
-  grid-row-gap: 1px;
-      grid-template-areas: ". . . . button1 button1"
-      "div div div div div div "
-     "button button button button button button";
-}
-.photo-container-padre{
-grid-area: div;
-}
+
 .sin-img-div{
 display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -83,60 +79,200 @@ display: grid;
     height: 100%;
     width: 100%
 }
-.photo-container1-div{
-display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 5px repeat(2, 1fr);
+.photo-container {
+  /* display: grid;
+  grid-template-columns: repeat(12, 98.2508333333px);
+  grid-template-rows: repeat(11, 46.1272727273px) 65.5px;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  grid-template-areas: ". . . . . . . . button1 button1  button2 button2"
+    ". div div div div div div div div div . ."
+    ". div div div div div div div div div . ."
+    ". div div div div div div div div div . ."
+    ". div div div div div div div div div . ."
+    ". div div div div div div div div div . ."
+    ". div div div div div div div div div . ."
+    ". div div div div div div div div div . ."
+    ". div div div div div div div div div . ."
+    ". div div div div div div div div div . ."
+    ". div div div div div div div div div . ."
+    "button button button button button button button button button button button button"; */
+    display: grid;
+      grid-template-rows: repeat(12, 46.1272727273px) 65.5px;
+      grid-template-columns: repeat(12, 98.2508333333px);
+      grid-column-gap: 0px;
+        grid-row-gap: 0px;
+      grid-template-areas:
+        'header-container header-container header-container header-container header-container header-container header-container header-container . . . .'
+        'header-container header-container header-container header-container header-container header-container header-container header-container button1 button1 button2 button2'
+        '. div div div div div div div div div . .'
+        '. div div div div div div div div div . .'
+        '. div div div div div div div div div . .'
+        '. div div div div div div div div div . .'
+        '. div div div div div div div div div . .'
+        '. div div div div div div div div div . .'
+        '. div div div div div div div div div . .'
+        '. div div div div div div div div div . .'
+        '. div div div div div div div div div . .'
+        '. div div div div div div div div div . .'
+        'button button button button button button button button button button button button';
+}
+
+.photo-container-padre {
+  width: 821px;
+  height: 470px;
+  grid-area: div;
+  padding-left: 86px;
+}
+.photo-container1-div{
+display: grid;
+grid-template-rows: repeat(12, 30.1283333333px);
+  grid-template-columns: repeat(12, 59.3783333333px);
   grid-template-areas:
-      ". . . . . ."
-      ".  . photo1 photo1 .  ."
-      ".  . photo1 photo1 .  .";
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1 photo1';
+  grid-column-gap: 9.86px;
+  grid-row-gap: 9.86px;
 
 }
+
 .photo-container2-div{
 display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 5px repeat(2, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 0px;
-  grid-template-areas: ". . . . . ."
-    ".  photo1 photo1 photo2 photo2 ."
-    ".  photo1 photo1 photo2 photo2  ."
+
+  grid-template-rows: repeat(12, 30.1283333333px);
+  grid-template-columns: repeat(12, 59.3783333333px);
+
+  grid-template-areas:
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2';
+  grid-column-gap: 9.86px;
+  grid-row-gap: 9.86px;
+
 }
 .photo-container3-div{
 display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 5px repeat(4, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 6px;
-    grid-template-areas: ". . . . . . ."
-      ".  photo1 photo1 photo1 photo2 photo2 ."
-      ".  photo1 photo1 photo1 photo2 photo2 ."
-      ".  photo1 photo1 photo1 photo3  photo3 ."
-      ".  photo1 photo1 photo1 photo3 photo3  .";
+  grid-template-rows: repeat(12, 30.1283333333px);
+  grid-template-columns: repeat(12, 59.3783333333px);
+  grid-template-areas:
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo1 photo1 photo1 photo1 photo1 photo1 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo2 photo2 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo2 photo2 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo2 photo2 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo2 photo2 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo2 photo2 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3 photo3 photo3'
+    'photo2 photo2 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3 photo3 photo3';
+  grid-column-gap: 9.86px;
+  grid-row-gap: 9.86px;
 }
 .photo-container4-div{
-display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: 5px repeat(2, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 6px;
-        grid-template-areas:
-            ". . . . . . . . . . "
-            ".  photo1 photo1 photo1 photo2 photo2 photo4 photo4 photo4 ."
-            ".  photo1 photo1 photo1 photo3 photo3 photo4 photo4 photo4 .";
-}
+  display: grid;
+    grid-template-rows: repeat(12, 30.1283333333px);
+    grid-template-columns: repeat(12, 59.3783333333px);
+    grid-template-areas:
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo3 photo3 photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo4 photo4'
+      'photo3 photo3 photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo4 photo4'
+      'photo3 photo3 photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo4 photo4'
+      'photo3 photo3 photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo4 photo4'
+      'photo3 photo3 photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo4 photo4'
+      'photo3 photo3 photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo4 photo4';
+    grid-column-gap: 9.86px;
+    grid-row-gap: 9.86px;
 
+}
+.photo-container5-div {
+  display: grid;
+    grid-template-rows: repeat(12, 30.1283333333px);
+    grid-template-columns: repeat(12, 59.3783333333px);
+    grid-template-areas:
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo1 photo1 photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo2 photo2'
+      'photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5'
+      'photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5'
+      'photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5'
+      'photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5'
+      'photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5'
+      'photo3 photo3 photo3 photo3 photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5';
+    grid-column-gap: 9.86px;
+    grid-row-gap: 9.86px;
+}
+.photo-container6-div {
+  display: grid;
+    grid-template-rows: repeat(12, 30.1283333333px);
+    grid-template-columns: repeat(12, 59.3783333333px);
+    grid-template-areas:
+      'photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3'
+      'photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3'
+      'photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3'
+      'photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3'
+      'photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3'
+      'photo1 photo1 photo1 photo1 photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo3'
+      'photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5 photo6 photo6 photo6 photo6'
+      'photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5 photo6 photo6 photo6 photo6'
+      'photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5 photo6 photo6 photo6 photo6'
+      'photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5 photo6 photo6 photo6 photo6'
+      'photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5 photo6 photo6 photo6 photo6'
+      'photo4 photo4 photo4 photo4 photo5 photo5 photo5 photo5 photo6 photo6 photo6 photo6';
+    grid-column-gap: 9.86px;
+    grid-row-gap: 9.86px;
+}
+.photo-container7-div {
+  display: grid;
+    grid-template-rows: repeat(12, 30.1283333333px);
+    grid-template-columns: repeat(12, 59.3783333333px);
+    grid-template-areas:
+      'photo1 photo1 photo1 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7'
+      'photo1 photo1 photo1 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7'
+      'photo1 photo1 photo1 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7'
+      'photo1 photo1 photo1 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7'
+      'photo2 photo2 photo2 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7'
+      'photo2 photo2 photo2 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7'
+      'photo2 photo2 photo2 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7'
+      'photo2 photo2 photo2 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7 photo7'
+      'photo3 photo3 photo3 photo4 photo4 photo4 photo5 photo5 photo5 photo6 photo6 photo6'
+      'photo3 photo3 photo3 photo4 photo4 photo4 photo5 photo5 photo5 photo6 photo6 photo6'
+      'photo3 photo3 photo3 photo4 photo4 photo4 photo5 photo5 photo5 photo6 photo6 photo6'
+      'photo3 photo3 photo3 photo4 photo4 photo4 photo5 photo5 photo5 photo6 photo6 photo6';
+    grid-column-gap: 9.86px;
+    grid-row-gap: 9.86px;
+}
 
 
 #photo-container__photo1{
-    grid-area: photo1;
-    object-fit: cover;
-
-}
-#photo-container__photo11{
     grid-area: photo1;
     object-fit: cover;
 
@@ -156,7 +292,34 @@ display: grid;
     grid-area:photo4;
     object-fit: cover;
 }
+#photo-container__photo5{
+    grid-area:photo5;
+    object-fit: cover;
+}
+#photo-container__photo6{
+    grid-area:photo6;
+    object-fit: cover;
+}
+#photo-container__photo7{
+    grid-area:photo7;
+    object-fit: cover;
+}
+/* .masimagenescontador-div{
+  grid-area: photo6;
+  display: table-cell;
+    vertical-align: middle;
+    padding: 0 5px;
+    color: #fff;
+    font-size: 1.25em;
+    background-color: rgba(0, 0, 0, 0.40);
+} */
+.masimagenescontador{
+  grid-area: photo6;
+      color: #fff;
+        font-size: 1.50em;
+        background-color: rgba(0, 0, 0, 0.40);
 
+}
 
 .photo-container-img{
 background-color: #ccc;
@@ -167,10 +330,29 @@ background-color: #ccc;
   height: 100%;
   width: 100%
 }
+.box-shadow-efecthover:hover {
+  border: 0.5px solid rgb(64, 64, 244);
+  box-shadow: 0px 0px 1px 7px #68E1FD;
+  animation: infinite resplandorAnimation 1s;
+}
+
+@keyframes resplandorAnimation {
+
+  0%,
+  100% {
+    box-shadow: 0px 0px 1px 5px #68E1FD;
+  }
+
+  50% {
+    box-shadow: 0px 0px 0px #68E1FD;
+
+  }
+
+}
 .photo-container__button{
     grid-area:button;
     justify-self:center;
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 21px;
     width: fit-content;
     padding: 6px 56px;
@@ -266,26 +448,35 @@ background-color: #ccc;
 }
 
 .container__box{
-    align-self: center;
+ align-self: center;
 }
 
 
 
+div.container__box>div>div.header-container{
+grid-area: header-container;
+    display: flex;
+      justify-content: flex-start;
+}
+div.container__box>div>div.header-container>div{
+display: flex;
+  flex-direction: column;
+}
+div.container__box>div>div.header-container>div>div{
+margin-top: 10px;
+}
 .photos-container-div{
-  display: flex;
-  width: 100%;
-  justify-content:space-around;
+display: flex;
+ justify-content: center;
   flex-wrap: wrap;
-  max-width: 1000px;
   margin: auto;
-flex-direction: row;
+  flex-direction: row;
 }
 .photo-container-gallery{
-width: 300px;
-  height: 200px;
-  margin-bottom: 20px;
-  object-fit: cover;
-  border-radius: 8px;
+    height: 150px;
+    margin: 10px;
+    border-radius: 8px;
+    padding: 10px;
 }
 .photo-container-gallery:hover {
   -webkit-transform: scale(1.1);
@@ -446,3 +637,6 @@ background-color: #ccc;
   height: 295px;
 }
 
+.modalbody{
+  height: 100%;
+}

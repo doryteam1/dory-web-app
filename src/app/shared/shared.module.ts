@@ -19,6 +19,17 @@ import { AppModalService } from './services/app-modal.service';
 import { ConfirmModalMapService } from './services/confirm-modal-map.service';
 import { ShorterPipe } from '../pipes/shorter.pipe';
 import { StarsComponent } from './components/stars/stars.component';
+import { ModalGallerySliderComponent } from './components/modal-gallery-slider/modal-gallery-slider.component';
+import { ModalGallerySliderService } from './services/modal-gallery-slider.service';
+import { CarrucelImgComponent } from './components/carrucel-img/carrucel-img.component';
+import { GranjasService } from '../../app/granjas/services/granjas.service';
+import { AuthInterceptor } from '../interceptors/auth.interceptor';
+import { HttpsService } from '../services/https.service';
+import {
+  HttpClientModule,
+  HttpClientJsonpModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 
 
 
@@ -38,9 +49,19 @@ import { StarsComponent } from './components/stars/stars.component';
     ConfirmModalComponent,
     ConfirmModalMapComponent,
     ShorterPipe,
-    StarsComponent
+    StarsComponent,
+    ModalGallerySliderComponent,
+    CarrucelImgComponent,
+    ModalGallerySliderComponent,
+    CarrucelImgComponent
   ],
-  imports: [CommonModule, RouterModule, FormsModule, NgbModule],
+  imports: [CommonModule,
+     RouterModule,
+     FormsModule,
+     NgbModule,
+    HttpClientModule,
+    HttpClientJsonpModule
+  ],
   exports: [
     NavbarComponent,
     FooterComponent,
@@ -55,8 +76,21 @@ import { StarsComponent } from './components/stars/stars.component';
     ConfirmModalComponent,
     ConfirmModalMapComponent,
     ShorterPipe,
-    StarsComponent
+    StarsComponent,
+    CarrucelImgComponent
   ],
-  providers: [AppModalService, ConfirmModalMapService],
+  providers: [
+    ConfirmModalMapService,
+    ModalGallerySliderService,
+    GranjasService,
+    ConfirmModalMapService,
+    AppModalService,
+    HttpsService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class SharedModule {}

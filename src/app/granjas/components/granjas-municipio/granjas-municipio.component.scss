@@ -1,6 +1,6 @@
 .data-container{
     display:flex;
-    margin-top: 77px;
+    margin-top: 50px;
     justify-content: center;
 }
 .container{
@@ -41,8 +41,7 @@
 
 .filters-container{
     margin-left: 40px;
-    margin-bottom: 50px;
-    margin-top: 58px;
+    margin-top: 50px;
     text-align: center;
 }
 
@@ -76,7 +75,24 @@
     border-radius: 10px;
     cursor: pointer;
 }
-
+.container-map-car{
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+}
+.row-map-cart{
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+}
+/* .row-map-cart>div{
+  padding-top: 80px;
+} */
+div.container-map-car>div>div:nth-child(1){
+  padding-top: 80px;
+}
 .card__image{
     grid-area: image;
     width: 262px;
@@ -169,10 +185,17 @@
 }
 
 .mapgoogle {
-  border: 1px solid #6c6c6c;
-  border-radius: 20px;
+border: 2px solid #6c6c6c;
+  border-radius: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
+  overflow: hidden;
+
+}
+.sticky-top{
+z-index: 1;
+height: auto;
+padding-top: 80px;
 }
 
 .box{

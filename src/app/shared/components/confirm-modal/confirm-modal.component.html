@@ -1,14 +1,14 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">{{title}}</h4>
+    <h4 class="modal-title textocolormodal" id="modal-title">{{title}}</h4>
     <button type="button" class="btn-close" aria-describedby="modal-title" (click)="dismiss()"></button>
     </div>
     <div class="modal-body">
-    <p><strong>¿{{message}}<span class="text-primary"> {{resourceId}}</span>?</strong></p>
-    <p>Toda la informacion asociada sera eliminada.
-    <span class="text-danger">Esta operación no podra deshacerse.</span>
+    <p><strong class="textocolormodal">¿{{message}}<span class="text-primary colorresourceld"> {{resourceId}}</span >?</strong></p>
+    <p class="textocolormodal">Toda la informacion asociada sera eliminada.
+    <span class="text-danger textocolormodal">Esta operación no podra deshacerse.</span>
     </p>
     </div>
     <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="decline()">{{btnCancelText}}</button>
-    <button type="button" class="btn btn-danger" (click)="accept()">{{btnOkText}}</button>
+    <button type="button" class="btn btn-danger coloraceptar" (click)="accept()">{{btnOkText}}</button>
 </div>

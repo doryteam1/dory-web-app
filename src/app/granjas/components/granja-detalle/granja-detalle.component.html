@@ -2,38 +2,82 @@
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
 <div class="container" *ngIf="!showNotFound && !showError && !showGallery">
-
 <div class="container__box">
-<div class="header-container">
-    <h3 class="header-container__title">{{granja?.nombre}}</h3>
-    <img class="header-container__icon" src="assets/icons/star-filled.svg">
-    <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span> <span class="header-container__description">  <span class="header-container__resenas" (click)="showResenas(granja.id_granja)">({{granja?.count_resenas}} reseñas) </span> {{granja?.nombre_municipio}}, Sucre, Colombia</span>
-</div>
-
-<div class="photo-container">
+  <div class="photo-container">
+    <div class="header-container">
+        <h3 class="header-container__title">{{granja?.nombre}}</h3>
+        <img class="header-container__icon" src="assets/icons/star-filled.svg">
+        <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
+         <span class="header-container__description">
+            <span class="header-container__resenas"
+           (click)="showResenas(granja.id_granja)">({{granja?.count_resenas}} reseñas)
+         </span> {{granja?.nombre_municipio}}, Sucre, Colombia</span>
+    </div>
     <div class="buttons-container1">
-      <div>
         <img class="buttons-container__image" src="assets/icons/share.svg">
         <a class="buttons-container__description" href="#">Compartir</a>
       </div>
       <div>
         <img class="buttons-container__image" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita" (click)="changeFavorite()">
         <img class="buttons-container__image" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita" (click)="changeFavorite()">
+    </div>
+    <div class="buttons-container2">
+        <img class="buttons-container__image" src="assets/icons/heart-outline.svg">
         <a class="buttons-container__description" href="#">Guardar</a>
-      </div>
     </div>
-    <div class="photo-container-padre sin-img-div"  *ngIf="fotosgranja?.length == 0">
-      <img src="../../../../assets/images/sinimagen.svg" alt="">
-    </div>
-<div class="photo-container-padre" [ngClass]="{ 'photo-container1-div': fotosgranja?.length ==1, 'photo-container2-div': fotosgranja?.length ==2,'photo-container3-div': fotosgranja?.length ==3,'photo-container4-div': fotosgranja?.length >=4}">
+
+<!-- <div class="photo-container-padre photo-container7-div"  *ngIf="fotosgranja?.length >=1">
+  <img class="photo-container-img" id="photo-container__photo1" src="{{granja?.fotos[0] ?granja?.fotos[0]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
+     (click)="fotoSele(0,photosGallery)"  >
+  <img class="photo-container-img" id="photo-container__photo2" src="{{granja?.fotos[1] ?granja?.fotos[1]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
+     (click)="fotoSele(1,photosGallery)"  >
+  <img class="photo-container-img" id="photo-container__photo3" src="{{granja?.fotos[2] ?granja?.fotos[2]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
+     (click)="fotoSele(2,photosGallery)"  >
+  <img class="photo-container-img" id="photo-container__photo4" src="{{granja?.fotos[3] ?granja?.fotos[3]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
+     (click)="fotoSele(3,photosGallery)"  >
+  <img class="photo-container-img" id="photo-container__photo5" src="{{granja?.fotos[4] ?granja?.fotos[4]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
+     (click)="fotoSele(4,photosGallery)"  >
+  <img class="photo-container-img" id="photo-container__photo6" src="{{granja?.fotos[5] ?granja?.fotos[5]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
+     (click)="fotoSele(5,photosGallery)"  >
+  <img class="photo-container-img" id="photo-container__photo7" src="{{granja?.fotos[6] ?granja?.fotos[6]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
+     (click)="fotoSele(6,photosGallery)"  >
+
   <img class="photo-container-img" id="photo-container__photo{{i+1}}" src="{{ fotogranja ? fotogranja : 'https://admin.moodyyc.com/img/no-image.png'}}"
-    *ngFor="let fotogranja of fotosgranja | slice:0:4; let i =index" (click)="fotoSele(i,photosGallery)"  >
+    *ngFor="let fotogranja of fotosgranja | slice:0:7; let i =index" (click)="fotoSele(i,photosGallery)"  >
+</div> -->
+<div class="photo-container-padre" [ngClass]="{
+  'photo-container1-div': fotosgranja?.length ==1,
+  'photo-container2-div': fotosgranja?.length ==2,
+  'photo-container3-div': fotosgranja?.length ==3,
+  'photo-container4-div': fotosgranja?.length ==4,
+  'photo-container5-div': fotosgranja?.length ==5,
+  'photo-container6-div': fotosgranja?.length ==6,
+  'photo-container7-div': fotosgranja?.length >=7
+                 }">
+
+  <img  class="photo-container-img box-shadow-efecthover" id="photo-container__photo{{i+1}}"
+    src="{{ fotogranja ? fotogranja : 'https://admin.moodyyc.com/img/no-image.png'}}"
+    *ngFor="let fotogranja of fotosgranja | slice:0:7; let i =index"
+    (click)="fotoSele(i)">
+    <div class="photo-container-padre sin-img-div"  *ngIf="singranjas">
+    <img src="../../../../assets/images/sinimagen.svg">
+    </div>
+
+  <button class="masimagenescontador" (click)="openGaleriaModal()" *ngIf="fotosgranja?.length >=7 "
+      (click)=" shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"><span style=" border-bottom: 1px solid #fff;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.5);">+ {{fotosgranja?.length-7}} fotos</span>
+  </button>
+</div>
+<button class="photo-container__button btn-square-blue" (click)="openGaleriaModalOtro()" *ngIf="fotosgranja?.length >1 && fotosgranja?.length<7" >Ver fotos</button>
+<button class="photo-container__button btn-square-blue" (click)="openGaleriaModalOtro()" *ngIf="fotosgranja?.length ==1 " >Ver la foto</button>
+<button class="photo-container__button btn-square-blue" (click)="openGaleriaModalOtro()" *ngIf="fotosgranja?.length >=7 ">Ver todas las fotos</button>
+
+  </div>
+
+
 </div>
 
-<button class="photo-container__button btn-square-blue" (click)="openGaleriaModal(photosGallery)" *ngIf="fotosgranja?.length >1 " (click)=" indice=-1">Ver todas las fotos</button>
-</div>
-</div>
-<div class="proprietary-container">
+<div class="proprietary-container" >
     <div class="proprietary-container__info">
         <h3 class="proprietary-container__title">Propietario - {{granja?.propietarios[0]?.nombre_completo}} </h3>
         <span class="proprietary-container__description1">N° Celular  {{granja?.propietarios[0]?.celular}} </span>
@@ -85,7 +129,7 @@
             <span class="detail-container__value" *ngFor="let infraestructura of granja?.infraestructuras">{{infraestructura.nombre}}</span>
         </div>
     </div>
-    
+
     <div class="resenas">
       <h4 class="resenas__title">Puntuaciones y reseñas</h4>
       <span class="resenas__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ? (granja.puntuacion | number:'1.1-1') : 'Sin calificación'}}</span>
@@ -120,64 +164,6 @@
         <p>No pudimos recuperar la granja solicitada :(</p>
     </div>
 </div>
-
-
-<ng-template #photosGallery let-modal >
-  <div class="modal-header" (click)="indice=-1" >
-    <div class="box">
-      <h4 class="modal-title" id="modal-basic-title">{{granja?.nombre}}</h4>
-    </div>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')" ></button>
-    <button type="button" *ngIf="showconte" (click)="showconte=!showconte">Ir a galeria</button>
-  </div>
-  <div class="modal-body"(click)="indice=-1" *ngIf="!showconte">
-<div class=" photos-container-div" >
-  <img src="{{ fotogranja ? fotogranja : 'https://admin.moodyyc.com/img/no-image.png'}}"
-    class="photo-container-gallery"  alt="image"  *ngFor="let fotogranja of fotosgranja;let i=index"
-  [ngClass]="{'box-shadow-efect':  indice==i ||  imgsele}" (click)="imgSelecionadaModal(i)">
-</div>
-
-  </div>
-  <div class="modal-body"(click)="indice=-1" *ngIf="showconte">
-<!-- <div class=" photos-container-div" >
-  <img src="{{ fotogranja ? fotogranja : 'https://admin.moodyyc.com/img/no-image.png'}}"
-    class="photo-container-gallery"  alt="image"  *ngFor="let fotogranja of fotosgranja;let i=index"
-  [ngClass]="{'box-shadow-efect':  indice==i ||  imgsele}" (click)="imgSelecionadaModal()">
-</div> -->
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-indicators" *ngFor="let fotogranja of fotosgranja;let ix=index">
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to=ix class="active"
-      aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-      aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-      aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="{{ fotosgranja[imgselecmodal] ? fotosgranja[imgselecmodal] : 'https://admin.moodyyc.com/img/no-image.png'}}" class="d-block w-100"
-        alt="image">
-    </div>
-
-    <div class="carousel-item carousel-contenedor-img" *ngFor="let fotogranja of fotosgranja;">
-      <img src="{{ fotogranja ? fotogranja : 'https://admin.moodyyc.com/img/no-image.png'}}" class="d-block w-100"
-        alt="image">
-    </div>
-
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-
-</div>
-</ng-template>
-
 <ng-template #qualifyModal let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" *ngIf="!success">Danos tu opinion sobre esta granja!😀</h4>
@@ -203,6 +189,7 @@
   </div>
   </div>
 </ng-template>
+
 <!-- <app-granja-gallery *ngIf="showGallery" [photos]="granja?.fotos"></app-granja-gallery> -->
 <app-footer></app-footer>
 <app-floating-btn-auto-up></app-floating-btn-auto-up>

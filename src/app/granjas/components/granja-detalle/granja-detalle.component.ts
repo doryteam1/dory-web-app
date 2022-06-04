@@ -1,20 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component,OnInit,HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GranjasService } from '../../services/granjas.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Utilities } from 'src/app/utilities/utilities';
 
+import { ModalGallerySliderService } from '../../../shared/services/modal-gallery-slider.service';
+import { PlatformLocation } from '@angular/common'
 @Component({
   selector: 'app-granja-detalle',
   templateUrl: './granja-detalle.component.html',
-  styleUrls: ['./granja-detalle.component.scss']
+  styleUrls: ['./granja-detalle.component.scss'],
 })
 export class GranjaDetalleComponent implements OnInit {
-  granja:any;
-  fotosgranja:any;
-  showNotFound:boolean = false;
-  showError:boolean = false;
-  selectedGranjaId:number = -1;
+  granja: any;
+  fotosgranja: any = [];
+  showNotFound: boolean = false;
+  showError: boolean = false;
+  selectedGranjaId: number = -1;
   errorMessage = '';
   showGallery:boolean = false;
   imgsele:boolean=false
@@ -30,29 +32,47 @@ export class GranjaDetalleComponent implements OnInit {
   descResena:string = '';
   loading: boolean = false;
   success:boolean = false;
-  constructor(private granjasService:GranjasService, private activatedRoute:ActivatedRoute,private modalService: NgbModal,) { }
+  shadoweffectindice!: number;
+  showconteslaider: boolean = false;
+  valorindicecarrucel!: number;
+  singranjas: boolean = false;
 
+  constructor(
+    private granjasService: GranjasService,
+    private activatedRoute: ActivatedRoute,
+    private modalGallerySliderService: ModalGallerySliderService,
+    public location: PlatformLocation,
+    private modalService: NgbModal
+  ){
+
+
+  }
   ngOnInit(): void {
-    this.selectedGranjaId = Number(this.activatedRoute.snapshot.paramMap.get('id')!);
+    this.selectedGranjaId = Number(
+      this.activatedRoute.snapshot.paramMap.get('id')!
+    );
+    console.log(this.selectedGranjaId);
     this.granjasService.getGranjaDetalle(this.selectedGranjaId).subscribe(
-      (response)=>{
-        if(response.data.length > 0){
+      (response) => {
+        if (response.data.length > 0) {
           this.granja = response.data[0];
-          this.fotosgranja=response.data[0].fotos
-          console.log(this.fotosgranja)
-          console.log(this.granja)
+          this.fotosgranja = response.data[0].fotos;
+          if (this.fotosgranja.length == 0) {
+            this.singranjas = true;
+          }
           this.showError = false;
           this.showNotFound = false;
-        }else{
+        } else {
           this.showNotFound = true;
           this.showError = false;
         }
-      },err=>{
+      },
+      (err) => {
         this.showNotFound = false;
         this.showError = false;
-        if(err.status == 404){
+        if (err.status == 404) {
           this.showNotFound = true;
-        }else{
+        } else {
           this.showError = true;
           this.errorMessage = 'Error inesperado';
         }
@@ -75,12 +95,7 @@ export class GranjaDetalleComponent implements OnInit {
       }
     )
   }
- 
- fotoSele(i:number,content:any){
-    this.indice=i
-    this.openGaleriaModal(content)
-    console.log(content)
-  }
+
   imgSelecionadaModal(i:number){
     this.imgselecmodal=i
     clearInterval(this.tiempo)
@@ -91,14 +106,6 @@ export class GranjaDetalleComponent implements OnInit {
     this.imgmauseover=true
      this.indice=-1
 
-  }
-  openGaleriaModal(content:any){
-    this.showconte=false
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass:'modal-photo' , scrollable: true,centered: true}).result.then((result) => {
-    console.log(result)
-    }, (reason) => {
-      console.log(reason)
-    });
   }
 
   openQualifyModal(content:any){
@@ -126,7 +133,7 @@ export class GranjaDetalleComponent implements OnInit {
 
   onRating(event:number){
     console.log(event)
-    this.rating = event; 
+    this.rating = event;
   }
 
   publicarResena(){
@@ -151,4 +158,56 @@ export class GranjaDetalleComponent implements OnInit {
       }
     )
   }
+@HostListener('window:popstate', ['$event']) onPopState(event:any) {
+ /* this.modalGallerySliderService.closeModal(); */
+  if (this.modalGallerySliderService) {
+    /*  this.location.back(); */
+    console.log('hello');
+  }
 }
+
+
+  fotoSele(i: number) {
+    this.shadoweffectindice = i;
+    this.imgselecmodal = -1;
+    this.valorindicecarrucel = -1;
+    this.openGaleriaModal();
+  }
+  openGaleriaModalOtro() {
+    this.shadoweffectindice = -1;
+    this.valorindicecarrucel = -1;
+    this.imgselecmodal = -1;
+    this.openGaleriaModal();
+  }
+
+  openGaleriaModal() {
+     this.location.onPopState(() => {
+       console.log('pressed back!');
+       this.modalGallerySliderService.closeModal();
+      //  detecta  cuando se da click atras detecta y cierra la cualquiera modal activa
+     });
+  /*  console.log( this.location.pushState(null, '', location.pathname)) */
+   /* bloque el boton de atras navegador */
+
+    this.showconteslaider = false;
+    this.modalGallerySliderService
+      .confirm(
+        this.shadoweffectindice,
+        this.imgselecmodal,
+        this.valorindicecarrucel,
+        this.showconteslaider,
+        this.granja,
+        this.fotosgranja
+      )
+      .then((result) => {
+      })
+      .catch((result) => {});
+    /*    history.pushState(null, '', window.location.pathname); */
+  }
+}
+
+
+
+
+
+

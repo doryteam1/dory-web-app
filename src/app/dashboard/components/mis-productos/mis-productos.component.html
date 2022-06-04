@@ -1,6 +1,6 @@
 <div class="container">
 <table class="table mt-40">
-    <thead class="table-light">
+    <thead class="table-light micolortablelight">
       <tr>
         <th>Imagen</th>
         <th>Nombre de producto</th>
@@ -11,14 +11,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let producto of productos; let i=index">
-        <td><img class="container_img" [src]="producto.imagen"></td>
-        <td>{{producto.nombreProducto}}</td>
-        <td>{{producto.descripcion}}</td>
-        <td>{{producto.precio}}</td>
+        <td class="imgproductotd"><img class="container_img" [src]="producto.imagen"></td>
+        <td class="colortextoproducto">{{producto.nombreProducto}}</td>
+        <td class="colortextoproducto">{{producto.descripcion}}</td>
+        <td class="colortextoproducto">{{producto.precio}}</td>
         <td>
             <div class="container-row">
-                <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i>
-                <i class="container__icon bi bi-trash text-danger" (click)="deleteProducto(producto.codigo,i)"></i>
+                <i class="container__icon bi bi-pencil text-success me-3 mitextcolorpencil" (click)="openModal(content,'update',i)"></i>
+                <i class="container__icon bi bi-trash text-danger mitextcolortrash" (click)="deleteProducto(producto.codigo,i)"></i>
             </div>
         </td>
       </tr>
@@ -36,7 +36,7 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo Producto' : 'Actualizar Producto'}}</h4>
+    <h4 class="modal-title modalmytitle" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo Producto' : 'Actualizar Producto'}}</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
@@ -81,7 +81,7 @@
       <div class="mb-3">
         <img class="modal__image" [src]="previewImage" *ngIf="previewImage">
       </div>
-      
+
       <div class="mb-3">
         <label for="dateOfBirth">Precio</label>
         <div class="input-group">
@@ -104,7 +104,7 @@
     </button>
     <button type="button" class="btn btn-outline-dark container__btn" (click)="updateProducto()" *ngIf="modalMode=='update'">
       <span *ngIf="!loading">Actualizar</span>
-      <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+      <div class="container__spinner spinner-border text-danger mitexcolor" role="status" *ngIf="loading">
       </div>
     </button>
   </div>

@@ -1,0 +1,74 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.photos-container-div {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: auto;
+  flex-direction: row;
+}
+
+.photo-container-gallery {
+  height: 150px;
+  margin: 10px;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.photo-container-gallery:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+}
+
+.box-shadow-efect:hover {
+  -webkit-transform: none;
+  transform: none;
+}
+
+.box-shadow-efect {
+  border: 1px solid rgb(64, 64, 244);
+  box-shadow: 0px 0px 1px 7px #68E1FD;
+  animation: infinite resplandorAnimation 1s;
+}
+
+@keyframes resplandorAnimation {
+
+  0%,
+  100% {
+    box-shadow: 0px 0px 1px 7px #68E1FD;
+  }
+
+  50% {
+    box-shadow: 0px 0px 0px #68E1FD;
+
+  }
+
+}
+
+
+
+.modalbody {
+  height: 100%;
+}
