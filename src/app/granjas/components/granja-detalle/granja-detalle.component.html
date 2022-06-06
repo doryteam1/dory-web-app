@@ -4,25 +4,24 @@
 <div class="container" *ngIf="!showNotFound && !showError && !showGallery">
 <div class="container__box">
   <div class="photo-container">
-    <div class="header-container">
+   <div class="header-container">
         <h3 class="header-container__title">{{granja?.nombre}}</h3>
-        <img class="header-container__icon" src="assets/icons/star-filled.svg">
-        <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
-         <span class="header-container__description">
-            <span class="header-container__resenas"
-           (click)="showResenas(granja.id_granja)">({{granja?.count_resenas}} reseñas)
-         </span> {{granja?.nombre_municipio}}, Sucre, Colombia</span>
-    </div>
+        <div>
+          <img class="header-container__icon" src="assets/icons/star-filled.svg">
+          <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
+           <span class="header-container__description">
+              <span class="header-container__resenas"
+             (click)="showResenas(granja.id_granja)">({{granja?.count_resenas}} reseñas)
+           </span> {{granja?.nombre_municipio}}, Sucre, Colombia</span>
+        </div>
+   </div>
     <div class="buttons-container1">
         <img class="buttons-container__image" src="assets/icons/share.svg">
         <a class="buttons-container__description" href="#">Compartir</a>
-      </div>
-      <div>
-        <img class="buttons-container__image" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita" (click)="changeFavorite()">
-        <img class="buttons-container__image" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita" (click)="changeFavorite()">
     </div>
     <div class="buttons-container2">
-        <img class="buttons-container__image" src="assets/icons/heart-outline.svg">
+      <img class="buttons-container__image" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita" (click)="changeFavorite()">
+      <img class="buttons-container__image" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita" (click)="changeFavorite()">
         <a class="buttons-container__description" href="#">Guardar</a>
     </div>
 
@@ -59,18 +58,19 @@
     src="{{ fotogranja ? fotogranja : 'https://admin.moodyyc.com/img/no-image.png'}}"
     *ngFor="let fotogranja of fotosgranja | slice:0:7; let i =index"
     (click)="fotoSele(i)">
+
     <div class="photo-container-padre sin-img-div"  *ngIf="singranjas">
     <img src="../../../../assets/images/sinimagen.svg">
     </div>
 
-  <button class="masimagenescontador" (click)="openGaleriaModal()" *ngIf="fotosgranja?.length >=7 "
+  <button class="masimagenescontador" (click)="OpenGalleryModalOptionOne()" *ngIf="fotosgranja?.length >=7 "
       (click)=" shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"><span style=" border-bottom: 1px solid #fff;
           border-bottom: 1px solid rgba(255, 255, 255, 0.5);">+ {{fotosgranja?.length-7}} fotos</span>
   </button>
 </div>
-<button class="photo-container__button btn-square-blue" (click)="openGaleriaModalOtro()" *ngIf="fotosgranja?.length >1 && fotosgranja?.length<7" >Ver fotos</button>
-<button class="photo-container__button btn-square-blue" (click)="openGaleriaModalOtro()" *ngIf="fotosgranja?.length ==1 " >Ver la foto</button>
-<button class="photo-container__button btn-square-blue" (click)="openGaleriaModalOtro()" *ngIf="fotosgranja?.length >=7 ">Ver todas las fotos</button>
+<button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length >1 && fotosgranja?.length<7" >Ver fotos</button>
+<button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length ==1 " >Ver la foto</button>
+<button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length >=7 ">Ver todas las fotos</button>
 
   </div>
 

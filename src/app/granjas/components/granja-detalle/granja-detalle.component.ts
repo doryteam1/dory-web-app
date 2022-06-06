@@ -18,20 +18,20 @@ export class GranjaDetalleComponent implements OnInit {
   showError: boolean = false;
   selectedGranjaId: number = -1;
   errorMessage = '';
-  showGallery:boolean = false;
-  imgsele:boolean=false
-  indice!:number
-  tiempo:any
-  imgmauseover:boolean=false
-  showconte:boolean=false
-  imgselecmodal!:number
-  resenas:any = [];
+  showGallery: boolean = false;
+  imgsele: boolean = false;
+  indice!: number;
+  tiempo: any;
+  imgmauseover: boolean = false;
+  showconte: boolean = false;
+  imgselecmodal!: number;
+  resenas: any = [];
   showErrorFound: boolean = false;
   puntuacion: any;
   rating: number = -1;
-  descResena:string = '';
+  descResena: string = '';
   loading: boolean = false;
-  success:boolean = false;
+  success: boolean = false;
   shadoweffectindice!: number;
   showconteslaider: boolean = false;
   valorindicecarrucel!: number;
@@ -43,10 +43,7 @@ export class GranjaDetalleComponent implements OnInit {
     private modalGallerySliderService: ModalGallerySliderService,
     public location: PlatformLocation,
     private modalService: NgbModal
-  ){
-
-
-  }
+  ) {}
   ngOnInit(): void {
     this.selectedGranjaId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
@@ -80,114 +77,126 @@ export class GranjaDetalleComponent implements OnInit {
     );
 
     this.granjasService.resenasById(this.selectedGranjaId).subscribe(
-      (response)=>{
+      (response) => {
         this.resenas = response.data.resenas;
         this.puntuacion = response.data.puntaje;
-        if(this.resenas.length < 1){
+        if (this.resenas.length < 1) {
           this.showNotFound = true;
-        }else{
+        } else {
           this.showNotFound = false;
         }
-      },err=>{
+      },
+      (err) => {
         this.showNotFound = false;
         this.showErrorFound = true;
-        console.log(err)
+        console.log(err);
       }
-    )
+    );
   }
-
-  imgSelecionadaModal(i:number){
-    this.imgselecmodal=i
-    clearInterval(this.tiempo)
-     this.indice=-1
-     this.showconte=true
-  }
-  imgMause(){
-    this.imgmauseover=true
-     this.indice=-1
-
-  }
-
-  openQualifyModal(content:any){
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass:'qualify-modal' , scrollable: true,centered: true}).result.then((result) => {
-    console.log(result)
-    }, (reason) => {
-      console.log(reason)
-    });
-  }
-
-  changeFavorite(){
-    this.granja.favorita = this.granja.favorita == 1 ? 0 : 1;
-    this.granjasService.esFavorita(this.granja.id_granja).subscribe(
-      (response)=>{
-      },err=>{
-        console.log(err)
-        this.granja.favorita = this.granja.favorita == 1 ? 0 : 1;
-      }
-    )
-  }
-
-  showResenas(idGranja:number){
-    this.granjasService.showResenasModal('Reseñas','Cerrar',idGranja);
-  }
-
-  onRating(event:number){
-    console.log(event)
-    this.rating = event;
-  }
-
-  publicarResena(){
-    let resena = {
-      id_granja:this.granja.id_granja,
-      descripcion:this.descResena,
-      fecha:Utilities.dateTimeNow()
-    }
-    this.loading = true;
-    this.granjasService.addResena(resena).subscribe(
-      (response)=>{
-        this.granjasService.calificarGranja(this.granja.id_granja,this.rating).subscribe(
-          response=>{
-            this.loading = false;
-            this.success = true;
-          },err=>{
-            this.loading = false;
-          }
-        )
-      },err=>{
-        this.loading = false;
-      }
-    )
-  }
-@HostListener('window:popstate', ['$event']) onPopState(event:any) {
- /* this.modalGallerySliderService.closeModal(); */
-  if (this.modalGallerySliderService) {
-    /*  this.location.back(); */
-    console.log('hello');
-  }
-}
-
-
   fotoSele(i: number) {
     this.shadoweffectindice = i;
     this.imgselecmodal = -1;
     this.valorindicecarrucel = -1;
-    this.openGaleriaModal();
+    this.OpenGalleryModalOptionOne();
   }
-  openGaleriaModalOtro() {
+  imgSelecionadaModal(i: number) {
+    this.imgselecmodal = i;
+    clearInterval(this.tiempo);
+    this.indice = -1;
+    this.showconte = true;
+  }
+  imgMause() {
+    this.imgmauseover = true;
+    this.indice = -1;
+  }
+
+  openQualifyModal(content: any) {
+    this.modalService
+      .open(content, {
+        ariaLabelledBy: 'modal-basic-title',
+        windowClass: 'qualify-modal',
+        scrollable: true,
+        centered: true,
+      })
+      .result.then(
+        (result) => {
+          console.log(result);
+        },
+        (reason) => {
+          console.log(reason);
+        }
+      );
+  }
+
+  changeFavorite() {
+    this.granja.favorita = this.granja.favorita == 1 ? 0 : 1;
+    this.granjasService.esFavorita(this.granja.id_granja).subscribe(
+      (response) => {},
+      (err) => {
+        console.log(err);
+        this.granja.favorita = this.granja.favorita == 1 ? 0 : 1;
+      }
+    );
+  }
+
+  showResenas(idGranja: number) {
+    this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
+  }
+
+  onRating(event: number) {
+    console.log(event);
+    this.rating = event;
+  }
+
+  publicarResena() {
+    let resena = {
+      id_granja: this.granja.id_granja,
+      descripcion: this.descResena,
+      fecha: Utilities.dateTimeNow(),
+    };
+    this.loading = true;
+    this.granjasService.addResena(resena).subscribe(
+      (response) => {
+        this.granjasService
+          .calificarGranja(this.granja.id_granja, this.rating)
+          .subscribe(
+            (response) => {
+              this.loading = false;
+              this.success = true;
+            },
+            (err) => {
+              this.loading = false;
+            }
+          );
+      },
+      (err) => {
+        this.loading = false;
+      }
+    );
+  }
+  // @HostListener('window:popstate', ['$event']) onPopState(event: any) {
+  //   // this.modalGallerySliderService.closeModal();
+  //   if (this.modalGallerySliderService) {
+  //     //  this.location.back();
+  //     console.log('hello');
+  //   }
+  // }
+
+  OpenGalleryModalOptionTwo() {
     this.shadoweffectindice = -1;
     this.valorindicecarrucel = -1;
     this.imgselecmodal = -1;
-    this.openGaleriaModal();
+    this.OpenGalleryModalOptionOne();
   }
 
-  openGaleriaModal() {
-     this.location.onPopState(() => {
-       console.log('pressed back!');
-       this.modalGallerySliderService.closeModal();
+  OpenGalleryModalOptionOne() {
+    this.location.onPopState(() => {
+      console.log('pressed back!');
+      this.modalGallerySliderService.closeModal();
       //  detecta  cuando se da click atras detecta y cierra la cualquiera modal activa
-     });
-  /*  console.log( this.location.pushState(null, '', location.pathname)) */
-   /* bloque el boton de atras navegador */
+    });
+    //  console.log( this.location.pushState(null, '', location.pathname))
+
 
     this.showconteslaider = false;
     this.modalGallerySliderService
@@ -199,8 +208,7 @@ export class GranjaDetalleComponent implements OnInit {
         this.granja,
         this.fotosgranja
       )
-      .then((result) => {
-      })
+      .then((result) => {})
       .catch((result) => {});
     /*    history.pushState(null, '', window.location.pathname); */
   }

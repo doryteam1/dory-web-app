@@ -74,13 +74,16 @@ export class GranjasMunicipioComponent implements OnInit {
     console.log(this.activatedRoute.snapshot.url[1]);
     this.granjasService
       .getGranjasMunicipio(Number(this.activatedRoute.snapshot.url[1]))
-      .subscribe((response) => {
-        this.granjas = response.data;
-        this.extractLatLong();
-        if (this.granjas.length < 1) {
-          this.singranjas = true;
-        }
-      });
+      .subscribe(
+        (response) => {
+          this.granjas = response.data;
+          this.extractLatLong();
+        },
+        (err) => {console.error('Hay un error al obtener la lista')
+       if (this.granjas.length == 0) {
+         this.singranjas = true;
+       }}
+      );
     this.placesService
       .getMunicipioById(Number(this.activatedRoute.snapshot.url[1]))
       .subscribe((response) => {
@@ -139,18 +142,19 @@ export class GranjasMunicipioComponent implements OnInit {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + id);
   }
   changeFavorite(i: number) {
-    console.log(this.granjas[i].id_granja);
-    console.log(this.granjas[i]);
+    this.granjas[i].favorita = this.granjas[i].favorita == 1 ? 0 : 1;
     this.granjasService.esFavorita(this.granjas[i].id_granja).subscribe(
       (response) => {
         console.log(response);
       },
       (err) => {
         console.log(err);
+        this.granjas[i].favorita = this.granjas[i].favorita == 1 ? 0 : 1;
       }
     );
     //this.proveedorService.updateProducto(this.form)
   }
+
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }

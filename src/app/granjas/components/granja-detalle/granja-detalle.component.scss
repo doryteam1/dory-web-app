@@ -11,6 +11,7 @@
 }
 
 .header-container__rating{
+  display: block;
     font-size:20px;
     font-weight: 600;
     margin-left: 7px;
@@ -18,12 +19,12 @@
 
 .header-container__icon{
     position: relative;
-    top: -4px;
     width:16px;
     height: 16px;
 }
 
 .header-container__description{
+  display: block;
     font-size:20px;
 }
 
@@ -455,12 +456,15 @@ background-color: #ccc;
 
 div.container__box>div>div.header-container{
 grid-area: header-container;
-    display: flex;
-      justify-content: flex-start;
+display: flex;
+ justify-content: flex-start;
+ flex-direction: column;
+  margin-top: 11px;
 }
 div.container__box>div>div.header-container>div{
 display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
 }
 div.container__box>div>div.header-container>div>div{
 margin-top: 10px;
