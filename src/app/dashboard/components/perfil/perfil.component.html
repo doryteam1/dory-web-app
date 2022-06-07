@@ -1,4 +1,4 @@
-<div class="row" >
+<div class="d-flex flex-row justify-content-center">
 <div class="container">
     <div class="container__box-row">
         <div class="container__box-image">
@@ -7,124 +7,152 @@
             <input #fileInput type="file" name="resume" (change)='fileChange($event)' hidden>
         </div>
         <div class="container__info">
-            <span class="container__title">{{nombres?.value ? nombres?.value : '____' }} {{apellidos?.value ? apellidos?.value : '____' }}</span>
-            <span class="container__title">{{usuario?.tipo_usuario ? usuario?.tipo_usuario : '____'}}</span>
+            <span class="container__label">{{nombres?.value ? nombres?.value : '____' }} {{apellidos?.value ? apellidos?.value : '____' }}</span>
+            <span class="container__label">{{usuario?.tipo_usuario ? usuario?.tipo_usuario : '____'}}</span>
         </div>
     </div>
     <form id="CreateForm" [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <div class="container__box mt-4" *ngIf="mostrarPorTipo('cedula')">
-        <span class="container__title">Cedula</span>
-        <div>
-            <input class="container__input form-input-text-square"  type="text" formControlName='cedula'>
-        </div>
+    <div class="container__box__title">
+        <span class="container__title mb-5">Datos básicos</span>
     </div>
 
-    <div class="container__box" *ngIf="mostrarPorTipo('nombres')">
-        <span class="container__title">Nombres</span>
-        <div>
-            <input class="container__input form-input-text-square"  type="text" formControlName='nombres'>
+    <div class="d-flex flex-row flex-wrap">
+        <div class="container__box" *ngIf="mostrarPorTipo('nombres')">
+            <span class="container__label">Nombres</span>
+            <div>
+                <input class="container__input form-input-text-square"  type="text" formControlName='nombres'>
+            </div>
         </div>
+    
+        <div class="container__box" *ngIf="mostrarPorTipo('apellidos')">
+            <span class="container__label">Apellidos</span>
+            <div>
+                <input class="container__input form-input-text-square"  type="text" formControlName='apellidos'>
+            </div>
+        </div>
+    
+        <div class="container__box" *ngIf="mostrarPorTipo('cedula')">
+            <span class="container__label">Cedula</span>
+            <div>
+                <input class="container__input form-input-text-square"  type="text" formControlName='cedula'>
+            </div>
+        </div>
+        
+        <div class="container__box" *ngIf="mostrarPorTipo('fecha_nacimiento')">
+            <span class="container__label">Fecha de nacimiento: </span>
+            <div>
+                <input class="container__input form-input-text-square" type="date" formControlName='fecha_nacimiento'>
+            </div>
+        </div>
+    
+        <div class="container__box" *ngIf="mostrarPorTipo('email')">
+            <span class="container__label">Correo electrónico</span>
+            <div>
+                <input class="container__input form-input-text-square"  type="text" formControlName='email'>
+            </div>
+        </div>
+    
+        <div class="container__box" *ngIf="mostrarPorTipo('celular')">
+            <span class="container__label">Celular</span>
+            <div>
+                <input class="container__input form-input-text-square"  type="text" formControlName='celular'>
+            </div>
+        </div>    
+    </div>
+    
+
+    <div class="container__box__title">
+        <span class="container__title">Datos de ubicación</span>
     </div>
 
-    <div class="container__box" *ngIf="mostrarPorTipo('apellidos')">
-        <span class="container__title">Apellidos</span>
-        <div>
-            <input class="container__input form-input-text-square"  type="text" formControlName='apellidos'>
+    <div class="d-flex flex-row flex-wrap">
+        <div class="container__box" *ngIf="mostrarPorTipo('departamento')">
+            <span class="container__label">Departamento</span>
+            <div>
+                <select class="container__input form-input-text-square" formControlName='id_departamento' (ngModelChange)='changeDpto()'>
+                    <optgroup label="Escoje un departamento" value="70">
+                        <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="container__box" *ngIf="mostrarPorTipo('municipio')">
+            <span class="container__label">Municipio</span>
+            <div>
+                <select class="container__input form-input-text-square" formControlName='id_municipio' (ngModelChange)='changeMunic()'>
+                    <optgroup label="Escoge un municipio">
+                        <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <!--<div class="container__box" *ngIf="mostrarPorTipo('corregimiento')">
+            <span class="container__label">Selecciona un corregimiento</span>
+            <div>
+                <select class="container__input form-input-text-square" formControlName='id_corregimiento' (ngModelChange)="corregSelected()">
+                    <optgroup label="Escoje un corregimiento">
+                        <option *ngFor="let corregimiento of corregimientos" [ngValue]="corregimiento.id_corregimiento">{{corregimiento.nombre}}</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>-->
+
+        <div *ngIf="mostrarPorTipo('corregimiento')">
+            <span class="container__label">Corregimiento</span>
+            <input class="container__input form-input-text-square" type="text" formControlName='nombre_corregimiento'>
+        </div>
+
+        <!--<span class="container__label" *ngIf="mostrarPorTipo('vereda')">Selecciona una vereda</span>
+        <div class="container__box" *ngIf="mostrarPorTipo('vereda')">
+            <div>
+                <select class="container__input form-input-text-square" formControlName='id_vereda' (ngModelChange)='veredaSelected()'>
+                    <optgroup label="Escoje una vereda">
+                        <option *ngFor="let vereda of veredas" [ngValue]="vereda.id_vereda">{{vereda.nombre}}</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>-->
+
+        <!-- <div class="container__box" *ngIf="mostrarPorTipo('vereda')">
+            <span class="container__label">Vereda</span>
+            <div>
+                <input class="container__input form-input-text-square"  type="text" formControlName='nombre_vereda'>
+            </div>
+        </div> -->
+
+        <div class="container__box" *ngIf="mostrarPorTipo('direccion')">
+            <span class="container__label">Dirección: </span>
+            <div>
+                <input class="container__input form-input-text-square"  type="text" formControlName='direccion'>
+            </div>
         </div>
     </div>
-
-    <div class="container__box" *ngIf="mostrarPorTipo('celular')">
-        <span class="container__title">Celular</span>
-        <div>
-            <input class="container__input form-input-text-square"  type="text" formControlName='celular'>
-        </div>
+    
+    <div class="d-flex flex-row justify-content-center">
+        <button class="container__btn2" *ngIf="mostrarPorTipo('coordenadas')" (click)="verMap()">
+            <span *ngIf="!loading">Escoger mi ubicación</span>
+            <i class="bi bi-geo-alt" *ngIf="!loading"></i>
+            <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+            </div>
+        </button>
+    </div>
+    <div class="container__box__title">
+        <span class="container__title">Otros datos</span>
     </div>
 
-    <div class="container__box" *ngIf="mostrarPorTipo('email')">
-        <span class="container__title">Correo electrónico</span>
-        <div>
-            <input class="container__input form-input-text-square"  type="text" formControlName='email'>
-        </div>
-    </div>
-
-    <div class="container__box" *ngIf="mostrarPorTipo('fecha_nacimiento')">
-        <span class="container__title">Fecha de nacimiento: </span>
-        <div>
-            <input class="container__input form-input-text-square" type="date" formControlName='fecha_nacimiento'>
-        </div>
-    </div>
-
-    <div class="container__box" *ngIf="mostrarPorTipo('departamento')">
-        <span class="container__title">Departamento</span>
-        <div>
-            <select class="container__input form-input-text-square" formControlName='id_departamento' (ngModelChange)='changeDpto()'>
-                <optgroup label="Escoje un departamento" value="70">
-                    <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
-                </optgroup>
-            </select>
-        </div>
-    </div>
-
-    <div class="container__box" *ngIf="mostrarPorTipo('municipio')">
-        <span class="container__title">Municipio</span>
-        <div>
-            <select class="container__input form-input-text-square" formControlName='id_municipio' (ngModelChange)='changeMunic()'>
-                <optgroup label="Escoge un municipio">
-                    <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}</option>
-                </optgroup>
-            </select>
-        </div>
-    </div>
-
-    <!--<div class="container__box" *ngIf="mostrarPorTipo('corregimiento')">
-        <span class="container__title">Selecciona un corregimiento</span>
-        <div>
-            <select class="container__input form-input-text-square" formControlName='id_corregimiento' (ngModelChange)="corregSelected()">
-                <optgroup label="Escoje un corregimiento">
-                    <option *ngFor="let corregimiento of corregimientos" [ngValue]="corregimiento.id_corregimiento">{{corregimiento.nombre}}</option>
-                </optgroup>
-            </select>
-        </div>
-    </div>-->
-
-    <div *ngIf="mostrarPorTipo('corregimiento')">
-        <span class="container__title">Corregimiento</span>
-        <input class="container__input form-input-text-square" type="text" formControlName='nombre_corregimiento'>
-    </div>
-
-    <!--<span class="container__title" *ngIf="mostrarPorTipo('vereda')">Selecciona una vereda</span>
-    <div class="container__box" *ngIf="mostrarPorTipo('vereda')">
-        <div>
-            <select class="container__input form-input-text-square" formControlName='id_vereda' (ngModelChange)='veredaSelected()'>
-                <optgroup label="Escoje una vereda">
-                    <option *ngFor="let vereda of veredas" [ngValue]="vereda.id_vereda">{{vereda.nombre}}</option>
-                </optgroup>
-            </select>
-        </div>
-    </div>-->
-
-    <div class="container__box" *ngIf="mostrarPorTipo('vereda')">
-        <span class="container__title">Vereda</span>
-        <div>
-            <input class="container__input form-input-text-square"  type="text" formControlName='nombre_vereda'>
-        </div>
-    </div>
-
-    <div class="container__box" *ngIf="mostrarPorTipo('direccion')">
-        <span class="container__title">Dirección: </span>
-        <div>
-            <input class="container__input form-input-text-square"  type="text" formControlName='direccion'>
-        </div>
-    </div>
+    <div class="d-flex flex-row flex-wrap">
     <div class="container__box" *ngIf="mostrarPorTipo('nombre_negocio')">
-        <span class="container__title">Nombre del negocio: </span>
+        <span class="container__label">Nombre del negocio: </span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='nombre_negocio'>
         </div>
     </div>
 
-    <span class="container__title" *ngIf="mostrarPorTipo('area_experticia')">Area de experticia</span>
+    
+    <span class="container__label" *ngIf="mostrarPorTipo('area_experticia')">Area de experticia</span>
     <div class="container__box-row" *ngIf="mostrarPorTipo('area_experticia')">
         <select class="container__input form-input-text-square" formControlName='id_area_experticia' (change)="onAreaExpChange()">
             <optgroup label="Escoje un area">
@@ -136,45 +164,52 @@
 
     <div *ngIf="idAreaExpert?.value ==-1">
         <div class="container__box" *ngIf="mostrarPorTipo('otra_area_experticia')">
-            <span class="container__title">Escribe el nombre del area experticia: </span>
+            <span class="container__label">Escribe el nombre del area experticia: </span>
             <div>
                 <input class="container__input form-input-text-square"  type="text" formControlName='otra_area_experticia'>
             </div>
         </div>
         <div class="container__box" *ngIf="mostrarPorTipo('otra_area_experticia_descripcion')">
-            <span class="container__title">Cuentanos en que consiste tu area experticia: </span>
+            <span class="container__label">Cuentanos en que consiste tu area experticia: </span>
             <div>
                 <input class="container__input form-input-text-square"  type="text-area" formControlName='otra_area_experticia_descripcion'>
             </div>
         </div>
     </div>
     <div class="container__box" *ngIf="mostrarPorTipo('sobre_mi')">
-        <span class="container__title">Cuentanos sobre ti: </span>
+        <span class="container__label">Cuentanos sobre ti: </span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='sobre_mi'>
         </div>
     </div>
-    <div class="container__box" *ngIf="mostrarPorTipo('coordenadas')">
-        <span class="container__title">Latitud</span>
+    <!-- <div class="container__box" *ngIf="mostrarPorTipo('coordenadas')">
+        <span class="container__label">Latitud</span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='latitud'>
         </div>
     </div>
     <div class="container__box" *ngIf="mostrarPorTipo('coordenadas')">
-        <span class="container__title">Longitud</span>
+        <span class="container__label">Longitud</span>
         <div>
             <input class="container__input form-input-text-square"  type="text" formControlName='longitud'>
         </div>
+    </div> -->
     </div>
-    <span class="container__title" *ngIf="mostrarPorTipo('coordenadas')">Ubicacion mapa: <span class="container_link"  (click)="verMap()">ver mapa</span></span>
-    <button class="container__btn">
-        <span *ngIf="!loading">Actualizar</span>
-        <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
-        </div>
-    </button>
+    <div class="container__box__title">
+        <span class="container__title">Cambiar foto de perfil</span>
+    </div>
+    
+    <div class="d-flex flex-row justify-content-center">
+        <button class="container__btn">
+            <span *ngIf="!loading">Actualizar</span>
+            <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+            </div>
+        </button>
+    </div>
+
     </form>
  </div>
-
+</div>
 <!-- Modal -->
 <ng-template #map let-modal >
   <div class="modal-header footerheadermodal ">
@@ -252,5 +287,4 @@
     </google-map>
   </div>
 </ng-template>
-    </div>
 <ngx-spinner type="square-jelly-box"></ngx-spinner>
