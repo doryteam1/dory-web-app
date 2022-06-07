@@ -25,7 +25,7 @@ export class GranjaDetalleComponent implements OnInit {
   imgmauseover: boolean = false;
   showconte: boolean = false;
   imgselecmodal!: number;
-  resenas: any = [];
+  resenas: Array<any> = [];
   showErrorFound: boolean = false;
   puntuacion: any;
   rating: number = -1;
@@ -44,6 +44,7 @@ export class GranjaDetalleComponent implements OnInit {
     public location: PlatformLocation,
     private modalService: NgbModal
   ) {}
+
   ngOnInit(): void {
     this.selectedGranjaId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
@@ -120,10 +121,18 @@ export class GranjaDetalleComponent implements OnInit {
       })
       .result.then(
         (result) => {
-          console.log(result);
+          console.log("result ",result);
+          this.success = false;
+          this.descResena = '';
+          this.rating = -1;
+          window.location.reload()
         },
         (reason) => {
-          console.log(reason);
+          this.success = false;
+          console.log("reason ",reason);
+          this.descResena = '';
+          this.rating = -1;
+          window.location.reload()
         }
       );
   }
@@ -148,31 +157,39 @@ export class GranjaDetalleComponent implements OnInit {
     this.rating = event;
   }
 
-  publicarResena() {
+  publicarResena(){
+    if(this.rating < 1 ){
+      return;
+    }
     let resena = {
-      id_granja: this.granja.id_granja,
-      descripcion: this.descResena,
-      fecha: Utilities.dateTimeNow(),
-    };
+      id_granja:this.granja.id_granja,
+      descripcion:this.descResena,
+      fecha:Utilities.dateNow(),
+      calificacion:this.rating
+    }
     this.loading = true;
+    console.log(resena)
     this.granjasService.addResena(resena).subscribe(
-      (response) => {
-        this.granjasService
-          .calificarGranja(this.granja.id_granja, this.rating)
-          .subscribe(
-            (response) => {
-              this.loading = false;
-              this.success = true;
-            },
-            (err) => {
-              this.loading = false;
-            }
-          );
-      },
-      (err) => {
+      (respose)=>{
+        /*this.resenas.push(resena)
+        let calif = this.acumCalif();
+        calif += resena.calificacion;
+        calif = calif / (this.granja.resenas.length + 1); */
+        this.loading = false;
+        this.success = true;
+      },err=>{
         this.loading = false;
       }
     );
+  }
+
+  acumCalif(){
+    let calif = 0;
+
+    this.granja.resenas.forEach((resena:any) => {
+      calif += resena.calificacion;
+    });
+    return calif;
   }
   // @HostListener('window:popstate', ['$event']) onPopState(event: any) {
   //   // this.modalGallerySliderService.closeModal();
@@ -211,6 +228,26 @@ export class GranjaDetalleComponent implements OnInit {
       .then((result) => {})
       .catch((result) => {});
     /*    history.pushState(null, '', window.location.pathname); */
+  }
+
+  /* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+ myFunction(id:string) {
+  document.getElementById(id)!.classList.toggle("show");
+}
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event:any) {
+  if (!event.target!.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
   }
 }
 

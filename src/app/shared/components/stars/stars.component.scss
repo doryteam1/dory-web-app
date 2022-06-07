@@ -1,17 +1,25 @@
 :host{
-    width: 218px;
+    //width: 218px;
+    width: fit-content;
 }
 
 .container{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     width: 100%;
     padding: 0;
     margin: 0;
 }
-.container__icon{
+
+.container__icon-medium{
     font-size: 27px;
+    margin-right: 8px;
+}
+
+.container__icon-small{
+    font-size: 15px;
+    margin-right: 5px;
 }
 
 .grey{

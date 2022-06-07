@@ -4,6 +4,11 @@ export class Utilities{
         return today.toISOString().substring(0, 10)+today.getDay()+" "+today.getHours()+"-"+today.getMinutes()+"-"+today.getSeconds()
     }
 
+    static dateNow():string{
+        let today = new Date();
+        return today.getFullYear().toString()+"-"+today.getMonth().toString()+"-"+today.getDate().toString();
+    }
+
     static dateToISOString(date:string){
         return new Date(date).toISOString().substring(0, 10);
     }

@@ -130,17 +130,31 @@
         </div>
     </div>
 
+
+
     <div class="resenas">
       <h4 class="resenas__title">Puntuaciones y reseñas</h4>
-      <span class="resenas__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ? (granja.puntuacion | number:'1.1-1') : 'Sin calificación'}}</span>
-      <app-stars class="mb-4" [selectedStar]="granja?.puntuacion"></app-stars>
-      <div class="card" *ngFor="let resena of resenas; let i = index">
+      <span class="resenas__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ? (granja?.puntuacion | number:'1.1-1') : 'Sin calificación'}}</span>
+      <app-stars [selectedStar]="granja?.puntuacion" size="medium"></app-stars>
+      <span class="mb-4">{{resenas.length}} reseñas</span>
+      <div class="card" *ngFor="let resena of resenas; let i = index" [hidden]="i>=3">
           <div class="card__row" *ngIf="i < 3">
-              <img src="{{ resena.foto_usuario ? resena.foto_usuario : 'assets/images/avatar-person.svg' }}" alt="" class="card__image">
-              <div class="card__box">
-                  <span class="card__title">{{resena.nombre_usuario}}</span>
-                  <div class="span card__date">{{resena.fecha}}</div>
+             <div class="d-flex flex-row justify-content-start">
+                <img src="{{ resena.foto_usuario ? resena.foto_usuario : 'assets/images/avatar-person.svg' }}" alt="" class="card__image">
+                <div class="card__box">
+                    <span class="card__title">{{resena.nombre_usuario}}</span>
+                </div>
+              </div> 
+              <div class="dropdown">
+                <button (click)="myFunction('myDropdown'+i)" class="dropbtn"><i class="bi bi-three-dots-vertical"></i></button>
+                <div [id]="'myDropdown' + i" class="dropdown-content">
+                  <a href="#">Eliminar</a>
+                </div>
               </div>
+          </div>
+          <div class="d-flex flex-row justify-content-start mt-4">
+            <app-stars class="card__stars" [selectedStar]="(resena?.calificacion == null || resena?.calificacion < 1) ? '0' : resena?.calificacion" *ngIf="i < 3" size="small"></app-stars>
+            <span *ngIf="i < 3">{{resena.fecha}}</span>
           </div>
           <p class="card__paragh" *ngIf="i < 3">{{resena.descripcion}}</p>
           <a class="link" *ngIf="i == 2" (click)="showResenas(granja.id_granja)">Ver todas las reseñas</a>
@@ -167,14 +181,13 @@
 <ng-template #qualifyModal let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" *ngIf="!success">Danos tu opinion sobre esta granja!😀</h4>
-    <h4 class="modal-title" id="modal-basic-title" *ngIf="success">Gracias por darnos tu opinión👍</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
   </div>
   <div class="modal-body">
     <div class="qualify-modal__container" *ngIf="!success">
       <app-stars class="qualify-modal__stars" (rating)="onRating($event)"></app-stars>
       <textarea class="qualify-modal__input form-input-text-square" placeholder="Describe tu experiencia(opcional)" [(ngModel)]="descResena"></textarea>
-      <button class="qualify-modal__button btn-rounded-blue" (click)="publicarResena()">
+      <button class="qualify-modal__button btn-rounded-blue" [ngClass]="(rating < 1 || rating > 5) ? 'disabled' : ''" (click)="publicarResena()" [disabled]="rating < 1 || rating > 5">
         <span *ngIf="!loading">Publicar</span>
         <div class="qualify__spinner spinner-border" role="status" *ngIf="loading">
         </div>
@@ -182,9 +195,8 @@
     </div>
     <div class="search-container" *ngIf="success">
       <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/searching.svg">
-          <h3>Gracias por tu opinión</h3>
-          <p>...</p>
+          <img class="search-container__image" src="assets/images/undraw_appreciation_re_p6rl.svg">
+          <h3 class="mt-4">Gracias por darnos tu opinión👍</h3>
       </div>
   </div>
   </div>
