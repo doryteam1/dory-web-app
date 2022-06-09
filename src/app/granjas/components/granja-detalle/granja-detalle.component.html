@@ -181,13 +181,7 @@
                 <div class="card__box">
                     <span class="card__title">{{resena.nombre_usuario}}</span>
                 </div>
-              </div>
-              <div class="dropdown">
-                <button (click)="myFunction('myDropdown'+i)" class="dropbtn"><i class="bi bi-three-dots-vertical"></i></button>
-                <div [id]="'myDropdown' + i" class="dropdown-content">
-                  <a href="#">Eliminar</a>
-                </div>
-              </div>
+              </div> 
           </div>
           <div class="d-flex flex-row justify-content-start mt-4">
             <app-stars class="card__stars" [selectedStar]="(resena?.calificacion == null || resena?.calificacion < 1) ? '0' : resena?.calificacion" *ngIf="i < 3" size="small"></app-stars>
