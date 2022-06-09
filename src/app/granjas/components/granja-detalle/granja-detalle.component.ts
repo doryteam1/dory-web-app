@@ -61,10 +61,8 @@ export class GranjaDetalleComponent implements OnInit {
       this.authUserId = payload.sub;
       this.granjasService.resenasUserByIdGranja(this.selectedGranjaId).subscribe(
         (response)=>{
-          console.log("response ",response)
           this.miresena = response.data.resena;
-          this.editedDescResena = this.miresena.descripcion;
-          console.log("mi reseña ", this.miresena)
+          this.editedDescResena = this.miresena?.descripcion;
         },err=>{
 
         }
@@ -140,7 +138,6 @@ export class GranjaDetalleComponent implements OnInit {
       this.editingMiResena = true;
     }else{
       this.editingMiResena = false;
-      this.rating = -1;
     }
     this.modalService
       .open(content, {

@@ -187,7 +187,7 @@
             <app-stars class="card__stars" [selectedStar]="(resena?.calificacion == null || resena?.calificacion < 1) ? '0' : resena?.calificacion" *ngIf="i < 3" size="small"></app-stars>
             <span *ngIf="i < 3">{{resena.fecha}}</span>
           </div>
-          <p class="card__paragh" *ngIf="i < 3">{{resena.descripcion}}</p>
+          <p class="card__paragh" *ngIf="i < 3">{{resena?.descripcion}}</p>
           <a class="link" *ngIf="i == 2" (click)="showResenas(granja.id_granja)">Ver todas las reseñas</a>
       </div>
       <!-- <button class="resenas__button btn-rounded-blue" (click)="openQualifyModal(qualifyModal)">Calificar</button> -->
