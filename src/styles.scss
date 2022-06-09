@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+
 :root {
   --morado: #6685b4;
   --azul1: #26a5b8;
@@ -288,6 +289,16 @@ div.map-container{
   border-bottom-left-radius:10px 10px;
   border-bottom-right-radius: 10px 10px
 }
+.ngx-pagination .current {
+  background: var(--azul1) !important;
+}
+.ngx-pagination {
+  font-size: 15px !important;
+  padding-left: 0px !important;
+}
+.ngx-pagination a {
+  text-decoration: none !important;
+}
 /* FIN PROPIOS */
 
 /* Importing Bootstrap SCSS file. */
@@ -295,3 +306,5 @@ div.map-container{
 /* @import '~@ngx-share/button/styles/share-buttons.css';
 @import '~@ngx-share/button/styles/themes/default/default-theme.css'; */
 //@import '~ngx-sharebuttons/themes/default';
+/* @import '~ngx-sharebuttons/themes/default'; */
+

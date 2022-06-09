@@ -13,7 +13,8 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { MisVehiculosComponent } from './components/mis-vehiculos/mis-vehiculos.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxLongPress2Module } from 'ngx-long-press2';
-import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.component'; 
+import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.
     MisGranjasComponent,
     MisProductosComponent,
     MisVehiculosComponent,
-    MisFavoritosComponent
+    MisFavoritosComponent,
   ],
   imports: [
     CommonModule,
@@ -36,7 +37,8 @@ import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.
     SharedModule,
     GoogleMapsModule,
     NgbModule,
-    NgxLongPress2Module
-  ]
+    NgxLongPress2Module,
+    NgxPaginationModule,
+  ],
 })
-export class DashboardModule { }
+export class DashboardModule {}

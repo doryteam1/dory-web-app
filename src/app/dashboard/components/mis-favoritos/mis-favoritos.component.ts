@@ -18,6 +18,7 @@ misGranjaFavoritas:any[]=[]
     this.granjasService.misFavoritas().subscribe(
       (response)=>{
         this.misGranjaFavoritas = response.data;
+        console.log(this.misGranjaFavoritas)
       },err=>{
 
       }
@@ -29,7 +30,7 @@ misGranjaFavoritas:any[]=[]
     .then(
       (result)=>{
         if(result == true){
-          this.misGranjaFavoritas[i].esfavorita = this.misGranjaFavoritas[i].esfavorita == 1 ? 0 : 1;  
+          this.misGranjaFavoritas[i].esfavorita = this.misGranjaFavoritas[i].esfavorita == 1 ? 0 : 1;
           this.granjasService
             .esFavorita(
               this.misGranjaFavoritas[i].id_granja
@@ -48,14 +49,14 @@ misGranjaFavoritas:any[]=[]
       }
     ).catch(
       (result)=>{
-        
+
       }
     )
-    
+
   }
 
   navigate(i:number){
-    // Converts the route into a string that can be used 
+    // Converts the route into a string that can be used
     // with the window.open() function
     const url = this.router.serializeUrl(
       this.router.createUrlTree([`/granjas/municipio/detalle/${this.misGranjaFavoritas[i].id_granja}`])

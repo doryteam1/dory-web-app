@@ -30,7 +30,9 @@ import {
   HttpClientJsonpModule,
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
-
+import { ModalShareButtonComponent } from './components/modal-share-button/modal-share-button.component';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 
 
 
@@ -53,14 +55,17 @@ import {
     ModalGallerySliderComponent,
     CarrucelImgComponent,
     ModalGallerySliderComponent,
-    CarrucelImgComponent
+    CarrucelImgComponent,
+    ModalShareButtonComponent
   ],
   imports: [CommonModule,
      RouterModule,
      FormsModule,
      NgbModule,
     HttpClientModule,
-    HttpClientJsonpModule
+    HttpClientJsonpModule,
+    ShareButtonsModule,
+    ShareIconsModule,
   ],
   exports: [
     NavbarComponent,
@@ -77,7 +82,8 @@ import {
     ConfirmModalMapComponent,
     ShorterPipe,
     StarsComponent,
-    CarrucelImgComponent
+    CarrucelImgComponent,
+  ModalShareButtonComponent
   ],
   providers: [
     ConfirmModalMapService,

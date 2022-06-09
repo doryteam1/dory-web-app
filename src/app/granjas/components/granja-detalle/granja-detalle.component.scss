@@ -28,22 +28,17 @@
     font-size:20px;
 }
 
-.buttons-container1{
+.buttons-container1 {
+  grid-area: button1;
+  height: 43px;
+  margin-left: 55px;
 
-    grid-area: button1;
-
-    height: 43px;
-
-    margin-left: 55px;
 }
-.buttons-container2{
 
-    grid-area: button2;
-
-    height: 43px;
-        margin-left: 20px;
-
-
+.buttons-container2 {
+  grid-area: button2;
+  height: 43px;
+  margin-left: 20px;
 }
 
 .buttons-container__image{
@@ -59,6 +54,7 @@
     font-weight: 500;
     text-decoration: none;
     color: var(--black);
+    cursor: pointer;
 }
 
 

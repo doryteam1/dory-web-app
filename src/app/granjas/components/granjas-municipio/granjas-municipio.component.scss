@@ -74,6 +74,8 @@
     padding-top: 10px;
     border-radius: 10px;
     cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 4px 4px 4px rgb(0 0 0 / 10%);
 }
 .container-map-car{
   margin-left: 10px;
@@ -98,8 +100,9 @@ div.container-map-car>div>div:nth-child(1){
     width: 262px;
     height: 219px;
     border-radius: 10px 0px 0px 10px;
-    cursor:pointer;
     margin-top: -9px;
+    overflow: hidden;
+    cursor:pointer;
 }
 
 .card__title{
@@ -123,18 +126,35 @@ div.container-map-car>div>div:nth-child(1){
     margin-top: 12px;
     cursor: pointer;
 }
+.mYstiledivmap{
 
+  margin-left: 30px;
+}
 .card__rating-container{
-    grid-area:data;
-    align-self:end;
+display: flex;
+flex-direction: column;
+  /*   align-self:end; */
+  align-items: flex-end;
     cursor:pointer;
+}
+.card__rating-container>div{
+    display: flex;
+      align-items: center;
+      gap: 5px;
+}
+.data-ratinn-area{
+  grid-area: data;
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
 .card__icon-rating{
     height: 20px;
     width: 20px;
-    margin-bottom: 10px;
-    margin-right: 10px;
+    /* margin-bottom: 10px;
+    margin-right: 10px; */
 }
 
 .card__rating{
@@ -147,9 +167,9 @@ div.container-map-car>div>div:nth-child(1){
 }
 
 .card__data{
-    grid-area:data;
-    justify-self: end;
-    align-self: end;
+  /*   grid-area:data; */
+   /*  justify-self: end;
+    align-self: end; */
     font-size:22px;
     font-weight: 700;
     cursor: pointer;
@@ -185,11 +205,16 @@ div.container-map-car>div>div:nth-child(1){
 }
 
 .mapgoogle {
-border: 2px solid #6c6c6c;
+/* border: 2px solid #6c6c6c; */
   border-radius: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
   overflow: hidden;
+  height: 650px;
+  width: 785px;
+  background-color: gainsboro;
+  border: 2px solid rgb(0 0 0 / 51%);
+  box-shadow: 4px 4px 4px rgb(0 0 0 / 15%);
 
 }
 .sticky-top{
@@ -207,4 +232,61 @@ padding-top: 80px;
 
 .box__button{
     margin-bottom: 35px;
+}
+
+/* prueba loader */
+.container-loader {
+  background-color: #f3f3f3;
+  position: fixed;
+  width: 83px;
+  height: 83px;
+  z-index: 9999;
+  transition: all 1.5s;
+
+
+}
+
+.loader-icon,
+.loader-icon::before,
+.loader-icon::after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  animation: loader 1.5s infinite ease-in-out;
+}
+
+.loader-icon {
+  color: black;
+  font-size: 13px;
+  position: relative;
+  animation-delay: -0.16s;
+}
+
+.loader-icon::before,
+.loader-icon::after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+
+.loader-icon::before {
+  left: -3.5em;
+  animation-delay: -0.32s;
+}
+
+.loader-icon::after {
+  left: 3.5em;
+}
+
+@keyframes loader {
+
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
 }

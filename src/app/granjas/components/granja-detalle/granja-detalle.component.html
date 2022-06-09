@@ -15,14 +15,14 @@
            </span> {{granja?.nombre_municipio}}, Sucre, Colombia</span>
         </div>
    </div>
-    <div class="buttons-container1">
-        <img class="buttons-container__image" src="assets/icons/share.svg">
-        <a class="buttons-container__description" href="#">Compartir</a>
+    <div class="buttons-container1" >
+        <img class="buttons-container__image" src="assets/icons/share.svg" (click)="shareFuntion()">
+        <span class="buttons-container__description" (click)="shareFuntion()">Compartir</span>
     </div>
     <div class="buttons-container2">
       <img class="buttons-container__image" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita" (click)="changeFavorite()">
       <img class="buttons-container__image" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita" (click)="changeFavorite()">
-        <a class="buttons-container__description" href="#">Guardar</a>
+        <span class="buttons-container__description" (click)="changeFavorite()">Guardar</span>
     </div>
 
 <!-- <div class="photo-container-padre photo-container7-div"  *ngIf="fotosgranja?.length >=1">
@@ -144,7 +144,7 @@
                 <div class="card__box">
                     <span class="card__title">{{resena.nombre_usuario}}</span>
                 </div>
-              </div> 
+              </div>
               <div class="dropdown">
                 <button (click)="myFunction('myDropdown'+i)" class="dropbtn"><i class="bi bi-three-dots-vertical"></i></button>
                 <div [id]="'myDropdown' + i" class="dropdown-content">

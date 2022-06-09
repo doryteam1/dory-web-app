@@ -34,14 +34,14 @@
 }
 
 .puntosindicators {
-  grid-area: indicador;
-  height: 100%;
+  grid-area: imagenes;
+  height: 15%;
   margin: 0px;
   overflow: hidden;
 }
 
 .puntosindicators>div {
-  width: 197px;
+  width: 100px;
   height: auto;
   overflow: hidden;
 }
@@ -62,6 +62,8 @@
   border-bottom: 0px;
   margin: 0px;
   align-self: center;
+  background-color: white;
+  box-shadow: inset 0 0 0 0.5px black;
 
 }
 
@@ -102,9 +104,9 @@
 .carouselsinfotos {
   display: grid;
   grid-template-areas:
+  'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
@@ -112,8 +114,8 @@
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
-    'indicador indicador indicador indicador indicador indicador indicador indicador indicador indicador indicador indicador'
-    'indicador indicador indicador indicador indicador indicador indicador indicador indicador indicador indicador indicador';
+    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
+    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes';
 }
 
 .carouselsinfotosimg1 {
@@ -153,14 +155,64 @@
   height: auto;
 }
 
-.carousel-control-prev-icon {
-  background-color: #333944;
+.mYcarousel-control-prev-icon {
+background: rgba(255, 255, 255, 0.77);
   border-radius: 100%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5px;
+
+}
+.mYcarousel-control-prev-icon>svg {
+display: block;
+  fill: none;
+  height: 12px;
+  width: 12px;
+  stroke: currentcolor;
+  stroke-width: 4;
+  overflow: visible;
+  color: black;
+}
+
+.mYcarousel-control-next-icon {
+  background: rgba(255, 255, 255, 0.77);
+  border-radius: 100%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 5px;
+
+}
+
+.mYcarousel-control-next-icon>svg {
+  display: block;
+  fill: none;
+  height: 12px;
+  width: 12px;
+  stroke: currentcolor;
+  stroke-width: 4;
+  overflow: visible;
+  color: black;
+
+}
+
+.carousel-control-prev-icon {
+background: rgba(255, 255, 255, 0.77);
+  border-radius: 100%;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000000'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
 }
 
 .carousel-control-next-icon {
-  background-color: #333944;
-  border-radius: 100%;
+background: rgba(255, 255, 255, 0.77);
+border-radius: 100%;
+background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000000'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 
 
@@ -189,15 +241,15 @@
 .imgitem {
   height: 100%;
   width: 100%;
-  object-fit: scale-down;
-  border-radius: 10px;
+  object-fit: cover;
+ /*  border-radius: 10px; */
 
 }
 
 .img1item {
   height: 100%;
   width: 100%;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 
 }
 
