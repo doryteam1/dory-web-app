@@ -37,6 +37,7 @@
 <div id="{{id}}" data-bs-ride="carousel" class="carousel"
   [ngClass]="{carouselsinfotosimg1: imagenes.length==1,carouselsinfotos:imagenes.length>1}" data-bs-interval="false"
   #myCarousel *ngIf="indicatorsphoto" [ngStyle]="{'grid-template-rows': divrows,'grid-template-columns': divcolumns}">
+
   <div class="carousel-indicators  puntosindicators" *ngIf="imagenes.length > 1">
     <div [ngStyle]="{'justify-content': justyfycentercontent}" (click)="clickDivIndicadorSlider()">
       <div style="left: 0px; " [ngStyle]="{'left.px': widthExp,'position': posicionsliderleftindicatorssinfotos}">
@@ -49,19 +50,30 @@
     </div>
   </div>
   <div class="carousel-inner  imagenes-carrucel">
-    <div class="carousel-item " *ngFor="let img of imagenes;let index = index; let isFirst = first"
-      [ngClass]="{active: isFirst }" (click)="clickImagenItemSlider()">
+    <div class="carousel-item" *ngFor="let img of imagenes;let index = index; let isFirst = first"
+      [ngClass]="{active: isFirst }" (click)="clickImagenItemSlider()" >
       <img [ngClass]="{ img1item: imagenes.length==1,imgitem:imagenes.length>1 }"
         src="{{ img? img: 'https://admin.moodyyc.com/img/no-image.png'}}">
     </div>
     <button class="carousel-control-prev" type="button" [attr.data-bs-target]="idnumeral" data-bs-slide="prev"
       (click)="clickButtonPrevious()" *ngIf="imagenes.length > 1">
-      <span class="carousel-control-prev-icon" aria-hidden="true">
+      <span class="mYcarousel-control-prev-icon" aria-hidden="true">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false">
+          <g fill="none">
+            <path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932">
+            </path>
+          </g>
+        </svg>
       </span>
     </button>
     <button class="carousel-control-next" type="button" [attr.data-bs-target]="idnumeral" data-bs-slide="next"
       (click)="clickButtonNext()" *ngIf="imagenes.length > 1">
-      <span class="carousel-control-next-icon" aria-hidden="true">
+      <span class="mYcarousel-control-next-icon" aria-hidden="true">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false">
+          <g fill="none">
+            <path d="m12 4 11.2928932 11.2928932c.3905243.3905243.3905243 1.0236893 0 1.4142136l-11.2928932 11.2928932"></path>
+          </g>
+        </svg>
       </span>
     </button>
   </div>

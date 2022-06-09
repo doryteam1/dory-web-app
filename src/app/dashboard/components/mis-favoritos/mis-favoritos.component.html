@@ -1,30 +1,4 @@
-<div class="row row-cols-1 row-cols-md-3 g-4"  >
-  <!-- <div class="col">
-    <div class="card h-100 cart-mi-estilo">
-      <img
-        src="../../../../assets/images/foto hotel.jpg"
-        class="card-img-top"
-        alt="..."
-      />
-      <div class="card-body" style="padding: 16px">
-        <div class="cart-titulo">
-          <h5 class="card-title">Titulo de la granja</h5>
-        </div>
-        <div class="div-cart-linea">
-          <p class="card-text">Calificación</p>
-        </div>
-        <div class="div-cart-linea">
-          <p class="card-text">Ubicación</p>
-        </div>
-          <div class="d-grid gap-2 mi-estilo-button-cart">
-            <a class="btn btn-primary" type="button">
-              Ver detalles de la granja
-            </a>
-          </div>
-      </div>
-    </div>
-  </div> -->
-
+<!-- <div class="row row-cols-1 row-cols-md-3 g-4"  >
   <div class="container">
     <div class="card" *ngFor="let granja of misGranjaFavoritas; let i = index">
       <img class="card__image" src="{{ granja.fotos[0] ? granja.fotos[0] : 'https://admin.moodyyc.com/img/no-image.png'}}"
@@ -44,7 +18,64 @@
       <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita" (click)="changeFavorite(i)">
       <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita" (click)="changeFavorite(i)">
       <span class="card__data" (click)="navigate(i)">{{granja.area | number:'':'es'}} m²</span>
-    </div>    
+    </div>
+  </div>
+
+</div> -->
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col" *ngFor="let granja of misGranjaFavoritas; let i = index">
+    <div class="card h-100">
+      <div class="imagen-card card-img-top">
+        <img src="{{ granja.fotos[0] ? granja.fotos[0] : 'https://admin.moodyyc.com/img/no-image.png'}}" (click)="navigate(i)">
+      </div>
+
+      <div class="card-body">
+        <div class="namecard-calificacion">
+          <h5 class="card-title">{{granja.nombre | shorter:20}}</h5>
+          <div class="card__rating-container">
+            <div>
+              <span class="card__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ? (granja.puntuacion |
+                number:'1.1-1') : 'S/C'}}</span>
+              <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+            </div>
+            <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)"> ({{granja.cantidad_resenas}} reseñas)</span>
+          </div>
+        </div>
+        <p class="card-text" (click)="navigate(i)">{{granja.descripcion | shorter:200}}.</p>
+          <div class="listview_remove_icon">
+            <svg class="card__icon-favorite" width="48" height="41" viewBox="0 0 48 41" fill="none"
+              xmlns="http://www.w3.org/2000/svg" *ngIf="granja?.esfavorita" (click)="changeFavorite(i)">
+              <path
+                d="M23.7292 7.0717C25.6562 2.90927 30.0582 0.000870193 35.1784 0.000870193C42.0756 0.000870193 47.043 5.37818 47.6675 11.7868C47.6675 11.7868 48.0046 13.3776 47.2626 16.2416C46.2523 20.1421 43.8775 23.6074 40.6757 26.2522L23.7292 40.0318L7.06815 26.2513C3.86638 23.6074 1.49155 20.1412 0.48127 16.2407C-0.260685 13.3767 0.0763938 11.7859 0.0763938 11.7859C0.700896 5.37732 5.66827 0 12.5655 0C17.6866 0 21.8022 2.90927 23.7292 7.0717Z"
+                fill="#26A5B8" stroke="white"  stroke-width="2"/>
+            </svg>
+            <!-- <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
+                        (click)="changeFavorite(i)"> -->
+
+            <svg class="card__icon-favorite" width="52" height="44" viewBox="0 0 52 44" fill="none"
+              xmlns="http://www.w3.org/2000/svg" *ngIf="!granja?.esfavorita" (click)="changeFavorite(i)">
+              <path
+                d="M25.7291 9.07161C27.656 4.90923 32.0581 2.00087 37.1782 2.00087C44.0754 2.00087 49.0428 7.37811 49.6673 13.7866C49.6673 13.7866 50.0043 15.3774 49.2624 18.2414C48.2521 22.1418 45.8773 25.6071 42.6755 28.2518L25.7291 42.0312L9.06811 28.2509C5.86636 25.6071 3.49154 22.1409 2.48127 18.2405C1.73932 15.3765 2.07639 13.7857 2.07639 13.7857C2.70089 7.37724 7.66824 2 14.5654 2C19.6865 2 23.8021 4.90923 25.7291 9.07161Z"
+                fill="white" stroke="black" stroke-width="3" />
+            </svg>
+            <!--  <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita"
+                        (click)="changeFavorite(i)"> -->
+          </div>
+          <div class="div-cart-linea">
+            <span class="card__data" (click)="navigate(i)">{{granja.area | number:'':'es'}} m²</span>
+          </div>
+      </div>
+      <div class="card-footer" >
+        <div class="mi-estilo-button-cart" (click)="navigate(i)">
+          <a class="btn btn-primary" type="button">
+            Ver detalles
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
+
+

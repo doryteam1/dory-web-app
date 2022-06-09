@@ -1,29 +1,39 @@
 <div class="container">
-<table class="table mt-40">
-    <thead class="table-light micolortablelight">
-      <tr>
-        <th>Imagen</th>
-        <th>Nombre de producto</th>
-        <th>Descripción</th>
-        <th>Precio</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let producto of productos; let i=index">
-        <td class="imgproductotd"><img class="container_img" [src]="producto.imagen"></td>
-        <td class="colortextoproducto">{{producto.nombreProducto}}</td>
-        <td class="colortextoproducto">{{producto.descripcion}}</td>
-        <td class="colortextoproducto">{{producto.precio}}</td>
-        <td>
-            <div class="container-row">
-                <i class="container__icon bi bi-pencil text-success me-3 mitextcolorpencil" (click)="openModal(content,'update',i)"></i>
-                <i class="container__icon bi bi-trash text-danger mitextcolortrash" (click)="deleteProducto(producto.codigo,i)"></i>
-            </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="container-table-pagination">
+    <table class="table mt-40">
+        <thead class="table-light micolortablelight">
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre de producto</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productos |  paginate: { itemsPerPage: 3, currentPage: p }; let i=index">
+            <td class="imgproductotd"><img class="container_img" [src]="producto.imagen"></td>
+            <td class="colortextoproducto">{{producto.nombreProducto}}</td>
+            <td class="colortextoproducto">{{producto.descripcion}}</td>
+            <td class="colortextoproducto">{{producto.precio}}</td>
+            <td>
+                <div class="container-row">
+                    <i class="container__icon bi bi-pencil text-success me-3 mitextcolorpencil" (click)="openModal(content,'update',i)"></i>
+                    <i class="container__icon bi bi-trash text-danger mitextcolortrash" (click)="deleteProducto(producto.codigo,i)"></i>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- https://www.npmjs.com/package/ngx-pagination -->
+      <pagination-controls
+                         *ngIf="!showNotFound"
+                          class="my-paginationn"
+                         (pageChange)="p = $event"
+                          previousLabel="Anterior"
+                          nextLabel="Siguiente"
+      ></pagination-controls>
+  </div>
   <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar nuevo producto</button>
 </div>
 <div class="search-container" *ngIf="showNotFound">

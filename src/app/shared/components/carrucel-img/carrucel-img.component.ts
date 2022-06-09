@@ -29,6 +29,7 @@ export class CarrucelImgComponent implements OnInit {
   posicionsliderleft!: string;
   posicionsliderleftindicatorssinfotos: string = 'relative';
   justyfycentercontent: string = 'none';
+  fotooverslider:boolean=false
   @Output() valueResponseIndiceActualSlider: EventEmitter<number> =
     new EventEmitter();
   @Output() eventValueResponseClickFotoMiniSlider: EventEmitter<number> =
@@ -45,7 +46,7 @@ export class CarrucelImgComponent implements OnInit {
     if (this.indicatorsphoto) {
       this.id = `carouselExampleCaptions${this.idtarge}`;
       this.idnumeral = `#carouselExampleCaptions${this.idtarge}`;
-      if (this.imagenes.length > 9) {
+      if (this.imagenes.length > 4) {
         this.widthExp = 0;
       } else {
         this.justyfycentercontent = 'center';
@@ -126,10 +127,10 @@ export class CarrucelImgComponent implements OnInit {
     if (this.indicatorsphoto) {
       let idx = this.valorindiceactual + 1;
       this.eventClickOnPreviousOrNew.emit();
-      if (this.imagenes.length > 9) {
-        if (idx >= 4 && idx <= this.imagenes.length - 6) {
+      if (this.imagenes.length > 4) {
+        if (idx > 3 && idx <= this.imagenes.length - 2) {
           console.log(idx);
-          let valores = idx - 4;
+          let valores = idx - 3;
           this.widthExp = -(20 * valores);
         } else if (idx >= 1 && idx <= 4) {
           this.widthExp = 0;
@@ -182,22 +183,12 @@ export class CarrucelImgComponent implements OnInit {
     if (this.indicatorsphoto) {
       let idx = this.valorindiceactual + 1;
       this.eventClickOnPreviousOrNew.emit();
-      if (this.imagenes.length > 9) {
-        if (idx >= 4 && idx <= this.imagenes.length - 9) {
-          console.log(
-            `atras this.imagenes.length completo${this.imagenes.length}`
-          );
-          console.log(
-            `atras this.imagenes.length -2${this.imagenes.length - 2}`
-          );
-          console.log(`atras idx completo${idx}`);
-          let valores = idx - 2;
-          console.log(`atras idx -4 completo${idx}`);
+      if (this.imagenes.length > 4) {
+        if (idx > 3 && idx <= this.imagenes.length - 2) {
+          let valores = idx - 3;
           this.widthExp = -(20 * valores);
-          console.log(`atras widhExp ${this.widthExp}`);
         } else if (idx == this.imagenes.length) {
-          console.log(`imagnes.length ${this.imagenes.length} y idx${idx}`);
-          let valores = this.imagenes.length - 10;
+          let valores = this.imagenes.length - 5;
           this.widthExp = -(20 * valores);
         } else if (idx >= 1 && idx <= 4) {
           this.widthExp = 0;

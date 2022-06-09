@@ -1,29 +1,33 @@
 <div class="container">
-  <table class="table mt-40">
-      <thead class="table-light">
-        <tr>
-          <th>Imagen</th>
-          <th>Modelo del vehiculo</th>
-          <th>Capacidad(TON)</th>
-          <th>Transporta alimentos(Si/No)</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let vehiculo of vehiculos; let i=index">
-          <td><img class="container_img" [src]="vehiculo.imagen"></td>
-          <td>{{vehiculo.modelo}}</td>
-          <td>{{vehiculo.capacidad}}</td>
-          <td>{{vehiculo.transporte_alimento == 1 ? 'Si' : 'No'}}</td>
-          <td>
-              <div class="container-row">
-                  <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i>
-                  <i class="container__icon bi bi-trash text-danger" (click)="deleteVehiculo(vehiculo.id_vehiculo,i)"></i>
-              </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="container-table-pagination">
+    <table class="table mt-40">
+        <thead class="table-light">
+          <tr>
+            <th>Imagen</th>
+            <th>Modelo del vehiculo</th>
+            <th>Capacidad(TON)</th>
+            <th>Transporta alimentos(Si/No)</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vehiculo of vehiculos |  paginate: { itemsPerPage: 3, currentPage: p };  let i=index">
+            <td><img class="container_img" [src]="vehiculo.imagen"></td>
+            <td>{{vehiculo.modelo}}</td>
+            <td>{{vehiculo.capacidad}}</td>
+            <td>{{vehiculo.transporte_alimento == 1 ? 'Si' : 'No'}}</td>
+            <td>
+                <div class="container-row">
+                    <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i>
+                    <i class="container__icon bi bi-trash text-danger" (click)="deleteVehiculo(vehiculo.id_vehiculo,i)"></i>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls *ngIf="!showNotFound" class="my-pagination" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente">
+      </pagination-controls>
+  </div>
     <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar nuevo vehiculo</button>
   </div>
   <div class="search-container" *ngIf="showNotFound">
@@ -33,7 +37,7 @@
         <p>Aun no has registrado tus vehiculos.</p>
     </div>
   </div>
-  
+
   <ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo vehiculo' : 'Actualizar vehiculo'}}</h4>
@@ -77,12 +81,12 @@
             </div>
           </div>
         </div>
-  
+
         <div class="mb-3">
           <!-- <img id="output" class="modal__image"> -->
           <img class="modal__image" [src]="previewImage" *ngIf="previewImage">
         </div>
-        
+
         <div class="container__box mb-3">
           <span class="container__title">¿Transportas alimentos?</span>
           <div class="input-group">

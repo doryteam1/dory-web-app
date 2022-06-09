@@ -15,6 +15,7 @@ import { Utilities } from 'src/app/utilities/utilities';
 export class MisVehiculosComponent implements OnInit {
   vehiculos:Array<any> = [];
   showNotFound:boolean = false;
+  p!:number
   form:FormGroup = new FormGroup({
     modelo:new FormControl('',[Validators.required]),
     capacidad:new FormControl('',[Validators.required]),
@@ -28,10 +29,10 @@ export class MisVehiculosComponent implements OnInit {
   modalMode:string = 'create';
   loading:boolean = false;
   showErrorNotImageSelected:boolean = false;
-  constructor(private vehiculosService:VehiculosService, 
-              private modalService:NgbModal, 
-              private storage:FirebaseStorageService, 
-              private sanitizer: DomSanitizer, 
+  constructor(private vehiculosService:VehiculosService,
+              private modalService:NgbModal,
+              private storage:FirebaseStorageService,
+              private sanitizer: DomSanitizer,
               private cd:ChangeDetectorRef,
               private appModalService:AppModalService) { }
 
@@ -66,7 +67,7 @@ export class MisVehiculosComponent implements OnInit {
     this.modalService.open(content).result.then(
       (result)=>{
         console.log("se cerro modal ",result)
-      } 
+      }
     ).catch(
       (err)=>{
         this.file = null;
@@ -142,7 +143,7 @@ export class MisVehiculosComponent implements OnInit {
   fileChange(event:any){
     console.log("change",event)
     this.file = event.target.files[0];
-    let objectURL = URL.createObjectURL(this.file);       
+    let objectURL = URL.createObjectURL(this.file);
     this.previewImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     this.showErrorNotImageSelected = false;
   }
@@ -172,7 +173,7 @@ export class MisVehiculosComponent implements OnInit {
         }
     ).catch(
       (result)=>{
-        
+
       }
     )
   }
@@ -246,14 +247,14 @@ export class MisVehiculosComponent implements OnInit {
           console.log(err);
           this.loading = false;
         }
-      )  
+      )
     }
   }
 
   invalid(controlFormName:string){;
     return this.form.get(controlFormName)?.invalid && (this.form.get(controlFormName)?.dirty || this.form.get(controlFormName)?.touched)
   }
-  
+
 
   get modelo(){
     return this.form.get('modelo')

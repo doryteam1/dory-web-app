@@ -77,9 +77,10 @@ export class GranjasMunicipioComponent implements OnInit {
       .subscribe(
         (response) => {
           this.granjas = response.data;
+          console.log(this.granjas)
           this.extractLatLong();
         },
-        (err) => {console.error('Hay un error al obtener la lista')
+        (err) => {console.error('Hay un error al obtener la lista de grajas')
        if (this.granjas.length == 0) {
          this.singranjas = true;
        }}

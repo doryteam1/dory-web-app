@@ -6,6 +6,7 @@ import { Utilities } from 'src/app/utilities/utilities';
 
 import { ModalGallerySliderService } from '../../../shared/services/modal-gallery-slider.service';
 import { PlatformLocation } from '@angular/common'
+import { AppModalService } from '../../../shared/services/app-modal.service';
 @Component({
   selector: 'app-granja-detalle',
   templateUrl: './granja-detalle.component.html',
@@ -46,7 +47,8 @@ export class GranjaDetalleComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private modalGallerySliderService: ModalGallerySliderService,
     public location: PlatformLocation,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private appModalService:AppModalService,
   ) {}
 
   ngOnInit(): void {
@@ -254,7 +256,6 @@ export class GranjaDetalleComponent implements OnInit {
     });
     //  console.log( this.location.pushState(null, '', location.pathname))
 
-
     this.showconteslaider = false;
     this.modalGallerySliderService
       .confirm(
@@ -298,21 +299,23 @@ updateMiResena(){
 
 }
 
+shareFuntion(){
+  this.location.onPopState(() => {
+ this.appModalService.closeModalShare();
+});
+this.appModalService
+ .shared(
+   'Compartir detalles de la granja',
+   '',
+   `Echa un vistazo a la granja piscícola: ${this.granja.nombre}`,
+   ''
+ )
+ .then((result) => {})
+ .catch((result) => {});
+}
 }
 
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event:any) {
-  if (!event.target!.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
+
 
 
 
