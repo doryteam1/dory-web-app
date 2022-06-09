@@ -129,9 +129,46 @@
             <span class="detail-container__value" *ngFor="let infraestructura of granja?.infraestructuras">{{infraestructura.nombre}}</span>
         </div>
     </div>
+    
+    <div class="box-miopinion" *ngIf="miresena">
+      <h3 class="box-miopinion__title">Tu opinión</h3>
+      <div class="d-flex flex-row mt-4">
+        <img class="box-miopinion__img" [src]="miresena?.foto_usuario ? miresena?.foto_usuario : 'assets/images/avatar-person.svg'">
+        <div class="box-miopinion__box d-flex flex-column">
+          <span class="box-miopinion__sub-title">{{miresena?.nombre_usuario}}</span>
+          <div class="box-miopinion__box d-flex flex-row flex-nowrap">
+            <app-stars class="box-miopinion__stars" [selectedStar]="miresena?.calificacion" size="small"></app-stars>
+            <span class="box-miopinion__date">{{miresena?.fecha}}</span>
+          </div>
+        </div>
+        <div class="box-miopinion__dots">
+          <div class="dropdown">
+            <i class="bi bi-three-dots-vertical" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li class="box-miopinion__option dropdown-item" (click)="deleteResena(miresena.id)"><span>Eliminar</span> <i class="bi bi-trash"></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p class="box-miopinion__desc">{{miresena?.descripcion}}</p>
+     <!--  <div class="d-flex flex-column justify-content-start"  *ngIf="editingMiResena">
+        <textarea class="box-miopinion__input form-input-text-square" [(ngModel)]="editedDescResena"></textarea>
+        <button class="btn-square-white align-self-end" (click)="updateMiResena()">
+          <span *ngIf="!loading">Actualizar</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+          </div>
+        </button>
+      </div> -->
+      <span class="box-miopinion__link link" (click)="openQualifyModal(qualifyModal,1)">Editar opinión</span>
+    </div>
 
-
-
+    <div class="box-calificar" *ngIf="!miresena">
+      <h4 class="box-calificar__title">Calificar granja</h4>
+      <span class="box-calificar__sub-title">Comparte tu opinión con otros usuarios</span>
+      <app-stars class="box-calificar__stars" (rating)="onRating($event)" (click)="openQualifyModal(qualifyModal)"></app-stars>
+      <span class="box-calificar__action" (click)="openQualifyModal(qualifyModal)">Escribe una opinión</span>
+    </div>
+    
     <div class="resenas">
       <h4 class="resenas__title">Puntuaciones y reseñas</h4>
       <span class="resenas__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ? (granja?.puntuacion | number:'1.1-1') : 'Sin calificación'}}</span>
@@ -145,12 +182,6 @@
                     <span class="card__title">{{resena.nombre_usuario}}</span>
                 </div>
               </div> 
-              <div class="dropdown">
-                <button (click)="myFunction('myDropdown'+i)" class="dropbtn"><i class="bi bi-three-dots-vertical"></i></button>
-                <div [id]="'myDropdown' + i" class="dropdown-content">
-                  <a href="#">Eliminar</a>
-                </div>
-              </div>
           </div>
           <div class="d-flex flex-row justify-content-start mt-4">
             <app-stars class="card__stars" [selectedStar]="(resena?.calificacion == null || resena?.calificacion < 1) ? '0' : resena?.calificacion" *ngIf="i < 3" size="small"></app-stars>
@@ -159,7 +190,7 @@
           <p class="card__paragh" *ngIf="i < 3">{{resena.descripcion}}</p>
           <a class="link" *ngIf="i == 2" (click)="showResenas(granja.id_granja)">Ver todas las reseñas</a>
       </div>
-      <button class="resenas__button btn-rounded-blue" (click)="openQualifyModal(qualifyModal)">Calificar</button>
+      <!-- <button class="resenas__button btn-rounded-blue" (click)="openQualifyModal(qualifyModal)">Calificar</button> -->
     </div>
 </div>
 
@@ -185,7 +216,7 @@
   </div>
   <div class="modal-body">
     <div class="qualify-modal__container" *ngIf="!success">
-      <app-stars class="qualify-modal__stars" (rating)="onRating($event)"></app-stars>
+      <app-stars class="qualify-modal__stars" [selectedStar]="rating" (rating)="onRating($event)" [editMode]="editingMiResena"></app-stars>
       <textarea class="qualify-modal__input form-input-text-square" placeholder="Describe tu experiencia(opcional)" [(ngModel)]="descResena"></textarea>
       <button class="qualify-modal__button btn-rounded-blue" [ngClass]="(rating < 1 || rating > 5) ? 'disabled' : ''" (click)="publicarResena()" [disabled]="rating < 1 || rating > 5">
         <span *ngIf="!loading">Publicar</span>

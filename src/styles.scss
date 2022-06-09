@@ -128,15 +128,11 @@
 }
 
 .btn-square-white {
-  background-color: var(--white);
-  border-radius: 7px;
-  border: 1px solid var(--white);
-  color: var(--black);
-  font-weight: 700;
+  border-radius: 5px;
+  height: 40px;
   width: 200px;
-  height: 45px;
-  -webkit-box-shadow: 2px 3px 14px -8px #000000;
-  box-shadow: 2px 3px 14px -8px #000000;
+  background-color: white;
+  border:0.5px solid var(--black);
 }
 
 .form-input-text-square {

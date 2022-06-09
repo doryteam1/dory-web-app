@@ -9,6 +9,7 @@ export class StarsComponent implements OnInit {
   overStar = 0;
   @Input() size:string = 'medium';
   @Input() selectedStar:number = -1;
+  @Input() editMode:boolean = false;
   @Output() rating = new EventEmitter<number>();
 
   constructor() { }
@@ -28,9 +29,9 @@ export class StarsComponent implements OnInit {
   }
 
   onClick(i:number){
-    if(this.selectedStar == -1){
+    if(this.selectedStar == -1 || this.editMode == true){
       this.selectedStar = i;
-      this.rating.emit(this.overStar)
+      this.rating.emit(this.selectedStar)
     }
   }
 }

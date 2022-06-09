@@ -36,7 +36,11 @@ export class GranjaDetalleComponent implements OnInit {
   showconteslaider: boolean = false;
   valorindicecarrucel!: number;
   singranjas: boolean = false;
-
+  userToken:string | null = '';
+  authUserId:number = -1;
+  miresena:any;
+  editedDescResena:string = '';
+  editingMiResena:boolean = false;
   constructor(
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
@@ -49,6 +53,22 @@ export class GranjaDetalleComponent implements OnInit {
     this.selectedGranjaId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
+    this.userToken = localStorage.getItem('token')
+    if(this.userToken){
+      let payload = Utilities.parseJwt(this.userToken);
+      this.authUserId = payload.sub;
+      this.granjasService.resenasUserByIdGranja(this.selectedGranjaId).subscribe(
+        (response)=>{
+          console.log("response ",response)
+          this.miresena = response.data.resena;
+          this.editedDescResena = this.miresena.descripcion;
+          console.log("mi reseña ", this.miresena)
+        },err=>{
+
+        }
+      )
+    }
+    
     console.log(this.selectedGranjaId);
     this.granjasService.getGranjaDetalle(this.selectedGranjaId).subscribe(
       (response) => {
@@ -111,7 +131,15 @@ export class GranjaDetalleComponent implements OnInit {
     this.indice = -1;
   }
 
-  openQualifyModal(content: any) {
+  openQualifyModal(content: any, editingMiResena?:number) {
+    if(editingMiResena && editingMiResena == 1){
+      this.rating = this.miresena.calificacion;
+      this.descResena = this.miresena.descripcion;
+      this.editingMiResena = true;
+    }else{
+      this.editingMiResena = false;
+      this.rating = -1;
+    }
     this.modalService
       .open(content, {
         ariaLabelledBy: 'modal-basic-title',
@@ -124,14 +152,14 @@ export class GranjaDetalleComponent implements OnInit {
           console.log("result ",result);
           this.success = false;
           this.descResena = '';
-          this.rating = -1;
+          this.editingMiResena = false;
           window.location.reload()
         },
         (reason) => {
           this.success = false;
           console.log("reason ",reason);
           this.descResena = '';
-          this.rating = -1;
+          this.editingMiResena = false;
           window.location.reload()
         }
       );
@@ -169,18 +197,30 @@ export class GranjaDetalleComponent implements OnInit {
     }
     this.loading = true;
     console.log(resena)
-    this.granjasService.addResena(resena).subscribe(
-      (respose)=>{
-        /*this.resenas.push(resena)
-        let calif = this.acumCalif();
-        calif += resena.calificacion;
-        calif = calif / (this.granja.resenas.length + 1); */
-        this.loading = false;
-        this.success = true;
-      },err=>{
-        this.loading = false;
-      }
-    );
+
+    if(this.editingMiResena){
+      this.granjasService.updateResena(resena, this.miresena.id).subscribe(
+        (respose)=>{
+          this.loading = false;
+          this.success = true;
+        },err=>{
+          this.loading = false;
+        }
+      );
+    }else{
+      this.granjasService.addResena(resena).subscribe(
+        (respose)=>{
+          /*this.resenas.push(resena)
+          let calif = this.acumCalif();
+          calif += resena.calificacion;
+          calif = calif / (this.granja.resenas.length + 1); */
+          this.loading = false;
+          this.success = true;
+        },err=>{
+          this.loading = false;
+        }
+      );
+    }
   }
 
   acumCalif(){
@@ -206,7 +246,7 @@ export class GranjaDetalleComponent implements OnInit {
     this.OpenGalleryModalOptionOne();
   }
 
-  OpenGalleryModalOptionOne() {
+  OpenGalleryModalOptionOne(){
     this.location.onPopState(() => {
       console.log('pressed back!');
       this.modalGallerySliderService.closeModal();
@@ -235,6 +275,29 @@ toggle between hiding and showing the dropdown content */
  myFunction(id:string) {
   document.getElementById(id)!.classList.toggle("show");
 }
+
+deleteResena(id:number){
+  this.granjasService.deleteResena(id).subscribe(
+    (response)=>{
+      let index = this.resenas.findIndex(
+        (resena)=>{
+          return resena.id == id
+        }
+      );
+      this.resenas.splice(index,1);
+      this.miresena = null;
+      console.log(response)
+    },err=>{
+      console.log(err)
+    }
+  )
+}
+
+updateMiResena(){
+  this.loading = true;
+
+}
+
 }
 
 // Close the dropdown menu if the user clicks outside of it
