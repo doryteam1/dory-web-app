@@ -186,6 +186,7 @@ export class PerfilComponent implements OnInit {
   };
   vertices = vertices;
   apiLoaded: Observable<boolean>;
+  percentUploaded: number | undefined = 0;
   constructor(
     private us: UsuarioService,
     private aes: AreasExperticiaService,
@@ -309,6 +310,7 @@ export class PerfilComponent implements OnInit {
       .percentageChanges()
       .subscribe((response) => {
         console.log(response);
+        this.percentUploaded = response;
       });
     this.storage
       .cloudStorageRef(this.fileName)
