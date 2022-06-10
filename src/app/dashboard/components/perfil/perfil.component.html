@@ -151,10 +151,10 @@
             </div>
         </div> -->
         <div class="d-flex flex-column">
-            <span class="container__label" *ngIf="mostrarPorTipo('area_experticia')">Area de experticia</span>
+            <span class="container__label" *ngIf="mostrarPorTipo('area_experticia')">Área de experticia</span>
             <div class="container__box-row" *ngIf="mostrarPorTipo('area_experticia')">
                 <select class="container__input form-input-text-square" formControlName='id_area_experticia' (change)="onAreaExpChange()">
-                    <optgroup label="Escoje un area">
+                    <optgroup label="Escoje un área">
                         <option *ngFor="let area of areas" [ngValue]="area.id_area">{{area.nombre}}</option>
                         <option ngValue=-1>Otra...</option>
                     </optgroup>
@@ -164,15 +164,15 @@
 
         
         <div class="container__box" *ngIf="mostrarPorTipo('otra_area_experticia') && idAreaExpert?.value ==-1">
-            <span class="container__label">Escribe el nombre del area experticia: </span>
+            <span class="container__label">Escribe el nombre del área experticia: </span>
             <div>
-                <input class="container__input form-input-text-square"  type="text" formControlName='otra_area_experticia' placeholder="Tu area de experticia">
+                <input class="container__input form-input-text-square"  type="text" formControlName='otra_area_experticia' placeholder="Tu área de experticia">
             </div>
         </div>
         <div class="container__box" *ngIf="mostrarPorTipo('otra_area_experticia_descripcion') && idAreaExpert?.value ==-1">
-            <span class="container__label">Cuentanos en que consiste tu area experticia: </span>
+            <span class="container__label">Cuéntanos en que consiste tu área experticia: </span>
             <div>
-                <input class="container__input form-input-text-square"  type="text-area" formControlName='otra_area_experticia_descripcion' placeholder="En que consiste tu area de experticia">
+                <input class="container__input form-input-text-square"  type="text-area" formControlName='otra_area_experticia_descripcion' placeholder="En que consiste tu área de experticia">
             </div>
         </div>
         
