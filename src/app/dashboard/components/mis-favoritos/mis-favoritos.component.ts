@@ -11,6 +11,7 @@ import { AppModalService } from 'src/app/shared/services/app-modal.service';
 })
 export class MisFavoritosComponent implements OnInit {
 misGranjaFavoritas:any[]=[]
+showNotFound:boolean=false
   constructor(private granjasService:GranjasService, private router:Router, private appModalService:AppModalService) { }
 
   ngOnInit(): void {
@@ -18,6 +19,9 @@ misGranjaFavoritas:any[]=[]
     this.granjasService.misFavoritas().subscribe(
       (response)=>{
         this.misGranjaFavoritas = response.data;
+         if (this.misGranjaFavoritas.length < 1) {
+           this.showNotFound = true;
+         }
         console.log(this.misGranjaFavoritas)
       },err=>{
 

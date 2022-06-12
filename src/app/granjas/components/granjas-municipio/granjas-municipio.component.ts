@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -44,6 +44,7 @@ export class GranjasMunicipioComponent implements OnInit {
   indicatorsphotos: boolean = true;
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   @ViewChild('marker') marker!: MapMarker;
+  @ViewChild('maptarge') maptarge!: ElementRef;
   selectedGranja = {
     nombre: '',
     propietario: {
@@ -71,19 +72,20 @@ export class GranjasMunicipioComponent implements OnInit {
     registerLocaleData(es);
     this.granjaDetailRoute =
       '/granjas/municipio/' + this.activatedRoute.snapshot.url[1] + '/detalle';
-    console.log(this.activatedRoute.snapshot.url[1]);
     this.granjasService
       .getGranjasMunicipio(Number(this.activatedRoute.snapshot.url[1]))
       .subscribe(
         (response) => {
           this.granjas = response.data;
-          console.log(this.granjas)
+          console.log(this.granjas);
           this.extractLatLong();
         },
-        (err) => {console.error('Hay un error al obtener la lista de grajas')
-       if (this.granjas.length == 0) {
-         this.singranjas = true;
-       }}
+        (err) => {
+          console.error('Hay un error al obtener la lista de grajas');
+          if (this.granjas.length == 0) {
+            this.singranjas = true;
+          }
+        }
       );
     this.placesService
       .getMunicipioById(Number(this.activatedRoute.snapshot.url[1]))
@@ -143,6 +145,12 @@ export class GranjasMunicipioComponent implements OnInit {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + id);
   }
   changeFavorite(i: number) {
+    let date = new Date();
+console.log(date.toISOString().split('T')[0]);
+const horas = new Date();
+
+console.log(horas.getHours());
+     console.log(this.maptarge);
     this.granjas[i].favorita = this.granjas[i].favorita == 1 ? 0 : 1;
     this.granjasService.esFavorita(this.granjas[i].id_granja).subscribe(
       (response) => {
@@ -159,4 +167,9 @@ export class GranjasMunicipioComponent implements OnInit {
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
+
+  /* @HostListener('authFailure', ['$event']) */
+/*   mapiniciado(event: any) {
+    console.log(`evento mapa ${event}`);
+  } */
 }

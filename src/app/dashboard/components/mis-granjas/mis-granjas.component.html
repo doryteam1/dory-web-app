@@ -14,7 +14,7 @@
             <tbody>
             <tr *ngFor="let granja of granjas |  paginate: { itemsPerPage: 5, currentPage: p }; let i=index">
                 <td>{{granja.nombre}}</td>
-                <td>{{granja.descripcion}}</td>
+                <td>{{granja.descripcion | shorter:200}}</td>
                 <td>{{granja.area}}</td>
                 <td>{{granja.numero_trabajadores}}</td>
                 <td>{{granja.produccion_estimada_mes}}</td>

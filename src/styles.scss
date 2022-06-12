@@ -298,7 +298,9 @@ div.map-container{
   text-decoration: none !important;
 }
 /* FIN PROPIOS */
-
+.disabled{
+  background-color: white
+}
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 /* @import '~@ngx-share/button/styles/share-buttons.css';
