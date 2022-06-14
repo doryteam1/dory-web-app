@@ -22,7 +22,8 @@ import { MapGeocoder } from '@angular/google-maps';
 import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { vertices } from '../../../global/constants';
-
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
 
 @Component({
   selector: 'app-perfil',
@@ -212,6 +213,7 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    registerLocaleData( es );
     this.latitud?.disable();
     this.longitud?.disable();
     this.email?.disable();

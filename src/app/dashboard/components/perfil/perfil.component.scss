@@ -14,7 +14,6 @@
 .container__box{
     display: flex;
     flex-direction: column;
-    margin-right: 20px;
 }
 
 .container__box__title{
@@ -110,6 +109,7 @@
     margin-bottom: 15px;
     margin-right: 5px;
     border-radius: 4px;
+    width: 100%;
 }
 
 .container_link{
@@ -291,5 +291,18 @@
 }
 
 .progress{
+  width: 360px;;
+}
+
+.container-row{
   width: 100%;
+  margin: 0;
+}
+
+.col{
+  padding: 0;
+}
+
+.left{
+  margin-left: 10px;
 }
