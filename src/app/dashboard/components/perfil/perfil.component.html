@@ -4,7 +4,7 @@
         <div class="container__box-image">
             <img class="container__image" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
             <img class="container__image2" src="assets/icons/camera.svg" (click)="openAddFileDialog()">
-            <input #fileInput type="file" name="resume" (change)='fileChange($event)' hidden>
+            <input #fileInput type="file" accept="image/png, image/jpeg" name="resume" (change)='fileChange($event)' hidden>
         </div>
         <div class="container__info">
             <span class="container__label2">{{nombres?.value ? nombres?.value : '____' }} {{apellidos?.value ? apellidos?.value : '____' }}</span>
