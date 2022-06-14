@@ -24,6 +24,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { vertices } from '../../../global/constants';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
+import imageCompression from 'browser-image-compression';
 
 @Component({
   selector: 'app-perfil',
@@ -34,12 +35,11 @@ export class PerfilComponent implements OnInit {
 @ViewChild('map') map: any;
   usuario: any;
    @ViewChild('fileInput') inputFileDialog!: ElementRef;
-  fileName: string = '';
-  file: any;
   buscarx: string = '';
   fueraDirecion: boolean = false;
   loading: boolean = false;
-   loadingseart:boolean=false
+  loadingPhoto: boolean = false;
+  loadingseart:boolean=false
   noexistendatos:boolean=false
   borrarseart:boolean=false
   valorbuscarx: string = '';
@@ -304,38 +304,66 @@ export class PerfilComponent implements OnInit {
     element.click();
   }
 
-  fileChange(event: any) {
-    this.fileName = '/perfil/user_' + this.id?.value;
-    this.file = event.target.files[0];
+  uploadToServer(file: any) {
+    let fileName = '/perfil/user_' + this.id?.value;
     this.storage
-      .cloudStorageTask(this.fileName, this.file)
+      .cloudStorageTask(fileName, file)
       .percentageChanges()
       .subscribe((response) => {
         console.log(response);
         this.percentUploaded = response;
-      });
-    this.storage
-      .cloudStorageRef(this.fileName)
-      .getDownloadURL()
-      .subscribe(
-        (downloadUrl) => {
-          console.log(downloadUrl);
-          this.us
-            .actualizarUsuario(this.id?.value, { foto: downloadUrl })
-            .subscribe(
-              (response) => {
-                this.usuario.foto = downloadUrl;
-                this.us.setAuthUserPhoto(this.usuario.foto);
-              },
-              (err) => {
-                console.log(err);
-              }
-            );
-        },
-        (err) => {
-          console.log(err);
+        if(this.percentUploaded == 100){
+          this.storage
+          .cloudStorageRef(fileName)
+          .getDownloadURL()
+          .subscribe(
+            (downloadUrl) => {
+              console.log(downloadUrl);
+              this.us
+                .actualizarUsuario(this.id?.value, { foto: downloadUrl })
+                .subscribe(
+                  (response) => {
+                    this.usuario.foto = downloadUrl;
+                    this.us.setAuthUserPhoto(this.usuario.foto);
+                    this.loadingPhoto = false;
+                    //window.location.reload();
+                  },
+                  (err) => {
+                    this.loadingPhoto = false;
+                    console.log(err);
+                  }
+                );
+            },
+            (err) => {
+              this.loadingPhoto = false;
+              console.log(err);
+            }
+          );
         }
-      );
+      });
+  }
+
+  async fileChange(event:any) {
+    this.loadingPhoto = true;
+    const imageFile = event.target.files[0];
+    console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+  
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true
+    }
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+  
+      await this.uploadToServer(compressedFile); // write your own logic
+    } catch (error) {
+      console.log(error);
+    }
+  
   }
 
   nomCorregVeredasubs() {
@@ -800,4 +828,5 @@ export class PerfilComponent implements OnInit {
       this.longitud?.setValue(position.coords.longitude);
     });
   } */
+
 }

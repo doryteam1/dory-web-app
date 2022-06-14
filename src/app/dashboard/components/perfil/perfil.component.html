@@ -4,6 +4,8 @@
         <div class="container__box-image">
             <img class="container__image" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
             <img class="container__image2" src="assets/icons/camera.svg" (click)="openAddFileDialog()">
+            <div class="container__spinner-photo spinner-border text-info" role="status" *ngIf="loadingPhoto">
+            </div>
             <input #fileInput type="file" accept="image/png, image/jpeg" name="resume" (change)='fileChange($event)' hidden>
         </div>
         <div class="container__info">
