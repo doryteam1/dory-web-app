@@ -7,6 +7,8 @@ import { Utilities } from 'src/app/utilities/utilities';
 import { ModalGallerySliderService } from '../../../shared/services/modal-gallery-slider.service';
 import { PlatformLocation } from '@angular/common'
 import { AppModalService } from '../../../shared/services/app-modal.service';
+import * as dayjs from 'dayjs'
+
 @Component({
   selector: 'app-granja-detalle',
   templateUrl: './granja-detalle.component.html',
@@ -310,6 +312,12 @@ this.appModalService
  .then((result) => {})
  .catch((result) => {});
 }
+
+dateToString(date:string){
+  console.log(date)
+  return dayjs(date).date()+"/"+ ( dayjs(date).month() < 10 ? 0 + dayjs(date).month().toString() : dayjs(date).month() ) +"/"+dayjs(date).year();
+}
+
 }
 
 

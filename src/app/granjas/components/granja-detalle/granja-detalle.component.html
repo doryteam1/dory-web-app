@@ -133,8 +133,8 @@
     <div class="detail-container">
       <img class="detail-container__image" src="assets/icons/text.svg">
       <div class="detail-container__data">
-          <h4 class="detail-container__title">Acerca de la esta granja</h4>
-          <p class="detail-container__value">{{granja.descripcion}}</p>
+          <h4 class="detail-container__title">Descripción de la granja</h4>
+          <p class="detail-container__value">{{granja?.descripcion}}</p>
       </div>
     </div>
 
@@ -193,7 +193,7 @@
           </div>
           <div class="d-flex flex-row justify-content-start mt-4">
             <app-stars class="card__stars" [selectedStar]="(resena?.calificacion == null || resena?.calificacion < 1) ? '0' : resena?.calificacion" *ngIf="i < 3" size="small"></app-stars>
-            <span *ngIf="i < 3">{{resena.fecha}}</span>
+            <span *ngIf="i < 3">{{dateToString(resena.fecha)}}</span>
           </div>
           <p class="card__paragh" *ngIf="i < 3">{{resena?.descripcion}}</p>
           <a class="link" *ngIf="i == 2" (click)="showResenas(granja.id_granja)">Ver todas las reseñas</a>

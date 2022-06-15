@@ -238,7 +238,7 @@
     <div class="progress" *ngIf="percentUploaded && percentUploaded > 1 && percentUploaded < 100">
         <div class="progress-bar" [style.width]="percentUploaded+'%'" role="progressbar" [attr.aria-valuenow]="percentUploaded" aria-valuemin="0" aria-valuemax="100">{{percentUploaded | number:'':'es'}}%</div>
     </div>
-    <span class="text-danger" *ngIf="percentUploaded && percentUploaded == 100">Foto de perfil cargada con exito</span>
+    <span class="text-danger" *ngIf="percentUploaded && percentUploaded == 100">Foto de perfil cargada con éxito</span>
     <div class="d-flex flex-column justify-content-center align-items-center">
         <button class="container__btn3" (click)="openAddFileDialog()">
             <i class="container__icon bi bi-folder-plus"></i>
