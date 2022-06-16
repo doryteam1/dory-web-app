@@ -1,4 +1,4 @@
-import { Component,OnInit,HostListener } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GranjasService } from '../../services/granjas.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -52,7 +52,6 @@ export class GranjaDetalleComponent implements OnInit {
     private modalService: NgbModal,
     private appModalService:AppModalService,
   ) {}
-
   ngOnInit(): void {
     this.selectedGranjaId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
@@ -70,8 +69,6 @@ export class GranjaDetalleComponent implements OnInit {
         }
       )
     }
-    
-    console.log(this.selectedGranjaId);
     this.granjasService.getGranjaDetalle(this.selectedGranjaId).subscribe(
       (response) => {
         if (response.data.length > 0) {
@@ -150,7 +147,6 @@ export class GranjaDetalleComponent implements OnInit {
       })
       .result.then(
         (result) => {
-          console.log("result ",result);
           this.success = false;
           this.descResena = '';
           this.editingMiResena = false;
@@ -158,7 +154,6 @@ export class GranjaDetalleComponent implements OnInit {
         },
         (reason) => {
           this.success = false;
-          console.log("reason ",reason);
           this.descResena = '';
           this.editingMiResena = false;
           window.location.reload()
@@ -272,9 +267,9 @@ export class GranjaDetalleComponent implements OnInit {
 
   /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
- myFunction(id:string) {
-  document.getElementById(id)!.classList.toggle("show");
-}
+  myFunction(id: string) {
+  document.getElementById(id)!.classList.toggle('show');
+  }
 
 deleteResena(id:number){
   this.granjasService.deleteResena(id).subscribe(
@@ -295,7 +290,6 @@ deleteResena(id:number){
 
 updateMiResena(){
   this.loading = true;
-
 }
 
 shareFuntion(){
@@ -305,9 +299,9 @@ shareFuntion(){
 this.appModalService
  .shared(
    'Compartir detalles de la granja',
-   '',
-   `Echa un vistazo a la granja piscícola: ${this.granja.nombre}`,
-   ''
+false,
+    '',
+`Echa un vistazo a la granja piscícola: ${this.granja.nombre}`
  )
  .then((result) => {})
  .catch((result) => {});
@@ -318,6 +312,22 @@ dateToString(date:string){
   return dayjs(date).date()+"/"+ ( dayjs(date).month() < 10 ? 0 + dayjs(date).month().toString() : dayjs(date).month() ) +"/"+dayjs(date).year();
 }
 
+  options: google.maps.MapOptions = {
+    center: { lat: 40, lng: -20 },
+    zoom: 4,
+  };
+  ModalGoogleMap() {
+    let atributos = this.granja;
+    let modalheadergooglemap = false;
+    let mapElementVarios =false;
+    this.location.onPopState(() => {
+      this.appModalService.CloseGoogleMapModal();
+    });
+    this.appModalService
+      .GoogleMapModal(atributos, modalheadergooglemap, mapElementVarios)
+      .then((result) => {})
+      .catch((result) => {});
+  }
 }
 
 

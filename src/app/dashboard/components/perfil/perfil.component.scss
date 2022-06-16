@@ -17,7 +17,7 @@
 }
 
 .container__box__title{
-  border:1px var(--azul1) solid; 
+  border:1px var(--azul1) solid;
   border-radius: 5px;
   width: 80vw;
   text-align: center;
@@ -97,7 +97,7 @@
 }
 
 .container__title{
-  
+
 }
 
 .form__box{
@@ -150,7 +150,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18); 
+  -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
   box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
 }
 
@@ -232,6 +232,8 @@
 
 .map {
   padding: 0px;
+  border-radius: 0.3rem;
+  overflow: hidden;
 }
 
 .alertclass {

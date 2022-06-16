@@ -280,13 +280,13 @@
   border: none !important;
 }
 .dark-modal .modal-content {
-  border-radius: 10px;
+  border-radius: 0.3rem;
 }
 
-div.map-container{
+/* div.map-container{
   border-bottom-left-radius:10px 10px;
   border-bottom-right-radius: 10px 10px
-}
+} */
 .ngx-pagination .current {
   background: var(--azul1) !important;
 }
@@ -300,6 +300,20 @@ div.map-container{
 /* FIN PROPIOS */
 .disabled{
   background-color: white
+}
+.modal-dialog-centered>div>div>div>div:nth-child(9)>button {
+  margin-right: 20px !important;
+  /* ajusta el boton de pantalla completa del mapa */
+}
+
+ @media (max-width: 575px) {
+  .modal-dialog-centered {
+      margin: 20px !important;
+      /* ajusta el boton de pantalla completa del mapa */
+    }
+ }
+.miestilofondosharedmodal {
+  background-color: transparent !important;
 }
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";

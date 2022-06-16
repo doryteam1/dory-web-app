@@ -709,7 +709,7 @@ background-color: #ccc;
 }
 
 .box-miopinion__link{
-  
+
 }
 
 .box-miopinion__dots{
@@ -740,4 +740,38 @@ background-color: #ccc;
 
 li:active {
   background-color:var(--gris4);
+}
+.container-button-open-map{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+}
+.container-button-open-map-data {
+    width: 250px;
+    height: 80px;
+    background-image: url(../../../../assets/images/googlemaplocation.svg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 4px 4px 4px rgb(0 0 0 / 10%);
+    cursor: pointer;
+}
+.container-button-open-map-data>div {
+  background-color: var(--azul1);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 4px 4px 4px rgb(0 0 0 / 10%);
+}
+.container-button-open-map-data>div>h4{
+color: #fff;
+margin-bottom: 0;
+}
+.mycontainer{
+  margin-top: 30px;
 }
