@@ -1,8 +1,9 @@
-import { Component, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+
 import { GranjasService } from '../../services/granjas.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
@@ -18,19 +19,8 @@ import {MapInfoWindow, MapMarker} from '@angular/google-maps';
   styleUrls: ['./granjas-municipio.component.scss'],
 })
 export class GranjasMunicipioComponent implements OnInit {
-  apiLoaded: Observable<boolean>;
-  granjas: any[] = [];
-  valor: boolean = false;
-  options: google.maps.MapOptions = {
-    center: { lat: 9.214145, lng: -75.188469 },
-    zoom: 10,
-    scrollwheel: true,
-  };
-
-  markerPosition: google.maps.LatLngLiteral = {
-    lat: 9.214145,
-    lng: -75.188469,
-  };
+  @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
+  @ViewChild('marker') marker!: MapMarker;
   singranjas: boolean = false;
   markerPositions: google.maps.LatLngLiteral[] = [];
   markersInfo: any[] = [];
@@ -42,15 +32,26 @@ export class GranjasMunicipioComponent implements OnInit {
   valorrows: number = 18.25;
   valorcolumns: number = 21.8333333333;
   indicatorsphotos: boolean = true;
-  @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
-  @ViewChild('marker') marker!: MapMarker;
-  @ViewChild('maptarge') maptarge!: ElementRef;
+  activaapiLoader: boolean = true;
+  apiLoaded!: Observable<boolean>;
+  granjas: any[] = [];
+  valor: boolean = false;
+  options: google.maps.MapOptions = {
+    center: { lat: 9.214145, lng: -75.188469 },
+    zoom: 10,
+    scrollwheel: true,
+  };
+  markerPosition: google.maps.LatLngLiteral = {
+    lat: 9.214145,
+    lng: -75.188469,
+  };
   selectedGranja = {
     nombre: '',
     propietario: {
       nombre: '',
     },
   };
+
   constructor(
     httpClient: HttpClient,
     private granjasService: GranjasService,
@@ -77,7 +78,6 @@ export class GranjasMunicipioComponent implements OnInit {
       .subscribe(
         (response) => {
           this.granjas = response.data;
-          console.log(this.granjas);
           this.extractLatLong();
         },
         (err) => {
@@ -122,8 +122,6 @@ export class GranjasMunicipioComponent implements OnInit {
       lng: Number(this.granjas[indexSelected].longitud),
     };
     this.openInfoWindow(this.marker, indexSelected);
-    /* console.log(this.markersInfo[indexSelected].markerPosition=this.markerPosition) */
-    /*  this.markersInfo.push({markerPosition: this.markerPosition}); */
   }
 
   eliminInfoWindow() {
@@ -146,11 +144,11 @@ export class GranjasMunicipioComponent implements OnInit {
   }
   changeFavorite(i: number) {
     let date = new Date();
-console.log(date.toISOString().split('T')[0]);
-const horas = new Date();
+    console.log(date.toISOString().split('T')[0]);
+    const horas = new Date();
 
-console.log(horas.getHours());
-     console.log(this.maptarge);
+    console.log(horas.getHours());
+
     this.granjas[i].favorita = this.granjas[i].favorita == 1 ? 0 : 1;
     this.granjasService.esFavorita(this.granjas[i].id_granja).subscribe(
       (response) => {
@@ -167,9 +165,4 @@ console.log(horas.getHours());
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
-
-  /* @HostListener('authFailure', ['$event']) */
-/*   mapiniciado(event: any) {
-    console.log(`evento mapa ${event}`);
-  } */
 }

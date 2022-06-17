@@ -1,7 +1,15 @@
 <app-notification-bar></app-notification-bar>
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
-<div class="container" *ngIf="!showNotFound && !showError && !showGallery">
+<div class="container mycontainer" *ngIf="!showNotFound && !showError && !showGallery">
+    <div class="container-button-open-map"(click)="ModalGoogleMap()">
+      <div class="container-button-open-map-data" >
+        <div>
+          <h4 class="detail-container__title" >Ver en el mapa</h4>
+        </div>
+      </div>
+    </div>
+
 <div class="container__box">
   <div class="photo-container">
    <div class="header-container">
@@ -86,9 +94,7 @@
     <img class="proprietary-container__image" [src]="granja?.propietarios[0]?.foto">
 </div>
 
-<div class="line">
-
-</div>
+<div class="line"></div>
 
     <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/images/layers.svg">
@@ -129,7 +135,7 @@
             <span class="detail-container__value" *ngFor="let infraestructura of granja?.infraestructuras">{{infraestructura.nombre}}</span>
         </div>
     </div>
-    
+
     <div class="detail-container">
       <img class="detail-container__image" src="assets/icons/text.svg">
       <div class="detail-container__data">
@@ -176,7 +182,7 @@
       <app-stars class="box-calificar__stars" (rating)="onRating($event)" (click)="openQualifyModal(qualifyModal)"></app-stars>
       <span class="box-calificar__action" (click)="openQualifyModal(qualifyModal)">Escribe una opinión</span>
     </div>
-    
+
     <div class="resenas">
       <h4 class="resenas__title">Puntuaciones y reseñas</h4>
       <span class="resenas__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ? (granja?.puntuacion | number:'1.1-1') : 'Sin calificación'}}</span>
@@ -189,7 +195,7 @@
                 <div class="card__box">
                     <span class="card__title">{{resena.nombre_usuario}}</span>
                 </div>
-              </div> 
+              </div>
           </div>
           <div class="d-flex flex-row justify-content-start mt-4">
             <app-stars class="card__stars" [selectedStar]="(resena?.calificacion == null || resena?.calificacion < 1) ? '0' : resena?.calificacion" *ngIf="i < 3" size="small"></app-stars>
@@ -240,6 +246,5 @@
   </div>
   </div>
 </ng-template>
-<!-- <app-granja-gallery *ngIf="showGallery" [photos]="granja?.fotos"></app-granja-gallery> -->
 <app-footer></app-footer>
 <app-floating-btn-auto-up></app-floating-btn-auto-up>

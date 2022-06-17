@@ -591,8 +591,7 @@ export class PerfilComponent implements OnInit {
     });
   }
   verMap() {
-    const instructionsElement = document.createElement("p");
-
+    /* const instructionsElement = document.createElement("p"); */
         const sucreColombia = {
           north: 10.184454,
           south: 8.136442,

@@ -9,14 +9,13 @@
 })
 export class ModalShareButtonComponent {
   @Input() titleheader: string = '';
-  @Input() iconTicleheader: string = '';
+  @Input() url: boolean = false;
+  @Input() urllink: string = '';
   @Input() bodymessage: string = '';
-  @Input() iconbodymessage: string = '';
   constructor(private _modalService: NgbActiveModal) {}
   public decline() {
     this._modalService.close(false);
   }
-
   public accept() {
     this._modalService.close(true);
   }

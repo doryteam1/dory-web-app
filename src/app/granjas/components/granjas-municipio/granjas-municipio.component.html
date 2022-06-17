@@ -93,7 +93,7 @@
     <div class="mYstiledivmap" >
     <div  class="sticky-top" >
     <div class="mapgoogle " *ngIf="granjas.length > 0 && (apiLoaded | async)">
-                <google-map height="650px" width="785px" [options]="options" #maptarge>
+                <google-map height="650px" width="785px" [options]="options">
                   <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i"
                     [position]="markerInfo.markerPosition" [options]="markerOptions"
                     icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"

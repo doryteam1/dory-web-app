@@ -28,7 +28,25 @@
   </div>
 </div>
 <div class="modal-body">
-  <share-buttons
+  <share-buttons *ngIf="url"
+    [theme]="'circles-dark'"
+    [include]="[
+      'facebook',
+      'twitter',
+      'linkedin',
+      'telegram',
+      'messenger',
+      'whatsapp',
+      'sms',
+      'email',
+      'print',
+      'copy'
+    ]"
+    [show]="10"
+    [url]="urllink"
+    [description]="bodymessage"
+  ></share-buttons>
+  <share-buttons *ngIf="!url"
     [theme]="'circles-dark'"
     [include]="[
       'facebook',
