@@ -6,6 +6,7 @@ import { MisProductosComponent } from './components/mis-productos/mis-productos.
 import { MisVehiculosComponent } from './components/mis-vehiculos/mis-vehiculos.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.component';
+import { MiConsumoComponent } from './components/mi-consumo/mi-consumo.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path:'mis-productos', component:MisProductosComponent},
       { path:'mis-vehiculos', component:MisVehiculosComponent},
       {path:'mis-favoritos',component:MisFavoritosComponent},
+      {path:'mi-consumo',component:MiConsumoComponent}
     ]
   }
 ];

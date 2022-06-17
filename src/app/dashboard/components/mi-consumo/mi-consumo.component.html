@@ -1,0 +1,29 @@
+<div class="box d-flex flex-column align-items-center">
+    <div class="container">
+        <div class="card" [ngClass]="consumo.check ? 'card--border-blue' : ''" *ngFor="let consumo of consumos">
+            <div class="card__header">
+                <span class="card__title">
+                    {{consumo.nombre}}
+                </span>
+                <input class="card__input" type="checkbox" [(ngModel)]="consumo.check">
+            </div>
+            <div>
+                <img class="card__img" [src]="consumo.imagen">
+            </div>
+            <div class="card__box-column">
+                <span class="card__label">
+                    ¿Cuantos kilos al mes consumes?
+                </span>
+                <div class="d-flex flex-row mt-2">
+                    <input class="card__input2" type="number" [(ngModel)]="consumo.cantidad_consumo">
+                    <span class="card__label">Kg/mes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn-square-blue2" (click)="updateConsumo()">
+        <span *ngIf="!loading">Actualizar perfil</span>
+        <div class="spinner spinner-border text-light" role="status" *ngIf="loading">
+        </div>
+    </button>
+</div>

@@ -120,13 +120,23 @@
   height: 45px;
 }
 
+.btn-square-blue2 {
+  background-color: var(--azul1);
+  border-radius: 7px;
+  border: 1px solid var(--azul1);
+  color: var(--white);
+  font-weight: 700;
+  width: 300px;
+  height: 45px;
+}
+
 .btn-rounded-white {
   background-color: var(--white);
   border-radius: 7px;
   border: 1px solid var(--black);
   color: var(--black);
   font-weight: 700;
-  width: 200px;
+  width: 300px;
   height: 45px;
 }
 
@@ -136,6 +146,22 @@
   width: 200px;
   background-color: white;
   border:0.5px solid var(--black);
+}
+
+.btn-square-white2{
+  border-radius: 5px;
+  height: 40px;
+  width: 360px;
+  background-color: var(--white);
+  color:black;
+  border:none;
+  margin-top: 20px;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18); 
+  box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
 }
 
 .form-input-text-square {

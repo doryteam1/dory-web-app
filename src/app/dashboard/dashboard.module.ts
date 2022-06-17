@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxLongPress2Module } from 'ngx-long-press2';
 import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MiConsumoComponent } from './components/mi-consumo/mi-consumo.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MisProductosComponent,
     MisVehiculosComponent,
     MisFavoritosComponent,
+    MiConsumoComponent,
   ],
   imports: [
     CommonModule,
