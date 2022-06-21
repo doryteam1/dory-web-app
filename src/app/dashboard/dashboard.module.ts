@@ -16,6 +16,7 @@ import { NgxLongPress2Module } from 'ngx-long-press2';
 import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MiConsumoComponent } from './components/mi-consumo/mi-consumo.component';
+import { MisNegociosComponent } from './components/mis-negocios/mis-negocios.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { MiConsumoComponent } from './components/mi-consumo/mi-consumo.component
     MisVehiculosComponent,
     MisFavoritosComponent,
     MiConsumoComponent,
+    MisNegociosComponent,
   ],
   imports: [
     CommonModule,

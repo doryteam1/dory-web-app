@@ -155,10 +155,8 @@
         
     <div class="d-flex flex-row justify-content-center">
         <button class="container__btn2" *ngIf="mostrarPorTipo('coordenadas')" (click)="verMap()">
-            <span *ngIf="!loading">Escoger mi ubicación</span>
-            <i class="bi bi-geo-alt" *ngIf="!loading"></i>
-            <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
-            </div>
+            <span>Escoger mi ubicación</span>
+            <i class="bi bi-geo-alt left" *ngIf="!loading"></i>
         </button>
     </div>
 
@@ -244,7 +242,7 @@
             <i class="container__icon bi bi-folder-plus"></i>
             <span>Escoger foto de perfil</span>
         </button>
-        <button class="container__btn3" (click)="onSubmit()">
+        <button class="container__btn3 btn-square-blue2" (click)="onSubmit()">
             <span *ngIf="!loading">Actualizar perfil</span>
             <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
             </div>

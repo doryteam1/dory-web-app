@@ -40,6 +40,12 @@
                 Mis favoritos
               </a>
             </li>
+            <li class="nav-item" *ngIf="tipoUsuario == 'Comerciante'">
+              <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-negocios']" routerLinkActive="active">
+                <span data-feather="home"></span>
+                Mis negocios
+              </a>
+            </li>
           </ul>
         </div>
       </nav>

@@ -1,0 +1,309 @@
+<div class="container">
+    <div class="container__table">
+        <table class="table mt-40">
+            <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Municipio</th>
+                <th>Departamento</th>
+                <th>Direccion</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let negocio of negocios |  paginate: { itemsPerPage: 5, currentPage: p }; let i=index">
+                <td>{{negocio?.nombre_negocio}}</td>
+                <td>{{negocio?.descripcion_negocio | shorter:200}}</td>
+                <td>{{negocio?.nombre_municipio}}</td>
+                <td>{{negocio?.nombre_departamento}}</td>
+                <td>{{negocio?.direccion}}</td>
+                <td>
+                    <div class="container-row">
+                        <!-- <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i> -->
+                        <!--<span class="container__link link" (click)="openModal(content,'update',i)">Ver detalle</span>-->
+                        <i class="container__icon1 bi bi-pencil text-success me-2"  (click)="openModal(content,'update',negocio)" ngbTooltip="Crear y actualizar"></i>
+                        <i class="container__icon2 bi bi-trash text-danger me-2" (click)="deleteNegocio(negocio)" ngbTooltip="Eliminar"></i>
+                        <i class="container__icon3 bi bi-geo-alt-fill text-danger me-2" (click)="verMap(negocio)"  ngbTooltip="Mi ubicación"></i>
+                        <i class="container__icon4 bi bi-images text-success" ngbTooltip="Actualizar fotos" (click)="openPhotosModal(photosModal, negocio)"></i>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <pagination-controls *ngIf="!showNotFound" class="my-pagination" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente">
+        </pagination-controls>
+    </div>
+    <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar negocio</button>
+</div>
+    <div class="search-container" *ngIf="showNotFound">
+      <div class="search-container__box">
+          <img class="search-container__image" src="assets/images/searching.svg">
+          <h3>No se han encontrado resultados</h3>
+          <p>Aun no has registrado tus negocios</p>
+      </div>
+    </div>
+     <!-- modal 1 detalles -->
+    <ng-template  #content   let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo Negocio' : 'Actualizar Negocio'}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form  [formGroup]="form"  >
+          <div class="mb-3">
+            <label for="dateOfBirth">Nombre</label>
+            <div class="input-group">
+              <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre_negocio">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+            <div *ngIf="invalid('nombre_negocio')" class="container__alert-msg danger-message">
+              <div *ngIf="nombreNegocio?.errors?.['required']">
+                  Campo requerido
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="dateOfBirth">Descripción</label>
+            <div class="input-group">
+              <textarea class="form-control" name="textarea" rows="5" cols="50" formControlName="descripcion_negocio">Write something here</textarea>
+              <!-- <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion"> -->
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+            <div *ngIf="invalid('descripcion_negocio')" class="container__alert-msg danger-message">
+              <div *ngIf="descripcion?.errors?.['required']">
+                  Campo requerido
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <span class="container__title">Departamento</span>
+            <div>
+                <select class="form-control" formControlName='id_departamento' (ngModelChange)='changeDpto()'>
+                    <optgroup label="Escoje un departamento" value="70">
+                        <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div *ngIf="invalid('id_departamento')" class="container__alert-msg danger-message">
+              <div *ngIf="idDpto?.errors?.['required']">
+                  Campo requerido
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <span class="container__title">Municipio</span>
+            <div>
+                <select class="form-control" formControlName='id_municipio'   (change)="idmunicipioselec()">
+                    <optgroup label="Escoge un municipio">
+                        <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio"  >{{municipio.nombre}}</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div *ngIf="invalid('id_municipio')" class="container__alert-msg danger-message">
+              <div *ngIf="idMunic?.errors?.['required']">
+                  Campo requerido
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="dateOfBirth">Dirección</label>
+            <div class="input-group">
+              <input id="productName" class="form-control" placeholder="Dirección del negocio" formControlName="direccion" (click)="verMap()" onkeydown="return false">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+            <div *ngIf="invalid('direccion')" class="container__alert-msg danger-message">
+              <div *ngIf="direccion?.errors?.['required']">
+                  Campo requerido
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="dateOfBirth">Información adicional dirección</label>
+            <div class="input-group">
+              <input id="productName" class="form-control" placeholder="Información adicional dirección" formControlName="informacion_adicional_direccion">
+              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+            </div>
+            <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
+              <div *ngIf="infoAdicionalDir?.errors?.['required']">
+                  Campo requerido
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark container__btn" (click)="addNegocio()" *ngIf="modalMode=='create'">
+          <span *ngIf="!loading1">Guardar</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading1">
+          </div>
+        </button>
+        <button type="button" class="btn btn-outline-dark container__btn" (click)="updateNegocio()"  *ngIf="modalMode=='update'">
+          <span *ngIf="!loading1" >Actualizar</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading1">
+          </div>
+        </button>
+      </div>
+    </ng-template>
+      <!-- modal 2 mapa -->
+    <ng-template  #map   let-modal>
+      <div class="modal-header footerheadermodal">
+          <!-- header modal -->
+          <div class="search" >
+            <input  class="container__input2" placeholder="Buscar en Google Map"   (keyup)="onKey($event)" (keyup.enter)="buscar()"
+              [(ngModel)]="buscarx" >
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="none" *ngIf="loadingseart">
+                <path stroke="#0A0A30" stroke-linecap="round" stroke-width="1.5"
+                  d="M12 6.864v1.333m0 7.606v1.333M17.136 12h-1.333m-7.606 0H6.864m8.768 3.632l-.943-.943M9.311 9.311l-.943-.943m0 7.264l.943-.943m5.378-5.378l.943-.943"
+                  style="animation:loader4 1.5s linear infinite both;transform-origin:center center" />
+              </svg>
+            <i class="bi bi-search img-search" (click)="buscar()" placement="bottom" ngbTooltip="Búsqueda" *ngIf="!loadingseart" ></i>
+              <div class="d-flex" style="height: 34px;color: rgb(158, 158, 167);">
+              <div class="vr">
+              </div>
+             </div>
+               <i class="bi bi-x img-x" (click)="borrarBusqueda()"  placement="bottom" ngbTooltip="Borrar búsqueda"*ngIf="borrarseart"></i>
+          </div>
+          <!-- button close- modal -->
+          <button type="button" class="btn-close button_close" aria-label="Close" (click)="modal.dismiss('Cross click')" placement="bottom" ngbTooltip="Salir"></button>
+      </div>
+      <div class="modal-body  map"  *ngIf="apiLoaded | async">
+          <!-- fuera de sucre -click fuera-->
+          <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf=" fueraDirecion" role="alert">
+            <div class="p-2 bd-highlight">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+                <path class="prefix__n-info-tri" style="animation-delay:1s" stroke="#0A0A30" stroke-width="1.5"
+                  d="M11.134 6.844a1 1 0 011.732 0l5.954 10.312a1 1 0 01-.866 1.5H6.046a1 1 0 01-.866-1.5l5.954-10.312z" />
+                <g class="prefix__n-info-tri">
+                  <path stroke="#265BFF" stroke-linecap="round" stroke-width="1.5" d="M12 10.284v3.206" />
+                  <circle cx="12" cy="15.605" r=".832" fill="#265BFF" />
+                </g>
+              </svg>
+            </div>
+            <div class="p-2 bd-highlight">
+              No puedes escoger una ubicación fuera del departamento de Sucre
+            </div>
+            <div class="ms-auto p-2 bd-highlight">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+          </div>
+          <!-- no ha guardado la ubicacion alerta -->
+          <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf="guarlatlog" role="alert">
+            <div class="p-2 bd-highlight">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+                <path class="prefix__n-info-tri" style="animation-delay:1s" stroke="#0A0A30" stroke-width="1.5"
+                  d="M11.134 6.844a1 1 0 011.732 0l5.954 10.312a1 1 0 01-.866 1.5H6.046a1 1 0 01-.866-1.5l5.954-10.312z" />
+                <g class="prefix__n-info-tri">
+                  <path stroke="#265BFF" stroke-linecap="round" stroke-width="1.5" d="M12 10.284v3.206" />
+                  <circle cx="12" cy="15.605" r=".832" fill="#265BFF" />
+                </g>
+              </svg>
+            </div>
+            <div class="p-2 bd-highlight">
+              No se ha podido guardar su ubicacion, por intente nuevamente
+            </div>
+            <div class="ms-auto p-2 bd-highlight">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          </div>
+          <!-- no se encontraron datos -->
+          <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf="noexistendatos" role="alert">
+            <div class="p-2 bd-highlight">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+                <path class="prefix__n-info-tri" style="animation-delay:1s" stroke="#0A0A30" stroke-width="1.5"
+                  d="M11.134 6.844a1 1 0 011.732 0l5.954 10.312a1 1 0 01-.866 1.5H6.046a1 1 0 01-.866-1.5l5.954-10.312z" />
+                <g class="prefix__n-info-tri">
+                  <path stroke="#265BFF" stroke-linecap="round" stroke-width="1.5" d="M12 10.284v3.206" />
+                  <circle cx="12" cy="15.605" r=".832" fill="#265BFF" />
+                </g>
+              </svg>
+            </div>
+            <div class="p-2 bd-highlight">
+            Google Maps no puede encontrar <strong>{{valorbuscarx}}</strong>
+            Asegúrese de que su búsqueda esté escrita correctamente. Intente agregar una ciudad, estado o código postal.
+            </div>
+            <div class="ms-auto p-2 bd-highlight">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          </div>
+          <google-map width="1200px" height="550px" class="modal-dialog-centered" [options]="options"
+            (mapClick)="addMarker($event)">
+            <map-marker [position]="markerPosition" [options]="markerOptions" title="Title"></map-marker>
+            <map-polyline [path]="vertices" [options]="optionPoli">
+            </map-polyline>
+          </google-map>
+      </div>
+    </ng-template>
+
+    <input #fileInput type="file" name="resume" (change)='loadPhotos($event)' hidden multiple>
+
+    <ng-template #photosModal let-modal>
+      <div class="modal-header">
+        <div class="box">
+          <button type="button" class="btn-close box__button" aria-label="Close" (click)="abortDeleting()" *ngIf="isPhotoSelectingToDel"></button>
+          <h4 class="modal-title box__title" id="modal-basic-title" *ngIf="isPhotoSelectingToDel">{{photosNegocioUrlToDel.length}} {{photosNegocioUrlToDel.length > 0 ? 'elementos seleccionados' : 'elemento seleccionado'}}</h4>
+          <h4 class="modal-title" id="modal-basic-title" *ngIf="!isPhotoSelectingToDel">Actualizar fotos</h4>
+        </div>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')" *ngIf="!isPhotoSelectingToDel"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container__box">
+          <div class="spinner spinner-border text-info" role="status" *ngIf="loading1">
+            <span class="sr-only"></span>
+          </div>
+
+          <div class="search-container" *ngIf="showNotFoundPhotos">
+            <div class="search-container__box">
+                <img class="search-container__image2" src="assets/images/undraw_a_day_off_re_hedl.svg">
+                <h3>Tu negocio aun no tiene fotos</h3>
+                <p>Puedes agregar algunas con el botón "Adicionar fotos"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-row mb-3 flex-wrap d-flex justify-content-center">
+          <div class="image-box" *ngFor="let photo of photosNegocioArray; let i=index">
+            <img
+            class="modal__image p-2"
+            [src]="photo"
+            ngxLongPress2
+            [maxTime]="1000"
+            (onLongPress)="onLongPress()"
+            (onReleasePressing)="onReleasePressing()"
+            (click)="addPhotoToDel(photo)">
+            <div class="square" *ngIf="isPhotoSelectingToDel" (click)="addPhotoToDel(photo)">
+              <i class="square__icon bi bi-check fa-3x" *ngIf="isPhotoIncludeToDelete(photo)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success container__btn2" *ngIf="!isPhotoSelectingToDel && !showNotFoundPhotos" (click)="isPhotoSelectingToDel = !isPhotoSelectingToDel">
+          <span>Seleccionar fotos</span>
+        </button>
+        <button type="button" class="btn btn-danger container__btn2" (click)="photosDelete()" *ngIf="isPhotoSelectingToDel">
+          <span *ngIf="!loading3">Eliminar ({{photosNegocioUrlToDel.length}}) fotos</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading3"></div>
+        </button>
+        <button type="button" class="btn btn-secondary container__btn1" (click)="openAddFileDialog()">
+          <span *ngIf="!loading2">Adicionar fotos</span>
+          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading2"></div>
+        </button>
+      </div>
+    </ng-template>
+
+<!--     <button
+    ngxLongPress2
+    [maxTime]="1000"
+    (onLongPress)="onLongPress()"
+    (onLongPressing)="onLongPressing($event)"
+    (onReleasePressing)="onReleasePressing()">
+{{ this.timeLapsed1 > 0 ? this.timeLapsed1 + ' ms' : 'PRESS ME'}}
+</button>-->
