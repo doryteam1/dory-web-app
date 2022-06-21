@@ -55,6 +55,7 @@ export class PerfilComponent implements OnInit {
     apellidos: new FormControl(''),
     celular: new FormControl(''),
     direccion: new FormControl(''),
+    informacion_adicional_direccion: new FormControl(''),
     id_tipo_usuario: new FormControl(''),
     email: new FormControl('', [Validators.required, Validators.email]),
     id_area_experticia: new FormControl(0),
@@ -220,6 +221,7 @@ export class PerfilComponent implements OnInit {
     let email: string | null = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe(
       (response) => {
+        console.log("usuario por email ",response)
         this.usuario = response.data[0];
         this.form.get('id')?.setValue(this.usuario.id);
         this.form.get('cedula')?.setValue(this.usuario.cedula);
@@ -227,6 +229,7 @@ export class PerfilComponent implements OnInit {
         this.form.get('apellidos')?.setValue(this.usuario.apellidos);
         this.form.get('celular')?.setValue(this.usuario.celular);
         this.form.get('direccion')?.setValue(this.usuario.direccion);
+        this.form.get('informacion_adicional_direccion')?.setValue(this.usuario.informacion_adicional_direccion);
         this.form
           .get('id_tipo_usuario')
           ?.setValue(this.usuario.id_tipo_usuario);
@@ -493,6 +496,8 @@ export class PerfilComponent implements OnInit {
       return;
     }
 
+    console.log("usuario ",this.form.getRawValue())
+    console.log("id ",this.form.get('id')?.value)
     this.us
       .actualizarUsuario(this.form.get('id')?.value, this.form.getRawValue())
       .subscribe(
