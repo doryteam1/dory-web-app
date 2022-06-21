@@ -31,10 +31,11 @@ import {
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { ModalGoogleMapComponent } from './components/modal-google-map/modal-google-map.component';
-import { ModalShareButtonComponent } from './components/modal-share-button/modal-share-button.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { ModalGoogleMapComponent } from './components/modal-google-map/modal-google-map.component';
+import { ModalShareButtonComponent } from './components/modal-share-button/modal-share-button.component';
+/* import { CardphotoGoogleMapComponent } from './components/cardphoto-google-map/cardphoto-google-map.component'; */
 
 
 
@@ -60,8 +61,10 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
     CarrucelImgComponent,
     ModalShareButtonComponent,
     ModalGoogleMapComponent,
+    /* CardphotoGoogleMapComponent, */
   ],
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     RouterModule,
     FormsModule,
     NgbModule,
@@ -87,7 +90,8 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
     ShorterPipe,
     StarsComponent,
     CarrucelImgComponent,
-    ModalShareButtonComponent
+    ModalShareButtonComponent,
+   /*  CardphotoGoogleMapComponent, */
   ],
   providers: [
     ConfirmModalMapService,

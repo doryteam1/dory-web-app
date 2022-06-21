@@ -65,6 +65,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     useClass:AuthInterceptor,
     multi:true
   }
+
   ],
   bootstrap: [AppComponent]
 })

@@ -6,32 +6,32 @@
         <img class="container__icon" src="assets/icons/build.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue">Municipio</h3>
-            <span class="container__description">{{municipio}}</span>    
+            <span class="container__description">{{municipio}}</span>
         </div>
     </div>
-    
+
     <div class="container">
         <img class="container__icon" src="assets/icons/group-circle-solid.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-morado">Población</h3>
-            <span class="container__description">{{poblacion | number:'':'es'}}</span>    
+            <span class="container__description">{{poblacion | number:'':'es'}}</span>
         </div>
     </div>
-    
+
     <div class="container">
         <img class="container__icon" src="assets/icons/fish.svg">
         <div class="container__info">
             <h3 class="container__title container__title--color-blue-2"># piscicultores</h3>
-            <span class="container__description">{{piscicultores.length}}</span>    
+            <span class="container__description">{{piscicultores.length}}</span>
         </div>
-    </div>    
+    </div>
 </div>
 
 <div class="piscicultores-container">
     <div class="cards-container overflow-auto" *ngIf="piscicultores.length >= 1">
         <div class="card" *ngFor="let piscicultor of piscicultores; index as i" (mouseover)="onMouseCard(piscicultor, i)">
             <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}" routerLink="/piscicultores/municipio/detalle">
-            
+
             <div class="card-box">
                 <h3 class="card__title">{{piscicultor.nombre}}</h3>
                 <span class="card__title2">{{piscicultor.nombre_asociacion}}</span>
@@ -39,11 +39,11 @@
                     <img class="card__icon" src="assets/icons/whatsapp.svg" *ngIf="piscicultor.celular">
                     <span class="card__phone">{{piscicultor.celular}}</span>
                     <span class="card__email">{{piscicultor.email}}</span>
-                </div>            
+                </div>
                 <span class="card__description1">{{piscicultor.direccion ? 'Dir.' : ''}} {{piscicultor.direccion}}</span>
                 <span class="card__description2">{{piscicultor.municipio}}-{{piscicultor.departamento}}</span>
             </div>
-            
+
         </div>
     </div>
 

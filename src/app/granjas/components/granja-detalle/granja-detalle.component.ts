@@ -320,11 +320,19 @@ dateToString(date:string){
     let atributos = this.granja;
     let modalheadergooglemap = false;
     let mapElementVarios =false;
+    let iconMarkerGoogleMap = "assets/icons/fish-marker.svg";
+
     this.location.onPopState(() => {
       this.appModalService.CloseGoogleMapModal();
     });
     this.appModalService
-      .GoogleMapModal(atributos, modalheadergooglemap, mapElementVarios)
+      .GoogleMapModal(
+        atributos,
+        modalheadergooglemap,
+        mapElementVarios,
+        iconMarkerGoogleMap,
+        ''
+      )
       .then((result) => {})
       .catch((result) => {});
   }

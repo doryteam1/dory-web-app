@@ -18,8 +18,8 @@
             <td class="colortextoproducto">{{producto.precio}}</td>
             <td>
                 <div class="container-row">
-                    <i class="container__icon bi bi-pencil text-success me-3 mitextcolorpencil" (click)="openModal(content,'update',i)"></i>
-                    <i class="container__icon bi bi-trash text-danger mitextcolortrash" (click)="deleteProducto(producto.codigo,i)"></i>
+                    <i class="container__icon bi bi-pencil text-success me-3 mitextcolorpencil" (click)="openModal(content,'update',producto.codigo)"></i>
+                    <i class="container__icon bi bi-trash text-danger mitextcolortrash" (click)="deleteProducto(producto.codigo)"></i>
                 </div>
             </td>
           </tr>

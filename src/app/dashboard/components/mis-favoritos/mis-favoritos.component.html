@@ -20,9 +20,6 @@
           </h3>
         </div>
       </div>
- <!--  <div *ngIf="misfavoritoscargados && !showNotFound && misGranjaFavoritas.length>0" class="buttonvermap">
-    <button (click)="seeFarmsMap()">Ver en el mapa</button>
-  </div> -->
       <div *ngIf="misfavoritoscargados && !showNotFound && misGranjaFavoritas.length>0" class="container-button-open-map" (click)="seeFarmsMap()">
         <div class="container-button-open-map-data">
           <div>
@@ -47,11 +44,7 @@
           </div>
           <div class="dimensionmasmenos1200">
               <div><img src="../../../../assets/icons/location_on_white_24dp.svg" ></div>
-              <div > {{granja.direccion}}  <span (click)="seeFarmsMaptwo(i)"><a>(Ver en el mapa)</a> </span>
-              <!-- text-decoration: auto; */
-               color: var(--azul1);
-              /* text-decoration: underline red; */
-               text-decoration: dashed underline white; -->
+              <div > {{granja.direccion}}  <span (click)="seeFarmsMaptwo(i)"><a style="text-decoration: dashed underline var(--azul1) 2px;">(Ver en el mapa)</a> </span>
               </div>
           </div>
           <div class="dimensionmas1200">
@@ -87,4 +80,6 @@
       </div>
   </div>
 </div>
+
+
 

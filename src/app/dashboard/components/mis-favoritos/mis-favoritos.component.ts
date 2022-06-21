@@ -85,11 +85,19 @@ export class MisFavoritosComponent implements OnInit {
     let atributos = this.misGranjaFavoritas;
     let modalheadergooglemap = false;
     let mapElementVarios = true;
+     let iconMarkerGoogleMap = 'assets/icons/Groupfavoritowhite.svg';
+     let iconMarkerGoogleMap2 = 'assets/icons/Groupfavoritoblue.svg';
     this.location.onPopState(() => {
       this.appModalService.CloseGoogleMapModal();
     });
     this.appModalService
-      .GoogleMapModal(atributos, modalheadergooglemap, mapElementVarios)
+      .GoogleMapModal(
+        atributos,
+        modalheadergooglemap,
+        mapElementVarios,
+        iconMarkerGoogleMap,
+        iconMarkerGoogleMap2
+      )
       .then((result) => {
         if (this.misGranjaFavoritas.length <= 0) {
           this.sinfavoritos = true;
@@ -101,11 +109,20 @@ export class MisFavoritosComponent implements OnInit {
         let atributos = this.misGranjaFavoritas[i];
         let modalheadergooglemap = false;
         let mapElementVarios = false;
+        let iconMarkerGoogleMap = 'assets/icons/Groupfavoritoblue.svg';
+       /*  let iconMarkerGoogleMap =
+           "i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' "; */
         this.location.onPopState(() => {
           this.appModalService.CloseGoogleMapModal();
         });
         this.appModalService
-          .GoogleMapModal(atributos, modalheadergooglemap, mapElementVarios)
+          .GoogleMapModal(
+            atributos,
+            modalheadergooglemap,
+            mapElementVarios,
+            iconMarkerGoogleMap,
+            '',
+          )
           .then((result) => {
             if (this.misGranjaFavoritas.length <= 0) {
               this.sinfavoritos = true;

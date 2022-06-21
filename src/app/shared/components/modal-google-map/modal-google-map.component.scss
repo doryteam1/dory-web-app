@@ -184,17 +184,6 @@ overflow-y: auto;
 
     .description {
       flex-basis: 60%;
-      /*    &:before {
-        transform: skewX(-3deg);
-        content: "";
-        background: #fff;
-        width: 30px;
-        position: absolute;
-        left: -10px;
-        top: 0;
-        bottom: 0;
-        z-index: -1;
-      } */
     }
 
     &.alt {
@@ -311,3 +300,4 @@ div.my_estilo_cols {
   height: 550px;
   background-color: #a2a2a2;
 }
+

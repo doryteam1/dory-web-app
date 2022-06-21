@@ -49,7 +49,9 @@ export class AppModalService {
   public GoogleMapModal(
     atributos:any={},
     modalheader:boolean,
-    mapElementVarios:boolean
+    mapElementVarios:boolean,
+    iconMarkerGoogleMap:string,
+    iconMarkerGoogleMap2:string
   ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalGoogleMapComponent, {
       ariaLabelledBy: 'modal-basic-title',
@@ -59,6 +61,8 @@ export class AppModalService {
     modalRef.componentInstance.atributos = atributos;
     modalRef.componentInstance.modalheader = modalheader;
     modalRef.componentInstance.mapElementVarios = mapElementVarios;
+    modalRef.componentInstance.iconMarkerGoogleMap = iconMarkerGoogleMap;
+    modalRef.componentInstance.iconMarkerGoogleMap2 = iconMarkerGoogleMap2;
     return modalRef.dismissed.toPromise()
   }
 }
