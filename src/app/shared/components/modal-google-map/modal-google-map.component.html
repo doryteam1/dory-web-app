@@ -53,7 +53,7 @@
                *ngFor="let markerInfo of markersInfo; index as i"
                [position]="markerInfo.markerPosition"
                 [options]="markerOptions"
-               icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"
+               [icon]="i == indexSelected ? iconMarkerGoogleMap2: iconMarkerGoogleMap"
                (mapMouseover)="openInfoWindowvarios(marker,i)"
                (mapMouseout)="eliminInfoWindowvarios()"
             (mapClick)="shareFuntionvarios(i) ">
@@ -95,7 +95,7 @@
           <map-marker #marker="mapMarker"
             [position]="markerPosition"
              [options]="markerOptions"
-            icon="{{'assets/icons/fish-marker.svg' }}"
+             [icon]=" iconMarkerGoogleMap"
             (mapClick)="shareFuntion() ">
           </map-marker>
           <map-info-window [position]="markerPosition">

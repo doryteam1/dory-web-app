@@ -22,13 +22,15 @@ import { GranjasService } from 'src/app/granjas/services/granjas.service';
   styleUrls: ['./modal-google-map.component.scss'],
 })
 export class ModalGoogleMapComponent implements OnInit {
+  @Input() atributos: any = {};
+  @Input() modalheader!: boolean;
+  @Input() mapElementVarios!: boolean;
+  @Input() iconMarkerGoogleMap!:string
+  @Input() iconMarkerGoogleMap2!:string
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   @ViewChild('marker') marker!: MapMarker;
   @ViewChild('myGoogleMap', { static: false })
   map!: GoogleMap;
-  @Input() atributos: any = {};
-  @Input() modalheader!: boolean;
-  @Input() mapElementVarios!: boolean;
   markerPositions: google.maps.LatLngLiteral[] = [];
   markersInfo: any[] = [];
   misfavoritas: any[] = [];
@@ -56,6 +58,7 @@ export class ModalGoogleMapComponent implements OnInit {
     },
   };
   ngOnInit(): void {
+    console.log(this.iconMarkerGoogleMap)
     const sucreColombia = {
       north: 10.184454,
       south: 8.136442,
@@ -161,6 +164,7 @@ export class ModalGoogleMapComponent implements OnInit {
   openInfoWindowvarios(marker: MapMarker, index: number) {
     if (this.mapElementVarios && this.mapaOn) {
       this.infoWindow.open(marker);
+      this.indexSelected=index
       this.selectedfavorito.granja.nombre = this.misfavoritas[index].nombre;
       this.selectedfavorito.granja.direccion =
         this.misfavoritas[index].direccion;
@@ -177,12 +181,12 @@ export class ModalGoogleMapComponent implements OnInit {
   }
   openInfoWindow(marker: MapMarker) {
     if (!this.mapElementVarios) {
-      console.log(this.indexSelected)
+      console.log(this.atributos)
       this.infoWindow.open(marker);
       this.selectedfavorito.granja.nombre = this.atributos.nombre;
       this.selectedfavorito.granja.direccion = this.atributos.direccion;
       this.selectedfavorito.granja.area = this.atributos.area;
-      this.selectedfavorito.propietario.nombre = this.atributos.propietario;
+      this.selectedfavorito.propietario.nombre = this.atributos.propietario || this.atributos.propietarios[0].nombre_completo;
     }
   }
   eliminInfoWindow() {

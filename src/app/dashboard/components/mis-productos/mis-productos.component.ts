@@ -57,7 +57,11 @@ export class MisProductosComponent implements OnInit {
     );
   }
 
-  openModal(content: any, action: string, i?: number) {
+  openModal(content: any, action: string, codigo?: number) {
+     let i = this.productos.findIndex((producto: any) => {
+       return producto.codigo == codigo;
+     });
+     console.log(i)
     /*  this.p=3 */
     this.modalMode = action;
     this.form.reset();
@@ -163,12 +167,15 @@ export class MisProductosComponent implements OnInit {
     this.showErrorNotImageSelected = false;
   }
 
-  deleteProducto(codigo: number, i: number) {
+  deleteProducto(codigo: number) {
+      let i = this.productos.findIndex((producto: any) => {
+        return producto.codigo == codigo;
+      });
     this.appModalService
       .confirm(
         'Eliminar producto',
         'Esta seguro que desea eliminar el producto',
-        'Cancelar',
+        'Si',
         'No estoy seguro',
         this.productos[i].nombreProducto
       )
@@ -176,7 +183,13 @@ export class MisProductosComponent implements OnInit {
         if (result == true) {
           this.proveedorService.deleteProducto(codigo).subscribe(
             (response) => {
-              this.productos.splice(i, 1);
+                 let index = this.productos.findIndex((producto: any) => {
+                   return producto.codigo == codigo;
+                 });
+                 this.productos.splice(index, 1);
+                 if (this.productos.length <= 0) {
+                   this.showNotFound = true;
+                 }
             },
             (err) => {
               console.log(err);

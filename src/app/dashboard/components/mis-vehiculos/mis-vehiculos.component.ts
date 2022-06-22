@@ -52,7 +52,11 @@ export class MisVehiculosComponent implements OnInit {
     )
   }
 
-  openModal(content:any, action:string, i?:number){
+  openModal(content:any, action:string, id_vehiculo?:number){
+     let i = this.vehiculos.findIndex((vehiculo: any) => {
+       return vehiculo.id_vehiculo == id_vehiculo;
+     });
+     console.log(i)
     this.modalMode = action;
     this.form.reset();
     this.formInit();
@@ -157,14 +161,23 @@ export class MisVehiculosComponent implements OnInit {
     reader.readAsDataURL(imageUrl);
   } */
 
-  deleteVehiculo(id:number, i:number){
+  deleteVehiculo(id:number){
+      let i = this.vehiculos.findIndex((vehiculo: any) => {
+        return vehiculo.id_vehiculo == id;
+      });
     this.appModalService.confirm('Eliminar vehiculo','Esta seguro que desea eliminar el vehiculo con id','Eliminar','No estoy seguro',this.vehiculos[i].modelo)
     .then(
       (result)=>{
         if(result == true){
             this.vehiculosService.deleteVehiculo(id).subscribe(
               (response)=>{
-                this.vehiculos.splice(i,1);
+                    let index = this.vehiculos.findIndex((vehiculo: any) => {
+                      return vehiculo.id_vehiculo == id;
+                    });
+                    this.vehiculos.splice(index,1);
+                    if (this.vehiculos.length <= 0) {
+                      this.showNotFound = true;
+                    }
               },err=>{
                 console.log(err)
               }

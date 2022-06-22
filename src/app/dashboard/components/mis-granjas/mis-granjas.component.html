@@ -20,12 +20,10 @@
                 <td>{{granja.produccion_estimada_mes}}</td>
                 <td>
                     <div class="container-row">
-                        <!-- <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i> -->
-                        <!--<span class="container__link link" (click)="openModal(content,'update',i)">Ver detalle</span>-->
-                        <i class="container__icon1 bi bi-pencil text-success me-2"  (click)="openModal(content,'update',i)" ngbTooltip="Crear y actualizar"></i>
-                        <i class="container__icon2 bi bi-trash text-danger me-2" (click)="deleteGranja(granja.id_granja,i)" ngbTooltip="Eliminar"></i>
-                        <i class="container__icon3 bi bi-geo-alt-fill text-danger me-2" (click)="verMap(i)"  ngbTooltip="Mi ubicación"></i>
-                        <i class="container__icon4 bi bi-images text-success" ngbTooltip="Actualizar fotos" (click)="openPhotosModal(photosModal, i)"></i>
+                        <i class="container__icon1 bi bi-pencil text-success me-2"  (click)="openModal(content,'update',granja.id_granja)" ngbTooltip="Crear y actualizar"></i>
+                        <i class="container__icon2 bi bi-trash text-danger me-2" (click)="deleteGranja(granja.id_granja)" ngbTooltip="Eliminar"></i>
+                        <i class="container__icon3 bi bi-geo-alt-fill text-danger me-2" (click)="verMap(granja.id_granja)"  ngbTooltip="Mi ubicación"></i>
+                        <i class="container__icon4 bi bi-images text-success" ngbTooltip="Actualizar fotos" (click)="openPhotosModal(photosModal, granja.id_granja)"></i>
                     </div>
                 </td>
             </tr>
@@ -135,38 +133,49 @@
           <div class="mb-3">
             <span class="container__title">Municipio</span>
             <div>
-                <select class="form-control" formControlName='id_municipio'   (change)="idmunicipioselec()">
+                <select class="form-control" formControlName='id_municipio'   (change)="idmunicipioselec()" >
                     <optgroup label="Escoge un municipio">
                         <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio"  >{{municipio.nombre}}</option>
                     </optgroup>
                 </select>
             </div>
 
-            <div *ngIf="invalid('id_municipio')" class="container__alert-msg danger-message">
-              <div *ngIf="idMunic?.errors?.['required']">
+            <div *ngIf="invalid('id_municipio') || faltanargumentos" class="container__alert-msg danger-message">
+              <div *ngIf="idMunic?.errors?.['required'] || faltanargumentos">
                   Campo requerido
               </div>
             </div>
           </div>
 
           <div class="mb-3">
-            <label for="dateOfBirth">Corregimiento o vedera</label>
+            <label for="dateOfBirth">Corregimiento o vereda</label>
             <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Corregimiento donde se ubica la granja" formControlName="corregimiento_vereda">
+              <input id="productName" class="form-control" placeholder="Corregimiento donde se ubica la granja" formControlName="corregimiento_vereda" >
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
             </div>
           </div>
 
           <div class="mb-3">
             <label for="dateOfBirth">Dirección</label>
-            <div class="input-group">
-
-              <input id="productName" class="form-control" placeholder="Dirección de la granja" formControlName="direccion">
+            <div class="input-group" (click)="verMapaDireccion()">
+              <input id="productName" class="form-control direccion-class" placeholder="Selecciona aquí la dirreción de la granja en el mapa" formControlName="direccion" >
               <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
             </div>
-            <div *ngIf="invalid('direccion')" class="container__alert-msg danger-message">
-              <div *ngIf="direccion?.errors?.['required']">
+            <div *ngIf="invalid('direccion') || faltadireccion" class="container__alert-msg danger-message">
+              <div *ngIf="direccion?.errors?.['required'] || faltadireccion">
                   Campo requerido
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="dateOfBirth">Información adicional de la ubicación</label>
+            <div class="input-group">
+              <textarea class="form-control" name="textarea" rows="5" cols="50" placeholder="Información adicional de la ubicación seleccionada"
+                formControlName="informacion_adicional_direccion">Write something here</textarea>
+            </div>
+            <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
+              <div *ngIf="informacionAdicionalDireccion?.errors?.['required']">
+                Campo requerido
               </div>
             </div>
           </div>
@@ -225,7 +234,7 @@
                <i class="bi bi-x img-x" (click)="borrarBusqueda()"  placement="bottom" ngbTooltip="Borrar búsqueda"*ngIf="borrarseart"></i>
           </div>
           <!-- button close- modal -->
-          <button type="button" class="btn-close button_close" aria-label="Close" (click)="modal.dismiss('Cross click')" placement="bottom" ngbTooltip="Salir"></button>
+          <button type="button" class="btn-close button_close" aria-label="Close" (click)="closeMap()" placement="bottom" ngbTooltip="Salir"></button>
       </div>
       <div class="modal-body  map"  *ngIf="apiLoaded | async">
           <!-- fuera de sucre -click fuera-->

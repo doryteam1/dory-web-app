@@ -18,8 +18,8 @@
             <td>{{vehiculo.transporte_alimento == 1 ? 'Si' : 'No'}}</td>
             <td>
                 <div class="container-row">
-                    <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i>
-                    <i class="container__icon bi bi-trash text-danger" (click)="deleteVehiculo(vehiculo.id_vehiculo,i)"></i>
+                    <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',vehiculo.id_vehiculo)"></i>
+                    <i class="container__icon bi bi-trash text-danger" (click)="deleteVehiculo(vehiculo.id_vehiculo)"></i>
                 </div>
             </td>
           </tr>
