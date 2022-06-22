@@ -48,6 +48,9 @@ export class PerfilComponent implements OnInit {
   municipios: Array<any> = [];
   corregimientos: Array<any> = [];
   veredas: Array<any> = [];
+  tempDir:string = '';
+  tempMunicId:number = -1;
+  isOpenMap:boolean = false;
   form: FormGroup = new FormGroup({
     id: new FormControl(''),
     cedula: new FormControl(''),
@@ -270,7 +273,6 @@ export class PerfilComponent implements OnInit {
         }
 
         this.idDpto?.disable();
-        this.idMunic?.disable();
         this.loadAreasExp();
         this.loadDptos();
         this.loadMunic();
@@ -293,7 +295,8 @@ export class PerfilComponent implements OnInit {
           lng: parseFloat(this.longitud?.value),
         };
 
-
+        this.tempDir = this.form.get('direccion')?.value;
+        this.tempMunicId = this.form.get('id_municipio')?.value;
       },
       (err) => {
         console.log(err);
@@ -463,6 +466,12 @@ export class PerfilComponent implements OnInit {
         console.log(err);
       }
     );
+    this.direccion?.setValue('');
+    if(this.idMunic?.value == this.tempMunicId){
+      this.direccion?.setValue(this.tempDir);
+    }else if(!this.isOpenMap){
+      this.verMap();
+    }
   }
 
   loadCorregVeredas() {
@@ -576,6 +585,8 @@ export class PerfilComponent implements OnInit {
                 this.idDpto?.setValue(idDpto);
                 this.idMunic?.setValue(idMunic);
                 this.direccion?.setValue(response.results[0].formatted_address);
+                this.tempDir = this.direccion?.value;
+                this.tempMunicId = this.idMunic?.value;
                 if (event.latLng) {
                   this.markerPosition = event.latLng.toJSON();
                   this.latitud?.setValue(event.latLng.toJSON().lat);
@@ -619,14 +630,22 @@ export class PerfilComponent implements OnInit {
       lat: parseFloat(this.latitud?.value),
       lng: parseFloat(this.longitud?.value),
     };
-     this.modalService.open(this.map, { size: 'xl',centered: true,windowClass: 'dark-modal'}
-
-     ).result.then((result) => {
+     this.modalService.open(this.map, { size: 'xl',centered: true,windowClass: 'dark-modal'}).result.then((result) => {
          console.log("se cerro modal ",result)
+         this.isOpenMap = false;
         } ).catch((err) => {
+        this.isOpenMap = false;
         console.log(err);
       });
+    this.isOpenMap = true;
     this.buscarx = '';
+    let index = this.municipios.findIndex((element)=>{
+      return element.id_municipio == this.idMunic?.value
+    });
+    if(index!=-1){
+      this.buscarx = this.municipios[index].nombre;
+    }
+    this.buscar()
   }
 
   buscar() {

@@ -168,7 +168,7 @@
     <div class="d-flex flex-row justify-content-center">
         <button class="container__btn2" *ngIf="mostrarPorTipo('coordenadas')" (click)="verMap()">
             <span>Escoger mi ubicación</span>
-            <i class="bi bi-geo-alt left" *ngIf="!loading"></i>
+            <i class="bi bi-geo-alt left"></i>
         </button>
     </div>
 
@@ -225,9 +225,6 @@
             </div>
         </div>
     </div>
-        
-        
-        
         <!-- <div class="container__box" *ngIf="mostrarPorTipo('coordenadas')">
             <span class="container__label">Latitud</span>
             <div>
@@ -256,7 +253,7 @@
         </button>
         <button class="container__btn3 btn-square-blue2" (click)="onSubmit()">
             <span *ngIf="!loading">Actualizar perfil</span>
-            <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
+            <div class="container__spinner spinner-border text-light" role="status" *ngIf="loading">
             </div>
         </button>
     </div>
