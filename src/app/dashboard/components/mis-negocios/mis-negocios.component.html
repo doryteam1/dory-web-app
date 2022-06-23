@@ -288,11 +288,11 @@
         <button type="button" class="btn btn-success container__btn2" *ngIf="!isPhotoSelectingToDel && !showNotFoundPhotos" (click)="isPhotoSelectingToDel = !isPhotoSelectingToDel">
           <span>Seleccionar fotos</span>
         </button>
-        <button type="button" class="btn btn-danger container__btn2" (click)="photosDelete()" *ngIf="isPhotoSelectingToDel">
+        <button type="button" class="btn btn-danger container__btn2" (click)="photosDelete()" *ngIf="isPhotoSelectingToDel && photosNegocioUrlToDel.length > 0">
           <span *ngIf="!loading3">Eliminar ({{photosNegocioUrlToDel.length}}) fotos</span>
           <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading3"></div>
         </button>
-        <button type="button" class="btn btn-secondary container__btn1" (click)="openAddFileDialog()">
+        <button type="button" class="btn btn-secondary container__btn1" (click)="openAddFileDialog()" *ngIf="!isPhotoSelectingToDel">
           <span *ngIf="!loading2">Adicionar fotos</span>
           <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading2"></div>
         </button>

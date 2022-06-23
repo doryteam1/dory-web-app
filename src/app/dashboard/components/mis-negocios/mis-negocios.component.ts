@@ -38,6 +38,9 @@ export class MisNegociosComponent implements OnInit {
   borrarseart: boolean = false;
   valorbuscarx: string = '';
   p!: number;
+  tempDir:string = '';
+  tempMunicId:number = -1;
+  firstTimeOpenModal = true;
   form: FormGroup = new FormGroup({
     nombre_negocio: new FormControl(''),
     direccion: new FormControl('', [Validators.required]),
@@ -136,57 +139,17 @@ export class MisNegociosComponent implements OnInit {
     this.idDpto?.setValue(70);
     this.idMunic?.setValue(null);
   }
-  /* mi codigo */
+
   idmunicipioselec() {
-    if (this.modalMode == 'update') {
-      console.log(this.modalMode);
-      this.places
-        .getMunicipioById(this.form.get('id_municipio')?.value)
-        .subscribe(
-          (response) => {
-            if (response.data != 0) {
-              if (
-                this.form.get('id_municipio')?.value !==
-                this.negocios[this.itemUpdateIndex].id_municipio
-              ) {
-                this.latitud?.setValue(response.data[0].latitud);
-                this.longitud?.setValue(response.data[0].longitud);
-                this.direccion?.setValue(0);
-              } else {
-                this.latitud?.setValue(
-                  this.negocios[this.itemUpdateIndex].latitud
-                );
-                this.longitud?.setValue(
-                  this.negocios[this.itemUpdateIndex].longitud
-                );
-                this.direccion?.setValue(
-                  this.negocios[this.itemUpdateIndex].direccion
-                );
-              }
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-    } else if (this.modalMode == 'create') {
-      console.log(this.modalMode);
-      this.places
-        .getMunicipioById(this.form.get('id_municipio')?.value)
-        .subscribe(
-          (response) => {
-            if (response.data != 0) {
-              this.latitud?.setValue(response.data[0].latitud);
-              this.longitud?.setValue(response.data[0].longitud);
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
+    this.direccion?.setValue('');
+    if(this.idMunic?.value == this.tempMunicId){
+      this.direccion?.setValue(this.tempDir);
+      console.log("temp dir ",this.tempDir)
+    }else if(!this.firstTimeOpenModal){
+      this.verMap();
     }
   }
-  /* fin */
+
   openModal(content: any, action: string, negocio?: any) {
     this.modalMode = action;
     this.form.reset();
@@ -202,17 +165,22 @@ export class MisNegociosComponent implements OnInit {
       this.idDpto?.setValue(negocio.id_departamento);
       this.idMunic?.setValue(negocio.id_municipio);
       this.itemUpdateIndex = this.negocios.findIndex((element)=>element.id_negocio == negocio.id_negocio);
+      this.tempDir = this.direccion?.value;
+      this.tempMunicId = this.idMunic?.value;
     }
     this.modalService
       .open(content)
       .result.then((result) => {
         console.log('se cerro modal ', result);
+        this.firstTimeOpenModal = true;
       })
       .catch((err) => {
         this.file = null;
         this.productImagePath = '';
         console.log(err);
+        this.firstTimeOpenModal = true;
       });
+      this.firstTimeOpenModal = false;
   }
 
   addNegocio() {
@@ -454,6 +422,7 @@ export class MisNegociosComponent implements OnInit {
         let municipioNombre = this.municipios[indexMunc].nombre;
         this.buscarx = municipioNombre;
         this.buscar();
+        console.log("buscar....")
       }
       return;
     }
@@ -627,6 +596,7 @@ export class MisNegociosComponent implements OnInit {
               if (result == true) {
                 if(this.indicenegocio == -1){
                   this.direccion?.setValue(response.results[0].formatted_address);
+                  this.idMunic?.setValue(idMunipio)
                 }else{
                   this.negociosService
                   .updateParcialNegocio(this.negocios[this.indicenegocio!].id_negocio, {
@@ -638,6 +608,8 @@ export class MisNegociosComponent implements OnInit {
                   .subscribe(
                     (response) => {
                       console.log(response);
+                      this.tempDir = this.direccion?.value;
+                      this.tempMunicId = this.idMunic?.value;
                       window.location.reload();
                     },
                     (err) => {

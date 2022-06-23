@@ -646,6 +646,7 @@ export class PerfilComponent implements OnInit {
       this.buscarx = this.municipios[index].nombre;
     }
     this.buscar()
+    this.buscarx = '';
   }
 
   buscar() {
