@@ -35,7 +35,7 @@ import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { ModalGoogleMapComponent } from './components/modal-google-map/modal-google-map.component';
 import { ModalShareButtonComponent } from './components/modal-share-button/modal-share-button.component';
-/* import { CardphotoGoogleMapComponent } from './components/cardphoto-google-map/cardphoto-google-map.component'; */
+
 
 
 
@@ -61,7 +61,6 @@ import { ModalShareButtonComponent } from './components/modal-share-button/modal
     CarrucelImgComponent,
     ModalShareButtonComponent,
     ModalGoogleMapComponent,
-    /* CardphotoGoogleMapComponent, */
   ],
   imports: [
     CommonModule,

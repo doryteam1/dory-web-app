@@ -121,6 +121,9 @@ export class MisGranjasComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   this. autorecarga()
+   }
+  autorecarga(): void {
     this.direccion?.disable();
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
@@ -400,7 +403,7 @@ if (this.form.getRawValue().direccion !== '') {
     .subscribe(
       (response) => {
         this.loading1 = false;
-        this.ngOnInit();
+        this.autorecarga();
         this.modalService.dismissAll();
       },
       (err) => {
@@ -902,7 +905,7 @@ if (this.form.getRawValue().direccion !== '') {
                     })
                     .subscribe(
                       (response) => {
-                        this.ngOnInit()
+                        this.autorecarga();
                       },
                       (err) => {
                         this.guarlatlog = true;

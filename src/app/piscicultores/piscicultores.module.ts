@@ -9,11 +9,13 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { PiscicultoresService } from './services/piscicultores.service';
 import { HttpsService } from '../services/https.service';
 import { SharedModule } from '../shared/shared.module';
+import { PiscicultorDetalleComponent } from './components/piscicultor-detalle/piscicultor-detalle.component';
 
 @NgModule({
   declarations: [
     PiscicultoresComponent,
-    PiscicultoresMunicipioComponent
+    PiscicultoresMunicipioComponent,
+    PiscicultorDetalleComponent
   ],
   imports: [
     CommonModule,

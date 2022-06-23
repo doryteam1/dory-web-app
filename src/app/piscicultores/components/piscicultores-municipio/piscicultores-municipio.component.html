@@ -18,6 +18,7 @@
         </div>
     </div>
 
+
     <div class="container">
         <img class="container__icon" src="assets/icons/fish.svg">
         <div class="container__info">
@@ -27,7 +28,14 @@
     </div>
 </div>
 
-<div class="piscicultores-container">
+<div class="search-container" *ngIf="piscicultores.length < 1">
+  <div class="search-container__box">
+    <img class="search-container__image" src="assets/images/searching.svg">
+    <h3>No se han encontrado resultados</h3>
+    <p>No encontramos granjas en este municipio </p>
+  </div>
+</div>
+<!-- <div class="piscicultores-container">
     <div class="cards-container overflow-auto" *ngIf="piscicultores.length >= 1">
         <div class="card" *ngFor="let piscicultor of piscicultores; index as i" (mouseover)="onMouseCard(piscicultor, i)">
             <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}" routerLink="/piscicultores/municipio/detalle">
@@ -35,7 +43,7 @@
             <div class="card-box">
                 <h3 class="card__title">{{piscicultor.nombre}}</h3>
                 <span class="card__title2">{{piscicultor.nombre_asociacion}}</span>
-                <div>
+              <div>
                     <img class="card__icon" src="assets/icons/whatsapp.svg" *ngIf="piscicultor.celular">
                     <span class="card__phone">{{piscicultor.celular}}</span>
                     <span class="card__email">{{piscicultor.email}}</span>
@@ -49,17 +57,112 @@
 
     <div *ngIf="piscicultores.length > 0 && (apiLoaded | async)">
         <google-map [options]="options" width="900px" height="600px">
-            <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/person-solid-red.svg' : 'assets/icons/person-outline.svg' }}"></map-marker>
+            <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title"
+            icon="{{ i == indexSelected ? 'assets/icons/person-solid-red.svg' : 'assets/icons/person-outline.svg' }}"></map-marker>
         </google-map>
     </div>
-</div>
+</div> -->
 
-<div class="search-container" *ngIf="piscicultores.length < 1">
-    <div class="search-container__box">
-        <img class="search-container__image" src="assets/images/searching.svg">
-        <h3>No se han encontrado resultados</h3>
-        <p>No encontramos granjas en este municipio </p>
-    </div>
-</div>
+<div class="container-map-car">
+  <div class="row-map-cart">
+    <div *ngIf="piscicultores.length >= 1">
+
+          <div class="blog-card"
+                  *ngFor="let piscicultor of piscicultores; let i =index"
+                  (mouseover)="onMouseCard(piscicultor,i)"
+                  (mouseout)="eliminInfoWindow()">
+           <div class="meta">
+              <div class="photo">
+                <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}"
+                  routerLink="/piscicultores/municipio/detalle">
+              </div>
+              <div class="details">
+                  <div class="container_card_nombre_asociacion">
+                    <img class="card__icon" src="assets/icons/asociacion_white_24dp.svg">
+                    <span class="card_nombre_asociacion">{{piscicultor.nombre_asociacion? piscicultor.nombre_asociacion : 'No existen
+                      asociaciones'}}</span>
+                  </div>
+                <div class="details-area-nombre-granja">
+                  <div><img src="../../../../assets/icons/set_meal_white_24dp.svg"></div>
+                  <div >informacion adicinal</div>
+                </div>
+                <div class="dimensionmasmenos1200">
+                  <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
+                  <div> dirrecion adicional <span ><a
+                        style="text-decoration: dashed underline var(--azul1) 2px;">(Ver en el mapa)</a> </span>
+                  </div>
+                </div>
+                <div class="dimensionmas1200">
+                  <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
+                  <div >dirrecion2 adicional</div>
+                </div>
+              </div>
+            </div>
+            <div class="description">
+              <div class="description_nombre">
+                <h1 >{{piscicultor.nombre | titlecase | shorter:20 }}</h1>
+              </div>
+              <p > </p>
+              <div class="description_container_card">
+                <div class="container_card_nombre_asociacion">
+                  <img class="card__icon" src="assets/icons/phone_msg_black_24dp.svg">
+                  <span class="card__phone">{{piscicultor.celular? piscicultor.celular : 'Contacto sin definir'}}</span>
+                </div>
+                <div class="container_card__email">
+                  <img class="card__icon" src="assets/icons/contact_mail_black_24dp.svg">
+                  <span class="card__email">{{piscicultor.email}}</span>
+                </div>
+                <div class="container_card__description1">
+                  <img class="card__icon" src="assets/icons/travel_explore_black_24dp.svg">
+                  <span class="card__description2">{{piscicultor.municipio}}-{{piscicultor.departamento}}</span>
+                </div>
+                <div class="container_card__description2">
+                  <img class="card__icon" src="assets/icons/person_pin_circle_black_24dp.svg">
+                  <span *ngIf="piscicultor.direccion" class="card__description1">{{piscicultor.direccion ? 'Dir.' : ''}} {{piscicultor.direccion | shorter:10}}</span>
+                  <span *ngIf="!piscicultor.direccion" class="card__description1">Dirección indefinida</span>
+                </div>
+              </div>
+              <div class="card__description-container_footer">
+                <p class="read-more" ><a>Ver detalles</a></p>
+              </div>
+            </div>
+          </div>
+
+      </div>
+  </div>
+  <div class="mYstiledivmap">
+      <div class="sticky-top">
+        <div class="mapgoogle" *ngIf="piscicultores.length > 0 && (apiLoaded | async)">
+          <google-map height="650px" width="785px" [options]="options">
+            <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i"
+              [position]="markerInfo.markerPosition" [options]="markerOptions"
+              icon="{{ i == indexSelected ? 'assets/icons/person_pin_circle_blue_24dp.svg' : 'assets/icons/person_pin_circle_red_24dp.svg' }}"
+              (mapMouseover)="openInfoWindow(marker,i)"
+              (mapMouseout)="eliminInfoWindow()">
+            </map-marker>
+            <map-info-window [position]="markerPosition">
+              <div class="myestilo-map-info-window">
+                <div class="details">
+                  <div class="detais-name-piscicultor">
+                    <img class="card__icon_info_windows" src="../../../../assets/icons/person_black.svg">
+                    <span>{{selectedPiscicultor.nombre | titlecase }}</span>
+                  </div>
+                  <div class="container_card__description2">
+                    <img class="card__icon_info_windows" src="assets/icons/person_pin_circle_black_24dp.svg">
+                    <span *ngIf="!selectedPiscicultor.dirrecion">Dirección indefinida</span>
+                    <span *ngIf="selectedPiscicultor.dirrecion"> {{selectedPiscicultor.dirrecion}}</span>
+                  </div>
+                </div>
+              </div>
+            </map-info-window>
+          </google-map>
+          <!-- <div  class="container-loader" *ngIf="!apiLoaded">
+                  <div class="loader-icon">
+                  </div>
+                </div> -->
+        </div>
+      </div>
+  </div>
+  </div>
 <!-- <app-footer></app-footer>
- --><app-floating-btn-auto-up></app-floating-btn-auto-up>
+ --><!-- <app-floating-btn-auto-up></app-floating-btn-auto-up> -->
