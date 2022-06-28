@@ -1,33 +1,32 @@
 import { Component, OnInit ,  ElementRef,
   ViewChild, } from '@angular/core';
 import { FormControl, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
-import { DomSanitizer} from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map,finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MapGeocoder } from '@angular/google-maps';
 import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { vertices } from '../../../global/constants';
-import { NegociosService } from 'src/app/services/negocios.service';
+import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
+
 const _ = require('lodash');
 
 @Component({
-  selector: 'app-mis-negocios',
-  templateUrl: './mis-negocios.component.html',
-  styleUrls: ['./mis-negocios.component.scss']
+  selector: 'app-mis-asociaciones',
+  templateUrl: './mis-asociaciones.component.html',
+  styleUrls: ['./mis-asociaciones.component.scss']
 })
-export class MisNegociosComponent implements OnInit {
+export class MisAsociacionesComponent implements OnInit {
   @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
   @ViewChild('map') map: any;
   @ViewChild('fileInput') inputFileDialog!: ElementRef;
-  negocios: Array<any> = [];
+  asociaciones: Array<any> = [];
   showNotFound: boolean = false;
   indicenegocio!: number;
   guarlatlog: boolean = false;
@@ -42,15 +41,17 @@ export class MisNegociosComponent implements OnInit {
   tempMunicId:number = -1;
   firstTimeOpenModal = true;
   form: FormGroup = new FormGroup({
-    nombre_negocio: new FormControl(''),
+    nit: new FormControl('',[Validators.required]),
     direccion: new FormControl('', [Validators.required]),
+    nombre: new FormControl('', [Validators.required]),
+    legalconstituida: new FormControl('', [Validators.required]),
     informacion_adicional_direccion:new FormControl('',),
-    latitud: new FormControl(0),
-    longitud: new FormControl(0),
-    descripcion_negocio: new FormControl(''),
+    fecha_renovacion_camarac: new FormControl('',[Validators.required]),
     id_departamento: new FormControl(70, [Validators.required]),
     id_municipio: new FormControl('', [Validators.required]),
-    corregimiento_vereda: new FormControl('')
+    corregimiento_vereda: new FormControl(''),
+    foto_camarac: new FormControl('',[Validators.required]),
+    id_tipo_asociacion_fk:new FormControl('',[Validators.required])
   });
   file: any = null;
   productImagePath: string = '';
@@ -88,12 +89,13 @@ export class MisNegociosComponent implements OnInit {
   indexSelectedToDel: Array<number> = [];
   showNotFoundPhotos: boolean = false;
   timeLapsed1: number = 0;
+  tiposAsociaciones: Array<any> = [];
+  error:string = '';
 
   constructor(
-    private negociosService: NegociosService,
+    private asociacionesService: AsociacionesService,
     private modalService: NgbModal,
     private storage: FirebaseStorageService,
-    private sanitizer: DomSanitizer,
     private places: PlacesService,
     private appModalService: AppModalService,
     httpClient: HttpClient,
@@ -115,10 +117,10 @@ export class MisNegociosComponent implements OnInit {
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
-    this.negociosService.getNegociosByUserId(payload.sub).subscribe(
+    this.asociacionesService.getAsociacionesUsuario(this.authUserId).subscribe(
       (respose) => {
-        this.negocios = respose.data;
-        if (this.negocios.length < 1) {
+        this.asociaciones = respose.data;
+        if (this.asociaciones.length < 1) {
           this.showNotFound = true;
         }
       },
@@ -128,16 +130,22 @@ export class MisNegociosComponent implements OnInit {
     );
 
     this.loadDptos();
+    this.loadAsociaciones();
   }
 
   initForm() {
-    this.idmunicipioselec();
-    this.direccion?.setValue('');
-    this.latitud?.setValue(0);
-    this.longitud?.setValue(0);
-    this.descripcion?.setValue('');
+    this.nombre?.setValue('');
+    this.idTipoAsoc?.setValue(null);
+    this.isLegalConstituida?.setValue(null);
+    this.nit?.setValue('');
     this.idDpto?.setValue(70);
     this.idMunic?.setValue(null);
+    this.corregVereda?.setValue('');
+    this.direccion?.setValue('');
+    this.infoAdicionalDir?.setValue('');
+    this.fechRenvCamc?.setValue('');
+    this.fotoCamc?.setValue('');
+    this.error = '';
   }
 
   idmunicipioselec() {
@@ -150,21 +158,26 @@ export class MisNegociosComponent implements OnInit {
     }
   }
 
-  openModal(content: any, action: string, negocio?: any) {
+  openModal(content: any, action: string, asociacion?: any) {
     this.modalMode = action;
     this.form.reset();
+    console.log(asociacion)
     this.initForm();
-    this.idDpto?.setValue(70);
     if (action == 'update') {
-      this.nombreNegocio?.setValue(negocio.nombre_negocio);
-      this.direccion?.setValue(negocio.direccion);
-      this.infoAdicionalDir?.setValue(negocio.informacion_adicional_direccion);
-      this.latitud?.setValue(negocio.latitud);
-      this.longitud?.setValue(negocio.longitud);
-      this.descripcion?.setValue(negocio.descripcion_negocio);
-      this.idDpto?.setValue(negocio.id_departamento);
-      this.idMunic?.setValue(negocio.id_municipio);
-      this.itemUpdateIndex = this.negocios.findIndex((element)=>element.id_negocio == negocio.id_negocio);
+      this.idDpto?.setValue(asociacion.id_departamento);
+      this.idMunic?.setValue(asociacion.id_municipio);
+      this.nit?.setValue(asociacion.nit);
+      this.direccion?.setValue(asociacion.direccion);
+      this.infoAdicionalDir?.setValue(asociacion.informacion_adicional_direccion);
+      this.nombre?.setValue(asociacion.nombre);
+      this.isLegalConstituida?.setValue(asociacion.legalconstituida);
+      this.fechRenvCamc?.setValue(asociacion.fecha_renovacion_camarac);
+      this.fotoCamc?.setValue(asociacion.foto_camarac);
+      this.idTipoAsoc?.setValue(asociacion.id_tipo_asociacion_fk);
+      this.corregVereda?.setValue(asociacion.corregimiento_vereda);
+      this.direccion?.setValue(asociacion.direccion);
+      this.infoAdicionalDir?.setValue(asociacion.informacion_adicional_direccion);
+      this.itemUpdateIndex = this.asociaciones.findIndex((element)=>element.id_negocio == asociacion.id_negocio);
       this.tempDir = this.direccion?.value;
       this.tempMunicId = this.idMunic?.value;
     }
@@ -174,7 +187,7 @@ export class MisNegociosComponent implements OnInit {
         console.log('se cerro modal ', result);
         this.firstTimeOpenModal = true;
       })
-      .catch((err) => {
+      .catch((err) => {89
         this.file = null;
         this.productImagePath = '';
         console.log(err);
@@ -183,8 +196,8 @@ export class MisNegociosComponent implements OnInit {
       this.firstTimeOpenModal = false;
   }
 
-  addNegocio() {
-    console.log('addNegocio');
+  addAsociaciones() {
+    console.log('addAsociaciones');
     console.log(this.form.getRawValue());
     console.log(this.form.controls);
     this.loading1 = true;
@@ -195,54 +208,74 @@ export class MisNegociosComponent implements OnInit {
       return;
     }
 
-    this.negociosService.addNegocio(this.form.getRawValue()).subscribe(
-      (response) => {
-        let nuevoNegocio = _.clone(this.form.getRawValue());
-        nuevoNegocio.id_negocio = response.body.insertId;
-        let indexMunc = this.municipios.findIndex((municipio)=>{
-          return municipio.id_municipio == nuevoNegocio.id_municipio;
-        })
-        nuevoNegocio.nombre_municipio = this.municipios[indexMunc].nombre;
-        let indexDepto = this.departamentos.findIndex((dpto)=>{
-          return dpto.id_departamento == nuevoNegocio.id_departamento;
-        })
-        nuevoNegocio.nombre_departamento = this.departamentos[indexDepto].nombre_departamento;
-        this.loading1 = false;
-        console.log(nuevoNegocio)
-        this.negocios.push(nuevoNegocio);
-        this.modalService.dismissAll();
-        //this.verMap(this.negocios.length - 1);
-      },
-      (err) => {
-        this.loading1 = false;
-        console.log(err);
+    let token = localStorage.getItem('token');
+    let payload = Utilities.parseJwt(token!);
+    let basePath = '/asociaciones/camaracomecio/todas/';
+    let fileName = 'asociacion-'+payload.sub+'-'+new Date().getTime()+'.pdf';
+    let filePath = basePath + fileName;
+    console.log("file ",this.file)
+    this.storage.cloudStorageTask(filePath,this.file).percentageChanges().subscribe(
+      (response)=>{
+        console.log(response)
+        if(response == 100){
+          this.storage.cloudStorageRef(filePath).getDownloadURL().subscribe(
+            (downloadUrl)=>{
+              console.log("download url ",downloadUrl)
+              let asociacion = { ...this.form.getRawValue() }
+              asociacion.foto_camarac = downloadUrl;
+              this.asociacionesService.add(asociacion).subscribe(
+                (response) => {
+                  console.log(response)
+                  //window.location.reload();
+                  this.ngOnInit()
+                  this.modalService.dismissAll();
+                  this.loading1 = false;
+                },
+                (err) => {
+                  this.loading1 = false;
+                  console.log(err);
+                  if(err.status == 400){
+                    this.error = 'Ya existe una asociación con el Nit '+ asociacion.nit
+                  }else{
+                    this.error = 'A ocurrido un error'
+                  }
+                }
+              );
+            },err=>{
+              this.loading1 = false;
+              console.log(err);
+            }
+          )
+        }
       }
     );
+  /*   this.pushFileToStorage(basePath,fileName,this.file).subscribe(
+      (response)=>{
+        console.log('upload ',response)
+      }
+    ) */
   }
 
   fileChange(event: any) {
     console.log('change', event);
     this.file = event.target.files[0];
-    /* let productImagePath:any = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(event.target.files[0]))
-    console.log(productImagePath.changingThisBreaksApplicationSecurity) */
-    //this.productImagePath = productImagePath.changingThisBreaksApplicationSecurity;
   }
 
-  deleteNegocio(negocio:any) {
+  delete(asociacion:any) {
     this.appModalService
       .confirm(
-        'Eliminar granja',
-        'Esta seguro que desea eliminar este negocio',
+        'Eliminar asociación',
+        'Esta seguro que desea eliminar esta asociación',
         'Eliminar',
         'No estoy seguro',
-        negocio.nombre
+        asociacion.nombre
       )
       .then((result) => {
         if (result == true) {
-          this.negociosService.deleteNegocio(negocio.id_negocio).subscribe(
+          this.asociacionesService.delete(asociacion.nit).subscribe(
             (response: any) => {
-              let index = this.negocios.findIndex((element)=> element.id_negocio == negocio.id_negocio)
-              this.negocios.splice(index, 1);
+              let index = this.asociaciones.findIndex((element)=> element.nit == asociacion.nit)
+              this.asociaciones.splice(index, 1);
             },
             (err) => {
               console.log(err);
@@ -253,7 +286,7 @@ export class MisNegociosComponent implements OnInit {
       .catch((result) => {});
   }
 
-  updateNegocio() {
+  updateAsociacion() {
     this.loading1 = true;
     if (!this.form.valid) {
       console.log('Not valid!');
@@ -262,17 +295,16 @@ export class MisNegociosComponent implements OnInit {
       return;
     }
 
-    this.negociosService
-      .updateNegocio(
-        this.negocios[this.itemUpdateIndex].id_negocio,
+    this.asociacionesService
+      .update(
+        this.asociaciones[this.itemUpdateIndex].nit,
         this.form.getRawValue()
       )
       .subscribe(
         (response) => {
           console.log(response);
           this.loading1 = false;
-
-          window.location.reload();
+          //window.location.reload();
           this.modalService.dismissAll();
         },
         (err) => {
@@ -280,6 +312,16 @@ export class MisNegociosComponent implements OnInit {
           this.loading1 = false;
         }
       );
+  }
+
+  loadAsociaciones(){
+    this.asociacionesService.tiposAsociacion().subscribe(
+      (response)=>{
+        this.tiposAsociaciones = response.data;
+      },err=>{
+        console.log(err)
+      }
+    )
   }
 
   loadDptos() {
@@ -370,12 +412,8 @@ export class MisNegociosComponent implements OnInit {
     return this.form.get('id_municipio');
   }
 
-  get nombreNegocio() {
-    return this.form.get('nombre_negocio');
-  }
-
-  get descripcion() {
-    return this.form.get('descripcion_negocio');
+  get nit() {
+    return this.form.get('nit');
   }
 
   get direccion() {
@@ -385,18 +423,34 @@ export class MisNegociosComponent implements OnInit {
   get infoAdicionalDir(){
     return this.form.get('informacion_adicional_direccion');
   }
-  get latitud() {
-    return this.form.get('latitud');
+
+  get nombre(){
+    return this.form.get('nombre');
   }
 
-  get longitud() {
-    return this.form.get('longitud');
+  get isLegalConstituida(){
+    return this.form.get('legalconstituida');
   }
 
+  get fechRenvCamc(){
+    return this.form.get('fecha_renovacion_camarac');
+  }
+
+  get fotoCamc(){
+    return this.form.get('foto_camarac');
+  }
+
+  get idTipoAsoc(){
+    return this.form.get('id_tipo_asociacion_fk');
+  }
+
+  get corregVereda(){
+    return this.form.get('corregimiento_vereda');
+  }
 
   verMap(negocio?: any) {
     if(negocio){
-      let index = this.negocios.findIndex((element)=>element.id_negocio == negocio.id_negocio)
+      let index = this.asociaciones.findIndex((element)=>element.id_negocio == negocio.id_negocio)
       this.indicenegocio = index!;
     }
     
@@ -578,7 +632,7 @@ export class MisNegociosComponent implements OnInit {
             lat: event.latLng!.toJSON().lat,
             lng: event.latLng!.toJSON().lng,
           };
-          this.negocios[this.indicenegocio!];
+          this.asociaciones[this.indicenegocio!];
           this.fueraDirecion = false;
 
           this.confirmModalMapService
@@ -597,8 +651,8 @@ export class MisNegociosComponent implements OnInit {
                   this.direccion?.setValue(response.results[0].formatted_address);
                   this.idMunic?.setValue(idMunipio)
                 }else{
-                  this.negociosService
-                  .updateParcialNegocio(this.negocios[this.indicenegocio!].id_negocio, {
+                  /*this.asociacionesService
+                  .updateParcialNegocio(this.asociaciones[this.indicenegocio!].id_negocio, {
                     latitud: event.latLng!.toJSON().lat,
                     longitud: event.latLng!.toJSON().lng,
                     id_municipio:idMunipio,
@@ -618,12 +672,12 @@ export class MisNegociosComponent implements OnInit {
                       }, 5000);
                       console.log(err);
                     }
-                  );
+                  );*/
                 }
               } else {
                 this.markerPosition = {
-                  lat: parseFloat(this.negocios[this.indicenegocio!].latitud),
-                  lng: parseFloat(this.negocios[this.indicenegocio!].longitud),
+                  lat: parseFloat(this.asociaciones[this.indicenegocio!].latitud),
+                  lng: parseFloat(this.asociaciones[this.indicenegocio!].longitud),
                 };
               }
             })
@@ -646,7 +700,7 @@ export class MisNegociosComponent implements OnInit {
         '/negocios/User' +
         this.authUserId +
         '/negocio' +
-        this.negocios[this.itemUpdateIndex].id_negocio +
+        this.asociaciones[this.itemUpdateIndex].id_negocio +
         '/foto';
       let files: Array<any> = event.target.files;
       let arrayFotos: Array<any> = [];
@@ -683,7 +737,7 @@ export class MisNegociosComponent implements OnInit {
   }
 
   openPhotosModal(content: any, negocio:any) {
-    let index = this.negocios.findIndex((element)=>element.id_negocio == negocio.id_negocio);
+    let index = this.asociaciones.findIndex((element)=>element.id_negocio == negocio.id_negocio);
     this.itemUpdateIndex = index;
     this.modalService
       .open(content, {
@@ -701,7 +755,7 @@ export class MisNegociosComponent implements OnInit {
     this.photosNegocioArray = [];
     this.loading1 = true;
 
-    this.photosNegocioArray = this.negocios[index].fotos;
+    this.photosNegocioArray = this.asociaciones[index].fotos;
     console.log("arrayFotosNegocio ",this.photosNegocioArray)
     if(this.photosNegocioArray.length == 0){
       this.showNotFoundPhotos = true;
@@ -710,7 +764,7 @@ export class MisNegociosComponent implements OnInit {
     }
 
     this.loading1 = false;
-    this.negociosService.detail(this.negocios[index].id_negocio)
+    this.asociacionesService.detail(this.asociaciones[index].id_negocio)
       .subscribe(
         (response) => {
           this.photosNegocioArray = response.data[0].fotos_negocio;
@@ -729,8 +783,8 @@ export class MisNegociosComponent implements OnInit {
 
   photosUpdate() {
     this.loading2 = true;
-    this.negociosService
-      .updatePhotos(this.negocios[this.itemUpdateIndex].id_negocio, this.photosNegocioArray)
+    /*this.asociacionesService
+      .updatePhotos(this.asociaciones[this.itemUpdateIndex].id_negocio, this.photosNegocioArray)
       .subscribe(
         (response) => {
           this.loading2 = false;
@@ -740,7 +794,7 @@ export class MisNegociosComponent implements OnInit {
           this.loading2 = false;
           console.log(err);
         }
-      );
+      );*/
   }
 
   onLongPressing(event: number) {
@@ -785,8 +839,8 @@ export class MisNegociosComponent implements OnInit {
       }
     });
     console.log(this.photosNegocioArrayCopy);
-    this.negociosService
-      .updatePhotos(this.negocios[this.itemUpdateIndex].id_negocio,this.photosNegocioArrayCopy)
+    /*this.asociacionesService
+      .updatePhotos(this.asociaciones[this.itemUpdateIndex].id_negocio,this.photosNegocioArrayCopy)
       .subscribe(
         (response) => {
           this.photosNegocioArray = this.photosNegocioArrayCopy;
@@ -801,6 +855,6 @@ export class MisNegociosComponent implements OnInit {
           console.log(err);
           this.loading3 = false;
         }
-      );
+      );*/
   }
 }

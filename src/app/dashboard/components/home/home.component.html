@@ -46,11 +46,17 @@
                 Mis negocios
               </a>
             </li>
+            <li class="nav-item" *ngIf="tipoUsuario == 'Piscicultor' || tipoUsuario == 'Pescador'">
+              <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-asociaciones']" routerLinkActive="active">
+                <span data-feather="home"></span>
+                Mis asociaciones
+              </a>
+            </li>
           </ul>
         </div>
       </nav>
 
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-x">
         <router-outlet></router-outlet>
       </main>
     </div>

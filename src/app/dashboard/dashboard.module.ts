@@ -17,6 +17,7 @@ import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MiConsumoComponent } from './components/mi-consumo/mi-consumo.component';
 import { MisNegociosComponent } from './components/mis-negocios/mis-negocios.component';
+import { MisAsociacionesComponent } from './components/mis-asociaciones/mis-asociaciones.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MisNegociosComponent } from './components/mis-negocios/mis-negocios.com
     MisFavoritosComponent,
     MiConsumoComponent,
     MisNegociosComponent,
+    MisAsociacionesComponent,
   ],
   imports: [
     CommonModule,

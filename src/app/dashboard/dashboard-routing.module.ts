@@ -8,6 +8,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.component';
 import { MiConsumoComponent } from './components/mi-consumo/mi-consumo.component';
 import { MisNegociosComponent } from './components/mis-negocios/mis-negocios.component';
+import { MisAsociacionesComponent } from './components/mis-asociaciones/mis-asociaciones.component';
 
 
 const routes: Routes = [
@@ -21,7 +22,8 @@ const routes: Routes = [
       { path:'mis-vehiculos', component:MisVehiculosComponent},
       {path:'mis-favoritos',component:MisFavoritosComponent},
       {path:'mi-consumo',component:MiConsumoComponent},
-      {path:'mis-negocios',component:MisNegociosComponent}
+      {path:'mis-negocios',component:MisNegociosComponent},
+      {path:'mis-asociaciones',component:MisAsociacionesComponent}
     ]
   }
 ];

@@ -497,7 +497,6 @@ if (this.form.getRawValue().direccion !== '') {
     );
     return checked;
   }
-  /* andres mi codigo */
 
   verMap(idGranja?: number) {
      this.faltadireccion = false;
