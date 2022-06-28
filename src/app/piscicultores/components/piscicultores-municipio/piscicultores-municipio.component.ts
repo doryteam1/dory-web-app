@@ -3,7 +3,7 @@ import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PiscicultoresService } from '../../services/piscicultores.service';
 import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
@@ -25,12 +25,6 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     center: { lat: 9.214145, lng: -75.188469 },
     zoom: 11.5,
   };
-
-  /*options: google.maps.MapOptions = {
-    center: { lat:9.31878300, lng:-75.29471300 },
-    zoom:14
-  }*/
-
   markerPosition: google.maps.LatLngLiteral = {
     lat: 9.214145,
     lng: -75.188469,
@@ -45,14 +39,16 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   municipio: string = '';
   selectedPiscicultor = {
     nombre: '',
-    dirrecion:''
+    dirrecion: '',
   };
+  mapaOn: boolean=false;
 
   constructor(
     httpClient: HttpClient,
     private activatedRoute: ActivatedRoute,
     private piscicultoresService: PiscicultoresService,
-    private placesService: PlacesService
+    private placesService: PlacesService,
+    private router: Router
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -116,7 +112,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
       this.markersInfo.push({ markerPosition: markerPosition });
     });
 
-    console.log(JSON.stringify(this.markersInfo));
+    /* console.log(JSON.stringify(this.markersInfo)); */
   }
   onMouseCard(piscicultor: any, indexSelected: number) {
     this.indexSelected = indexSelected;
@@ -127,17 +123,23 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     this.openInfoWindow(this.marker, indexSelected);
   }
   eliminInfoWindow() {
-    if (this.piscicultores.length > 0) {
+    if (this.piscicultores.length > 0 && this.mapaOn) {
       this.infoWindow.close();
       this.indexSelected = -1;
     }
   }
   openInfoWindow(marker: MapMarker, index: number) {
-    if (this.piscicultores.length > 0) {
+    if (this.piscicultores.length > 0 && this.mapaOn) {
       this.indexSelected = index;
       this.infoWindow.open(marker);
       this.selectedPiscicultor.nombre = this.piscicultores[index].nombre;
       this.selectedPiscicultor.dirrecion = this.piscicultores[index].direccion;
     }
+  }
+  navigate(id: number) {
+    this.router.navigateByUrl('/piscicultores/municipio/detalle/' + id);
+  }
+  mapainiciado() {
+      this.mapaOn = true;
   }
 }

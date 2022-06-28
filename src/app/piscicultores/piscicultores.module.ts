@@ -10,12 +10,16 @@ import { PiscicultoresService } from './services/piscicultores.service';
 import { HttpsService } from '../services/https.service';
 import { SharedModule } from '../shared/shared.module';
 import { PiscicultorDetalleComponent } from './components/piscicultor-detalle/piscicultor-detalle.component';
+import { PiscicultorCardGranjasComponent } from './components/piscicultor-card-granjas/piscicultor-card-granjas.component';
+import { PiscicultorCardAsociacionesComponent } from './components/piscicultor-card-asociaciones/piscicultor-card-asociaciones.component';
 
 @NgModule({
   declarations: [
     PiscicultoresComponent,
     PiscicultoresMunicipioComponent,
-    PiscicultorDetalleComponent
+    PiscicultorDetalleComponent,
+    PiscicultorCardGranjasComponent,
+    PiscicultorCardAsociacionesComponent
   ],
   imports: [
     CommonModule,

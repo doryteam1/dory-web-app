@@ -97,6 +97,7 @@ export class MisGranjasComponent implements OnInit {
   indexSelectedToDel: Array<number> = [];
   showNotFoundPhotos: boolean = false;
   timeLapsed1: number = 0;
+  escogerdireccion: boolean=false;
 
   constructor(
     private granjaService: GranjasService,
@@ -262,6 +263,11 @@ export class MisGranjasComponent implements OnInit {
                 this.latitud?.setValue(response.data[0].latitud);
                 this.longitud?.setValue(response.data[0].longitud);
                 this.direccion?.setValue('');
+                this.verMapaDireccion()
+                this.escogerdireccion = true;
+                setTimeout(() => {
+                  this.escogerdireccion = false;
+                }, 30000);
                 this.faltadireccion = true;
               } else {
                 this.latitud?.setValue(
@@ -292,7 +298,12 @@ export class MisGranjasComponent implements OnInit {
               this.latitud?.setValue(response.data[0].latitud);
               this.longitud?.setValue(response.data[0].longitud);
               this.direccion?.setValue('');
+              this.verMapaDireccion();
               this.faltadireccion = true;
+              this.escogerdireccion=true
+              setTimeout(() => {
+                this.escogerdireccion = false;
+              }, 30000);
               this.mylatitudidmunicipio = response.data[0].latitud;
               this.mylongitudidmunicipio = response.data[0].longitud;
             }
@@ -738,6 +749,7 @@ if (this.form.getRawValue().direccion !== '') {
   }
   // Metodo para adicionar una marca en el mapa
   addMarker(event: google.maps.MapMouseEvent) {
+     this.escogerdireccion = false;
     this.guarlatlog = false;
     const point: google.maps.LatLngLiteral = {
       lat: event.latLng?.toJSON().lat!,

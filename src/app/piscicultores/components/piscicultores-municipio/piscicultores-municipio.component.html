@@ -9,7 +9,6 @@
             <span class="container__description">{{municipio}}</span>
         </div>
     </div>
-
     <div class="container">
         <img class="container__icon" src="assets/icons/group-circle-solid.svg">
         <div class="container__info">
@@ -17,8 +16,6 @@
             <span class="container__description">{{poblacion | number:'':'es'}}</span>
         </div>
     </div>
-
-
     <div class="container">
         <img class="container__icon" src="assets/icons/fish.svg">
         <div class="container__info">
@@ -27,7 +24,6 @@
         </div>
     </div>
 </div>
-
 <div class="search-container" *ngIf="piscicultores.length < 1">
   <div class="search-container__box">
     <img class="search-container__image" src="assets/images/searching.svg">
@@ -35,42 +31,14 @@
     <p>No encontramos granjas en este municipio </p>
   </div>
 </div>
-<!-- <div class="piscicultores-container">
-    <div class="cards-container overflow-auto" *ngIf="piscicultores.length >= 1">
-        <div class="card" *ngFor="let piscicultor of piscicultores; index as i" (mouseover)="onMouseCard(piscicultor, i)">
-            <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}" routerLink="/piscicultores/municipio/detalle">
-
-            <div class="card-box">
-                <h3 class="card__title">{{piscicultor.nombre}}</h3>
-                <span class="card__title2">{{piscicultor.nombre_asociacion}}</span>
-              <div>
-                    <img class="card__icon" src="assets/icons/whatsapp.svg" *ngIf="piscicultor.celular">
-                    <span class="card__phone">{{piscicultor.celular}}</span>
-                    <span class="card__email">{{piscicultor.email}}</span>
-                </div>
-                <span class="card__description1">{{piscicultor.direccion ? 'Dir.' : ''}} {{piscicultor.direccion}}</span>
-                <span class="card__description2">{{piscicultor.municipio}}-{{piscicultor.departamento}}</span>
-            </div>
-
-        </div>
-    </div>
-
-    <div *ngIf="piscicultores.length > 0 && (apiLoaded | async)">
-        <google-map [options]="options" width="900px" height="600px">
-            <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title"
-            icon="{{ i == indexSelected ? 'assets/icons/person-solid-red.svg' : 'assets/icons/person-outline.svg' }}"></map-marker>
-        </google-map>
-    </div>
-</div> -->
-
 <div class="container-map-car">
   <div class="row-map-cart">
     <div *ngIf="piscicultores.length >= 1">
-
           <div class="blog-card"
                   *ngFor="let piscicultor of piscicultores; let i =index"
                   (mouseover)="onMouseCard(piscicultor,i)"
-                  (mouseout)="eliminInfoWindow()">
+                  (mouseout)="eliminInfoWindow()"
+                  (click)="navigate(piscicultor.id)">
            <div class="meta">
               <div class="photo">
                 <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}"
@@ -127,20 +95,23 @@
               </div>
             </div>
           </div>
-
       </div>
   </div>
   <div class="mYstiledivmap">
       <div class="sticky-top">
         <div class="mapgoogle" *ngIf="piscicultores.length > 0 && (apiLoaded | async)">
-          <google-map height="650px" width="785px" [options]="options">
+          <google-map
+          height="650px"
+           width="785px"
+           [options]="options"
+           (tilesloaded)="mapainiciado()">
             <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i"
               [position]="markerInfo.markerPosition" [options]="markerOptions"
               icon="{{ i == indexSelected ? 'assets/icons/person_pin_circle_blue_24dp.svg' : 'assets/icons/person_pin_circle_red_24dp.svg' }}"
               (mapMouseover)="openInfoWindow(marker,i)"
               (mapMouseout)="eliminInfoWindow()">
             </map-marker>
-            <map-info-window [position]="markerPosition">
+            <map-info-window [position]="markerPosition" *ngIf="mapaOn">
               <div class="myestilo-map-info-window">
                 <div class="details">
                   <div class="detais-name-piscicultor">

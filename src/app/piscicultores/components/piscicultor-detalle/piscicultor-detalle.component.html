@@ -1,1 +1,89 @@
-<p>piscicultor-detalle works!</p>
+<app-notification-bar></app-notification-bar>
+<app-search-bar></app-search-bar>
+<app-navbar></app-navbar>
+<div class="container mycontainer">
+  <div class="mycontainer_info">
+    <div class="piscicultor-container">
+      <div class="piscicultor-container__info">
+        <div class="piscicultor-container__detalle">
+          <img class="detail-container__image" src="assets/icons/person_black.svg">
+          <h3 class="piscicultor-container__title">Piscicultor - {{piscicultor?.nombre_completo}} </h3>
+        </div>
+        <div class="piscicultor-container__detalle">
+          <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
+          <span class="piscicultor-container__description1"> {{piscicultor?.municipio}}-{{piscicultor?.departamento}}</span>
+        </div>
+      </div>
+      <img class="piscicultor-container__image" src="{{piscicultor?.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}">
+    </div>
+    <div class="line"></div>
+    <div class="detail-container mt-4">
+      <img class="detail-container__image" src="assets/icons/phone_msg_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Celular</h4>
+        <span class="detail-container__value">{{piscicultor?.celular}}</span>
+      </div>
+    </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/contact_mail_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Correo electronico</h4>
+        <span class="detail-container__value">{{piscicultor?.email}}</span>
+      </div>
+    </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Dirección</h4>
+        <span class="detail-container__value">{{piscicultor?.direccion}} </span>
+      </div>
+    </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Número de asociaciones a las que pertenece </h4>
+        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}} asociaciones en
+          total</span>
+        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length==1">{{piscicultorasociaciones?.length}} asociación en
+          total</span>
+        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con asociaciones</span>
+      </div>
+    </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="../../../../assets/icons/set_meal_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Número de granjas</h4>
+        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length>1">{{piscicultorgranjas?.length}} granjas en total</span>
+        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length==1">{{piscicultorgranjas?.length}} granja en total</span>
+        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length<=0">No cuenta con granjas registradas</span>
+    </div>
+  </div>
+  </div>
+  <!-- granjas y asociaciones -->
+  <div class="mynavtabs">
+    <ul class="nav nav-tabs">
+      <li class="nav-item" (click)="mygranjaAndAsociacionActive(1)">
+        <a class="nav-link" [ngClass]="{'active mynav-link': activatelistgranja}" aria-current="page">
+          <span>
+            <img class="detail-container__image" src="../../../../assets/icons/set_meal_black_24dp.svg">
+          </span> Granjas- {{piscicultor?.nombre_completo}}
+        </a>
+      </li>
+      <li class="nav-item" (click)="mygranjaAndAsociacionActive(2)">
+        <a class="nav-link" [ngClass]="{'active mynav-link': activatelistasociacion}">
+          <span>
+            <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
+          </span> Asociaciones</a>
+      </li>
+    </ul>
+  </div>
+  <div class="container_mytarget">
+    <div class="mytarget" *ngIf="activatelistgranja">
+      <app-piscicultor-card-granjas [selectedPiscicultorId]="selectedPiscicultorId" *ngIf="ngOnlnitPiscicultorDetalle">
+      </app-piscicultor-card-granjas>
+    </div>
+    <div class="mytarget" *ngIf="activatelistasociacion">
+      <app-piscicultor-card-asociaciones *ngIf="ngOnlnitPiscicultorDetalle"></app-piscicultor-card-asociaciones>
+    </div>
+  </div>
+</div>

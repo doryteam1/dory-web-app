@@ -24,7 +24,6 @@ export class GranjaDetalleComponent implements OnInit {
   showGallery: boolean = false;
   imgsele: boolean = false;
   indice!: number;
-  tiempo: any;
   imgmauseover: boolean = false;
   showconte: boolean = false;
   imgselecmodal!: number;
@@ -121,7 +120,6 @@ export class GranjaDetalleComponent implements OnInit {
   }
   imgSelecionadaModal(i: number) {
     this.imgselecmodal = i;
-    clearInterval(this.tiempo);
     this.indice = -1;
     this.showconte = true;
   }
