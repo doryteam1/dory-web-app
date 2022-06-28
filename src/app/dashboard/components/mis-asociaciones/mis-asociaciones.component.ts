@@ -226,8 +226,8 @@ export class MisAsociacionesComponent implements OnInit {
               this.asociacionesService.add(asociacion).subscribe(
                 (response) => {
                   console.log(response)
-                  //window.location.reload();
-                  this.ngOnInit()
+                  window.location.reload();
+                  //this.ngOnInit()
                   this.modalService.dismissAll();
                   this.loading1 = false;
                 },

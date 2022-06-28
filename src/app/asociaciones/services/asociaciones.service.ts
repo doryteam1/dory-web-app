@@ -16,7 +16,7 @@ export class AsociacionesService {
   }
 
   getAsociacionesMunicipio(idMunicipio:number){
-    //return this.https.get("https://dory-api-rest.herokuapp.com/api/asociaciones/municipio/"+idMunicipio);
+    return this.https.get("https://dory-api-rest.herokuapp.com/api/asociaciones/municipio/"+idMunicipio);
   }
 
   getAsociacionesDpto(dptoId:number){

@@ -15,12 +15,12 @@
             <div class="card" *ngFor="let asociacion of asociaciones; index as i" (mouseover)="onMouseCard(i)">
                 <div class="card__box">
                     <h4 class="card__title">Asociación de piscicultores</h4>
-                    <span class="card__description">Asopescadores</span>
+                    <span class="card__description">{{asociacion.nombre}}</span>
                     <h5 class="card__title2">Información basica</h5>
-                    <span class="card__description">Caimito Sincelejo Sucre</span>
-                    <span class="card__description">Cra 23A # 12 - 45</span>
-                    <span class="card__description">Constituida: SI</span>
-                    <span class="card__description">Fecha renovación: 10/12/2021</span>
+                    <span class="card__description">{{asociacion.nombre_municipio}} {{asociacion.nombre_departamento}}</span>
+                    <span class="card__description">{{asociacion.direccion}}</span>
+                    <span class="card__description">Constituida: {{asociacion.legalconstituida ? 'Si' : 'No' }}</span>
+                    <span class="card__description">Fecha renovación: {{asociacion.fecha_renovacion_camarac}}</span>
                     <h5 class="card__title2">Representante legal</h5>
                     <span class="card__description">Mauricio Tamara</span>
                     <h4 class="card__link" routerLink="/piscicultores/asociacion/{{asociacion.nit}}">Ver piscicultores</h4>
