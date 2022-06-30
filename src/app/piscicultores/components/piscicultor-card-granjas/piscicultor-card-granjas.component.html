@@ -78,45 +78,45 @@
   </div> -->
   <div class="blog-card" *ngFor="let granja of piscicultorgranjas; let i = index">
     <div class="meta">
-      <div class="photo">
+      <div class="photo" (click)="navigate(granja.id_granja)">
         <img class="card__image" src="https://admin.moodyyc.com/img/no-image.png">
        <!--  <img class="card__image"
           src="{{ granja.fotos[0] ? granja.fotos[0] : 'https://admin.moodyyc.com/img/no-image.png'}}"
           > -->
       </div>
-      <div class="details">
+      <div class="details" (click)="navigate(granja.id_granja)">
         <div class="detais-name-propietario">
           <div> <img src="../../../../assets/icons/person_white_24dp.svg"></div>
           <div>{{granja.propietario.nombres | titlecase}} {{granja.propietario.apellidos | titlecase}}</div>
         </div>
         <div class="details-area-nombre-granja">
           <div><img src="../../../../assets/icons/set_meal_white_24dp.svg"></div>
-          <div (click)="navigate(i)"> {{granja.nombre | titlecase}}</div>
+          <div (click)="navigate(granja.id_granja)"> {{granja.nombre | titlecase}}</div>
         </div>
         <div class="dimensionmas1200">
           <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
-          <div (click)="navigate(i)"> {{granja.direccion}} </div>
+          <div (click)="navigate(granja.id_granja)"> {{granja.direccion}} </div>
         </div>
         <div class="details-area-granja">
           <div><img src="../../../../assets/icons/areaterreno_white.svg"></div>
-          <div (click)="navigate(i)">{{granja.area}} m²</div>
+          <div (click)="navigate(granja.id_granja)">{{granja.area}} m²</div>
         </div>
       </div>
     </div>
     <div class="description">
       <div>
-        <h1 (click)="navigate(i)">{{granja.nombre | shorter:15}}</h1>
+        <h1 (click)="navigate(granja.id_granja)">{{granja.nombre | shorter:15}}</h1>
         <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
           (click)="changeFavorite(i)">
         <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita"
           (click)="changeFavorite(i)">
       </div>
-      <p class="estilo-p-card" (click)="navigate(i)"> {{granja.descripcion | shorter:100}}</p>
+      <p class="estilo-p-card" (click)="navigate(granja.id_granja)"> {{granja.descripcion | shorter:100}}</p>
 <!--       <div class="card__rating-container">
         <p class="read-more" (click)="navigate(i)"><a>Ver detalles</a></p>
       </div> -->
       <div class="card__description-container_footer">
-        <p class="read-more" (click)="navigate(i)"><a>Ver detalles</a></p>
+        <p class="read-more" (click)="navigate(granja.id_granja)"><a>Ver detalles</a></p>
       </div>
     </div>
   </div>

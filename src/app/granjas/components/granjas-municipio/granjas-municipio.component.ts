@@ -33,6 +33,7 @@ export class GranjasMunicipioComponent implements OnInit {
   valorcolumns: number = 21.8333333333;
   indicatorsphotos: boolean = true;
   activaapiLoader: boolean = true;
+  mapaOn: boolean = false;
   apiLoaded!: Observable<boolean>;
   granjas: any[] = [];
   valor: boolean = false;
@@ -46,7 +47,9 @@ export class GranjasMunicipioComponent implements OnInit {
     lng: -75.188469,
   };
   selectedGranja = {
-    nombre: '',
+    nombregranja: '',
+    dirreciongranja:'',
+    area:0,
     propietario: {
       nombre: '',
     },
@@ -78,6 +81,7 @@ export class GranjasMunicipioComponent implements OnInit {
       .subscribe(
         (response) => {
           this.granjas = response.data;
+          console.log(this.granjas[0])
           this.extractLatLong();
         },
         (err) => {
@@ -116,25 +120,36 @@ export class GranjasMunicipioComponent implements OnInit {
   }
 
   onMouseCard(indexSelected: number) {
+
     this.indexSelected = indexSelected;
     this.markerPosition = {
       lat: Number(this.granjas[indexSelected].latitud),
       lng: Number(this.granjas[indexSelected].longitud),
     };
+    this.options = {
+      center: {
+        lat: Number(this.granjas[indexSelected].latitud),
+        lng: Number(this.granjas[indexSelected].longitud),
+      },
+      zoom: 13,
+    };
     this.openInfoWindow(this.marker, indexSelected);
   }
 
   eliminInfoWindow() {
-    if (this.granjas.length > 0) {
+    this.indexSelected = -1;
+    if (this.granjas.length > 0 && this.mapaOn) {
       this.infoWindow.close();
-      this.indexSelected = -1;
     }
   }
 
   openInfoWindow(marker: MapMarker, index: number) {
-    if (this.granjas.length > 0) {
+    if (this.granjas.length > 0 && this.mapaOn) {
+       this.indexSelected = index;
       this.infoWindow.open(marker);
-      this.selectedGranja.nombre = this.granjas[index].nombre;
+      this.selectedGranja.nombregranja = this.granjas[index].nombre;
+      this.selectedGranja.area = this.granjas[index].area;
+      this.selectedGranja.dirreciongranja = this.granjas[index].direccion;
       this.selectedGranja.propietario.nombre = this.granjas[index].propietario;
     }
   }
@@ -164,5 +179,8 @@ export class GranjasMunicipioComponent implements OnInit {
 
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
+  }
+  mapainiciado() {
+    this.mapaOn = true;
   }
 }

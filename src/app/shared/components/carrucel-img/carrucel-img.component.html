@@ -36,8 +36,7 @@
 <!-- sin fotos indicadoras -->
 <div id="{{id}}" data-bs-ride="carousel" class="carousel"
   [ngClass]="{carouselsinfotosimg1: imagenes.length==1,carouselsinfotos:imagenes.length>1}" data-bs-interval="false"
-  #myCarousel *ngIf="indicatorsphoto" [ngStyle]="{'grid-template-rows': divrows,'grid-template-columns': divcolumns}">
-
+  #myCarousel *ngIf="indicatorsphoto">
   <div class="carousel-indicators  puntosindicators" *ngIf="imagenes.length > 1">
     <div [ngStyle]="{'justify-content': justyfycentercontent}" (click)="clickDivIndicadorSlider()">
       <div style="left: 0px; " [ngStyle]="{'left.px': widthExp,'position': posicionsliderleftindicatorssinfotos}">

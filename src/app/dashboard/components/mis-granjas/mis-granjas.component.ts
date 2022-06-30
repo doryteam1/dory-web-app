@@ -569,7 +569,6 @@ if (this.form.getRawValue().direccion !== '') {
       });
       this.modal.result
         .then((result) => {
-          console.log('se cerro modal ', result);
         })
         .catch((err) => {
           console.log(err);
@@ -757,35 +756,39 @@ if (this.form.getRawValue().direccion !== '') {
     };
     this.places.geocodeLatLng(point).then((response) => {
       if (response.status == 'OK') {
-        console.log(response);
-        console.log(this.municipios);
+        console.log("response total")
+       console .log(response)
+        console.log("mis municipios")
+       console.log(this.municipios);
+       console.log("resul")
         let result = response.results[0].address_components;
+        console.log(result)
+        /*departamento  */
+        console.log("identificar el departamento")
         console.log('administrative_area_level_1');
         let index = result.findIndex((element) =>
           element.types.includes('administrative_area_level_1')
         );
-        console.log(`departamento indice${index}`);
+        console.log(`departamento index ${index}`);
         let dpto = result[index].short_name;
         console.log(`departamento ${dpto}`);
         /* munisipio */
+        console.log('identificar el municipio');
         console.log('administrative_area_level_2');
         index = result.findIndex((element) =>
           element.types.includes('administrative_area_level_2')
         );
-        console.log(`munisipio indice ${index}`);
+        console.log(`municipio index ${index}`);
         let municipio = result[index].short_name;
-        console.log(`munisipio ${municipio}`);
-        /*  index = this.departamentos.findIndex(
-          (element) => element.nombre_departamento == dpto
-        );
-        let idDpto = this.departamentos[index]?.id_departamento; */
-        /* id munisipio */
+        console.log(`municipio ${municipio}`);
+      /* compribar a ver si existe enla lista */
         index = this.municipios.findIndex(
           (element) => element.nombre == municipio
         );
-        console.log(`munisipio indice id ${index}`);
+        console.log(`municipio index id ${index}`);
         let idMunipio = this.municipios[index]?.id_municipio;
-        console.log(`munisipio id ${idMunipio}`);
+
+        console.log(`municipio id  mi lista ${idMunipio}`);
 
         if (dpto == 'Sucre') {
           this.fueraDirecion = false;
@@ -813,6 +816,7 @@ if (this.form.getRawValue().direccion !== '') {
                     this.direccion?.setValue(
                       response.results[0].formatted_address
                     );
+                    this.faltadireccion = false;
                     this.closeMap();
                   } else {
                     this.latitud?.setValue(event.latLng!.toJSON().lat);

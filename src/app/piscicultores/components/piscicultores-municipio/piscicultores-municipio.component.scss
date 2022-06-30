@@ -79,14 +79,12 @@
     flex-direction: row;
     justify-content: center;
 }
-
+.search-container__image {
+  width: 1024px;
+  height: 370px;
+}
 .search-container__box{
     text-align: center;
-}
-
-.search-container__image{
-    width:1024px;
-    height: 628px;
 }
 /* mi estilo targeta nuevo map */
 .container-map-car {
@@ -131,6 +129,8 @@ div.container-map-car>div>div:nth-child(1) {
   box-shadow: 4px 4px 4px rgb(0 0 0 / 15%);
 
 }
+
+
 /* stilo car */
 .blog-card {
   display: flex;
@@ -368,12 +368,18 @@ div.container-map-car>div>div:nth-child(1) {
 
 
 }
-
-div.my_estilo_cols {
-  gap: 5px;
-  margin-top: 20px;
+/* estilo infomap */
+.myestilo-map-info-window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.card__icon_info_windows {
+  width: 22px;
+  height: 22px;
+  margin-right: 5px;
+}
 @media (max-width: 1201px) {
 
   /* cuando el contenido es <1200px */
@@ -414,23 +420,7 @@ div.my_estilo_cols {
   }
 }
 
-.search-container__box {
-  text-align: center;
-}
-
-.search-container__image {
-  width: 1024px;
-  height: 370px;
-}
-
-.search-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 @keyframes pulsate {
-
   0%,
   to {
     transform: scale(1)
@@ -441,49 +431,4 @@ div.my_estilo_cols {
   }
 }
 
-.container-button-open-map {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-}
-
-.container-button-open-map-data {
-  width: 250px;
-  height: 80px;
-  background-image: url(../../../../assets/images/googlemaplocation.svg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 4px 4px 4px rgb(0 0 0 / 10%);
-  cursor: pointer;
-}
-
-.container-button-open-map-data>div {
-  background-color: var(--azul1);
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 4px 4px 4px rgb(0 0 0 / 10%);
-}
-
-.container-button-open-map-data>div>h4 {
-  color: #fff;
-  margin-bottom: 0;
-}
-/* estilo infomap */
-.myestilo-map-info-window {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.card__icon_info_windows {
-  width: 22px;
-  height: 22px;
-  margin-right: 5px;
-}
 

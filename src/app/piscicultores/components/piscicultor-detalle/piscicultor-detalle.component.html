@@ -83,7 +83,7 @@
       </app-piscicultor-card-granjas>
     </div>
     <div class="mytarget" *ngIf="activatelistasociacion">
-      <app-piscicultor-card-asociaciones *ngIf="ngOnlnitPiscicultorDetalle"></app-piscicultor-card-asociaciones>
+      <app-piscicultor-card-asociaciones [selectedPiscicultorId]="selectedPiscicultorId"  *ngIf="ngOnlnitPiscicultorDetalle"></app-piscicultor-card-asociaciones>
     </div>
   </div>
 </div>
