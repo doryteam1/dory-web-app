@@ -35,6 +35,8 @@ import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { ModalGoogleMapComponent } from './components/modal-google-map/modal-google-map.component';
 import { ModalShareButtonComponent } from './components/modal-share-button/modal-share-button.component';
+import { CardAsociacionComponent } from './components/card-asociacion/card-asociacion.component';
+import { BasicFloatingBtnComponent } from './components/basic-floating-btn/basic-floating-btn.component';
 
 
 
@@ -61,6 +63,8 @@ import { ModalShareButtonComponent } from './components/modal-share-button/modal
     CarrucelImgComponent,
     ModalShareButtonComponent,
     ModalGoogleMapComponent,
+    CardAsociacionComponent,
+    BasicFloatingBtnComponent,
   ],
   imports: [
     CommonModule,
@@ -90,6 +94,8 @@ import { ModalShareButtonComponent } from './components/modal-share-button/modal
     StarsComponent,
     CarrucelImgComponent,
     ModalShareButtonComponent,
+    CardAsociacionComponent,
+    BasicFloatingBtnComponent
    /*  CardphotoGoogleMapComponent, */
   ],
   providers: [

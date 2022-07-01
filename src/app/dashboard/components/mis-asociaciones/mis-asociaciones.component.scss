@@ -15,8 +15,10 @@
 }
 
 .container{
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 
 .container__icon1{
@@ -95,7 +97,20 @@
 .container__spinner{
     width: 20px;
     height: 20px;
+    color: var(--white);
 }
+
+.container__btn{
+  width: 200px;
+  height: 38px;
+  margin-left: 10px;
+  margin-top: 0;
+}
+
+.container__btn--azul{
+  background-color: var(azul1);
+}
+
 
 .container__btn1{
     width: 150px;

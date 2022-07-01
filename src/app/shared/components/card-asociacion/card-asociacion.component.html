@@ -1,0 +1,56 @@
+<div class="card">
+    <div class="card__meta">
+      <div class="card__meta-photo">
+      <!--   <div class="paspartu">
+          <div class="paspartu-iframe">
+            <iframe src="../../../../assets/images/test.pdf"  allowtransparency="true"  style="width:100%; height:100%;" frameborder="0" allowfullscreen ></iframe>
+          </div>
+        </div> -->
+         <img class="card__meta-photo-img" src="assets/images/pdf_camara_comercio.svg">
+      </div>
+      <div class="card__meta-details" >
+        <div class="card__meta-detais-info">
+            <a [href]="asociacion?.foto_camarac" target="_blank"><img class="card__meta-detais-info-img" src="assets/icons/download-pdf-10136 1.svg"></a>
+        </div>
+    </div>
+    </div>
+    <div class="card__description" (click)="detalle(asociacion)">
+      <div class="card__description-header">
+        <img  src="assets/icons/asociacion_black_24dp.svg">
+        <h1>{{asociacion.nombre | shorter:20}}</h1>
+      </div>
+      <p> </p>
+      <div class="card__description-container">
+        <h2>Información de la asociación</h2>
+        <div class="card__description-container-infor-1">
+          <div class="card__description-container-infor-1-div">
+            <img  src="assets/icons/travel_explore_black_24dp.svg">
+            <span >{{asociacion.municipio}}-{{asociacion.departamento}}</span>
+          </div>
+          <div class="card__description-container-infor-1-div">
+            <img src="assets/icons/person_pin_circle_black_24dp.svg">
+            <span >{{asociacion.direccion ? 'Dir.' : ''}} {{asociacion.direccion | shorter:15}}</span>
+          </div>
+          <div class="card__description-container-infor-1-div">
+            <img src="assets/icons/litigation-negotiation.svg">
+            <span >Constituida: {{asociacion.legalconstituida ? 'Si' : 'No'}}</span>
+          </div>
+          <h3 >Fecha de modificación del documento</h3>
+          <div class="card__description-container-infor-1-div">
+              <img  src="assets/icons/edit_document_black_24dp.svg">
+              <span>{{asociacion.fecha_renovacion_camarac}}</span>
+          </div>
+        </div>
+        <h2>Representante legal</h2>
+        <div class="card__description-container-infor-2">
+          <div class="card__description-container-infor-2-div">
+            <img  src="assets/icons/person_pin_black_24dp.svg">
+            <span >{{asociacion.propietario}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="card__description-footer">
+        <p class="read-more"><a>Ver detalles</a></p>
+      </div>
+    </div>
+  </div>

@@ -122,12 +122,36 @@
 
 .btn-square-blue2 {
   background-color: var(--azul1);
-  border-radius: 7px;
+  border-radius: 5px;
   border: 1px solid var(--azul1);
   color: var(--white);
   font-weight: 700;
   width: 300px;
   height: 45px;
+  -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
+  box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
+  padding-bottom: 35px;
+  -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
+  box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
+  padding-bottom: 35px;
+  padding-top: 10px;
+}
+
+.btn-square-white2 {
+  background-color: var(--white);
+  border-radius: 5px;
+  border: 1px solid var(--azul1);
+  color: var(--black);
+  font-weight: 700;
+  width: 300px;
+  height: 45px;
+  -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
+  box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
+  padding-bottom: 35px;
+  -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
+  box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
+  padding-bottom: 35px;
+  padding-top: 10px;
 }
 
 .btn-rounded-white {

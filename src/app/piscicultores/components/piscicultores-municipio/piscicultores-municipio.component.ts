@@ -63,6 +63,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
 
   ngOnInit(): void {
     registerLocaleData(es);
+    console.log("url ",this.activatedRoute.snapshot.url)
     let path = this.activatedRoute.snapshot.url[0].path;
     let id = this.activatedRoute.snapshot.params.id;
 
@@ -71,6 +72,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
         .getPiscicultoresAsociacion(id)
         .subscribe((response) => {
           this.piscicultores = response.data;
+          this.municipio = response.municipio;
           console.log(this.piscicultores);
           this.extractLatLong();
         });
@@ -83,7 +85,6 @@ export class PiscicultoresMunicipioComponent implements OnInit {
           this.extractLatLong();
         });
     }
-
     this.placesService.getMunicipioById(id).subscribe(
       (response) => {
         if (response.data.length > 0) {

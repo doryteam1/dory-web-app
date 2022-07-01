@@ -52,6 +52,7 @@ export class PescadoresMunicipioComponent implements OnInit {
         (response:any)=>{
           console.log(response);
           this.pescadores = response.data;
+          this.municipio = response.municipio;
           this.extractLatLong();
         }
       );
@@ -61,24 +62,23 @@ export class PescadoresMunicipioComponent implements OnInit {
           console.log(response);
           this.pescadores = response.data;
           this.extractLatLong();
+          this.placesService.getMunicipioById(id).subscribe(
+            (response)=>{
+              if(response.data.length > 0){
+                this.poblacion = response.data[0].poblacion;
+                this.municipio = response.data[0].nombre;
+                this.options = {
+                  center: { lat: parseFloat(response.data[0].latitud), lng:parseFloat(response.data[0].longitud)},
+                  zoom:13
+                }
+              }
+            },err=>{
+              
+            }
+          )
         }
       );
     }
-
-    this.placesService.getMunicipioById(id).subscribe(
-      (response)=>{
-        if(response.data.length > 0){
-          this.poblacion = response.data[0].poblacion;
-          this.municipio = response.data[0].nombre;
-          this.options = {
-            center: { lat: parseFloat(response.data[0].latitud), lng:parseFloat(response.data[0].longitud)},
-            zoom:13
-          }
-        }
-      },err=>{
-        
-      }
-    )
     console.log(this.activatedRoute.snapshot.url[0].path);
   }
 

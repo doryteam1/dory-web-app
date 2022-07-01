@@ -14,7 +14,9 @@ import { MapGeocoder } from '@angular/google-maps';
 import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { vertices } from '../../../global/constants';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
-
+import { formatDate } from '@angular/common' 
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
 const _ = require('lodash');
 
 @Component({
@@ -91,6 +93,7 @@ export class MisAsociacionesComponent implements OnInit {
   timeLapsed1: number = 0;
   tiposAsociaciones: Array<any> = [];
   error:string = '';
+  showDetalleAsociacion:boolean = false;
 
   constructor(
     private asociacionesService: AsociacionesService,
@@ -114,6 +117,7 @@ export class MisAsociacionesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    registerLocaleData( es );
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
@@ -146,6 +150,7 @@ export class MisAsociacionesComponent implements OnInit {
     this.fechRenvCamc?.setValue('');
     this.fotoCamc?.setValue('');
     this.error = '';
+    this.file = null;
   }
 
   idmunicipioselec() {
@@ -208,10 +213,11 @@ export class MisAsociacionesComponent implements OnInit {
       return;
     }
 
+    let ext = this.file.name.split('.')[1];
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     let basePath = '/asociaciones/camaracomecio/todas/';
-    let fileName = 'asociacion-'+payload.sub+'-'+new Date().getTime()+'.pdf';
+    let fileName = 'asociacion-'+this.form.getRawValue().nit+'.'+ext;
     let filePath = basePath + fileName;
     console.log("file ",this.file)
     this.storage.cloudStorageTask(filePath,this.file).percentageChanges().subscribe(
@@ -287,31 +293,75 @@ export class MisAsociacionesComponent implements OnInit {
   }
 
   updateAsociacion() {
+    console.log("Actualizando!!")
     this.loading1 = true;
+    this.fotoCamc?.clearValidators();
+    this.fotoCamc?.updateValueAndValidity();
     if (!this.form.valid) {
       console.log('Not valid!');
       this.form.markAllAsTouched();
       this.loading1 = false;
       return;
     }
-
-    this.asociacionesService
-      .update(
-        this.asociaciones[this.itemUpdateIndex].nit,
-        this.form.getRawValue()
-      )
-      .subscribe(
-        (response) => {
-          console.log(response);
-          this.loading1 = false;
-          //window.location.reload();
-          this.modalService.dismissAll();
-        },
-        (err) => {
-          console.log(err);
-          this.loading1 = false;
+    this.fotoCamc?.setValidators([Validators.required])
+    this.fotoCamc?.updateValueAndValidity();
+    if(this.fotoCamc?.invalid){
+      let asociacion = { ...this.form.getRawValue() }
+      asociacion.foto_camarac = this.asociaciones[this.itemUpdateIndex].foto_camarac;
+      this.asociacionesService
+              .update(
+                this.asociaciones[this.itemUpdateIndex].nit,
+                asociacion
+              )
+              .subscribe(
+                (response) => {
+                  this.loading1 = false;
+                  window.location.reload();
+                },
+                (err) => {
+                  console.log(err);
+                  this.loading1 = false;
+                }
+              );
+    }else{
+      let ext = this.file.name.split('.')[1];
+      let basePath = '/asociaciones/camaracomecio/todas/';
+      let fileName = 'asociacion-'+this.form.getRawValue().nit+'.'+ext;
+      let filePath = basePath + fileName;
+      console.log("file ",this.file)
+      this.storage.cloudStorageTask(filePath,this.file).percentageChanges().subscribe(
+        (response)=>{
+          console.log(response)
+          if(response == 100){
+            this.storage.cloudStorageRef(filePath).getDownloadURL().subscribe(
+              (downloadUrl)=>{
+                console.log("download url ",downloadUrl)
+                let asociacion = { ...this.form.getRawValue() }
+                asociacion.foto_camarac = downloadUrl;
+                this.asociacionesService
+                .update(
+                  this.asociaciones[this.itemUpdateIndex].nit,
+                  asociacion
+                )
+                .subscribe(
+                  (response) => {
+                    this.loading1 = false;
+                    //window.location.reload();
+                  },
+                  (err) => {
+                    console.log(err);
+                    this.loading1 = false;
+                  }
+                );
+              },err=>{
+                this.loading1 = false;
+                console.log(err);
+              }
+            )
+          }
         }
-      );
+      );  
+    }
   }
 
   loadAsociaciones(){
@@ -856,5 +906,31 @@ export class MisAsociacionesComponent implements OnInit {
           this.loading3 = false;
         }
       );*/
+  }
+
+  detalleAsociacion(action: string, asociacion?: any) {
+    this.modalMode = action;
+    this.form.reset();
+    console.log(asociacion)
+    this.initForm();
+    if (action == 'update') {
+      this.idDpto?.setValue(asociacion.id_departamento);
+      this.idMunic?.setValue(asociacion.id_municipio);
+      this.nit?.setValue(asociacion.nit);
+      this.direccion?.setValue(asociacion.direccion);
+      this.infoAdicionalDir?.setValue(asociacion.informacion_adicional_direccion);
+      this.nombre?.setValue(asociacion.nombre);
+      this.isLegalConstituida?.setValue(asociacion.legalconstituida);
+      this.fechRenvCamc?.setValue(formatDate(asociacion?.fecha_renovacion_camarac,'yyyy-MM-dd','es'));
+      //this.fotoCamc?.setValue(asociacion.foto_camarac);
+      this.idTipoAsoc?.setValue(asociacion.id_tipo_asociacion_fk);
+      this.corregVereda?.setValue(asociacion.corregimiento_vereda);
+      this.direccion?.setValue(asociacion.direccion);
+      this.infoAdicionalDir?.setValue(asociacion.informacion_adicional_direccion);
+      this.itemUpdateIndex = this.asociaciones.findIndex((element)=>element.nit == asociacion.nit);
+      this.tempDir = this.direccion?.value;
+      this.tempMunicId = this.idMunic?.value;
+    }
+    this.showDetalleAsociacion = true;
   }
 }
