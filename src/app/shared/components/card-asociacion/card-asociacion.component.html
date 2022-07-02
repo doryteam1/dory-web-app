@@ -14,13 +14,16 @@
         </div>
     </div>
     </div>
-    <div class="card__description" (click)="detalle(asociacion)">
+    <div class="card__description">
       <div class="card__description-header">
-        <img  src="assets/icons/asociacion_black_24dp.svg">
-        <h1>{{asociacion.nombre | shorter:20}}</h1>
+        <div class="d-flex flex-direction-row">
+          <img src="assets/icons/asociacion_black_24dp.svg">
+          <h1 class="card__title" (click)="detalle(asociacion)">{{asociacion.nombre | shorter:20}}</h1>
+        </div>
+        <i class="card__icon bi bi-trash3" (click)="eliminar(asociacion)"></i>
       </div>
       <p> </p>
-      <div class="card__description-container">
+      <div class="card__description-container" (click)="detalle(asociacion)">
         <h2>Información de la asociación</h2>
         <div class="card__description-container-infor-1">
           <div class="card__description-container-infor-1-div">
@@ -50,7 +53,7 @@
         </div>
       </div>
       <div class="card__description-footer">
-        <p class="read-more"><a>Ver detalles</a></p>
+        <p class="read-more" (click)="detalle(asociacion)"><a>Ver detalles</a></p>
       </div>
     </div>
   </div>

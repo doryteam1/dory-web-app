@@ -9,6 +9,7 @@ import {  Router } from '@angular/router';
 export class CardAsociacionComponent implements OnInit {
   @Input() asociacion: any;
   @Output() onDetalle:EventEmitter<any> = new EventEmitter(); 
+  @Output() onDelete:EventEmitter<any> = new EventEmitter(); 
   showNotFound: boolean = false;
   changeItem: boolean = true;
   piscicultorasociaciones: any;
@@ -28,5 +29,9 @@ export class CardAsociacionComponent implements OnInit {
   
   detalle(asociacion:any){
     return this.onDetalle.emit(asociacion);
+  }
+
+  eliminar(asociacion:any){
+    return this.onDelete.emit(asociacion);
   }
 }

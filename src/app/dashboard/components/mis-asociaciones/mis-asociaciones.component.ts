@@ -151,6 +151,7 @@ export class MisAsociacionesComponent implements OnInit {
     this.fotoCamc?.setValue('');
     this.error = '';
     this.file = null;
+    this.nit?.enable();
   }
 
   idmunicipioselec() {
@@ -930,6 +931,7 @@ export class MisAsociacionesComponent implements OnInit {
       this.itemUpdateIndex = this.asociaciones.findIndex((element)=>element.nit == asociacion.nit);
       this.tempDir = this.direccion?.value;
       this.tempMunicId = this.idMunic?.value;
+      this.nit?.disable();
     }
     this.showDetalleAsociacion = true;
   }

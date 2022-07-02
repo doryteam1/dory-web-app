@@ -45,7 +45,7 @@
     </div> -->
     
     <div class="row row-cols-2" *ngIf="!showDetalleAsociacion">
-      <app-card-asociacion class="col" *ngFor="let asociacion of asociaciones" [asociacion]="asociacion" (onDetalle)="detalleAsociacion('update',$event)"></app-card-asociacion>
+      <app-card-asociacion class="col" *ngFor="let asociacion of asociaciones" [asociacion]="asociacion" (onDetalle)="detalleAsociacion('update',$event)" (onDelete)="delete($event)"></app-card-asociacion>
     </div>
     <div class="search-container" *ngIf="showNotFound">
       <div class="search-container__box">
