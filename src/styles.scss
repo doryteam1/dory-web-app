@@ -13,6 +13,7 @@
   --gris5: #c2c2c7;
   --gris6:  #717B7B;
   --gris7: #8692A6;
+  --gris8:#3A3B3c;
   --gris-oscuro: #4a4a4b;
   --white: #ffffff;
   --black: #000000;
@@ -76,14 +77,26 @@
 
 .btn-square {
   border-radius: 7px;
-  width: 200px;
-  height: 45px;
+  width: fit-content;
+  padding: 4px 10px 4px 10px;
 }
 
 .btn-rounded {
   border-radius: 20px;
   width: 150px;
   height: 40px;
+}
+
+.btn--blue{
+  background-color: var(--azul1);
+  border: 1px solid var(--azul1);
+  color: var(--white);
+}
+
+.btn--grey{
+  background-color: var(--gris8);
+  border: 1px solid var(--gris8);
+  color: var(--white);
 }
 
 .btn--morado {
@@ -136,6 +149,7 @@
   padding-bottom: 35px;
   padding-top: 10px;
 }
+
 
 .btn-square-white2 {
   background-color: var(--white);

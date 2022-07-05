@@ -72,6 +72,52 @@
         </form> -->
         <button class="btn-outline-blue boton-registro" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
         <button class="btn-rounded-blue ms-2" routerLink="/registro" *ngIf="!authenticated()">Registrate</button>
+
+        <div class="notify dropstart" *ngIf="authenticated()">
+          <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="notify__icon bi bi-bell">
+            </i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              99+
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </div>
+
+          <ul class="notify__menu dropdown-menu p-3" aria-labelledby="dropdownMenuButton1">
+            <li class="notify__menu-item"> 
+              <div class="dropdown-item d-flex flex-row align-items-start">
+                <img class="notify__avatar" src="https://i.pravatar.cc/300">
+                <div class="d-flex flex-column ">
+                  <span class="notify__description">¿Eres miembro de <span class="notify__label">Asopesqueros</span>?</span>
+                  <span class="notify__sub-description">
+                    hace 4 horas 
+                  </span>
+                  <div class="d-flex flex-row mt-2">
+                    <button class="notify-button btn-square btn--blue">Confirmar</button>
+                    <button class="notify-button btn-square btn--grey">Eliminar</button>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <hr>
+            <li class="notify__menu-item"> 
+              <div class="dropdown-item d-flex flex-row align-items-start">
+                <img class="notify__avatar" src="https://i.pravatar.cc/300">
+                <div class="d-flex flex-column ">
+                  <span class="notify__description">¿Eres miembro de <span class="notify__label">Piscicultores de Sucre</span>?</span>
+                  <span class="notify__sub-description">
+                    hace 4 horas 
+                  </span>
+                  <div class="d-flex flex-row mt-2">
+                    <button class="notify-button btn-square btn--blue">Confirmar</button>
+                    <button class="notify-button btn-square btn--grey">Eliminar</button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
         <div class="dropdown" *ngIf="authenticated()">
           <img class="container__img" [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'">
           <button class="container__button btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
