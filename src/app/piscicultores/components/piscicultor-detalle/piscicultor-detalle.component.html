@@ -11,17 +11,19 @@
         </div>
         <div class="piscicultor-container__detalle">
           <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
-          <span class="piscicultor-container__description1"> {{piscicultor?.municipio}}-{{piscicultor?.departamento}}</span>
+          <span class="piscicultor-container__description1">
+            {{piscicultor?.municipio}}-{{piscicultor?.departamento}}</span>
         </div>
       </div>
-      <img class="piscicultor-container__image" src="{{piscicultor?.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}">
+      <img class="piscicultor-container__image"
+        src="{{piscicultor?.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}">
     </div>
     <div class="line"></div>
     <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/phone_msg_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Celular</h4>
-        <span class="detail-container__value">{{piscicultor?.celular}}</span>
+        <span class="detail-container__value">{{piscicultor.celular? piscicultor.celular : 'Contacto sin definir'}} </span>
       </div>
     </div>
     <div class="detail-container">
@@ -35,41 +37,49 @@
       <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Dirección</h4>
-        <span class="detail-container__value">{{piscicultor?.direccion}} </span>
+        <span *ngIf="piscicultor.direccion"class="detail-container__value">{{piscicultor.direccion ? 'Dir.' : ''}}
+        {{piscicultor?.direccion}}} </span>
+        <span *ngIf="!piscicultor.direccion" class="detail-container__value">Dirección indefinida</span>
       </div>
     </div>
     <div class="detail-container">
       <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Número de asociaciones a las que pertenece </h4>
-        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}} asociaciones en
+        <span class="detail-container__value"
+          *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}} asociaciones en
           total</span>
-        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length==1">{{piscicultorasociaciones?.length}} asociación en
+        <span class="detail-container__value"
+          *ngIf="piscicultorasociaciones?.length==1">{{piscicultorasociaciones?.length}} asociación en
           total</span>
-        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con asociaciones</span>
+        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con
+          asociaciones</span>
       </div>
     </div>
     <div class="detail-container">
       <img class="detail-container__image" src="../../../../assets/icons/set_meal_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Número de granjas</h4>
-        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length>1">{{piscicultorgranjas?.length}} granjas en total</span>
-        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length==1">{{piscicultorgranjas?.length}} granja en total</span>
-        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length<=0">No cuenta con granjas registradas</span>
+        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length>1">{{piscicultorgranjas?.length}}
+          granjas en total</span>
+        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length==1">{{piscicultorgranjas?.length}}
+          granja en total</span>
+        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length<=0">No cuenta con granjas
+          registradas</span>
+      </div>
     </div>
-  </div>
   </div>
   <!-- granjas y asociaciones -->
   <div class="mynavtabs">
     <ul class="nav nav-tabs">
-      <li class="nav-item" (click)="mygranjaAndAsociacionActive(1)">
+      <li class="nav-item" (click)="activeTab(1)">
         <a class="nav-link" [ngClass]="{'active mynav-link': activatelistgranja}" aria-current="page">
           <span>
             <img class="detail-container__image" src="../../../../assets/icons/set_meal_black_24dp.svg">
           </span> Granjas- {{piscicultor?.nombre_completo}}
         </a>
       </li>
-      <li class="nav-item" (click)="mygranjaAndAsociacionActive(2)">
+      <li class="nav-item" (click)="activeTab(2)">
         <a class="nav-link" [ngClass]="{'active mynav-link': activatelistasociacion}">
           <span>
             <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
@@ -79,11 +89,51 @@
   </div>
   <div class="container_mytarget">
     <div class="mytarget" *ngIf="activatelistgranja">
-      <app-piscicultor-card-granjas [selectedPiscicultorId]="selectedPiscicultorId" *ngIf="ngOnlnitPiscicultorDetalle">
-      </app-piscicultor-card-granjas>
+      <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 row--mi-estilo"
+        [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound,'container--flex-center':piscicultorgranjas?.length==1}" >
+        <div *ngIf="changeItem" class="mychangeitem">
+          <div>
+           <img src="assets/icons/changeiconanimado.svg">
+          </div>
+        </div>
+        <div class="search-container" *ngIf="showNotFound">
+          <div class="search-container__box">
+            <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
+            <h3>
+              Parece que este piscicultor no cuenta con granjas registradas
+              <span>
+              <img src="assets/icons/corazonanimado.svg">
+              </span>
+            </h3>
+          </div>
+        </div>
+          <app-card-granjas *ngFor="let granja of piscicultorgranjas " [granja]="granja"
+            (onDetalle)="goDetailFarm($event)"></app-card-granjas>
+      </div>
     </div>
     <div class="mytarget" *ngIf="activatelistasociacion">
-      <app-piscicultor-card-asociaciones [selectedPiscicultorId]="selectedPiscicultorId"  *ngIf="ngOnlnitPiscicultorDetalle"></app-piscicultor-card-asociaciones>
+      <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4  row--mi-estilo"
+        [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound, 'container--flex-center':piscicultorasociaciones?.length==1 }">
+        <div *ngIf="changeItem" class="mychangeitem">
+          <div>
+           <img src="assets/icons/changeiconanimado.svg">
+          </div>
+        </div>
+        <div class="search-container" *ngIf="showNotFound">
+          <div class="search-container__box">
+            <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
+            <h3>
+              Parece que este piscicultor no cuenta con asociaciones registradas
+              <span>
+                <img src="assets/icons/corazonanimado.svg">
+              </span>
+            </h3>
+          </div>
+        </div>
+          <app-card-asociacion *ngFor="let asociacion of piscicultorasociaciones" [asociacion]="asociacion"
+            [delatecard]="false" (onDetalle)="goAssociationDetail($event)">
+          </app-card-asociacion>
+      </div>
     </div>
   </div>
 </div>

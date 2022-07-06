@@ -66,14 +66,13 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     console.log("url ",this.activatedRoute.snapshot.url)
     let path = this.activatedRoute.snapshot.url[0].path;
     let id = this.activatedRoute.snapshot.params.id;
-
+console.log(path)
     if (path == 'asociacion') {
       this.piscicultoresService
         .getPiscicultoresAsociacion(id)
         .subscribe((response) => {
           this.piscicultores = response.data;
           this.municipio = response.municipio;
-          console.log(this.piscicultores);
           this.extractLatLong();
         });
     } else if (path == 'municipio') {
@@ -82,6 +81,13 @@ export class PiscicultoresMunicipioComponent implements OnInit {
         .subscribe((response) => {
           this.piscicultores = response.data;
           console.log(this.piscicultores);
+           this.options = {
+             center: {
+               lat: Number(this.piscicultores[0].latitud),
+               lng: Number(this.piscicultores[0].longitud),
+             },
+             zoom: 13,
+           };
           this.extractLatLong();
         });
     }

@@ -37,6 +37,8 @@ import { ModalGoogleMapComponent } from './components/modal-google-map/modal-goo
 import { ModalShareButtonComponent } from './components/modal-share-button/modal-share-button.component';
 import { CardAsociacionComponent } from './components/card-asociacion/card-asociacion.component';
 import { BasicFloatingBtnComponent } from './components/basic-floating-btn/basic-floating-btn.component';
+import { CardGranjasComponent } from './components/card-granjas/card-granjas.component';
+import { ModalAlertActualizadoComponent } from './components/modal-alert-actualizado/modal-alert-actualizado.component';
 
 
 
@@ -65,6 +67,8 @@ import { BasicFloatingBtnComponent } from './components/basic-floating-btn/basic
     ModalGoogleMapComponent,
     CardAsociacionComponent,
     BasicFloatingBtnComponent,
+    CardGranjasComponent,
+    ModalAlertActualizadoComponent,
   ],
   imports: [
     CommonModule,
@@ -95,8 +99,10 @@ import { BasicFloatingBtnComponent } from './components/basic-floating-btn/basic
     CarrucelImgComponent,
     ModalShareButtonComponent,
     CardAsociacionComponent,
-    BasicFloatingBtnComponent
-   /*  CardphotoGoogleMapComponent, */
+    BasicFloatingBtnComponent,
+    CardGranjasComponent,
+    ModalAlertActualizadoComponent,
+    /*  CardphotoGoogleMapComponent, */
   ],
   providers: [
     ConfirmModalMapService,

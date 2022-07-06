@@ -3,12 +3,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmModalComponent } from '../components/confirm-modal/confirm-modal.component';
 import { ModalShareButtonComponent } from '../components/modal-share-button/modal-share-button.component';
 import { ModalGoogleMapComponent } from '../components/modal-google-map/modal-google-map.component';
+import { ModalAlertActualizadoComponent } from '../components/modal-alert-actualizado/modal-alert-actualizado.component';
 @Injectable({
   providedIn: 'root',
 })
 export class AppModalService {
   constructor(private modalService: NgbModal) {}
-
+/* modal confirmar click */
   public confirm(
     title: string,
     message: string,
@@ -24,14 +25,15 @@ export class AppModalService {
     modalRef.componentInstance.resourceId = resourceId;
     return modalRef.result;
   }
+  /* modal shared */
   public closeModalShare(): void {
     this.modalService.dismissAll();
   }
   public shared(
     titleheader: string,
-    url: boolean ,
-    urllink: string ,
-    bodymessage: string,
+    url: boolean,
+    urllink: string,
+    bodymessage: string
   ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalShareButtonComponent, {
       centered: true,
@@ -43,15 +45,16 @@ export class AppModalService {
     modalRef.componentInstance.bodymessage = bodymessage;
     return modalRef.result;
   }
+  /* modal google map */
   public CloseGoogleMapModal(): void {
     this.modalService.dismissAll();
   }
   public GoogleMapModal(
-    atributos:any={},
-    modalheader:boolean,
-    mapElementVarios:boolean,
-    iconMarkerGoogleMap:string,
-    iconMarkerGoogleMap2:string
+    atributos: any = {},
+    modalheader: boolean,
+    mapElementVarios: boolean,
+    iconMarkerGoogleMap: string,
+    iconMarkerGoogleMap2: string
   ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalGoogleMapComponent, {
       ariaLabelledBy: 'modal-basic-title',
@@ -63,6 +66,21 @@ export class AppModalService {
     modalRef.componentInstance.mapElementVarios = mapElementVarios;
     modalRef.componentInstance.iconMarkerGoogleMap = iconMarkerGoogleMap;
     modalRef.componentInstance.iconMarkerGoogleMap2 = iconMarkerGoogleMap2;
-    return modalRef.dismissed.toPromise()
+    return modalRef.dismissed.toPromise();
+  }
+  /* alerta modal perfil actualizado */
+  public closeModalAlertActualizadoComponent(): void {
+    this.modalService.dismissAll();
+  }
+  public modalAlertActualizadoComponent(
+    mensaje: string
+  ): Promise<boolean> {
+    const modalRef = this.modalService.open(ModalAlertActualizadoComponent, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+      centered: true,
+    });
+    modalRef.componentInstance.mensaje = mensaje;
+    return modalRef.dismissed.toPromise();
   }
 }

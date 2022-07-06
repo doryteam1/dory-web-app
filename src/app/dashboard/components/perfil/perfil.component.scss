@@ -11,6 +11,7 @@
     width: 100%;
 }
 
+
 .container__box{
     display: flex;
     flex-direction: column;
@@ -109,6 +110,7 @@
     margin-bottom: 15px;
     margin-right: 5px;
     border-radius: 4px;
+    padding-right: 25px;
     width: 100%;
 }
 
@@ -315,3 +317,40 @@
 .left{
   margin-left: 10px;
 }
+/* estilo input direccion */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+.input-icon {
+  color: #191919;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  /* left: 12px; */
+  top: 20px;
+  bottom: 20px;
+  transform: translateY(-50%);
+}
+
+.input-icon.option {
+  left: unset;
+  right: 3px;
+}
+.input-icon.option-select-optgroup {
+  left: unset;
+  right: 1px;
+}
+
+.container__input--color {
+  background-color: #f6f8f9;
+}
+.container__input--direccion {
+  background-color: white;
+  cursor: pointer;
+}
+
+.container__input--direccion:hover {
+  background-color: #e4f4ff;
+}
+

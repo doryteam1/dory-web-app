@@ -23,17 +23,23 @@
         <div class="col">
             <div class="container__box" *ngIf="mostrarPorTipo('nombres')">
                 <span class="container__label">Nombres</span>
-                <div>
-                    <input class="container__input form-input-text-square"  type="text" formControlName='nombres' placeholder="Nombres">
+                <div class="input-wrapper">
+                    <input name= "nombr" class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'nombres', usuario.nombres)" [ngClass]="{'container__input--color':!editarperfil}"
+                     type="text" formControlName='nombres' placeholder="Nombres">
+                    <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
+                    <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg">
                 </div>
             </div>
         </div>
-        
+
         <div class="col">
             <div class="container__box left" *ngIf="mostrarPorTipo('apellidos')">
                 <span class="container__label">Apellidos</span>
-                <div>
-                    <input class="container__input form-input-text-square"  type="text" formControlName='apellidos' placeholder="Apellidos">
+                <div class="input-wrapper">
+                    <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'apellidos', usuario.apellidos)"  [ngClass]="{'container__input--color':!editarperfil}"
+                      type="text" formControlName='apellidos' placeholder="Apellidos">
+                    <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
+                    <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg">
                 </div>
             </div>
         </div>
@@ -43,42 +49,53 @@
         <div class="col">
             <div class="container__box" *ngIf="mostrarPorTipo('cedula')">
                 <span class="container__label">Cédula</span>
-                <div>
-                    <input class="container__input form-input-text-square"  type="text" formControlName='cedula' placeholder="Tu número de cédula">
+                <div class="input-wrapper">
+                    <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'cedula', usuario.cedula)" [ngClass]="{'container__input--color':!editarperfil}"
+                      type="text" formControlName='cedula' placeholder="Tu número de cédula">
+                    <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
+                    <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg">
                 </div>
             </div>
         </div>
-        
+
         <div class="col">
             <div class="container__box left" *ngIf="mostrarPorTipo('email')">
                 <span class="container__label">Correo electrónico</span>
-                <div>
-                    <input class="container__input form-input-text-square"  type="text" formControlName='email' placeholder="Ingresa tu correo electrónico">
+                <div class="input-wrapper">
+                    <input class="container__input form-input-text-square"  [ngClass]="{'container__input--color':true}"
+                    type="text" formControlName='email' placeholder="Ingresa tu correo electrónico">
+                    <img  class="input-icon option" src="assets/icons/lock_black_24dp.svg">
                 </div>
             </div>
         </div>
     </div>
-        
+
     <div class="container-row row align-items-center">
         <div class="col">
             <div class="container__box" *ngIf="mostrarPorTipo('celular')">
                 <span class="container__label">Célular</span>
-                <div>
-                    <input class="container__input form-input-text-square"  type="text" formControlName='celular' placeholder="Tu número de celular">
-                </div>
-            </div>    
-        </div>
-        
-        <div class="col">
-            <div class="container__box" *ngIf="mostrarPorTipo('fecha_nacimiento')">
-                <span class="container__label">Fecha de nacimiento: </span>
-                <div>
-                    <input class="container__input form-input-text-square" type="date" formControlName='fecha_nacimiento' placeholder="Fecha de nacimiento">
+                <div class="input-wrapper">
+                    <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'celular', usuario.celular)" [ngClass]="{'container__input--color':!editarperfil}"
+                      type="text" formControlName='celular' placeholder="Tu número de celular">
+                    <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
+                    <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg">
                 </div>
             </div>
         </div>
-    </div>   
-        
+
+        <div class="col">
+            <div class="container__box" *ngIf="mostrarPorTipo('fecha_nacimiento')">
+                <span class="container__label">Fecha de nacimiento: </span>
+                <div class="input-wrapper">
+                    <input class="container__input form-input-text-square" (keyup)="onKeyInput($event)" [ngClass]="{'container__input--color':!editarperfil}"
+                     type="date" formControlName='fecha_nacimiento' placeholder="Fecha de nacimiento">
+                    <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
+                    <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container__box__title">
         <span class="container__title">Datos de ubicación</span>
     </div>
@@ -88,24 +105,31 @@
         <div class="col">
             <div class="container__box" *ngIf="mostrarPorTipo('departamento')">
                 <span class="container__label">Departamento</span>
-                <div>
-                    <select class="container__input form-input-text-square" formControlName='id_departamento' (ngModelChange)='changeDpto()'>
+                <div class="input-wrapper">
+                    <select class="container__input form-input-text-square"  [ngClass]="{'container__input--color':true}"
+                          formControlName='id_departamento' (ngModelChange)='changeDpto()'>
                         <optgroup label="Escoje un departamento" value="70">
                             <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
                         </optgroup>
                     </select>
+                    <!-- <img *ngIf="editarperfil" class="input-icon option-select-optgroup" src="assets/icons/lock_open_black_24dp.svg"> -->
+                    <img  class="input-icon option-select-optgroup" src="assets/icons/lock_black_24dp.svg">
                 </div>
-            </div>    
+            </div>
         </div>
-        
+
         <div class="col">
             <div class="container__box left" *ngIf="mostrarPorTipo('municipio')">
-                <span class="container__label">Municipio</span>    
-                <select class="container__input form-input-text-square" formControlName='id_municipio' (ngModelChange)='changeMunic()'>
-                    <optgroup label="Escoge un municipio">
-                        <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}</option>
-                    </optgroup>
-                </select>
+                <span class="container__label">Municipio</span>
+                <div class="input-wrapper">
+                  <select class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
+                       formControlName='id_municipio' (ngModelChange)='changeMunic()' >
+                      <optgroup label="Escoge un municipio">
+                          <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio" >{{municipio.nombre}}</option>
+                      </optgroup>
+                  </select>
+                  <img *ngIf="!editarperfil" class="input-icon option-select-optgroup" src="assets/icons/lock_black_24dp.svg">
+                </div>
             </div>
         </div>
     </div>
@@ -142,13 +166,26 @@
         <div class="col">
             <div class="container__box"  *ngIf="mostrarPorTipo('corregimiento')">
                 <span class="container__label">Corregimiento</span>
-                <input class="container__input form-input-text-square" type="text" formControlName='nombre_corregimiento' placeholder="Corregimiento o vereda">
+                <div class="input-wrapper">
+                  <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'nombre_corregimiento', usuario.nombre_corregimiento)"  [ngClass]="{'container__input--color':!editarperfil}"
+                    type="text" formControlName='nombre_corregimiento' placeholder="Corregimiento o vereda">
+                    <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
+                    <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg">
+                </div>
             </div>
         </div>
         <div class="col">
-            <div class="container__box left" *ngIf="mostrarPorTipo('direccion')">
+            <div class="container__box left" *ngIf="mostrarPorTipo('direccion')"   (click)="verMap()" >
                 <span class="container__label">Dirección: </span>
-                <input class="container__input form-input-text-square"  type="text" formControlName='direccion' placeholder="Dirección" onkeydown="return false">
+                <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}">
+                  <input class="container__input form-input-text-square" [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil}"
+                   type="text" formControlName='direccion' placeholder="Selecciona aquí  tu direccón" >
+                   <img *ngIf="editarperfil" class="input-icon option" src ="assets/icons/ojoanimado.svg">
+                   <img *ngIf="!editarperfil" class="input-icon option" src ="assets/icons/lock_black_24dp.svg">
+                </div>
+            </div>
+            <div *ngIf="faltadireccion" class="container__alert-msg danger-message">
+                Campo requerido
             </div>
         </div>
     </div>
@@ -156,21 +193,32 @@
     <div class="container-row row">
         <div class="col">
             <div class="container__box"  *ngIf="mostrarPorTipo('corregimiento')">
-                <span class="container__label">Información adicional dirección</span>
-                <input class="container__input form-input-text-square" type="text" formControlName="informacion_adicional_direccion" placeholder="Información adicional dirección">
+                <label  class="container__label" for="dateOfBirth">Información adicional de la dirección</label>
+                <div class="input-group">
+                  <div class="input-wrapper">
+                    <textarea  (keyup)="onKeyInput($event ,'informacion_adicional_direccion', usuario.informacion_adicional_direccion)" class="form-control" [ngClass]="{'container__input--color':!editarperfil}"
+                      name="textarea" rows="3" cols="50"
+                      placeholder="Información adicional de la ubicación seleccionada"
+                      formControlName="informacion_adicional_direccion">Write something here</textarea>
+                    <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
+                    <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg">
+                  </div>
+                </div>
             </div>
         </div>
+
         <div class="col">
-        
+
         </div>
     </div>
 
-    <div class="d-flex flex-row justify-content-center">
+
+<!--     <div class="d-flex flex-row justify-content-center">
         <button class="container__btn2" *ngIf="mostrarPorTipo('coordenadas')" (click)="verMap()">
             <span>Escoger mi ubicación</span>
             <i class="bi bi-geo-alt left"></i>
         </button>
-    </div>
+    </div> -->
 
     <div class="container__box__title" *ngIf="mostrarPorTipo('area_experticia') || mostrarPorTipo('otra_area_experticia') || mostrarPorTipo('otra_area_experticia_descripcion') || mostrarPorTipo('sobre_mi')">
         <span class="container__title">Otros datos</span>
@@ -196,7 +244,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col">
             <div class="container__box left" *ngIf="mostrarPorTipo('sobre_mi')">
                 <span class="container__label">Cuéntanos sobre ti: </span>
@@ -238,9 +286,9 @@
             </div>
         </div> -->
     <div class="container__box__title">
-        <span class="container__title">Cambiar foto de perfil</span>
+        <span class="container__title">Foto de perfil</span>
     </div>
-    
+
     </form>
     <div class="progress" *ngIf="percentUploaded && percentUploaded > 1 && percentUploaded < 100">
         <div class="progress-bar" [style.width]="percentUploaded+'%'" role="progressbar" [attr.aria-valuenow]="percentUploaded" aria-valuemin="0" aria-valuemax="100">{{percentUploaded | number:'':'es'}}%</div>
@@ -251,14 +299,14 @@
             <i class="container__icon bi bi-folder-plus"></i>
             <span>Escoger foto de perfil</span>
         </button>
-        <button class="container__btn3 btn-square-blue2" (click)="onSubmit()">
+   <!--      <button class="container__btn3 btn-square-blue2" (click)="onSubmit()">
             <span *ngIf="!loading">Actualizar perfil</span>
             <div class="container__spinner spinner-border text-light" role="status" *ngIf="loading">
             </div>
-        </button>
+        </button> -->
     </div>
 
-    
+
  </div>
 </div>
 <!-- Modal -->
@@ -329,6 +377,25 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       </div>
+        <!-- escoger mi ubicación -->
+        <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf="escogerdireccion" role="alert">
+          <div class="p-2 bd-highlight">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+              <path class="prefix__n-info-tri" style="animation-delay:1s" stroke="#0A0A30" stroke-width="1.5"
+                d="M11.134 6.844a1 1 0 011.732 0l5.954 10.312a1 1 0 01-.866 1.5H6.046a1 1 0 01-.866-1.5l5.954-10.312z" />
+              <g class="prefix__n-info-tri">
+                <path stroke="#265BFF" stroke-linecap="round" stroke-width="1.5" d="M12 10.284v3.206" />
+                <circle cx="12" cy="15.605" r=".832" fill="#265BFF" />
+              </g>
+            </svg>
+          </div>
+          <div class="p-2 bd-highlight">
+            Por favor escoge tu <strong> dirección</strong>
+          </div>
+          <div class="ms-auto p-2 bd-highlight">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
 
     <google-map width="1200px" height="550px" class="modal-dialog-centered" [options]="options"
       (mapClick)="addMarker($event)">
@@ -339,3 +406,13 @@
   </div>
 </ng-template>
 <ngx-spinner type="square-jelly-box"></ngx-spinner>
+  <app-basic-floating-btn [editar]="true" *ngIf="!editarperfil" (click)="editarPerfi()" >
+  </app-basic-floating-btn>
+
+    <app-basic-floating-btn [cancelar]="true"  *ngIf="editarperfil" (click)="cancelProfileEditing()">
+    </app-basic-floating-btn>
+    <app-basic-floating-btn [actualizar]="true"  *ngIf="editarperfil && EditedInputValue" (click)="onSubmit()">
+    </app-basic-floating-btn>
+
+
+

@@ -4,12 +4,13 @@ import {  Router } from '@angular/router';
 @Component({
   selector: 'app-card-asociacion',
   templateUrl: './card-asociacion.component.html',
-  styleUrls: ['./card-asociacion.component.scss']
+  styleUrls: ['./card-asociacion.component.scss'],
 })
 export class CardAsociacionComponent implements OnInit {
   @Input() asociacion: any;
-  @Output() onDetalle:EventEmitter<any> = new EventEmitter(); 
-  @Output() onDelete:EventEmitter<any> = new EventEmitter(); 
+  @Input() delatecard!:boolean
+  @Output() onDetalle: EventEmitter<any> = new EventEmitter();
+  @Output() onDelete: EventEmitter<any> = new EventEmitter();
   showNotFound: boolean = false;
   changeItem: boolean = true;
   piscicultorasociaciones: any;
@@ -17,21 +18,15 @@ export class CardAsociacionComponent implements OnInit {
   errorMessage = '';
   ngOnlnitPiscicultorDetalle: boolean = false;
   foto_camaracpdf!: string;
-  constructor(
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
-  }
-  navigate(id: number) {
-    this.router.navigateByUrl('/asociaciones/municipio/detalle/' + this.asociacion.nit);
-  }
-  
-  detalle(asociacion:any){
+  ngOnInit(): void {}
+
+  detalle(asociacion: any) {
     return this.onDetalle.emit(asociacion);
   }
 
-  eliminar(asociacion:any){
+  eliminar(asociacion: any) {
     return this.onDelete.emit(asociacion);
   }
 }

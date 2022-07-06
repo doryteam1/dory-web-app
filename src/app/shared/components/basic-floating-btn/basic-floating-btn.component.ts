@@ -1,18 +1,21 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-basic-floating-btn',
   templateUrl: './basic-floating-btn.component.html',
-  styleUrls: ['./basic-floating-btn.component.scss']
+  styleUrls: ['./basic-floating-btn.component.scss'],
 })
 export class BasicFloatingBtnComponent implements OnInit {
-  constructor() { }
+  @Input() agregar: boolean = false;
+  @Input() editar: boolean = false;
+  @Input() actualizar: boolean = false;
+  @Input() cancelar:boolean=false
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
-  
-  onClick(){
-    console.log("Submit");
+  ngOnInit(): void {}
+
+  onClick() {
+    console.log('Submit');
   }
 }

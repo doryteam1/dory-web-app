@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card__meta">
+    <div class="card__meta-photo" (click)="detalle(granja)">
+      <!-- <img class="card__meta-photo-img" src="https://admin.moodyyc.com/img/no-image.png"> -->
+       <img class="card__meta-photo-img"
+          src="{{ granja.fotos[ran] ? granja.fotos[ran] : 'https://admin.moodyyc.com/img/no-image.png'}}"
+          >
+    </div>
+    <div class="card__meta-details" (click)="detalle(granja)">
+      <div class="card__meta-details-infor">
+        <div> <img src="../../../../assets/icons/person_white_24dp.svg"></div>
+        <div>{{granja.nombres | titlecase}} {{granja.apellidos | titlecase}}</div>
+      </div>
+      <div class="card__meta-details-infor">
+        <div><img src="../../../../assets/icons/set_meal_white_24dp.svg"></div>
+        <div (click)="detalle(granja)"> {{granja.nombre | titlecase}}</div>
+      </div>
+      <div class="card__meta-details-infor">
+        <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
+        <div (click)="detalle(granja)"> {{granja.direccion}} </div>
+      </div>
+      <div class="card__meta-details-infor">
+        <div><img src="../../../../assets/icons/areaterreno_white.svg"></div>
+        <div (click)="detalle(granja)">{{granja.area}} m²</div>
+      </div>
+    </div>
+  </div>
+  <div class="card__description">
+    <div class="card__description-header">
+      <h1 (click)="detalle(granja)">{{granja.nombre | shorter:15}}</h1>
+      <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
+        (click)="changeFavorite(granja)">
+      <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita"
+        (click)="changeFavorite(granja)">
+    </div>
+    <div class="card__description-container">
+      <p class="estilo-p-card" (click)="detalle(granja)"> {{granja.descripcion | shorter:100}}</p>
+    </div>
+    <div class="card__description-container_footer">
+      <p class="read-more"  (click)="detalle(granja)"><a>Ver detalles</a></p>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,31 @@
-<!--<input type="image" src="assets/images/logo-no-name.svg" (click)="onClick()">-->
-<div class="floating-btn">
-    <!--<button type="button" class="btn btn-primary btn-sm" (click)="onClick()"></button>-->
-    <i class="floating-btn__icon bi bi-plus" (mouseenter)="onClick()" (mouseleave)="onClick()"></i>
+
+
+<div  *ngIf="editar" class="floating-btn" >
+  <img class="floating-btn__icon  tooltip-trigger"src="assets/icons/edit_note_azul1_24dp.svg" >
+  <div class="tooltip-one">
+    Editar perfil
+  </div>
 </div>
+<div class="botonupdatendcancel">
+  <div  *ngIf="cancelar" class="floating-btn">
+    <img class="floating-btn__icon tooltip-trigger"src="assets/icons/clear_azul1_24dp.svg">
+    <div class="tooltip-one">
+      Cancelar edición
+    </div>
+  </div>
+  <div  *ngIf="actualizar" class="floating-btn2">
+    <img class="floating-btn__icon tooltip-trigger" src="assets/icons/save_as_azul1_24dp.svg">
+
+        <div class="tooltip-one">
+          Actualizar perfil
+        </div>
+  </div>
+</div>
+  <div *ngIf="agregar" class="floating-btn "  >
+    <img class="floating-btn__icon tooltip-trigger" src="assets/icons/add_blue1_24dp.svg">
+    <div class="tooltip-one">
+      Agregar
+    </div>
+</div>
+
+

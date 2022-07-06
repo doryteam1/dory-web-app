@@ -813,17 +813,13 @@ if (this.form.getRawValue().direccion !== '') {
                   if (this.form.get('id_municipio')?.value == idMunipio) {
                     this.latitud?.setValue(event.latLng!.toJSON().lat);
                     this.longitud?.setValue(event.latLng!.toJSON().lng);
-                    this.direccion?.setValue(
-                      response.results[0].formatted_address
-                    );
+                    this.direccion?.setValue(response.results[0].formatted_address);
                     this.faltadireccion = false;
                     this.closeMap();
                   } else {
                     this.latitud?.setValue(event.latLng!.toJSON().lat);
                     this.longitud?.setValue(event.latLng!.toJSON().lng);
-                    this.direccion?.setValue(
-                      response.results[0].formatted_address
-                    );
+                    this.direccion?.setValue(response.results[0].formatted_address);
                     this.idMunic?.setValue(idMunipio);
                     this.closeMap();
                   }

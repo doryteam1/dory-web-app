@@ -71,6 +71,9 @@ flex-direction: column;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #F8F9FA;
+  margin-bottom: 20px;
+  box-shadow: 4px 4px 4px rgb(0 0 0 / 10%);
 }
 .mytarget{
   overflow: scroll;
@@ -83,3 +86,43 @@ flex-direction: column;
 .mycontainer_info {
   padding-top: 50px;
 }
+/* estilos anucio sin asociaciones y sin granjas */
+.row--mi-estilo {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.search-container__box {
+  text-align: center;
+}
+
+.search-container__image {
+  width: 1024px;
+  height: 370px;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mychangeitem {
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.mychangeitemheight {
+  height: 90%;
+}
+.container--flex-center{
+    justify-content: center;
+}
+.search-container--flex{
+  align-items: center;
+  justify-content: center;
+}
+
+
