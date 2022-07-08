@@ -9,12 +9,16 @@ import { AsociacionesMunicipioComponent } from './components/asociaciones-munici
 import { AsociacionesService } from './services/asociaciones.service';
 import { HttpsService } from '../services/https.service';
 import { SharedModule } from '../shared/shared.module';
+import { SolicitudesModalContentComponent } from './components/modals/solicitudes-modal-content/solicitudes-modal-content.component';
+import { PiscicultoresModule } from '../piscicultores/piscicultores.module';
+import { PescadoresModule } from '../pescadores/pescadores.module';
 
 
 @NgModule({
   declarations: [
     AsociacionesComponent,
-    AsociacionesMunicipioComponent
+    AsociacionesMunicipioComponent,
+    SolicitudesModalContentComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +27,9 @@ import { SharedModule } from '../shared/shared.module';
     HttpClientModule,
     HttpClientJsonpModule,
     NgbModule,
-    SharedModule
+    SharedModule,
+    PiscicultoresModule,
+    PescadoresModule
   ],
   providers:[
     AsociacionesService,

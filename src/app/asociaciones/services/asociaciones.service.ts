@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpsService } from 'src/app/services/https.service';
+import { SolicitudesModalContentComponent } from '../components/modals/solicitudes-modal-content/solicitudes-modal-content.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AsociacionesService {
 
-  constructor(private https:HttpsService) {
+  constructor(private https:HttpsService, private modalService:NgbModal) {
 
   }
 
@@ -45,6 +47,23 @@ export class AsociacionesService {
 
   tiposAsociacion(){
     return this.https.get('https://dory-api-rest.herokuapp.com/api/tipos-asociaciones');
+  }
+
+  public showSolicitudesModal(
+    nit:number,
+    title?: string): Promise<boolean> {
+    const modalRef = this.modalService.open(SolicitudesModalContentComponent);
+    modalRef.componentInstance.title = title;
+    modalRef.componentInstance.nit = nit;
+    return modalRef.result;
+  }
+
+  invitarUsuario(solicitud:any, nit:number){
+    return this.https.post('https://dory-api-rest.herokuapp.com/api/asociaciones/solicitud/adicion/'+nit,solicitud)
+  }
+
+  eliminarSolicitud(idSolicitud:number){
+    return this.https.delete('https://dory-api-rest.herokuapp.com/api/asociaciones//solicitud/eliminar/'+idSolicitud)
   }
 }
 

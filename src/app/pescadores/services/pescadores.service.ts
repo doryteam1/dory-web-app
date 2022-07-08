@@ -23,4 +23,8 @@ export class PescadoresService {
   getPescadoresDepartamento(idDpto:number){
     return this.https.get("https://dory-api-rest.herokuapp.com/api/pescadores/departamento/"+idDpto);
   }
+
+  getPescadoresEstadoSolicitud(nit:number){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/usuario/pescador/asociacion/'+nit)
+  }
 }

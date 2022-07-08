@@ -935,4 +935,8 @@ export class MisAsociacionesComponent implements OnInit {
     }
     this.showDetalleAsociacion = true;
   }
+
+  agregarMiembro(){
+    this.asociacionesService.showSolicitudesModal(this.nit?.value, 'Agregar miembro');
+  }
 }

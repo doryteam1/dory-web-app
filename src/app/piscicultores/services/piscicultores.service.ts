@@ -52,4 +52,8 @@ export class PiscicultoresService {
       null
     );
   }
+
+  getPiscicultoresEstadoSolicitud(nit:number){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/usuario/piscicultor/asociacion/'+nit)
+  }
 }
