@@ -107,7 +107,7 @@
            (tilesloaded)="mapainiciado()">
             <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i"
               [position]="markerInfo.markerPosition" [options]="markerOptions"
-              icon="{{ i == indexSelected ? 'assets/icons/person_pin_circle_blue_24dp.svg' : 'assets/icons/person_pin_circle_red_24dp.svg' }}"
+              icon="{{ i == indexSelected ? 'assets/icons/person_pin_circle_red_24dp.svg' : 'assets/icons/person_pin_circle_blue_24dp.svg' }}"
               (mapMouseover)="openInfoWindow(marker,i)"
               (mapMouseout)="eliminInfoWindow()">
             </map-marker>
