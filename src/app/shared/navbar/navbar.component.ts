@@ -53,4 +53,12 @@ export class NavbarComponent implements OnInit {
   updatePassword(){
     this.router.navigateByUrl('update-password')
   }
+
+  confirmarInvitacion(){
+
+  }
+
+  eliminarInvitacion(){
+    
+  }
 }

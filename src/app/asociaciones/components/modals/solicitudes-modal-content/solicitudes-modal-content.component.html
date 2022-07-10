@@ -19,7 +19,7 @@
                         <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person.svg'}}">
                         <span class="card__title">{{piscicultor.nombres}}</span>
                     </div>
-                    <button class="card__button btn-square btn--blue" (click)="invitarAnular(piscicultor)">{{piscicultor?.estado_solicitud == 'Enviada' || piscicultor?.estado_solicitud == 'Aceptada' ? 'Anular' : 'Invitar'}}</button>
+                    <button class="card__button btn-square btn--blue" [ngClass]="{'btn--grey' : piscicultor?.estado_solicitud == 'Enviada'}" (click)="invitarAnular(piscicultor)">{{piscicultor?.estado_solicitud == 'Enviada' || piscicultor?.estado_solicitud == 'Aceptada' ? 'Anular' : 'Invitar'}}</button>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
                         <img class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person.svg'}}">
                         <span class="card__title">{{pescador.nombres}}</span>
                     </div>
-                    <button class="card__button btn-square btn--blue" (click)="invitarAnular(pescador)">Invitar</button>
+                    <button class="card__button btn-square btn--blue" [ngClass]="{'btn--grey' : pescador?.estado_solicitud == 'Enviada'}" (click)="invitarAnular(pescador)">{{pescador?.estado_solicitud == 'Enviada' || pescador?.estado_solicitud == 'Aceptada' ? 'Anular' : 'Invitar'}}</button>
                 </div>
             </div>
         </div>

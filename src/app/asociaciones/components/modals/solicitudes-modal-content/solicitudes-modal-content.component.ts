@@ -52,6 +52,8 @@ export class SolicitudesModalContentComponent implements OnInit {
       this.asociacionService.invitarUsuario(data,this.nit).subscribe(
         (response)=>{
           console.log(response)
+          usuario.id_solicitud = response.body.insertId;
+          console.log("usuario.id_solicitud ",usuario.id_solicitud)
         },err=>{
           usuario.estado_solicitud = null;   
           console.log(err)     

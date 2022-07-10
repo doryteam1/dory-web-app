@@ -88,9 +88,9 @@
               <div class="dropdown-item d-flex flex-row align-items-start">
                 <img class="notify__avatar" src="https://i.pravatar.cc/300">
                 <div class="d-flex flex-column ">
-                  <span class="notify__description">¿Eres miembro de <span class="notify__label">Asopesqueros</span>?</span>
+                  <span class="notify__description">Te han invitado a indicar que eres miembro de <span class="notify__label">Asopesqueros</span></span>
                   <span class="notify__sub-description">
-                    hace 4 horas 
+                    hace 4 horas · ¿Eres miembro?
                   </span>
                   <div class="d-flex flex-row mt-2">
                     <button class="notify-button btn-square btn--blue">Confirmar</button>
@@ -104,13 +104,13 @@
               <div class="dropdown-item d-flex flex-row align-items-start">
                 <img class="notify__avatar" src="https://i.pravatar.cc/300">
                 <div class="d-flex flex-column ">
-                  <span class="notify__description">¿Eres miembro de <span class="notify__label">Piscicultores de Sucre</span>?</span>
+                  <span class="notify__description">Te han invitado a indicar que eres miembro de <span class="notify__label">Piscicultores de Sucre</span></span>
                   <span class="notify__sub-description">
-                    hace 4 horas 
+                    hace 4 horas · ¿Eres miembro?
                   </span>
                   <div class="d-flex flex-row mt-2">
-                    <button class="notify-button btn-square btn--blue">Confirmar</button>
-                    <button class="notify-button btn-square btn--grey">Eliminar</button>
+                    <button class="notify-button btn-square btn--blue" (click)="confirmarInvitacion()">Confirmar</button>
+                    <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion()">Eliminar</button>
                   </div>
                 </div>
               </div>
