@@ -262,8 +262,10 @@ export class PerfilComponent implements OnInit {
   municipiocambiado: boolean = false;
   editarperfil: boolean = false;
   mensajedirecion!: string;
-  EditedInputValue: boolean=false;
-  canceladoedir: boolean=false;
+  EditedInputValue: boolean = false;
+  canceladoedir: boolean = false;
+  photoDelate: boolean=false;
+  photoUpdate: boolean=false
   constructor(
     private us: UsuarioService,
     private aes: AreasExperticiaService,
@@ -290,8 +292,6 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.direccion?.disable();
-
     this.nombres?.disable();
     this.cedula?.disable();
     this.apellidos?.disable();
@@ -299,16 +299,21 @@ export class PerfilComponent implements OnInit {
     this.informacion_adicional_direccion?.disable();
     this.nombre_corregimiento?.disable();
     this.idMunic?.disable();
-
-    registerLocaleData(es);
+    this.direccion?.disable();
+    this.idAreaExpert?.disable();
+    this.sobre_mi?.disable();
+    this.otraAreaExp?.disable()
+    this.otraAreaExpDesc?.disable()
     this.latitud?.disable();
     this.longitud?.disable();
     this.email?.disable();
+    registerLocaleData(es);
     let email: string | null = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe(
       (response) => {
         /* console.log('usuario por email ', response); */
         this.usuario = response.data[0];
+        console.log(this.usuario)
         this.form.get('id')?.setValue(this.usuario.id);
         this.form.get('cedula')?.setValue(this.usuario.cedula);
         this.form.get('nombres')?.setValue(this.usuario.nombres);
@@ -325,6 +330,7 @@ export class PerfilComponent implements OnInit {
         this.form
           .get('id_area_experticia')
           ?.setValue(this.usuario.id_area_experticia);
+        this.form.get('sobre_mi')?.setValue(this.usuario.sobre_mi);
         this.form.get('nombre_negocio')?.setValue(this.usuario.nombre_negocio);
         this.form.get('foto')?.setValue(this.usuario.foto);
         this.form
@@ -334,7 +340,7 @@ export class PerfilComponent implements OnInit {
           .get('fecha_nacimiento')
           ?.setValue(Utilities.dateToISOString(this.usuario.fecha_nacimiento));
         this.form.get('nombre_vereda')?.setValue(this.usuario.nombre_vereda);
-        this.form.get('id_municipio')?.setValue(this.usuario.id_municipio);
+
         this.form
           .get('id_corregimiento')
           ?.setValue(this.usuario.id_corregimiento);
@@ -349,13 +355,20 @@ export class PerfilComponent implements OnInit {
           this.usuario.otra_area_experticia_descripcion
         );
 
-        if (this.usuario.id_departamento == 0 ) {
+        if (this.usuario.id_departamento == 0 || this.usuario.id_departamento == null) {
           this.form.get('id_departamento')?.setValue(70);
         } else {
           this.form
             .get('id_departamento')
             ?.setValue(this.usuario.id_departamento);
         }
+      /*   if (this.usuario.id_municipio== 0 || this.usuario.id_municipio == null) {
+               this.form
+                 .get('id_municipio')
+                 ?.setValue(0);
+        } else {
+        } */
+        this.form.get('id_municipio')?.setValue(this.usuario.id_municipio);
 
         this.idDpto?.disable();
         this.loadAreasExp();
@@ -371,23 +384,23 @@ export class PerfilComponent implements OnInit {
         if (
           !this.usuario.tipo_usuario ||
           !(this.usuario.nombres && this.usuario.apellidos)
-        ) {
-          this.router.navigate(['/welcome', this.usuario]);
-        }
-        this.us.setAuthUserPhoto(this.usuario.foto);
-        this.markerPosition = {
-          lat: parseFloat(this.latitud?.value),
-          lng: parseFloat(this.longitud?.value),
-        };
+          ) {
+            this.router.navigate(['/welcome', this.usuario]);
+          }
+          this.us.setAuthUserPhoto(this.usuario.foto);
+          this.markerPosition = {
+            lat: parseFloat(this.latitud?.value),
+            lng: parseFloat(this.longitud?.value),
+          };
 
-        this.tempDir = this.form.get('direccion')?.value;
-        this.tempMunicId = this.form.get('id_municipio')?.value;
+          this.tempDir = this.form.get('direccion')?.value;
+          this.tempMunicId = this.form.get('id_municipio')?.value;
+
       },
       (err) => {
         console.log(err);
       }
     );
-
   }
   myNgOnInit() {
     this.direccion?.disable();
@@ -398,39 +411,46 @@ export class PerfilComponent implements OnInit {
     this.informacion_adicional_direccion?.disable();
     this.nombre_corregimiento?.disable();
     this.idMunic?.disable();
-        this.form.get('id')?.setValue(this.usuario.id);
-        this.form.get('cedula')?.setValue(this.usuario.cedula);
-        this.form.get('nombres')?.setValue(this.usuario.nombres);
-        this.form.get('apellidos')?.setValue(this.usuario.apellidos);
-        this.form.get('celular')?.setValue(this.usuario.celular);
-        this.form.get('direccion')?.setValue(this.usuario.direccion);
-        this.form
-          .get('informacion_adicional_direccion')
-          ?.setValue(this.usuario.informacion_adicional_direccion);
-        this.form
-          .get('id_tipo_usuario')
-          ?.setValue(this.usuario.id_tipo_usuario);
-        this.form.get('email')?.setValue(this.usuario.email);
-        this.form
-          .get('id_area_experticia')
-          ?.setValue(this.usuario.id_area_experticia);
-        this.form.get('nombre_negocio')?.setValue(this.usuario.nombre_negocio);
-        this.form.get('foto')?.setValue(this.usuario.foto);
-        this.form
-          .get('fecha_registro')
-          ?.setValue(Utilities.dateToISOString(this.usuario.fecha_registro));
-        this.form
-          .get('fecha_nacimiento')
-          ?.setValue(Utilities.dateToISOString(this.usuario.fecha_nacimiento));
-        this.form.get('nombre_vereda')?.setValue(this.usuario.nombre_vereda);
-        this.form.get('id_municipio')?.setValue(this.usuario.id_municipio);
-        this.form
-          .get('id_corregimiento')
-          ?.setValue(this.usuario.id_corregimiento);
-        this.form.get('id_vereda')?.setValue(this.usuario.id_vereda);
-        this.form.get('latitud')?.setValue(this.usuario.latitud);
-        this.form.get('longitud')?.setValue(this.usuario.longitud);
-        this.form.get('nombre_corregimiento')?.setValue(this.usuario.nombre_corregimiento);
+    this.idAreaExpert?.disable();
+    this.sobre_mi?.disable()
+    this.otraAreaExp?.disable();
+    this.otraAreaExpDesc?.disable();
+    this.form.get('id')?.setValue(this.usuario.id);
+    this.form.get('cedula')?.setValue(this.usuario.cedula);
+    this.form.get('nombres')?.setValue(this.usuario.nombres);
+    this.form.get('apellidos')?.setValue(this.usuario.apellidos);
+    this.form.get('celular')?.setValue(this.usuario.celular);
+    this.form.get('direccion')?.setValue(this.usuario.direccion);
+    this.form
+      .get('informacion_adicional_direccion')
+      ?.setValue(this.usuario.informacion_adicional_direccion);
+    this.form.get('id_tipo_usuario')?.setValue(this.usuario.id_tipo_usuario);
+    this.form.get('email')?.setValue(this.usuario.email);
+    this.form
+      .get('id_area_experticia')
+      ?.setValue(this.usuario.id_area_experticia);
+      this.form.get('sobre_mi')?.setValue(this.usuario.sobre_mi);
+    this.form.get('nombre_negocio')?.setValue(this.usuario.nombre_negocio);
+    this.form.get('foto')?.setValue(this.usuario.foto);
+    this.form
+      .get('fecha_registro')
+      ?.setValue(Utilities.dateToISOString(this.usuario.fecha_registro));
+    this.form
+      .get('fecha_nacimiento')
+      ?.setValue(Utilities.dateToISOString(this.usuario.fecha_nacimiento));
+    this.form.get('nombre_vereda')?.setValue(this.usuario.nombre_vereda);
+    this.form.get('id_municipio')?.setValue(this.usuario.id_municipio);
+    this.form.get('id_corregimiento')?.setValue(this.usuario.id_corregimiento);
+    this.form.get('id_vereda')?.setValue(this.usuario.id_vereda);
+    this.form.get('latitud')?.setValue(this.usuario.latitud);
+    this.form.get('longitud')?.setValue(this.usuario.longitud);
+    this.form
+      .get('nombre_corregimiento')
+      ?.setValue(this.usuario.nombre_corregimiento);
+             this.otraAreaExp?.setValue(this.usuario.otra_area_experticia);
+             this.otraAreaExpDesc?.setValue(
+               this.usuario.otra_area_experticia_descripcion
+             );
   }
 
   openAddFileDialog() {
@@ -440,6 +460,8 @@ export class PerfilComponent implements OnInit {
 
   uploadToServer(file: any) {
     let fileName = '/perfil/user_' + this.id?.value;
+    console.log(fileName);
+    console.log(file);
     this.storage
       .cloudStorageTask(fileName, file)
       .percentageChanges()
@@ -460,23 +482,60 @@ export class PerfilComponent implements OnInit {
                       this.usuario.foto = downloadUrl;
                       this.us.setAuthUserPhoto(this.usuario.foto);
                       this.loadingPhoto = false;
-                      //window.location.reload();
+                      this.photoUpdate=true
+                                      setTimeout(() => {
+                                        this.photoUpdate = false;
+                                        /* window.location.reload(); */
+                                      }, 3000);
+
                     },
                     (err) => {
                       this.loadingPhoto = false;
+                       this.photoUpdate = false;
                       console.log(err);
                     }
                   );
               },
               (err) => {
                 this.loadingPhoto = false;
+                 this.photoUpdate = false;
                 console.log(err);
               }
             );
         }
       });
   }
+delatePhotoPerfil(){
+     let fileName = '/perfil/user_' + this.id?.value;
+     this.storage.deletephotoPerfil(fileName).subscribe(
+       (result) => {
+          this.us
+            .actualizarUsuario(this.id?.value, { foto: '' })
+            .subscribe(
+              (response) => {
+                this.usuario.foto = '';
+                this.us.setAuthUserPhoto(this.usuario.foto);
+                this.storageService.add('photoUser', '');
+                this.photoDelate=true
+                this.usuario
+                setTimeout(() => {
+                  this.photoDelate = false;
+                  window.location.reload();
+                }, 3000);
+              },
+              (err) => {
+                this.photoDelate = false;
+                console.log(err);
+              }
+            );
 
+       },
+       (err) => {
+         console.log(err);
+       }
+     );
+
+  }
   async fileChange(event: any) {
     this.loadingPhoto = true;
     const imageFile = event.target.files[0];
@@ -531,6 +590,7 @@ export class PerfilComponent implements OnInit {
     this.aes.getAreasDeExperticia().subscribe(
       (response) => {
         this.areas = response.data;
+        console.log(this.areas)
       },
       (err) => {
         console.log(err);
@@ -542,6 +602,7 @@ export class PerfilComponent implements OnInit {
     this.places.getDepartamentos().subscribe(
       (response) => {
         this.departamentos = response.data;
+        console.log(this.departamentos)
       },
       (err) => {
         console.log(err);
@@ -616,11 +677,13 @@ export class PerfilComponent implements OnInit {
           if (response.data != 0) {
             this.mylatitudidmunicipio = Number(response.data[0].latitud);
             this.mylongitudidmunicipio = Number(response.data[0].longitud);
-            this.direccion?.setValue('');
             if (this.idMunic?.value == this.tempMunicId) {
               this.direccion?.setValue(this.tempDir);
             } else if (!this.isOpenMap) {
               this.verMap();
+              if (!this.canceladoedir) {
+                this.direccion?.setValue('');
+              }
               this.escogerdireccion = true;
               setTimeout(() => {
                 this.escogerdireccion = false;
@@ -663,7 +726,6 @@ export class PerfilComponent implements OnInit {
       return;
     }
     console.log('usuario ', this.form.getRawValue());
-
     /*  console.log('id ', this.form.get('id')?.value); */
     this.us
       .actualizarUsuario(this.form.get('id')?.value, this.form.getRawValue())
@@ -681,6 +743,10 @@ export class PerfilComponent implements OnInit {
           this.informacion_adicional_direccion?.disable();
           this.nombre_corregimiento?.disable();
           this.idMunic?.disable();
+           this.idAreaExpert?.disable();
+           this.sobre_mi?.disable();
+           this.otraAreaExp?.disable();
+          this.otraAreaExpDesc?.disable();
           this.mensajedirecion = '';
           this.EditedInputValue = false;
           this.validateInputFormObject.forEach((o) => {
@@ -691,7 +757,7 @@ export class PerfilComponent implements OnInit {
             }
           });
           this.appModalService
-            .modalAlertActualizadoComponent('Perfil actualizado correctamnete')
+            .modalAlertActualizadoComponent('Perfil actualizado correctamente')
             .then((result) => {})
             .catch((result) => {});
         },
@@ -707,22 +773,25 @@ export class PerfilComponent implements OnInit {
           this.informacion_adicional_direccion?.disable();
           this.nombre_corregimiento?.disable();
           this.idMunic?.disable();
-                    this.mensajedirecion = '';
-                    this.EditedInputValue = false;
-                    this.validateInputFormObject.forEach((o) => {
-                      let claves = Object.keys(o);
-                      for (let i = 0; i < claves.length; i++) {
-                        let clave: any = claves[i];
-                        o[clave] = false;
-                      }
-                    });
-                    this.appModalService
-                      .modalAlertActualizadoComponent(
-                        'Parece que hubo un error al actualizar el perfil, por favor inténtalo de nuevo'
-                      )
-                      .then((result) => {})
-                      .catch((result) => {});
-
+           this.idAreaExpert?.disable();
+           this.sobre_mi?.disable();
+               this.otraAreaExp?.disable();
+               this.otraAreaExpDesc?.disable();
+          this.mensajedirecion = '';
+          this.EditedInputValue = false;
+          this.validateInputFormObject.forEach((o) => {
+            let claves = Object.keys(o);
+            for (let i = 0; i < claves.length; i++) {
+              let clave: any = claves[i];
+              o[clave] = false;
+            }
+          });
+          this.appModalService
+            .modalAlertActualizadoComponent(
+              'Parece que hubo un error al actualizar el perfil, por favor inténtalo de nuevo'
+            )
+            .then((result) => {})
+            .catch((result) => {});
         }
       );
   }
@@ -740,6 +809,24 @@ export class PerfilComponent implements OnInit {
     if (this.idAreaExpert?.value !== -1) {
       this.otraAreaExp?.setValue('');
       this.otraAreaExpDesc?.setValue('');
+      if (this.usuario.id_area_experticia !== this.idAreaExpert?.value) {
+        this.validateInputFormObject.forEach((o) => {
+          o.id_area_experticia = true;
+        });
+        if (
+          JSON.stringify(this.validateInputFormObject) !==
+          JSON.stringify(this.validateInputFormObjectFalse)
+        ) {
+          this.EditedInputValue = true;
+        } else {
+          this.EditedInputValue = false;
+        }
+      } else{
+        this.EditedInputValue = false;
+                this.validateInputFormObject.forEach((o) => {
+                  o.id_area_experticia = false;
+                });
+      }
     }
   }
 
@@ -792,6 +879,7 @@ export class PerfilComponent implements OnInit {
                 this.direccion?.setValue(response.results[0].formatted_address);
                 this.tempDir = this.direccion?.value;
                 this.tempMunicId = this.idMunic?.value;
+                this.foto?.setValue('')
                 if (event.latLng) {
                   this.markerPosition = event.latLng.toJSON();
                   this.latitud?.setValue(event.latLng.toJSON().lat);
@@ -800,16 +888,15 @@ export class PerfilComponent implements OnInit {
                 this.validateInputFormObject.forEach((o) => {
                   o.latitud = true;
                   o.longitud = true;
-
                 });
-                    if (
-                      JSON.stringify(this.validateInputFormObject) !==
-                      JSON.stringify(this.validateInputFormObjectFalse)
-                    ) {
-                      this.EditedInputValue = true;
-                    } else {
-                      this.EditedInputValue = false;
-                    }
+                if (
+                  JSON.stringify(this.validateInputFormObject) !==
+                  JSON.stringify(this.validateInputFormObjectFalse)
+                ) {
+                  this.EditedInputValue = true;
+                } else {
+                  this.EditedInputValue = false;
+                }
               } else {
                 this.validateInputFormObject.forEach((o) => {
                   o.latitud = false;
@@ -872,10 +959,11 @@ export class PerfilComponent implements OnInit {
           windowClass: 'dark-modal',
         })
         .result.then((result) => {
-          console.log('se cerro modal ', result);
           this.isOpenMap = false;
           this.municipiocambiado = false;
           if (!this.form.get('direccion')?.value && this.usuario.direccion) {
+            console.log(this.usuario.direccion);
+            console.log(this.form.get('direccion')?.value);
             this.form.get('direccion')?.setValue(this.tempDir);
             this.form.get('id_municipio')?.setValue(this.tempMunicId);
             this.form.get('latitud')?.setValue(this.latitud?.value);
@@ -886,6 +974,8 @@ export class PerfilComponent implements OnInit {
           this.isOpenMap = false;
           this.municipiocambiado = false;
           if (!this.form.get('direccion')?.value && this.usuario.direccion) {
+            console.log(this.usuario.direccion);
+            console.log(this.form.get('direccion')?.value);
             this.form.get('direccion')?.setValue(this.tempDir);
             this.form.get('id_municipio')?.setValue(this.tempMunicId);
             this.form.get('latitud')?.setValue(this.latitud?.value);
@@ -904,13 +994,13 @@ export class PerfilComponent implements OnInit {
             latLngBounds: sucreColombia,
             strictBounds: false,
           },
-          zoom: 12,
+          zoom: 11,
           scrollwheel: true,
         };
-        this.markerPosition = {
+   /*      this.markerPosition = {
           lat: this.mylatitudidmunicipio,
           lng: this.mylongitudidmunicipio,
-        };
+        }; */
       } else {
         this.options = {
           center: {
@@ -1041,15 +1131,14 @@ export class PerfilComponent implements OnInit {
         valor == -1)
     ) {
       this.validateInputFormObject.forEach((o) => (o[nombreinput] = true));
-              if (
-                JSON.stringify(this.validateInputFormObject) !==
-                JSON.stringify(this.validateInputFormObjectFalse)
-              ) {
-                this.EditedInputValue = true;
-              } else {
-                this.EditedInputValue = false;
-              }
-      console.log('ha cambiado el valor');
+      if (
+        JSON.stringify(this.validateInputFormObject) !==
+        JSON.stringify(this.validateInputFormObjectFalse)
+      ) {
+        this.EditedInputValue = true;
+      } else {
+        this.EditedInputValue = false;
+      }
     }
 
     if (
@@ -1060,15 +1149,14 @@ export class PerfilComponent implements OnInit {
       (valor_sin_espacios === usuarionombreinput && valor === -1)
     ) {
       this.validateInputFormObject.forEach((o) => (o[nombreinput] = false));
-              if (
-                JSON.stringify(this.validateInputFormObject) !==
-                JSON.stringify(this.validateInputFormObjectFalse)
-              ) {
-                this.EditedInputValue = true;
-              } else {
-                this.EditedInputValue = false;
-              }
-      console.log('los valores son iguales');
+      if (
+        JSON.stringify(this.validateInputFormObject) !==
+        JSON.stringify(this.validateInputFormObjectFalse)
+      ) {
+        this.EditedInputValue = true;
+      } else {
+        this.EditedInputValue = false;
+      }
     }
   }
   editarPerfi() {
@@ -1081,9 +1169,12 @@ export class PerfilComponent implements OnInit {
     this.informacion_adicional_direccion?.enable();
     this.nombre_corregimiento?.enable();
     this.idMunic?.enable();
+     this.idAreaExpert?.enable();
+     this.sobre_mi?.enable();
+     this.otraAreaExp?.enable();
+    this.otraAreaExpDesc?.enable();
   }
   cancelProfileEditing() {
-
     if (
       JSON.stringify(this.validateInputFormObject) !==
       JSON.stringify(this.validateInputFormObjectFalse)
@@ -1100,8 +1191,8 @@ export class PerfilComponent implements OnInit {
         )
         .then((result) => {
           if (result == true) {
-            this.canceladoedir=true
-            this.mensajedirecion=''
+            this.canceladoedir = true;
+            this.mensajedirecion = '';
             this.EditedInputValue = false;
             this.editarperfil = false;
             this.validateInputFormObject.forEach((o) => {
@@ -1111,11 +1202,11 @@ export class PerfilComponent implements OnInit {
                 o[clave] = false;
               }
             });
+            console.log(this.validateInputFormObject);
             this.myNgOnInit();
-
           } else {
-             this.EditedInputValue = true;
-             this.editarperfil = true;
+            this.EditedInputValue = true;
+            this.editarperfil = true;
           }
         })
         .catch((result) => {
@@ -1131,6 +1222,10 @@ export class PerfilComponent implements OnInit {
       this.informacion_adicional_direccion?.disable();
       this.nombre_corregimiento?.disable();
       this.idMunic?.disable();
+      this.idAreaExpert?.disable();
+      this.sobre_mi?.disable();
+      this.otraAreaExp?.disable();
+      this.otraAreaExpDesc?.disable();
     }
   }
   get id() {
@@ -1225,6 +1320,9 @@ export class PerfilComponent implements OnInit {
 
   get otraAreaExp() {
     return this.form.get('otra_area_experticia');
+  }
+  get sobre_mi() {
+    return this.form.get('sobre_mi');
   }
 
   get otraAreaExpDesc() {

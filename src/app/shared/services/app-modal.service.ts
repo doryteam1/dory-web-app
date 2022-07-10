@@ -77,7 +77,7 @@ export class AppModalService {
   ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalAlertActualizadoComponent, {
       ariaLabelledBy: 'modal-basic-title',
-      size: 'xl',
+      size: 'sm',
       centered: true,
     });
     modalRef.componentInstance.mensaje = mensaje;
