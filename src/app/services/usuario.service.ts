@@ -98,7 +98,7 @@ export class UsuarioService {
   }
 
   solicitudesDeAsociaciones(){
-    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/usuario/solicitudes/noaceptadas');
+    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/usuario/solicitudes/noaceptadas/porusuario');
   }
 
   eliminarSolicitud(idSolicitud:number){

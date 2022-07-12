@@ -25,7 +25,7 @@
                     <div class="btn-group" *ngIf="piscicultor.estado_solicitud == 'Aceptada'">
                       <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item">Eliminar</a></li>
+                        <li (click)="invitarAnular(piscicultor)"><a class="dropdown-item"><i class="bi bi-trash3"></i> Eliminar</a></li>
                       </ul>
                     </div>
                 </div>
@@ -44,9 +44,7 @@
                     <div class="btn-group" *ngIf="pescador.estado_solicitud == 'Aceptada'">
                       <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">Menu item</a></li>
-                        <li><a class="dropdown-item" href="#">Menu item</a></li>
-                        <li><a class="dropdown-item" href="#">Menu item</a></li>
+                        <li (click)="invitarAnular(pescador)"><a class="dropdown-item"><i class="bi bi-trash3"></i> Eliminar</a></li>
                       </ul>
                     </div>
                 </div>
