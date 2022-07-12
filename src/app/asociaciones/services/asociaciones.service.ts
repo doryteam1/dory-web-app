@@ -66,6 +66,7 @@ export class AsociacionesService {
     console.log("service asociaciones idSolicitud ",idSolicitud)
     return this.https.delete('https://dory-api-rest.herokuapp.com/api/asociaciones/solicitud/eliminar/'+idSolicitud)
   }
+  
 }
 
 

@@ -70,8 +70,40 @@
 
 .notify-button{
     margin-right: 6px;
+    z-index: 10000;
 }
 
 .notify__sub-description{
     color:var(--azul1)
+}
+
+.notify__message{
+    color:var(--gris9);
+    font-size: 14px;
+}
+
+.search-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.search-container__box{
+    text-align: center;
+}
+
+.search-container__image{
+    width:400px;
+    height: 100px;
+    margin-top: 15px;
+}
+
+.search-container__title{
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
+.search-container__description{
+    font-size: 14px;
 }

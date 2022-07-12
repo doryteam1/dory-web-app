@@ -11,8 +11,13 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class NavbarComponent implements OnInit {
   photoUser:string = '';
   nomCom:string = '';
-  successMessage = 'Mensaje de prueba'
-  constructor(private router:Router,private userService:UsuarioService,private storageService:StorageService) { }
+  successMessage = 'Mensaje de prueba';
+  invitaciones:Array<any> = [];
+  notificatiosOpened:boolean = false;
+  constructor(
+    private router:Router,
+    private userService:UsuarioService,
+    private storageService:StorageService) { }
 
   ngOnInit(): void {
     this.photoUser = localStorage.getItem('photoUser')!;
@@ -23,6 +28,11 @@ export class NavbarComponent implements OnInit {
         this.nomCom = response.nomApell;
       }
     );
+    this.userService.solicitudesDeAsociaciones().subscribe(
+      (response)=>{
+        this.invitaciones = response.data;
+      }
+    )
   }
 
   login(){
@@ -58,7 +68,14 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  eliminarInvitacion(){
-    
-  }
+  eliminarInvitacion(invitacion:any){
+    invitacion.message = 'Solicitud eliminada'
+    this.userService.eliminarSolicitud(invitacion.id_solicitud).subscribe(
+      (response)=>{
+        console.log(response)
+      },err=>{
+        console.log(err)
+        invitacion.message = undefined;
+      });
+    }
 }

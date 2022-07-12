@@ -74,47 +74,40 @@
         <button class="btn-rounded-blue ms-2" routerLink="/registro" *ngIf="!authenticated()">Registrate</button>
 
         <div class="notify dropstart" *ngIf="authenticated()">
-          <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
             <i class="notify__icon bi bi-bell">
             </i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              99+
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" *ngIf="!notificatiosOpened">
+              {{invitaciones?.length}}
               <span class="visually-hidden">unread messages</span>
             </span>
           </div>
 
           <ul class="notify__menu dropdown-menu p-3" aria-labelledby="dropdownMenuButton1">
-            <li class="notify__menu-item"> 
+            <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index"> 
               <div class="dropdown-item d-flex flex-row align-items-start">
                 <img class="notify__avatar" src="https://i.pravatar.cc/300">
                 <div class="d-flex flex-column ">
-                  <span class="notify__description">Te han invitado a indicar que eres miembro de <span class="notify__label">Asopesqueros</span></span>
+                  <span class="notify__description">Te han invitado a indicar que eres miembro de <span class="notify__label">{{invitacion.asociacion}}</span></span>
                   <span class="notify__sub-description">
                     hace 4 horas · ¿Eres miembro?
                   </span>
-                  <div class="d-flex flex-row mt-2">
+                  <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
                     <button class="notify-button btn-square btn--blue">Confirmar</button>
-                    <button class="notify-button btn-square btn--grey">Eliminar</button>
+                    <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion(invitacion)">Eliminar</button>
                   </div>
+                  <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
                 </div>
               </div>
+              <hr class="dropdown-divider" *ngIf="i < invitaciones.length - 1">
             </li>
-            <hr>
-            <li class="notify__menu-item"> 
-              <div class="dropdown-item d-flex flex-row align-items-start">
-                <img class="notify__avatar" src="https://i.pravatar.cc/300">
-                <div class="d-flex flex-column ">
-                  <span class="notify__description">Te han invitado a indicar que eres miembro de <span class="notify__label">Piscicultores de Sucre</span></span>
-                  <span class="notify__sub-description">
-                    hace 4 horas · ¿Eres miembro?
-                  </span>
-                  <div class="d-flex flex-row mt-2">
-                    <button class="notify-button btn-square btn--blue" (click)="confirmarInvitacion()">Confirmar</button>
-                    <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion()">Eliminar</button>
-                  </div>
-                </div>
+            <div class="search-container" *ngIf="invitaciones.length < 1">
+              <div class="search-container__box">
+                  <img class="search-container__image" src="assets/images/inbox_cleanup.svg">
+                  <h3 class="search-container__title">No se han encontrado resultados</h3>
+                  <p class="search-container__description">No tienes notificaciones </p>
               </div>
-            </li>
+            </div>
           </ul>
         </div>
 

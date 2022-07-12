@@ -97,4 +97,13 @@ export class UsuarioService {
     return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/usuario/verify/account',{token:token})
   }
 
+  solicitudesDeAsociaciones(){
+    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/usuario/solicitudes/noaceptadas');
+  }
+
+  eliminarSolicitud(idSolicitud:number){
+    console.log("service asociaciones idSolicitud ",idSolicitud)
+    return this.httpsService.delete('https://dory-api-rest.herokuapp.com/api/asociaciones/solicitud/eliminar/'+idSolicitud)
+  }
+
 }
