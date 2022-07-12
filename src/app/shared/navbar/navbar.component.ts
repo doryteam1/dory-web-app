@@ -64,8 +64,15 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('update-password')
   }
 
-  confirmarInvitacion(){
-
+  confirmarInvitacion(invitacion:any){
+    invitacion.message = 'Aceptaste la solicitud. Ya eres miembro.';
+    this.userService.aceptarInvitacion(invitacion.id_solicitud).subscribe(
+      (response)=>{
+        
+      },err=>{
+        invitacion.message = undefined;
+      }
+    )
   }
 
   eliminarInvitacion(invitacion:any){

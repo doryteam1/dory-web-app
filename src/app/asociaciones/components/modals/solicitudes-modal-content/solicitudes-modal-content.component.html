@@ -21,8 +21,13 @@
                     </div>
                     <button class="card__button btn-square btn--grey" (click)="invitarAnular(piscicultor)" *ngIf="piscicultor.estado_solicitud == 'Enviada' && piscicultor.solicitud_enviada_por == 'asociacion'">Anular</button>
                     <button class="card__button btn-square btn--blue" (click)="invitarAnular(piscicultor)" *ngIf="piscicultor.estado_solicitud == 'Enviada' && piscicultor.solicitud_enviada_por == 'usuario'">Confirmar</button>
-                    <button class="card__button btn-square btn--grey" (click)="invitarAnular(piscicultor)" *ngIf="piscicultor.estado_solicitud == 'Aceptada'">Miembro</button>
-                    <button class="card__button btn-square btn--blue" (click)="invitarAnular(piscicultor)" *ngIf="!piscicultor.estado_solicitud">Invitar</button>
+                    <button class="card__button btn-square  btn--blue" (click)="invitarAnular(piscicultor)" *ngIf="!piscicultor.estado_solicitud">Invitar</button>
+                    <div class="btn-group" *ngIf="piscicultor.estado_solicitud == 'Aceptada'">
+                      <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item">Eliminar</a></li>
+                      </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,8 +40,15 @@
                     </div>
                     <button class="card__button btn-square btn--grey" (click)="invitarAnular(pescador)" *ngIf="pescador.estado_solicitud == 'Enviada' && pescador.solicitud_enviada_por == 'asociacion'">Anular</button>
                     <button class="card__button btn-square btn--blue" (click)="invitarAnular(pescador)" *ngIf="pescador.estado_solicitud == 'Enviada' && pescador.solicitud_enviada_por == 'usuario'">Confirmar</button>
-                    <button class="card__button btn-square btn--grey" (click)="invitarAnular(pescador)" *ngIf="pescador.estado_solicitud == 'Aceptada'">Miembro</button>
                     <button class="card__button btn-square btn--blue" (click)="invitarAnular(pescador)" *ngIf="!pescador.estado_solicitud">Invitar</button>
+                    <div class="btn-group" *ngIf="pescador.estado_solicitud == 'Aceptada'">
+                      <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#">Menu item</a></li>
+                        <li><a class="dropdown-item" href="#">Menu item</a></li>
+                        <li><a class="dropdown-item" href="#">Menu item</a></li>
+                      </ul>
+                    </div>
                 </div>
             </div>
         </div>

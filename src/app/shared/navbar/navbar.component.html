@@ -93,7 +93,7 @@
                     hace 4 horas · ¿Eres miembro?
                   </span>
                   <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
-                    <button class="notify-button btn-square btn--blue">Confirmar</button>
+                    <button class="notify-button btn-square btn--blue" (click)="confirmarInvitacion(invitacion)">Confirmar</button>
                     <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion(invitacion)">Eliminar</button>
                   </div>
                   <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>

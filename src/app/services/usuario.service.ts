@@ -102,8 +102,11 @@ export class UsuarioService {
   }
 
   eliminarSolicitud(idSolicitud:number){
-    console.log("service asociaciones idSolicitud ",idSolicitud)
     return this.httpsService.delete('https://dory-api-rest.herokuapp.com/api/asociaciones/solicitud/eliminar/'+idSolicitud)
+  }
+
+  aceptarInvitacion(idSolicitud:number){
+    return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/asociaciones/aceptarSolicitudAsociacion/'+idSolicitud,null)
   }
 
 }
