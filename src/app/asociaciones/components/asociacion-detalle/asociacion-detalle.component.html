@@ -1,0 +1,175 @@
+<app-notification-bar></app-notification-bar>
+<app-search-bar></app-search-bar>
+<app-navbar></app-navbar>
+<div class="container mycontainer">
+  <div class="mycontainer_info">
+    <div class="asociacion-container">
+      <div class="asociacion-container__info">
+        <div class="asociacion-container__detalle">
+          <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
+          <h3 class="asociacion-container__title">Asociación - {{asociacion?.nombre}} </h3>
+        </div>
+       <div class="asociacion-container__detalle">
+          <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
+          <span class="asociacion-container__description1">
+            {{asociacion?.municipio}}-{{asociacion?.departamento}}</span>
+        </div>
+      </div>
+      <img class="asociacion-container__image"
+        src="{{asociacion?.foto ? asociacion.foto : '/assets/images/avatar-person-square.png'}}">
+    </div>
+
+    <div class="line"></div>
+    <div class="detail-container mt-4">
+      <img class="detail-container__image" src="assets/icons/tipoAsociacion.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Tipo de asociación</h4>
+        <span class="detail-container__value">{{asociacion?.nombre_tipo_asociacion}}
+        </span>
+      </div>
+    </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/person_pin_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Representante legal</h4>
+        <span class="detail-container__value">{{asociacion?.propietario}}</span>
+      </div>
+    </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/litigation-negotiation.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Constituida legalmente</h4>
+        <span *ngIf="asociacion?.direccion" class="detail-container__value">
+          {{asociacion.legalconstituida ? 'Si' : 'No'}} </span>
+      </div>
+    </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/article_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Documento camara de comercio</h4>
+        <div class="detail-container__meta">
+          <img class="detail-container__meta-img" src="assets/images/pdf_camara_comercio.svg">
+          <div class="detail-container__meta-details">
+          <div class="detail-container__meta-info">
+          <a [href]="asociacion?.foto_camarac" target="_blank"><img class="detail-container__meta-info-img"
+            src="assets/icons/download-pdf-10136 1.svg"></a>
+         </div>
+    </div>
+        </div>
+        <h6 class="detail-container__title detail-container__title--font">Fecha de renovación</h6>
+        <div *ngIf="asociacion?.direccion" class="detail-container__value">{{asociacion.fecha_renovacion_camarac}} </div>
+      </div>
+    </div>
+        <div class="detail-container">
+          <img class="detail-container__image"src="assets/icons/location_on_black_24dp.svg">
+          <div class="detail-container__data">
+            <h4 class="detail-container__title">Dirección</h4>
+            <span *ngIf="asociacion?.direccion" class="detail-container__value">
+              {{asociacion.direccion ? 'Dir.' : ''}} {{asociacion.direccion}}</span>
+          </div>
+        </div>
+        <div class="detail-container" *ngIf="asociacion?.informacion_adicional_direccion" >
+          <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
+          <div class="detail-container__data">
+            <h4 class="detail-container__title">Información adicional de la dirección</h4>
+            <span class="detail-container__value">
+              {{asociacion.informacion_adicional_direccion}}</span>
+          </div>
+        </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/pescador.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Pescadores que pertenecen a la asociación </h4>
+        <span class="detail-container__value"
+          *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}} pescadores en
+          total</span>
+        <span class="detail-container__value"
+          *ngIf="piscicultorasociaciones?.length==1">{{piscicultorasociaciones?.length}} pescador en
+          total</span>
+        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con pescadores asociados</span>
+      </div>
+    </div>
+
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/piscicultor.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Piscicultores que pertenecen a la asociación </h4>
+        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length>1">{{piscicultorgranjas?.length}}
+          piscicultores en total</span>
+        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length==1">{{piscicultorgranjas?.length}}
+          piscicultores en total</span>
+        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length<=0">No cuenta con piscicultores asociados</span>
+      </div>
+    </div>
+  </div>
+  <!-- granjas y asociaciones -->
+  <div class="mynavtabs">
+    <ul class="nav nav-tabs">
+      <li class="nav-item" (click)="activeTab(1)">
+        <a class="nav-link" [ngClass]="{'active mynav-link': activatelistgranja}" aria-current="page">
+          <span>
+            <img class="detail-container__image" src="assets/icons/piscicultor.svg">
+          </span> Piscicultores
+        </a>
+      </li>
+      <li class="nav-item" (click)="activeTab(2)">
+        <a class="nav-link" [ngClass]="{'active mynav-link': activatelistasociacion}">
+          <span>
+            <img class="detail-container__image" src="assets/icons/pescador.svg">
+          </span> Pescadores</a>
+      </li>
+    </ul>
+  </div>
+  <div class="container_mytarget">
+    <div class="mytarget" *ngIf="activatelistgranja">
+      <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 row--mi-estilo"
+        [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound,'container--flex-center':piscicultorasociaciones?.length==1}">
+        <div *ngIf="changeItem" class="mychangeitem">
+          <div>
+            <img src="assets/icons/changeiconanimado.svg">
+          </div>
+        </div>
+        <div class="search-container" *ngIf="showNotFound">
+          <div class="search-container__box">
+            <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
+            <h3>
+              Parece que esta asociación no cuenta con piscicultores registrados
+              <span>
+                <img src="assets/icons/corazonanimado.svg">
+              </span>
+            </h3>
+          </div>
+        </div>
+<!--         <app-card-granjas *ngFor="let granja of piscicultorgranjas " [granja]="granja"
+          (onDetalle)="goDetailFarm($event)"></app-card-granjas> -->
+                  <app-card-piscicultor *ngFor="let piscicultor of piscicultorasociaciones; let i =index " [piscicultor]="piscicultor " (onDetalle)="gopiscicultorDetail($event)">
+                  </app-card-piscicultor>
+      </div>
+    </div>
+    <div class="mytarget" *ngIf="activatelistasociacion">
+      <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4  row--mi-estilo"
+        [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound, 'container--flex-center':piscicultorasociaciones?.length==1 }">
+        <div *ngIf="changeItem" class="mychangeitem">
+          <div>
+            <img src="assets/icons/changeiconanimado.svg">
+          </div>
+        </div>
+        <div class="search-container" *ngIf="showNotFound">
+          <div class="search-container__box">
+            <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
+            <h3>
+              Parece que esta asociación no cuenta con pescadores registrados
+              <span>
+                <img src="assets/icons/corazonanimado.svg">
+              </span>
+            </h3>
+          </div>
+        </div>
+<!--             <app-card-pescador *ngFor="let pescador of pescadorasociaciones; let i =index " [pescador]="pescador"
+              (onDetalle)="goPescadorDetail($event)">
+            </app-card-pescador> -->
+      </div>
+    </div>
+  </div>
+</div>
+

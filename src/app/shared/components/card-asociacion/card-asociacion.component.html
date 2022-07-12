@@ -13,7 +13,7 @@
         <div class="card__meta-detais-info">
             <a [href]="asociacion?.foto_camarac" target="_blank"><img class="card__meta-detais-info-img" src="assets/icons/download-pdf-10136 1.svg"></a>
         </div>
-    </div>
+     </div>
     </div>
     <div class="card__description">
       <div class="card__description-header">
@@ -32,18 +32,18 @@
             <span >{{asociacion.municipio}}-{{asociacion.departamento}}</span>
           </div>
           <div class="card__description-container-infor-1-div">
-            <img src="assets/icons/person_pin_circle_black_24dp.svg">
+            <img src="assets/icons/location_on_black_24dp.svg">
             <span >{{asociacion.direccion ? 'Dir.' : ''}} {{asociacion.direccion | shorter:15}}</span>
           </div>
-          <div class="card__description-container-infor-1-div">
+<!--           <div class="card__description-container-infor-1-div">
             <img src="assets/icons/litigation-negotiation.svg">
             <span >Constituida: {{asociacion.legalconstituida ? 'Si' : 'No'}}</span>
-          </div>
-          <h3 >Fecha de modificación del documento</h3>
+          </div> -->
+<!--           <h3 >Fecha de modificación del documento</h3>
           <div class="card__description-container-infor-1-div">
               <img  src="assets/icons/edit_document_black_24dp.svg">
               <span>{{asociacion.fecha_renovacion_camarac}}</span>
-          </div>
+          </div -->
         </div>
         <h2>Representante legal</h2>
         <div class="card__description-container-infor-2">

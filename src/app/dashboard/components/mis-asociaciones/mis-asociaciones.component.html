@@ -70,7 +70,7 @@
         <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nueva Asociación' : 'Actualizar Asociación'}}</h4>
         <button class="btn-add btn-square btn--blue" (click)="agregarMiembro()"><i class="icon-add bi bi-person-plus"></i>Agregar miembros</button>
       </div>
-      
+
       <div class="modal-body">
         <form  [formGroup]="form"  >
           <div class="mb-3">
@@ -191,10 +191,14 @@
           </div>
 
           <div class="mb-3">
-            <label for="dateOfBirth">Información adicional dirección</label>
-            <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Información adicional dirección" formControlName="informacion_adicional_direccion">
-            </div>
+          <label for="dateOfBirth">Información adicional de la dirección</label>
+              <div class="input-group">
+                <div class="input-wrapper">
+                  <textarea id="productName" class="form-control" name="textarea" rows="3" cols="50"
+                    placeholder="Información adicional dirección" formControlName="informacion_adicional_direccion">
+                    Write something here</textarea>
+                </div>
+              </div>
             <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
               <div *ngIf="infoAdicionalDir?.errors?.['required']">
                   Campo requerido

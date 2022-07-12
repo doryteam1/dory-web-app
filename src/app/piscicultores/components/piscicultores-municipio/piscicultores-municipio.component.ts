@@ -10,6 +10,7 @@ import { PlacesService } from 'src/app/services/places.service';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { vertices } from '../../../global/constants';
 
 @Component({
   selector: 'app-piscicultores-municipio',
@@ -32,7 +33,13 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   markerPositions: google.maps.LatLngLiteral[] = [];
   markersInfo: any[] = [];
   markerOptions: google.maps.MarkerOptions = { draggable: false };
-
+  vertices = vertices;
+  optionPoli: google.maps.PolylineOptions = {
+    strokeColor: '#494949',
+    strokeOpacity: 0.8,
+    strokeWeight: 3,
+    visible: true,
+  };
   piscicultores: any[] = [];
   indexSelected: number = -1;
   poblacion: number = 0;
@@ -41,7 +48,8 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     nombre: '',
     dirrecion: '',
   };
-  mapaOn: boolean=false;
+  mapaOn: boolean = false;
+  showNotFound: boolean=false;
 
   constructor(
     httpClient: HttpClient,
@@ -63,10 +71,10 @@ export class PiscicultoresMunicipioComponent implements OnInit {
 
   ngOnInit(): void {
     registerLocaleData(es);
-    console.log("url ",this.activatedRoute.snapshot.url)
+    console.log('url ', this.activatedRoute.snapshot.url);
     let path = this.activatedRoute.snapshot.url[0].path;
     let id = this.activatedRoute.snapshot.params.id;
-console.log(path)
+    console.log(path);
     if (path == 'asociacion') {
       this.piscicultoresService
         .getPiscicultoresAsociacion(id)
@@ -81,19 +89,30 @@ console.log(path)
         .subscribe((response) => {
           this.piscicultores = response.data;
           console.log(this.piscicultores);
-           this.options = {
-             center: {
-               lat: Number(this.piscicultores[0].latitud),
-               lng: Number(this.piscicultores[0].longitud),
-             },
-             zoom: 13,
-           };
+                    if (this.piscicultores.length !== 0) {
+                      this.showNotFound = false;
+                    } else {
+                      this.showNotFound = true;
+                    }
+          this.options = {
+            center: {
+              lat: Number(this.piscicultores[0].latitud),
+              lng: Number(this.piscicultores[0].longitud),
+            },
+            zoom: 13,
+          };
           this.extractLatLong();
         });
     }
     this.placesService.getMunicipioById(id).subscribe(
       (response) => {
         if (response.data.length > 0) {
+           const sucreColombia = {
+             north: 10.184454,
+             south: 8.136442,
+             west: -75.842392,
+             east: -74.324908,
+           };
           this.poblacion = response.data[0].poblacion;
           this.municipio = response.data[0].nombre;
           this.options = {
@@ -102,6 +121,11 @@ console.log(path)
               lng: parseFloat(response.data[0].longitud),
             },
             zoom: 13,
+            scrollwheel: true,
+            restriction: {
+              latLngBounds: sucreColombia,
+              strictBounds: false,
+            },
           };
         }
       },
@@ -127,13 +151,13 @@ console.log(path)
       lat: Number(this.piscicultores[indexSelected].latitud),
       lng: Number(this.piscicultores[indexSelected].longitud),
     };
-       this.options = {
-         center: {
-           lat: Number(this.piscicultores[indexSelected].latitud),
-           lng: Number(this.piscicultores[indexSelected].longitud),
-         },
-         zoom: 13,
-       };
+    this.options = {
+      center: {
+        lat: Number(this.piscicultores[indexSelected].latitud),
+        lng: Number(this.piscicultores[indexSelected].longitud),
+      },
+      zoom: 13,
+    };
     this.openInfoWindow(this.marker, indexSelected);
   }
   eliminInfoWindow() {
@@ -150,10 +174,12 @@ console.log(path)
       this.selectedPiscicultor.dirrecion = this.piscicultores[index].direccion;
     }
   }
-  navigate(id: number) {
-    this.router.navigateByUrl('/piscicultores/municipio/detalle/' + id);
+  navigate(piscicultor: any) {
+    this.router.navigateByUrl(
+      '/piscicultores/municipio/detalle/' + piscicultor.id
+    );
   }
   mapainiciado() {
-      this.mapaOn = true;
+    this.mapaOn = true;
   }
 }

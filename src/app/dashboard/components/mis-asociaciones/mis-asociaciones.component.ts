@@ -14,7 +14,7 @@ import { MapGeocoder } from '@angular/google-maps';
 import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { vertices } from '../../../global/constants';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
-import { formatDate } from '@angular/common' 
+import { formatDate } from '@angular/common'
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 const _ = require('lodash');
@@ -361,7 +361,7 @@ export class MisAsociacionesComponent implements OnInit {
             )
           }
         }
-      );  
+      );
     }
   }
 
@@ -504,7 +504,7 @@ export class MisAsociacionesComponent implements OnInit {
       let index = this.asociaciones.findIndex((element)=>element.id_negocio == negocio.id_negocio)
       this.indicenegocio = index!;
     }
-    
+
     this.modalService
       .open(this.map, { size: 'xl', centered: true, windowClass: 'dark-modal' })
       .result.then((result) => {

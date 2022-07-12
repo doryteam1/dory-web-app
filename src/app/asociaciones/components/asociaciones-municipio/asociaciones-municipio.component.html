@@ -1,44 +1,19 @@
 <app-notification-bar></app-notification-bar>
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
-<div class="search-container" *ngIf="asociaciones.length < 1">
+<div class="container container--myestilo">
+  <div class="search-container" *ngIf="showNotFound">
     <div class="search-container__box">
-        <img class="search-container__image" src="assets/images/searching.svg">
-        <h3>No se han encontrado resultados</h3>
-        <p>No encontramos granjas en este municipio </p>
+      <img class="search-container__image" src="assets/images/searching.svg">
+      <h3>Sin resultados encontrado</h3>
+      <p>No se encontraron asociaciones en este municipio </p>
     </div>
-    
-</div>
-
-<div class="asociaciones-container">
-        <div class="cards-container overflow-auto" *ngIf="asociaciones.length > 0">
-            <div class="card" *ngFor="let asociacion of asociaciones; index as i" (mouseover)="onMouseCard(i)">
-                <div class="card__box">
-                    <h4 class="card__title">Asociación de piscicultores</h4>
-                    <span class="card__description">{{asociacion.nombre}}</span>
-                    <h5 class="card__title2">Información basica</h5>
-                    <span class="card__description">{{asociacion.nombre_municipio}} {{asociacion.nombre_departamento}}</span>
-                    <span class="card__description">{{asociacion.direccion}}</span>
-                    <span class="card__description">Constituida: {{asociacion.legalconstituida ? 'Si' : 'No' }}</span>
-                    <span class="card__description">Fecha renovación: {{asociacion.fecha_renovacion_camarac}}</span>
-                    <h5 class="card__title2">Representante legal</h5>
-                    <span class="card__description">{{asociacion.propietario}}</span>
-                    <h4 class="card__link" routerLink="/piscicultores/asociacion/{{asociacion.nit}}">Ver piscicultores</h4>
-                    <h4 class="card__link" routerLink="/pescadores/asociacion/{{asociacion.nit}}">Ver pescadores</h4>
-                </div>
-                <div class="card__box-image">
-                    <img class="card__image" src="https://admin.moodyyc.com/img/no-image.png">
-                    <img class="card__icon" src="assets/icons/download.svg">
-                </div>
-            </div>
-        </div>
-        <div *ngIf="asociaciones.length > 0 && (apiLoaded | async)">
-            <google-map height="600px"
-                        width="800px" 
-                        [options]="options">
-                <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/house-red.svg' : 'assets/icons/house.svg' }}"></map-marker>
-            </google-map>
-        </div>
+  </div>
+  <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4" *ngIf="asociaciones.length > 0 && !showNotFound">
+      <app-card-asociacion  *ngFor="let asociacion of  asociaciones" [asociacion]="asociacion" [delatecard]="false"
+        (onDetalle)="goAsociacionDetail($event)">
+      </app-card-asociacion>
+  </div>
 </div>
 <!--<app-footer></app-footer>-->
 <app-floating-btn-auto-up></app-floating-btn-auto-up>

@@ -3,7 +3,6 @@ import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-
 import { GranjasService } from '../../services/granjas.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
@@ -11,6 +10,8 @@ import es from '@angular/common/locales/es';
 import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
 import {MapInfoWindow, MapMarker} from '@angular/google-maps';
+import { vertices } from '../../../global/constants';
+
 
 
 @Component({
@@ -37,6 +38,13 @@ export class GranjasMunicipioComponent implements OnInit {
   apiLoaded!: Observable<boolean>;
   granjas: any[] = [];
   valor: boolean = false;
+  vertices = vertices;
+  optionPoli: google.maps.PolylineOptions = {
+    strokeColor: '#494949',
+    strokeOpacity: 0.8,
+    strokeWeight: 3,
+    visible: true,
+  };
   options: google.maps.MapOptions = {
     center: { lat: 9.214145, lng: -75.188469 },
     zoom: 10,
@@ -48,8 +56,8 @@ export class GranjasMunicipioComponent implements OnInit {
   };
   selectedGranja = {
     nombregranja: '',
-    dirreciongranja:'',
-    area:0,
+    dirreciongranja: '',
+    area: 0,
     propietario: {
       nombre: '',
     },
@@ -81,7 +89,7 @@ export class GranjasMunicipioComponent implements OnInit {
       .subscribe(
         (response) => {
           this.granjas = response.data;
-          console.log(this.granjas[0])
+          console.log(this.granjas[0]);
           this.extractLatLong();
         },
         (err) => {
@@ -95,6 +103,12 @@ export class GranjasMunicipioComponent implements OnInit {
       .getMunicipioById(Number(this.activatedRoute.snapshot.url[1]))
       .subscribe((response) => {
         if (response.data.length > 0) {
+        const sucreColombia = {
+          north: 10.184454,
+          south: 8.136442,
+          west: -75.842392,
+          east: -74.324908,
+        };
           this.poblacion = response.data[0].poblacion;
           this.municipio = response.data[0].nombre;
           this.options = {
@@ -103,6 +117,11 @@ export class GranjasMunicipioComponent implements OnInit {
               lng: parseFloat(response.data[0].longitud),
             },
             zoom: 13,
+            scrollwheel: true,
+            restriction: {
+              latLngBounds: sucreColombia,
+              strictBounds: false,
+            },
           };
         }
       });
@@ -120,7 +139,6 @@ export class GranjasMunicipioComponent implements OnInit {
   }
 
   onMouseCard(indexSelected: number) {
-
     this.indexSelected = indexSelected;
     this.markerPosition = {
       lat: Number(this.granjas[indexSelected].latitud),
@@ -145,7 +163,7 @@ export class GranjasMunicipioComponent implements OnInit {
 
   openInfoWindow(marker: MapMarker, index: number) {
     if (this.granjas.length > 0 && this.mapaOn) {
-       this.indexSelected = index;
+      this.indexSelected = index;
       this.infoWindow.open(marker);
       this.selectedGranja.nombregranja = this.granjas[index].nombre;
       this.selectedGranja.area = this.granjas[index].area;

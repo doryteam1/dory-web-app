@@ -447,6 +447,11 @@ padding-top: 80px;
     justify-content: space-between;
     align-items: center;
   }
+  .description_title_fauvourite>div{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
 
   .description_nombre {
     display: flex;

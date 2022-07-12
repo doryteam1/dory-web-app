@@ -1,0 +1,146 @@
+.detail-container {
+  display: flex;
+  margin-left: 0px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.detail-container__data {
+  display: flex;
+  flex-direction: column;
+  margin-left: 17px;
+}
+
+.detail-container__image {
+  width: 25px;
+  height: 25px;
+  font-size: 30px;
+  align-self: flex-start;
+}
+
+.detail-container__title {
+  font-size: 20px;
+}
+
+.detail-container__value {
+  font-size: 15px;
+  text-align: justify;
+}
+
+.piscicultor-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.piscicultor-container__description1 {
+  display: block;
+  font-size: 23px;
+  margin-left: 17px;
+
+}
+
+.piscicultor-container__image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  align-self: center;
+  object-fit: cover;
+}
+
+.line {
+  border-top: 1px solid var(--black);
+  margin-top: 30px;
+}
+
+.piscicultor-container__info {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.piscicultor-container__detalle {
+  display: flex;
+
+}
+
+.piscicultor-container__title {
+  margin-left: 17px;
+}
+
+.mycontainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.mynavtabs {
+  padding-top: 10px;
+}
+
+.mynav-link {
+  background-color: #E4F4FF !important;
+}
+
+.container_mytarget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #F8F9FA;
+  margin-bottom: 20px;
+  box-shadow: 4px 4px 4px rgb(0 0 0 / 10%);
+}
+
+.mytarget {
+  overflow: scroll;
+  width: 100%;
+  height: 500px;
+}
+
+.nav-item {
+  cursor:default;
+}
+
+.mycontainer_info {
+  padding-top: 50px;
+}
+
+/* estilos anucio sin asociaciones y sin granjas */
+.row--mi-estilo {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.search-container__box {
+  text-align: center;
+}
+
+.search-container__image {
+  width: 1024px;
+  height: 370px;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mychangeitem {
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.mychangeitemheight {
+  height: 90%;
+}
+
+.container--flex-center {
+  justify-content: center;
+}
+
+.search-container--flex {
+  align-items: center;
+  justify-content: center;
+}

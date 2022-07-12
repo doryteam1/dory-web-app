@@ -23,7 +23,7 @@
       <img class="detail-container__image" src="assets/icons/phone_msg_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Celular</h4>
-        <span class="detail-container__value">{{piscicultor.celular? piscicultor.celular : 'Contacto sin definir'}} </span>
+        <span class="detail-container__value">{{piscicultor?.celular? piscicultor?.celular : 'Contacto sin definir'}} </span>
       </div>
     </div>
     <div class="detail-container">
@@ -37,15 +37,23 @@
       <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Dirección</h4>
-        <span *ngIf="piscicultor.direccion"class="detail-container__value">{{piscicultor.direccion ? 'Dir.' : ''}}
+        <span *ngIf="piscicultor?.direccion"class="detail-container__value">{{piscicultor?.direccion? 'Dir.' : ''}}
         {{piscicultor?.direccion}}} </span>
-        <span *ngIf="!piscicultor.direccion" class="detail-container__value">Dirección indefinida</span>
+        <span *ngIf="!piscicultor?.direccion" class="detail-container__value">Dirección indefinida</span>
       </div>
     </div>
+        <div class="detail-container" *ngIf="piscicultor?.informacion_adicional_direccion">
+          <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
+          <div class="detail-container__data">
+            <h4 class="detail-container__title">Información adicional de la dirección</h4>
+            <span class="detail-container__value">
+              {{piscicultor.informacion_adicional_direccion}}</span>
+          </div>
+        </div>
     <div class="detail-container">
       <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
       <div class="detail-container__data">
-        <h4 class="detail-container__title">Número de asociaciones a las que pertenece </h4>
+        <h4 class="detail-container__title">Sus asociaciones </h4>
         <span class="detail-container__value"
           *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}} asociaciones en
           total</span>
@@ -59,7 +67,7 @@
     <div class="detail-container">
       <img class="detail-container__image" src="../../../../assets/icons/set_meal_black_24dp.svg">
       <div class="detail-container__data">
-        <h4 class="detail-container__title">Número de granjas</h4>
+        <h4 class="detail-container__title">Sus granjas</h4>
         <span class="detail-container__value" *ngIf="piscicultorgranjas?.length>1">{{piscicultorgranjas?.length}}
           granjas en total</span>
         <span class="detail-container__value" *ngIf="piscicultorgranjas?.length==1">{{piscicultorgranjas?.length}}

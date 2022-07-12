@@ -24,77 +24,20 @@
         </div>
     </div>
 </div>
-<div class="search-container" *ngIf="piscicultores.length < 1">
+<div class="search-container" *ngIf="showNotFound">
   <div class="search-container__box">
     <img class="search-container__image" src="assets/images/searching.svg">
     <h3>No se han encontrado resultados</h3>
-    <p>No encontramos granjas en este municipio </p>
+    <p>No encontramos piscicultores en este municipio </p>
   </div>
 </div>
 <div class="container-map-car">
   <div class="row-map-cart">
     <div *ngIf="piscicultores.length >= 1">
-          <div class="blog-card"
-                  *ngFor="let piscicultor of piscicultores; let i =index"
-                  (mouseover)="onMouseCard(piscicultor,i)"
-                  (mouseout)="eliminInfoWindow()"
-                  (click)="navigate(piscicultor.id)">
-           <div class="meta">
-              <div class="photo">
-                <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}"
-                  routerLink="/piscicultores/municipio/detalle">
-              </div>
-              <div class="details">
-                  <div class="container_card_nombre_asociacion">
-                    <img class="card__icon" src="assets/icons/asociacion_white_24dp.svg">
-                    <span class="card_nombre_asociacion">{{piscicultor.nombre_asociacion? piscicultor.nombre_asociacion : 'No existen
-                      asociaciones'}}</span>
-                  </div>
-                <div class="details-area-nombre-granja">
-                  <div><img src="../../../../assets/icons/set_meal_white_24dp.svg"></div>
-                  <div >informacion adicinal</div>
-                </div>
-                <div class="dimensionmasmenos1200">
-                  <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
-                  <div> dirrecion adicional <span ><a
-                        style="text-decoration: dashed underline var(--azul1) 2px;">(Ver en el mapa)</a> </span>
-                  </div>
-                </div>
-                <div class="dimensionmas1200">
-                  <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
-                  <div >dirrecion2 adicional</div>
-                </div>
-              </div>
-            </div>
-            <div class="description">
-              <div class="description_nombre">
-                <h1 >{{piscicultor.nombre | titlecase | shorter:20 }}</h1>
-              </div>
-              <p > </p>
-              <div class="description_container_card">
-                <div class="container_card_nombre_asociacion">
-                  <img class="card__icon" src="assets/icons/phone_msg_black_24dp.svg">
-                  <span class="card__phone">{{piscicultor.celular? piscicultor.celular : 'Contacto sin definir'}}</span>
-                </div>
-                <div class="container_card__email">
-                  <img class="card__icon" src="assets/icons/contact_mail_black_24dp.svg">
-                  <span class="card__email">{{piscicultor.email}}</span>
-                </div>
-                <div class="container_card__description1">
-                  <img class="card__icon" src="assets/icons/travel_explore_black_24dp.svg">
-                  <span class="card__description2">{{piscicultor.municipio}}-{{piscicultor.departamento}}</span>
-                </div>
-                <div class="container_card__description2">
-                  <img class="card__icon" src="assets/icons/person_pin_circle_black_24dp.svg">
-                  <span *ngIf="piscicultor.direccion" class="card__description1">{{piscicultor.direccion ? 'Dir.' : ''}} {{piscicultor.direccion | shorter:10}}</span>
-                  <span *ngIf="!piscicultor.direccion" class="card__description1">Dirección indefinida</span>
-                </div>
-              </div>
-              <div class="card__description-container_footer">
-                <p class="read-more" ><a>Ver detalles</a></p>
-              </div>
-            </div>
-          </div>
+              <app-card-piscicultor *ngFor="let piscicultor of piscicultores; let i =index " [piscicultor]="piscicultor "
+                (onDetalle)="navigate($event)" (onMouseOutCard)="eliminInfoWindow()"
+                (onMouseInsideCard)=" onMouseCard($event, i)">
+              </app-card-piscicultor>
       </div>
   </div>
   <div class="mYstiledivmap">
@@ -111,6 +54,7 @@
               (mapMouseover)="openInfoWindow(marker,i)"
               (mapMouseout)="eliminInfoWindow()">
             </map-marker>
+            <map-polyline [path]="vertices" [options]="optionPoli"></map-polyline>
             <map-info-window [position]="markerPosition" *ngIf="mapaOn">
               <div class="myestilo-map-info-window">
                 <div class="details">
@@ -134,6 +78,7 @@
         </div>
       </div>
   </div>
-  </div>
+</div>
+
 <!-- <app-footer></app-footer>
  --><!-- <app-floating-btn-auto-up></app-floating-btn-auto-up> -->

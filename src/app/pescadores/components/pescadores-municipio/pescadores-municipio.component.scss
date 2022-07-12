@@ -2,43 +2,53 @@
     display:flex;
     margin-top: 77px;
     justify-content: center;
-}
-.container{
-    display:flex;
-    justify-content: center;
-}
+    .container{
+        display:flex;
+        justify-content: center;
+        .container__icon{
+            width:40px;
+            height:40px;
+        }
 
-.container__icon{
-    width:40px;
-    height:40px;
-}
+        .container__info{
+            display: flex;
+            flex-direction: column;
+            margin-left:20px;
+            .container__title {
+                font-size: 20px;
+              }
+            .container__description {
+                align-self: center;
+             }
+        }
+    }
 
-.container__info{
-    display: flex;
-    flex-direction: column;
-    margin-left:20px;
-}
+    .container__title--color-morado{
+        color:var(--morado)
+    }
 
-.container__title{
-    font-size: 20px;
-}
+    .container__title--color-blue{
+        color:var(--azul1)
+    }
 
-.container__description{
-    align-self: center;   
+    .container__title--color-blue-2{
+        color:var(--azul2)
+    }
 }
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 
-.container__title--color-morado{
-    color:var(--morado)
+  .search-container__box {
+    text-align: center;
+
+    .search-container__image {
+      width: 1024px;
+      height: 628px;
+    }
+  }
 }
-
-.container__title--color-blue{
-    color:var(--azul1)
-}
-
-.container__title--color-blue-2{
-    color:var(--azul2)
-}
-
 .filters-container{
     margin-bottom: 90px;
 }
@@ -47,88 +57,78 @@
     margin-right: 10px;
 }
 
-.card{
+/* mi estilo targeta nuevo map */
+.container-map-car {
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: space-between;
+  .row-map-cart {
     display: flex;
+    justify-content: center;
     flex-direction: row;
     flex-wrap: nowrap;
-    border: 0;
-    margin-bottom: 30px;
-    padding-left:20px;
+    width: 100%;
+  }
+  .row-map-cart>div {
+    width: 100%;
+  }
+  .mYstiledivmap {
+    margin-left: 30px;
+    .sticky-top {
+      z-index: 1;
+      height: auto;
+      padding-top: 80px;
+      .mapgoogle {
+          /* border: 2px solid #6c6c6c; */
+          border-radius: 10px;
+          margin-right: 10px;
+          margin-bottom: 10px;
+          overflow: hidden;
+          height: 650px;
+          width: 785px;
+          background-color: gainsboro;
+          border: 2px solid rgb(0 0 0 / 51%);
+          box-shadow: 4px 4px 4px rgb(0 0 0 / 15%);
+          .myestilo-map-info-window {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              .myestilo-map-info-window-container{
+              display: flex;
+              flex-direction: column;
+              align-items:flex-start;
+              .myestilo-map-info-window-container-informa{
+                display: flex;
+                flex-direction: row;
+               align-items: center;
+               .card__icon_info_windows {
+                 width: 22px;
+                 height: 22px;
+                 margin-right: 5px;
+               }
+              }
+              }
+            }
+
+
+        }
+    }
+  }
 }
 
-.card-box{
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-}
-.card__image{
-    width: 170px;
-    height: 170px;
-    border-radius: 5px;
-    object-fit: cover;
-    border-radius: 50%;
+div.container-map-car>div>div:nth-child(1) {
+  padding-top: 80px;
 }
 
-.card__title{
-    font-size:20px;
-}
+@keyframes pulsate {
 
-.card__title2{
-    grid-area: title;
-    font-size:16px;
-}
+  0%,
+  to {
+    transform: scale(1)
+  }
 
-.card__icon{
-    width: 22px;
-    height: 22px;
-    margin-right: 10px;
-}
-
-.card__phone{
-    font-size: 16px;
-}
-
-.card__description1{
-    font-size: 16px;
-}
-
-.card__description2{
-    font-size: 16px;
-}
-
-.card__email{
-    display: block;
-}
-
-.pescadores-container{
-    display:flex;
-    justify-content: space-evenly;
-    margin-top: 80px;
-}
-
-.pescadores-container__map{
-    align-self: start;
-    width:546px;
-    margin-left:18px;
-}
-
-.cards-container{
-    width: 750px;
-    height: 600px;
-    border: none;
-}
-
-.search-container{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.search-container__box{
-    text-align: center;
-}
-
-.search-container__image{
-    width:1024px;
-    height: 628px;
+  50% {
+    transform: scale(.9)
+  }
 }

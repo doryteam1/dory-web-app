@@ -1,0 +1,63 @@
+<div class="card"
+(mouseover)="mouseInsideCard (pescador)"
+(mouseout)="mouseOutCard ()"
+(click)="detalle (pescador)">
+  <div class="card__meta">
+    <div [ngClass]="{'card__meta-photo': pescador?.foto, 'card__meta-photo-sin-img': !pescador?.foto}">
+      <img class=" card__meta-photo-img" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person-square.png'}}"
+       (click)="detalle (pescador)">
+    </div>
+  <!--   <div class="card__meta-details">
+      <div class="card__meta-details-informacion">
+        <img src="assets/icons/asociacion_white_24dp.svg">
+        <span>{{pescador.nombre_asociacion? pescador.nombre_asociacion : 'No
+          existen
+          asociaciones'}}</span>
+      </div>
+      <div class="card__meta-details-informacion">
+        <div><img src="../../../../assets/icons/set_meal_white_24dp.svg"></div>
+        <div>informacion adicinal</div>
+      </div>
+      <div class="dimensionmasmenos1200">
+        <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
+        <div> dirrecion adicional <span><a style="text-decoration: dashed underline var(--azul1) 2px;">(Ver en el
+              mapa)</a> </span>
+        </div>
+      </div>
+      <div class="card__meta-details-informacion">
+        <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
+        <div>dirrecion2 adicional</div>
+      </div>
+    </div> -->
+  </div>
+  <div class="card__description">
+    <div class="card__description-header">
+      <img src="assets/icons/pescador.svg">
+      <h1>{{pescador.nombre | titlecase | shorter:20 }}</h1>
+    </div>
+    <p> </p>
+    <div class="card__description-body">
+      <div class="card__description-body-informacion">
+        <img class="card__icon" src="assets/icons/phone_msg_black_24dp.svg">
+        <span class="card__phone">{{pescador.celular? pescador.celular : 'Contacto sin definir'}}</span>
+      </div>
+      <div class="card__description-body-informacion">
+        <img class="card__icon" src="assets/icons/contact_mail_black_24dp.svg">
+        <span class="card__email">{{pescador.email}}</span>
+      </div>
+      <div class="card__description-body-informacion">
+        <img class="card__icon" src="assets/icons/travel_explore_black_24dp.svg">
+        <span class="card__description2">{{pescador.municipio}}-{{pescador.departamento}}</span>
+      </div>
+      <div class="card__description-body-informacion">
+        <img class="card__icon" src="assets/icons/person_pin_circle_black_24dp.svg">
+        <span *ngIf="pescador.direccion" class="card__description1">{{pescador.direccion ? 'Dir.' : ''}}
+          {{pescador.direccion | shorter:10}}</span>
+        <span *ngIf="!pescador.direccion" class="card__description1">Dirección indefinida</span>
+      </div>
+    </div>
+    <div class="card__description-footer">
+      <p class="read-more"  (click)="detalle(pescador)"><a>Ver detalles</a></p>
+    </div>
+  </div>
+</div>

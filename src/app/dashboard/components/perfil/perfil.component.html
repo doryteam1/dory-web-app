@@ -7,8 +7,13 @@
               <img class="container__image2" src="assets/icons/camera.svg"  data-bs-toggle="dropdown" aria-expanded="false">
               <img class="container__image2" *ngIf="!usuario?.foto" src="assets/icons/camera.svg"   (click)="openAddFileDialog()">
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" *ngIf="usuario?.foto" (click)="delatePhotoPerfil()">Eliminar </a></li>
-                <li><a class="dropdown-item" *ngIf="usuario?.foto" (click)="openAddFileDialog()">Actualizar</a></li>
+                <li class="dropdown-menu--li">
+                  <img src="assets/icons/delate-icon-animado.svg">
+                  <a class="dropdown-item dropdown-item-myestilo" *ngIf="usuario?.foto" (click)="delatePhotoPerfil()">Eliminar </a></li>
+                <li class="dropdown-menu--li">
+                  <img src="assets/icons/update-icon-animado.svg">
+                  <a class="dropdown-item dropdown-item-myestilo" *ngIf="usuario?.foto" (click)="openAddFileDialog()">Actualizar</a>
+                </li>
               </ul>
             </div>
             <div class="container__spinner-photo spinner-border text-info" role="status" *ngIf="loadingPhoto">
@@ -308,16 +313,22 @@
     <span class="text-danger" *ngIf="photoDelate">Foto de perfil eliminada con éxito</span>
     <div class="d-flex flex-column justify-content-center align-items-center">
         <button class="container__btn3" *ngIf="!usuario?.foto" (click)="openAddFileDialog()">
-            <i class="container__icon bi bi-folder-plus"></i>
+          <div class="container__btn3-div">
+            <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
             <span>Escoger foto de perfil</span>
+          </div>
         </button>
         <button class="container__btn3" *ngIf="usuario?.foto" (click)="openAddFileDialog()">
-            <i class="container__icon bi bi-folder-plus"></i>
+          <div class="container__btn3-div" >
+            <img   src="assets/icons/update-icon-animado.svg">
             <span>Actualizar foto de perfil</span>
+          </div>
         </button>
         <button class="container__btn3" *ngIf="usuario?.foto" (click)="delatePhotoPerfil()">
-            <i class="container__icon bi bi-folder-plus"></i>
+          <div class="container__btn3-div" >
+            <img src="assets/icons/delate-icon-animado.svg">
             <span>Eliminar foto de perfil</span>
+          </div>
         </button>
    <!--      <button class="container__btn3 btn-square-blue2" (click)="onSubmit()">
             <span *ngIf="!loading">Actualizar perfil</span>

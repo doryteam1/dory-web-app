@@ -362,14 +362,7 @@ export class PerfilComponent implements OnInit {
             .get('id_departamento')
             ?.setValue(this.usuario.id_departamento);
         }
-      /*   if (this.usuario.id_municipio== 0 || this.usuario.id_municipio == null) {
-               this.form
-                 .get('id_municipio')
-                 ?.setValue(0);
-        } else {
-        } */
         this.form.get('id_municipio')?.setValue(this.usuario.id_municipio);
-
         this.idDpto?.disable();
         this.loadAreasExp();
         this.loadDptos();
@@ -994,7 +987,7 @@ delatePhotoPerfil(){
             latLngBounds: sucreColombia,
             strictBounds: false,
           },
-          zoom: 11,
+          zoom: 14,
           scrollwheel: true,
         };
    /*      this.markerPosition = {

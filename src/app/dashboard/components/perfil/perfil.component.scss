@@ -355,3 +355,18 @@
   background-color: #e4f4ff;
 }
 
+.dropdown-menu--li{
+  display: flex;
+  gap: 5px;
+}
+.dropdown-item-myestilo{
+padding-left: 0;
+}
+.container__btn3-div{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.container__btn3-div>img{
+  width: 30px;
+}

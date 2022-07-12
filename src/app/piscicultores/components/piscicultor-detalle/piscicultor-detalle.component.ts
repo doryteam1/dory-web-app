@@ -32,7 +32,7 @@ export class PiscicultorDetalleComponent implements OnInit {
     this.piscicultoresService
       .getPiscicultorDetalle(this.selectedPiscicultorId)
       .subscribe(
-        (response) => {
+        (response:any) => {
           if (response.data.length > 0) {
             this.piscicultor = response.data[0];
             this.showError = false;
@@ -57,9 +57,10 @@ export class PiscicultorDetalleComponent implements OnInit {
     this.piscicultoresService
       .getPiscicultorDetalleAsociaciones(this.selectedPiscicultorId)
       .subscribe(
-        (response) => {
+        (response:any) => {
           if (response.data.length > 0) {
             this.piscicultorasociaciones = response.data;
+            console.log(this.piscicultorasociaciones)
             this.showError = false;
             this.showNotFound = false;
             this.changeItem = false;
@@ -85,7 +86,7 @@ export class PiscicultorDetalleComponent implements OnInit {
     this.piscicultoresService
       .getPiscicultorDetalleGranjas(this.selectedPiscicultorId)
       .subscribe(
-        (response) => {
+        (response:any) => {
           if (response.data.length > 0) {
             this.piscicultorgranjas = response.data;
             this.showError = false;

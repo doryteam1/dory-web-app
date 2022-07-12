@@ -137,6 +137,11 @@ p {
    align-items: center;
    justify-content: space-between;
  }
+ .card__description-header>div {
+   display: flex;
+   align-items: center;
+   gap: 5px;
+ }
 
  .card__description-container {
    .estilo-p-card {

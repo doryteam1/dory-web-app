@@ -1,7 +1,6 @@
 <div class="card">
   <div class="card__meta">
     <div class="card__meta-photo" (click)="detalle(granja)">
-      <!-- <img class="card__meta-photo-img" src="https://admin.moodyyc.com/img/no-image.png"> -->
        <img class="card__meta-photo-img"
           src="{{ granja.fotos[ran] ? granja.fotos[ran] : 'https://admin.moodyyc.com/img/no-image.png'}}"
           >
@@ -27,7 +26,10 @@
   </div>
   <div class="card__description">
     <div class="card__description-header">
-      <h1 (click)="detalle(granja)">{{granja.nombre | shorter:15}}</h1>
+      <div>
+        <img src="assets/icons/set_meal_black_24dp.svg">
+        <h1 (click)="detalle(granja)">{{granja.nombre | shorter:15}}</h1>
+      </div>
       <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
         (click)="changeFavorite(granja)">
       <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita"

@@ -39,7 +39,8 @@ import { CardAsociacionComponent } from './components/card-asociacion/card-asoci
 import { BasicFloatingBtnComponent } from './components/basic-floating-btn/basic-floating-btn.component';
 import { CardGranjasComponent } from './components/card-granjas/card-granjas.component';
 import { ModalAlertActualizadoComponent } from './components/modal-alert-actualizado/modal-alert-actualizado.component';
-import { AsociacionesModule } from '../asociaciones/asociaciones.module';
+import { CardPescadorComponent } from './components/card-pescador/card-pescador.component';
+import { CardPiscicultorComponent } from './components/card-piscicultor/card-piscicultor.component';
 
 
 
@@ -70,6 +71,8 @@ import { AsociacionesModule } from '../asociaciones/asociaciones.module';
     BasicFloatingBtnComponent,
     CardGranjasComponent,
     ModalAlertActualizadoComponent,
+    CardPescadorComponent,
+    CardPiscicultorComponent,
   ],
   imports: [
     CommonModule,
@@ -103,6 +106,8 @@ import { AsociacionesModule } from '../asociaciones/asociaciones.module';
     BasicFloatingBtnComponent,
     CardGranjasComponent,
     ModalAlertActualizadoComponent,
+    CardPescadorComponent,
+    CardPiscicultorComponent,
     /*  CardphotoGoogleMapComponent, */
   ],
   providers: [

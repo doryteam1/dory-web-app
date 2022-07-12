@@ -1,0 +1,117 @@
+<app-notification-bar></app-notification-bar>
+<app-search-bar></app-search-bar>
+<app-navbar></app-navbar>
+<!--
+
+id_area_experticia: 0
+id_tipo_usuario: 7
+informacion_adicional_direccion: null
+sobre_mi: ""
+tipo_usuario: "Pescador"
+vereda: null
+[[Prototype]]: -->
+<div class="container mycontainer">
+  <div class="mycontainer_info">
+    <div class="piscicultor-container">
+      <div class="piscicultor-container__info">
+        <div class="piscicultor-container__detalle">
+          <img class="detail-container__image" src="assets/icons/person_black.svg">
+          <h3 class="piscicultor-container__title">Pescador - {{pescador?.nombre_completo}} </h3>
+        </div>
+        <div class="piscicultor-container__detalle">
+          <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
+          <span class="piscicultor-container__description1">
+            {{pescador?.municipio}}-{{pescador?.departamento}}</span>
+        </div>
+      </div>
+      <img class="piscicultor-container__image"
+        src="{{pescador?.foto ? pescador.foto : '/assets/images/avatar-person-square.png'}}">
+    </div>
+    <div class="line"></div>
+    <div class="detail-container mt-4">
+      <img class="detail-container__image" src="assets/icons/phone_msg_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Celular</h4>
+        <span class="detail-container__value">{{pescador?.celular? pescador?.celular : 'Contacto sin definir'}}
+        </span>
+      </div>
+    </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/contact_mail_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Correo electronico</h4>
+        <span class="detail-container__value">{{pescador?.email}}</span>
+      </div>
+    </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Dirección</h4>
+        <span *ngIf="pescador?.direccion" class="detail-container__value">{{pescador?.direccion? 'Dir.' : ''}}
+          {{pescador?.direccion}} </span>
+        <span *ngIf="!pescador?.direccion" class="detail-container__value">Dirección indefinida</span>
+      </div>
+    </div>
+    <div class="detail-container" *ngIf="pescador?.informacion_adicional_direccion">
+          <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
+              <div class="detail-container__data">
+                <h4 class="detail-container__title">Información adicional de la dirección</h4>
+                <span class="detail-container__value">
+                  {{pescador.informacion_adicional_direccion}}</span>
+              </div>
+            </div>
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Número de asociaciones a las que pertenece </h4>
+        <span class="detail-container__value"
+          *ngIf="pescadorasociaciones?.length>1">{{pescadorasociaciones?.length}} asociaciones en
+          total</span>
+        <span class="detail-container__value"
+          *ngIf="pescadorasociaciones?.length==1">{{pescadorasociaciones?.length}} asociación en
+          total</span>
+        <span class="detail-container__value" *ngIf="pescadorasociaciones?.length<=0">No cuenta con
+          asociaciones</span>
+      </div>
+    </div>
+  </div>
+  <!-- granjas y asociaciones -->
+  <div class="mynavtabs">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active mynav-link': activatelistasociacion}" aria-current="page">
+          <span>
+            <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
+          </span> Asociaciones
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="container_mytarget">
+    <div class="mytarget" *ngIf="activatelistasociacion ">
+      <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 row--mi-estilo"
+        [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound,'container--flex-center':pescadorasociaciones?.length==1}">
+        <div *ngIf="changeItem" class="mychangeitem">
+          <div>
+            <img src="assets/icons/changeiconanimado.svg">
+          </div>
+        </div>
+        <div class="search-container" *ngIf="showNotFound">
+          <div class="search-container__box">
+            <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
+            <h3>
+              Parece que este pescador no esta registrado en ninguna asociación
+              <span>
+                <img src="assets/icons/corazonanimado.svg">
+              </span>
+            </h3>
+          </div>
+        </div>
+          <app-card-asociacion *ngFor="let asociacion of pescadorasociaciones" [asociacion]="asociacion" [delatecard]="false"
+            (onDetalle)="goAssociationDetail($event)">
+          </app-card-asociacion>
+      </div>
+    </div>
+  </div>
+</div>
+

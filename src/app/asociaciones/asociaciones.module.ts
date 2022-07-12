@@ -12,13 +12,15 @@ import { SharedModule } from '../shared/shared.module';
 import { SolicitudesModalContentComponent } from './components/modals/solicitudes-modal-content/solicitudes-modal-content.component';
 import { PiscicultoresModule } from '../piscicultores/piscicultores.module';
 import { PescadoresModule } from '../pescadores/pescadores.module';
+import { AsociacionDetalleComponent } from './components/asociacion-detalle/asociacion-detalle.component';
 
 
 @NgModule({
   declarations: [
     AsociacionesComponent,
     AsociacionesMunicipioComponent,
-    SolicitudesModalContentComponent
+    SolicitudesModalContentComponent,
+    AsociacionDetalleComponent
   ],
   imports: [
     CommonModule,

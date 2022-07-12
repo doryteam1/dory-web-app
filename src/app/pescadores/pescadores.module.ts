@@ -8,11 +8,13 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { PescadoresService } from './services/pescadores.service';
 import { SharedModule } from '../shared/shared.module';
+import { PescadorDetalleComponent } from './components/pescador-detalle/pescador-detalle.component';
 
 @NgModule({
   declarations: [
     PescadoresComponent,
-    PescadoresMunicipioComponent
+    PescadoresMunicipioComponent,
+    PescadorDetalleComponent
   ],
   imports: [
     CommonModule,
