@@ -86,11 +86,11 @@
           <ul class="notify__menu dropdown-menu p-3" aria-labelledby="dropdownMenuButton1">
             <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index"> 
               <div class="dropdown-item d-flex flex-row align-items-start">
-                <img class="notify__avatar" src="https://i.pravatar.cc/300">
+                <img class="notify__avatar" [src]="invitacion.foto_representante_legal">
                 <div class="d-flex flex-column ">
-                  <span class="notify__description">Te han invitado a indicar que eres miembro de <span class="notify__label">{{invitacion.asociacion}}</span></span>
+                  <span class="notify__description"><span class="notify__label">{{invitacion?.representante_legal}}</span> te han invitado a indicar que eres miembro de <span class="notify__label">{{invitacion.asociacion}}</span></span>
                   <span class="notify__sub-description">
-                    hace 4 horas · ¿Eres miembro?
+                    hace 4 horas · ¿Te gustaria ser miembro?
                   </span>
                   <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
                     <button class="notify-button btn-square btn--blue" (click)="confirmarInvitacion(invitacion)">Confirmar</button>
