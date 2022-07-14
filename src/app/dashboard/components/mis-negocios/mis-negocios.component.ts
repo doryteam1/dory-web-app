@@ -231,7 +231,7 @@ export class MisNegociosComponent implements OnInit {
   deleteNegocio(negocio:any) {
     this.appModalService
       .confirm(
-        'Eliminar granja',
+        'Eliminar negocio',
         'Esta seguro que desea eliminar este negocio',
         'Eliminar',
         'No estoy seguro',
