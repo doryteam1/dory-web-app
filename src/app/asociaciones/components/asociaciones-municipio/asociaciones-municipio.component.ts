@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class AsociacionesMunicipioComponent implements OnInit {
   asociaciones: any[] = [];
-  showNotFound: boolean=false;
+  showNotFound: boolean = false;
+  legalrepresentanteasociacion: any;
 
   constructor(
     private asociacionesService: AsociacionesService,
@@ -23,20 +24,42 @@ export class AsociacionesMunicipioComponent implements OnInit {
       .subscribe(
         (response) => {
           this.asociaciones = response.data;
+          console.log(this.asociaciones)
           if (this.asociaciones.length !== 0) {
-             this.showNotFound = false;
-          }else{
+            this.showNotFound = false;
+          } else {
             this.showNotFound = true;
           }
         },
         (err) => {
           console.error(err);
-           this.showNotFound = true;
-
+          this.showNotFound = true;
         }
       );
   }
   goAsociacionDetail(asociacion: any) {
-    this.router.navigateByUrl('/asociaciones/municipio/detalle/' + asociacion.nit);
+    this.router.navigateByUrl(
+      '/asociaciones/municipio/detalle/' + asociacion.nit
+    );
+  }
+  goDetalleRepresentante(asociacion: any) {
+    console.log('representante legal');
+    console.log(asociacion.id_propietario);
+    console.log(asociacion);
+              console.log(asociacion.tipo_propietario);
+              if (
+                asociacion.tipo_propietario == 'Pescador'
+              ) {
+                this.router.navigateByUrl(
+                  '/pescadores/municipio/detalle/' + asociacion.id_propietario
+                );
+              }else if (
+                asociacion.tipo_propietario == 'Piscicultor'
+              ) {
+                    this.router.navigateByUrl(
+                      '/piscicultores/municipio/detalle/' +
+                        asociacion.id_propietario
+                    );
+              }
   }
 }

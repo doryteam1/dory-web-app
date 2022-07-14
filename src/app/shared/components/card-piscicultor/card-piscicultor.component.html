@@ -5,7 +5,7 @@
   <div class="card__meta">
     <div [ngClass]="{'card__meta-photo': piscicultor?.foto, 'card__meta-photo-sin-img': !piscicultor?.foto}">
       <img class=" card__meta-photo-img"
-        src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}"
+        src="{{piscicultor?.foto ? piscicultor?.foto : '/assets/images/avatar-person-square.png'}}"
        (click)="detalle (piscicultor)">
     </div>
 <!--     <div class="card__meta-details">
@@ -34,27 +34,27 @@
   <div class="card__description">
     <div class="card__description-header">
       <img src="assets/icons/piscicultor.svg">
-      <h1>{{piscicultor.nombre | titlecase | shorter:20 }}</h1>
+      <h1>{{piscicultor?.nombre | titlecase | shorter:20 }}</h1>
     </div>
     <p> </p>
     <div class="card__description-body">
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/phone_msg_black_24dp.svg">
-        <span class="card__phone">{{piscicultor.celular? piscicultor.celular : 'Contacto sin definir'}}</span>
+        <span class="card__phone">{{piscicultor?.celular? piscicultor?.celular : 'Contacto sin definir'}}</span>
       </div>
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/contact_mail_black_24dp.svg">
-        <span class="card__email">{{piscicultor.email}}</span>
+        <span class="card__email">{{piscicultor?.email}}</span>
       </div>
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/travel_explore_black_24dp.svg">
-        <span class="card__description2">{{piscicultor.municipio}}-{{piscicultor.departamento}}</span>
+        <span class="card__description2">{{piscicultor?.municipio}}-{{piscicultor?.departamento}}</span>
       </div>
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/person_pin_circle_black_24dp.svg">
-        <span *ngIf="piscicultor.direccion" class="card__description1">{{piscicultor.direccion ? 'Dir.' : ''}}
-          {{piscicultor.direccion | shorter:10}}</span>
-        <span *ngIf="!piscicultor.direccion" class="card__description1">Dirección indefinida</span>
+        <span *ngIf="piscicultor?.direccion" class="card__description1">{{piscicultor?.direccion ? 'Dir.' : ''}}
+          {{piscicultor?.direccion | shorter:10}}</span>
+        <span *ngIf="!piscicultor?.direccion" class="card__description1">Dirección indefinida</span>
       </div>
     </div>
     <div class="card__description-footer">

@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
 import { AsociacionesService } from '../../services/asociaciones.service';
-
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/es';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 
 @Component({
   selector: 'app-asociacion-detalle',
@@ -22,12 +24,13 @@ export class AsociacionDetalleComponent implements OnInit {
   activatelistgranja: boolean = true;
   activatelistasociacion: boolean = false;
   changeItem: boolean = true;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private asociacionesService: AsociacionesService,
     private router: Router,
     private piscicultoresService: PiscicultoresService,
-    private pescadoresService:PescadoresService
+    private pescadoresService: PescadoresService
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +44,8 @@ export class AsociacionDetalleComponent implements OnInit {
           if (response.data.length > 0) {
             this.asociacion = response.data[0];
             console.log(this.asociacion);
+
+            /* 2022-07-09T00:00:00.000Z */
             this.showError = false;
             this.showNotFound = false;
           } else {
@@ -60,42 +65,44 @@ export class AsociacionDetalleComponent implements OnInit {
         }
       );
 
-        this.piscicultoresService
-          .getPiscicultorPorAsociacion(this.selectedAsociacionnit)
-          .subscribe(
-            (response) => {
-              if (response.data.length > 0) {
-                this.piscicultorasociaciones = response.data;
-                console.log(`piscicultores por asociacion ${this.piscicultorasociaciones} ` );
-                console.log(this.piscicultorasociaciones);
-                this.showError = false;
-                this.showNotFound = false;
-                this.changeItem = false;
-              } else {
-                this.showNotFound = true;
-                this.showError = false;
-                this.changeItem = false;
-              }
-            },
-            (err) => {
-              this.showNotFound = false;
-              this.showError = false;
-              this.changeItem = false;
-              if (err.status == 404 || err.status == 500) {
-                this.showNotFound = true;
-              } else {
-                this.showError = true;
-                this.errorMessage = 'Error inesperado';
-              }
-            }
-          );
+    this.piscicultoresService
+      .getPiscicultorPorAsociacion(this.selectedAsociacionnit)
+      .subscribe(
+        (response) => {
+          if (response.data.length > 0) {
+            this.piscicultorasociaciones = response.data;
+            console.log(
+              `piscicultores por asociacion ${this.piscicultorasociaciones} `
+            );
+            console.log(this.piscicultorasociaciones);
+            this.showError = false;
+            this.showNotFound = false;
+            this.changeItem = false;
+          } else {
+            this.showNotFound = true;
+            this.showError = false;
+            this.changeItem = false;
+          }
+        },
+        (err) => {
+          this.showNotFound = false;
+          this.showError = false;
+          this.changeItem = false;
+          if (err.status == 404 || err.status == 500) {
+            this.showNotFound = true;
+          } else {
+            this.showError = true;
+            this.errorMessage = 'Error inesperado';
+          }
+        }
+      );
 
     this.pescadoresService
       .getPescadoresPorAsociacion(this.selectedAsociacionnit)
       .subscribe(
         (response) => {
-          console.log(response)
-       /*    if (response.data.length > 0) {
+          console.log(response);
+          /*    if (response.data.length > 0) {
             this.piscicultorgranjas = response.data;
             this.showError = false;
             this.showNotFound = false;
@@ -119,6 +126,9 @@ export class AsociacionDetalleComponent implements OnInit {
         }
       );
   }
+  dayjsx(data: string, forma: string, local: string) {
+    return dayjs(data).locale(local).format(forma);
+  }
   activeTab(i: number) {
     if (i == 1) {
       this.activatelistgranja = true;
@@ -129,12 +139,26 @@ export class AsociacionDetalleComponent implements OnInit {
     }
   }
   gopiscicultorDetail(piscicultor: any) {
-    console.log(piscicultor)
+    console.log(piscicultor);
     this.router.navigateByUrl(
       'piscicultores/municipio/detalle/' + piscicultor.id
     );
   }
-/*   gopescadorDetail(pescador: any) {
+  goDetalleRepresentante() {
+    console.log('representante legal');
+
+    console.log(this.asociacion.tipo_propietario);
+    if (this.asociacion.tipo_propietario == 'Pescador') {
+      this.router.navigateByUrl(
+        '/pescadores/municipio/detalle/' + this.asociacion.id_propietario
+      );
+    } else if (this.asociacion.tipo_propietario == 'Piscicultor') {
+      this.router.navigateByUrl(
+        '/piscicultores/municipio/detalle/' + this.asociacion.id_propietario
+      );
+    }
+  }
+  /*   gopescadorDetail(pescador: any) {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + granja.id_granja);
   } */
 }

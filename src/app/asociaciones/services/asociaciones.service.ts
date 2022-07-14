@@ -41,7 +41,6 @@ export class AsociacionesService {
       'https://dory-api-rest.herokuapp.com/api/asociaciones/detail/' + nit
     );
   }
-
   add(asociacion: any) {
     return this.https.post(
       'https://dory-api-rest.herokuapp.com/api/asociaciones',

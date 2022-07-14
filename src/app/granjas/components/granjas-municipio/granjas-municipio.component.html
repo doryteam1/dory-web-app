@@ -27,22 +27,64 @@
         </div>
     </div>
 </div>
-
-<div class="filters-container">
-    <button class="filters-container__button btn-outline-black">
-        Mayor Area
-    </button>
-    <button class="filters-container__button  btn-outline-black">
-        Menor Area
-    </button>
-    <button class="filters-container__button  btn-outline-black">
-        Calificación
-    </button>
-    <button class="filters-container__button  btn-outline-black">
-        Más filtros
-    </button>
+<div class="buscador-container">
+  <app-search
+   [buscadorpersonalizado]="true"
+   [placeholderbuscador]="'Buscar granjas...'"
+   [dataabuscar]="'granjas'"
+   (keyEnterPress)="buscar()">
+  </app-search>
+    <div class="dropdown buscador-container-option1">
+      <div
+        class="btn btn-secondary dropdown-toggle buscador-container-option-div"
+        type="button"
+        id="dropdownCenterBtn"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <span>
+          <img src="assets/icons/filter_alt_black_24dp.svg">
+        </span>
+        Filtros
+      </div>
+      <ul class="dropdown-menu" aria-labelledby="dropdownCenterBtn">
+      <li><a class="dropdown-item">Calificación</a></li>
+      <li><a class="dropdown-item">Área</a></li>
+      <li><a class="dropdown-item">Otros</a></li>
+      </ul>
+    </div>
+  <div class="dropdown-center buscador-container-option2" *ngIf="historialGranjas.length > 0">
+      <div class="btn btn-secondary dropdown-toggle buscador-container-option-div"
+       type="button" id="dropdownCenterBtn"
+       data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <span>
+          <img src="assets/icons/manage_search_black_24dp.svg">
+        </span>
+        Mis busquedas
+      </div>
+    <ul class="dropdown-menu" [ngClass]="{'dropdown-menu--display':displayblock}" aria-labelledby="dropdownCenterBtn">
+      <li *ngFor="let item of historialGranjas ; let i =index" class="dropdown-menu--li" >
+        <a class="dropdown-item"
+         (click)="buscaritemHistorial(item)">{{item | titlecase}}</a>
+         <div (click)="eliminarItemHistorial(i)">
+           <img src="assets/icons/clear_black_24dp (1).svg">
+         </div>
+      </li>
+    </ul>
+  </div>
+  <div class="dropdown buscador-container-option3" *ngIf="datagranjaencontrada">
+    <div
+    class="btn btn-secondary dropdown-toggle buscador-container-option-div"
+     type="button"
+     (click)="ArrayCompletoGranjas()"
+     >
+      <span>
+        <img src="assets/icons/set_meal_black_24dp.svg">
+      </span>
+      Granjas
+    </div>
+  </div>
 </div>
-
 <div class="search-container" *ngIf="singranjas">
     <div class="search-container__box">
         <img class="search-container__image" src="assets/images/searching.svg">
@@ -50,95 +92,100 @@
         <p>No encontramos granjas en este municipio </p>
     </div>
 </div>
-<div class="container-map-car">
-  <div class="row-map-cart">
-    <div *ngIf="granjas.length >= 1">
-      <div class="blog-card" *ngFor="let granja of granjas; let i =index" (mouseover)="onMouseCard(i)" (mouseout)="eliminInfoWindow()">
-        <div class="meta">
-          <div class="photo">
-          <app-carrucel-img class="card__image"
-            [imagenes]="granjas[i].fotos"
-            [indicatorsphoto]=" indicatorsphotos"
-            [idtarge]="i"
-            (eventValueResponseClickFotoMiniSlider)="navigate(granja.id_granja)"
-            (eventValueResponseClickDivIndicadorSlider)="navigate(granja.id_granja)"
-            (eventValueResponseclickImagenItemSlider)="navigate(granja.id_granja)">
-          </app-carrucel-img>
+<div>
+  <div class="container-map-car">
+    <div class="row-map-cart">
+      <div *ngIf="granjas.length >= 1">
+        <div class="blog-card" *ngFor="let granja of granjas ; let i =index"
+        (mouseover)="onMouseCard(i)"
+         (mouseout)="eliminInfoWindow()">
+          <div class="meta">
+            <div class="photo">
+            <app-carrucel-img class="card__image"
+              [imagenes]="granjas[i].fotos"
+              [indicatorsphoto]=" indicatorsphotos"
+              [idtarge]="i"
+              (eventValueResponseClickFotoMiniSlider)="navigate(granja.id_granja)"
+              (eventValueResponseClickDivIndicadorSlider)="navigate(granja.id_granja)"
+              (eventValueResponseclickImagenItemSlider)="navigate(granja.id_granja)">
+            </app-carrucel-img>
+            </div>
           </div>
-        </div>
-        <div class="description">
-          <div class="description_title_fauvourite">
-                  <div>
-                    <img src="assets/icons/set_meal_black_24dp.svg">
-                    <h1 (click)="navigate(granja.id_granja)">{{granja.nombre | shorter:15}}</h1>
-                  </div>
-            <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita"
-              (click)="changeFavorite(i)">
-            <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita"
-              (click)="changeFavorite(i)">
-          </div>
-          <div class="mas_description_info" (click)="navigate(granja.id_granja)">
-              <p class="estilo-p-card" (click)="navigate(granja.id_granja)"> {{granja.descripcion | shorter:100}}</p>
-          </div>
-          <div class="card__rating-container">
-            <div class="card__rating-container_info">
-              <div  class="card__rating-container_puntos"(click)="showResenas(granja?.id_granja)">
-                <span class="card__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ?
-                  (granja.puntuacion |
-                  number:'1.1-1') : 'S/C'}}</span>
-                <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+          <div class="description">
+            <div class="description_title_fauvourite">
+                    <div>
+                      <img src="assets/icons/set_meal_black_24dp.svg">
+                      <h1 (click)="navigate(granja.id_granja)">{{granja.nombre | shorter:15}}</h1>
+                    </div>
+              <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita"
+                (click)="changeFavorite(i)">
+              <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita"
+                (click)="changeFavorite(i)">
+            </div>
+            <div class="mas_description_info" (click)="navigate(granja.id_granja)">
+                <p class="estilo-p-card" (click)="navigate(granja.id_granja)"> {{granja.descripcion | shorter:100}}</p>
+            </div>
+            <div class="card__rating-container">
+              <div class="card__rating-container_info">
+                <div  class="card__rating-container_puntos"(click)="showResenas(granja?.id_granja)">
+                  <span class="card__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ?
+                    (granja.puntuacion |
+                    number:'1.1-1') : 'S/C'}}</span>
+                  <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+                </div>
+                <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)"> {{granja.count_resenas}}
+                  reseñas</span>
               </div>
-              <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)"> {{granja.count_resenas}}
-                reseñas</span>
+              <p class="read-more"(click)="navigate(granja.id_granja)"><a>Ver detalles</a></p>
             </div>
-            <p class="read-more"(click)="navigate(granja.id_granja)"><a>Ver detalles</a></p>
           </div>
         </div>
       </div>
     </div>
+    <div class="mYstiledivmap">
+      <div class="sticky-top">
+        <div class="mapgoogle" *ngIf="granjas.length > 0 && (apiLoaded | async)">
+          <google-map height="650px" width="785px" [options]="options" (tilesloaded)="mapainiciado()">
+            <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo  ; let i =index"
+              [position]="markerInfo.markerPosition" [options]="markerOptions"
+              icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"
+              (mapMouseover)="openInfoWindow(marker,i)"
+              (mapMouseout)="eliminInfoWindow()">
+            </map-marker>
+            <map-polyline [path]="vertices" [options]="optionPoli"></map-polyline>
+            <map-info-window [position]="markerPosition" *ngIf="mapaOn">
+              <div class="myestilo-map-info-window">
+  <div class="details_info_windo">
+    <div class="detais-name-propietario_info_windo ">
+      <div> <img src="assets/icons/person_black.svg"></div>
+      <div>{{selectedGranja.propietario.nombre | titlecase }}</div>
+    </div>
+    <div class="details-area-nombre-granja_info_windo ">
+      <div><img src="assets/icons/set_meal_black_24dp.svg"></div>
+      <div> {{selectedGranja.nombregranja | titlecase}}</div>
+    </div>
+    <div class="details-area-granja_info_windo ">
+      <div><img src="assets/icons/areaterreno_black.svg"></div>
+      <div>{{selectedGranja.area | number:'':'es'}} m²</div>
+    </div>
+    <div class="details-area-direccion_info_windo ">
+      <div><img src="assets/icons/location_on_black_24dp.svg"></div>
+      <div *ngIf="!selectedGranja.dirreciongranja">Dirección indefinida</div>
+      <div *ngIf="selectedGranja.dirreciongranja">{{selectedGranja.dirreciongranja}}</div>
+    </div>
   </div>
-  <div class="mYstiledivmap">
-    <div class="sticky-top">
-      <div class="mapgoogle" *ngIf="granjas.length > 0 && (apiLoaded | async)">
-        <google-map height="650px" width="785px" [options]="options" (tilesloaded)="mapainiciado()">
-          <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i"
-            [position]="markerInfo.markerPosition" [options]="markerOptions"
-            icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"
-            (mapMouseover)="openInfoWindow(marker,i)"
-            (mapMouseout)="eliminInfoWindow()">
-          </map-marker>
-          <map-polyline [path]="vertices" [options]="optionPoli"></map-polyline>
-          <map-info-window [position]="markerPosition" *ngIf="mapaOn">
-            <div class="myestilo-map-info-window">
-<div class="details_info_windo">
-  <div class="detais-name-propietario_info_windo ">
-    <div> <img src="assets/icons/person_black.svg"></div>
-    <div>{{selectedGranja.propietario.nombre | titlecase }}</div>
-  </div>
-  <div class="details-area-nombre-granja_info_windo ">
-    <div><img src="assets/icons/set_meal_black_24dp.svg"></div>
-    <div> {{selectedGranja.nombregranja | titlecase}}</div>
-  </div>
-  <div class="details-area-granja_info_windo ">
-    <div><img src="assets/icons/areaterreno_black.svg"></div>
-    <div>{{selectedGranja.area | number:'':'es'}} m²</div>
-  </div>
-  <div class="details-area-direccion_info_windo ">
-    <div><img src="assets/icons/location_on_black_24dp.svg"></div>
-    <div *ngIf="!selectedGranja.dirreciongranja">Dirección indefinida</div>
-    <div *ngIf="selectedGranja.dirreciongranja">{{selectedGranja.dirreciongranja}}</div>
-  </div>
-</div>
-            </div>
-          </map-info-window>
-        </google-map>
-        <!-- <div  class="container-loader" *ngIf="!apiLoaded">
-                  <div class="loader-icon">
-                  </div>
-                </div> -->
+              </div>
+            </map-info-window>
+          </google-map>
+          <!-- <div  class="container-loader" *ngIf="!apiLoaded">
+                    <div class="loader-icon">
+                    </div>
+                  </div> -->
+        </div>
       </div>
     </div>
   </div>
+  <!--<app-footer></app-footer>-->
+  <app-floating-btn-auto-up></app-floating-btn-auto-up>
 </div>
-<!--<app-footer></app-footer>-->
 

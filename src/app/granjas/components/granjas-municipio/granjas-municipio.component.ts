@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
 import {MapInfoWindow, MapMarker} from '@angular/google-maps';
 import { vertices } from '../../../global/constants';
+import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 
 
 
@@ -62,13 +63,18 @@ export class GranjasMunicipioComponent implements OnInit {
       nombre: '',
     },
   };
+  granjassearch: any[] = [];
+  displayblock: boolean = false;
+  granjasarray: any[] = [];
+  datagranjaencontrada: boolean=false;
 
   constructor(
     httpClient: HttpClient,
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
     private placesService: PlacesService,
-    private router: Router
+    private router: Router,
+    private searchBuscadorService: SearchBuscadorService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -88,9 +94,19 @@ export class GranjasMunicipioComponent implements OnInit {
       .getGranjasMunicipio(Number(this.activatedRoute.snapshot.url[1]))
       .subscribe(
         (response) => {
-          this.granjas = response.data;
-          console.log(this.granjas[0]);
-          this.extractLatLong();
+          this.granjasarray = response.data;
+          if (localStorage.getItem('HistirialSearchCardGranjas')) {
+            this.granjas = JSON.parse(
+              localStorage.getItem('HistirialSearchCardGranjas')!
+            );
+            this.datagranjaencontrada = true;
+            this.extractLatLong();
+            console.log("helllo1")
+          } else {
+            this.granjas = response.data;
+            console.log('helllo2');
+            this.extractLatLong();
+          }
         },
         (err) => {
           console.error('Hay un error al obtener la lista de grajas');
@@ -103,12 +119,12 @@ export class GranjasMunicipioComponent implements OnInit {
       .getMunicipioById(Number(this.activatedRoute.snapshot.url[1]))
       .subscribe((response) => {
         if (response.data.length > 0) {
-        const sucreColombia = {
-          north: 10.184454,
-          south: 8.136442,
-          west: -75.842392,
-          east: -74.324908,
-        };
+          const sucreColombia = {
+            north: 10.184454,
+            south: 8.136442,
+            west: -75.842392,
+            east: -74.324908,
+          };
           this.poblacion = response.data[0].poblacion;
           this.municipio = response.data[0].nombre;
           this.options = {
@@ -128,6 +144,8 @@ export class GranjasMunicipioComponent implements OnInit {
   }
 
   extractLatLong() {
+  this.markerPositions= [];
+  this.markersInfo= [];
     this.granjas.forEach((granja: Granja) => {
       let markerPosition: google.maps.LatLngLiteral = {
         lat: Number(granja.latitud),
@@ -136,6 +154,7 @@ export class GranjasMunicipioComponent implements OnInit {
       this.markerPositions.push(markerPosition);
       this.markersInfo.push({ markerPosition: markerPosition });
     });
+    console.log(this.markersInfo)
   }
 
   onMouseCard(indexSelected: number) {
@@ -168,7 +187,9 @@ export class GranjasMunicipioComponent implements OnInit {
       this.selectedGranja.nombregranja = this.granjas[index].nombre;
       this.selectedGranja.area = this.granjas[index].area;
       this.selectedGranja.dirreciongranja = this.granjas[index].direccion;
-      this.selectedGranja.propietario.nombre = this.granjas[index].propietario;
+      this.selectedGranja.propietario.nombre =
+        this.granjas[index].propietario ||
+        this.granjas[index].propietarios[0].nombre_completo;
     }
   }
 
@@ -200,5 +221,62 @@ export class GranjasMunicipioComponent implements OnInit {
   }
   mapainiciado() {
     this.mapaOn = true;
+  }
+  /* funciones de busqueda granjas */
+  buscar() {
+    this.granjasService
+      .getGranjaSearch(
+        this.valorActualPulsado,
+        Number(this.activatedRoute.snapshot.url[1])
+      )
+      .subscribe(
+        (response) => {
+          this.granjassearch = response.data;
+          if (this.granjassearch.length>0) {
+            this.granjas = this.granjassearch;
+            this.extractLatLong()
+            localStorage.setItem(
+              'HistirialSearchCardGranjas',
+              JSON.stringify(this.granjassearch)
+            );
+            this.datagranjaencontrada=true
+          }else{
+            localStorage.removeItem('HistirialSearchCardGranjas');
+            this.granjas=this.granjasarray
+            this.extractLatLong();
+            this.datagranjaencontrada = false;
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+  buscaritemHistorial(valor: string) {
+    this.searchBuscadorService.buscarData(valor);
+    this.buscar();
+  }
+  eliminarItemHistorial(index: number) {
+    this.displayblock = true;
+    this.historialGranjas.splice(index, 1);
+    localStorage.setItem(
+      'HistirialSearchGranjas',
+      JSON.stringify(this.historialGranjas)
+    );
+    if (this.historialGranjas.length <= 0) {
+      this.displayblock = false;
+    }
+  }
+  ArrayCompletoGranjas(){
+    localStorage.removeItem('HistirialSearchCardGranjas');
+    this.granjas=this.granjasarray
+    this.extractLatLong();
+    this.datagranjaencontrada = false;
+  }
+  get historialGranjas() {
+    return this.searchBuscadorService.getHistorialGranjas;
+  }
+  get valorActualPulsado() {
+    return this.searchBuscadorService.getValorActualPulsado;
   }
 }

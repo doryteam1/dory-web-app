@@ -24,15 +24,15 @@
       <img class="detail-container__image" src="assets/icons/tipoAsociacion.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Tipo de asociación</h4>
-        <span class="detail-container__value">{{asociacion?.nombre_tipo_asociacion}}
+        <span class="detail-container__value">{{asociacion?.tipo_asociacion}}
         </span>
       </div>
     </div>
-    <div class="detail-container">
+    <div class="detail-container" >
       <img class="detail-container__image" src="assets/icons/person_pin_black_24dp.svg">
-      <div class="detail-container__data">
-        <h4 class="detail-container__title">Representante legal</h4>
-        <span class="detail-container__value">{{asociacion?.propietario}}</span>
+      <div class="detail-container__data detail-container__data--legal" (click)="goDetalleRepresentante()">
+        <h4 class="detail-container__title detail-container__title--legal">Representante legal</h4>
+        <span class="detail-container__value detail-container__value-legal">{{asociacion?.propietario}}</span>
       </div>
     </div>
     <div class="detail-container">
@@ -57,7 +57,10 @@
     </div>
         </div>
         <h6 class="detail-container__title detail-container__title--font">Fecha de renovación</h6>
-        <div *ngIf="asociacion?.direccion" class="detail-container__value">{{asociacion.fecha_renovacion_camarac}} </div>
+        <div *ngIf="asociacion?.direccion" class="detail-container__value">
+          {{asociacion.fecha_renovacion_camarac | date:'dd/MM/yyyy'}}
+          {{dayjsx(asociacion.fecha_renovacion_camarac,'DD/MM/YYYY','es')}}
+         </div>
       </div>
     </div>
         <div class="detail-container">
