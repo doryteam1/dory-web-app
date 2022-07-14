@@ -1,7 +1,7 @@
 <app-notification-bar></app-notification-bar>
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
-<app-search (textSearch)="textChange($event)" (keyEnterPress)="onSearch($event)"></app-search>
+<app-search [buscadorpersonalizado]="false" (textSearch)="textChange($event)" (keyEnterPress)="onSearch($event)"></app-search>
 <div class="container">
     <div *ngFor="let novedad of novedadesFiltered; let i=index;">
         <div class="container-box">
@@ -19,7 +19,7 @@
                     <!--<button class="novedad__share-button"><img class="novedad__button_icon" src="assets/icons/share.svg">Compartir</button>-->
                 </div>
                 <div>
-                    
+
                 </div>
                 <!-- <div class="pt-3">
                     <span  class="novedad__categoria">PRODUCTORES</span>
@@ -57,7 +57,7 @@
                 twitterAccount="rodrigokamada">
             </share-buttons>
         </div>
-    </div>    
+    </div>
 </div>
 <div class="search-container" *ngIf="showNotFound">
     <div class="search-container__box">

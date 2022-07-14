@@ -11,7 +11,7 @@
   </div>
   <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4" *ngIf="asociaciones.length > 0 && !showNotFound">
       <app-card-asociacion  *ngFor="let asociacion of  asociaciones" [asociacion]="asociacion" [delatecard]="false"
-        (onDetalle)="goAsociacionDetail($event)">
+        (onDetalle)="goAsociacionDetail($event)" (onDetalleRepresentante)="goDetalleRepresentante($event)">
       </app-card-asociacion>
   </div>
 </div>

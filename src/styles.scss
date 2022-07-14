@@ -6,6 +6,7 @@
   --azul1: #26a5b8;
   --azul2: #a7cfcf;
   --azul3: #dbf3f3;
+  --azul4:#E4F4FF;
   --gris: #c3c4be;
   --gris2: #c8baa0;
   --gris3: #9e9fa3;
@@ -199,7 +200,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18); 
+  -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
   box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
 }
 

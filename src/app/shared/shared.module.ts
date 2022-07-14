@@ -41,6 +41,7 @@ import { CardGranjasComponent } from './components/card-granjas/card-granjas.com
 import { ModalAlertActualizadoComponent } from './components/modal-alert-actualizado/modal-alert-actualizado.component';
 import { CardPescadorComponent } from './components/card-pescador/card-pescador.component';
 import { CardPiscicultorComponent } from './components/card-piscicultor/card-piscicultor.component';
+import { SearchBuscadorService } from './services/search-buscador.service';
 
 
 
@@ -117,6 +118,7 @@ import { CardPiscicultorComponent } from './components/card-piscicultor/card-pis
     ConfirmModalMapService,
     AppModalService,
     HttpsService,
+    SearchBuscadorService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

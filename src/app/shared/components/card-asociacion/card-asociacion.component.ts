@@ -8,8 +8,9 @@ import {  Router } from '@angular/router';
 })
 export class CardAsociacionComponent implements OnInit {
   @Input() asociacion: any;
-  @Input() delatecard!:boolean
+  @Input() delatecard!: boolean;
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
+  @Output() onDetalleRepresentante: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
   showNotFound: boolean = false;
   changeItem: boolean = true;
@@ -28,5 +29,8 @@ export class CardAsociacionComponent implements OnInit {
 
   eliminar(asociacion: any) {
     return this.onDelete.emit(asociacion);
+  }
+  goDetalleRepresentante(asociacion: any) {
+    return this.onDetalleRepresentante.emit(asociacion);
   }
 }

@@ -10,7 +10,9 @@
   flex-direction: column;
   margin-left: 17px;
 }
-
+.detail-container__data--legal{
+cursor: pointer;
+}
 .detail-container__image {
   width: 25px;
   height: 25px;
@@ -20,12 +22,16 @@
 .detail-container__title {
   font-size: 20px;
 }
-
+.detail-container__title--legal:hover{
+  color: var(--azul1);
+}
 .detail-container__value {
   font-size: 15px;
   text-align: justify;
 }
-
+.detail-container__value-legal:hover{
+  color: var(--azul1);
+}
 .asociacion-container {
   display: flex;
   justify-content: space-between;
