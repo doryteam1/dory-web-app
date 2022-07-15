@@ -19,6 +19,10 @@ const routes: Routes = [
     component: PescadorDetalleComponent,
   },
   {
+    path: 'detalle/:id',
+    component: PescadorDetalleComponent,
+  },
+  {
     path: 'asociacion/:id',
     component: PescadoresMunicipioComponent,
   },

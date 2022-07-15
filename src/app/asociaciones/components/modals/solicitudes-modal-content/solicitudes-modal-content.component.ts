@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
@@ -23,7 +24,8 @@ export class SolicitudesModalContentComponent implements OnInit {
     private pescadoresService:PescadoresService, 
     private piscicultoresService:PiscicultoresService, 
     private asociacionService:AsociacionesService,
-    private appModalService: AppModalService) { }
+    private appModalService: AppModalService,
+    private router:Router) { }
 
   ngOnInit(): void {
     this.pescadoresService.getPescadoresEstadoSolicitud(this.nit).subscribe(
@@ -126,4 +128,20 @@ export class SolicitudesModalContentComponent implements OnInit {
     }
   }
 
+  navigateDetalle(user:any){
+    let url = '';
+    if(this.selectedTab == 'piscicultores')
+    {
+      // Converts the route into a string that can be used 
+      // with the window.open() function
+       url = this.router.serializeUrl(
+        this.router.createUrlTree([`/piscicultores/detalle/${user.id}`])
+      );
+    }else{
+       url = this.router.serializeUrl(
+       this.router.createUrlTree([`/pescadores/detalle/${user.id}`])
+      );
+    }
+    window.open(url, '_blank');
+  }
 }

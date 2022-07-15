@@ -13,6 +13,7 @@ import { SolicitudesModalContentComponent } from './components/modals/solicitude
 import { PiscicultoresModule } from '../piscicultores/piscicultores.module';
 import { PescadoresModule } from '../pescadores/pescadores.module';
 import { AsociacionDetalleComponent } from './components/asociacion-detalle/asociacion-detalle.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { AsociacionDetalleComponent } from './components/asociacion-detalle/asoc
     NgbModule,
     SharedModule,
     PiscicultoresModule,
-    PescadoresModule
+    PescadoresModule,
+    RouterModule
   ],
   providers:[
     AsociacionesService,

@@ -12,8 +12,11 @@ const routes: Routes = [
   {
     path:"municipio/:id", component:PiscicultoresMunicipioComponent
   },
-   {
+  {
     path:'municipio/detalle/:id',component:PiscicultorDetalleComponent
+  },
+  {
+    path:'detalle/:id',component:PiscicultorDetalleComponent
   },
   {
     path:"asociacion/:id", component:PiscicultoresMunicipioComponent
