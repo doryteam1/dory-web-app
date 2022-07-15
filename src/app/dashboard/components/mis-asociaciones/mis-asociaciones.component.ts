@@ -94,6 +94,9 @@ export class MisAsociacionesComponent implements OnInit {
   tiposAsociaciones: Array<any> = [];
   error:string = '';
   showDetalleAsociacion:boolean = false;
+  selectedTab:string = 'representante';
+  asociacionesIsMiembro: any;
+  showNotFoundAsocMiemb: boolean = false;
 
   constructor(
     private asociacionesService: AsociacionesService,
@@ -121,9 +124,10 @@ export class MisAsociacionesComponent implements OnInit {
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
+    /*Asociaciones en donde se es representante legal*/
     this.asociacionesService.getAsociacionesUsuario(this.authUserId).subscribe(
-      (respose) => {
-        this.asociaciones = respose.data;
+      (response) => {
+        this.asociaciones = response.data;
         if (this.asociaciones.length < 1) {
           this.showNotFound = true;
         }
@@ -133,11 +137,21 @@ export class MisAsociacionesComponent implements OnInit {
       }
     );
 
+    /*Asociaciones en donde se en miembro*/
+    this.asociacionesService.getAsociacionesIsMiembroUser(this.authUserId).subscribe(
+      (response)=>{
+        this.asociacionesIsMiembro =  response.data;
+        if (this.asociacionesIsMiembro.length < 1) {
+          this.showNotFoundAsocMiemb = true;
+        }
+      }
+    )
     this.loadDptos();
     this.loadAsociaciones();
   }
 
   initForm() {
+    this.form.enable()
     this.nombre?.setValue('');
     this.idTipoAsoc?.setValue(null);
     this.isLegalConstituida?.setValue(null);
@@ -932,6 +946,10 @@ export class MisAsociacionesComponent implements OnInit {
       this.tempDir = this.direccion?.value;
       this.tempMunicId = this.idMunic?.value;
       this.nit?.disable();
+
+      if(this.selectedTab == 'miembro'){
+        this.form.disable()
+      }
     }
     this.showDetalleAsociacion = true;
   }

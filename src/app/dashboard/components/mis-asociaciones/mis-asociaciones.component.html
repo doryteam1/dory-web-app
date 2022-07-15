@@ -43,23 +43,55 @@
         <pagination-controls *ngIf="!showNotFound" class="my-pagination" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente">
         </pagination-controls>
     </div> -->
-
-    <div class="row row-cols-2" *ngIf="!showDetalleAsociacion">
-      <app-card-asociacion class="col"
-      *ngFor="let asociacion of asociaciones"
-       [asociacion]="asociacion"
-       [delatecard]="true"
-       (onDetalle)="detalleAsociacion('update',$event)"
-       (onDelete)="delete($event)">
-      </app-card-asociacion>
-    </div>
-    <div class="search-container" *ngIf="showNotFound">
-      <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/searching.svg">
-          <h3>No se han encontrado resultados</h3>
-          <p>Aun no has registrado tus asociaciones</p>
+    <div *ngIf="!showDetalleAsociacion">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" (click)="selectedTab = 'representante'">Donde soy representante</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" (click)="selectedTab = 'miembro'">Donde soy miembro</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+          <div class="row row-cols-2" >
+            <app-card-asociacion class="col"
+            *ngFor="let asociacion of asociaciones"
+            [asociacion]="asociacion"
+            [delatecard]="true"
+            (onDetalle)="detalleAsociacion('update',$event)"
+            (onDelete)="delete($event)">
+            </app-card-asociacion>
+          </div>
+          <div class="search-container" *ngIf="showNotFound">
+            <div class="search-container__box">
+                <img class="search-container__image" src="assets/images/searching.svg">
+                <h3>No se han encontrado resultados</h3>
+                <p>Aun no has registrado tus asociaciones</p>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+          <div class="row row-cols-2" >
+            <app-card-asociacion class="col"
+            *ngFor="let asociacion of asociacionesIsMiembro"
+            [asociacion]="asociacion"
+            [delatecard]="true"
+            (onDetalle)="detalleAsociacion('update',$event)"
+            (onDelete)="delete($event)">
+            </app-card-asociacion>
+          </div>
+          <div class="search-container" *ngIf="showNotFoundAsocMiemb">
+            <div class="search-container__box">
+                <img class="search-container__image" src="assets/images/searching.svg">
+                <h3>No se han encontrado resultados</h3>
+                <p>Aun no has registrado tus asociaciones</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+   
     <!-- <div class="d-flex flex-direction-row justify-content-center">
       <button class="btn-outline-blue button" (click)="detalleAsociacion('create')" *ngIf="modalMode == 'create'">Agregar asociación</button>
     </div> -->
@@ -67,8 +99,9 @@
 
     <div *ngIf="showDetalleAsociacion">
       <div class="d-flex flex-row justify-content-between">
-        <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nueva Asociación' : 'Actualizar Asociación'}}</h4>
-        <button class="btn-add btn-square btn--blue" (click)="agregarMiembro()"><i class="icon-add bi bi-person-plus"></i>Agregar miembros</button>
+        <h4 class="modal-title" id="modal-basic-title" *ngIf="selectedTab=='representante'">{{modalMode == 'create' ? 'Nueva Asociación' : 'Actualizar Asociación'}}</h4>
+        <h4 class="modal-title" id="modal-basic-title" *ngIf="selectedTab=='miembro'">Detalle Asociación</h4>
+        <button class="btn-add btn-square btn--blue" (click)="agregarMiembro()" *ngIf="selectedTab == 'representante'"><i class="icon-add bi bi-person-plus"></i>Agregar miembros</button>
       </div>
 
       <div class="modal-body">
@@ -237,18 +270,18 @@
       </div>
       <div class="modal-footer">
         <div class="d-flex flex-direction-row justify-content-center align-items-center">
-          <button type="button" class="btn-square-blue2 container__btn container__btn--azul" (click)="addAsociaciones()" *ngIf="modalMode=='create'">
+          <button type="button" class="btn-square-blue2 container__btn container__btn--azul" (click)="addAsociaciones()" *ngIf="modalMode=='create' && selectedTab == 'representante'">
             <span *ngIf="!loading1">Guardar</span>
             <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
             </div>
           </button>
-          <button type="button" class="btn-square-blue2 container__btn container__btn--azul" (click)="updateAsociacion()"  *ngIf="modalMode=='update'">
+          <button type="button" class="btn-square-blue2 container__btn container__btn--azul" (click)="updateAsociacion()"  *ngIf="modalMode=='update' && selectedTab == 'representante'">
             <span *ngIf="!loading1" >Actualizar</span>
             <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
             </div>
           </button>
           <button type="button" class="btn-square-white2 container__btn" (click)="showDetalleAsociacion = !showDetalleAsociacion">
-            <span>Cancelar</span>
+            <span>{{selectedTab == 'representante' ? 'Cancelar' : 'Atras'}}</span>
           </button>
         </div>
       </div>
