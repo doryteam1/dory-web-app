@@ -20,9 +20,7 @@ export class SearchComponent {
   }
 
   onEnterPress() {
-    console.log('press enter');
     this.keyEnterPress.emit(this.text);
-    console.log(this.text);
   }
   search() {
     const valor = this.txtBuscar.nativeElement.value;

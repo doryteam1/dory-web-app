@@ -15,6 +15,9 @@ export class SolicitudesModalContentComponent implements OnInit {
   @Input() nit = -1;
   piscicultores:Array<any> = [];
   pescadores:Array<any> = [];
+  selectedTab:string = 'piscicultores';
+  piscicultoresFiltered:any[] = [];
+  pescadoresFiltered: any[] = [];
   constructor(
     public activeModal:NgbActiveModal, 
     private pescadoresService:PescadoresService, 
@@ -27,12 +30,14 @@ export class SolicitudesModalContentComponent implements OnInit {
       (response:any)=>{
         console.log(response)
         this.pescadores = response.data;
+        this.pescadoresFiltered = this.pescadores;
       }
     );
     this.piscicultoresService.getPiscicultoresEstadoSolicitud(this.nit).subscribe(
       (response)=>{
         console.log(response)
         this.piscicultores = response.data;
+        this.piscicultoresFiltered = this.piscicultores;
       }
     )
   }
@@ -99,5 +104,26 @@ export class SolicitudesModalContentComponent implements OnInit {
     }
   }
 
+  onSearch(text:string){
+    if(this.selectedTab == 'piscicultores'){
+      console.log("piscicultores ",text)
+      if(text == ''){
+        this.piscicultoresFiltered = this.piscicultores;
+      }else{
+        this.piscicultoresFiltered = this.piscicultores.filter((element)=>{
+          return element.nombres.toLocaleLowerCase().includes(text.toLocaleLowerCase());
+        })
+      }
+    }else{
+      console.log("pescadores ",text)
+      if(text == ''){
+        this.pescadoresFiltered = this.piscicultores;
+      }else{
+        this.pescadoresFiltered = this.pescadores.filter((element)=>{
+          return element.nombres.toLowerCase().includes(text.toLocaleLowerCase());
+        })
+      }
+    }
+  }
 
 }
