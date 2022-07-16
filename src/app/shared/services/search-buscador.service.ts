@@ -4,14 +4,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class SearchBuscadorService {
-  private _historialgranjas: string[] = [];
-  private _historialpiscicultores: string[] = [];
+  private _arraydatasearch: any[] = [];
+  private _arraydatafilter: any[] = [];
+  /*   private _historialpiscicultores: string[] = [];
   private _historialpescadores: string[] = [];
   private _historialasociaciones: string[] = [];
-  private _valoractualpulsado: string = '';
+  private _valoractualpulsado: string = ''; */
 
-  constructor(){
-    if (
+  constructor() {
+    /*     if (
       localStorage.getItem('HistirialSearchGranjas') ||
       localStorage.getItem('HistirialSearchPescadores') ||
       localStorage.getItem('HistirialSearchPiscicultores') ||
@@ -23,12 +24,15 @@ export class SearchBuscadorService {
           localStorage.getItem('HistirialSearchPiscicultores')! ||
           localStorage.getItem('HistirialSearchAsociaciones')!
       );
-    }
+    } */
   }
-  get getHistorialGranjas() {
-    return this._historialgranjas;
+  get getArraydataSearch() {
+    return [...this._arraydatasearch];
   }
-  get getHistorialPiscicultores() {
+  get getArraydataFilter() {
+    return [...this._arraydatafilter];
+  }
+  /*   get getHistorialPiscicultores() {
     return [...this._historialpiscicultores];
   }
   get getHistorialPescadores() {
@@ -39,12 +43,17 @@ export class SearchBuscadorService {
   }
   get getValorActualPulsado() {
     return this._valoractualpulsado;
-  }
-  DataSearchExiste(datasearchexiste:boolean){
-
-  }
-  buscarData(query: string, dataabuscar?: string) {
-    this._valoractualpulsado=query
+  } */
+  buscarData(arraydata: any[], query: string) {
+    let arraydatanew = arraydata.slice()
+    let newArray = arraydatanew.filter((dataarray) => {
+      return (
+        dataarray.nombre.toLowerCase().includes(query.toLowerCase()) ||
+        dataarray.descripcion.toLowerCase().includes(query.toLowerCase())
+      );
+    });
+    this._arraydatasearch=newArray
+    /*     this._valoractualpulsado=query
     if (dataabuscar == 'granjas') {
       if (!this._historialgranjas.includes(query)) {
         this._historialgranjas.unshift(query);
@@ -81,6 +90,22 @@ export class SearchBuscadorService {
            JSON.stringify(this._historialasociaciones)
          );
       }
-    }
+    } */
   }
+  filterArray(arraydata: any[], parametroaevualuar:any) {
+     let arraydatanew = arraydata.slice();
+    let filterarraydata = arraydatanew.sort((a, b) => {
+      if (Number(a[parametroaevualuar]) > Number(b[parametroaevualuar])) {
+        return -1;
+      } else if (
+        Number(a[parametroaevualuar]) < Number(a[parametroaevualuar])
+      ) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    this._arraydatafilter=filterarraydata
+  }
+
 }

@@ -922,7 +922,6 @@ export class MisAsociacionesComponent implements OnInit {
         }
       );*/
   }
-
   detalleAsociacion(action: string, asociacion?: any) {
     this.modalMode = action;
     this.form.reset();
@@ -936,7 +935,8 @@ export class MisAsociacionesComponent implements OnInit {
       this.infoAdicionalDir?.setValue(asociacion.informacion_adicional_direccion);
       this.nombre?.setValue(asociacion.nombre);
       this.isLegalConstituida?.setValue(asociacion.legalconstituida);
-      this.fechRenvCamc?.setValue(formatDate(asociacion?.fecha_renovacion_camarac,'yyyy-MM-dd','es'));
+      this.fechRenvCamc?.setValue(
+        asociacion?.fecha_renovacion_camarac.slice(0, asociacion?.fecha_renovacion_camarac.indexOf('T')));
       //this.fotoCamc?.setValue(asociacion.foto_camarac);
       this.idTipoAsoc?.setValue(asociacion.id_tipo_asociacion_fk);
       this.corregVereda?.setValue(asociacion.corregimiento_vereda);

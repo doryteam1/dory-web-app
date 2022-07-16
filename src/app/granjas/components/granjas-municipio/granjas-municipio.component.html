@@ -31,8 +31,7 @@
   <app-search
    [buscadorpersonalizado]="true"
    [placeholderbuscador]="'Buscar granjas...'"
-   [dataabuscar]="'granjas'"
-   (keyEnterPress)="buscar()">
+   (keyEnterPress)="buscar($event)">
   </app-search>
     <div class="dropdown buscador-container-option1">
       <div
@@ -47,12 +46,12 @@
         Filtros
       </div>
       <ul class="dropdown-menu" aria-labelledby="dropdownCenterBtn">
-      <li><a class="dropdown-item">Calificación</a></li>
-      <li><a class="dropdown-item">Área</a></li>
-      <li><a class="dropdown-item">Otros</a></li>
+      <li><a class="dropdown-item" (click)="filterCalificacion()">Calificación</a></li>
+      <li><a class="dropdown-item" (click)="filterArea()">Área</a></li>
+      <li><a class="dropdown-item" (click)="verTodasLasGranjas()">Ver todas</a></li>
       </ul>
     </div>
-  <div class="dropdown-center buscador-container-option2" *ngIf="historialGranjas.length > 0">
+<!--   <div class="dropdown-center buscador-container-option2" *ngIf="historialGranjas.length > 0">
       <div class="btn btn-secondary dropdown-toggle buscador-container-option-div"
        type="button" id="dropdownCenterBtn"
        data-bs-toggle="dropdown"
@@ -83,7 +82,7 @@
       </span>
       Granjas
     </div>
-  </div>
+  </div> -->
 </div>
 <div class="search-container" *ngIf="singranjas">
     <div class="search-container__box">
@@ -114,8 +113,7 @@
           <div class="description">
             <div class="description_title_fauvourite">
                     <div>
-                      <img src="assets/icons/set_meal_black_24dp.svg">
-                      <h1 (click)="navigate(granja.id_granja)">{{granja.nombre | shorter:15}}</h1>
+                      <h1 class="description_title_fauvourite--h1" (click)="navigate(granja.id_granja)">{{granja.nombre | shorter:15}}</h1>
                     </div>
               <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita"
                 (click)="changeFavorite(i)">
@@ -128,13 +126,13 @@
             <div class="card__rating-container">
               <div class="card__rating-container_info">
                 <div  class="card__rating-container_puntos"(click)="showResenas(granja?.id_granja)">
-                  <span class="card__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ?
+                  <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
                     (granja.puntuacion |
-                    number:'1.1-1') : 'S/C'}}</span>
-                  <img class="card__icon-rating" src="assets/icons/star-filled.svg">
+                    number:'1.1-1') : '0'}}</span>
+                  <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
                 </div>
-                <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)"> {{granja.count_resenas}}
-                  reseñas</span>
+                <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)">Reseñas: {{granja.count_resenas}}
+                  </span>
               </div>
               <p class="read-more"(click)="navigate(granja.id_granja)"><a>Ver detalles</a></p>
             </div>

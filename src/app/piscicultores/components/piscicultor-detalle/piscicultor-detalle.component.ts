@@ -13,12 +13,16 @@ export class PiscicultorDetalleComponent implements OnInit {
   piscicultor: any;
   piscicultorasociaciones: any;
   piscicultorgranjas: any;
-  showNotFound: boolean = false;
-  showError: boolean = false;
+  piscicultorDetalleAsociacioneshowNotFound: boolean = false;
+  piscicultorDetalleGranjasshowNotFound: boolean = false;
+  piscicultorDetalleshowError: boolean = false;
+  piscicultorDetalleAsociacioneshowError: boolean = false;
+  piscicultorDetalleGranjasshowError: boolean = false;
   errorMessage = '';
   activatelistgranja: boolean = true;
   activatelistasociacion: boolean = false;
-  changeItem: boolean = true;
+  piscicultorDetalleAsociacioneschangeItem: boolean = true;
+  piscicultorDetalleGranjaschangeItem: boolean = true;
   constructor(
     private activatedRoute: ActivatedRoute,
     private piscicultoresService: PiscicultoresService,
@@ -29,26 +33,23 @@ export class PiscicultorDetalleComponent implements OnInit {
     this.selectedPiscicultorId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
+    console.log(this.selectedPiscicultorId);
     this.piscicultoresService
       .getPiscicultorDetalle(this.selectedPiscicultorId)
       .subscribe(
-        (response:any) => {
+        (response: any) => {
           if (response.data.length > 0) {
             this.piscicultor = response.data[0];
-            this.showError = false;
-            this.showNotFound = false;
+            this.piscicultorDetalleshowError = false;
           } else {
-            this.showNotFound = true;
-            this.showError = false;
+            this.piscicultorDetalleshowError = false;
           }
         },
         (err) => {
-          this.showNotFound = false;
-          this.showError = false;
+          this.piscicultorDetalleshowError = false;
           if (err.status == 404) {
-            this.showNotFound = true;
           } else {
-            this.showError = true;
+            this.piscicultorDetalleshowError = true;
             this.errorMessage = 'Error inesperado';
           }
         }
@@ -57,27 +58,27 @@ export class PiscicultorDetalleComponent implements OnInit {
     this.piscicultoresService
       .getPiscicultorDetalleAsociaciones(this.selectedPiscicultorId)
       .subscribe(
-        (response:any) => {
+        (response: any) => {
           if (response.data.length > 0) {
             this.piscicultorasociaciones = response.data;
-            console.log(this.piscicultorasociaciones)
-            this.showError = false;
-            this.showNotFound = false;
-            this.changeItem = false;
+            console.log(this.piscicultorasociaciones);
+            this.piscicultorDetalleAsociacioneshowError = false;
+            this.piscicultorDetalleAsociacioneshowNotFound = false;
+            this.piscicultorDetalleAsociacioneschangeItem = false;
           } else {
-            this.showNotFound = true;
-            this.showError = false;
-            this.changeItem = false;
+            this.piscicultorDetalleAsociacioneshowNotFound = true;
+            this.piscicultorDetalleAsociacioneshowError = false;
+            this.piscicultorDetalleAsociacioneschangeItem = false;
           }
         },
         (err) => {
-          this.showNotFound = false;
-          this.showError = false;
-          this.changeItem = false;
-          if (err.status == 404 || err.status == 500) {
-            this.showNotFound = true;
+          this.piscicultorDetalleAsociacioneshowNotFound = false;
+          this.piscicultorDetalleAsociacioneshowError = false;
+          this.piscicultorDetalleAsociacioneschangeItem = false;
+          if (err.status == 404) {
+            this.piscicultorDetalleAsociacioneshowNotFound = true;
           } else {
-            this.showError = true;
+            this.piscicultorDetalleAsociacioneshowError = true;
             this.errorMessage = 'Error inesperado';
           }
         }
@@ -86,26 +87,27 @@ export class PiscicultorDetalleComponent implements OnInit {
     this.piscicultoresService
       .getPiscicultorDetalleGranjas(this.selectedPiscicultorId)
       .subscribe(
-        (response:any) => {
+        (response: any) => {
           if (response.data.length > 0) {
             this.piscicultorgranjas = response.data;
-            this.showError = false;
-            this.showNotFound = false;
-            this.changeItem = false;
+            console.log(this.piscicultorgranjas);
+            this.piscicultorDetalleGranjasshowError = false;
+            this.piscicultorDetalleGranjasshowNotFound = false;
+            this.piscicultorDetalleGranjaschangeItem = false;
           } else {
-            this.showNotFound = true;
-            this.showError = false;
-            this.changeItem = false;
+            this.piscicultorDetalleGranjasshowNotFound = true;
+            this.piscicultorDetalleGranjasshowError = false;
+            this.piscicultorDetalleGranjaschangeItem = false;
           }
         },
         (err) => {
-          this.showNotFound = false;
-          this.showError = false;
-          this.changeItem = false;
-          if (err.status == 404 || err.status == 500) {
-            this.showNotFound = true;
+          this.piscicultorDetalleGranjasshowNotFound = false;
+          this.piscicultorDetalleGranjasshowError = false;
+          this.piscicultorDetalleGranjaschangeItem = false;
+          if (err.status == 404) {
+            this.piscicultorDetalleGranjasshowNotFound = true;
           } else {
-            this.showError = true;
+            this.piscicultorDetalleGranjasshowError = true;
             this.errorMessage = 'Error inesperado';
           }
         }
