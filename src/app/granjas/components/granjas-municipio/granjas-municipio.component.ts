@@ -95,16 +95,15 @@ export class GranjasMunicipioComponent implements OnInit {
       .subscribe(
         (response) => {
           this.granjasarray = response.data;
+          console.log(this.granjasarray)
           if (localStorage.getItem('HistirialSearchCardGranjas')) {
             this.granjas = JSON.parse(
               localStorage.getItem('HistirialSearchCardGranjas')!
             );
             this.datagranjaencontrada = true;
             this.extractLatLong();
-            console.log("helllo1")
           } else {
             this.granjas = response.data;
-            console.log('helllo2');
             this.extractLatLong();
           }
         },
@@ -154,7 +153,6 @@ export class GranjasMunicipioComponent implements OnInit {
       this.markerPositions.push(markerPosition);
       this.markersInfo.push({ markerPosition: markerPosition });
     });
-    console.log(this.markersInfo)
   }
 
   onMouseCard(indexSelected: number) {
@@ -162,13 +160,6 @@ export class GranjasMunicipioComponent implements OnInit {
     this.markerPosition = {
       lat: Number(this.granjas[indexSelected].latitud),
       lng: Number(this.granjas[indexSelected].longitud),
-    };
-    this.options = {
-      center: {
-        lat: Number(this.granjas[indexSelected].latitud),
-        lng: Number(this.granjas[indexSelected].longitud),
-      },
-      zoom: 13,
     };
     this.openInfoWindow(this.marker, indexSelected);
   }
@@ -223,10 +214,13 @@ export class GranjasMunicipioComponent implements OnInit {
     this.mapaOn = true;
   }
   /* funciones de busqueda granjas */
-  buscar() {
-    this.granjasService
+  buscar(query:string) {
+    this.searchBuscadorService.buscarData(this.granjasarray, query);
+    this.granjas=this.arrayDataSearch
+    this.extractLatLong();
+/*     this.granjasService
       .getGranjaSearch(
-        this.valorActualPulsado,
+        query,
         Number(this.activatedRoute.snapshot.url[1])
       )
       .subscribe(
@@ -250,9 +244,31 @@ export class GranjasMunicipioComponent implements OnInit {
         (err) => {
           console.log(err);
         }
-      );
+      ); */
   }
-  buscaritemHistorial(valor: string) {
+  filterCalificacion(){
+    this.granjas =[]
+    console.log(this.granjas);
+    console.log(this.granjasarray);
+    this.searchBuscadorService.filterArray(this.granjasarray, 'puntuacion');
+    this.granjas = this.arrayDataFilter;
+    console.log(this.granjas)
+    this.extractLatLong();
+  }
+  filterArea(){
+     this.granjas = [];
+     console.log(this.granjas);
+       console.log(this.granjasarray);
+    this.searchBuscadorService.filterArray(this.granjasarray, 'area');
+    this.granjas = this.arrayDataFilter;
+    console.log(this.granjas)
+    this.extractLatLong();
+  }
+  verTodasLasGranjas(){
+   this.granjas= this.granjasarray
+   this.extractLatLong();
+  }
+ /*  buscaritemHistorial(valor: string) {
     this.searchBuscadorService.buscarData(valor);
     this.buscar();
   }
@@ -272,11 +288,12 @@ export class GranjasMunicipioComponent implements OnInit {
     this.granjas=this.granjasarray
     this.extractLatLong();
     this.datagranjaencontrada = false;
+  } */
+  get arrayDataSearch() {
+    return this.searchBuscadorService.getArraydataSearch;
   }
-  get historialGranjas() {
-    return this.searchBuscadorService.getHistorialGranjas;
+  get arrayDataFilter() {
+    return this.searchBuscadorService.getArraydataFilter;
   }
-  get valorActualPulsado() {
-    return this.searchBuscadorService.getValorActualPulsado;
-  }
+
 }

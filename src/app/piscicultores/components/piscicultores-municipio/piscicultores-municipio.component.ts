@@ -151,13 +151,6 @@ export class PiscicultoresMunicipioComponent implements OnInit {
       lat: Number(this.piscicultores[indexSelected].latitud),
       lng: Number(this.piscicultores[indexSelected].longitud),
     };
-    this.options = {
-      center: {
-        lat: Number(this.piscicultores[indexSelected].latitud),
-        lng: Number(this.piscicultores[indexSelected].longitud),
-      },
-      zoom: 13,
-    };
     this.openInfoWindow(this.marker, indexSelected);
   }
   eliminInfoWindow() {

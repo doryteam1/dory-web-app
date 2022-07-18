@@ -89,11 +89,11 @@ export class PescadoresMunicipioComponent implements OnInit {
         .subscribe((response: any) => {
           console.log(response);
           this.pescadores = response.data;
-                              if (this.pescadores.length !== 0) {
-                                this.showNotFound = false;
-                              } else {
-                                this.showNotFound = true;
-                              }
+     if (this.pescadores.length !== 0) {
+       this.showNotFound = false;
+     } else {
+       this.showNotFound = true;
+     }
           this.placesService.getMunicipioById(id).subscribe(
             (response) => {
               if (response.data.length > 0) {
@@ -147,13 +147,6 @@ export class PescadoresMunicipioComponent implements OnInit {
     this.markerPosition = {
       lat: Number(pescador.latitud),
       lng: Number(pescador.longitud),
-    };
-    this.options = {
-      center: {
-        lat: Number(pescador.latitud),
-        lng: Number(pescador.longitud),
-      },
-      zoom: 13,
     };
     this.openInfoWindow(this.marker, indexSelected);
   }

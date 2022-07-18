@@ -769,3 +769,21 @@ margin-bottom: 0;
 .mycontainer{
   margin-top: 30px;
 }
+/* estilo puntuacio */
+ .star {
+   position: relative;
+   display: inline-block;
+   font-size: 3rem;
+   color: #d3d3d3;
+ }
+
+ .full {
+   color: red;
+ }
+
+ .half {
+   position: absolute;
+   display: inline-block;
+   overflow: hidden;
+   color: red;
+ }

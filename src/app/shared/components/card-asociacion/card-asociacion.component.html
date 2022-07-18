@@ -30,7 +30,7 @@
             <img src="assets/icons/location_on_black_24dp.svg">
             <span >{{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion | shorter:15}}</span>
           </div>
-          <div class="card__description-container-infor-1-div" >
+          <div class="card__description-container-infor-1-div" *ngIf="asociacion.legalconstituida==1">
             <img src="assets/icons/picture_as_pdf_black_24dp.svg">
             <div>
               <span *ngIf="asociacion?.foto_camarac">
@@ -45,20 +45,18 @@
               </span>
             </div>
           </div>
-          <div class="card__description-container-infor-1-div" *ngIf="asociacion?.foto_camarac">
-                <span class="card_description--span">Renovada: {{asociacion?.fecha_renovacion_camarac}}</span>
+          <div class="card__description-container-infor-1-div" *ngIf="asociacion?.foto_camarac && asociacion.legalconstituida==1">
+                <span class="card_description--span">
+                  Renovada: {{asociacion?.fecha_renovacion_camarac.slice(0, asociacion?.fecha_renovacion_camarac.indexOf('T')) | date:'dd/MM/yyyy'}}
+                </span>
           </div>
-         <!--           <h3 >Fecha de modificación del documento</h3>
-          <div class="card__description-container-infor-1-div">
-              <img  src="assets/icons/edit_document_black_24dp.svg">
-              <span>{{asociacion.fecha_renovacion_camarac}}</span>
-          </div -->
         </div>
         <h2>Representante legal</h2>
         <div class="card__description-container-infor-2" (click)="goDetalleRepresentante(asociacion)">
           <div class="card__description-container-infor-2-div">
             <img  src="assets/icons/person_pin_black_24dp.svg">
-            <a>{{asociacion?.propietario}}</a>
+            <a *ngIf="asociacion?.propietario">{{asociacion?.propietario}}</a>
+            <a  *ngIf="!asociacion?.propietario">Representante legal indefinido</a>
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ export class SearchComponent {
   @ViewChild('txtBuscar') txtBuscar!: ElementRef<HTMLInputElement>;
   @Input() buscadorpersonalizado: boolean = false;
   @Input() placeholderbuscador!: string;
-  @Input() dataabuscar!: string;
+ /*  @Input() dataabuscar!: string; */
   @Output() textSearch: EventEmitter<string> = new EventEmitter();
   @Output() keyEnterPress: EventEmitter<string> = new EventEmitter();
   text: string = '';
@@ -27,8 +27,8 @@ export class SearchComponent {
     if (valor.trim().length === 0) {
       return;
     }
-    this.searchBuscadorService.buscarData(valor,this.dataabuscar)
-     this.keyEnterPress.emit();
+  /*   this.searchBuscadorService.buscarData(valor,this.dataabuscar) */
+     this.keyEnterPress.emit(valor);
    /*  this.txtBuscar.nativeElement.value = ''; */
   }
 }

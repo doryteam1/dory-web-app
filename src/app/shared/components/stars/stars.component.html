@@ -5,9 +5,20 @@
     <i [ngClass]="[ overStar >= 4 ? 'bi-star-fill blue' : '',  4  >  overStar ? 'bi-star' : '', size == 'medium' ? 'container__icon-medium' : '', size == 'small' ? 'container__icon-small' : '']" (mouseover)="mouseOver(4)" (mouseout)="mouseOut(4)" (click)="onClick(4)" *ngIf="selectedStar == -1"></i>
     <i [ngClass]="[ overStar >= 5 ? 'bi-star-fill blue' : '',  5  >  overStar ? 'bi-star' : '', size == 'medium' ? 'container__icon-medium' : '', size == 'small' ? 'container__icon-small' : '']" (mouseover)="mouseOver(5)" (mouseout)="mouseOut(5)" (click)="onClick(5)" *ngIf="selectedStar == -1"></i>
 
-    <i [ngClass]="[ selectedStar >= 1 ? 'bi-star-fill blue' : '',  1  >  selectedStar ? 'bi-star' : '', size == 'medium' ? 'container__icon-medium' : '', size == 'small' ? 'container__icon-small' : '']" *ngIf="selectedStar  >= 0" (click)="onClick(1)"></i>
+   <!--  <i [ngClass]="[ selectedStar >= 1 ? 'bi-star-fill blue' : '',  1  >  selectedStar ? 'bi-star' : '', size == 'medium' ? 'container__icon-medium' : '', size == 'small' ? 'container__icon-small' : '']" *ngIf="selectedStar  >= 0" (click)="onClick(1)"></i>
     <i [ngClass]="[ selectedStar >= 2 ? 'bi-star-fill blue' : '',  2  >  selectedStar ? 'bi-star' : '', size == 'medium' ? 'container__icon-medium' : '', size == 'small' ? 'container__icon-small' : '']" *ngIf="selectedStar  >= 0" (click)="onClick(2)"></i>
     <i [ngClass]="[ selectedStar >= 3 ? 'bi-star-fill blue' : '',  3  >  selectedStar ? 'bi-star' : '', size == 'medium' ? 'container__icon-medium' : '', size == 'small' ? 'container__icon-small' : '']" *ngIf="selectedStar  >= 0" (click)="onClick(3)"></i>
     <i [ngClass]="[ selectedStar >= 4 ? 'bi-star-fill blue' : '',  4  >  selectedStar ? 'bi-star' : '', size == 'medium' ? 'container__icon-medium' : '', size == 'small' ? 'container__icon-small' : '']" *ngIf="selectedStar  >= 0" (click)="onClick(4)"></i>
-    <i [ngClass]="[ selectedStar >= 5 ? 'bi-star-fill blue' : '',  5  >  selectedStar ? 'bi-star' : '', size == 'medium' ? 'container__icon-medium' : '', size == 'small' ? 'container__icon-small' : '']" *ngIf="selectedStar  >= 0" (click)="onClick(5)"></i>
+    <i [ngClass]="[ selectedStar >= 5 ? 'bi-star-fill blue' : '',  5  >  selectedStar ? 'bi-star' : '', size == 'medium' ? 'container__icon-medium' : '', size == 'small' ? 'container__icon-small' : '']" *ngIf="selectedStar  >= 0" (click)="onClick(5)"></i> -->
+    <ng-template #t let-fill="fill" >
+      <span
+      class="star"
+       [ngClass]="[size == 'mini' ? 'container__icon-mini' : '',size == 'medium' ? 'container__icon-medium' : '', size == 'small' ? 'container__icon-small' : '']"
+       [class.full]="fill === 100">
+      <span  class="half" [style.width.%]="fill"><i class="bi bi-star-fill"></i></span><i class="bi bi-star"></i>
+      </span>
+    </ng-template>
+    <ngb-rating class="ndb-ratingx" [(rate)]="selectedStar" [starTemplate]="t" [readonly]="true" [max]="5" *ngIf="selectedStar >= 0"></ngb-rating>
 </div>
+
+

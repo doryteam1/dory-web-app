@@ -153,13 +153,8 @@
         </div>
 
         <div class="download-cam" *ngIf="modalMode=='update'">
-            <span *ngIf="asociacion?.foto_camarac">
+            <span *ngIf="asociacion?.foto_camarac && asociacion?.foto_camarac!='null'">
               <a [href]="asociacion?.foto_camarac" target="_blank">Camara de comercio
-                 <img src="assets/icons/download_for_offline_blue1_24dp.svg">
-              </a>
-            </span>
-            <span *ngIf="!asociacion?.foto_camarac">
-              <a >Camara de comercio
                  <img src="assets/icons/download_for_offline_blue1_24dp.svg">
               </a>
             </span>

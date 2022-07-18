@@ -18,6 +18,10 @@
 }
 
 .container__icon-small{
+    font-size: 20px;
+    margin-right: 5px;
+}
+.container__icon-mini{
     font-size: 15px;
     margin-right: 5px;
 }
@@ -33,4 +37,21 @@
 .margin{
     margin-right: 0px;
 }
+
+.star {
+          position: relative;
+          display: inline-block;
+          color: #d3d3d3;
+        }
+
+        .full {
+          color: var(--azul1);
+        }
+
+        .half {
+          position: absolute;
+          display: inline-block;
+          overflow: hidden;
+          color: var(--azul1);
+        }
 

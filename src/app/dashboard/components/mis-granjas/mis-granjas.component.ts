@@ -122,8 +122,8 @@ export class MisGranjasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this. autorecarga()
-   }
+    this.autorecarga();
+  }
   autorecarga(): void {
     this.direccion?.disable();
     let token = localStorage.getItem('token');
@@ -569,9 +569,20 @@ if (this.form.getRawValue().direccion !== '') {
       });
       this.modal.result
         .then((result) => {
+          if (this.form.getRawValue().direccion == '') {
+            this.faltadireccion = true;
+          } else {
+            this.faltadireccion = false;
+          }
+
         })
         .catch((err) => {
-          console.log(err);
+          if (this.form.getRawValue().direccion == '') {
+            this.faltadireccion = true;
+          } else {
+            this.faltadireccion = false;
+          }
+
         });
       this.markerPosition = {
         lat: Number(this.form.get('latitud')?.value),

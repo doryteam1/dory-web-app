@@ -26,16 +26,16 @@
             </div>
             <div class="estilo-p-card" (click)="navigate(i)"></div>
             <div class="card__rating-container" >
-              <div (click)="showResenas(granja?.id_granja)">
-                <div >
-                  <span class="card__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ?
-                    (granja.puntuacion |
-                    number:'1.1-1') : 'S/C'}}</span>
-                  <img class="card__icon-rating" src="assets/icons/star-filled.svg">
-                </div>
-                <span class="card__rating__detail"> {{granja.cantidad_resenas}}
-                  reseñas</span>
-              </div>
+                          <div class="card__rating-container_info">
+                            <div class="card__rating-container_puntos" (click)="showResenas(granja?.id_granja)">
+                              <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
+                                (granja.puntuacion |
+                                number:'1.1-1') : '0'}}</span>
+                              <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
+                            </div>
+                            <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)">Reseñas: {{granja.cantidad_resenas}}
+                            </span>
+                          </div>
             </div>
           </div>
         </div>

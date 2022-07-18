@@ -20,8 +20,8 @@
           </h3>
         </div>
       </div>
-      <div *ngIf="misfavoritoscargados && !showNotFound && misGranjaFavoritas.length>0" class="container-button-open-map" (click)="seeFarmsMap()">
-        <div class="container-button-open-map-data">
+      <div *ngIf="misfavoritoscargados && !showNotFound && misGranjaFavoritas.length>0" class="container-button-open-map">
+        <div class="container-button-open-map-data"  (click)="seeFarmsMap()">
           <div>
             <h4 class="detail-container__title">Ver en el mapa</h4>
           </div>
@@ -67,13 +67,15 @@
         </div>
         <p class="estilo-p-card" (click)="navigate(i)"> {{granja.descripcion | shorter:100}}</p>
         <div class="card__rating-container">
-            <div>
-              <div (click)="showResenas(granja?.id_granja)">
-                <span class="card__rating">{{granja.puntuacion !== null && granja.puntuacion !== undefined ? (granja.puntuacion |
-                  number:'1.1-1') : 'S/C'}}</span>
-                  <img class="card__icon-rating" src="assets/icons/star-filled.svg">
-              </div>
-              <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)"> {{granja.cantidad_resenas}} reseñas</span>
+            <div class="card__rating-container_info">
+                <div class="card__rating-container_puntos" (click)="showResenas(granja?.id_granja)">
+                  <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
+                    (granja.puntuacion |
+                    number:'1.1-1') : '0'}}</span>
+                  <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
+                </div>
+                <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)">Reseñas: {{granja.cantidad_resenas}}
+                </span>
             </div>
              <p class="read-more" (click)="navigate(i)"><a >Ver detalles</a></p>
         </div>

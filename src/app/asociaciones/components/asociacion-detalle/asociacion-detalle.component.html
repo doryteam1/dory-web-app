@@ -58,8 +58,7 @@
         </div>
         <h6 class="detail-container__title detail-container__title--font">Fecha de renovación</h6>
         <div *ngIf="asociacion?.direccion" class="detail-container__value">
-          {{asociacion.fecha_renovacion_camarac | date:'dd/MM/yyyy'}}
-          {{dayjsx(asociacion.fecha_renovacion_camarac,'DD/MM/YYYY','es')}}
+          {{asociacion?.fecha_renovacion_camarac.slice(0, asociacion?.fecha_renovacion_camarac.indexOf('T')) | date:'dd/MM/yyyy'}}
          </div>
       </div>
     </div>
@@ -68,7 +67,7 @@
           <div class="detail-container__data">
             <h4 class="detail-container__title">Dirección</h4>
             <span *ngIf="asociacion?.direccion" class="detail-container__value">
-              {{asociacion.direccion ? 'Dir.' : ''}} {{asociacion.direccion}}</span>
+              {{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion}}</span>
           </div>
         </div>
         <div class="detail-container" *ngIf="asociacion?.informacion_adicional_direccion" >
@@ -76,7 +75,7 @@
           <div class="detail-container__data">
             <h4 class="detail-container__title">Información adicional de la dirección</h4>
             <span class="detail-container__value">
-              {{asociacion.informacion_adicional_direccion}}</span>
+              {{asociacion?.informacion_adicional_direccion}}</span>
           </div>
         </div>
     <div class="detail-container">
@@ -84,12 +83,12 @@
       <div class="detail-container__data">
         <h4 class="detail-container__title">Pescadores que pertenecen a la asociación </h4>
         <span class="detail-container__value"
-          *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}} pescadores en
+          *ngIf="pescadorasociaciones?.length>1">{{pescadorasociaciones?.length}} pescadores en
           total</span>
         <span class="detail-container__value"
-          *ngIf="piscicultorasociaciones?.length==1">{{piscicultorasociaciones?.length}} pescador en
+          *ngIf="pescadorasociaciones?.length==1">{{pescadorasociaciones?.length}} pescador en
           total</span>
-        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con pescadores asociados</span>
+        <span class="detail-container__value" *ngIf="pescadorasociaciones?.length<=0">No cuenta con pescadores asociados</span>
       </div>
     </div>
 
@@ -97,11 +96,11 @@
       <img class="detail-container__image" src="assets/icons/piscicultor.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Piscicultores que pertenecen a la asociación </h4>
-        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length>1">{{piscicultorgranjas?.length}}
+        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}}
           piscicultores en total</span>
-        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length==1">{{piscicultorgranjas?.length}}
+        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length==1">{{piscicultorasociaciones?.length}}
           piscicultores en total</span>
-        <span class="detail-container__value" *ngIf="piscicultorgranjas?.length<=0">No cuenta con piscicultores asociados</span>
+        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con piscicultores asociados</span>
       </div>
     </div>
   </div>
@@ -126,13 +125,13 @@
   <div class="container_mytarget">
     <div class="mytarget" *ngIf="activatelistgranja">
       <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 row--mi-estilo"
-        [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound,'container--flex-center':piscicultorasociaciones?.length==1}">
-        <div *ngIf="changeItem" class="mychangeitem">
+        [ngClass]="{'mychangeitemheight':piscicultorchangeItem,'search-container--flex':piscicultorshowNotFound,'container--flex-center':piscicultorasociaciones?.length==1}">
+        <div *ngIf="piscicultorchangeItem" class="mychangeitem">
           <div>
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <div class="search-container" *ngIf="showNotFound">
+        <div class="search-container" *ngIf="piscicultorshowNotFound">
           <div class="search-container__box">
             <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
             <h3>
@@ -143,21 +142,21 @@
             </h3>
           </div>
         </div>
-<!--         <app-card-granjas *ngFor="let granja of piscicultorgranjas " [granja]="granja"
-          (onDetalle)="goDetailFarm($event)"></app-card-granjas> -->
-                  <app-card-piscicultor *ngFor="let piscicultor of piscicultorasociaciones; let i =index " [piscicultor]="piscicultor " (onDetalle)="gopiscicultorDetail($event)">
+                  <app-card-piscicultor *ngFor="let piscicultor of piscicultorasociaciones; let i =index "
+                  [piscicultor]="piscicultor "
+                   (onDetalle)="gopiscicultorDetail($event)">
                   </app-card-piscicultor>
       </div>
     </div>
     <div class="mytarget" *ngIf="activatelistasociacion">
       <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4  row--mi-estilo"
-        [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound, 'container--flex-center':piscicultorasociaciones?.length==1 }">
-        <div *ngIf="changeItem" class="mychangeitem">
+        [ngClass]="{'mychangeitemheight':pescadorchangeItem,'search-container--flex':pescadorshowNotFound, 'container--flex-center':pescadorasociaciones?.length==1 }">
+        <div *ngIf="pescadorchangeItem" class="mychangeitem">
           <div>
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <div class="search-container" *ngIf="showNotFound">
+        <div class="search-container" *ngIf="pescadorshowNotFound">
           <div class="search-container__box">
             <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
             <h3>
@@ -168,9 +167,10 @@
             </h3>
           </div>
         </div>
-<!--             <app-card-pescador *ngFor="let pescador of pescadorasociaciones; let i =index " [pescador]="pescador"
-              (onDetalle)="goPescadorDetail($event)">
-            </app-card-pescador> -->
+            <app-card-pescador *ngFor="let pescador of pescadorasociaciones; let i =index "
+            [pescador]="pescador"
+              (onDetalle)="gopescadorDetail($event)">
+            </app-card-pescador>
       </div>
     </div>
   </div>

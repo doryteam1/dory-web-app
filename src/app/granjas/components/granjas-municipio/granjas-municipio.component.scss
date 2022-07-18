@@ -131,15 +131,14 @@ cursor: pointer;
 }
 .card__rating-container_info{
 display: flex;
-  align-items: flex-end;
+  align-items:flex-start;
   flex-direction: column;
-  grid-gap: 5px;
   gap: 5px;
 }
 .card__rating-container_puntos{
     display: flex;
       align-items: center;
-      gap: 2px;
+      gap: 5px;
 }
 .data-ratinn-area{
   grid-area: data;
@@ -393,7 +392,7 @@ padding-top: 80px;
     &:first-of-type {
       margin-top: 1.25rem;
 
-
+/*
       &:before {
         content: "";
         position: absolute;
@@ -402,7 +401,7 @@ padding-top: 80px;
         width: 35px;
         top: -0.75rem;
         border-radius: 3px;
-      }
+      } */
     }
   }
 
@@ -446,6 +445,9 @@ padding-top: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .description_title_fauvourite--h1{
+      color: var(--azul1);
+    }
   }
   .description_title_fauvourite>div{
     display: flex;

@@ -239,10 +239,6 @@
   height: 20px;
 }
 
-.disabled {
-  background-color: var(--gris-oscuro);
-  border: none;
-}
 
 .input-glyphicon {
   position: relative;
@@ -348,11 +344,7 @@
 .dark-modal .modal-content {
   border-radius: 0.3rem;
 }
-
-/* div.map-container{
-  border-bottom-left-radius:10px 10px;
-  border-bottom-right-radius: 10px 10px
-} */
+/* estilos paginacion */
 .ngx-pagination .current {
   background: var(--azul1) !important;
 }
@@ -363,8 +355,12 @@
 .ngx-pagination a {
   text-decoration: none !important;
 }
-/* FIN PROPIOS */
-
+.disabled {
+  /* background-color: var(--gris-oscuro) !important; */
+  border: none;
+  display: none !important;
+}
+/* estilos paginacion */
 .modal-dialog-centered>div>div>div>div:nth-child(9)>button {
   margin-right: 20px !important;
   /* ajusta el boton de pantalla completa del mapa */
@@ -379,6 +375,11 @@
 .miestilofondosharedmodal {
   background-color: transparent !important;
 }
+                .ndb-ratingx {
+                  .sr-only {
+                    display: none !important;
+                  }
+                }
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 /* @import '~@ngx-share/button/styles/share-buttons.css';

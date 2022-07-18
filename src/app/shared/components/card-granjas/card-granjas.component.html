@@ -27,7 +27,6 @@
   <div class="card__description">
     <div class="card__description-header">
       <div>
-        <img src="assets/icons/set_meal_black_24dp.svg">
         <h1 (click)="detalle(granja)">{{granja.nombre | shorter:15}}</h1>
       </div>
       <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
@@ -39,6 +38,15 @@
       <p class="estilo-p-card" (click)="detalle(granja)"> {{granja.descripcion | shorter:100}}</p>
     </div>
     <div class="card__description-container_footer">
+      <div class="card__description-container_footer-rating">
+        <div class="card__rating-container_puntos">
+          <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
+            (granja.puntuacion |
+            number:'1.1-1') : '0'}}</span>
+          <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
+        </div>
+        <span class="card__rating__detail" >Reseñas: {{granja.count_resenas}}</span>
+      </div>
       <p class="read-more"  (click)="detalle(granja)"><a>Ver detalles</a></p>
     </div>
   </div>

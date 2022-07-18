@@ -228,7 +228,7 @@ overflow-y: auto;
     justify-content: space-evenly;
   }
 
-  div.card__rating-container>div {
+/*   div.card__rating-container>div {
     display: flex;
     align-items: end;
     flex-direction: column;
@@ -249,8 +249,25 @@ overflow-y: auto;
   div.card__rating-container>div>div>img {
     width: 20px;
     height: 20px;
-  }
+  } */
+.card__rating-container_info {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
 
+.card__rating-container_puntos {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  .card__rating {
+    font-size: 20px;
+    font-weight: 700;
+  }
+}
 }
 
   .details_info_windo {

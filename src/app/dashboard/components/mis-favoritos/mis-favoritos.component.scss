@@ -102,7 +102,7 @@
       color: var(--azul1);
         display: inline-block;
         position: relative;
-        text-decoration: dashed underline black 2px;
+        text-decoration: underline var(--azul1) 2px;
         cursor: pointer;
 
         &:after {
@@ -129,17 +129,6 @@
 
     &:first-of-type {
       margin-top: 1.25rem;
-
-
-      &:before {
-        content: "";
-        position: absolute;
-        height: 5px;
-        background: var(--azul1);
-        width: 35px;
-        top: -0.75rem;
-        border-radius: 3px;
-      }
     }
   }
 
@@ -220,30 +209,24 @@
           justify-content: space-evenly;
         }
 
-        div.card__rating-container>div {
-          display: flex;
-          align-items: end;
-          flex-direction: column;
-        }
+.card__rating-container_info {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
 
-        div.card__rating-container>div>div {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          cursor: pointer;
-        }
+.card__rating-container_puntos {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 
-        div.card__rating-container>div>span {
-          font-size: 13px;
-          color: #666;
-          cursor: pointer;
-        }
-
-        div.card__rating-container>div>div>img {
-          width: 20px;
-          height: 20px;
-        }
-
+    .card__rating {
+      font-size: 20px;
+      font-weight: 700;
+    }
+}
       }
       div.my_estilo_cols {
         gap: 5px;

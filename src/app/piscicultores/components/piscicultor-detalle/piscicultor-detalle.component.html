@@ -16,7 +16,7 @@
         </div>
       </div>
       <img class="piscicultor-container__image"
-        src="{{piscicultor?.foto ? piscicultor.foto : '/assets/images/avatar-person-square.png'}}">
+        src="{{piscicultor?.foto ? piscicultor?.foto : '/assets/images/avatar-person-square.png'}}">
     </div>
     <div class="line"></div>
     <div class="detail-container mt-4">
@@ -47,7 +47,7 @@
           <div class="detail-container__data">
             <h4 class="detail-container__title">Información adicional de la dirección</h4>
             <span class="detail-container__value">
-              {{piscicultor.informacion_adicional_direccion}}</span>
+              {{piscicultor?.informacion_adicional_direccion}}</span>
           </div>
         </div>
     <div class="detail-container">
@@ -98,13 +98,13 @@
   <div class="container_mytarget">
     <div class="mytarget" *ngIf="activatelistgranja">
       <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 row--mi-estilo"
-        [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound,'container--flex-center':piscicultorgranjas?.length==1}" >
-        <div *ngIf="changeItem" class="mychangeitem">
+        [ngClass]="{'mychangeitemheight':piscicultorDetalleGranjaschangeItem,'search-container--flex':piscicultorDetalleGranjasshowNotFound,'container--flex-center':piscicultorgranjas?.length==1}" >
+        <div *ngIf="piscicultorDetalleGranjaschangeItem" class="mychangeitem">
           <div>
            <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <div class="search-container" *ngIf="showNotFound">
+        <div class="search-container" *ngIf="piscicultorDetalleGranjasshowNotFound">
           <div class="search-container__box">
             <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
             <h3>
@@ -121,13 +121,13 @@
     </div>
     <div class="mytarget" *ngIf="activatelistasociacion">
       <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4  row--mi-estilo"
-        [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound, 'container--flex-center':piscicultorasociaciones?.length==1 }">
-        <div *ngIf="changeItem" class="mychangeitem">
+        [ngClass]="{'mychangeitemheight':piscicultorDetalleAsociacioneschangeItem,'search-container--flex':piscicultorDetalleAsociacioneshowNotFound , 'container--flex-center':piscicultorasociaciones?.length==1 }">
+        <div *ngIf="piscicultorDetalleAsociacioneschangeItem" class="mychangeitem">
           <div>
            <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <div class="search-container" *ngIf="showNotFound">
+        <div class="search-container" *ngIf="piscicultorDetalleAsociacioneshowNotFound ">
           <div class="search-container__box">
             <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
             <h3>
