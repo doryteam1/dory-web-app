@@ -1,0 +1,202 @@
+<div>
+    <div class="d-flex flex-row justify-content-between">
+      <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='enable'">{{modalMode == 'create' ? 'Nueva Asociación' : 'Actualizar Asociación'}}</h4>
+      <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='disable'">Detalle Asociación</h4>
+      <button class="btn-add btn-square btn--blue" (click)="agregarMiembro()" *ngIf="formState == 'enable'"><i class="icon-add bi bi-person-plus"></i>Agregar miembros</button>
+    </div>
+
+    <div class="modal-body">
+      <form  [formGroup]="form"  >
+        <div class="mb-3">
+          <label for="dateOfBirth">Nombre</label>
+          <div class="input-group">
+            <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre">
+            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+          </div>
+          <div *ngIf="invalid('nombre')" class="container__alert-msg danger-message">
+            <div *ngIf="nombre?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <span class="container__title">Tipo de asociación</span>
+          <div>
+              <select class="form-control" formControlName='id_tipo_asociacion_fk'>
+                  <optgroup label="Escoje el tipo de asociación">
+                      <option *ngFor="let tipoAsociacion of tiposAsociaciones" [value]="tipoAsociacion.id_tipo_asociacion">{{ tipoAsociacion.nombre }}</option>
+                  </optgroup>
+              </select>
+          </div>
+          <div *ngIf="invalid('id_tipo_asociacion_fk')" class="container__alert-msg danger-message">
+            <div *ngIf="idTipoAsoc?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <span class="container__title">¿Esta legalmente constituida?</span>
+          <div>
+              <select class="form-control" formControlName='legalconstituida'>
+                  <optgroup label="Escoje una opción">
+                      <option value="0">No</option>
+                      <option value="1">Si</option>
+                  </optgroup>
+              </select>
+          </div>
+          <div *ngIf="invalid('legalconstituida')" class="container__alert-msg danger-message">
+            <div *ngIf="isLegalConstituida?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <label for="dateOfBirth">Nit</label>
+          <div class="input-group">
+            <input id="productName" class="form-control" placeholder="Nit" formControlName="nit">
+          </div>
+          <div *ngIf="invalid('nit')" class="container__alert-msg danger-message">
+            <div *ngIf="nit?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <span class="container__title">Departamento</span>
+          <div>
+              <select class="form-control" formControlName='id_departamento'>
+                  <optgroup label="Escoje un departamento" value="70">
+                      <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
+                  </optgroup>
+              </select>
+          </div>
+          <div *ngIf="invalid('id_departamento')" class="container__alert-msg danger-message">
+            <div *ngIf="idDpto?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <span class="container__title">Municipio</span>
+          <div>
+              <select class="form-control" formControlName='id_municipio'>
+                  <optgroup label="Escoge un municipio">
+                      <option *ngFor="let municipio of municipios" [value]="municipio.id_municipio">{{municipio.nombre}}</option>
+                  </optgroup>
+              </select>
+          </div>
+
+          <div *ngIf="invalid('id_municipio')" class="container__alert-msg danger-message">
+            <div *ngIf="idMunic?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dateOfBirth">Corregimiento o vereda</label>
+          <div class="input-group">
+            <input id="productName" class="form-control" placeholder="Corregimiento o vereda" formControlName="corregimiento_vereda">
+          </div>
+          <div *ngIf="invalid('corregimiento_vereda')" class="container__alert-msg danger-message">
+            <div *ngIf="corregVereda?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dateOfBirth">Dirección</label>
+          <div class="input-group">
+            <input id="productName" class="form-control" placeholder="Dirección del negocio" formControlName="direccion">
+          </div>
+          <div *ngIf="invalid('direccion')" class="container__alert-msg danger-message">
+            <div *ngIf="direccion?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+        <label for="dateOfBirth">Información adicional de la dirección</label>
+            <div class="input-group">
+              <div class="input-wrapper">
+                <textarea id="productName" class="form-control" name="textarea" rows="3" cols="50"
+                  placeholder="Información adicional dirección" formControlName="informacion_adicional_direccion">
+                  Write something here</textarea>
+              </div>
+            </div>
+          <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
+            <div *ngIf="infoAdicionalDir?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dateOfBirth">Fecha renovación camara de comercio</label>
+          <div class="input-group">
+            <input id="productName" class="form-control" type="date" placeholder="Fecha renovación" formControlName="fecha_renovacion_camarac">
+          </div>
+          <div *ngIf="invalid('fecha_renovacion_camarac')" class="container__alert-msg danger-message">
+            <div *ngIf="fechRenvCamc?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="download-cam" *ngIf="modalMode=='update'">
+            <span *ngIf="asociacion?.foto_camarac">
+              <a [href]="asociacion?.foto_camarac" target="_blank">Camara de comercio
+                 <img src="assets/icons/download_for_offline_blue1_24dp.svg">
+              </a>
+            </span>
+            <span *ngIf="!asociacion?.foto_camarac">
+              <a >Camara de comercio
+                 <img src="assets/icons/download_for_offline_blue1_24dp.svg">
+              </a>
+            </span>
+        </div>
+
+        <div class="mb-5">
+          <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.foto_camarac ? 'Actualizar camara de comercio ' : 'Subir camara de comercio' }}</label>
+          <div class="input-group">
+            <input id="productName" type="file" class="form-control" placeholder="Seleccionar documento" formControlName="foto_camarac" (change)='fileChange($event)'>
+          </div>
+          <div *ngIf="invalid('foto_camarac')" class="container__alert-msg danger-message">
+            <div *ngIf="fotoCamc?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="error" class="container__alert-msg danger-message">
+          {{error}}
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="d-flex flex-direction-row justify-content-center align-items-center">
+        <button type="button" class="btn-square-blue2 container__btn container__btn--azul" (click)="addAsociaciones()" *ngIf="modalMode=='create' && formState == 'enable'">
+          <span *ngIf="!loading1">Guardar</span>
+          <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
+          </div>
+        </button>
+        <button type="button" class="btn-square-blue2 container__btn container__btn--azul" (click)="updateAsociacion()"  *ngIf="modalMode=='update' && formState == 'enable'">
+          <span *ngIf="!loading1" >Actualizar</span>
+          <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
+          </div>
+        </button>
+        <button type="button" class="btn-square-white2 container__btn" (click)="goBack()">
+          <span>Atrás</span>
+        </button>
+      </div>
+    </div>
+  </div>

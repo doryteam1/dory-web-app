@@ -9,6 +9,7 @@ import { MisFavoritosComponent } from './components/mis-favoritos/mis-favoritos.
 import { MiConsumoComponent } from './components/mi-consumo/mi-consumo.component';
 import { MisNegociosComponent } from './components/mis-negocios/mis-negocios.component';
 import { MisAsociacionesComponent } from './components/mis-asociaciones/mis-asociaciones.component';
+import { AsociacionDetalleFormComponent } from './components/asociacion-detalle-form/asociacion-detalle-form.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
       {path:'mis-favoritos',component:MisFavoritosComponent},
       {path:'mi-consumo',component:MiConsumoComponent},
       {path:'mis-negocios',component:MisNegociosComponent},
-      {path:'mis-asociaciones',component:MisAsociacionesComponent}
+      {path:'mis-asociaciones',component:MisAsociacionesComponent},
+      {path:'asociacion/detalle',component:AsociacionDetalleFormComponent}
     ]
   }
 ];

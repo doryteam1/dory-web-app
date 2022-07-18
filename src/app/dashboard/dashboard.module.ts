@@ -19,6 +19,7 @@ import { MiConsumoComponent } from './components/mi-consumo/mi-consumo.component
 import { MisNegociosComponent } from './components/mis-negocios/mis-negocios.component';
 import { MisAsociacionesComponent } from './components/mis-asociaciones/mis-asociaciones.component';
 import { RouterModule } from '@angular/router';
+import { AsociacionDetalleFormComponent } from './components/asociacion-detalle-form/asociacion-detalle-form.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { RouterModule } from '@angular/router';
     MiConsumoComponent,
     MisNegociosComponent,
     MisAsociacionesComponent,
+    AsociacionDetalleFormComponent,
   ],
   imports: [
     CommonModule,

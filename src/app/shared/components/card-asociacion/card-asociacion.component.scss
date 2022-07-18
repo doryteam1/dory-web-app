@@ -229,7 +229,8 @@
 
     .card__icon{
       font-size: 20px;
-      color:var(--red)
+      color:var(--red);
+      cursor: pointer;
     }
      .card__description-footer {
         display: flex;
