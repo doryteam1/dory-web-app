@@ -51,13 +51,15 @@
                 </span>
           </div>
         </div>
-        <h2>Representante legal</h2>
-        <div class="card__description-container-infor-2" (click)="goDetalleRepresentante(asociacion)">
-          <div class="card__description-container-infor-2-div">
-            <img  src="assets/icons/person_pin_black_24dp.svg">
-            <a *ngIf="asociacion?.propietario">{{asociacion?.propietario}}</a>
-            <a  *ngIf="!asociacion?.propietario">Representante legal indefinido</a>
-          </div>
+        <div *ngIf="showRepLegal">
+          <h2>Representante legal</h2>
+          <div class="card__description-container-infor-2" (click)="goDetalleRepresentante(asociacion)">
+            <div class="card__description-container-infor-2-div">
+              <img  src="assets/icons/person_pin_black_24dp.svg">
+              <a *ngIf="asociacion?.propietario">{{asociacion?.propietario}}</a>
+              <a  *ngIf="!asociacion?.propietario">Representante legal indefinido</a>
+            </div>
+          </div>  
         </div>
       </div>
       <div class="card__description-footer" (click)="detalle(asociacion)">

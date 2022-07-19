@@ -266,6 +266,9 @@ export class AsociacionDetalleFormComponent implements OnInit {
     );
   }
 
+  verMiembros(){
+    this.asociacionesService.showAscociacionMiembrosModal(this.nit?.value, 'Miembros')
+  }
   agregarMiembro(){
     this.asociacionesService.showSolicitudesModal(this.nit?.value, 'Agregar miembro');
   }

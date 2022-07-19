@@ -1,0 +1,41 @@
+.card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content:space-between;
+    border:0;
+    margin-top: 15px;
+}
+
+.card__image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.card__title{
+
+}
+
+.card__button{
+    width: fit-content;
+    height: fit-content;
+    padding: 0;
+    border: none;
+    background-color: white;
+}
+
+.list{
+    height:500px;
+    padding-right: 10px;
+}
+
+.modal-body{
+    padding-top: 0;
+}
+
+.card__user-info{
+    cursor: pointer;
+}

@@ -9,6 +9,7 @@ import {  Router } from '@angular/router';
 export class CardAsociacionComponent implements OnInit {
   @Input() asociacion: any;
   @Input() delatecard!: boolean;
+  @Input() showRepLegal: boolean = true;
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   @Output() onDetalleRepresentante: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<any> = new EventEmitter();

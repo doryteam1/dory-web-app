@@ -277,6 +277,9 @@
   cursor: pointer;
 }
 
+textarea:focus, input:focus{
+  outline: none;
+}
 
 /* Put your css in here */
 

@@ -14,6 +14,7 @@ import { PiscicultoresModule } from '../piscicultores/piscicultores.module';
 import { PescadoresModule } from '../pescadores/pescadores.module';
 import { AsociacionDetalleComponent } from './components/asociacion-detalle/asociacion-detalle.component';
 import { RouterModule } from '@angular/router';
+import { MiembrosAsociacionModalContentComponent } from './components/modals/miembros-asociacion-modal-content/miembros-asociacion-modal-content.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { RouterModule } from '@angular/router';
     AsociacionesComponent,
     AsociacionesMunicipioComponent,
     SolicitudesModalContentComponent,
-    AsociacionDetalleComponent
+    AsociacionDetalleComponent,
+    MiembrosAsociacionModalContentComponent,
   ],
   imports: [
     CommonModule,

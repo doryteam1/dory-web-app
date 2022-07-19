@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpsService } from 'src/app/services/https.service';
+import { MiembrosAsociacionModalContentComponent } from '../components/modals/miembros-asociacion-modal-content/miembros-asociacion-modal-content.component';
 import { SolicitudesModalContentComponent } from '../components/modals/solicitudes-modal-content/solicitudes-modal-content.component';
 
 @Injectable({
@@ -74,6 +75,13 @@ export class AsociacionesService {
 
   public showSolicitudesModal(nit: number, title?: string): Promise<boolean> {
     const modalRef = this.modalService.open(SolicitudesModalContentComponent);
+    modalRef.componentInstance.title = title;
+    modalRef.componentInstance.nit = nit;
+    return modalRef.result;
+  }
+
+  public showAscociacionMiembrosModal(nit: number, title?: string): Promise<boolean> {
+    const modalRef = this.modalService.open(MiembrosAsociacionModalContentComponent);
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.nit = nit;
     return modalRef.result;

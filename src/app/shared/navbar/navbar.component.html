@@ -77,9 +77,9 @@
           <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
             <i class="notify__icon bi bi-bell">
             </i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" *ngIf="!notificatiosOpened">
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
               {{invitaciones?.length}}
-              <span class="visually-hidden">unread messages</span>
+              <span class="visually-hidden">tienes notificaciones</span>
             </span>
           </div>
 
