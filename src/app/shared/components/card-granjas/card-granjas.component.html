@@ -40,9 +40,9 @@
     <div class="card__description-container_footer">
       <div class="card__description-container_footer-rating">
         <div class="card__rating-container_puntos">
-          <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
+<!--           <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
             (granja.puntuacion |
-            number:'1.1-1') : '0'}}</span>
+            number:'1.1-1') : '0'}}</span> -->
           <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
         </div>
         <span class="card__rating__detail" >Reseñas: {{granja.count_resenas}}</span>

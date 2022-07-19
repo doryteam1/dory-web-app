@@ -74,6 +74,7 @@ export class GranjaDetalleComponent implements OnInit {
       (response) => {
         if (response.data.length > 0) {
           this.granja = response.data[0];
+          console.log(this.granja)
           this.currentRate = this.granja?.puntuacion;
           this.fotosgranja = response.data[0].fotos;
           if (this.fotosgranja.length == 0) {

@@ -24,6 +24,16 @@
         </div>
     </div>
 </div>
+<div class="buscador-container" *ngIf="!showNotFound">
+  <app-search
+     [buscadorpersonalizado]="true"
+     [placeholderbuscador]="'Buscar piscicultor...'"
+    [dataarrayabuscar]="piscicultoresarray"
+     [buscarpor]="buscardatospor"
+     (keyEnterPressData)="buscarData($event)"
+    [fitroactivo]="false">
+  </app-search>
+</div>
 <div class="search-container" *ngIf="showNotFound">
   <div class="search-container__box">
     <img class="search-container__image" src="assets/images/searching.svg">

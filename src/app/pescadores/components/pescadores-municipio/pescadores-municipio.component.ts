@@ -39,18 +39,34 @@ export class PescadoresMunicipioComponent implements OnInit {
     strokeWeight: 3,
     visible: true,
   };
-  pescadores: any[] = [];
+
   indexSelected: number = -1;
   poblacion: number = 0;
   municipio: string = '';
   selectedPescador = {
     nombre: '',
     dirrecion: '',
-    celular:''
+    celular: '',
   };
   mapaOn: boolean = false;
-  showNotFound: boolean=false;
-
+  showNotFound: boolean = false;
+  pescadoresarray: any[] = [];
+  pescadores: any[] = [];
+ /*  filtros: any[] = [
+    {
+      data: [
+        {
+          nombrefiltro: 'Calificación',
+          datoafiltrar: 'puntuacion',
+        },
+        {
+          nombrefiltro: 'Área',
+          datoafiltrar: 'area',
+        },
+      ],
+    },
+  ]; */
+  buscardatospor = [{ data1: 'nombre' },{ data2: 'celular' }];
   constructor(
     httpClient: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -89,11 +105,13 @@ export class PescadoresMunicipioComponent implements OnInit {
         .subscribe((response: any) => {
           console.log(response);
           this.pescadores = response.data;
-     if (this.pescadores.length !== 0) {
-       this.showNotFound = false;
-     } else {
-       this.showNotFound = true;
-     }
+          this.pescadoresarray = response.data;
+          console.log(this.pescadoresarray);
+          if (this.pescadores.length !== 0) {
+            this.showNotFound = false;
+          } else {
+            this.showNotFound = true;
+          }
           this.placesService.getMunicipioById(id).subscribe(
             (response) => {
               if (response.data.length > 0) {
@@ -128,6 +146,8 @@ export class PescadoresMunicipioComponent implements OnInit {
   }
 
   extractLatLong() {
+        this.markerPositions = [];
+        this.markersInfo = [];
     this.pescadores.forEach((pescador: any) => {
       let markerPosition: google.maps.LatLngLiteral = {
         lat: Number(pescador.latitud),
@@ -169,8 +189,15 @@ export class PescadoresMunicipioComponent implements OnInit {
     this.mapaOn = true;
   }
   goPescadorDetail(pescador: any) {
-    this.router.navigateByUrl(
-      '/pescadores/municipio/detalle/' + pescador.id
-    );
+    this.router.navigateByUrl('/pescadores/municipio/detalle/' + pescador.id);
+  }
+  /* funciones de busqueda granjas */
+  buscarData(data: any[]) {
+    this.pescadores = data;
+    this.extractLatLong();
+  }
+  filtradoData(datafilter: any[]) {
+    this.pescadores = datafilter;
+    this.extractLatLong();
   }
 }

@@ -19,10 +19,7 @@ export class CardGranjasComponent implements OnInit {
   ran!:number;
   constructor(private piscicultoresService: PiscicultoresService) {}
   ngOnInit(): void {
-    console.log(this.granja);
-    console.log(this.granja.fotos.length);
     this.ran = Math.floor(this.granja.fotos.length * Math.random());
-   console.log(this.ran)
   }
   detalle(granja: any) {
     return this.onDetalle.emit(granja);

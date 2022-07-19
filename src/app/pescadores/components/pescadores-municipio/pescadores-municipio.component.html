@@ -34,35 +34,16 @@
     <p>No encontramos pescadores en este municipio </p>
   </div>
 </div>
-<!-- <div class="pescadores-container">
-        <div class="cards-container overflow-auto" *ngIf="pescadores.length >= 1">
-            <div class="card" *ngFor="let pescador of pescadores; index as i" (mouseover)="onMouseCard(i)">
-                <img class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person-square.png'}}" routerLink="/pescadores/municipio/detalle">
-                <div class="card-box">
-                    <h3 class="card__title">{{pescador.nombre}}</h3>
-                    <span class="card__title2">{{pescador.nombre_asociacion}}</span>
-                    <div>
-                        <img class="card__icon" src="assets/icons/whatsapp.svg"  *ngIf="pescador.celular">
-                        <span class="card__phone">{{pescador.celular}}</span>
-                        <span class="card__email">{{pescador.email}}</span>
-                    </div>
-                    <span class="card__description1">{{pescador.direccion ? 'Dir.' : ''}} {{pescador.direccion}}</span>
-                    <span class="card__description2">{{pescador.municipio}}-{{pescador.departamento}}</span>
-                </div>
-            </div>
-            <app-card-pescador *ngFor="let pescador of pescadores " [pescador]="pescador"
-            (onDetalle)="goPescadorDetail($event)"
-            (onMouseOutCard)="eliminInfoWindow()"
-            (onMouseInsideCard)=" onMouseCard($event)"
-            >
-          </app-card-pescador>
-        </div>
-        <div *ngIf="pescadores.length > 0 && (apiLoaded | async)">
-            <google-map [options]="options" width="900px" height="600px">
-                <map-marker *ngFor="let markerInfo of markersInfo; index as i" [position]="markerInfo.markerPosition" [options]="markerOptions"  [title]="markerInfo.title" icon="{{ i == indexSelected ? 'assets/icons/person-solid-red.svg' : 'assets/icons/person-outline.svg' }}"></map-marker>
-            </google-map>
-        </div>
-</div> -->
+<div class="buscador-container"  *ngIf="!showNotFound">
+  <app-search
+  [buscadorpersonalizado]="true"
+  [placeholderbuscador]="'Buscar pescador...'"
+  [dataarrayabuscar]="pescadoresarray"
+  [buscarpor]="buscardatospor"
+    (keyEnterPressData)="buscarData($event)"
+    [fitroactivo]="false">
+  </app-search>
+</div>
 <div class="container-map-car">
   <div class="row-map-cart">
     <div *ngIf="pescadores.length >= 1">

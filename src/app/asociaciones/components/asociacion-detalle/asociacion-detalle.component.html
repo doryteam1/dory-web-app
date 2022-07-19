@@ -40,10 +40,10 @@
       <div class="detail-container__data">
         <h4 class="detail-container__title">Constituida legalmente</h4>
         <span *ngIf="asociacion?.direccion" class="detail-container__value">
-          {{asociacion.legalconstituida ? 'Si' : 'No'}} </span>
+          {{asociacion?.legalconstituida ? 'Si' : 'No'}} </span>
       </div>
     </div>
-    <div class="detail-container">
+    <div class="detail-container" *ngIf="asociacion?.legalconstituida ==1">
       <img class="detail-container__image" src="assets/icons/article_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Documento camara de comercio</h4>
@@ -55,9 +55,9 @@
             src="assets/icons/download-pdf-10136 1.svg"></a>
          </div>
     </div>
-        </div>
-        <h6 class="detail-container__title detail-container__title--font">Fecha de renovación</h6>
-        <div *ngIf="asociacion?.direccion" class="detail-container__value">
+        </div >
+        <h6 class="detail-container__title detail-container__title--font" *ngIf="asociacion?.legalconstituida ==1">Fecha de renovación</h6>
+        <div *ngIf="asociacion.legalconstituida ==1"class="detail-container__value" >
           {{asociacion?.fecha_renovacion_camarac.slice(0, asociacion?.fecha_renovacion_camarac.indexOf('T')) | date:'dd/MM/yyyy'}}
          </div>
       </div>
@@ -105,41 +105,30 @@
     </div>
   </div>
   <!-- granjas y asociaciones -->
-  <div class="mynavtabs">
+  <div class="mynavtabs"  *ngIf="piscicultorasociaciones?.length>0 || pescadorasociaciones?.length>0">
     <ul class="nav nav-tabs">
-      <li class="nav-item" (click)="activeTab(1)">
-        <a class="nav-link" [ngClass]="{'active mynav-link': activatelistgranja}" aria-current="page">
+      <li class="nav-item" (click)="activeTabClick(1)" *ngIf="piscicultorasociaciones?.length>0">
+        <a class="nav-link" [ngClass]="{'active mynav-link': activatelistpiscicultores}" aria-current="page">
           <span>
             <img class="detail-container__image" src="assets/icons/piscicultor.svg">
           </span> Piscicultores
         </a>
       </li>
-      <li class="nav-item" (click)="activeTab(2)">
-        <a class="nav-link" [ngClass]="{'active mynav-link': activatelistasociacion}">
+      <li class="nav-item" (click)="activeTabClick(2)" *ngIf="pescadorasociaciones?.length>0">
+        <a class="nav-link" [ngClass]="{'active mynav-link': activatelistpescadores}">
           <span>
             <img class="detail-container__image" src="assets/icons/pescador.svg">
           </span> Pescadores</a>
       </li>
     </ul>
   </div>
-  <div class="container_mytarget">
-    <div class="mytarget" *ngIf="activatelistgranja">
+  <div class="container_mytarget" *ngIf="piscicultorasociaciones?.length>0 || pescadorasociaciones?.length>0">
+    <div class="mytarget" *ngIf="activatelistpiscicultores">
       <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 row--mi-estilo"
         [ngClass]="{'mychangeitemheight':piscicultorchangeItem,'search-container--flex':piscicultorshowNotFound,'container--flex-center':piscicultorasociaciones?.length==1}">
         <div *ngIf="piscicultorchangeItem" class="mychangeitem">
           <div>
             <img src="assets/icons/changeiconanimado.svg">
-          </div>
-        </div>
-        <div class="search-container" *ngIf="piscicultorshowNotFound">
-          <div class="search-container__box">
-            <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
-            <h3>
-              Parece que esta asociación no cuenta con piscicultores registrados
-              <span>
-                <img src="assets/icons/corazonanimado.svg">
-              </span>
-            </h3>
           </div>
         </div>
                   <app-card-piscicultor *ngFor="let piscicultor of piscicultorasociaciones; let i =index "
@@ -148,7 +137,7 @@
                   </app-card-piscicultor>
       </div>
     </div>
-    <div class="mytarget" *ngIf="activatelistasociacion">
+    <div class="mytarget" *ngIf="activatelistpescadores">
       <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4  row--mi-estilo"
         [ngClass]="{'mychangeitemheight':pescadorchangeItem,'search-container--flex':pescadorshowNotFound, 'container--flex-center':pescadorasociaciones?.length==1 }">
         <div *ngIf="pescadorchangeItem" class="mychangeitem">
@@ -156,21 +145,10 @@
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <div class="search-container" *ngIf="pescadorshowNotFound">
-          <div class="search-container__box">
-            <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
-            <h3>
-              Parece que esta asociación no cuenta con pescadores registrados
-              <span>
-                <img src="assets/icons/corazonanimado.svg">
-              </span>
-            </h3>
-          </div>
-        </div>
-            <app-card-pescador *ngFor="let pescador of pescadorasociaciones; let i =index "
+          <app-card-pescador *ngFor="let pescador of pescadorasociaciones; let i =index "
             [pescador]="pescador"
               (onDetalle)="gopescadorDetail($event)">
-            </app-card-pescador>
+           </app-card-pescador>
       </div>
     </div>
   </div>

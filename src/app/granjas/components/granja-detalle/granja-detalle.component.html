@@ -16,7 +16,7 @@
         <h3 class="header-container__title">{{granja?.nombre}}</h3>
         <div>
           <img class="header-container__icon" src="assets/icons/star-filled.svg">
-          <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
+          <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C' }}</span>
            <span class="header-container__description">
               <span class="header-container__resenas"
              (click)="showResenas(granja.id_granja)">({{granja?.count_resenas}} reseñas)
@@ -33,25 +33,6 @@
         <span class="buttons-container__description" (click)="changeFavorite()">Guardar</span>
     </div>
 
-<!-- <div class="photo-container-padre photo-container7-div"  *ngIf="fotosgranja?.length >=1">
-  <img class="photo-container-img" id="photo-container__photo1" src="{{granja?.fotos[0] ?granja?.fotos[0]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
-     (click)="fotoSele(0,photosGallery)"  >
-  <img class="photo-container-img" id="photo-container__photo2" src="{{granja?.fotos[1] ?granja?.fotos[1]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
-     (click)="fotoSele(1,photosGallery)"  >
-  <img class="photo-container-img" id="photo-container__photo3" src="{{granja?.fotos[2] ?granja?.fotos[2]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
-     (click)="fotoSele(2,photosGallery)"  >
-  <img class="photo-container-img" id="photo-container__photo4" src="{{granja?.fotos[3] ?granja?.fotos[3]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
-     (click)="fotoSele(3,photosGallery)"  >
-  <img class="photo-container-img" id="photo-container__photo5" src="{{granja?.fotos[4] ?granja?.fotos[4]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
-     (click)="fotoSele(4,photosGallery)"  >
-  <img class="photo-container-img" id="photo-container__photo6" src="{{granja?.fotos[5] ?granja?.fotos[5]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
-     (click)="fotoSele(5,photosGallery)"  >
-  <img class="photo-container-img" id="photo-container__photo7" src="{{granja?.fotos[6] ?granja?.fotos[6]  : 'https://admin.moodyyc.com/img/no-image.png'}}"
-     (click)="fotoSele(6,photosGallery)"  >
-
-  <img class="photo-container-img" id="photo-container__photo{{i+1}}" src="{{ fotogranja ? fotogranja : 'https://admin.moodyyc.com/img/no-image.png'}}"
-    *ngFor="let fotogranja of fotosgranja | slice:0:7; let i =index" (click)="fotoSele(i,photosGallery)"  >
-</div> -->
 <div class="photo-container-padre" [ngClass]="{
   'photo-container1-div': fotosgranja?.length ==1,
   'photo-container2-div': fotosgranja?.length ==2,
@@ -97,9 +78,33 @@
 <div class="line"></div>
 
     <div class="detail-container mt-4">
+        <img class="detail-container__image"src="assets/icons/person_pin_circle_black_24dp.svg">
+        <div class="detail-container__data">
+            <h4 class="detail-container__title">Dirección de la granja</h4>
+            <span class="detail-container__value">{{granja?.direccion}}</span>
+        </div>
+    </div>
+
+    <div class="detail-container mt-4" *ngIf="granja?.informacion_adicional_direccion">
+        <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
+        <div class="detail-container__data">
+            <h4 class="detail-container__title">Información adicional de la dirección</h4>
+            <span class="detail-container__value">{{granja?.informacion_adicional_direccion}}</span>
+        </div>
+    </div>
+    
+    <div class="detail-container">
+      <img class="detail-container__image" src="assets/icons/text.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Descripción de la granja</h4>
+        <p class="detail-container__value">{{granja?.descripcion}}</p>
+      </div>
+    </div>
+
+    <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/images/layers.svg">
         <div class="detail-container__data">
-            <h4 class="detail-container__title">area (M²)</h4>
+            <h4 class="detail-container__title">Área (M²)</h4>
             <span class="detail-container__value">{{granja?.area}}</span>
         </div>
     </div>
@@ -135,15 +140,6 @@
             <span class="detail-container__value" *ngFor="let infraestructura of granja?.infraestructuras">{{infraestructura.nombre}}</span>
         </div>
     </div>
-
-    <div class="detail-container">
-      <img class="detail-container__image" src="assets/icons/text.svg">
-      <div class="detail-container__data">
-          <h4 class="detail-container__title">Descripción de la granja</h4>
-          <p class="detail-container__value">{{granja?.descripcion}}</p>
-      </div>
-    </div>
-
     <div class="box-miopinion" *ngIf="miresena">
       <h3 class="box-miopinion__title">Tu opinión</h3>
       <div class="d-flex flex-row mt-4">

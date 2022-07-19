@@ -20,11 +20,10 @@ export class CardAsociacionComponent implements OnInit {
   errorMessage = '';
   ngOnlnitPiscicultorDetalle: boolean = false;
   foto_camaracpdf!: string;
-  constructor(private router: Router) {}
-
   ngOnInit(): void {}
 
   detalle(asociacion: any) {
+    console.log(asociacion)
     return this.onDetalle.emit(asociacion);
   }
 
@@ -32,6 +31,7 @@ export class CardAsociacionComponent implements OnInit {
     return this.onDelete.emit(asociacion);
   }
   goDetalleRepresentante(asociacion: any) {
+    console.log(asociacion);
     return this.onDetalleRepresentante.emit(asociacion);
   }
 }

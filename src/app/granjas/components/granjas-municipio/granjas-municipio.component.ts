@@ -11,9 +11,6 @@ import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
 import {MapInfoWindow, MapMarker} from '@angular/google-maps';
 import { vertices } from '../../../global/constants';
-import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
-
-
 
 @Component({
   selector: 'app-granjas-municipio',
@@ -37,7 +34,7 @@ export class GranjasMunicipioComponent implements OnInit {
   activaapiLoader: boolean = true;
   mapaOn: boolean = false;
   apiLoaded!: Observable<boolean>;
-  granjas: any[] = [];
+
   valor: boolean = false;
   vertices = vertices;
   optionPoli: google.maps.PolylineOptions = {
@@ -63,18 +60,33 @@ export class GranjasMunicipioComponent implements OnInit {
       nombre: '',
     },
   };
-  granjassearch: any[] = [];
   displayblock: boolean = false;
   granjasarray: any[] = [];
-  datagranjaencontrada: boolean=false;
-
+  granjas: any[] = [];
+  modoFiltro: any[] = ['number_ordenarmayoramenor', 'string_filtrodatosvarios'];
+  filtros: any[] = [
+    {
+      data: [
+        {
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Calificación',
+          datoafiltrar: 'puntuacion',
+        },
+        {
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Área',
+          datoafiltrar: 'area',
+        },
+      ],
+    },
+  ];
+  buscardatospor = [{ data1: 'nombre' }, { data2: 'descripcion' }];
   constructor(
     httpClient: HttpClient,
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
     private placesService: PlacesService,
-    private router: Router,
-    private searchBuscadorService: SearchBuscadorService
+    private router: Router
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -95,17 +107,9 @@ export class GranjasMunicipioComponent implements OnInit {
       .subscribe(
         (response) => {
           this.granjasarray = response.data;
-          console.log(this.granjasarray)
-          if (localStorage.getItem('HistirialSearchCardGranjas')) {
-            this.granjas = JSON.parse(
-              localStorage.getItem('HistirialSearchCardGranjas')!
-            );
-            this.datagranjaencontrada = true;
-            this.extractLatLong();
-          } else {
-            this.granjas = response.data;
-            this.extractLatLong();
-          }
+          this.granjas = response.data;
+          console.log(this.granjas);
+          this.extractLatLong();
         },
         (err) => {
           console.error('Hay un error al obtener la lista de grajas');
@@ -143,8 +147,8 @@ export class GranjasMunicipioComponent implements OnInit {
   }
 
   extractLatLong() {
-  this.markerPositions= [];
-  this.markersInfo= [];
+    this.markerPositions = [];
+    this.markersInfo = [];
     this.granjas.forEach((granja: Granja) => {
       let markerPosition: google.maps.LatLngLiteral = {
         lat: Number(granja.latitud),
@@ -214,86 +218,12 @@ export class GranjasMunicipioComponent implements OnInit {
     this.mapaOn = true;
   }
   /* funciones de busqueda granjas */
-  buscar(query:string) {
-    this.searchBuscadorService.buscarData(this.granjasarray, query);
-    this.granjas=this.arrayDataSearch
-    this.extractLatLong();
-/*     this.granjasService
-      .getGranjaSearch(
-        query,
-        Number(this.activatedRoute.snapshot.url[1])
-      )
-      .subscribe(
-        (response) => {
-          this.granjassearch = response.data;
-          if (this.granjassearch.length>0) {
-            this.granjas = this.granjassearch;
-            this.extractLatLong()
-            localStorage.setItem(
-              'HistirialSearchCardGranjas',
-              JSON.stringify(this.granjassearch)
-            );
-            this.datagranjaencontrada=true
-          }else{
-            localStorage.removeItem('HistirialSearchCardGranjas');
-            this.granjas=this.granjasarray
-            this.extractLatLong();
-            this.datagranjaencontrada = false;
-          }
-        },
-        (err) => {
-          console.log(err);
-        }
-      ); */
-  }
-  filterCalificacion(){
-    this.granjas =[]
-    console.log(this.granjas);
-    console.log(this.granjasarray);
-    this.searchBuscadorService.filterArray(this.granjasarray, 'puntuacion');
-    this.granjas = this.arrayDataFilter;
-    console.log(this.granjas)
+  buscarData(data: any[]) {
+    this.granjas = data;
     this.extractLatLong();
   }
-  filterArea(){
-     this.granjas = [];
-     console.log(this.granjas);
-       console.log(this.granjasarray);
-    this.searchBuscadorService.filterArray(this.granjasarray, 'area');
-    this.granjas = this.arrayDataFilter;
-    console.log(this.granjas)
+  filtradoData(datafilter: any[]) {
+    this.granjas = datafilter;
     this.extractLatLong();
   }
-  verTodasLasGranjas(){
-   this.granjas= this.granjasarray
-   this.extractLatLong();
-  }
- /*  buscaritemHistorial(valor: string) {
-    this.searchBuscadorService.buscarData(valor);
-    this.buscar();
-  }
-  eliminarItemHistorial(index: number) {
-    this.displayblock = true;
-    this.historialGranjas.splice(index, 1);
-    localStorage.setItem(
-      'HistirialSearchGranjas',
-      JSON.stringify(this.historialGranjas)
-    );
-    if (this.historialGranjas.length <= 0) {
-      this.displayblock = false;
-    }
-  }
-  ArrayCompletoGranjas(){
-    localStorage.removeItem('HistirialSearchCardGranjas');
-    this.granjas=this.granjasarray
-    this.extractLatLong();
-    this.datagranjaencontrada = false;
-  } */
-  get arrayDataSearch() {
-    return this.searchBuscadorService.getArraydataSearch;
-  }
-  get arrayDataFilter() {
-    return this.searchBuscadorService.getArraydataFilter;
-  }
-
 }

@@ -6,106 +6,72 @@ import { Injectable } from '@angular/core';
 export class SearchBuscadorService {
   private _arraydatasearch: any[] = [];
   private _arraydatafilter: any[] = [];
-  /*   private _historialpiscicultores: string[] = [];
-  private _historialpescadores: string[] = [];
-  private _historialasociaciones: string[] = [];
-  private _valoractualpulsado: string = ''; */
-
-  constructor() {
-    /*     if (
-      localStorage.getItem('HistirialSearchGranjas') ||
-      localStorage.getItem('HistirialSearchPescadores') ||
-      localStorage.getItem('HistirialSearchPiscicultores') ||
-      localStorage.getItem('HistirialSearchAsociaciones')
-    ) {
-      this._historialgranjas = JSON.parse(
-        localStorage.getItem('HistirialSearchGranjas')! ||
-          localStorage.getItem('HistirialSearchPescadores')! ||
-          localStorage.getItem('HistirialSearchPiscicultores')! ||
-          localStorage.getItem('HistirialSearchAsociaciones')!
-      );
-    } */
-  }
   get getArraydataSearch() {
     return [...this._arraydatasearch];
   }
   get getArraydataFilter() {
     return [...this._arraydatafilter];
   }
-  /*   get getHistorialPiscicultores() {
-    return [...this._historialpiscicultores];
-  }
-  get getHistorialPescadores() {
-    return [...this._historialpescadores];
-  }
-  get getHistorialAsociaciones() {
-    return [...this._historialasociaciones];
-  }
-  get getValorActualPulsado() {
-    return this._valoractualpulsado;
-  } */
-  buscarData(arraydata: any[], query: string) {
-    let arraydatanew = arraydata.slice()
+  buscarData(arraydata: any[], query: string, buscarpor: any[]) {
+    let arraydatanew = arraydata.slice();
     let newArray = arraydatanew.filter((dataarray) => {
-      return (
-        dataarray.nombre.toLowerCase().includes(query.toLowerCase()) ||
-        dataarray.descripcion.toLowerCase().includes(query.toLowerCase())
-      );
-    });
-    this._arraydatasearch=newArray
-    /*     this._valoractualpulsado=query
-    if (dataabuscar == 'granjas') {
-      if (!this._historialgranjas.includes(query)) {
-        this._historialgranjas.unshift(query);
-        this._historialgranjas = this._historialgranjas.splice(0, 5);
-        localStorage.setItem('HistirialSearchGranjas',JSON.stringify(this._historialgranjas))
-      }
-    } else if (dataabuscar == 'pescadores') {
-      if (!this._historialpescadores.includes(query)) {
-        this._historialpescadores.unshift(query);
-        this._historialpescadores = this._historialpescadores.splice(0, 5);
-         localStorage.setItem(
-           'HistirialSearchPescadores',
-           JSON.stringify(this._historialpescadores)
-         );
-      }
-    } else if (dataabuscar == 'piscicultores') {
-      if (!this._historialpiscicultores.includes(query)) {
-        this._historialpiscicultores.unshift(query);
-        this._historialpiscicultores = this._historialpiscicultores.splice(
-          0,
-          5
+      if (buscarpor.length == 1) {
+        let dataanalisis= dataarray[buscarpor[0].data1]?.toString().toLowerCase()
+        return dataanalisis.includes(query);
+      } else if (buscarpor.length == 2) {
+        let dataanalisis1= dataarray[buscarpor[0].data1]?.toString().toLowerCase()
+        let dataanalisis2= dataarray[buscarpor[1].data2]?.toString().toLowerCase()
+        return dataanalisis1?.includes(query) || dataanalisis2?.includes(query);
+      } else if (buscarpor.length == 3) {
+        let dataanalisis1= dataarray[buscarpor[0].data1]?.toString().toLowerCase()
+        let dataanalisis2= dataarray[buscarpor[1].data2]?.toString().toLowerCase()
+        let dataanalisis3= dataarray[buscarpor[2].data3]?.toString().toLowerCase()
+        return (
+          dataanalisis1?.includes(query) ||
+          dataanalisis2?.includes(query) ||
+          dataanalisis3?.includes(query)
         );
-         localStorage.setItem(
-           'HistirialSearchPiscicultores',
-           JSON.stringify(this._historialpiscicultores)
-         );
-      }
-    } else if (dataabuscar == 'asociaciones') {
-      if (!this._historialasociaciones.includes(query)) {
-        this._historialasociaciones.unshift(query);
-        this._historialasociaciones = this._historialasociaciones.splice(0, 5);
-         localStorage.setItem(
-           'HistirialSearchAsociaciones',
-           JSON.stringify(this._historialasociaciones)
-         );
-      }
-    } */
-  }
-  filterArray(arraydata: any[], parametroaevualuar:any) {
-     let arraydatanew = arraydata.slice();
-    let filterarraydata = arraydatanew.sort((a, b) => {
-      if (Number(a[parametroaevualuar]) > Number(b[parametroaevualuar])) {
-        return -1;
-      } else if (
-        Number(a[parametroaevualuar]) < Number(a[parametroaevualuar])
-      ) {
-        return 1;
-      } else {
-        return 0;
+      } else if (buscarpor.length == 4) {
+        let dataanalisis1= dataarray[buscarpor[0].data1]?.toString().toLowerCase()
+        let dataanalisis2= dataarray[buscarpor[1].data2]?.toString().toLowerCase()
+        let dataanalisis3= dataarray[buscarpor[2].data3]?.toString().toLowerCase()
+        let dataanalisis4= dataarray[buscarpor[3].data4]?.toString().toLowerCase()
+        return (
+          dataanalisis1?.includes(query) ||
+          dataanalisis2?.includes(query) ||
+          dataanalisis3?.includes(query) ||
+          dataanalisis4?.includes(query)
+        );
       }
     });
-    this._arraydatafilter=filterarraydata
+    this._arraydatasearch = newArray;
   }
-
+  filterArray(arraydata: any[], filtroSelecData: any, modoFiltro: string) {
+    let arraydatanew = arraydata.slice();
+    if (modoFiltro == 'number_ordenarmayoramenor') {
+      let filterarraydata = arraydatanew.sort((a, b) => {
+        if (
+          Number(a[filtroSelecData.datoafiltrar]) >
+          Number(b[filtroSelecData.datoafiltrar])
+        ) {
+          return -1;
+        } else if (
+          Number(a[filtroSelecData.datoafiltrar]) <
+          Number(a[filtroSelecData.datoafiltrar])
+        ) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      this._arraydatafilter = filterarraydata;
+    } else if (modoFiltro == 'string_filtrodatosvarios') {
+      let query = filtroSelecData.datoafiltrar.toLowerCase();
+      let newArray = arraydatanew.filter((dataarray) => {
+        let dataanalisis = dataarray[filtroSelecData.nombrecampoDB]?.toLowerCase();
+        return dataanalisis?.includes(query);
+      });
+      this._arraydatafilter = newArray;
+    }
+  }
 }

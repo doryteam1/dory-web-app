@@ -76,7 +76,7 @@ vereda: null
     </div>
   </div>
   <!-- granjas y asociaciones -->
-  <div class="mynavtabs">
+  <div class="mynavtabs" *ngIf="pescadorasociaciones.length > 0">
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a class="nav-link" [ngClass]="{'active mynav-link': activatelistasociacion}" aria-current="page">
@@ -87,7 +87,7 @@ vereda: null
       </li>
     </ul>
   </div>
-  <div class="container_mytarget">
+  <div class="container_mytarget" *ngIf="pescadorasociaciones.length > 0">
     <div class="mytarget" *ngIf="activatelistasociacion ">
       <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 row--mi-estilo"
         [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound,'container--flex-center':pescadorasociaciones?.length==1}">
@@ -96,19 +96,9 @@ vereda: null
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <div class="search-container" *ngIf="showNotFound">
-          <div class="search-container__box">
-            <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
-            <h3>
-              Parece que este pescador no esta registrado en ninguna asociación
-              <span>
-                <img src="assets/icons/corazonanimado.svg">
-              </span>
-            </h3>
-          </div>
-        </div>
           <app-card-asociacion *ngFor="let asociacion of pescadorasociaciones" [asociacion]="asociacion" [delatecard]="false"
-            (onDetalle)="goAssociationDetail($event)">
+            (onDetalle)="goAssociationDetail($event)"
+            (onDetalleRepresentante)="goDetalleRepresentante($event)">
           </app-card-asociacion>
       </div>
     </div>

@@ -28,39 +28,38 @@ export class PescadorDetalleComponent implements OnInit {
     this.selectedPescadorId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
-    this.pescadoresService.getPescadorDetalle(
-      this.selectedPescadorId
-    ).subscribe(
-      (response:any) => {
-        if (response.data.length > 0) {
-          this.pescador = response.data[0];
-          console.log(this.pescador)
-          this.showError = false;
+    this.pescadoresService
+      .getPescadorDetalle(this.selectedPescadorId)
+      .subscribe(
+        (response: any) => {
+          if (response.data.length > 0) {
+            this.pescador = response.data[0];
+            console.log(this.pescador);
+            this.showError = false;
+            this.showNotFound = false;
+          } else {
+            this.showNotFound = true;
+            this.showError = false;
+          }
+        },
+        (err) => {
           this.showNotFound = false;
-        } else {
-          this.showNotFound = true;
           this.showError = false;
+          if (err.status == 404) {
+            this.showNotFound = true;
+          } else {
+            this.showError = true;
+            this.errorMessage = 'Error inesperado';
+          }
         }
-      },
-      (err) => {
-        this.showNotFound = false;
-        this.showError = false;
-        if (err.status == 404) {
-          this.showNotFound = true;
-        } else {
-          this.showError = true;
-          this.errorMessage = 'Error inesperado';
-        }
-      }
-    );
+      );
 
     this.pescadoresService
       .getPescadorDetalleAsociaciones(this.selectedPescadorId)
       .subscribe(
-        (response:any) => {
+        (response: any) => {
           if (response.data.length > 0 && response.data.length !== null) {
             this.pescadorasociaciones = response.data;
-            console.log(this.pescadorasociaciones);
             this.showError = false;
             this.showNotFound = false;
             this.changeItem = false;
@@ -87,5 +86,16 @@ export class PescadorDetalleComponent implements OnInit {
     this.router.navigateByUrl(
       '/asociaciones/municipio/detalle/' + asociacion.nit
     );
+  }
+  goDetalleRepresentante(asociacion: any) {
+    if (asociacion.tipo_propietario == 'Pescador') {
+      this.router.navigateByUrl(
+        '/pescadores/municipio/detalle/' + asociacion.id_propietario
+      );
+    } else if (asociacion.tipo_propietario == 'Piscicultor') {
+      this.router.navigateByUrl(
+        '/piscicultores/municipio/detalle/' + asociacion.id_propietario
+      );
+    }
   }
 }

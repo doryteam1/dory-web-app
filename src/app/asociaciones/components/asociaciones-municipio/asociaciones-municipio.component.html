@@ -2,6 +2,21 @@
 <app-search-bar></app-search-bar>
 <app-navbar></app-navbar>
 <div class="container container--myestilo">
+  <div class="buscador-container" *ngIf="!showNotFound">
+    <app-search
+       [buscadorpersonalizado]="true"
+       [placeholderbuscador]="'Buscar asociacion..'"
+      [dataarrayabuscar]="asociasionessarray "
+      [buscarpor]="buscardatospor"
+       (keyEnterPressData)="buscarData($event)"
+       [fitroactivo]="true"
+       [filtros]="filtros"
+       [namefilterbutton]="'Tipo de asociación'"
+       [modoFiltro]="modoFiltro[1]"
+       (onFilterSeleccionado)="filtradoData($event)"
+      >
+    </app-search>
+  </div>
   <div class="search-container" *ngIf="showNotFound">
     <div class="search-container__box">
       <img class="search-container__image" src="assets/images/searching.svg">

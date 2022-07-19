@@ -7,7 +7,6 @@
     justify-content: center;
     align-items: center;
 }
-
 .container__input{
     background: url("/assets/icons/search.svg") no-repeat left center;
     background-size: 20px;
@@ -20,7 +19,82 @@
     height: 64px;
     border:0.5px solid var(--gris4);
     border-left: 30px solid var(--white);
-    -webkit-box-shadow: -1px 3px 8px 3px rgba(0,0,0,0.14); 
+    -webkit-box-shadow: -1px 3px 8px 3px rgba(0,0,0,0.14);
     box-shadow: -1px 3px 8px 3px rgba(0,0,0,0.14);
     outline: none;
+}
+
+/* estilos buscador */
+.buscador-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  .buscador-containe__div-search{
+  flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    .buscador-containe__search {
+      background-color: var(--white);
+      width: 100%;
+      height: 100px;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+
+      .buscador-containe__search-input {
+        background: url("/assets/icons/search.svg") no-repeat left center;
+        background-size: 20px;
+        background-color: var(--white);
+        padding-left: 30px;
+        background-origin: padding-box;
+        border-radius: 133px;
+        width: 512px;
+        height: 64px;
+        border: 0.5px solid var(--gris4);
+        border-left: 30px solid var(--white);
+        -webkit-box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
+        box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
+        outline: none;
+      }
+      .dropdown-menu-div-li{
+        display: flex;
+        gap: 5px;
+        padding-right: 5px;
+      }
+    }
+    .alert-mi-estilo-filtro{
+    margin-bottom: 0;
+    width: 79%;
+    background-color: var(--azul4);
+     color: black;
+    }
+    .alert-mi-estilo{
+    margin-bottom: 0;
+    width: 100%;
+    background-color: var(--azul4);
+    color: black;
+    }
+  }
+  .buscador-container__filter {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    border-radius: 20px;
+
+    .buscador-container-option-div {
+      background-color: transparent;
+      color: #6c757d;
+    }
+
+    .buscador-container-option-div:hover {
+      background-color: var(--azul4);
+    }
+  }
+
+
 }

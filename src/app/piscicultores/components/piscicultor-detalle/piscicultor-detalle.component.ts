@@ -19,7 +19,7 @@ export class PiscicultorDetalleComponent implements OnInit {
   piscicultorDetalleAsociacioneshowError: boolean = false;
   piscicultorDetalleGranjasshowError: boolean = false;
   errorMessage = '';
-  activatelistgranja: boolean = true;
+  activatelistgranja: boolean = false;
   activatelistasociacion: boolean = false;
   piscicultorDetalleAsociacioneschangeItem: boolean = true;
   piscicultorDetalleGranjaschangeItem: boolean = true;
@@ -38,8 +38,8 @@ export class PiscicultorDetalleComponent implements OnInit {
       .getPiscicultorDetalle(this.selectedPiscicultorId)
       .subscribe(
         (response: any) => {
+          this.piscicultor = response.data[0];
           if (response.data.length > 0) {
-            this.piscicultor = response.data[0];
             this.piscicultorDetalleshowError = false;
           } else {
             this.piscicultorDetalleshowError = false;
@@ -54,14 +54,47 @@ export class PiscicultorDetalleComponent implements OnInit {
           }
         }
       );
+      this.piscicultorDetalleAsociaciones()
 
-    this.piscicultoresService
-      .getPiscicultorDetalleAsociaciones(this.selectedPiscicultorId)
-      .subscribe(
-        (response: any) => {
-          if (response.data.length > 0) {
+  }
+  async piscicultorDetalleGranjas() {
+try {
+      let response = await this.piscicultoresService
+        .getPiscicultorDetalleGranjas(this.selectedPiscicultorId)
+        .toPromise();
+        this.piscicultorgranjas = response.data;
+      if (response.data.length >= 0) {
+        this.piscicultorDetalleGranjasshowError = false;
+        this.piscicultorDetalleGranjasshowNotFound = false;
+        this.piscicultorDetalleGranjaschangeItem = false;
+      } else {
+        this.piscicultorDetalleGranjasshowNotFound = true;
+        this.piscicultorDetalleGranjasshowError = false;
+        this.piscicultorDetalleGranjaschangeItem = false;
+      }
+
+} catch (err:any) {
+     this.piscicultorDetalleGranjasshowNotFound = false;
+     this.piscicultorDetalleGranjasshowError = false;
+     this.piscicultorDetalleGranjaschangeItem = false;
+     if (err.status == 404) {
+       this.piscicultorDetalleGranjasshowNotFound = true;
+     } else {
+       this.piscicultorDetalleGranjasshowError = true;
+       this.errorMessage = 'Error inesperado';
+     }
+}
+
+  }
+  async piscicultorDetalleAsociaciones() {
+try {
+      let response = await this.piscicultoresService
+        .getPiscicultorDetalleAsociaciones(this.selectedPiscicultorId)
+        .toPromise();
             this.piscicultorasociaciones = response.data;
-            console.log(this.piscicultorasociaciones);
+           await this.piscicultorDetalleGranjas();
+           this.activeTabVerifi();
+          if (response.data.length > 0) {
             this.piscicultorDetalleAsociacioneshowError = false;
             this.piscicultorDetalleAsociacioneshowNotFound = false;
             this.piscicultorDetalleAsociacioneschangeItem = false;
@@ -70,8 +103,8 @@ export class PiscicultorDetalleComponent implements OnInit {
             this.piscicultorDetalleAsociacioneshowError = false;
             this.piscicultorDetalleAsociacioneschangeItem = false;
           }
-        },
-        (err) => {
+
+} catch (err:any) {
           this.piscicultorDetalleAsociacioneshowNotFound = false;
           this.piscicultorDetalleAsociacioneshowError = false;
           this.piscicultorDetalleAsociacioneschangeItem = false;
@@ -81,43 +114,35 @@ export class PiscicultorDetalleComponent implements OnInit {
             this.piscicultorDetalleAsociacioneshowError = true;
             this.errorMessage = 'Error inesperado';
           }
-        }
-      );
-
-    this.piscicultoresService
-      .getPiscicultorDetalleGranjas(this.selectedPiscicultorId)
-      .subscribe(
-        (response: any) => {
-          if (response.data.length > 0) {
-            this.piscicultorgranjas = response.data;
-            console.log(this.piscicultorgranjas);
-            this.piscicultorDetalleGranjasshowError = false;
-            this.piscicultorDetalleGranjasshowNotFound = false;
-            this.piscicultorDetalleGranjaschangeItem = false;
-          } else {
-            this.piscicultorDetalleGranjasshowNotFound = true;
-            this.piscicultorDetalleGranjasshowError = false;
-            this.piscicultorDetalleGranjaschangeItem = false;
-          }
-        },
-        (err) => {
-          this.piscicultorDetalleGranjasshowNotFound = false;
-          this.piscicultorDetalleGranjasshowError = false;
-          this.piscicultorDetalleGranjaschangeItem = false;
-          if (err.status == 404) {
-            this.piscicultorDetalleGranjasshowNotFound = true;
-          } else {
-            this.piscicultorDetalleGranjasshowError = true;
-            this.errorMessage = 'Error inesperado';
-          }
-        }
-      );
+}
   }
-  activeTab(i: number) {
-    if (i == 1) {
+
+  activeTabVerifi() {
+    if (
+      this.piscicultorgranjas.length > 0 &&
+      this.piscicultorasociaciones.length > 0
+    ) {
       this.activatelistgranja = true;
       this.activatelistasociacion = false;
-    } else if (i == 2) {
+    } else if (
+      this.piscicultorgranjas.length > 0 &&
+      this.piscicultorasociaciones.length <= 0
+    ) {
+      this.activatelistgranja = true;
+      this.activatelistasociacion = false;
+    } else if (
+      this.piscicultorgranjas.length <= 0 &&
+      this.piscicultorasociaciones.length > 0
+    ) {
+      this.activatelistgranja = false;
+      this.activatelistasociacion = true;
+    }
+  }
+  activeTabClick(i: number) {
+    if (i == 1 && this.piscicultorgranjas.length > 0) {
+      this.activatelistgranja = true;
+      this.activatelistasociacion = false;
+    } else if (i == 2 && this.piscicultorasociaciones.length > 0) {
       this.activatelistasociacion = true;
       this.activatelistgranja = false;
     }
@@ -129,5 +154,16 @@ export class PiscicultorDetalleComponent implements OnInit {
   }
   goDetailFarm(granja: any) {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + granja.id_granja);
+  }
+  goDetalleRepresentante(asociacion: any) {
+    if (asociacion.tipo_propietario == 'Pescador') {
+      this.router.navigateByUrl(
+        '/pescadores/municipio/detalle/' + asociacion.id_propietario
+      );
+    } else if (asociacion.tipo_propietario == 'Piscicultor') {
+      this.router.navigateByUrl(
+        '/piscicultores/municipio/detalle/' + asociacion.id_propietario
+      );
+    }
   }
 }

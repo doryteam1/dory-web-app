@@ -23,12 +23,12 @@ export class AsociacionDetalleComponent implements OnInit {
   pescadorshowError: boolean = false;
   piscicultorshowError: boolean = false;
   errorMessage = '';
-  activatelistgranja: boolean = true;
-  activatelistasociacion: boolean = false;
+  activatelistpiscicultores: boolean = false;
+  activatelistpescadores: boolean = false;
   pescadorchangeItem: boolean = true;
   piscicultorchangeItem: boolean = true;
   pescadorasociaciones: any;
-  datapiscicultorasociaciones: boolean=false;
+  datapiscicultorasociaciones: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,21 +46,16 @@ export class AsociacionDetalleComponent implements OnInit {
       .getAsociacionDetalle(this.selectedAsociacionnit)
       .subscribe(
         (response) => {
-          console.log(this.selectedAsociacionnit)
-          console.log(response)
           this.asociacion = response.data[0];
-          console.log(this.asociacion)
           if (response.data.length > 0) {
             this.asociacionesshowError = false;
             this.asociacionesshowNotFound = false;
           } else {
             this.asociacionesshowNotFound = true;
             this.asociacionesshowError = false;
-
           }
         },
         (err) => {
-           console.log('hhuelo');
           this.asociacionesshowNotFound = false;
           this.asociacionesshowError = false;
           if (err.status == 404) {
@@ -71,77 +66,98 @@ export class AsociacionDetalleComponent implements OnInit {
           }
         }
       );
+    this.pescadoresPorAsociacions();
+  }
+  async pescadoresPorAsociacions() {
+    try {
+      let response: any = await this.pescadoresService
+        .getPescadoresPorAsociacion(this.selectedAsociacionnit)
+        .toPromise();
+      this.pescadorasociaciones = response.data;
+      console.log(this.pescadorasociaciones)
+      await this.piscicultorPorAsociacion();
+      this.activeTabVerifi();
+      if (response.data.length > 0) {
+        this.pescadorshowError = false;
+        this.pescadorshowNotFound = false;
+        this.pescadorchangeItem = false;
+      } else {
+        this.pescadorshowNotFound = true;
+        this.pescadorshowError = false;
+        this.pescadorchangeItem = false;
+      }
 
-    this.piscicultoresService
-      .getPiscicultorPorAsociacion(this.selectedAsociacionnit)
-      .subscribe(
-        (response:any) => {
-          if (response.data.length > 0) {
-            this.piscicultorasociaciones = response.data;
-            console.log(
-              `piscicultores por asociacion ${this.piscicultorasociaciones} `
-            );
-            console.log(this.piscicultorasociaciones);
-            this.piscicultorshowError = false;
-            this.piscicultorshowNotFound = false;
-            this.piscicultorchangeItem = false;
-          } else {
-            this.piscicultorshowNotFound = true;
-            this.piscicultorshowError = false;
-             this.piscicultorchangeItem = false;
-          }
-        },
-        (err) => {
-          console.log("hello")
-          this.piscicultorshowNotFound = false;
-          this.piscicultorshowError = false;
-          this.piscicultorchangeItem = false;
-          if (err.status == 404 ) {
-            this.piscicultorshowNotFound = true;
-          } else {
-            this.piscicultorshowError = true;
-            this.errorMessage = 'Error inesperado';
-          }
-        }
-      );
-
-    this.pescadoresService
-      .getPescadoresPorAsociacion(this.selectedAsociacionnit)
-      .subscribe(
-        (response:any) => {
-          console.log(response);
-             if (response.data.length > 0) {
-            this.pescadorasociaciones = response.data;
-            this.pescadorshowError = false;
-            this.pescadorshowNotFound = false;
-            this.pescadorchangeItem = false;
-          } else {
-            this.pescadorshowNotFound = true;
-            this.pescadorshowError = false;
-            this.pescadorchangeItem = false;
-          }
-        },
-        (err) => {
-          this.pescadorshowNotFound = false;
-          this.pescadorshowError = false;
-          this.pescadorchangeItem = false;
-          if (err.status == 404 ) {
-            this.pescadorshowNotFound = true;
-          } else {
-            this.pescadorshowError = true;
-            this.errorMessage = 'Error inesperado';
-          }
-        }
-      );
+    } catch (err: any) {
+      this.pescadorshowNotFound = false;
+      this.pescadorshowError = false;
+      this.pescadorchangeItem = false;
+      if (err.status == 404) {
+        this.pescadorshowNotFound = true;
+      } else {
+        this.pescadorshowError = true;
+        this.errorMessage = 'Error inesperado';
+      }
+    }
+  }
+  async piscicultorPorAsociacion() {
+    try {
+      let response: any = await this.piscicultoresService
+        .getPiscicultorPorAsociacion(this.selectedAsociacionnit)
+        .toPromise();
+      this.piscicultorasociaciones = response.data;
+      console.log(this.piscicultorasociaciones);
+      if (response.data.length > 0) {
+        this.piscicultorshowError = false;
+        this.piscicultorshowNotFound = false;
+        this.piscicultorchangeItem = false;
+      } else {
+        this.piscicultorshowNotFound = true;
+        this.piscicultorshowError = false;
+        this.piscicultorchangeItem = false;
+      }
+    } catch (err: any) {
+      this.piscicultorshowNotFound = false;
+      this.piscicultorshowError = false;
+      this.piscicultorchangeItem = false;
+      if (err.status == 404) {
+        this.piscicultorshowNotFound = true;
+      } else {
+        this.piscicultorshowError = true;
+        this.errorMessage = 'Error inesperado';
+      }
+    }
   }
 
-  activeTab(i: number) {
+  activeTabVerifi() {
+    if (
+      this.piscicultorasociaciones.length > 0 &&
+      this.pescadorasociaciones.length > 0
+    ) {
+      this.activatelistpiscicultores = true;
+      this.activatelistpescadores = false;
+    } else if (
+      this.piscicultorasociaciones.length > 0 &&
+      this.pescadorasociaciones.length <= 0
+    ) {
+      this.activatelistpiscicultores = true;
+      this.activatelistpescadores = false;
+    } else if (
+      this.piscicultorasociaciones.length <= 0 &&
+      this.pescadorasociaciones.length  > 0
+    ) {
+      console.log('hello3');
+      this.activatelistpiscicultores = false;
+      this.activatelistpescadores = true;
+    }
+  }
+
+  activeTabClick(i: number) {
     if (i == 1) {
-      this.activatelistgranja = true;
-      this.activatelistasociacion = false;
+      this.activatelistpiscicultores = true;
+      this.activatelistpescadores = false;
     } else if (i == 2) {
-      this.activatelistasociacion = true;
-      this.activatelistgranja = false;
+      this.activatelistpescadores = true;
+      this.activatelistpiscicultores = false;
     }
   }
   gopiscicultorDetail(piscicultor: any) {
@@ -152,9 +168,7 @@ export class AsociacionDetalleComponent implements OnInit {
   }
   gopescadorDetail(pescador: any) {
     console.log(pescador);
-    this.router.navigateByUrl(
-      'pescadores/municipio/detalle/' + pescador.id
-    );
+    this.router.navigateByUrl('pescadores/municipio/detalle/' + pescador.id);
   }
   goDetalleRepresentante() {
     console.log('representante legal');

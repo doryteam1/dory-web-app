@@ -78,16 +78,16 @@
     </div>
   </div>
   <!-- granjas y asociaciones -->
-  <div class="mynavtabs">
+  <div class="mynavtabs" *ngIf="piscicultorgranjas?.length>0 || piscicultorasociaciones?.length>0">
     <ul class="nav nav-tabs">
-      <li class="nav-item" (click)="activeTab(1)">
+      <li class="nav-item" (click)="activeTabClick(1)" *ngIf="piscicultorgranjas?.length>0">
         <a class="nav-link" [ngClass]="{'active mynav-link': activatelistgranja}" aria-current="page">
           <span>
             <img class="detail-container__image" src="../../../../assets/icons/set_meal_black_24dp.svg">
           </span> Granjas- {{piscicultor?.nombre_completo}}
         </a>
       </li>
-      <li class="nav-item" (click)="activeTab(2)">
+      <li class="nav-item" (click)="activeTabClick(2)" *ngIf="piscicultorasociaciones?.length>0">
         <a class="nav-link" [ngClass]="{'active mynav-link': activatelistasociacion}">
           <span>
             <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
@@ -95,7 +95,7 @@
       </li>
     </ul>
   </div>
-  <div class="container_mytarget">
+  <div class="container_mytarget" *ngIf="piscicultorgranjas?.length>0 || piscicultorasociaciones?.length>0 ">
     <div class="mytarget" *ngIf="activatelistgranja">
       <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 row--mi-estilo"
         [ngClass]="{'mychangeitemheight':piscicultorDetalleGranjaschangeItem,'search-container--flex':piscicultorDetalleGranjasshowNotFound,'container--flex-center':piscicultorgranjas?.length==1}" >
@@ -104,19 +104,11 @@
            <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <div class="search-container" *ngIf="piscicultorDetalleGranjasshowNotFound">
-          <div class="search-container__box">
-            <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
-            <h3>
-              Parece que este piscicultor no cuenta con granjas registradas
-              <span>
-              <img src="assets/icons/corazonanimado.svg">
-              </span>
-            </h3>
-          </div>
-        </div>
-          <app-card-granjas *ngFor="let granja of piscicultorgranjas " [granja]="granja"
-            (onDetalle)="goDetailFarm($event)"></app-card-granjas>
+          <app-card-granjas
+             *ngFor="let granja of piscicultorgranjas "
+             [granja]="granja"
+             (onDetalle)="goDetailFarm($event)">
+          </app-card-granjas>
       </div>
     </div>
     <div class="mytarget" *ngIf="activatelistasociacion">
@@ -127,7 +119,7 @@
            <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <div class="search-container" *ngIf="piscicultorDetalleAsociacioneshowNotFound ">
+     <!--    <div class="search-container" *ngIf="piscicultorDetalleAsociacioneshowNotFound ">
           <div class="search-container__box">
             <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
             <h3>
@@ -137,9 +129,11 @@
               </span>
             </h3>
           </div>
-        </div>
+        </div> -->
           <app-card-asociacion *ngFor="let asociacion of piscicultorasociaciones" [asociacion]="asociacion"
-            [delatecard]="false" (onDetalle)="goAssociationDetail($event)">
+            [delatecard]="false"
+             (onDetalle)="goAssociationDetail($event)"
+             (onDetalleRepresentante)="goDetalleRepresentante($event)">
           </app-card-asociacion>
       </div>
     </div>

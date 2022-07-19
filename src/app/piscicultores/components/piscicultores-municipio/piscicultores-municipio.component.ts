@@ -40,7 +40,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     strokeWeight: 3,
     visible: true,
   };
-  piscicultores: any[] = [];
+
   indexSelected: number = -1;
   poblacion: number = 0;
   municipio: string = '';
@@ -49,8 +49,24 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     dirrecion: '',
   };
   mapaOn: boolean = false;
-  showNotFound: boolean=false;
-
+  showNotFound: boolean = false;
+  piscicultoresarray: any[] = [];
+  piscicultores: any[] = [];
+/*   filtros: any[] = [
+    {
+      data: [
+        {
+          nombrefiltro: 'Calificación',
+          datoafiltrar: 'puntuacion',
+        },
+        {
+          nombrefiltro: 'Área',
+          datoafiltrar: 'area',
+        },
+      ],
+    },
+  ]; */
+  buscardatospor = [{ data1: 'nombre' }];
   constructor(
     httpClient: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -88,12 +104,13 @@ export class PiscicultoresMunicipioComponent implements OnInit {
         .getPiscicultoresMunicipio(id)
         .subscribe((response) => {
           this.piscicultores = response.data;
+          this.piscicultoresarray = response.data;
           console.log(this.piscicultores);
-                    if (this.piscicultores.length !== 0) {
-                      this.showNotFound = false;
-                    } else {
-                      this.showNotFound = true;
-                    }
+          if (this.piscicultores.length !== 0) {
+            this.showNotFound = false;
+          } else {
+            this.showNotFound = true;
+          }
           this.options = {
             center: {
               lat: Number(this.piscicultores[0].latitud),
@@ -107,12 +124,12 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     this.placesService.getMunicipioById(id).subscribe(
       (response) => {
         if (response.data.length > 0) {
-           const sucreColombia = {
-             north: 10.184454,
-             south: 8.136442,
-             west: -75.842392,
-             east: -74.324908,
-           };
+          const sucreColombia = {
+            north: 10.184454,
+            south: 8.136442,
+            west: -75.842392,
+            east: -74.324908,
+          };
           this.poblacion = response.data[0].poblacion;
           this.municipio = response.data[0].nombre;
           this.options = {
@@ -134,6 +151,8 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   }
 
   extractLatLong() {
+    this.markerPositions = [];
+    this.markersInfo = [];
     this.piscicultores.forEach((piscicultor: any) => {
       let markerPosition: google.maps.LatLngLiteral = {
         lat: Number(piscicultor.latitud),
@@ -174,5 +193,14 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   }
   mapainiciado() {
     this.mapaOn = true;
+  }
+  /* funciones de busqueda granjas */
+  buscarData(data: any[]) {
+    this.piscicultores = data;
+    this.extractLatLong();
+  }
+  filtradoData(datafilter: any[]) {
+    this.piscicultores = datafilter;
+    this.extractLatLong();
   }
 }
