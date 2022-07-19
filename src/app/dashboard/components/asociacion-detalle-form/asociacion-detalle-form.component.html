@@ -40,7 +40,7 @@
         <div class="mb-3">
           <span class="container__title">¿Esta legalmente constituida?</span>
           <div>
-              <select class="form-control" formControlName='legalconstituida'>
+              <select class="form-control" formControlName='legalconstituida' (change)="onChangeLegalConst()">
                   <optgroup label="Escoje una opción">
                       <option value="0">No</option>
                       <option value="1">Si</option>

@@ -54,15 +54,17 @@ export class AsociacionDetalleFormComponent implements OnInit {
     this.prepareForm(action!,this.asociacion)
     this.loadDptos();
     this.loadTiposAsociaciones();
+    this.onChangeLegalConst();
   }
 
   updateAsociacion() {
     console.log("Actualizando!!")
     this.loading1 = true;
 
-    if(this.isLegalConstituida?.value == '0' || this.asociacion.foto_camarac ){
+    if(this.isLegalConstituida?.value == '0' || (this.asociacion.foto_camarac && this.asociacion.foto_camarac != 'null') ){
       this.fotoCamc?.clearValidators();
       this.fotoCamc?.updateValueAndValidity();
+      console.log("Se quitaron los validadores")
     }
     
     if (!this.form.valid){
@@ -150,7 +152,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
     this.fotoCamc?.setValidators([Validators.required])
     this.fotoCamc?.updateValueAndValidity();
 
-    if(this.fotoCamc?.invalid){
+    if(this.isLegalConstituida?.value == '0'){
       let asociacion = { ...this.form.getRawValue() }
       this.asociacionesService.add(asociacion).subscribe(
         (response) => {
@@ -307,6 +309,15 @@ export class AsociacionDetalleFormComponent implements OnInit {
 
   goBack(){
     this.location.back();
+  }
+
+  onChangeLegalConst(){
+    console.log(this.isLegalConstituida?.value)
+    if(this.isLegalConstituida?.value == '1'){
+      this.fotoCamc?.enable();
+    }else{
+      this.fotoCamc?.disable();
+    }
   }
 
   get idDpto() {
