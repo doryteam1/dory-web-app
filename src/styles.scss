@@ -96,8 +96,8 @@
 }
 
 .btn--grey{
-  background-color: var(--gris8);
-  border: 1px solid var(--gris8);
+  background-color: var(--gris3);
+  border: 1px solid var(--gris3);
   color: var(--white);
 }
 
@@ -358,11 +358,11 @@ textarea:focus, input:focus{
 .ngx-pagination a {
   text-decoration: none !important;
 }
-.disabled {
+//.disabled {
   /* background-color: var(--gris-oscuro) !important; */
-  border: none;
-  display: none !important;
-}
+  //border: none;
+  //display: none !important;
+//}
 /* estilos paginacion */
 .modal-dialog-centered>div>div>div>div:nth-child(9)>button {
   margin-right: 20px !important;

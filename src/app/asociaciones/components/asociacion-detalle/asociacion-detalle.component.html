@@ -18,7 +18,9 @@
       <img class="asociacion-container__image"
         src="{{asociacion?.foto ? asociacion.foto : '/assets/images/avatar-person-square.png'}}">
     </div>
-
+    <button class="btn-square btn--blue mt-4" (click)="invitarAnular(asociacion)" *ngIf="!asociacion.estado_solicitud">Indicar que soy miembro</button>
+    <button class="btn-square btn--grey mt-4" (click)="invitarAnular(asociacion)" *ngIf="asociacion.estado_solicitud == 'Enviada'">Anular solicitud</button>
+    <button class="btn-square btn--grey mt-4" (click)="invitarAnular(asociacion)" *ngIf="asociacion.estado_solicitud == 'Aceptada'">Eres miembro</button>
     <div class="line"></div>
     <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/tipoAsociacion.svg">

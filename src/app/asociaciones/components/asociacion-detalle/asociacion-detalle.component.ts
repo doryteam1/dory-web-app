@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
+import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { AsociacionesService } from '../../services/asociaciones.service';
 
 
@@ -35,7 +36,9 @@ export class AsociacionDetalleComponent implements OnInit {
     private asociacionesService: AsociacionesService,
     private router: Router,
     private piscicultoresService: PiscicultoresService,
-    private pescadoresService: PescadoresService
+    private pescadoresService: PescadoresService,
+    private asociacionService: AsociacionesService,
+    private appModalService:AppModalService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +49,7 @@ export class AsociacionDetalleComponent implements OnInit {
       .getAsociacionDetalle(this.selectedAsociacionnit)
       .subscribe(
         (response) => {
+          console.log(response.data[0])
           this.asociacion = response.data[0];
           if (response.data.length > 0) {
             this.asociacionesshowError = false;
@@ -184,4 +188,65 @@ export class AsociacionDetalleComponent implements OnInit {
       );
     }
   }
+
+  invitarAnular(asociacion:any){
+    if(asociacion.estado_solicitud == 'Aceptada'){
+      this.appModalService
+      .confirm(
+        'Eliminar de miembro',
+        'Esta seguro que desea eliminar este miembro de esta asociación',
+        'Eliminar',
+        'No estoy seguro'
+      )
+      .then((result) => {
+        if (result == true) {
+          let estado = asociacion.estado_solicitud;
+          let enviadaPor = asociacion.solicitud_enviada_por;
+          asociacion.estado_solicitud = null;
+          asociacion.solicitud_enviada_por = null;
+          this.asociacionService.eliminarSolicitud(asociacion.id_solicitud).subscribe(
+            (response)=>{
+              console.log(response)
+            },err=>{
+          asociacion.estado_solicitud = estado;
+          asociacion.solicitud_enviada_por = enviadaPor;
+          console.log(err)
+          }
+        )
+        }
+      }).catch((result) => {});
+    }
+    else if(asociacion.estado_solicitud == 'Enviada'){
+      let estado = asociacion.estado_solicitud;
+      let enviadaPor = asociacion.solicitud_enviada_por;
+      asociacion.estado_solicitud = null;
+      asociacion.solicitud_enviada_por = null;
+      this.asociacionService.eliminarSolicitud(asociacion.id_solicitud).subscribe(
+        (response)=>{
+          console.log(response)
+        },err=>{
+          asociacion.estado_solicitud = estado;
+          asociacion.solicitud_enviada_por = enviadaPor;
+          console.log(err)
+        }
+      )
+    }else{
+      let data = {
+        quienEnvia : 'usuario'
+      }
+      asociacion.estado_solicitud = 'Enviada';
+      asociacion.solicitud_enviada_por = 'usuario'
+      this.asociacionService.invitarUsuarioAsociacion(data,asociacion.nit).subscribe(
+        (response)=>{
+          console.log(response)
+          asociacion.id_solicitud = response.body.insertId;
+        },err=>{
+          asociacion.estado_solicitud = null;
+          asociacion.solicitud_enviada_por = null
+          console.log(err)     
+        }
+      )
+    }
+  }
+
 }

@@ -87,7 +87,7 @@ export class AsociacionesService {
     return modalRef.result;
   }
 
-  invitarUsuario(solicitud: any, nit: number) {
+  invitarUsuarioAsociacion(solicitud: any, nit: number) {
     return this.https.post(
       'https://dory-api-rest.herokuapp.com/api/asociaciones/solicitud/adicion/' +
         nit,

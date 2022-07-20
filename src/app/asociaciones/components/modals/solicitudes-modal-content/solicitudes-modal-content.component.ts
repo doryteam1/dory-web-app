@@ -92,7 +92,7 @@ export class SolicitudesModalContentComponent implements OnInit {
       }
       usuario.estado_solicitud = 'Enviada';
       usuario.solicitud_enviada_por = 'asociacion'
-      this.asociacionService.invitarUsuario(data,this.nit).subscribe(
+      this.asociacionService.invitarUsuarioAsociacion(data,this.nit).subscribe(
         (response)=>{
           console.log(response)
           usuario.id_solicitud = response.body.insertId;
