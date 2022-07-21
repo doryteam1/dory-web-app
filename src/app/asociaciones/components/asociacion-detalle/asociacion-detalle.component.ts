@@ -5,7 +5,7 @@ import { PescadoresService } from 'src/app/pescadores/services/pescadores.servic
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { AsociacionesService } from '../../services/asociaciones.service';
-
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-asociacion-detalle',
@@ -38,7 +38,8 @@ export class AsociacionDetalleComponent implements OnInit {
     private piscicultoresService: PiscicultoresService,
     private pescadoresService: PescadoresService,
     private asociacionService: AsociacionesService,
-    private appModalService:AppModalService
+    private appModalService:AppModalService,
+    public userService:UsuarioService
   ) {}
 
   ngOnInit(): void {
@@ -193,9 +194,9 @@ export class AsociacionDetalleComponent implements OnInit {
     if(asociacion.estado_solicitud == 'Aceptada'){
       this.appModalService
       .confirm(
-        'Eliminar de miembro',
-        'Esta seguro que desea eliminar este miembro de esta asociación',
-        'Eliminar',
+        'Salir de la asociación',
+        'Usted ya no es miembro de esta asociación',
+        'No soy miembro',
         'No estoy seguro'
       )
       .then((result) => {

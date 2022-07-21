@@ -18,9 +18,16 @@
       <img class="asociacion-container__image"
         src="{{asociacion?.foto ? asociacion.foto : '/assets/images/avatar-person-square.png'}}">
     </div>
-    <button class="btn-square btn--blue mt-4" (click)="invitarAnular(asociacion)" *ngIf="!asociacion.estado_solicitud">Indicar que soy miembro</button>
-    <button class="btn-square btn--grey mt-4" (click)="invitarAnular(asociacion)" *ngIf="asociacion.estado_solicitud == 'Enviada'">Anular solicitud</button>
-    <button class="btn-square btn--grey mt-4" (click)="invitarAnular(asociacion)" *ngIf="asociacion.estado_solicitud == 'Aceptada'">Eres miembro</button>
+    <div *ngIf="userService.isAuthenticated()">
+      <button class="btn-square btn--blue mt-3" (click)="invitarAnular(asociacion)" *ngIf="!asociacion.estado_solicitud">Indicar que soy miembro</button>
+      <button class="btn-square btn--grey mt-3" (click)="invitarAnular(asociacion)" *ngIf="asociacion.estado_solicitud == 'Enviada'">Cancelar solicitud</button>
+      <div class="btn-group mt-3" *ngIf="asociacion.estado_solicitud == 'Aceptada'">
+        <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li (click)="invitarAnular(asociacion)"><a class="dropdown-item"><i class="bi bi-box-arrow-left"></i> No soy miembro</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="line"></div>
     <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/tipoAsociacion.svg">

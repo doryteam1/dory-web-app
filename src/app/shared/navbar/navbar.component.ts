@@ -1,23 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import * as dayjs from 'dayjs';
+import * as relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+require('dayjs/locale/es')
+dayjs.locale('es') 
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, AfterViewInit{
   photoUser:string = '';
   nomCom:string = '';
   successMessage = 'Mensaje de prueba';
   invitaciones:Array<any> = [];
   notificatiosOpened:boolean = false;
+  invitacionesFromUsers:Array<any> = [];
+  notifyHeights:string[] = ['','notify__menu--height1','notify__menu--height2','notify__menu--height3','notify__menu--height4','notify__menu--height5','notify__menu--height6','notify__menu--height7'];
+  tests:string[] = [];
+ 
+  @ViewChild('notifies', { read: Element }) notifies!:Element;
+
   constructor(
     private router:Router,
     private userService:UsuarioService,
-    private storageService:StorageService) { }
+    private storageService:StorageService,
+    private elRef:ElementRef) { }
 
   ngOnInit(): void {
     this.photoUser = localStorage.getItem('photoUser')!;
@@ -33,6 +45,37 @@ export class NavbarComponent implements OnInit {
         this.invitaciones = response.data;
       }
     )
+
+    this.userService.solicitudesParaAsociacionesRepresentante().subscribe(
+      (response)=>{
+        this.invitacionesFromUsers = response.data;
+      }
+    )
+
+    this.test()
+  }
+
+  test(){
+    setTimeout(()=>{
+      this.tests.push("test");
+      this.test()
+    },2000)
+  }
+  ngAfterViewInit() {
+   /*  console.log(this.notifies)
+     const observer = new ResizeObserver((entries)=>{
+      console.log(entries)
+    })
+
+    observer.observe(this.notifies) */
+    //console.log(this.elRef.nativeElement.querySelector('.notify__menu'))
+  }
+
+  onResize(){
+    console.log("resize!")
+  }
+  onClick(event:any) {
+    console.log(event);
   }
 
   login(){
@@ -84,5 +127,10 @@ export class NavbarComponent implements OnInit {
         console.log(err)
         invitacion.message = undefined;
       });
+    }
+
+    timeToNow(date:string){
+      dayjs.extend(relativeTime)
+      return dayjs().toNow(true)
     }
 }

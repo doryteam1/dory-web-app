@@ -101,6 +101,10 @@ export class UsuarioService {
     return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/usuario/solicitudes/noaceptadas/porusuario');
   }
 
+  solicitudesParaAsociacionesRepresentante(){
+    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/usuario/solicitudes/noaceptadas/representante');
+  }
+
   eliminarSolicitud(idSolicitud:number){
     return this.httpsService.delete('https://dory-api-rest.herokuapp.com/api/asociaciones/solicitud/eliminar/'+idSolicitud)
   }
