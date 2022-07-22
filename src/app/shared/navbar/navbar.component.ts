@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -7,13 +7,14 @@ import * as relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 require('dayjs/locale/es')
 dayjs.locale('es') 
+import { ResizeObserver } from '@juggle/resize-observer';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit, AfterViewInit{
+export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
   photoUser:string = '';
   nomCom:string = '';
   successMessage = 'Mensaje de prueba';
@@ -24,6 +25,8 @@ export class NavbarComponent implements OnInit, AfterViewInit{
   tests:string[] = [];
  
   @ViewChild('notifies', { read: Element }) notifies!:Element;
+  resizedObserver!: ResizeObserver;
+  notifiesHeigth: number = 0;
 
   constructor(
     private router:Router,
@@ -62,6 +65,7 @@ export class NavbarComponent implements OnInit, AfterViewInit{
     },2000)
   }
   ngAfterViewInit() {
+    console.log("ngAftterViewInit!")
    /*  console.log(this.notifies)
      const observer = new ResizeObserver((entries)=>{
       console.log(entries)
@@ -69,8 +73,23 @@ export class NavbarComponent implements OnInit, AfterViewInit{
 
     observer.observe(this.notifies) */
     //console.log(this.elRef.nativeElement.querySelector('.notify__menu'))
+    const notifies = document.querySelector('.notify__menu')!;
+    
+    const ro = new ResizeObserver((entries, observer) => {
+      if(this.notifiesHeigth < 650){
+        this.notifiesHeigth = entries[0].contentRect.height;
+      }
+      this.resizedObserver = observer; 
+      console.log("resizing!")
+    });
+    
+    ro.observe(notifies); // Watch dimension changes on notifies ul
   }
 
+  ngOnDestroy(): void {
+    console.log("ng on destroy")
+    //this.resizedObserver.disconnect();// Stop observing
+  }
   onResize(){
     console.log("resize!")
   }

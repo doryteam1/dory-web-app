@@ -84,7 +84,7 @@
           </div>
 
           <!-- [ngClass]="[(invitaciones.length + invitacionesFromUsers.length) < 9 ? notifyHeights[(invitaciones.length + invitacionesFromUsers.length)] : '',]" -->
-          <ul #notifies class="notify__menu notify__menu dropdown-menu p-3 overflow-auto"  aria-labelledby="dropdownMenuButton1" (onresize)="onResize()">
+          <ul #notifies class="notify__menu notify__menu dropdown-menu p-3 overflow-auto" [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 650 }"  aria-labelledby="dropdownMenuButton1" (onresize)="onResize()">
             <li class="notify__title"><span *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
             <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span></li>
             <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index"> 
@@ -121,7 +121,7 @@
                   <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
                 </div>
               </div>
-              <hr class="dropdown-divider" *ngIf="i < invitaciones.length - 1">
+              <hr class="dropdown-divider" *ngIf="i < invitacionesFromUsers.length - 1">
             </li>
             <div class="search-container" *ngIf="invitaciones.length < 1 && invitacionesFromUsers.length < 1">
               <div class="search-container__box">
