@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import * as dayjs from 'dayjs';
@@ -32,7 +32,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
     private router:Router,
     private userService:UsuarioService,
     private storageService:StorageService,
-    private elRef:ElementRef) { }
+    private elRef:ElementRef,
+    private ar:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.photoUser = localStorage.getItem('photoUser')!;
@@ -54,7 +55,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
         this.invitacionesFromUsers = response.data;
       }
     )
-
+    
     this.test()
   }
 
