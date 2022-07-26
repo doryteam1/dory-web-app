@@ -6,6 +6,7 @@ import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultor
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { AsociacionesService } from '../../services/asociaciones.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Utilities } from 'src/app/utilities/utilities';
 
 @Component({
   selector: 'app-asociacion-detalle',
@@ -30,6 +31,7 @@ export class AsociacionDetalleComponent implements OnInit {
   piscicultorchangeItem: boolean = true;
   pescadorasociaciones: any;
   datapiscicultorasociaciones: boolean = false;
+  tipoUsuario: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,6 +45,11 @@ export class AsociacionDetalleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let token = localStorage.getItem('token');
+    if(token && token!='undefined'){
+      this.tipoUsuario = Utilities.parseJwt(token!).rol;
+    }
+    
     this.selectedAsociacionnit = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
