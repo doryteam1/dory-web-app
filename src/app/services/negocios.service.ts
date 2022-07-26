@@ -12,6 +12,10 @@ export class NegociosService {
     return this.https.get('https://dory-api-rest.herokuapp.com/api/negocios/usuario/'+id)
   }
 
+  getNegociosAll(){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/negocios/')
+  }
+
   addNegocio(negocio:any){
     return this.https.post('https://dory-api-rest.herokuapp.com/api/negocios',negocio)
   }

@@ -23,4 +23,8 @@ export class ProveedorService {
   updateProducto(producto:any,id:number){
     return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/proveedores/producto/'+id,producto)
   }
+
+  getProductosAll(){
+    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/proveedores/producto/todos')
+  }
 }

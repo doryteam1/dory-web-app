@@ -1,0 +1,11 @@
+<div class="d-flex flex-row justify-content-center mb-5 mt-4">
+  <app-search (textSearch)="onSearch($event)"></app-search>
+</div>
+<div class="container">
+  <div class="card" *ngFor="let negocio of negociosFiltered">
+    <img src="https://www.megamall.com.co/fotosalmacenes/macro_almacen-l_h-1564775241.jpg" alt="" class="card__img">
+    <span class="card__title">{{negocio.nombre_negocio}}</span>
+    <span class="card__sub-title">{{negocio.nombre_municipio}}</span>
+    <span class="card__description">{{negocio.direccion}}</span>
+  </div>
+</div>

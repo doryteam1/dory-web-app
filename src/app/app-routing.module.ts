@@ -56,6 +56,10 @@ const routes: Routes = [
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
+    path:'panel-busqueda',
+    loadChildren: () => import('./panel-busqueda/panel-busqueda.module').then(m => m.PanelBusquedaModule)
+  },
+  {
     path:'equipo',
     loadChildren: () => import('./equipo-trabajo/equipo-trabajo.module').then(m => m.EquipoTrabajoModule)
   },

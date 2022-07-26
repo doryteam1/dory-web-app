@@ -1,0 +1,19 @@
+<div class="d-flex flex-row justify-content-center mb-5 mt-4">
+  <app-search (textSearch)="onSearch($event)"></app-search>
+</div>
+<div class="container">
+  <div class="card" *ngFor="let producto of productosFiltered">
+    <img class="card__img card-img-top" src="{{producto.imagen ? producto.imagen : 'http://bppl.kkp.go.id/uploads/publikasi/karya_tulis_ilmiah/default.jpg'}}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card__title card-title">${{producto.precio | number:'':'es'}}</h5>
+      <h5 class="card__sub-title card-title">{{producto.nombre_producto}}</h5>
+      <p class="card__descripction card-text">{{producto.descripcion | shorter:200 }} </p>
+    </div>
+  </div>
+ <!--  <div class="card" *ngFor="let producto of productos">
+    <img [src]="producto.imagen" alt="" class="card__img">
+    <span class="card__title">$125.000</span>
+    <span class="card__sub-title">Concentrado de solla nutricion animal</span>
+    <span class="card__descripction">Solla Mojarra 38 es un producto con un nivel de proteína por encima del 38% y con niveles de grasa cercanos al 4%, que garantizan un Pre-levante ideal de sus alevinos en las primeras fases de crecimiento, obteniendo así la mejor relación costo beneficio. | shorter:200</span>
+  </div> -->
+</div>

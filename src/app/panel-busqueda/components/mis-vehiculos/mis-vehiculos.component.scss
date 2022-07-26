@@ -1,0 +1,66 @@
+.container-row{
+    display: flex;
+    justify-content: stretch;
+}
+
+.container_img{
+    width:  160px;
+    height: 130px;
+    object-fit: cover;
+}
+
+.button{
+    width: 200px;
+    align-self: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.container__icon{
+    cursor: pointer;
+}
+
+.search-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.search-container__box{
+    text-align: center;
+}
+
+.search-container__image{
+    width:1024px;
+    height: 370px;
+}
+
+.modal__image{
+    width: 160px;
+    height: 130px;
+    object-fit: cover;
+    display: block;
+}
+
+.modal__box{
+    display: flex;
+    flex-direction: column;
+}
+
+.container__btn{
+    width: 100px;
+    height: 38px;
+}
+
+.container__spinner{
+    width: 20px;
+    height: 20px;
+}
+.container-table-pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
