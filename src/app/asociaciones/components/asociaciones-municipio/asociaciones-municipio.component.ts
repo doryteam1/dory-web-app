@@ -13,23 +13,35 @@ export class AsociacionesMunicipioComponent implements OnInit {
   asociaciones: any[] = [];
   asociasionessarray: any[] = [];
   modoFiltro: any[] = ['number_ordenarmayoramenor', 'string_filtrodatosvarios'];
+
   filtros: any[] = [
     {
-      data: [
+      nombre_boton_filtro: [
         {
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Piscicultores',
-          datoafiltrar: 'Piscicultores',
-        },
-        {
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Pescadores',
-          datoafiltrar: 'Pescadores',
-        },
-        {
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Mixta',
-          datoafiltrar: 'Mixta',
+          name: 'Tipo de asociación',
+          checkbox: false,
+          data: [
+            {
+              nombrecampoDB: 'tipo_asociacion',
+              nombrefiltro: 'Piscicultores',
+              datoafiltrar: 'Piscicultores',
+            },
+            {
+              nombrecampoDB: 'tipo_asociacion',
+              nombrefiltro: 'Pescadores',
+              datoafiltrar: 'Pescadores',
+            },
+            {
+              nombrecampoDB: 'tipo_asociacion',
+              nombrefiltro: 'Mixta',
+              datoafiltrar: 'Mixta',
+            },
+            {
+              nombrecampoDB: '',
+              nombrefiltro: 'Ver todas',
+              datoafiltrar: '',
+            },
+          ],
         },
       ],
     },

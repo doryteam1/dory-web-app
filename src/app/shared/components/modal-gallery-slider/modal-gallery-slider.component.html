@@ -18,10 +18,6 @@
     </div>
     <!-- gallery contenido -->
     <div class="modal-body" *ngIf="!showconteslaider">
-     <!--  <div class="list-group">
-        <a class="list-group-item list-group-item-action" *ngFor="let fotogranja of fotosgranja;let i=index"
-          (click)="inView(i)">Item {{i}}</a>
-      </div> -->
       <div class="photos-container-div" (click)="shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"
         style="position: relative;">
         <div *ngFor="let fotogranja of fotosgranja;let i=index"  #myItemLists>
@@ -47,4 +43,5 @@
        >
       </app-carrucel-img>
     </div>
+
 

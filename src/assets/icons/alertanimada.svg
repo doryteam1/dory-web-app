@@ -1,0 +1,43 @@
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+    <style>
+    @keyframes n-info-tri {
+                0%,
+                to {
+                  transform: rotate(0deg);
+                  transform-origin: center
+                }
+
+                10%,
+                90% {
+                  transform: rotate(2deg)
+                }
+
+                20%,
+                40%,
+                60% {
+                  transform: rotate(-6deg)
+                }
+
+                30%,
+                50%,
+                70% {
+                  transform: rotate(6deg)
+                }
+
+                80% {
+                  transform: rotate(-2deg)
+                }
+              }
+
+              .prefix__n-info-tri {
+                animation: n-info-tri .8s cubic-bezier(.455, .03, .515, .955) both infinite
+              }
+
+    </style>
+                <path class="prefix__n-info-tri" style="animation-delay:1s" stroke="#0A0A30" stroke-width="1.5"
+                  d="M11.134 6.844a1 1 0 011.732 0l5.954 10.312a1 1 0 01-.866 1.5H6.046a1 1 0 01-.866-1.5l5.954-10.312z" />
+                <g class="prefix__n-info-tri">
+                  <path stroke="#265BFF" stroke-linecap="round" stroke-width="1.5" d="M12 10.284v3.206" />
+                  <circle cx="12" cy="15.605" r=".832" fill="#265BFF" />
+                </g>
+      </svg>

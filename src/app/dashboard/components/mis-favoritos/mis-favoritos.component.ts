@@ -23,6 +23,7 @@ export class MisFavoritosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     registerLocaleData(es);
     this.granjasService.misFavoritas().subscribe(
       (response) => {

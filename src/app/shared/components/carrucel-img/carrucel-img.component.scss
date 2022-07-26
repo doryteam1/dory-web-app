@@ -249,6 +249,13 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
 .imgitem {
   height: 100%;
   width: 100%;
+  object-fit:scale-down;
+ /*  border-radius: 10px; */
+
+}
+.img2item {
+  height: 100%;
+  width: 100%;
   object-fit: cover;
  /*  border-radius: 10px; */
 

@@ -1,3 +1,4 @@
+import { SafeUrl } from '@angular/platform-browser';
 import {
   Component,
   Input,
@@ -13,7 +14,7 @@ import {
   styleUrls: ['./carrucel-img.component.scss'],
 })
 export class CarrucelImgComponent implements OnInit {
-  @Input() imagenes = [];
+  @Input() imagenes:any | SafeUrl[]= [];
   @Input() imgselecmodal!: number;
   @Input() indicatorsphoto!: boolean;
   @Input() valorrows!: number;

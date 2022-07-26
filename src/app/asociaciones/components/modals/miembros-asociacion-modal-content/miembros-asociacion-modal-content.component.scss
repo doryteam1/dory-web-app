@@ -39,3 +39,12 @@
 .card__user-info{
     cursor: pointer;
 }
+.nav-link {
+  color: var(--gris-oscuro);
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: var(--azul1);
+  background-color: var(--gris4);
+}

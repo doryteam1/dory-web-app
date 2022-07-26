@@ -378,13 +378,19 @@ textarea:focus, input:focus{
 .miestilofondosharedmodal {
   background-color: transparent !important;
 }
-                .ndb-ratingx {
-                  .sr-only {
-                    display: none !important;
-                  }
-                }
+.ndb-ratingx {
+  .sr-only {
+    display: none !important;
+  }
+}
+  .form-control:focus{
+  border-color: rgb(82, 81, 81) !important;
+  box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px rgb(82, 81, 81) !important;
+  outline: 0 none !important;
+  }
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
+@import "~animate.css/animate.min";
 /* @import '~@ngx-share/button/styles/share-buttons.css';
 @import '~@ngx-share/button/styles/themes/default/default-theme.css'; */
 //@import '~ngx-sharebuttons/themes/default';

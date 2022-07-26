@@ -6,10 +6,23 @@
     <app-search (textSearch)="onSearch($event)"></app-search>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" (click)="selectedTab = 'piscicultores'">Piscicultores</button>
+        <button class="nav-link active"
+        id="home-tab" data-bs-toggle="tab"
+        data-bs-target="#home-tab-pane"
+         type="button" role="tab"
+         aria-controls="home-tab-pane"
+         aria-selected="true"
+         (click)="selectedTab = 'piscicultores'">Piscicultores</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" (click)="selectedTab = 'pescadores'">Pescadores</button>
+        <button class="nav-link"
+        id="profile-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#profile-tab-pane"
+        type="button" role="tab"
+        aria-controls="profile-tab-pane"
+         aria-selected="false"
+          (click)="selectedTab = 'pescadores'">Pescadores</button>
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -20,7 +33,7 @@
                       <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person.svg'}}">
                       <span class="card__title">{{piscicultor.nombres}}</span>
                   </div>
-                  
+
                   <button class="card__button btn-square btn--grey" (click)="invitarAnular(piscicultor)" *ngIf="piscicultor.estado_solicitud == 'Enviada' && piscicultor.solicitud_enviada_por == 'asociacion'">Anular</button>
                   <button class="card__button btn-square btn--blue" (click)="invitarAnular(piscicultor)" *ngIf="piscicultor.estado_solicitud == 'Enviada' && piscicultor.solicitud_enviada_por == 'usuario'">Confirmar</button>
                   <button class="card__button btn-square  btn--blue" (click)="invitarAnular(piscicultor)" *ngIf="!piscicultor.estado_solicitud">Invitar</button>

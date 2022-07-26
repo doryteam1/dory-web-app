@@ -1,6 +1,7 @@
 import { Component, OnInit ,  ElementRef,
-  ViewChild, } from '@angular/core';
-import { FormControl, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
+  ViewChild,
+  HostListener,
+ } from '@angular/core';
 import { DomSanitizer} from '@angular/platform-browser';
 import {  NgbModal,NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
@@ -15,6 +16,7 @@ import { environment } from 'src/environments/environment';
 import { MapGeocoder } from '@angular/google-maps';
 import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { vertices } from '../../../global/constants';
+import { Router } from '@angular/router';
 const _ = require('lodash');
 
 @Component({
@@ -23,9 +25,7 @@ const _ = require('lodash');
   styleUrls: ['./mis-granjas.component.scss'],
 })
 export class MisGranjasComponent implements OnInit {
-  @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
   @ViewChild('map') map: any;
-  @ViewChild('fileInput') inputFileDialog!: ElementRef;
   granjas: Array<any> = [];
   showNotFound: boolean = false;
   indicegranja!: number;
@@ -42,26 +42,7 @@ export class MisGranjasComponent implements OnInit {
   faltadireccion: boolean = false;
   modal!: NgbModalRef;
   p!: number;
-  form: FormGroup = new FormGroup({
-    nombre_granja: new FormControl('', [Validators.required]),
-    area: new FormControl(0, [Validators.required]),
-    numero_trabajadores: new FormControl(0, [Validators.required]),
-    produccion_estimada_mes: new FormControl(0, [Validators.required]),
-    direccion: new FormControl('', [Validators.required]),
-    informacion_adicional_direccion:new FormControl('',[Validators.required]),
-    latitud: new FormControl(0, [Validators.required]),
-    longitud: new FormControl(0, [Validators.required]),
-    descripcion: new FormControl('', [Validators.required]),
-    id_departamento: new FormControl(70, [Validators.required]),
-    id_municipio: new FormControl('', [Validators.required]),
-    id_vereda: new FormControl(0),
-    id_corregimiento: new FormControl(0),
-    corregimiento_vereda: new FormControl(''),
-    arrayTiposInfraestructuras: new FormArray([]),
-    arrayEspecies: new FormArray([]),
-  });
   file: any = null;
-  productImagePath: string = '';
   itemUpdateIndex: number = -1;
   modalMode: string = 'create';
   municipios: Array<any> = [];
@@ -90,25 +71,17 @@ export class MisGranjasComponent implements OnInit {
     strokeWeight: 3,
     visible: true,
   };
-  photosGranjaArray: Array<string> = [];
-  photosGranjaArrayCopy: Array<string> = [];
-  photosGranjaUrlToDel: Array<string> = [];
-  isPhotoSelectingToDel: boolean = false;
-  indexSelectedToDel: Array<number> = [];
-  showNotFoundPhotos: boolean = false;
   timeLapsed1: number = 0;
-  escogerdireccion: boolean=false;
-
+  escogerdireccion: boolean = false;
   constructor(
     private granjaService: GranjasService,
     private modalService: NgbModal,
-    private storage: FirebaseStorageService,
-    private sanitizer: DomSanitizer,
     private places: PlacesService,
     private appModalService: AppModalService,
     httpClient: HttpClient,
     private geocoder: MapGeocoder,
-    private confirmModalMapService: ConfirmModalMapService
+    private router: Router,
+    private confirmModalMapService: ConfirmModalMapService,
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -125,14 +98,13 @@ export class MisGranjasComponent implements OnInit {
     this.autorecarga();
   }
   autorecarga(): void {
-    this.direccion?.disable();
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
     this.granjaService.getGranjaByUserId(payload.sub).subscribe(
       (respose) => {
         this.granjas = respose.data;
-        console.log(this.granjas)
+        console.log(this.granjas);
         if (this.granjas.length < 1) {
           this.showNotFound = true;
         }
@@ -143,222 +115,6 @@ export class MisGranjasComponent implements OnInit {
     );
 
     this.loadDptos();
-
-    this.granjaService.getInfraestructuras().subscribe(
-      (response) => {
-        this.infraestructurasData = response.data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-
-    this.granjaService.getEspecies().subscribe(
-      (response) => {
-        this.especiesData = response.data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-
-  initForm() {
-    this.idmunicipioselec();
-    this.nombreGranja?.setValue('');
-    this.area?.setValue(0);
-    this.numeroTrabajadores?.setValue(0);
-    this.prodEstimadaMes?.setValue(0);
-    this.direccion?.setValue('');
-    this.informacionAdicionalDireccion?.setValue('');
-    this.latitud?.setValue(0);
-    this.longitud?.setValue(0);
-    this.descripcion?.setValue('');
-    this.idDpto?.setValue(70);
-    this.idMunic?.setValue(null);
-    this.idVereda?.setValue(0);
-    this.idCorregimiento?.setValue(0);
-    this.corregimiento_vereda?.setValue('');
-    this.infraestructuras.clear();
-    this.especies.clear();
-  }
-  /* mi codigo */
-
-  /* fin */
-  openModal(content: any, action: string, idGranja?: number) {
-    this.faltanargumentos=false;
-    this.faltadireccion = false;
-    this.disableinput = true;
-    let index = this.granjas.findIndex((granja: any) => {
-      return granja.id_granja == idGranja;
-    });
-    this.modalMode = action;
-    this.form.reset();
-    this.initForm();
-    this.idDpto?.setValue(70);
-    if (action == 'update') {
-      this.granjaService
-        .getGranjaDetalle(this.granjas[index!].id_granja)
-        .subscribe((granja) => {
-          let granjaDetalle = granja.data[0];
-          this.nombreGranja?.setValue(granjaDetalle.nombre);
-          this.area?.setValue(granjaDetalle.area);
-          this.numeroTrabajadores?.setValue(granjaDetalle.numero_trabajadores);
-          this.prodEstimadaMes?.setValue(granjaDetalle.produccion_estimada_mes);
-          this.direccion?.setValue(granjaDetalle.direccion);
-          this.informacionAdicionalDireccion?.setValue(
-            granjaDetalle.informacion_adicional_direccion
-          );
-          this.latitud?.setValue(granjaDetalle.latitud);
-          this.longitud?.setValue(granjaDetalle.longitud);
-          this.descripcion?.setValue(granjaDetalle.descripcion);
-          this.idDpto?.setValue(granjaDetalle.id_departamento);
-          this.idMunic?.setValue(granjaDetalle.id_municipio);
-          this.idVereda?.setValue(granjaDetalle.id_vereda);
-          this.idCorregimiento?.setValue(granjaDetalle.id_corregimiento);
-          this.corregimiento_vereda?.setValue(
-            granjaDetalle.corregimiento_vereda
-          );
-          if (
-            granjaDetalle.infraestructuras &&
-            granjaDetalle.infraestructuras.length > 0
-          ) {
-            granjaDetalle.infraestructuras.forEach((element: any) => {
-              this.infraestructuras?.push(
-                new FormControl(element.id_infraestructura)
-              );
-            });
-          }
-
-          if (granjaDetalle.especies && granjaDetalle.especies.length > 0) {
-            granjaDetalle.especies.forEach((element: any) => {
-              this.especies?.push(new FormControl(element.id_especie));
-            });
-          }
-        });
-
-      this.itemUpdateIndex = index!;
-    }
-    this.modalService
-      .open(content)
-      .result.then((result) => {
-        console.log('se cerro modal ', result);
-      })
-      .catch((err) => {
-        this.file = null;
-        this.productImagePath = '';
-      });
-  }
-  idmunicipioselec() {
-    if (this.modalMode == 'update') {
-      this.places
-        .getMunicipioById(this.form.get('id_municipio')?.value)
-        .subscribe(
-          (response) => {
-            if (response.data != 0) {
-              if (
-                this.form.get('id_municipio')?.value !==
-                this.granjas[this.itemUpdateIndex].id_municipio
-              ) {
-                this.latitud?.setValue(response.data[0].latitud);
-                this.longitud?.setValue(response.data[0].longitud);
-                this.direccion?.setValue('');
-                this.verMapaDireccion()
-                this.escogerdireccion = true;
-                setTimeout(() => {
-                  this.escogerdireccion = false;
-                }, 30000);
-                this.faltadireccion = true;
-              } else {
-                this.latitud?.setValue(
-                  this.granjas[this.itemUpdateIndex].latitud
-                );
-                this.longitud?.setValue(
-                  this.granjas[this.itemUpdateIndex].longitud
-                );
-                this.direccion?.setValue(
-                  this.granjas[this.itemUpdateIndex].direccion
-                );
-                this.faltadireccion = false;
-              }
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-    } else if (this.modalMode == 'create') {
-      this.faltanargumentos = false;
-      console.log(this.modalMode);
-      this.places
-        .getMunicipioById(this.form.get('id_municipio')?.value)
-        .subscribe(
-          (response) => {
-            if (response.data != 0) {
-              this.latitud?.setValue(response.data[0].latitud);
-              this.longitud?.setValue(response.data[0].longitud);
-              this.direccion?.setValue('');
-              this.verMapaDireccion();
-              this.faltadireccion = true;
-              this.escogerdireccion=true
-              setTimeout(() => {
-                this.escogerdireccion = false;
-              }, 30000);
-              this.mylatitudidmunicipio = response.data[0].latitud;
-              this.mylongitudidmunicipio = response.data[0].longitud;
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-    }
-  }
-  addGranja() {
-    this.loading1 = true;
-    if (!this.form.valid) {
-         if (this.form.getRawValue().direccion == '') {
-           this.faltadireccion = true;
-         }else{
-          this.faltadireccion = false;
-         }
-      console.log('Not valid!');
-      this.form.markAllAsTouched();
-      this.loading1 = false;
-      return;
-    }
- if (this.form.getRawValue().direccion !== '') {
-   this.faltadireccion = false;
-   this.granjaService.addGranja(this.form.getRawValue()).subscribe(
-     (response) => {
-       let nuevaGranjainsertId = _.clone(this.form.getRawValue());
-       nuevaGranjainsertId.id_granja = response.body.insertId;
-       nuevaGranjainsertId.nombre = this.form.getRawValue().nombre_granja;
-       this.loading1 = false;
-       this.granjas.push(nuevaGranjainsertId);
-     if (this.granjas.length >= 1) {
-       this.showNotFound = false;
-     }
-
-       this.modalService.dismissAll();
-     },
-     (err) => {
-       this.loading1 = false;
-       console.log(err);
-     }
-   );
- } else {
-  this.loading1 = false;
-   this.faltadireccion = true;
- }
-  }
-
-  fileChange(event: any) {
-    console.log('change', event);
-    this.file = event.target.files[0];
-    /* let productImagePath:any = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(event.target.files[0]))
-    console.log(productImagePath.changingThisBreaksApplicationSecurity) */
-    //this.productImagePath = productImagePath.changingThisBreaksApplicationSecurity;
   }
 
   deleteGranja(idGranja: number) {
@@ -391,50 +147,10 @@ export class MisGranjasComponent implements OnInit {
       .catch((result) => {});
   }
 
-  updateGranja() {
-    this.loading1 = true;
-    if (!this.form.valid) {
-      if (this.form.getRawValue().direccion=='') {
-        this.faltadireccion = true;
-      }else{
-        this.faltadireccion = false;
-      }
-      console.log('Not valid!');
-      this.form.markAllAsTouched();
-      this.loading1 = false;
-      return;
-    }
-if (this.form.getRawValue().direccion !== '') {
-  this.faltadireccion = false;
-  this.granjaService
-    .updateGranja(
-      this.granjas[this.itemUpdateIndex].id_granja,
-      this.form.getRawValue()
-    )
-    .subscribe(
-      (response) => {
-        this.loading1 = false;
-        this.autorecarga();
-        this.modalService.dismissAll();
-      },
-      (err) => {
-        console.log(err);
-        this.loading1 = false;
-      }
-    );
-} else {
-  this.loading1 = false;
-  this.faltadireccion = true;
-}
-    //this.proveedorService.updateProducto(this.form)
-  }
-
   loadDptos() {
     this.places.getDepartamentos().subscribe(
       (response) => {
         this.departamentos = response.data;
-        this.idDpto?.setValue(70);
-        this.idDpto?.disable();
         this.loadMunic();
       },
       (err) => {
@@ -444,7 +160,7 @@ if (this.form.getRawValue().direccion !== '') {
   }
 
   loadMunic() {
-    this.places.getMunicipiosDepartamentos(this.idDpto?.value).subscribe(
+    this.places.getMunicipiosDepartamentos(70).subscribe(
       (response) => {
         this.municipios = response.data;
       },
@@ -452,65 +168,10 @@ if (this.form.getRawValue().direccion !== '') {
         console.log(err);
       }
     );
-  }
-
-  changeDpto() {
-    this.form.get('id_municipio')?.setValue(0);
-    this.places.getMunicipiosDepartamentos(this.idDpto?.value).subscribe(
-      (response) => {
-        this.municipios = response.data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-
-  invalid(controlFormName: string) {
-    return (
-      this.form.get(controlFormName)?.invalid &&
-      (this.form.get(controlFormName)?.dirty ||
-        this.form.get(controlFormName)?.touched)
-    );
-  }
-
-  onCheckboxChange(e: any, controlName: string) {
-    const checkArray: FormArray = this.form.get(controlName) as FormArray;
-    if (e.target.checked) {
-      checkArray.push(new FormControl(e.target.value));
-    } else {
-      let i: number = 0;
-      checkArray.controls.forEach(
-        (
-          item: AbstractControl,
-          i: number,
-          controls: Array<AbstractControl>
-        ) => {
-          if (item.value == e.target.value) {
-            checkArray.removeAt(i);
-            return;
-          }
-          i++;
-        }
-      );
-    }
-  }
-
-  isChecked(controlName: string, value: number) {
-    let checked: boolean = false;
-    const checkArray: FormArray = this.form.get(controlName) as FormArray;
-    checkArray.controls.forEach(
-      (item: AbstractControl, i: number, controls: Array<AbstractControl>) => {
-        if (item.value == value) {
-          checked = true;
-        }
-      }
-    );
-    return checked;
   }
 
   verMap(idGranja?: number) {
-     this.faltadireccion = false;
+    this.faltadireccion = false;
     let index = this.granjas.findIndex((granja: any) => {
       return granja.id_granja == idGranja;
     });
@@ -551,120 +212,6 @@ if (this.form.getRawValue().direccion !== '') {
       zoom: 14,
       scrollwheel: true,
     };
-    this.buscarx = '';
-  }
-  verMapaDireccion() {
-    this.faltadireccion = false;
-    const sucreColombia = {
-      north: 10.184454,
-      south: 8.136442,
-      west: -75.842392,
-      east: -74.324908,
-    };
-    if (this.modalMode == 'update') {
-      this.modal = this.modalService.open(this.map, {
-        size: 'xl',
-        centered: true,
-        windowClass: 'dark-modal',
-      });
-      this.modal.result
-        .then((result) => {
-          if (this.form.getRawValue().direccion == '') {
-            this.faltadireccion = true;
-          } else {
-            this.faltadireccion = false;
-          }
-
-        })
-        .catch((err) => {
-          if (this.form.getRawValue().direccion == '') {
-            this.faltadireccion = true;
-          } else {
-            this.faltadireccion = false;
-          }
-
-        });
-      this.markerPosition = {
-        lat: Number(this.form.get('latitud')?.value),
-        lng: Number(this.form.get('longitud')?.value),
-      };
-
-      this.options = {
-        center: {
-          lat: Number(this.form.get('latitud')?.value),
-          lng: Number(this.form.get('longitud')?.value),
-        },
-        restriction: {
-          latLngBounds: sucreColombia,
-          strictBounds: false,
-        },
-        zoom: 14,
-        scrollwheel: true,
-      };
-    } else if (this.modalMode == 'create') {
-
-      if (
-        this.form.getRawValue().latitud &&
-        this.form.getRawValue().latitud !== ''
-      ) {
-        this.faltanargumentos = false;
-
-        this.modal = this.modalService.open(this.map, {
-          size: 'xl',
-          centered: true,
-          windowClass: 'dark-modal',
-        });
-        this.modal.result
-          .then((result) => {
-            console.log('se cerro modal ', result);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        if (
-          this.form.get('latitud')?.value == this.mylatitudidmunicipio &&
-          this.form.get('longitud')?.value == this.mylongitudidmunicipio
-        ) {
-          this.markerPosition = {
-            lat: Number(this.mylatitudidmunicipio),
-            lng: Number(this.mylongitudidmunicipio),
-          };
-
-          this.options = {
-            center: {
-              lat: Number(this.mylatitudidmunicipio),
-              lng: Number(this.mylongitudidmunicipio),
-            },
-            restriction: {
-              latLngBounds: sucreColombia,
-              strictBounds: false,
-            },
-            zoom: 14,
-            scrollwheel: true,
-          };
-        } else {
-          this.markerPosition = {
-            lat: Number(this.form.get('latitud')?.value),
-            lng: Number(this.form.get('longitud')?.value),
-          };
-
-          this.options = {
-            center: {
-              lat: Number(this.form.get('latitud')?.value),
-              lng: Number(this.form.get('longitud')?.value),
-            },
-            restriction: {
-              latLngBounds: sucreColombia,
-              strictBounds: false,
-            },
-            zoom: 14,
-            scrollwheel: true,
-          };
-        }
-      } else {
-        this.faltanargumentos = true;
-      }
-    }
     this.buscarx = '';
   }
   closeMap() {
@@ -759,7 +306,7 @@ if (this.form.getRawValue().direccion !== '') {
   }
   // Metodo para adicionar una marca en el mapa
   addMarker(event: google.maps.MapMouseEvent) {
-     this.escogerdireccion = false;
+    this.escogerdireccion = false;
     this.guarlatlog = false;
     const point: google.maps.LatLngLiteral = {
       lat: event.latLng?.toJSON().lat!,
@@ -767,15 +314,15 @@ if (this.form.getRawValue().direccion !== '') {
     };
     this.places.geocodeLatLng(point).then((response) => {
       if (response.status == 'OK') {
-        console.log("response total")
-       console .log(response)
-        console.log("mis municipios")
-       console.log(this.municipios);
-       console.log("resul")
+        console.log('response total');
+        console.log(response);
+        console.log('mis municipios');
+        console.log(this.municipios);
+        console.log('resul');
         let result = response.results[0].address_components;
-        console.log(result)
+        console.log(result);
         /*departamento  */
-        console.log("identificar el departamento")
+        console.log('identificar el departamento');
         console.log('administrative_area_level_1');
         let index = result.findIndex((element) =>
           element.types.includes('administrative_area_level_1')
@@ -792,7 +339,7 @@ if (this.form.getRawValue().direccion !== '') {
         console.log(`municipio index ${index}`);
         let municipio = result[index].short_name;
         console.log(`municipio ${municipio}`);
-      /* compribar a ver si existe enla lista */
+        /* compribar a ver si existe enla lista */
         index = this.municipios.findIndex(
           (element) => element.nombre == municipio
         );
@@ -807,105 +354,7 @@ if (this.form.getRawValue().direccion !== '') {
             lat: event.latLng!.toJSON().lat,
             lng: event.latLng!.toJSON().lng,
           };
-          /* console.log(this.granjas[this.indicegranja!]); */
-          if (this.modalMode == 'update') {
-            this.confirmModalMapService
-              .confirm(
-                '../../../../assets/icons/editar.svg',
-                '../../../../assets/icons/save.svg',
-                'Actualizar  mi ubicación',
-                'Estás a punto de cambiar tu ubicación por: ',
-                'Si',
-                'No estoy seguro',
-                `${response.results[0].formatted_address}`
-              )
-              .then((result) => {
-                if (result == true) {
-                  if (this.form.get('id_municipio')?.value == idMunipio) {
-                    this.latitud?.setValue(event.latLng!.toJSON().lat);
-                    this.longitud?.setValue(event.latLng!.toJSON().lng);
-                    this.direccion?.setValue(response.results[0].formatted_address);
-                    this.faltadireccion = false;
-                    this.closeMap();
-                  } else {
-                    this.latitud?.setValue(event.latLng!.toJSON().lat);
-                    this.longitud?.setValue(event.latLng!.toJSON().lng);
-                    this.direccion?.setValue(response.results[0].formatted_address);
-                    this.idMunic?.setValue(idMunipio);
-                    this.closeMap();
-                  }
-                } else {
-                  if (
-                    this.form.get('latitud')?.value ==
-                      this.mylatitudidmunicipio &&
-                    this.form.get('longitud')?.value ==
-                      this.mylongitudidmunicipio
-                  ) {
-                    this.markerPosition = {
-                      lat: Number(this.mylatitudidmunicipio),
-                      lng: Number(this.mylongitudidmunicipio),
-                    };
-                  } else {
-                    this.markerPosition = {
-                      lat: Number(this.form.get('latitud')?.value),
-                      lng: Number(this.form.get('longitud')?.value),
-                    };
-                  }
-                }
-              })
-              .catch((result) => {});
-          } else if (this.modalMode == 'create') {
-            this.confirmModalMapService
-              .confirm(
-                '../../../../assets/icons/iconoubicacion.svg',
-                '../../../../assets/icons/save.svg',
-                'Escoger ubicación',
-                `Estás a punto de escoger la siguiente ubicación:`,
-                'Si',
-                'No estoy seguro',
-                `${response.results[0].formatted_address}`
-              )
-              .then((result) => {
-                if (result == true) {
-                  if (this.form.get('id_municipio')?.value == idMunipio) {
-                    console.log('igual');
-                    this.latitud?.setValue(event.latLng!.toJSON().lat);
-                    this.longitud?.setValue(event.latLng!.toJSON().lng);
-                    this.direccion?.setValue(
-                      response.results[0].formatted_address
-                    );
-                    this.closeMap();
-                  } else {
-                    console.log('difrente');
-                    this.latitud?.setValue(event.latLng!.toJSON().lat);
-                    this.longitud?.setValue(event.latLng!.toJSON().lng);
-                    this.direccion?.setValue(
-                      response.results[0].formatted_address
-                    );
-                    this.idMunic?.setValue(idMunipio);
-                    this.closeMap();
-                  }
-                } else {
-                  if (
-                    this.form.get('latitud')?.value ==
-                      this.mylatitudidmunicipio &&
-                    this.form.get('longitud')?.value ==
-                      this.mylongitudidmunicipio
-                  ) {
-                    this.markerPosition = {
-                      lat: Number(this.mylatitudidmunicipio),
-                      lng: Number(this.mylongitudidmunicipio),
-                    };
-                  } else {
-                    this.markerPosition = {
-                      lat: Number(this.form.get('latitud')?.value),
-                      lng: Number(this.form.get('longitud')?.value),
-                    };
-                  }
-                }
-              })
-              .catch((result) => {});
-          } else if (this.modalMode == 'updateporvermapa') {
+          if (this.modalMode == 'updateporvermapa') {
             this.confirmModalMapService
               .confirm(
                 '../../../../assets/icons/editar.svg',
@@ -957,227 +406,21 @@ if (this.form.getRawValue().direccion !== '') {
     });
   }
 
-  async loadPhotos(event: any) {
-    this.loading2 = true;
-    try {
-      let fileNameBase =
-        '/granjas/User' +
-        this.authUserId +
-        '/granja' +
-        this.granjas[this.itemUpdateIndex].id_granja +
-        '/foto';
-      let files: Array<any> = event.target.files;
-      let arrayFotos: Array<any> = [];
-      for (let i = 0; i < files.length; i++) {
-        let nowTimestamp = new Date().getTime().toString();
-        await this.storage
-          .cloudStorageTask(fileNameBase + nowTimestamp, files[i])
-          .percentageChanges()
-          .toPromise();
-
-        let downloadUrl = await this.storage
-          .cloudStorageRef(fileNameBase + nowTimestamp)
-          .getDownloadURL()
-          .toPromise();
-
-        arrayFotos.push(downloadUrl);
-      }
-      this.photosGranjaArray = this.photosGranjaArray.concat(arrayFotos);
-      if (this.photosGranjaArray.length < 1) {
-        this.showNotFoundPhotos = true;
-      } else {
-        this.showNotFoundPhotos = false;
-      }
-      this.loading2 = false;
-      this.photosUpdate();
-    } catch (err) {
-      this.loading2 = false;
-    }
+  createNewGranja() {
+    let object = {
+      action: 'create',
+      formState: 'enable',
+      authUserId: this.authUserId,
+    };
+    this.router.navigate(['/dashboard/granja/detalle', object]);
+  }
+  editarGranja(granja: any, formState: string) {
+    let object: any = { ...granja };
+    (object.action = 'update'),
+      (object.formState = formState),
+      (object.authUserId = this.authUserId);
+      this.router.navigate(['/dashboard/granja/detalle', object]);
   }
 
-  openAddFileDialog() {
-    const element: HTMLElement = this.inputFileDialog.nativeElement;
-    element.click();
-  }
 
-  openPhotosModal(content: any, idGranja: number) {
-    let index = this.granjas.findIndex((granja: any) => {
-      return granja.id_granja == idGranja;
-    });
-    this.itemUpdateIndex = index;
-    this.modalService
-      .open(content, {
-        ariaLabelledBy: 'modal-basic-title',
-        windowClass: 'modal-photo',
-      })
-      .result.then(
-        (result) => {
-          console.log(result);
-        },
-        (reason) => {
-          console.log(reason);
-        }
-      );
-    this.photosGranjaArray = [];
-    this.loading1 = true;
-    this.granjaService
-      .getGranjaDetalle(this.granjas[index].id_granja)
-      .subscribe(
-        (response) => {
-          this.photosGranjaArray = response.data[0].fotos;
-          this.loading1 = false;
-          this.showNotFoundPhotos = false;
-          if (this.photosGranjaArray.length < 1) {
-            this.showNotFoundPhotos = true;
-          }
-        },
-        (err) => {
-          this.loading1 = false;
-          this.showNotFoundPhotos = false;
-        }
-      );
-  }
-
-  photosUpdate() {
-    this.loading2 = true;
-    this.granjaService
-      .updatePhotos(this.granjas[this.itemUpdateIndex].id_granja, {
-        arrayFotos: this.photosGranjaArray,
-      })
-      .subscribe(
-        (response) => {
-          this.loading2 = false;
-          console.log(response);
-        },
-        (err) => {
-          this.loading2 = false;
-          console.log(err);
-        }
-      );
-  }
-
-  onLongPressing(event: number) {
-    console.log(event);
-  }
-
-  onLongPress() {
-    this.isPhotoSelectingToDel = true;
-  }
-
-  onReleasePressing() {}
-
-  abortDeleting() {
-    this.isPhotoSelectingToDel = false;
-    this.photosGranjaUrlToDel = [];
-  }
-
-  addPhotoToDel(photoUrl: string) {
-    if (!this.isPhotoSelectingToDel) {
-      return;
-    }
-    let i = this.photosGranjaUrlToDel.indexOf(photoUrl);
-    if (i > -1) {
-      this.photosGranjaUrlToDel.splice(i, 1);
-    } else {
-      this.photosGranjaUrlToDel.push(photoUrl);
-    }
-  }
-
-  isPhotoIncludeToDelete(photoUrl: string) {
-    return this.photosGranjaUrlToDel.includes(photoUrl);
-  }
-
-  photosDelete() {
-    this.loading3 = true;
-    this.photosGranjaArrayCopy = this.photosGranjaArray.slice(0);
-    this.photosGranjaUrlToDel.forEach((photo) => {
-      let index = this.photosGranjaArrayCopy.indexOf(photo);
-      if (index > -1) {
-        this.photosGranjaArrayCopy.splice(index, 1);
-      }
-    });
-    console.log(this.photosGranjaArrayCopy);
-    this.granjaService
-      .updatePhotos(this.granjas[this.itemUpdateIndex].id_granja, {
-        arrayFotos: this.photosGranjaArrayCopy,
-      })
-      .subscribe(
-        (response) => {
-          this.photosGranjaArray = this.photosGranjaArrayCopy;
-          this.photosGranjaUrlToDel = [];
-          this.isPhotoSelectingToDel = false;
-          this.loading3 = false;
-          if (this.photosGranjaArray.length < 1) {
-            this.showNotFoundPhotos = true;
-          }
-        },
-        (err) => {
-          console.log(err);
-          this.loading3 = false;
-        }
-      );
-  }
-
-  get idDpto() {
-    return this.form.get('id_departamento');
-  }
-
-  get idMunic() {
-    return this.form.get('id_municipio');
-  }
-
-  get nombreGranja() {
-    return this.form.get('nombre_granja');
-  }
-
-  get descripcion() {
-    return this.form.get('descripcion');
-  }
-
-  get area() {
-    return this.form.get('area');
-  }
-
-  get numeroTrabajadores() {
-    return this.form.get('numero_trabajadores');
-  }
-
-  get prodEstimadaMes() {
-    return this.form.get('produccion_estimada_mes');
-  }
-
-  get direccion() {
-    return this.form.get('direccion');
-  }
-
-  get corregimiento_vereda() {
-    return this.form.get('corregimiento_vereda');
-  }
-
-  get latitud() {
-    return this.form.get('latitud');
-  }
-
-  get longitud() {
-    return this.form.get('longitud');
-  }
-
-  get idVereda() {
-    return this.form.get('id_vereda');
-  }
-
-  get idCorregimiento() {
-    return this.form.get('id_corregimiento');
-  }
-
-  get infraestructuras() {
-    return this.form.get('arrayTiposInfraestructuras') as FormArray;
-  }
-
-  get especies() {
-    return this.form.get('arrayEspecies') as FormArray;
-  }
-  get informacionAdicionalDireccion(){
-return this.form.get('informacion_adicional_direccion');
-  }
 }

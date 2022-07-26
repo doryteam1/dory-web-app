@@ -1,82 +1,83 @@
-.container-row{
-    display: flex;
-    justify-content: stretch;
+.container-row {
+  display: flex;
+  justify-content: stretch;
 }
 
-.container_img{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+.container_img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
 }
 
-.button{
-    width: 200px;
-    align-self: center;
+.button {
+  width: 200px;
+  align-self: center;
 }
 
-.container{
+.container {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
 }
 
-.container__icon1{
-    cursor: pointer;
-    color:var(--morado);
+.container__icon1 {
+  cursor: pointer;
+  color: var(--morado);
 }
 
-.container__icon2{
+.container__icon2 {
   cursor: pointer;
 }
 
-.container__icon3{
+.container__icon3 {
   cursor: pointer;
 }
 
-.container__icon4{
+.container__icon4 {
   cursor: pointer;
-  color:var(--morado)
+  color: var(--morado)
 }
 
-.search-container{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.search-container__box{
-    text-align: center;
+.search-container__box {
+  text-align: center;
 }
 
-.search-container__image{
-    width:1024px;
-    height: 370px;
-}
-
-.search-container__image2{
-  width:396px;
+.search-container__image {
+  width: 1024px;
   height: 370px;
 }
 
-.modal__image{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    display: block;
+.search-container__image2 {
+  width: 396px;
+  height: 370px;
 }
 
-.modal__box{
-    display: flex;
-    flex-direction: column;
+.modal__image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  display: block;
 }
 
-.container__table{
-    width: 1200px;
-      display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+.modal__box {
+  display: flex;
+  flex-direction: column;
 }
+
+.container__table {
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 /* .my-pagination ::ng-deep .ngx-pagination .current {
   background: var(--azul1);
 } */
@@ -87,53 +88,53 @@
 } */
 
 
-.container__input{
-    width: 100%;
+.container__input {
+  width: 100%;
 }
 
-.container__link{
-    margin-right: 10px;
-}
-.container__spinner{
-    width: 20px;
-    height: 20px;
-    color: var(--white);
+.container__link {
+  margin-right: 10px;
 }
 
-.container__btn{
+.container__spinner {
+  width: 20px;
+  height: 20px;
+  color: var(--white);
+}
+
+.container__btn {
   width: 200px;
   height: 38px;
   margin-left: 10px;
   margin-top: 0;
 }
 
-.container__btn--azul{
+.container__btn--azul {
   background-color: var(azul1);
 }
 
 
-.container__btn1{
-    width: 150px;
-    height: 38px;
-    background-color: var(--morado);
+.container__btn1 {
+  width: 150px;
+  height: 38px;
+  background-color: var(--morado);
 }
 
-.container__btn2{
+.container__btn2 {
   width: 200px;
   height: 38px;
 }
 
-.spinner{
-}
+.spinner {}
 
-.container__box{
+.container__box {
   display: flex;
   justify-content: center;
   height: 100%;
   width: 100%;
 }
 
-.modal__image{
+.modal__image {
   width: 200px;
   height: 160px;
   object-fit: cover;
@@ -143,21 +144,22 @@
   position: relative;
 }
 
-.image-box{
-  position:relative;
+.image-box {
+  position: relative;
 }
 
-.modal-body{
+.modal-body {
   width: 100%;
   height: 100%;
 }
 
-.modal-header{
+.modal-header {
   justify-content: center;
 }
-.square{
+
+.square {
   border: 1px solid white;
-  position:absolute;
+  position: absolute;
   right: 10px;
   bottom: 10px;
   width: 25px;
@@ -166,7 +168,7 @@
   background-color: var(--morado);
 }
 
-.square__icon{
+.square__icon {
   color: white;
   font-weight: 700;
   font-size: 30px;
@@ -174,30 +176,32 @@
   right: -3px;
   bottom: -10px;
 }
-.box{
+
+.box {
   display: flex;
   justify-content: center;
 }
 
-.box__title{
+.box__title {
   margin-left: 15px;
 }
 
-.box__button{
+.box__button {
   align-self: center;
 }
 
-.btn-add{
+.btn-add {
   margin-right: 15px;
   margin-top: 10px;
 }
 
-.icon-add{
+.icon-add {
   margin-right: 5px;
 }
+
 /* mi  estilo */
 
-.button_close{
+.button_close {
   margin-left: 60px;
   margin-right: 20px;
 
@@ -215,6 +219,7 @@
   -webkit-box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
   box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
 }
+
 .container__input2 {
   background-size: 20px;
   background-color: var(--white);
@@ -237,6 +242,7 @@
   color: rgb(158, 158, 167);
   cursor: pointer
 }
+
 .img-x {
   font-size: 2em;
   margin-right: 12px;
@@ -245,48 +251,53 @@
   cursor: pointer
 }
 
- .map  {
-      padding: 0px;
-      }
-.alertclass{
-        padding: 0px ;
-        margin-bottom: 0px;
-      }
-  .footerheadermodal{
-    padding: 10px;
-  }
+.map {
+  padding: 0px;
+}
+
+.alertclass {
+  padding: 0px;
+  margin-bottom: 0px;
+}
+
+.footerheadermodal {
+  padding: 10px;
+}
+
 @keyframes n-info-tri {
-                0%,
-                to {
-                  transform: rotate(0deg);
-                  transform-origin: center
-                }
 
-                10%,
-                90% {
-                  transform: rotate(2deg)
-                }
+  0%,
+  to {
+    transform: rotate(0deg);
+    transform-origin: center
+  }
 
-                20%,
-                40%,
-                60% {
-                  transform: rotate(-6deg)
-                }
+  10%,
+  90% {
+    transform: rotate(2deg)
+  }
 
-                30%,
-                50%,
-                70% {
-                  transform: rotate(6deg)
-                }
+  20%,
+  40%,
+  60% {
+    transform: rotate(-6deg)
+  }
 
-                80% {
-                  transform: rotate(-2deg)
-                }
-              }
+  30%,
+  50%,
+  70% {
+    transform: rotate(6deg)
+  }
 
-              .prefix__n-info-tri {
-                animation: n-info-tri .8s cubic-bezier(.455, .03, .515, .955) both infinite
-              }
+  80% {
+    transform: rotate(-2deg)
+  }
+}
+
+.prefix__n-info-tri {
+  animation: n-info-tri .8s cubic-bezier(.455, .03, .515, .955) both infinite
+}
+
 @keyframes loader4 {
   0% {
     -webkit-transform: rotate(0);
@@ -298,12 +309,60 @@
     transform: rotate(360deg)
   }
 }
-.input-wrapper{
+
+.input-wrapper {
   width: 100%;
 }
 
 /* fin mi estilo */
 /* prueba estilo */
+.nav-link--mytabstilo {
+  background-color: var(--gris4) !important;
+  color: var(--azul1) !important;
+}
 
+.nav-link--color {
+  color: var(--gris-oscuro);
+}
 
+/* estilos unirme a una asociacion */
+.card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  border: 0;
+  margin-top: 15px;
+  background-color: #F8F9FA;
+}
 
+.card__image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.card__button {
+  width: 110px;
+  height: 40px;
+}
+
+.list {
+  max-height: 500px;
+  min-height: min-content;
+  padding-right: 10px;
+  background-color: #F8F9FA;
+  box-shadow: 4px 4px 4px rgb(0 0 0 / 10%);
+}
+
+.card__user-info {
+  align-items: center;
+  cursor: pointer;
+}
+.btn--grey {
+  background-color: var(--gris3);
+  border: 1px solid var(--gris3);
+  color: var(--white);
+}

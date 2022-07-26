@@ -1,0 +1,124 @@
+
+<input #fileInputCreate type="file" name="resume" accept="image/*"
+(change)='fileChangeCreate($event)' hidden multiple>
+<!-- header contenido gallery -->
+<div class="modal-header" (click)="shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"
+  *ngIf="!showconteslaider">
+  <div class="box">
+          <h4 class="modal-title box__title" id="modal-basic-title" *ngIf="isPhotoSelectingToDel">
+           Seleccionar fotos</h4>
+          <h4 class="modal-title" id="modal-basic-title" *ngIf="!isPhotoSelectingToDel">Fotos</h4>
+  </div>
+  <!-- <button (click)=" goDown1()"></button> -->
+  <button type="button" *ngIf="!showconteslaider" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+<!-- header slider -->
+<div class="modal-header" *ngIf="showconteslaider">
+  <div class="box">
+    <h4 class="modal-title" id="modal-basic-title">Fotos</h4>
+  </div>
+  <button type="button" *ngIf="showconteslaider" (click)="closeslider()" class="btn-close" aria-label="Close"></button>
+</div>
+<!-- gallery contenido -->
+<div class="modal-body" *ngIf="!showconteslaider">
+  <div class="photos-container-div" (click)="shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"
+    style="position: relative;">
+          <div class="container__box">
+            <div class="spinner spinner-border text-info" role="status" *ngIf="loading2 && ArrayFotos.length==0 || loading1">
+              <span class="sr-only"></span>
+            </div>
+            <div class="search-container" *ngIf="showNotFoundPhotos && ArrayFotos.length==0 && !loading2 && !loading1">
+              <div class="search-container__box">
+                <img class="search-container__image2" src="assets/images/undraw_a_day_off_re_hedl.svg">
+                <h3>Parece que no hay fotos para mostrar</h3>
+                <p>Puedes agregar algunas con el botón "Adicionar fotos"</p>
+              </div>
+            </div>
+          </div>
+    <div class="image-box"  *ngFor="let photo of ArrayFotos; let i=index" #myItemLists>
+
+      <img
+        class="photo-container-gallery animate__bounceIn" alt="image"
+        [ngClass]="{'box-shadow-efect':  shadoweffectindice==i ||   valorindicecarrucel==i || imgselecmodal==i}"
+        [src]="photo" ngxLongPress2
+        [maxTime]="1000"
+        (onLongPress)="onLongPress()"
+        (onReleasePressing)="onReleasePressing()"
+        (click)="imgSelecionadaModal(i,photo)">
+        <div class="square" *ngIf="isPhotoSelectingToDel" (click)="addPhotoToDel(photo,i)">
+        <i class="square__icon bi bi-check fa-3x" *ngIf="isPhotoIncludeToDelete(photo)"></i>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- slaider contenido -->
+<div class="modal-body modalbody" *ngIf="showconteslaider && !isPhotoSelectingToDel">
+  <app-carrucel-img [imagenes]="ArrayFotos" [imgselecmodal]="imgselecmodal"
+    (valueResponseIndiceActualSlider)="selcCarruselImg($event)"
+    (eventClickOnPreviousOrNew)="eventClickOnPreviousOrNewSlider()"
+    (eventValueResponseClickFotoMiniSlider)="eventValueResponseClickFotoMiniSlider($event)" [valorrows]="valorrows"
+    [valorcolumns]='valorcolumns' [indicatorsphoto]="indicatorsphotos">
+  </app-carrucel-img>
+</div>
+<div class="modal-footer" *ngIf="!showconteslaider && veryadicionar">
+  <button [disabled]="loading2" type="button" class="btn btn-success container__btn2"
+    *ngIf="ArrayFotos.length> 0 && !isPhotoSelectingToDel" (click)="clickDelate()">
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff">
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+      </svg>
+      <span>Eliminar fotos</span>
+    </div>
+  </button>
+  <button type="button" class="btn btn-danger container__btn3" (click)="photosDeleteCreate()"
+    *ngIf="isPhotoSelectingToDel && photosArrayUrlToDel.length > 0">
+    <div>
+      <svg *ngIf="!loading3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"
+          fill="black" />
+        <path
+          d="M15.8889 9H8.11111C7.49444 9 7 9.5 7 10.1111V17.8889C7 18.5 7.49444 19 8.11111 19H15.8889C16.5056 19 17 18.5 17 17.8889V10.1111C17 9.5 16.5056 9 15.8889 9ZM10.8889 16.7778L8.11111 14L8.89444 13.2167L10.8889 15.2056L15.1056 10.9889L15.8889 11.7778L10.8889 16.7778Z"
+          fill="white" />
+      </svg>
+      <span *ngIf="!loading3">Eliminar ({{photosArrayUrlToDel.length}}) fotos</span>
+      <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading3"></div>
+    </div>
+  </button>
+  <button type="button" class="btn btn-success container__btn2" (click)="seleccionarTodo()"
+    *ngIf=" photosArrayUrlToDel.length > 0 && ArrayFotos.length > 0 || isPhotoSelectingToDel && ArrayFotos.length > 0">
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff">
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path
+          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+      </svg>
+      <span>Seleccionar todo</span>
+    </div>
+  </button>
+  <button type="button" class="btn btn-secondary container__btn1" (click)="abortDeleting()"
+    *ngIf=" photosArrayUrlToDel.length > 0 && ArrayFotos.length > 0 || cancelarseleccionphoto && ArrayFotos.length > 0">
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff">
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path
+          d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" />
+      </svg>
+      <span>Cancelar</span>
+    </div>
+  </button>
+  <button [disabled]="loading2" type="button" class="btn btn-secondary container__btn1"
+    (click)="openAddFileDialogCreate()" *ngIf="!isPhotoSelectingToDel  || ArrayFotos.length == 0">
+    <div>
+      <svg *ngIf="!loading2" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+        viewBox="0 0 24 24" width="24px" fill="#fff">
+        <rect fill="none" height="24" width="24" />
+        <path
+          d="M3,4V1h2v3h3v2H5v3H3V6H0V4H3z M6,10V7h3V4h7l1.83,2H21c1.1,0,2,0.9,2,2v12c0,1.1-0.9,2-2,2H5c-1.1,0-2-0.9-2-2V10H6z M13,19c2.76,0,5-2.24,5-5s-2.24-5-5-5s-5,2.24-5,5S10.24,19,13,19z M9.8,14c0,1.77,1.43,3.2,3.2,3.2s3.2-1.43,3.2-3.2 s-1.43-3.2-3.2-3.2S9.8,12.23,9.8,14z" />
+      </svg>
+      <span *ngIf="!loading2">Adicionar fotos</span>
+      <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading2"></div>
+    </div>
+  </button>
+</div>
+

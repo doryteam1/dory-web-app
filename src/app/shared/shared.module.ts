@@ -42,7 +42,9 @@ import { ModalAlertActualizadoComponent } from './components/modal-alert-actuali
 import { CardPescadorComponent } from './components/card-pescador/card-pescador.component';
 import { CardPiscicultorComponent } from './components/card-piscicultor/card-piscicultor.component';
 import { SearchBuscadorService } from './services/search-buscador.service';
-
+import { ModalGallerySliderVerYElimanarFotosComponent } from './components/modal-gallery-slider-ver-y-elimanar-fotos/modal-gallery-slider-ver-y-elimanar-fotos.component';
+import { NgxLongPress2Module } from 'ngx-long-press2';
+import { ModalCheckboxListComponent } from './components/modal-checkbox-list/modal-checkbox-list.component';
 
 
 
@@ -74,6 +76,8 @@ import { SearchBuscadorService } from './services/search-buscador.service';
     ModalAlertActualizadoComponent,
     CardPescadorComponent,
     CardPiscicultorComponent,
+    ModalGallerySliderVerYElimanarFotosComponent,
+    ModalCheckboxListComponent,
   ],
   imports: [
     CommonModule,
@@ -85,6 +89,7 @@ import { SearchBuscadorService } from './services/search-buscador.service';
     ShareButtonsModule,
     ShareIconsModule,
     GoogleMapsModule,
+    NgxLongPress2Module,
   ],
   exports: [
     NavbarComponent,
@@ -109,6 +114,8 @@ import { SearchBuscadorService } from './services/search-buscador.service';
     ModalAlertActualizadoComponent,
     CardPescadorComponent,
     CardPiscicultorComponent,
+    ModalGallerySliderVerYElimanarFotosComponent,
+    ModalCheckboxListComponent,
     /*  CardphotoGoogleMapComponent, */
   ],
   providers: [

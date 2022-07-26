@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MisProductosComponent } from './components/mis-productos/mis-productos.component';
-import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MisVehiculosComponent } from './components/mis-vehiculos/mis-vehiculos.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxLongPress2Module } from 'ngx-long-press2';
@@ -20,6 +20,8 @@ import { MisNegociosComponent } from './components/mis-negocios/mis-negocios.com
 import { MisAsociacionesComponent } from './components/mis-asociaciones/mis-asociaciones.component';
 import { RouterModule } from '@angular/router';
 import { AsociacionDetalleFormComponent } from './components/asociacion-detalle-form/asociacion-detalle-form.component';
+import { GranjaDetalleFormComponent } from './components/granja-detalle-form/granja-detalle-form.component';
+import { AuthInterceptor } from '../interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { AsociacionDetalleFormComponent } from './components/asociacion-detalle-
     MisNegociosComponent,
     MisAsociacionesComponent,
     AsociacionDetalleFormComponent,
+    GranjaDetalleFormComponent,
   ],
   imports: [
     CommonModule,
@@ -48,7 +51,7 @@ import { AsociacionDetalleFormComponent } from './components/asociacion-detalle-
     NgbModule,
     NgxLongPress2Module,
     NgxPaginationModule,
-    RouterModule
+    RouterModule,
   ],
 })
 export class DashboardModule {}

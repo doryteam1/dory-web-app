@@ -45,8 +45,10 @@ export class SearchBuscadorService {
       }
     });
     this._arraydatasearch = newArray;
+
   }
   filterArray(arraydata: any[], filtroSelecData: any, modoFiltro: string) {
+    /* ordena arrayas de mayor a menor , pasandole una referencia un valor numerico */
     let arraydatanew = arraydata.slice();
     if (modoFiltro == 'number_ordenarmayoramenor') {
       let filterarraydata = arraydatanew.sort((a, b) => {
@@ -66,12 +68,29 @@ export class SearchBuscadorService {
       });
       this._arraydatafilter = filterarraydata;
     } else if (modoFiltro == 'string_filtrodatosvarios') {
-      let query = filtroSelecData.datoafiltrar.toLowerCase();
-      let newArray = arraydatanew.filter((dataarray) => {
-        let dataanalisis = dataarray[filtroSelecData.nombrecampoDB]?.toLowerCase();
-        return dataanalisis?.includes(query);
-      });
-      this._arraydatafilter = newArray;
+      /* filtra  segun el campo requerido, pasarle un string */
+      if (filtroSelecData.nombrecampoDB=="" || filtroSelecData.datoafiltrar == '') {
+         this._arraydatafilter = arraydatanew;
+      }else{
+        let query = filtroSelecData.datoafiltrar.toLowerCase();
+        let newArray = arraydatanew.filter((dataarray) => {
+          let dataanalisis =
+            dataarray[filtroSelecData.nombrecampoDB]?.toLowerCase();
+          return dataanalisis?.includes(query);
+        });
+        this._arraydatafilter = newArray;
+        // /*  let query = filtroSelecData.datoafiltrar.toLowerCase(); */
+        // let query: any[] = ['Sincelejo', 'Corozal'];
+        // for (let index = 0; index < query.length; index++) {
+        //   const element = query[index].toLowerCase();
+        //   let newArray = arraydatanew.filter((dataarray) => {
+        //     let dataanalisis = dataarray.municipio?.toLowerCase();
+        //     return dataanalisis?.includes(element);
+        //   });
+        //   this._arraydatafilter = this._arraydatafilter.concat(newArray);
+        //   console.log(this._arraydatafilter);
+        // }
+      }
     }
   }
 }

@@ -9,15 +9,15 @@
     <div style="left: 0px; right: inherit;" [ngStyle]="{'left.px': widthExp,'position': posicionsliderleft}">
       <img type="button" data-bs-target="#carouselExampleCaptions"
         *ngFor="let item of imagenes ; let i = index; let isFirst = first"
-        src="{{ item ? item : 'https://admin.moodyyc.com/img/no-image.png'}}" [attr.data-bs-slide-to]="i "
+        [src]=" item ? item : 'https://admin.moodyyc.com/img/no-image.png'" [attr.data-bs-slide-to]="i "
         [ngClass]="{'active':imgselecmodal==i}" class="imgminislider" aria-current="true" aria-label="Slide"
         (click)="clickImgIndiceIndicadorSlide(i)">
     </div>
   </div>
   <div class="carousel-inner  imagenes-carrucel">
     <div class="carousel-item" *ngFor="let img of imagenes; let index = index; let isFirst = first"
-      [ngClass]="{active: imgselecmodal==index}">
-      <img  class="imgitem" src="{{ img? img: 'https://admin.moodyyc.com/img/no-image.png'}}">
+    [ngClass]="{active: imgselecmodal==index}">
+    <img  class="imgitem" [src]="img? img: 'https://admin.moodyyc.com/img/no-image.png'">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev"
@@ -51,7 +51,7 @@
   <div class="carousel-inner  imagenes-carrucel">
     <div class="carousel-item" *ngFor="let img of imagenes;let index = index; let isFirst = first"
       [ngClass]="{active: isFirst }" (click)="clickImagenItemSlider()" >
-      <img [ngClass]="{ img1item: imagenes.length==1,imgitem:imagenes.length>1 }"
+      <img [ngClass]="{ img1item: imagenes.length==1,img2item:imagenes.length>1 }"
         src="{{ img? img: 'https://admin.moodyyc.com/img/no-image.png'}}">
     </div>
     <button class="carousel-control-prev" type="button" [attr.data-bs-target]="idnumeral" data-bs-slide="prev"

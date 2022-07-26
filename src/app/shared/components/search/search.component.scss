@@ -65,7 +65,12 @@
         display: flex;
         gap: 5px;
         padding-right: 5px;
+        cursor: default;
       }
+            .buscador-container__search-filtros {
+              display: flex;
+              gap: 10px;
+            }
     }
     .alert-mi-estilo-filtro{
     margin-bottom: 0;

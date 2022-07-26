@@ -66,20 +66,27 @@ export class GranjasMunicipioComponent implements OnInit {
   modoFiltro: any[] = ['number_ordenarmayoramenor', 'string_filtrodatosvarios'];
   filtros: any[] = [
     {
-      data: [
+      nombre_boton_filtro: [
         {
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Calificación',
-          datoafiltrar: 'puntuacion',
-        },
-        {
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Área',
-          datoafiltrar: 'area',
+          name: 'Filtrar Granjas',
+          checkbox: false,
+          data: [
+            {
+              nombrecampoDB: 'tipo_asociacion',
+              nombrefiltro: 'Calificación',
+              datoafiltrar: 'puntuacion',
+            },
+            {
+              nombrecampoDB: 'tipo_asociacion',
+              nombrefiltro: 'Área',
+              datoafiltrar: 'area',
+            },
+          ],
         },
       ],
     },
   ];
+
   buscardatospor = [{ data1: 'nombre' }, { data2: 'descripcion' }];
   constructor(
     httpClient: HttpClient,

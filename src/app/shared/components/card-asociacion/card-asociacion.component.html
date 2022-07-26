@@ -1,15 +1,5 @@
 
-<div class="card">
-<!--     <div class="card__meta">
-      <div class="card__meta-photo">
-         <img class="card__meta-photo-img" src="assets/images/pdf_camara_comercio.svg">
-      </div>
-      <div class="card__meta-details" >
-        <div class="card__meta-detais-info">
-            <a [href]="asociacion?.foto_camarac" target="_blank"><img class="card__meta-detais-info-img" src="assets/icons/download-pdf-10136 1.svg"></a>
-        </div>
-     </div>
-    </div> -->
+<div class="card" [ngClass]="{ 'second': !delatecard}">
     <div class="card__description">
       <div class="card__description-header">
         <div class="d-flex flex-direction-row">
@@ -59,7 +49,7 @@
               <a *ngIf="asociacion?.propietario">{{asociacion?.propietario}}</a>
               <a  *ngIf="!asociacion?.propietario">Representante legal indefinido</a>
             </div>
-          </div>  
+          </div>
         </div>
       </div>
       <div class="card__description-footer" (click)="detalle(asociacion)">

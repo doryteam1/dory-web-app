@@ -8,12 +8,13 @@ import {
   ViewChildren
 } from '@angular/core';
 import { ElementRef } from '@angular/core';
+import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 @Component({
   selector: 'app-modal-gallery-slider',
   templateUrl: './modal-gallery-slider.component.html',
   styleUrls: ['./modal-gallery-slider.component.scss'],
 })
-export class ModalGallerySliderComponent  {
+export class ModalGallerySliderComponent {
   @ViewChildren('myItemLists') items!: QueryList<ElementRef>;
   @Input() shadoweffectindice!: number;
   @Input() imgselecmodal!: number;
@@ -21,6 +22,7 @@ export class ModalGallerySliderComponent  {
   @Input() showconteslaider!: boolean;
   @Input() granja: any;
   @Input() fotosgranja: any = [];
+  @Input() veryagregarfotos: boolean = false;
   showNotFound: boolean = false;
   showError: boolean = false;
   selectedGranjaId: number = -1;
@@ -33,6 +35,7 @@ export class ModalGallerySliderComponent  {
   /* @Output() indicatorsphotos: boolean = true; */
   constructor(
     private _modalService: NgbActiveModal,
+    private storage: FirebaseStorageService
   ) {}
 
   public decline() {
@@ -62,7 +65,6 @@ export class ModalGallerySliderComponent  {
     setTimeout(() => {
       localStorage.removeItem('index');
     }, 11);
-
   }
 
   selcCarruselImg(idx: number) {
@@ -80,12 +82,13 @@ export class ModalGallerySliderComponent  {
     }
   }
   inView(index: number) {
-      let valor = this.items.get(index);
+    let valor = this.items.get(index);
     valor?.nativeElement.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
       inline: 'start',
     });
   }
+
 }
 

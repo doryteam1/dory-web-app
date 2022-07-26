@@ -11,12 +11,13 @@ import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { Router } from '@angular/router';
+import { PlacesService } from 'src/app/services/places.service';
 const _ = require('lodash');
 
 @Component({
   selector: 'app-mis-asociaciones',
   templateUrl: './mis-asociaciones.component.html',
-  styleUrls: ['./mis-asociaciones.component.scss']
+  styleUrls: ['./mis-asociaciones.component.scss'],
 })
 export class MisAsociacionesComponent implements OnInit {
   @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
@@ -33,11 +34,10 @@ export class MisAsociacionesComponent implements OnInit {
   borrarseart: boolean = false;
   valorbuscarx: string = '';
   p!: number;
-  tempDir:string = '';
-  tempMunicId:number = -1;
+  tempDir: string = '';
+  tempMunicId: number = -1;
   firstTimeOpenModal = true;
-  
-  
+
   productImagePath: string = '';
   itemUpdateIndex: number = -1;
   modalMode: string = 'create';
@@ -74,17 +74,70 @@ export class MisAsociacionesComponent implements OnInit {
   showNotFoundPhotos: boolean = false;
   timeLapsed1: number = 0;
   tiposAsociaciones: Array<any> = [];
-  
-  showDetalleAsociacion:boolean = false;
-  selectedTab:string = 'representante';
+
+  showDetalleAsociacion: boolean = false;
+  selectedTab: string = 'representante';
   asociacionesIsMiembro: any;
   showNotFoundAsocMiemb: boolean = false;
+  activeclass1: boolean = true;
+  activeclass2: boolean = false;
+  activeclass3: boolean = false;
+  asociacionesexistentes!: any[];
+  showNotFoundAsocexistente: boolean = false;
+  /* varibles de buscqueda y filtros */
+
+  modoFiltro: any[] = ['number_ordenarmayoramenor', 'string_filtrodatosvarios'];
+  filtros: any[] = [
+    {
+      nombre_boton_filtro: [
+        {
+          name: 'Municipios',
+          checkbox: true,
+          data: [],
+        },
+        {
+          name: 'Tipo de asociación',
+          checkbox: false,
+          data: [
+            {
+              nombrecampoDB: 'tipo_asociacion',
+              nombrefiltro: 'Piscicultores',
+              datoafiltrar: 'Piscicultores',
+            },
+            {
+              nombrecampoDB: 'tipo_asociacion',
+              nombrefiltro: 'Pescadores',
+              datoafiltrar: 'Pescadores',
+            },
+            {
+              nombrecampoDB: 'tipo_asociacion',
+              nombrefiltro: 'Mixta',
+              datoafiltrar: 'Mixta',
+            },
+            {
+              nombrecampoDB: '',
+              nombrefiltro: 'Ver todas',
+              datoafiltrar: '',
+            },
+          ],
+        },
+      ],
+    },
+  ];
+  buscardatospor = [
+    { data1: 'nombre' },
+    { data2: 'propietario' },
+    { data3: 'nit' },
+    { data4: 'municipio' },
+  ];
+  asociasionesexistentesarray!: any[];
 
   constructor(
     private asociacionesService: AsociacionesService,
     private appModalService: AppModalService,
     httpClient: HttpClient,
-    private router:Router
+    private router: Router,
+    private places: PlacesService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -98,7 +151,7 @@ export class MisAsociacionesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    registerLocaleData( es );
+    registerLocaleData(es);
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
@@ -106,7 +159,7 @@ export class MisAsociacionesComponent implements OnInit {
     this.asociacionesService.getAsociacionesUsuario(this.authUserId).subscribe(
       (response) => {
         this.asociaciones = response.data;
-        console.log("Asociaciones representante ",this.asociaciones)
+        console.log('Asociaciones representante ', this.asociaciones);
         if (this.asociaciones.length < 1) {
           this.showNotFound = true;
         }
@@ -117,60 +170,31 @@ export class MisAsociacionesComponent implements OnInit {
     );
 
     /*Asociaciones en donde se en miembro*/
-    this.asociacionesService.getAsociacionesIsMiembroUser(this.authUserId).subscribe(
-      (response)=>{
-        this.asociacionesIsMiembro =  response.data;
-        console.log("Asociaciones de un miembro ",this.asociacionesIsMiembro)
+    this.asociacionesService
+      .getAsociacionesIsMiembroUser(this.authUserId)
+      .subscribe((response) => {
+        this.asociacionesIsMiembro = response.data;
+        console.log('Asociaciones de un miembro ', this.asociacionesIsMiembro);
         if (this.asociacionesIsMiembro.length < 1) {
           this.showNotFoundAsocMiemb = true;
         }
+      });
+    /*Todas las asociaones que existen*/
+    this.asociacionesService.getAsociacionesTodas().subscribe((response) => {
+      this.asociacionesexistentes = response.data;
+      this.asociasionesexistentesarray = response.data;
+      console.log('Asociaciones existentes', this.asociacionesexistentes);
+      if (this.asociacionesexistentes.length < 1) {
+        this.showNotFoundAsocexistente = true;
+      } else {
+        this.showNotFoundAsocexistente = false;
       }
-    )
-    
+    });
+    /* municipios sucre */
+    this.loadMunic();
   }
 
-
-
-  /*openModal(content: any, action: string, asociacion?: any) {
-    this.modalMode = action;
-    this.form.reset();
-    console.log(asociacion)
-    this.initForm();
-    if (action == 'update') {
-      this.idDpto?.setValue(asociacion.id_departamento);
-      this.idMunic?.setValue(asociacion.id_municipio);
-      this.nit?.setValue(asociacion.nit);
-      this.direccion?.setValue(asociacion.direccion);
-      this.infoAdicionalDir?.setValue(asociacion.informacion_adicional_direccion);
-      this.nombre?.setValue(asociacion.nombre);
-      this.isLegalConstituida?.setValue(asociacion.legalconstituida);
-      this.fechRenvCamc?.setValue(asociacion.fecha_renovacion_camarac);
-      this.fotoCamc?.setValue(asociacion.foto_camarac);
-      this.idTipoAsoc?.setValue(asociacion.id_tipo_asociacion_fk);
-      this.corregVereda?.setValue(asociacion.corregimiento_vereda);
-      this.direccion?.setValue(asociacion.direccion);
-      this.infoAdicionalDir?.setValue(asociacion.informacion_adicional_direccion);
-      this.itemUpdateIndex = this.asociaciones.findIndex((element)=>element.id_negocio == asociacion.id_negocio);
-      this.tempDir = this.direccion?.value;
-      this.tempMunicId = this.idMunic?.value;
-    }
-    this.modalService
-      .open(content)
-      .result.then((result) => {
-        console.log('se cerro modal ', result);
-        this.firstTimeOpenModal = true;
-      })
-      .catch((err) => {89
-        this.file = null;
-        this.productImagePath = '';
-        console.log(err);
-        this.firstTimeOpenModal = true;
-      });
-      this.firstTimeOpenModal = false;
-  }*/
-
-
-  delete(asociacion:any) {
+  delete(asociacion: any) {
     this.appModalService
       .confirm(
         'Eliminar asociación',
@@ -183,7 +207,9 @@ export class MisAsociacionesComponent implements OnInit {
         if (result == true) {
           this.asociacionesService.delete(asociacion.nit).subscribe(
             (response: any) => {
-              let index = this.asociaciones.findIndex((element)=> element.nit == asociacion.nit)
+              let index = this.asociaciones.findIndex(
+                (element) => element.nit == asociacion.nit
+              );
               this.asociaciones.splice(index, 1);
             },
             (err) => {
@@ -195,20 +221,64 @@ export class MisAsociacionesComponent implements OnInit {
       .catch((result) => {});
   }
 
-  create(){
+  create() {
     let object = {
-      action:'create',
-      formState:'enable',
-    }
-
-    this.router.navigate(['/dashboard/asociacion/detalle',object])
+      action: 'create',
+      formState: 'enable',
+    };
+    this.router.navigate(['/dashboard/asociacion/detalle', object]);
   }
-
-  navigate(event:any,formState:string){
-    console.log('formState ',formState)
-    let object:any = {...event};
-    object.action = 'update',
-    object.formState = this.selectedTab == 'representante' ? 'enable' : 'disable',
-    this.router.navigate(['/dashboard/asociacion/detalle',object])
+  activeTabClick(selectedTab: string) {
+    if (selectedTab == 'representante') {
+      this.selectedTab = selectedTab;
+      this.activeclass1 = true;
+      this.activeclass2 = false;
+      this.activeclass3 = false;
+      console.log(this.selectedTab);
+    } else if (selectedTab == 'miembro') {
+      this.selectedTab = selectedTab;
+      this.activeclass1 = false;
+      this.activeclass2 = true;
+      this.activeclass3 = false;
+      console.log(this.selectedTab);
+    } else if (selectedTab == 'Unirme_a_una_asociacion') {
+      this.selectedTab = selectedTab;
+      this.activeclass1 = false;
+      this.activeclass2 = false;
+      this.activeclass3 = true;
+      console.log(this.selectedTab);
+    }
+  }
+  navigate(event: any, formState: string) {
+    console.log('formState ', formState);
+    let object: any = { ...event };
+    (object.action = 'update'),
+      (object.formState =
+        this.selectedTab == 'representante' ? 'enable' : 'disable'),
+      this.router.navigate(['/dashboard/asociacion/detalle', object]);
+  }
+  goAssociationDetail(asociacion: any) {
+    this.router.navigateByUrl(
+      '/asociaciones/municipio/detalle/' + asociacion.nit
+    );
+  }
+  /* funciones de busqueda granjas */
+  buscarData(data: any[]) {
+    this.asociacionesexistentes = data;
+  }
+  filtradoData(datafilter: any[]) {
+    this.asociacionesexistentes = datafilter;
+  }
+  loadMunic() {
+    this.places.getMunicipiosDepartamentos(70).subscribe(
+      (response) => {
+        this.municipios = response.data;
+        console.log(this.municipios);
+        this.filtros[0].nombre_boton_filtro[0].data=this.municipios
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
