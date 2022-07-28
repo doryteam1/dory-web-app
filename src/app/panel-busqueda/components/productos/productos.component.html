@@ -3,7 +3,9 @@
 </div>
 <div class="container">
   <div class="card" *ngFor="let producto of productosFiltered">
-    <img class="card__img card-img-top" src="{{producto.imagen ? producto.imagen : 'http://bppl.kkp.go.id/uploads/publikasi/karya_tulis_ilmiah/default.jpg'}}" alt="Card image cap">
+    <div class="card__img-box">
+      <img class="card__img card-img-top" src="{{producto.imagen ? producto.imagen : 'http://bppl.kkp.go.id/uploads/publikasi/karya_tulis_ilmiah/default.jpg'}}" alt="Card image cap">
+    </div>
     <div class="card-body">
       <h5 class="card__title card-title">${{producto.precio | number:'':'es'}}</h5>
       <h5 class="card__sub-title card-title">{{producto.nombre_producto}}</h5>

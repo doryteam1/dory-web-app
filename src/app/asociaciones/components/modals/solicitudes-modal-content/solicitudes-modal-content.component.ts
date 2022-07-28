@@ -107,24 +107,20 @@ export class SolicitudesModalContentComponent implements OnInit {
   }
 
   onSearch(text:string){
-    if(this.selectedTab == 'piscicultores'){
-      console.log("piscicultores ",text)
-      if(text == ''){
-        this.piscicultoresFiltered = this.piscicultores;
-      }else{
-        this.piscicultoresFiltered = this.piscicultores.filter((element)=>{
-          return element.nombres.toLocaleLowerCase().includes(text.toLocaleLowerCase());
-        })
-      }
+    if(text == ''){
+      this.piscicultoresFiltered = this.piscicultores;
     }else{
-      console.log("pescadores ",text)
-      if(text == ''){
-        this.pescadoresFiltered = this.piscicultores;
-      }else{
-        this.pescadoresFiltered = this.pescadores.filter((element)=>{
-          return element.nombres.toLowerCase().includes(text.toLocaleLowerCase());
-        })
-      }
+      this.piscicultoresFiltered = this.piscicultores.filter((element)=>{
+        return element.nombres.toLocaleLowerCase().includes(text.toLocaleLowerCase());
+      })
+    }
+
+    if(text == ''){
+      this.pescadoresFiltered = this.pescadores;
+    }else{
+      this.pescadoresFiltered = this.pescadores.filter((element)=>{
+        return element.nombres.toLowerCase().includes(text.toLocaleLowerCase());
+      })
     }
   }
 

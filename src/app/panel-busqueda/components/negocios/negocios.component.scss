@@ -20,7 +20,7 @@
   height: 333px;
   object-fit: cover;
   align-self: center;
-  border-radius: 8px;
+  border-radius: 15px;
 }
 
 .card__title{
@@ -38,4 +38,11 @@
 .card__description{
   font-size: 14px;
   margin-top: 4px;
+}
+
+.img2item {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
 }

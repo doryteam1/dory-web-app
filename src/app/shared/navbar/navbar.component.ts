@@ -56,7 +56,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
       }
     )
     
-    this.test()
+    //this.test()
   }
 
   test(){
@@ -77,7 +77,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
     const notifies = document.querySelector('.notify__menu')!;
     
     const ro = new ResizeObserver((entries, observer) => {
-      if(this.notifiesHeigth < 650){
+      if(this.notifiesHeigth < 356){
         this.notifiesHeigth = entries[0].contentRect.height;
       }
       this.resizedObserver = observer; 

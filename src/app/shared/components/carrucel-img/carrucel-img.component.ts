@@ -20,6 +20,7 @@ export class CarrucelImgComponent implements OnInit {
   @Input() valorrows!: number;
   @Input() valorcolumns!: number;
   @Input() idtarge!: number;
+  @Input() rounded:boolean = false;
   id!: string;
   idnumeral!: string;
   divrows!: string;

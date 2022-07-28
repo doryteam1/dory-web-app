@@ -8,6 +8,7 @@ import { formatDate, Location } from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { TipoAsocValidator } from '../../validators/tipo-asociacion.validator';
 
 @Component({
   selector: 'app-asociacion-detalle-form',
@@ -21,6 +22,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
   asociacion:any;
   file: any = null;
   error:string = '';
+  previousValue:number = 0;
   form: FormGroup = new FormGroup({
     nit: new FormControl('',[Validators.required]),
     direccion: new FormControl('', [Validators.required]),
@@ -55,6 +57,9 @@ export class AsociacionDetalleFormComponent implements OnInit {
     this.loadDptos();
     this.loadTiposAsociaciones();
     this.onChangeLegalConst();
+    this.idTipoAsoc?.valueChanges.subscribe((value)=>{
+      
+    })
   }
 
   updateAsociacion() {
