@@ -1,59 +1,13 @@
 <div class="container" *ngIf="!buscadorpersonalizado">
-    <input class="container__input" placeholder="Buscar..." [(ngModel)]="text" (ngModelChange)="onChange()" (keyup.enter)="onEnterPress()">
+  <input class="container__input" placeholder="Buscar..." [(ngModel)]="text" (ngModelChange)="onChange()"
+    (keyup.enter)="onEnterPress()">
 </div>
 <div *ngIf="buscadorpersonalizado" class="buscador-container">
   <div class="buscador-containe__div-search">
     <div class="buscador-containe__search">
+      <!-- buscador -->
       <input class="buscador-containe__search-input" placeholder={{placeholderbuscador}} (keyup)="search()" #txtBuscar>
-      <div *ngIf="fitroactivo" class="buscador-container__search-filtros">
-        <div
-             class="dropdown buscador-container__filter"
-             *ngFor="let nombrebotonfiltro of filtros[0].nombre_boton_filtro,let i =index"
-             (click)="ClicFiltroButton(nombrebotonfiltro.checkbox,nombrebotonfiltro.data)">
-              <!-- solo cuando  nombrebotonfiltro.checkbox es false-->
-             <div class="btn btn-secondary dropdown-toggle buscador-container-option-div"
-               type="button"
-                id="nombrebotonfiltro.name"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-               *ngIf="fitroactivo && !nombrebotonfiltro.checkbox">
-              <span>
-                <img src="assets/icons/filter_alt_black_24dp.svg">
-              </span>
-              {{nombrebotonfiltro.name}}
-          </div>
-            <!-- solo cuando  nombrebotonfiltro.checkbox es false-->
-            <ul class="dropdown-menu" [attr.aria-labelledby]="nombrebotonfiltro.name"
-              *ngIf="fitroactivo && !nombrebotonfiltro.checkbox">
-              <li>
-                <div *ngFor="let filtroSelecData of nombrebotonfiltro.data; let i =index" class="dropdown-menu-div-li">
-                  <a class="dropdown-item" (click)="filterSeleccionado(i,filtroSelecData )">{{filtroSelecData.nombrefiltro}}
-                  </a>
-                  <img src="assets/icons/check_black_24dp.svg" *ngIf="i==indicefiltroselec">
-                </div>
-              </li>
-            </ul>
-            <!-- solo cuando  nombrebotonfiltro.checkbox es true-->
-            <div class="btn btn-secondary dropdown-toggle buscador-container-option-div"
-               type="button"
-                id="nombrebotonfiltro.name"
-               *ngIf="fitroactivo && nombrebotonfiltro.checkbox">
-              <span>
-                <img src="assets/icons/filter_alt_black_24dp.svg">
-              </span>
-              {{nombrebotonfiltro.name}}
-            </div>
-        </div>
-      </div>
-    </div>
-   <div  *ngIf="sinresultados" class="alert alert-primary d-flex align-items-center"
-   [ngClass]="{'alert-mi-estilo': !fitroactivo, 'alert-mi-estilo-filtro': fitroactivo}"
-   role="alert">
-    <img src="assets/icons/searchanimado.svg">
-     <div>
-            No se encontraron resultados para <strong> "{{valorpulsado}}" </strong>
     </div>
   </div>
-</div>
 
 </div>

@@ -1,0 +1,30 @@
+
+  .buscador-container__filter {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    border-radius: 20px;
+    width: max-content;
+    .buscador-container-option-div {
+      background-color: transparent;
+      color: #6c757d;
+    }
+    .buscador-container-option-div:hover {
+      background-color: var(--azul4);
+    }
+    .dropdown-menu-div-li {
+      display: flex;
+      gap: 5px;
+      padding-right: 5px;
+      cursor: default;
+    }
+  }
+ .buscador-container-option-div2 {
+   background-color: var(--white);
+   width: max-content;
+   color: #6c757d;
+ }
+ .filtroactivo{
+fill: var(--azul1);
+ }
+

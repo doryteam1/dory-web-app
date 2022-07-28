@@ -1,18 +1,22 @@
 <div class="container container--myestilo">
-  <div class="buscador-container" *ngIf="!showNotFound">
-    <app-search
-       [buscadorpersonalizado]="true"
-       [placeholderbuscador]="'Buscar asociacion..'"
-      [dataarrayabuscar]="asociasionessarray "
-      [buscarpor]="buscardatospor"
-       (keyEnterPressData)="buscarData($event)"
-       [fitroactivo]="true"
-       [filtros]="filtros"
-       [namefilterbutton]="'Tipo de asociación'"
-       [modoFiltro]="modoFiltro[1]"
-       (onFilterSeleccionado)="filtradoData($event)"
-      >
-    </app-search>
+  <div class="buscadoryfiltro" *ngIf="!showNotFound">
+    <div class="buscador-container" *ngIf="!showNotFound">
+      <app-search
+         [buscadorpersonalizado]="true"
+         [placeholderbuscador]="'Buscar asociacion..'"
+         (keyEnterPressData)=" onBuscarPalabra($event)"
+        >
+      </app-search>
+          <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)">
+          </app-filtro>
+    </div>
+    <div *ngIf="asociaciones.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo"
+      role="alert">
+      <img src="assets/icons/searchanimado.svg">
+      <div>
+        No se encontraron resultados
+      </div>
+    </div>
   </div>
   <div class="search-container" *ngIf="showNotFound">
     <div class="search-container__box">

@@ -1,100 +1,80 @@
 <div>
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <a [ngClass]="{'active nav-link--mytabstilo': activeclass1}"
-       class="nav-link nav-link--color"
-       id="home-tab" data-bs-toggle="tab"
-       data-bs-target="#home-tab-pane"
-        type="button" role="tab"
-         aria-controls="home-tab-pane"
-         aria-selected="true"
-         (click)="activeTabClick('representante')">Donde soy representante</a>
+      <a [ngClass]="{'active nav-link--mytabstilo': activeclass1}" class="nav-link nav-link--color" id="home-tab"
+        data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
+        aria-selected="true" (click)="activeTabClick('representante')">Donde soy representante</a>
     </li>
     <li class="nav-item" role="presentation">
-      <a  [ngClass]="{'active nav-link--mytabstilo': activeclass2}"
-       class="nav-link nav-link--color" id="profile-tab"
-      data-bs-toggle="tab"
-      data-bs-target="#profile-tab-pane"
-      type="button"
-       role="tab"
-        aria-controls="profile-tab-pane"
-        aria-selected="false"
-        (click)="activeTabClick('miembro')">Donde soy miembro</a>
+      <a [ngClass]="{'active nav-link--mytabstilo': activeclass2}" class="nav-link nav-link--color" id="profile-tab"
+        data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab"
+        aria-controls="profile-tab-pane" aria-selected="false" (click)="activeTabClick('miembro')">Donde soy miembro</a>
     </li>
     <li class="nav-item" role="presentation">
-      <a  [ngClass]="{'active nav-link--mytabstilo': activeclass3}"
-       class="nav-link nav-link--color" id="profile-tab"
-      data-bs-toggle="tab"
-      data-bs-target="#Unirme_a_una_asociacion"
-      type="button"
-       role="tab"
-        aria-controls="profile-tab-pane"
-        aria-selected="false"
+      <a [ngClass]="{'active nav-link--mytabstilo': activeclass3}" class="nav-link nav-link--color" id="profile-tab"
+        data-bs-toggle="tab" data-bs-target="#Unirme_a_una_asociacion" type="button" role="tab"
+        aria-controls="profile-tab-pane" aria-selected="false"
         (click)="activeTabClick('Unirme_a_una_asociacion')">Unirme a una asociación</a>
     </li>
   </ul>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-      <div class="row row-cols-2" >
-        <app-card-asociacion class="col"
-        *ngFor="let asociacion of asociaciones"
-        [asociacion]="asociacion"
-        [delatecard]="true"
-        [showRepLegal]="false"
-        (onDetalle)="navigate($event,'enable')"
-        (onDelete)="delete($event)">
+      <div class="row row-cols-2">
+        <app-card-asociacion class="col" *ngFor="let asociacion of asociaciones" [asociacion]="asociacion"
+          [delatecard]="true" [showRepLegal]="false" (onDetalle)="navigate($event,'enable')"
+          (onDelete)="delete($event)">
         </app-card-asociacion>
       </div>
       <div class="search-container" *ngIf="showNotFound">
         <div class="search-container__box">
-            <img class="search-container__image" src="assets/images/searching.svg">
-            <h3>No se han encontrado resultados</h3>
-            <p>Aun no has registrado tus asociaciones</p>
+          <img class="search-container__image" src="assets/images/searching.svg">
+          <h3>No se han encontrado resultados</h3>
+          <p>Aun no has registrado tus asociaciones</p>
         </div>
       </div>
     </div>
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-      <div class="row row-cols-2" >
-        <app-card-asociacion class="col"
-        *ngFor="let asociacion of asociacionesIsMiembro"
-        [asociacion]="asociacion"
-        [delatecard]="false"
-        (onDetalle)="navigate($event,'disable')"
-        (onDelete)="delete($event)">
+      <div class="row row-cols-2">
+        <app-card-asociacion class="col" *ngFor="let asociacion of asociacionesIsMiembro" [asociacion]="asociacion"
+          [delatecard]="false" (onDetalle)="navigate($event,'disable')" (onDelete)="delete($event)">
         </app-card-asociacion>
       </div>
       <div class="search-container" *ngIf="showNotFoundAsocMiemb">
         <div class="search-container__box">
-            <img class="search-container__image" src="assets/images/searching.svg">
-            <h3>No se han encontrado resultados</h3>
-            <p>Aún no perteneces a una asociación</p>
+          <img class="search-container__image" src="assets/images/searching.svg">
+          <h3>No se han encontrado resultados</h3>
+          <p>Aún no perteneces a una asociación</p>
         </div>
       </div>
     </div>
     <div class="tab-pane fade" id="Unirme_a_una_asociacion" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-      <div class="buscador-container" *ngIf="!showNotFound">
-         <app-search
-   [buscadorpersonalizado]="true"
-   [placeholderbuscador]="'Buscar asociacion..'"
-  [dataarrayabuscar]="asociasionesexistentesarray"
-  [buscarpor]="buscardatospor"
-   (keyEnterPressData)="buscarData($event)"
-   [fitroactivo]="true"
-   [filtros]="filtros"
-   [namefilterbutton]="'Tipo de asociación'"
-   [modoFiltro]="modoFiltro[1]"
-   (onFilterSeleccionado)="filtradoData($event)"
-  >
-     </app-search>
-    </div>
-                  <div class="list overflow-auto d-flex flex-column">
-                    <div class="card" *ngFor="let asociacion of  asociacionesexistentes">
-                      <div class="card__user-info d-flex flex-row" (click)="goAssociationDetail(asociacion)">
-                        <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
-                        <span class="card__title">{{asociacion.nombre}}</span>
-                      </div>
-                      <button class="card__button btn-square btn--grey" >Unirme</button>
-                     <!--     <button class="card__button btn-square btn--grey" (click)="invitarAnular(pescador)"
+      <div class="buscadoryfiltro" *ngIf="!showNotFound">
+        <div class="buscador-container" >
+          <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar asociacion..'"
+            (keyEnterPressData)="onBuscarPalabra($event)">
+          </app-search>
+          <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)">
+          </app-filtro>
+          <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
+            (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)">
+          </app-filtro>
+        </div>
+        <div *ngIf="asociacionesexistentes?.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo"
+               role="alert">
+              <img src="assets/icons/searchanimado.svg">
+              <div>
+                No se encontraron resultados
+              </div>
+         </div>
+      </div>
+      <div class="list overflow-auto d-flex flex-column">
+        <div class="card" *ngFor="let asociacion of  asociacionesexistentes">
+          <div class="card__user-info d-flex flex-row" (click)="goAssociationDetail(asociacion)">
+            <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
+            <span class="card__title">{{asociacion.nombre}}</span>
+          </div>
+          <button class="card__button btn-square btn--grey">Unirme</button>
+          <!--     <button class="card__button btn-square btn--grey" (click)="invitarAnular(pescador)"
                         *ngIf="pescador.estado_solicitud == 'Enviada' && pescador.solicitud_enviada_por == 'asociacion'">Anular</button>
                       <button class="card__button btn-square btn--blue" (click)="invitarAnular(pescador)"
                         *ngIf="pescador.estado_solicitud == 'Enviada' && pescador.solicitud_enviada_por == 'usuario'">Confirmar</button>
@@ -107,9 +87,9 @@
                           <li (click)="invitarAnular(pescador)"><a class="dropdown-item"><i class="bi bi-trash3"></i> Eliminar</a></li>
                         </ul>
                       </div> -->
-                    </div>
-                  </div>
- <!--        <app-card-asociacion class="col"
+        </div>
+      </div>
+      <!--        <app-card-asociacion class="col"
         *ngFor="let asociacion of  asociacionesexistentes"
         [asociacion]="asociacion"
         [delatecard]="false"
@@ -119,12 +99,13 @@
 
       <div class="search-container" *ngIf="showNotFoundAsocexistente">
         <div class="search-container__box">
-            <img class="search-container__image" src="assets/images/searching.svg">
-            <h3>No se han encontrado resultados</h3>
-            <p>Aún no perteneces a una asociación</p>
+          <img class="search-container__image" src="assets/images/searching.svg">
+          <h3>No se han encontrado resultados</h3>
+          <p>Aún no perteneces a una asociación</p>
         </div>
       </div>
     </div>
   </div>
 </div>
-<app-basic-floating-btn [agregar]="true" (click)="create()" *ngIf="selectedTab == 'representante'"></app-basic-floating-btn>
+<app-basic-floating-btn [agregar]="true" (click)="create()" *ngIf="selectedTab == 'representante'">
+</app-basic-floating-btn>

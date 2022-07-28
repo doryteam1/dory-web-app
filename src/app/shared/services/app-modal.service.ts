@@ -144,14 +144,18 @@ export class AppModalService {
   }
   public modalCheckboxListComponent(
     arrayCheckbox: any[],
+    arrayCheckboxSelec:any[],
     titleModal:string
     ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalCheckboxListComponent, {
       size: 'md',
       centered: true,
       scrollable: true,
+      backdrop: 'static',
+      keyboard: false,
     });
     modalRef.componentInstance.arrayCheckbox = arrayCheckbox;
+    modalRef.componentInstance.arrayCheckboxSelec = arrayCheckboxSelec;
     modalRef.componentInstance.titleModal = titleModal;
     return modalRef.dismissed.toPromise();
   }

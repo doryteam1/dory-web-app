@@ -1,95 +1,95 @@
 <div>
   <div class="data-container">
-      <div class="container">
-          <img class="container__icon" src="assets/icons/build.svg">
-          <div class="container__info">
-              <h3 class="container__title container__title--color-blue">Municipio</h3>
-              <span class="container__description">{{municipio}}</span>
-          </div>
+    <div class="container">
+      <img class="container__icon" src="assets/icons/build.svg">
+      <div class="container__info">
+        <h3 class="container__title container__title--color-blue">Municipio</h3>
+        <span class="container__description">{{municipio}}</span>
       </div>
+    </div>
 
-      <div class="container">
-          <img class="container__icon" src="assets/icons/group-circle-solid.svg">
-          <div class="container__info">
-              <h3 class="container__title container__title--color-morado">Población</h3>
-              <span class="container__description">{{poblacion | number:'':'es'}}</span>
-          </div>
+    <div class="container">
+      <img class="container__icon" src="assets/icons/group-circle-solid.svg">
+      <div class="container__info">
+        <h3 class="container__title container__title--color-morado">Población</h3>
+        <span class="container__description">{{poblacion | number:'':'es'}}</span>
       </div>
+    </div>
 
-      <div class="container">
-          <img class="container__icon" src="assets/icons/fish.svg">
-          <div class="container__info">
-              <h3 class="container__title container__title--color-blue-2"># granjas</h3>
-              <span class="container__description">{{granjas.length}}</span>
-          </div>
+    <div class="container">
+      <img class="container__icon" src="assets/icons/fish.svg">
+      <div class="container__info">
+        <h3 class="container__title container__title--color-blue-2"># granjas</h3>
+        <span class="container__description">{{granjas.length}}</span>
       </div>
+    </div>
   </div>
-  <div class="buscador-container" *ngIf="!singranjas">
-    <app-search
-     [buscadorpersonalizado]="true"
-     [placeholderbuscador]="'Buscar granjas...'"
-     [dataarrayabuscar]="granjasarray"
-     [buscarpor]="buscardatospor"
-     (keyEnterPressData)="buscarData($event)"
-     [fitroactivo]="true"
-     [filtros]="filtros"
-    [modoFiltro]="modoFiltro[0]"
-     (onFilterSeleccionado)="filtradoData($event)"
-     ></app-search>
+  <div class="buscadoryfiltro" *ngIf="!singranjas">
+    <div class="buscador-container">
+      <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar granjas...'"
+        (keyEnterPressData)="onBuscarPalabra($event)">
+      </app-search>
+      <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)">
+      </app-filtro>
+    </div>
+    <div *ngIf="granjas.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
+      <img src="assets/icons/searchanimado.svg">
+      <div>
+        No se encontraron resultados
+      </div>
+    </div>
   </div>
   <div class="search-container" *ngIf="singranjas">
-      <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/searching.svg">
-          <h3>No se han encontrado resultados</h3>
-          <p>No encontramos granjas en este municipio </p>
-      </div>
+    <div class="search-container__box">
+      <img class="search-container__image" src="assets/images/searching.svg">
+      <h3>No se han encontrado resultados</h3>
+      <p>No encontramos granjas en este municipio </p>
+    </div>
   </div>
   <div>
     <div class="container-map-car">
       <div class="row-map-cart">
         <div *ngIf="granjas.length >= 1">
-          <div class="blog-card" *ngFor="let granja of granjas ; let i =index"
-          (mouseover)="onMouseCard(i)"
-           (mouseout)="eliminInfoWindow()">
+          <div class="blog-card" *ngFor="let granja of granjas ; let i =index" (mouseover)="onMouseCard(i)"
+            (mouseout)="eliminInfoWindow()">
             <div class="meta">
               <div class="photo">
-              <app-carrucel-img class="card__image"
-                [imagenes]="granjas[i].fotos"
-                [indicatorsphoto]=" indicatorsphotos"
-                [idtarge]="i"
-                (eventValueResponseClickFotoMiniSlider)="navigate(granja.id_granja)"
-                (eventValueResponseClickDivIndicadorSlider)="navigate(granja.id_granja)"
-                (eventValueResponseclickImagenItemSlider)="navigate(granja.id_granja)">
-              </app-carrucel-img>
+                <app-carrucel-img class="card__image" [imagenes]="granjas[i].fotos"
+                  [indicatorsphoto]=" indicatorsphotos" [idtarge]="i"
+                  (eventValueResponseClickFotoMiniSlider)="navigate(granja.id_granja)"
+                  (eventValueResponseClickDivIndicadorSlider)="navigate(granja.id_granja)"
+                  (eventValueResponseclickImagenItemSlider)="navigate(granja.id_granja)">
+                </app-carrucel-img>
               </div>
             </div>
             <div class="description">
               <div class="description_title_fauvourite">
-                      <div>
-                        <h1 class="description_title_fauvourite--h1" (click)="navigate(granja.id_granja)">{{granja.nombre | shorter:15}}</h1>
-                      </div>
+                <div>
+                  <h1 class="description_title_fauvourite--h1" (click)="navigate(granja.id_granja)">{{granja.nombre |
+                    shorter:15}}</h1>
+                </div>
                 <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita"
                   (click)="changeFavorite(i)">
                 <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita"
                   (click)="changeFavorite(i)">
               </div>
               <div class="mas_description_info" (click)="navigate(granja.id_granja)">
-                  <p class="estilo-p-card" (click)="navigate(granja.id_granja)"> {{granja.descripcion | shorter:100}}</p>
+                <p class="estilo-p-card" (click)="navigate(granja.id_granja)"> {{granja.descripcion | shorter:100}}</p>
               </div>
               <div class="card__rating-container">
                 <div class="card__rating-container_info">
-                  <div ><span class="card__rating">Área: </span>{{granja?.area}} m²</div>
-                  <div  class="card__rating-container_puntos"(click)="showResenas(granja?.id_granja)">
-<!--                     <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
+                  <div><span class="card__rating">Área: </span>{{granja?.area}} m²</div>
+                  <div class="card__rating-container_puntos" (click)="showResenas(granja?.id_granja)">
+                    <!--                     <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
                       (granja.puntuacion |
                       number:'1.1-1') : '0'}}</span> -->
                     <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
                   </div>
                   <div class="card__rating__detail" (click)="showResenas(granja?.id_granja)">
                     <span class="card__rating">Reseñas:</span> {{granja.count_resenas}}
-                    </div>
+                  </div>
                 </div>
-                <p class="read-more"(click)="navigate(granja.id_granja)"><a>Ver detalles</a></p>
+                <p class="read-more" (click)="navigate(granja.id_granja)"><a>Ver detalles</a></p>
               </div>
             </div>
           </div>
@@ -102,31 +102,30 @@
               <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo  ; let i =index"
                 [position]="markerInfo.markerPosition" [options]="markerOptions"
                 icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"
-                (mapMouseover)="openInfoWindow(marker,i)"
-                (mapMouseout)="eliminInfoWindow()">
+                (mapMouseover)="openInfoWindow(marker,i)" (mapMouseout)="eliminInfoWindow()">
               </map-marker>
               <map-polyline [path]="vertices" [options]="optionPoli"></map-polyline>
               <map-info-window [position]="markerPosition" *ngIf="mapaOn">
                 <div class="myestilo-map-info-window">
-    <div class="details_info_windo">
-      <div class="detais-name-propietario_info_windo ">
-        <div> <img src="assets/icons/person_black.svg"></div>
-        <div>{{selectedGranja.propietario.nombre | titlecase }}</div>
-      </div>
-      <div class="details-area-nombre-granja_info_windo ">
-        <div><img src="assets/icons/set_meal_black_24dp.svg"></div>
-        <div> {{selectedGranja.nombregranja | titlecase}}</div>
-      </div>
-      <div class="details-area-granja_info_windo ">
-        <div><img src="assets/icons/areaterreno_black.svg"></div>
-        <div>{{selectedGranja.area | number:'':'es'}} m²</div>
-      </div>
-      <div class="details-area-direccion_info_windo ">
-        <div><img src="assets/icons/location_on_black_24dp.svg"></div>
-        <div *ngIf="!selectedGranja.dirreciongranja">Dirección indefinida</div>
-        <div *ngIf="selectedGranja.dirreciongranja">{{selectedGranja.dirreciongranja}}</div>
-      </div>
-    </div>
+                  <div class="details_info_windo">
+                    <div class="detais-name-propietario_info_windo ">
+                      <div> <img src="assets/icons/person_black.svg"></div>
+                      <div>{{selectedGranja.propietario.nombre | titlecase }}</div>
+                    </div>
+                    <div class="details-area-nombre-granja_info_windo ">
+                      <div><img src="assets/icons/set_meal_black_24dp.svg"></div>
+                      <div> {{selectedGranja.nombregranja | titlecase}}</div>
+                    </div>
+                    <div class="details-area-granja_info_windo ">
+                      <div><img src="assets/icons/areaterreno_black.svg"></div>
+                      <div>{{selectedGranja.area | number:'':'es'}} m²</div>
+                    </div>
+                    <div class="details-area-direccion_info_windo ">
+                      <div><img src="assets/icons/location_on_black_24dp.svg"></div>
+                      <div *ngIf="!selectedGranja.dirreciongranja">Dirección indefinida</div>
+                      <div *ngIf="selectedGranja.dirreciongranja">{{selectedGranja.dirreciongranja}}</div>
+                    </div>
+                  </div>
                 </div>
               </map-info-window>
             </google-map>
@@ -142,4 +141,3 @@
     <app-floating-btn-auto-up></app-floating-btn-auto-up>
   </div>
 </div>
-

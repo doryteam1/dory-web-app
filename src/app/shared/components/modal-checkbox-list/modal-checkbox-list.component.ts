@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { Component,Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -10,52 +9,51 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ModalCheckboxListComponent implements OnInit {
   @Input() titleModal: string = '';
   @Input() arrayCheckbox: any[] = [];
-  checkArray:any[]= []
-  constructor(private _modalService: NgbActiveModal) {}
+  @Input() arrayCheckboxSelec: any[] = []
+  checkArray: any[] = [];
+  constructor(
+    private _modalService: NgbActiveModal,
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.arrayCheckboxSelec.length !==0) {
+      this.checkArray = this.checkArray.concat(this.arrayCheckboxSelec);
+      console.log(this.checkArray)
+    }
+  }
+  onCheckboxChange(e: any) {
+    if (e.target.checked) {
+      this.checkArray.push(e.target.value);
+    } else {
+      let i: number = 0;
+      this.checkArray.forEach((item, i: number) => {
+        if (item == e.target.value) {
+          this.checkArray.splice(i, 1);
+          return;
+        }
+        i++;
+      });
+    }
+  }
+
+  isChecked(value: string) {
+    let checked: boolean = false;
+    this.arrayCheckboxSelec.forEach(
+      (item) => {
+        if (item == value) {
+          checked = true;
+        }
+      }
+    );
+    return checked;
+  }
   public decline() {
     this._modalService.close(false);
   }
   public accept() {
     this._modalService.close(true);
   }
-  public dismiss() {
-    this._modalService.dismiss();
-  }
-  onCheckboxChange(e: any, controlName: string) {
-    console.log(e)
-    if (e.target.checked) {
-     this. checkArray.push(e.target.value);
-      console.log(this.checkArray)
-    } else {
-         let i: number = 0;
-         this.checkArray.forEach(
-           (
-             item,
-             i: number,
-           ) => {
-             if (item == e.target.value) {
-               this.checkArray.splice(i,1);
-               return;
-             }
-             i++;
-            }
-            );
-            console.log(this.checkArray)
-    }
-  }
-
-  isChecked(controlName: string, value: number) {
-/*     let checked: boolean = false;
-    const checkArray: FormArray = this.form.get(controlName) as FormArray;
-    checkArray.controls.forEach(
-      (item: AbstractControl, i: number, controls: Array<AbstractControl>) => {
-        if (item.value == value) {
-          checked = true;
-        }
-      }
-    );
-    return checked; */
+  public dismiss(value:string) {
+   this._modalService.dismiss(this.checkArray);
   }
 }

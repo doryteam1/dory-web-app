@@ -11,6 +11,8 @@ import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { vertices } from '../../../global/constants';
+import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
+import { BuscarPor } from 'src/models/buscarPor.model';
 
 @Component({
   selector: 'app-piscicultores-municipio',
@@ -52,27 +54,13 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   showNotFound: boolean = false;
   piscicultoresarray: any[] = [];
   piscicultores: any[] = [];
-/*   filtros: any[] = [
-    {
-      data: [
-        {
-          nombrefiltro: 'Calificación',
-          datoafiltrar: 'puntuacion',
-        },
-        {
-          nombrefiltro: 'Área',
-          datoafiltrar: 'area',
-        },
-      ],
-    },
-  ]; */
-  buscardatospor = [{ data1: 'nombre' }];
   constructor(
     httpClient: HttpClient,
     private activatedRoute: ActivatedRoute,
     private piscicultoresService: PiscicultoresService,
     private placesService: PlacesService,
-    private router: Router
+    private router: Router,
+    private searchBuscadorService: SearchBuscadorService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -195,12 +183,18 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     this.mapaOn = true;
   }
   /* funciones de busqueda granjas */
-  buscarData(data: any[]) {
-    this.piscicultores = data;
-    this.extractLatLong();
-  }
-  filtradoData(datafilter: any[]) {
-    this.piscicultores = datafilter;
-    this.extractLatLong();
+  buscarData(texto: string):any {
+    if (texto.trim().length === 0) {
+      this.piscicultores = this.piscicultoresarray;
+       this.extractLatLong();
+    }else{
+      let buscardatospor: BuscarPor[]= [{ data1: 'nombre' }];
+      this.piscicultores = this.searchBuscadorService.buscarData(
+        this.piscicultoresarray,
+        texto,
+        buscardatospor
+      );
+      this.extractLatLong();
+    }
   }
 }
