@@ -6,13 +6,18 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map,finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { vertices } from '../../../global/constants';
+import { MODOFILTRO2, vertices } from '../../../global/constants';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { Router } from '@angular/router';
 import { PlacesService } from 'src/app/services/places.service';
+import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
+import { Filtro, MetaFiltro } from '../../../../models/filtro.model';
+import { Checkbox } from 'src/models/checkbox.model';
+import { BuscarPor } from '../../../../models/buscarPor.model';
 const _ = require('lodash');
+
 
 @Component({
   selector: 'app-mis-asociaciones',
@@ -85,59 +90,60 @@ export class MisAsociacionesComponent implements OnInit {
   asociacionesexistentes!: any[];
   showNotFoundAsocexistente: boolean = false;
   /* varibles de buscqueda y filtros */
-
-  modoFiltro: any[] = ['number_ordenarmayoramenor', 'string_filtrodatosvarios'];
-  filtros: any[] = [
+  filtro: Filtro[] = [
     {
-      nombre_boton_filtro: [
+      nameButton: 'Tipo de asociación',
+      data: [
         {
-          name: 'Municipios',
-          checkbox: true,
-          data: [],
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Piscicultores',
+          datoafiltrar: 'Piscicultores',
+          modoFiltro: MODOFILTRO2,
         },
         {
-          name: 'Tipo de asociación',
-          checkbox: false,
-          data: [
-            {
-              nombrecampoDB: 'tipo_asociacion',
-              nombrefiltro: 'Piscicultores',
-              datoafiltrar: 'Piscicultores',
-            },
-            {
-              nombrecampoDB: 'tipo_asociacion',
-              nombrefiltro: 'Pescadores',
-              datoafiltrar: 'Pescadores',
-            },
-            {
-              nombrecampoDB: 'tipo_asociacion',
-              nombrefiltro: 'Mixta',
-              datoafiltrar: 'Mixta',
-            },
-            {
-              nombrecampoDB: '',
-              nombrefiltro: 'Ver todas',
-              datoafiltrar: '',
-            },
-          ],
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Pescadores',
+          datoafiltrar: 'Pescadores',
+          modoFiltro: MODOFILTRO2,
+        },
+        {
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Mixta',
+          datoafiltrar: 'Mixta',
+          modoFiltro: MODOFILTRO2,
+        },
+        {
+          nombrecampoDB: null,
+          nombrefiltro: 'Ver todas',
+          datoafiltrar: null,
+          modoFiltro: MODOFILTRO2,
         },
       ],
+      /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
     },
   ];
-  buscardatospor = [
-    { data1: 'nombre' },
-    { data2: 'propietario' },
-    { data3: 'nit' },
-    { data4: 'municipio' },
+  checkbox: Checkbox[] = [
+    {
+      nameButton: 'Municipios',
+      nombrecampoDB: 'municipio',
+      modoFiltro: MODOFILTRO2,
+      titulomodal: 'Municipios de sucre',
+    },
+    /* modoFiltro: 'number_ordenarmayoramenor', */
   ];
   asociasionesexistentesarray!: any[];
+  arrayFilter: any[] = [];
+  palabra: string = '';
+  filtroseleccionado!: MetaFiltro;
+  filtroseleccionadoCheckbox: string[] = [];
 
   constructor(
     private asociacionesService: AsociacionesService,
     private appModalService: AppModalService,
     httpClient: HttpClient,
     private router: Router,
-    private places: PlacesService
+    private places: PlacesService,
+    private searchBuscadorService: SearchBuscadorService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -234,19 +240,16 @@ export class MisAsociacionesComponent implements OnInit {
       this.activeclass1 = true;
       this.activeclass2 = false;
       this.activeclass3 = false;
-      console.log(this.selectedTab);
     } else if (selectedTab == 'miembro') {
       this.selectedTab = selectedTab;
       this.activeclass1 = false;
       this.activeclass2 = true;
       this.activeclass3 = false;
-      console.log(this.selectedTab);
     } else if (selectedTab == 'Unirme_a_una_asociacion') {
       this.selectedTab = selectedTab;
       this.activeclass1 = false;
       this.activeclass2 = false;
       this.activeclass3 = true;
-      console.log(this.selectedTab);
     }
   }
   navigate(event: any, formState: string) {
@@ -258,27 +261,90 @@ export class MisAsociacionesComponent implements OnInit {
       this.router.navigate(['/dashboard/asociacion/detalle', object]);
   }
   goAssociationDetail(asociacion: any) {
-    this.router.navigateByUrl(
-      '/asociaciones/municipio/detalle/' + asociacion.nit
+    let url = this.router.serializeUrl(
+      this.router.createUrlTree([
+        `/asociaciones/municipio/detalle/${asociacion.nit}`,
+      ])
     );
+    window.open(url, '_blank');
   }
-  /* funciones de busqueda granjas */
-  buscarData(data: any[]) {
-    this.asociacionesexistentes = data;
-  }
-  filtradoData(datafilter: any[]) {
-    this.asociacionesexistentes = datafilter;
-  }
-  loadMunic() {
+
+  loadMunic(): any[] {
     this.places.getMunicipiosDepartamentos(70).subscribe(
       (response) => {
         this.municipios = response.data;
-        console.log(this.municipios);
-        this.filtros[0].nombre_boton_filtro[0].data=this.municipios
       },
       (err) => {
         console.log(err);
       }
     );
+    return this.municipios;
+  }
+  /* funciones de busqueda granjas */
+
+  buscarData(texto: string): any {
+    let asociacionesresult: any[];
+    if (texto.trim().length === 0) {
+      asociacionesresult = this.asociasionesexistentesarray;
+    } else {
+      let buscardatospor:BuscarPor[]= [{ data1: 'nombre' }, { data3: 'nit' }];
+      asociacionesresult = this.searchBuscadorService.buscarData(
+        this.asociasionesexistentesarray,
+        texto,
+        buscardatospor
+      );
+    }
+
+    return asociacionesresult;
+  }
+  onBuscarPalabra(palabra: string) {
+    this.palabra = palabra;
+    console.log('palabra', this.palabra);
+    this.reseteoDeBusqueda();
+  }
+
+  filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
+    let filtroresult: any[] = [];
+    filtroresult = this.searchBuscadorService.filterSeleccionadoList(
+      arrayafiltar,
+      filtroSelecOptionData
+    );
+    return filtroresult;
+  }
+  onFiltroChange(filtro: MetaFiltro) {
+    this.filtroseleccionado = filtro;
+    this.reseteoDeBusqueda();
+  }
+  filtradoDataCheckbox(arrayCheckboxSelec: any[], arrayafiltrar: any[]) {
+    let filtroresult: any[] = [];
+    let filtroSelecOptionData: Checkbox[] = this.checkbox;
+    filtroresult = this.searchBuscadorService.filterCheckbox(
+      arrayafiltrar,
+      arrayCheckboxSelec,
+      filtroSelecOptionData
+    );
+    return filtroresult;
+  }
+  onFiltroChangeCheckbox(checkboxs: string[]) {
+    this.filtroseleccionadoCheckbox = checkboxs;
+    this.reseteoDeBusqueda();
+  }
+  reseteoDeBusqueda() {
+    let resultados: any[] = this.buscarData(this.palabra);
+    if (this.filtroseleccionado) {
+      resultados = this.filtradoData(this.filtroseleccionado, resultados);
+    }
+    if (
+      this.filtroseleccionadoCheckbox &&
+      this.filtroseleccionadoCheckbox.length > 0
+    ) {
+      resultados = this.filtradoDataCheckbox(
+        this.filtroseleccionadoCheckbox,
+        resultados
+      );
+      console.log(this.filtroseleccionadoCheckbox);
+    }
+    console.log(resultados);
+    this.asociacionesexistentes = resultados;
   }
 }

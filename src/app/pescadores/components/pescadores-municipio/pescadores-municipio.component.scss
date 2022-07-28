@@ -132,3 +132,28 @@ div.container-map-car>div>div:nth-child(1) {
     transform: scale(.9)
   }
 }
+.buscadoryfiltro {
+  display: flex;
+  flex-direction: column;
+
+  .buscador-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .alert-mi-estilo-filtro {
+    margin-bottom: 0;
+    width: 79%;
+    background-color: var(--azul4);
+    color: black;
+  }
+
+  .alert-mi-estilo {
+    margin-bottom: 0;
+    width: 100%;
+    background-color: var(--azul4);
+    color: black;
+  }
+}

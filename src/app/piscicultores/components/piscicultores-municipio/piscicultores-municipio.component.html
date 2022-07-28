@@ -21,15 +21,21 @@
         </div>
     </div>
 </div>
-<div class="buscador-container" *ngIf="!showNotFound">
-  <app-search
-     [buscadorpersonalizado]="true"
-     [placeholderbuscador]="'Buscar piscicultor...'"
-    [dataarrayabuscar]="piscicultoresarray"
-     [buscarpor]="buscardatospor"
-     (keyEnterPressData)="buscarData($event)"
-    [fitroactivo]="false">
-  </app-search>
+<div class="buscadoryfiltro" *ngIf="!showNotFound">
+  <div class="buscador-container" >
+    <app-search
+       [buscadorpersonalizado]="true"
+       [placeholderbuscador]="'Buscar piscicultor...'"
+       (keyEnterPressData)="buscarData($event)">
+    </app-search>
+  </div>
+    <div *ngIf="piscicultores.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo"
+      role="alert">
+      <img src="assets/icons/searchanimado.svg">
+      <div>
+        No se encontraron resultados
+      </div>
+    </div>
 </div>
 <div class="search-container" *ngIf="showNotFound">
   <div class="search-container__box">

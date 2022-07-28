@@ -194,28 +194,68 @@
   width: 20px;
   height: 20px;
 }
-.Photos-mini{
-    display: flex;
-      height: 50px;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 10px;
-      .Photos-mini__img{
-              height: 100%;
-              border-radius: 10%;
-              cursor: pointer;
-      }
-      .masimagenescontador {
-        color: #fff;
-        font-size: 1.50em;
-        background-color: rgba(0, 0, 0, 0.40);
-          height: 100%;
-          .Photos-mini__img {
-              height: 100%;
-              border-radius: 10%;
-              cursor: pointer;
-            }
-      }
-}
+.Photos-mini {
+  display: flex;
+  height: 50px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
 
+  .Photos-mini--div {
+    width: 80px;
+    height: 100%;
+
+    .Photos-mini__img {
+      border-radius: 10%;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+  }
+
+  .masimagenescontador {
+    position: relative;
+    color: #fff;
+    font-size: 1.50em;
+    width: 80px;
+    height: 100%;
+
+    .Photos-mini__img {
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 100%;
+      border-radius: 10%;
+
+    }
+
+    div {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      transition: left 0.2s;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 10px;
+      width: 100%;
+      font-size: 0.9rem;
+      border-radius: 10%;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p{
+        margin: 0;
+      }
+    }
+  }
+}

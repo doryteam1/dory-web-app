@@ -1,18 +1,18 @@
 <div class="modal-header">
   <h4 class="modal-title">{{titleModal}}</h4>
-  <div type="button" class="btn-close" (click)="dismiss()"></div>
+  <div type="button" class="btn-close" (click)="decline()"></div>
 </div>
 <div class="modal-body">
 <div class="row row-cols-2">
   <div *ngFor="let item of arrayCheckbox">
     <label>
-      <input type="checkbox"  [value] ="item.nombre" (change)="onCheckboxChange($event,'arrayCheckbox')"
-        [checked]="isChecked('arrayCheckbox',item.nombre)" />
+      <input type="checkbox"  [value] ="item.nombre" (change)="onCheckboxChange($event)"
+        [checked]="isChecked(item.nombre)" />
         {{item.nombre}}
     </label>
   </div>
 </div>
 </div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-light btn--mybtn" (click)="dismiss()">Aplicar Filtro</button>
+<div class="modal-footer" *ngIf="checkArray.length >0">
+  <button type="button" class="btn btn-light btn--mybtn" (click)="dismiss('filtroacepta')">Aplicar Filtro</button>
 </div>

@@ -11,6 +11,8 @@ import es from '@angular/common/locales/es';
 import { Router } from '@angular/router';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { vertices } from '../../../global/constants';
+import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
+import { BuscarPor } from 'src/models/buscarPor.model';
 
 @Component({
   selector: 'app-pescadores-municipio',
@@ -52,7 +54,7 @@ export class PescadoresMunicipioComponent implements OnInit {
   showNotFound: boolean = false;
   pescadoresarray: any[] = [];
   pescadores: any[] = [];
- /*  filtros: any[] = [
+  /*  filtros: any[] = [
     {
       data: [
         {
@@ -66,13 +68,14 @@ export class PescadoresMunicipioComponent implements OnInit {
       ],
     },
   ]; */
-  buscardatospor = [{ data1: 'nombre' },{ data2: 'celular' }];
+
   constructor(
     httpClient: HttpClient,
     private activatedRoute: ActivatedRoute,
     private pescadoresService: PescadoresService,
     private placesService: PlacesService,
-    private router: Router
+    private router: Router,
+    private searchBuscadorService: SearchBuscadorService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -146,8 +149,8 @@ export class PescadoresMunicipioComponent implements OnInit {
   }
 
   extractLatLong() {
-        this.markerPositions = [];
-        this.markersInfo = [];
+    this.markerPositions = [];
+    this.markersInfo = [];
     this.pescadores.forEach((pescador: any) => {
       let markerPosition: google.maps.LatLngLiteral = {
         lat: Number(pescador.latitud),
@@ -192,12 +195,18 @@ export class PescadoresMunicipioComponent implements OnInit {
     this.router.navigateByUrl('/pescadores/municipio/detalle/' + pescador.id);
   }
   /* funciones de busqueda granjas */
-  buscarData(data: any[]) {
-    this.pescadores = data;
-    this.extractLatLong();
-  }
-  filtradoData(datafilter: any[]) {
-    this.pescadores = datafilter;
-    this.extractLatLong();
+
+  buscarData(texto: string): any {
+    if (texto.trim().length === 0) {
+       this.pescadores=this.pescadoresarray;
+    }else{
+      let buscardatospor: BuscarPor[]= [{ data1: 'nombre' }, { data2: 'celular' }];
+     this.pescadores = this.searchBuscadorService.buscarData(
+       this.pescadoresarray,
+       texto,
+       buscardatospor
+     );
+      this.extractLatLong();
+    }
   }
 }

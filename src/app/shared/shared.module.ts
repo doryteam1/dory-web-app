@@ -45,6 +45,7 @@ import { SearchBuscadorService } from './services/search-buscador.service';
 import { ModalGallerySliderVerYElimanarFotosComponent } from './components/modal-gallery-slider-ver-y-elimanar-fotos/modal-gallery-slider-ver-y-elimanar-fotos.component';
 import { NgxLongPress2Module } from 'ngx-long-press2';
 import { ModalCheckboxListComponent } from './components/modal-checkbox-list/modal-checkbox-list.component';
+import { FiltrosComponent } from './components/filtros/filtros.component';
 
 
 
@@ -78,6 +79,7 @@ import { ModalCheckboxListComponent } from './components/modal-checkbox-list/mod
     CardPiscicultorComponent,
     ModalGallerySliderVerYElimanarFotosComponent,
     ModalCheckboxListComponent,
+    FiltrosComponent,
   ],
   imports: [
     CommonModule,
@@ -116,6 +118,7 @@ import { ModalCheckboxListComponent } from './components/modal-checkbox-list/mod
     CardPiscicultorComponent,
     ModalGallerySliderVerYElimanarFotosComponent,
     ModalCheckboxListComponent,
+    FiltrosComponent,
     /*  CardphotoGoogleMapComponent, */
   ],
   providers: [

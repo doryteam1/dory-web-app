@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AsociacionesService } from '../../services/asociaciones.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
+import { BuscarPor } from '../../../../models/buscarPor.model';
+import { Filtro, MetaFiltro } from 'src/models/filtro.model';
+import { MODOFILTRO2 } from 'src/app/global/constants';
+import { filter } from 'rxjs/internal/operators/filter';
 @Component({
   selector: 'app-asociaciones-municipio',
   templateUrl: './asociaciones-municipio.component.html',
@@ -12,50 +17,44 @@ export class AsociacionesMunicipioComponent implements OnInit {
   legalrepresentanteasociacion: any;
   asociaciones: any[] = [];
   asociasionessarray: any[] = [];
-  modoFiltro: any[] = ['number_ordenarmayoramenor', 'string_filtrodatosvarios'];
-
-  filtros: any[] = [
+  filtro: Filtro[] = [
     {
-      nombre_boton_filtro: [
+      nameButton: 'Tipo de asociación',
+      data: [
         {
-          name: 'Tipo de asociación',
-          checkbox: false,
-          data: [
-            {
-              nombrecampoDB: 'tipo_asociacion',
-              nombrefiltro: 'Piscicultores',
-              datoafiltrar: 'Piscicultores',
-            },
-            {
-              nombrecampoDB: 'tipo_asociacion',
-              nombrefiltro: 'Pescadores',
-              datoafiltrar: 'Pescadores',
-            },
-            {
-              nombrecampoDB: 'tipo_asociacion',
-              nombrefiltro: 'Mixta',
-              datoafiltrar: 'Mixta',
-            },
-            {
-              nombrecampoDB: '',
-              nombrefiltro: 'Ver todas',
-              datoafiltrar: '',
-            },
-          ],
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Piscicultores',
+          datoafiltrar: 'Piscicultores',
+          modoFiltro: MODOFILTRO2,
+        },
+        {
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Pescadores',
+          datoafiltrar: 'Pescadores',
+          modoFiltro: MODOFILTRO2,
+        },
+        {
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Mixta',
+          datoafiltrar: 'Mixta',
+          modoFiltro: MODOFILTRO2,
+        },
+        {
+          nombrecampoDB: null,
+          nombrefiltro: 'Ver todas',
+          datoafiltrar: null,
+          modoFiltro: MODOFILTRO2,
         },
       ],
     },
   ];
-  buscardatospor = [
-    { data1: 'nombre' },
-    { data2: 'propietario' },
-    { data3: 'nit' },
-  ];
-
+  filtroseleccionado!: MetaFiltro;
+  palabra: string = '';
   constructor(
     private asociacionesService: AsociacionesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private searchBuscadorService: SearchBuscadorService
   ) {}
 
   ngOnInit(): void {
@@ -98,10 +97,46 @@ export class AsociacionesMunicipioComponent implements OnInit {
     }
   }
   /* funciones de busqueda granjas */
-  buscarData(data: any[]) {
-    this.asociaciones = data;
+  buscarData(texto: string): any {
+    let asociacionesresult: any[];
+    if (texto.trim().length === 0) {
+      asociacionesresult = this.asociasionessarray;
+    } else {
+      let buscardatospor: BuscarPor[] = [
+        { data1: 'nombre' },
+        { data2: 'propietario' },
+        { data3: 'nit' },
+        { data4: 'municipio' },
+      ];
+      asociacionesresult = this.searchBuscadorService.buscarData(
+        this.asociasionessarray,
+        texto,
+        buscardatospor
+      );
+    }
+    return asociacionesresult;
   }
-  filtradoData(datafilter: any[]) {
-    this.asociaciones = datafilter;
+  onBuscarPalabra(palabra: string) {
+    this.palabra = palabra;
+    this.reseteoDeBusqueda();
+  }
+  filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
+    let filtroresult: any[] = [];
+    filtroresult = this.searchBuscadorService.filterSeleccionadoList(
+      arrayafiltar,
+      filtroSelecOptionData
+    );
+    return filtroresult;
+  }
+  onFiltroChange(filtro: MetaFiltro) {
+    this.filtroseleccionado = filtro;
+    this.reseteoDeBusqueda();
+  }
+  reseteoDeBusqueda() {
+    let resultados: any[] = this.buscarData(this.palabra);
+    if (this.filtroseleccionado) {
+      resultados = this.filtradoData(this.filtroseleccionado, resultados);
+    }
+    this.asociaciones = resultados;
   }
 }

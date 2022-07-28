@@ -61,45 +61,7 @@
         box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
         outline: none;
       }
-      .dropdown-menu-div-li{
-        display: flex;
-        gap: 5px;
-        padding-right: 5px;
-        cursor: default;
-      }
-            .buscador-container__search-filtros {
-              display: flex;
-              gap: 10px;
-            }
     }
-    .alert-mi-estilo-filtro{
-    margin-bottom: 0;
-    width: 79%;
-    background-color: var(--azul4);
-     color: black;
-    }
-    .alert-mi-estilo{
-    margin-bottom: 0;
-    width: 100%;
-    background-color: var(--azul4);
-    color: black;
-    }
+
   }
-  .buscador-container__filter {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--white);
-    border-radius: 20px;
-
-    .buscador-container-option-div {
-      background-color: transparent;
-      color: #6c757d;
-    }
-
-    .buscador-container-option-div:hover {
-      background-color: var(--azul4);
-    }
-  }
-
-
 }

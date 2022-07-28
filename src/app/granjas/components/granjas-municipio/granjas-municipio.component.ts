@@ -11,6 +11,9 @@ import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
 import {MapInfoWindow, MapMarker} from '@angular/google-maps';
 import { vertices } from '../../../global/constants';
+import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
+import { BuscarPor } from '../../../../models/buscarPor.model';
+import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 
 @Component({
   selector: 'app-granjas-municipio',
@@ -63,37 +66,37 @@ export class GranjasMunicipioComponent implements OnInit {
   displayblock: boolean = false;
   granjasarray: any[] = [];
   granjas: any[] = [];
-  modoFiltro: any[] = ['number_ordenarmayoramenor', 'string_filtrodatosvarios'];
-  filtros: any[] = [
+
+  filtro: Filtro[] = [
     {
-      nombre_boton_filtro: [
+      nameButton: 'Filtrar Granjas',
+      data: [
         {
-          name: 'Filtrar Granjas',
-          checkbox: false,
-          data: [
-            {
-              nombrecampoDB: 'tipo_asociacion',
-              nombrefiltro: 'Calificación',
-              datoafiltrar: 'puntuacion',
-            },
-            {
-              nombrecampoDB: 'tipo_asociacion',
-              nombrefiltro: 'Área',
-              datoafiltrar: 'area',
-            },
-          ],
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Calificación',
+          datoafiltrar: 'puntuacion',
+          modoFiltro: 'number_ordenarmayoramenor',
+        },
+        {
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Área',
+          datoafiltrar: 'area',
+          modoFiltro: 'number_ordenarmayoramenor',
         },
       ],
+      /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
     },
   ];
+  palabra: string = '';
+  filtroseleccionado!: MetaFiltro;
 
-  buscardatospor = [{ data1: 'nombre' }, { data2: 'descripcion' }];
   constructor(
     httpClient: HttpClient,
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
     private placesService: PlacesService,
-    private router: Router
+    private router: Router,
+    private searchBuscadorService: SearchBuscadorService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -224,13 +227,72 @@ export class GranjasMunicipioComponent implements OnInit {
   mapainiciado() {
     this.mapaOn = true;
   }
+
   /* funciones de busqueda granjas */
-  buscarData(data: any[]) {
-    this.granjas = data;
+  /*  buscarData(texto: string): any {
+    if (texto.trim().length == 0) {
+      this.granjas = this.granjasarray;
+      this.extractLatLong();
+    } else {
+      let buscardatospor: BuscarPor[] = [
+        { data1: 'nombre' },
+        { data2: 'descripcion' },
+      ];
+      this.granjas = this.searchBuscadorService.buscarData(
+        this.granjasarray,
+        texto,
+        buscardatospor
+      );
+      this.extractLatLong();
+    }
+  } */
+  buscarData(texto: string): any {
+    let granjassresult: any[];
+    if (texto.trim().length === 0) {
+      granjassresult = this.granjasarray;
+    } else {
+      let buscardatospor: BuscarPor[] = [
+        { data1: 'nombre' },
+        { data2: 'descripcion' },
+      ];
+      granjassresult = this.searchBuscadorService.buscarData(
+        this.granjasarray,
+        texto,
+        buscardatospor
+      );
+    }
+    return granjassresult;
+  }
+  onBuscarPalabra(palabra: string) {
+    this.palabra = palabra;
+    this.reseteoDeBusqueda();
+  }
+
+  filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
+    let filtroresult: any[] = [];
+    filtroresult = this.searchBuscadorService.filterSeleccionadoList(
+      arrayafiltar,
+      filtroSelecOptionData
+    );
+    return filtroresult;
+  }
+  onFiltroChange(filtro: MetaFiltro) {
+    this.filtroseleccionado = filtro;
+    this.reseteoDeBusqueda();
+  }
+  reseteoDeBusqueda() {
+    let resultados: any[] = this.buscarData(this.palabra);
+    if (this.filtroseleccionado) {
+      resultados = this.filtradoData(this.filtroseleccionado, resultados);
+    }
+    this.granjas = resultados;
     this.extractLatLong();
   }
-  filtradoData(datafilter: any[]) {
-    this.granjas = datafilter;
+  /*   filtradoData(datafilter: any) {
+    this.granjas = this.searchBuscadorService.filterSeleccionadoList(
+      this.granjasarray,
+      datafilter
+    );
     this.extractLatLong();
-  }
+  } */
 }

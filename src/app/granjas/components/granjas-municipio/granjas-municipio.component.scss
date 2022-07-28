@@ -566,93 +566,28 @@ padding-top: 80px;
          }
 
 /* estilos buscador */
-.buscador-container{
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 20px;
-.buscador-container-option1{
-display: flex;
+.buscadoryfiltro {
+  display: flex;
   flex-direction: column;
-  margin-top: 60px;
-  background-color: var(--white);
-  border-radius: 20px;
-  .buscador-container-option-div{
-background-color: transparent;
-color: #6c757d;
-  }
- .buscador-container-option-div:hover {
-       background-color: var(--azul4);
-     }
-}
-.buscador-container-option2{
-display: flex;
-  flex-direction: column;
-  margin-top: 60px;
-  background-color: var(--white);
-  border-radius: 20px;
-  /* padding-left: 60px; */
-  cursor: pointer;
-  .buscador-container-option-div{
-  background-color: transparent;
-    color: #6c757d;
-  }
-    .buscador-container-option-div:hover {
-      background-color: var(--azul4);
-    }
 
-.dropdown-menu--li{
-  display: flex;
-  align-items: center;
-  padding-right: 5px;
-  div{
-    height: 100%;
+  .buscador-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
   }
-  img{
-    width: 17px;
-    height: 17px;
-  }
-  img:hover{
-    fill: var(--azul1);
-  }
-}
-.dropdown-menu--display{
-  display: block;
-    position: absolute;
-    inset: 0px auto auto 0px;
-    margin: 0px;
-    transform: translate3d(1023px, 419px, 0px);
-    z-index: 1000;
-    min-width: 10rem;
-    padding: 0.5rem 0;
-    font-size: 1rem;
-    color: #212529;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.25rem;
-}
-}
-.buscador-container-option3 {
-  display: flex;
-  flex-direction: column;
-  margin-top: 60px;
-  background-color: var(--white);
-  border-radius: 20px;
-  cursor: pointer;
-  .buscador-container-option-div {
-    background-color: transparent;
-    color: #6c757d;
-  }
-  .buscador-container-option-div:hover {
+
+  .alert-mi-estilo-filtro {
+    margin-bottom: 0;
+    width: 79%;
     background-color: var(--azul4);
+    color: black;
   }
-    .buscador-container-option-div::after {
-      display: none;
-    }
 
-}
-
+  .alert-mi-estilo {
+    margin-bottom: 0;
+    width: 100%;
+    background-color: var(--azul4);
+    color: black;
+  }
 }
