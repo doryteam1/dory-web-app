@@ -163,7 +163,7 @@
             </span>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-5" *ngIf="formState!='disable'">
           <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.foto_camarac ? 'Actualizar camara de comercio ' : 'Subir camara de comercio' }}</label>
           <div class="input-group">
             <input id="productName" type="file" class="form-control" placeholder="Seleccionar documento" formControlName="foto_camarac" (change)='fileChange($event)'>

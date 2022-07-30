@@ -58,7 +58,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
     this.loadTiposAsociaciones();
     this.onChangeLegalConst();
     this.idTipoAsoc?.valueChanges.subscribe((value)=>{
-      
+
     })
   }
 
@@ -289,6 +289,8 @@ export class AsociacionDetalleFormComponent implements OnInit {
   prepareForm(action: string, asociacion?: any){
     this.modalMode = action;
     this.form.reset();
+    console.log("action ",action)
+    console.log("formState ",this.formState)
     if (action == 'update') {
       this.idDpto?.setValue(asociacion.id_departamento);
       this.idMunic?.setValue(asociacion.id_municipio);
@@ -309,7 +311,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
       this.direccion?.setValue(asociacion.direccion);
       this.nit?.disable();
       if(this.formState == 'disable'){
-        this.form.disable()
+        this.form.disable();
       }
     }
     console.log("asociacion cargada en form ", this.form.getRawValue())
