@@ -179,6 +179,7 @@ export class PerfilComponent implements OnInit {
       'email',
     ],
   };
+  /* Se utilizan para  validar la entra del usurio la input */
   validateInputFormObject: any[] = [
     {
       apellidos: false,
@@ -513,7 +514,7 @@ delatePhotoPerfil(){
                 this.usuario
                 setTimeout(() => {
                   this.photoDelate = false;
-                  window.location.reload();
+                 /*  window.location.reload(); */
                 }, 3000);
               },
               (err) => {
@@ -534,7 +535,7 @@ delatePhotoPerfil(){
     const imageFile = event.target.files[0];
     console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
     console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
-
+    event.srcElement.value = '';
     const options = {
       maxSizeMB: 1,
       maxWidthOrHeight: 1920,
@@ -990,10 +991,6 @@ delatePhotoPerfil(){
           zoom: 14,
           scrollwheel: true,
         };
-   /*      this.markerPosition = {
-          lat: this.mylatitudidmunicipio,
-          lng: this.mylongitudidmunicipio,
-        }; */
       } else {
         this.options = {
           center: {

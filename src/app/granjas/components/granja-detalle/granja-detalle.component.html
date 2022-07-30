@@ -10,15 +10,20 @@
 <div class="container__box">
   <div class="photo-container">
    <div class="header-container">
-        <h3 class="header-container__title">{{granja?.nombre}}</h3>
-        <div>
-          <img class="header-container__icon" src="assets/icons/star-filled.svg">
-          <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C' }}</span>
+    <div class="header-container--titulo">
+      <h3 class="header-container__title">{{granja?.nombre}}</h3>
+      <app-stars [selectedStar]="granja?.puntuacion" size="medium"></app-stars>
+    </div>
+    <div class="header-container--subtitulo">
+ <!--          <img class="header-container__icon" src="assets/icons/star-filled.svg">
+          <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C' }}</span> -->
            <span class="header-container__description">
+              {{granja?.nombre_municipio}}, Sucre.
               <span class="header-container__resenas"
-             (click)="showResenas(granja.id_granja)">({{granja?.count_resenas}} reseñas)
-           </span> {{granja?.nombre_municipio}}, Sucre, Colombia</span>
-        </div>
+                (click)="showResenas(granja.id_granja,granja)">Reseñas ({{granja?.count_resenas}})
+              </span>
+          </span>
+    </div>
    </div>
     <div class="buttons-container1" >
         <img class="buttons-container__image" src="assets/icons/share.svg" (click)="shareFuntion()">
@@ -144,7 +149,8 @@
           <span class="box-miopinion__sub-title">{{miresena?.nombre_usuario}}</span>
           <div class="box-miopinion__box d-flex flex-row flex-nowrap">
             <app-stars class="box-miopinion__stars" [selectedStar]="miresena?.calificacion" size="small"></app-stars>
-            <span class="box-miopinion__date">{{miresena?.fecha}}</span>
+            <span class="box-miopinion__date">{{miresena?.fecha.slice(0, miresena?.fecha.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
+
           </div>
         </div>
         <div class="box-miopinion__dots">
@@ -191,7 +197,7 @@
           </div>
           <div class="d-flex flex-row justify-content-start mt-4">
             <app-stars class="card__stars" [selectedStar]="(resena?.calificacion == null || resena?.calificacion < 1) ? '0' : resena?.calificacion" *ngIf="i < 3" size="small"></app-stars>
-            <span *ngIf="i < 3">{{dateToString(resena.fecha)}}</span>
+            <span *ngIf="i < 3">{{resena?.fecha.slice(0, resena?.fecha.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
           </div>
           <p class="card__paragh" *ngIf="i < 3">{{resena?.descripcion}}</p>
           <a class="link" *ngIf="i == 2" (click)="showResenas(granja.id_granja)">Ver todas las reseñas</a>

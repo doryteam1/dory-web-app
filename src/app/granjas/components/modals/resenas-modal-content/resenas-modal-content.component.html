@@ -4,12 +4,13 @@
 </div>
 <div class="modal-body">
     <div class="card__rating-container">
-        <img class="card__icon-rating" src="assets/icons/star-filled.svg">
-        <span class="card__rating">{{puntuacion !== null && puntuacion !== undefined ? (puntuacion | number:'1.1-1') : 'Sin calificación'}}</span>
-        <span class="card__rating__detail"> ({{resenas.length}} reseñas)</span>
+        <!-- <img class="card__icon-rating" src="assets/icons/star-filled.svg"> -->
+        <app-stars [selectedStar]="puntuacion"  size="medium"></app-stars>
+<!--         <span class="card__rating">{{puntuacion !== null && puntuacion !== undefined ? (puntuacion | number:'1.1-1') : 'Sin calificación'}}</span> -->
+        <!-- <span class="card__rating__detail"> ({{resenas.length}} reseñas)</span> -->
         <!-- <span class="card__rating">{{granja.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C'}}</span>
         <span class="card__rating__detail" (click)="showResenas()"> ({{granja.count_resenas}} reseñas)</span> -->
-        
+
     </div>
     <div class="container overflow-auto" *ngIf="!showNotFound && !showErrorFound">
         <div class="card" *ngFor="let resena of resenas">
@@ -17,7 +18,7 @@
                 <img src="{{ resena.foto_usuario ? resena.foto_usuario : 'assets/images/avatar-person.svg' }}" alt="" class="card__image">
                 <div class="card__box">
                     <span class="card__title">{{resena.nombre_usuario}}</span>
-                    <div class="span card__date">{{resena.fecha}}</div>
+                    <div class="span card__date"> {{resena?.fecha.slice(0, resena?.fecha.indexOf('T')) | date:'dd/MM/yyyy'}}</div>
                 </div>
             </div>
             <p class="card__paragh">{{resena.descripcion}}</p>

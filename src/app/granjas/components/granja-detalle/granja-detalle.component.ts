@@ -8,6 +8,7 @@ import { ModalGallerySliderService } from '../../../shared/services/modal-galler
 import { PlatformLocation } from '@angular/common'
 import { AppModalService } from '../../../shared/services/app-modal.service';
 import * as dayjs from 'dayjs'
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-granja-detalle',
@@ -60,15 +61,15 @@ export class GranjaDetalleComponent implements OnInit {
     if (this.userToken) {
       let payload = Utilities.parseJwt(this.userToken);
       this.authUserId = payload.sub;
-      this.granjasService
-        .resenasUserByIdGranja(this.selectedGranjaId)
-        .subscribe(
-          (response) => {
-            this.miresena = response.data.resena;
-            this.editedDescResena = this.miresena?.descripcion;
-          },
-          (err) => {}
-        );
+     this.granjasService
+         .resenasUserByIdGranja(this.selectedGranjaId)
+         .subscribe(
+           (response) => {
+             this.miresena = response.data.resena;
+             this.editedDescResena = this.miresena?.descripcion;
+           },
+           (err) => {}
+         );
     }
     this.granjasService.getGranjaDetalle(this.selectedGranjaId).subscribe(
       (response) => {
@@ -99,7 +100,7 @@ export class GranjaDetalleComponent implements OnInit {
       }
     );
 
-    this.granjasService.resenasById(this.selectedGranjaId).subscribe(
+   this.granjasService.resenasById(this.selectedGranjaId).subscribe(
       (response) => {
         this.resenas = response.data.resenas;
         this.puntuacion = response.data.puntaje;
@@ -152,13 +153,15 @@ export class GranjaDetalleComponent implements OnInit {
           this.success = false;
           this.descResena = '';
           this.editingMiResena = false;
-          window.location.reload();
+          this.ngOnInit();
+          /* window.location.reload(); */
         },
         (reason) => {
           this.success = false;
           this.descResena = '';
           this.editingMiResena = false;
-          window.location.reload();
+           this.ngOnInit();
+          /* window.location.reload(); */
         }
       );
   }
@@ -174,8 +177,12 @@ export class GranjaDetalleComponent implements OnInit {
     );
   }
 
-  showResenas(idGranja: number) {
-    this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
+  showResenas(idGranja: number,granja?:any) {
+    this.granjasService.showResenasModal(
+      `Reseñas (${granja?.count_resenas})`,
+      'Cerrar',
+      idGranja
+    );
   }
 
   onRating(event: number) {
@@ -197,7 +204,7 @@ export class GranjaDetalleComponent implements OnInit {
     console.log(resena);
 
     if (this.editingMiResena) {
-      this.granjasService.updateResena(resena, this.miresena.id).subscribe(
+     this.granjasService.updateResena(resena, this.miresena.id).subscribe(
         (respose) => {
           this.loading = false;
           this.success = true;
@@ -284,6 +291,7 @@ toggle between hiding and showing the dropdown content */
         this.resenas.splice(index, 1);
         this.miresena = null;
         console.log(response);
+        this.ngOnInit();
       },
       (err) => {
         console.log(err);

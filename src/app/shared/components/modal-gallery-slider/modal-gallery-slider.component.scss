@@ -1,25 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .photos-container-div {
   display: flex;
   justify-content: center;
@@ -48,8 +28,8 @@
 }
 
 .box-shadow-efect {
-  border: 1px solid rgb(64, 64, 244);
-  box-shadow: 0px 0px 1px 7px #68E1FD;
+  border: 1px solid #4a4a4b;
+  box-shadow: 0px 0px 1px 7px #9e9fa3;
   animation: infinite resplandorAnimation 1s;
 }
 
@@ -57,18 +37,15 @@
 
   0%,
   100% {
-    box-shadow: 0px 0px 1px 7px #68E1FD;
+    box-shadow: 0px 0px 1px 7px #9e9fa3;
   }
 
   50% {
-    box-shadow: 0px 0px 0px #68E1FD;
+    box-shadow: 0px 0px 0px #9e9fa3;
 
   }
 
 }
-
-
-
 .modalbody {
   height: 100%;
 }

@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter,Input, OnInit, Output } from '@angular/core';
 import { AppModalService } from '../../services/app-modal.service';
-import { Filtro } from '../../../../models/filtro.model';
+import { Filtro, MetaFiltro } from '../../../../models/filtro.model';
 import { Checkbox } from 'src/models/checkbox.model';
+
+
 
 @Component({
   selector: 'app-filtro',
@@ -15,8 +17,7 @@ export class FiltrosComponent implements OnInit {
   /* Variables obligatoria para filtro multiseleccion */
   @Input() checkbox!: Checkbox[];
   @Input() checkboxArray!: any[]; //Array de todas las opciones que va a tener el filtro multiseleccion
-
-  indicefiltroselec: number = -1;
+  @Input() filtroSeleccionado: MetaFiltro | null = null;
   @Output() onFilterSeleccionado: EventEmitter<any> = new EventEmitter();
   @Output() onArrayCheckboxSelec: EventEmitter<any[]> = new EventEmitter();
   arrayCheckboxSelec: any[] = [];
@@ -24,12 +25,20 @@ export class FiltrosComponent implements OnInit {
   constructor(private appModalService: AppModalService) {}
 
   ngOnInit(): void {}
-  filterSeleccionado(i: number, filtroSelecOptionData: any) {
-    if (this.indicefiltroselec == i) {
-      this.indicefiltroselec = -1;
+  filterSeleccionado(filtroSelecOptionData: MetaFiltro) {
+   if (this.filtroSeleccionado == null) {
+      /* Si el filtro esta seleccionado lo marca  */
+      this.filtroSeleccionado = filtroSelecOptionData;
+      this.onFilterSeleccionado.emit(filtroSelecOptionData);
+    } else if (filtroSelecOptionData.id == this.filtroSeleccionado!.id) {
+      /* Si el filtro seleccionado es igual al que tenia guaradado
+      deseleccionamos */
+      this.filtroSeleccionado = null;
       this.onFilterSeleccionado.emit(null);
-    } else {
-      this.indicefiltroselec = i;
+    }else {
+      /* Si el que filtro que seleccionamos es diferente, del que  tenia guaradado
+      deseleccinamos el nuevo filtro */
+      this.filtroSeleccionado = filtroSelecOptionData;
       this.onFilterSeleccionado.emit(filtroSelecOptionData);
     }
   }

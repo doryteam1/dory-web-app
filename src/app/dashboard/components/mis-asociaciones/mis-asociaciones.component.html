@@ -49,23 +49,59 @@
     </div>
     <div class="tab-pane fade" id="Unirme_a_una_asociacion" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
       <div class="buscadoryfiltro" *ngIf="!showNotFound">
-        <div class="buscador-container" >
+        <div class="buscador-container">
           <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar asociacion..'"
             (keyEnterPressData)="onBuscarPalabra($event)">
           </app-search>
-          <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)">
+          <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)"
+            [filtroSeleccionado]="filtroseleccionado">
           </app-filtro>
           <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
             (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)">
           </app-filtro>
         </div>
-        <div *ngIf="asociacionesexistentes?.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo"
-               role="alert">
-              <img src="assets/icons/searchanimado.svg">
-              <div>
-                No se encontraron resultados
-              </div>
-         </div>
+        <app-chip-con-boton-close
+        *ngIf="filtroseleccionado"
+         [iconoChip]="true"
+         [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+         [contenidoChip]="filtroseleccionado.nombrefiltro"
+         (onCloseClip)="delateFilter()"
+         >
+        </app-chip-con-boton-close>
+        <div *ngIf="filtroseleccionadoCheckbox">
+          <app-chip-con-boton-close
+          *ngFor="let  nombre of filtroseleccionadoCheckbox"
+           [iconoChip]="true"
+           [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+           [contenidoChip]="nombre"
+           (onCloseClip)="delateFilterCheckbox()"
+           >
+          </app-chip-con-boton-close>
+        </div>
+
+  <!--       <div *ngIf="filtroseleccionado" class="chip waves-effect" role="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24"
+            width="24px" fill="#000000" class="iconofiltro">
+            <g>
+              <path d="M0,0h24 M24,24H0" fill="none" />
+              <path
+                d="M4.25,5.61C6.27,8.2,10,13,10,13v6c0,0.55,0.45,1,1,1h2c0.55,0,1-0.45,1-1v-6c0,0,3.72-4.8,5.74-7.39 C20.25,4.95,19.78,4,18.95,4H5.04C4.21,4,3.74,4.95,4.25,5.61z" />
+              <path d="M0,0h24v24H0V0z" fill="none" />
+            </g>
+          </svg>
+          <strong>Tipo de asociacion: </strong> {{ filtroseleccionado.nombrefiltro}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+            (click)="delateFilter()"></button>
+            Pescadores
+          <i class="bi bi-x close" (click)="delateFilter()"></i>
+        </div> -->
+        <div *ngIf="asociacionesexistentes?.length == 0"
+          class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
+          <img src="assets/icons/searchanimado.svg">
+          <div>
+            No se encontraron resultados
+          </div>
+        </div>
       </div>
       <div class="list overflow-auto d-flex flex-column">
         <div class="card" *ngFor="let asociacion of  asociacionesexistentes">
@@ -73,30 +109,21 @@
             <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
             <span class="card__title">{{asociacion.nombre}}</span>
           </div>
-          <button class="card__button btn-square btn--grey">Unirme</button>
-          <!--     <button class="card__button btn-square btn--grey" (click)="invitarAnular(pescador)"
-                        *ngIf="pescador.estado_solicitud == 'Enviada' && pescador.solicitud_enviada_por == 'asociacion'">Anular</button>
-                      <button class="card__button btn-square btn--blue" (click)="invitarAnular(pescador)"
-                        *ngIf="pescador.estado_solicitud == 'Enviada' && pescador.solicitud_enviada_por == 'usuario'">Confirmar</button>
-                      <button class="card__button btn-square btn--blue" (click)="invitarAnular(pescador)"
-                        *ngIf="!pescador.estado_solicitud">Invitar</button>
-                      <div class="btn-group" *ngIf="pescador.estado_solicitud == 'Aceptada'">
-                        <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
-                          data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <li (click)="invitarAnular(pescador)"><a class="dropdown-item"><i class="bi bi-trash3"></i> Eliminar</a></li>
-                        </ul>
-                      </div> -->
+          <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(asociacion)"
+            *ngIf="!asociacion?.estado_solicitud">Unirme</button>
+          <button class="btn-square btn--grey mt-3" (click)="invitarAnular(asociacion)"
+            *ngIf="asociacion?.estado_solicitud == 'Enviada'">Cancelar solicitud</button>
+          <div class="btn-group mt-3" *ngIf="asociacion?.estado_solicitud == 'Aceptada'">
+            <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
+              data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li (click)="invitarAnular(asociacion)"><a class="dropdown-item"><i class="bi bi-box-arrow-left"></i> No
+                  soy
+                  miembro</a></li>
+            </ul>
+          </div>
         </div>
       </div>
-      <!--        <app-card-asociacion class="col"
-        *ngFor="let asociacion of  asociacionesexistentes"
-        [asociacion]="asociacion"
-        [delatecard]="false"
-        (onDetalle)=" goAssociationDetail($event)"
-        (onDelete)="delete($event)">
-        </app-card-asociacion> -->
-
       <div class="search-container" *ngIf="showNotFoundAsocexistente">
         <div class="search-container__box">
           <img class="search-container__image" src="assets/images/searching.svg">

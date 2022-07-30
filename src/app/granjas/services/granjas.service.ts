@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+/* import { Subject,Observable, pipe } from 'rxjs'; */
 import { HttpsService } from 'src/app/services/https.service';
 import { ResenasModalContentComponent } from '../components/modals/resenas-modal-content/resenas-modal-content.component';
-
+/* import {tap  } from "rxjs/operators"; */
 @Injectable({
   providedIn: 'root',
 })
 export class GranjasService {
   constructor(private https: HttpsService, private modalService: NgbModal) {}
-
   getGranjas() {
     return this.https.get('https://dory-api-rest.herokuapp.com/granjas');
   }
@@ -26,8 +26,10 @@ export class GranjasService {
   }
   getGranjaSearch(cadena: string, idMunicipio: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/buscar/granja/municipio?idMunicipio='+
-        idMunicipio+'&cadena='+cadena
+      'https://dory-api-rest.herokuapp.com/api/buscar/granja/municipio?idMunicipio=' +
+        idMunicipio +
+        '&cadena=' +
+        cadena
     );
   }
 
@@ -74,9 +76,8 @@ export class GranjasService {
   }
 
   getGranjaDetalle(id: number) {
-    return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/granjas/detailed/' + id
-    );
+    return this.https
+      .get('https://dory-api-rest.herokuapp.com/api/granjas/detailed/' + id)
   }
   updateParcial(id: number, datos: any) {
     return this.https.put(

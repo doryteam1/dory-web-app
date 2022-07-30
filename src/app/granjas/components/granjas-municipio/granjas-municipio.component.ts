@@ -72,12 +72,14 @@ export class GranjasMunicipioComponent implements OnInit {
       nameButton: 'Filtrar Granjas',
       data: [
         {
+          id:0,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Calificación',
           datoafiltrar: 'puntuacion',
           modoFiltro: 'number_ordenarmayoramenor',
         },
         {
+          id:1,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Área',
           datoafiltrar: 'area',

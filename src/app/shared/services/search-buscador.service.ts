@@ -93,7 +93,8 @@ export class SearchBuscadorService {
     } else if (filtroSelecOptionData.modoFiltro == MODOFILTRO2) {
       if (
         filtroSelecOptionData.nombrecampoDB == null ||
-        filtroSelecOptionData.datoafiltrar == null
+        filtroSelecOptionData.datoafiltrar == null ||
+        filtroSelecOptionData ==null
       ) {
         return arraydatanew;
       } else {

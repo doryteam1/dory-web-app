@@ -3,6 +3,7 @@ export interface Filtro {
    data:MetaFiltro []
 }
 export interface MetaFiltro {
+  id:number;
   nombrecampoDB: string | null;
   nombrefiltro: string; // Nombre  del filtro en la interfas
   datoafiltrar: string | null; //String que se ba a buscar dentro del array

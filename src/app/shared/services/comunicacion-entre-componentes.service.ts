@@ -9,6 +9,7 @@ export class ComunicacionEntreComponentesService {
   @Output() changeArray: EventEmitter<any[]> = new EventEmitter();
   @Output() changeArray2: EventEmitter<any[]> = new EventEmitter();
   @Output() ArrayDelate: EventEmitter<any[]> = new EventEmitter();
+  @Output() Action: EventEmitter<boolean> = new EventEmitter();
 
   changeMyArray(Array: any[]) {
     console.log('changeArray');
@@ -21,5 +22,9 @@ export class ComunicacionEntreComponentesService {
   arrayDelate(Array: any[]) {
     console.log('ArrayDelate');
     this.ArrayDelate.emit(Array);
+  }
+  activateOrDeactivate(action:boolean){
+    this.Action.emit(action)
+
   }
 }

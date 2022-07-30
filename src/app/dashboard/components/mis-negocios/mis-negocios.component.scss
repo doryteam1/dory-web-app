@@ -21,22 +21,29 @@
 
 .container__icon1{
     cursor: pointer;
-    color:var(--morado);
 }
-
+.container__icon1::before {
+  color: var(--azul1);
+}
 .container__icon2{
   cursor: pointer;
 }
-
+.container__icon2::before {
+  color: var(--azul1);
+}
 .container__icon3{
   cursor: pointer;
 }
-
+.container__icon3::before {
+  color: var(--azul1);
+}
 .container__icon4{
   cursor: pointer;
-  color:var(--morado)
-}
 
+}
+.container__icon4::before {
+  color: var(--azul1);
+}
 .search-container{
     display:flex;
     flex-direction: row;
@@ -274,6 +281,14 @@
     transform: rotate(360deg)
   }
 }
+ /* estilo direccion disable */
+ .direccion-class {
+   cursor: pointer;
+ }
+
+ .direccion-class:hover {
+   background-color: #e4f4ff;
+ }
 
 /* fin mi estilo */
 /* prueba estilo */

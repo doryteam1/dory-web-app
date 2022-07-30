@@ -46,6 +46,7 @@ import { ModalGallerySliderVerYElimanarFotosComponent } from './components/modal
 import { NgxLongPress2Module } from 'ngx-long-press2';
 import { ModalCheckboxListComponent } from './components/modal-checkbox-list/modal-checkbox-list.component';
 import { FiltrosComponent } from './components/filtros/filtros.component';
+import { ChipConBotonCloseComponent } from './components/chip-con-boton-close/chip-con-boton-close.component';
 
 
 
@@ -80,6 +81,7 @@ import { FiltrosComponent } from './components/filtros/filtros.component';
     ModalGallerySliderVerYElimanarFotosComponent,
     ModalCheckboxListComponent,
     FiltrosComponent,
+    ChipConBotonCloseComponent,
   ],
   imports: [
     CommonModule,
@@ -119,6 +121,7 @@ import { FiltrosComponent } from './components/filtros/filtros.component';
     ModalGallerySliderVerYElimanarFotosComponent,
     ModalCheckboxListComponent,
     FiltrosComponent,
+    ChipConBotonCloseComponent,
     /*  CardphotoGoogleMapComponent, */
   ],
   providers: [

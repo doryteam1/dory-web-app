@@ -130,7 +130,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     this.direccion?.disable();
     registerLocaleData(es);
     this.granja = this.ar.snapshot.params;
-   /*  console.log(this.granja); */
+    /*  console.log(this.granja); */
     let action = this.ar.snapshot.paramMap.get('action');
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
     this.authUserId = Number(this.ar.snapshot.paramMap.get('authUserId')!);
@@ -165,29 +165,29 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
       this.comunicacionEntreComponentesService.changeArray.subscribe(
         (arrayFiles) => {
           if (arrayFiles.length > 0) {
-            if(action == 'create'){
-             console.log('files ngOnlnit create');
-      /*          console.log(arrayFiles); */
-               if (arrayFiles[0].length > 0) {
-                 for (let index = 0; index < arrayFiles[0].length; index++) {
-                   const element = arrayFiles[0][index];
-                   this.photosGranjaArray = arrayFiles[0];
-                   console.log(this.photosGranjaArray)
-                 }
-               } else {
-                 this.photosGranjaArray = [];
-               }
-               for (let index = 0; index < arrayFiles[1].length; index++) {
-                 const element = arrayFiles[1][index];
-                 this.filesfinalCreate.push(element);
-               }
-               for (let index = 0; index < arrayFiles[2].length; index++) {
-                 const element = arrayFiles[2][index];
-                 this.filesfinalCreate.splice(element, 1);
-               }
-               console.log(this.photosGranjaArray)
-               console.log(this.filesfinalCreate)
-            }else if (action == 'update'){
+            if (action == 'create') {
+              console.log('files ngOnlnit create');
+              /*          console.log(arrayFiles); */
+              if (arrayFiles[0].length > 0) {
+                for (let index = 0; index < arrayFiles[0].length; index++) {
+                  const element = arrayFiles[0][index];
+                  this.photosGranjaArray = arrayFiles[0];
+                  console.log(this.photosGranjaArray);
+                }
+              } else {
+                this.photosGranjaArray = [];
+              }
+              for (let index = 0; index < arrayFiles[1].length; index++) {
+                const element = arrayFiles[1][index];
+                this.filesfinalCreate.push(element);
+              }
+              for (let index = 0; index < arrayFiles[2].length; index++) {
+                const element = arrayFiles[2][index];
+                this.filesfinalCreate.splice(element, 1);
+              }
+              console.log(this.photosGranjaArray);
+              console.log(this.filesfinalCreate);
+            } else if (action == 'update') {
               console.log('files ngOnlnit update');
               console.log(arrayFiles);
               this.loadPhotos(arrayFiles);
@@ -351,64 +351,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     );
     return checked;
   }
-  idmunicipioselec() {
-    if (this.modalMode == 'update') {
-      this.places
-        .getMunicipioById(this.form.get('id_municipio')?.value)
-        .subscribe(
-          (response) => {
-            if (response.data != 0) {
-              if (
-                this.form.get('id_municipio')?.value !==
-                this.granja.id_municipio
-              ) {
-                this.latitud?.setValue(response.data[0].latitud);
-                this.longitud?.setValue(response.data[0].longitud);
-                this.direccion?.setValue('');
-                this.verMapaDireccion();
-                this.escogerdireccion = true;
-                setTimeout(() => {
-                  this.escogerdireccion = false;
-                }, 30000);
-                this.faltadireccion = true;
-              } else {
-                this.latitud?.setValue(this.granja.latitud);
-                this.longitud?.setValue(this.granja.longitud);
-                this.direccion?.setValue(this.granja.direccion);
-                this.faltadireccion = false;
-              }
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-    } else if (this.modalMode == 'create') {
-      this.faltanargumentos = false;
-      this.places
-        .getMunicipioById(this.form.get('id_municipio')?.value)
-        .subscribe(
-          (response) => {
-            if (response.data != 0) {
-              this.latitud?.setValue(response.data[0].latitud);
-              this.longitud?.setValue(response.data[0].longitud);
-              this.direccion?.setValue('');
-              this.verMapaDireccion();
-              this.faltadireccion = true;
-              this.escogerdireccion = true;
-              setTimeout(() => {
-                this.escogerdireccion = false;
-              }, 30000);
-              this.mylatitudidmunicipio = response.data[0].latitud;
-              this.mylongitudidmunicipio = response.data[0].longitud;
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-    }
-  }
+
   initForm() {
     this.idmunicipioselec();
     this.nombreGranja?.setValue('');
@@ -480,10 +423,78 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         this.form.disable();
       }
     }
-  /*   console.log('granjas cargada en form ', this.form.getRawValue()); */
+    /*   console.log('granjas cargada en form ', this.form.getRawValue()); */
   }
   goBack() {
     this.location.back();
+  }
+  /* Funciones necesarias para el mapa y escoger direccion */
+  idmunicipioselec() {
+    if (this.modalMode == 'update') {
+      this.places
+        .getMunicipioById(this.form.get('id_municipio')?.value)
+        .subscribe(
+          (response) => {
+            if (response.data != 0) {
+              if (
+                this.form.get('id_municipio')?.value !==
+                this.granja.id_municipio
+              ) {
+                this.latitud?.setValue(response.data[0].latitud);
+                this.longitud?.setValue(response.data[0].longitud);
+                this.direccion?.setValue('');
+                this.verMapaDireccion();
+                this.escogerdireccion = true;
+                setTimeout(() => {
+                  this.escogerdireccion = false;
+                }, 30000);
+                this.faltadireccion = true;
+              } else {
+                /*  this.latitud?.setValue(this.granja.latitud);
+                this.longitud?.setValue(this.granja.longitud);
+                this.direccion?.setValue(this.granja.direccion);
+                this.faltadireccion = false; */
+                this.latitud?.setValue(response.data[0].latitud);
+                this.longitud?.setValue(response.data[0].longitud);
+                this.direccion?.setValue('');
+                this.verMapaDireccion();
+                this.escogerdireccion = true;
+                setTimeout(() => {
+                  this.escogerdireccion = false;
+                }, 30000);
+                this.faltadireccion = true;
+              }
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    } else if (this.modalMode == 'create') {
+      this.faltanargumentos = false;
+      this.places
+        .getMunicipioById(this.form.get('id_municipio')?.value)
+        .subscribe(
+          (response) => {
+            if (response.data != 0) {
+              this.latitud?.setValue(response.data[0].latitud);
+              this.longitud?.setValue(response.data[0].longitud);
+              this.direccion?.setValue('');
+              this.verMapaDireccion();
+              this.faltadireccion = true;
+              this.escogerdireccion = true;
+              setTimeout(() => {
+                this.escogerdireccion = false;
+              }, 30000);
+              this.mylatitudidmunicipio = response.data[0].latitud;
+              this.mylongitudidmunicipio = response.data[0].longitud;
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    }
   }
   verMapaDireccion() {
     this.faltadireccion = false;
@@ -494,52 +505,10 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
       east: -74.324908,
     };
     if (this.modalMode == 'update') {
-      this.modal = this.modalService.open(this.map, {
-        size: 'xl',
-        centered: true,
-        windowClass: 'dark-modal',
-      });
-      this.modal.result
-        .then((result) => {
-          if (this.form.getRawValue().direccion == '') {
-            this.faltadireccion = true;
-            this.idMunic?.setValue(null);
-          } else {
-            this.faltadireccion = false;
-          }
-        })
-        .catch((err) => {
-          if (this.form.getRawValue().direccion == '') {
-            this.faltadireccion = true;
-            this.idMunic?.setValue(null);
-          } else {
-            this.faltadireccion = false;
-          }
-        });
-      this.markerPosition = {
-        lat: Number(this.form.get('latitud')?.value),
-        lng: Number(this.form.get('longitud')?.value),
-      };
-
-      this.options = {
-        center: {
-          lat: Number(this.form.get('latitud')?.value),
-          lng: Number(this.form.get('longitud')?.value),
-        },
-        restriction: {
-          latLngBounds: sucreColombia,
-          strictBounds: false,
-        },
-        zoom: 14,
-        scrollwheel: true,
-      };
-    } else if (this.modalMode == 'create') {
       if (
-        this.form.getRawValue().latitud &&
-        this.form.getRawValue().latitud !== ''
+        this.form.getRawValue().latitud !== 0 &&
+        this.form.getRawValue().longitud !== 0
       ) {
-        this.faltanargumentos = false;
-
         this.modal = this.modalService.open(this.map, {
           size: 'xl',
           centered: true,
@@ -549,6 +518,8 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
           .then((result) => {
             if (this.form.getRawValue().direccion == '') {
               this.faltadireccion = true;
+              this.latitud?.setValue(0);
+              this.longitud?.setValue(0);
               this.idMunic?.setValue(null);
             } else {
               this.faltadireccion = false;
@@ -557,6 +528,58 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
           .catch((err) => {
             if (this.form.getRawValue().direccion == '') {
               this.faltadireccion = true;
+              this.latitud?.setValue(0);
+              this.longitud?.setValue(0);
+              this.idMunic?.setValue(null);
+            } else {
+              this.faltadireccion = false;
+            }
+          });
+        this.markerPosition = {
+          lat: Number(this.form.get('latitud')?.value),
+          lng: Number(this.form.get('longitud')?.value),
+        };
+
+        this.options = {
+          center: {
+            lat: Number(this.form.get('latitud')?.value),
+            lng: Number(this.form.get('longitud')?.value),
+          },
+          restriction: {
+            latLngBounds: sucreColombia,
+            strictBounds: false,
+          },
+          zoom: 14,
+          scrollwheel: true,
+        };
+      }
+    } else if (this.modalMode == 'create') {
+      if (
+        this.form.getRawValue().latitud !== 0 &&
+        this.form.getRawValue().longitud !== 0
+      ) {
+        this.faltanargumentos = false;
+        this.modal = this.modalService.open(this.map, {
+          size: 'xl',
+          centered: true,
+          windowClass: 'dark-modal',
+        });
+        this.modal.result
+          .then((result) => {
+            if (this.form.getRawValue().direccion == '') {
+              this.faltadireccion = true;
+              this.latitud?.setValue(0);
+              this.longitud?.setValue(0);
+              this.idMunic?.setValue(null);
+            } else {
+              this.faltadireccion = false;
+            }
+          })
+          .catch((err) => {
+            if (this.form.getRawValue().direccion == '') {
+              this.faltadireccion = true;
+              this.latitud?.setValue(0);
+              this.longitud?.setValue(0);
               this.idMunic?.setValue(null);
             } else {
               this.faltadireccion = false;
@@ -922,7 +945,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
           arrayFotos.push(downloadUrl);
         }
         console.log('Fotos granjas guardadas en firebase');
-        console.log(arrayFotos);
         this.photosGranjaArray = this.photosGranjaArray.concat(arrayFotos);
         /* entrega las ultimas fotos que se cargaron, las manda al componente
         que las necesite */
@@ -1006,7 +1028,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         action
       )
       .then((result: any) => {
-    /*     console.log(result);
+        /*     console.log(result);
         if (result[0].length >0) {
           for (let index = 0; index < result[0].length; index++) {
             const element = result[0][index];
@@ -1048,46 +1070,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         action
       )
       .then((result: any) => {
-        //         /* Resultados */
-        //         console.log(result);
-        //        /*Estraemos photos de resul  */
-        //         for (let index = 0; index < result[0].length; index++) {
-        //           const element = result[0][index];
-        //           this.photosGranjaArray = result[0];
-        //         }
-        //        console.log(this.photosGranjaArray);
-        //        /* Filtramos los nuevas fotos */
-        // /*         let newArray = this.photosGranjaArray.filter((dataarray: any) => {
-        //           let dataanalisis = dataarray.changingThisBreaksApplicationSecurity;
-        //           return dataanalisis?.includes('blob');
-        //         });
-        //         console.log(newArray); */
-        //         /* Filtramos las fotos ya existentes en firebase */
-        //         /* Posiblemente este sera el array a mandar para actualizar la base de datos */
-        //         let newArray2 = this.photosGranjaArray.filter((dataarray: any) => {
-        //           let dataanalisis = dataarray;
-        //           return dataarray >= 'https://firebasestorage.googleapis.com';
-        //         });
-        //         console.log(newArray2);
-        //         /* Estraemos los files para mandar a firebase */
-        //         for (let index = 0; index < result[1].length; index++) {
-        //           const element = result[1][index];
-        //           this.filesfinalCreate.push(element);
-        //         }
-        //         /* Agregamos nuevos elementos al file solo para cumplir requisitos */
-        //         for (let index = 0; index < newArray2.length; index++) {
-        //           const element = newArray2[index];
-        //           this.filesfinalCreate.unshift(element);
-        //         }
-        //         console.log(this.filesfinalCreate);
-        //         /* Segun el inice eliminaremos los archivos files */
-        //         if (result[2].length>0) {
-        //      /*      for (let index = 0; index < result[2].length; index++) {
-        //             const element = result[2][index];
-        //             this.filesfinalCreate.splice(element, 1);
-        //           } */
-        //           console.log(this.filesfinalCreate);
-        //         }
+
       })
       .catch((result) => {});
   }

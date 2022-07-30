@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { AsociacionesService } from '../../services/asociaciones.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -22,33 +22,29 @@ export class AsociacionesMunicipioComponent implements OnInit {
       nameButton: 'Tipo de asociación',
       data: [
         {
+          id:0,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Piscicultores',
           datoafiltrar: 'Piscicultores',
           modoFiltro: MODOFILTRO2,
         },
         {
+          id:1,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Pescadores',
           datoafiltrar: 'Pescadores',
           modoFiltro: MODOFILTRO2,
         },
-        {
+        { id:2,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Mixta',
           datoafiltrar: 'Mixta',
           modoFiltro: MODOFILTRO2,
         },
-        {
-          nombrecampoDB: null,
-          nombrefiltro: 'Ver todas',
-          datoafiltrar: null,
-          modoFiltro: MODOFILTRO2,
-        },
       ],
     },
   ];
-  filtroseleccionado!: MetaFiltro;
+  filtroseleccionado!: MetaFiltro | null;
   palabra: string = '';
   constructor(
     private asociacionesService: AsociacionesService,
@@ -131,6 +127,10 @@ export class AsociacionesMunicipioComponent implements OnInit {
   onFiltroChange(filtro: MetaFiltro) {
     this.filtroseleccionado = filtro;
     this.reseteoDeBusqueda();
+  }
+  delateFilter() {
+ this.filtroseleccionado = null;
+this.reseteoDeBusqueda();
   }
   reseteoDeBusqueda() {
     let resultados: any[] = this.buscarData(this.palabra);

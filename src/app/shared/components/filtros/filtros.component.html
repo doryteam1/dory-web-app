@@ -5,7 +5,7 @@
     <span>
       <span>
         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24"
-          width="24px" fill="#000000" [ngClass]="{'filtroactivo': indicefiltroselec !== -1}">
+          width="24px" fill="#000000" [ngClass]="{'filtroactivo':filtroSeleccionado }">
           <g>
             <path d="M0,0h24 M24,24H0" fill="none" />
             <path
@@ -22,10 +22,10 @@
     <li>
       <div *ngFor="let filtroSelecData of filtro[0].data; let i =index" class="dropdown-menu-div-li">
         <!-- Verificaobcion  filtro selecionado -->
-        <a class="dropdown-item" (click)="filterSeleccionado(i,filtroSelecData)">
+        <a class="dropdown-item" (click)="filterSeleccionado(filtroSelecData)">
           {{filtroSelecData.nombrefiltro}}
         </a>
-        <img src="assets/icons/check_black_24dp.svg" *ngIf="i==indicefiltroselec">
+        <img src="assets/icons/check_black_24dp.svg" *ngIf="filtroSelecData.id === filtroSeleccionado?.id">
       </div>
     </li>
   </ul>
@@ -48,4 +48,6 @@
     </span>
   </span>
   {{checkbox[0].nameButton}}
+
 </div>
+
