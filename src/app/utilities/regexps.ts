@@ -2,7 +2,7 @@ const eigthChar = /.{8}/;
 const capitalcase = /[A-Z]{1}/;
 const lowercase = /[a-z]{1}/;
 const number = /[0-9]{1}/;
-const twoCadSpace = /^[A-Za-z]+\s*[A-Za-z]*$/;
+const twoCadSpace = /^[A-Za-zÀ-ÿ\u00f1\u00d1]+\s*[A-Za-zÀ-ÿ\u00f1\u00d1]*$/;
 export class RegExpUtils{
     
     static eigthCharTest(cad:string){

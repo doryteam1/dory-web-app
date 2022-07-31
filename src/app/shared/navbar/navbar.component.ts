@@ -115,6 +115,11 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
   authUserPhoto():any{
     return this.userService.getAuthUserPhoto();
   }
+
+  authUserNomApell():any{
+    return this.userService.getAuthUserNomApell();
+  }
+
   authWith(){
     return this.userService.authenticatedWith();
   }

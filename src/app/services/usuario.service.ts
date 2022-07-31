@@ -85,6 +85,14 @@ export class UsuarioService {
   setAuthUserPhoto(photoUrl:string){
     localStorage.setItem('photoUser',photoUrl);
   }
+  
+  setAuthUserNomApell(nomApell:string){
+    localStorage.setItem('nomApell',nomApell);
+  }
+
+  getAuthUserNomApell(){
+    return localStorage.getItem('nomApell');
+  }
 
   getAuthUserPhoto(){
     return localStorage.getItem('photoUser');
