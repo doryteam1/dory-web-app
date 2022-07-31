@@ -385,10 +385,7 @@ export class MisAsociacionesComponent implements OnInit {
     this.filtroseleccionado = null;
     this.reseteoDeBusqueda();
   }
-  delateFilterCheckbox() {
-   this.filtroseleccionadoCheckbox = [];
-    this.reseteoDeBusqueda();
-  }
+
   filtradoDataCheckbox(arrayCheckboxSelec: any[], arrayafiltrar: any[]) {
     let filtroresult: any[] = [];
     let filtroSelecOptionData: Checkbox[] = this.checkbox;
@@ -401,6 +398,10 @@ export class MisAsociacionesComponent implements OnInit {
   }
   onFiltroChangeCheckbox(checkboxs: string[]) {
     this.filtroseleccionadoCheckbox = checkboxs;
+    this.reseteoDeBusqueda();
+  }
+  delateFilterCheckbox(index: number) {
+   this.filtroseleccionadoCheckbox.splice(index,1);
     console.log(this.filtroseleccionadoCheckbox);
     this.reseteoDeBusqueda();
   }

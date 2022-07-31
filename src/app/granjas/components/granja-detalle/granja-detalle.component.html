@@ -149,7 +149,7 @@
           <span class="box-miopinion__sub-title">{{miresena?.nombre_usuario}}</span>
           <div class="box-miopinion__box d-flex flex-row flex-nowrap">
             <app-stars class="box-miopinion__stars" [selectedStar]="miresena?.calificacion" size="small"></app-stars>
-            <span class="box-miopinion__date">{{miresena?.fecha.slice(0, miresena?.fecha.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
+            <span class="box-miopinion__date">{{miresena?.fecha?.slice(0, miresena?.fecha?.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
 
           </div>
         </div>
@@ -197,7 +197,7 @@
           </div>
           <div class="d-flex flex-row justify-content-start mt-4">
             <app-stars class="card__stars" [selectedStar]="(resena?.calificacion == null || resena?.calificacion < 1) ? '0' : resena?.calificacion" *ngIf="i < 3" size="small"></app-stars>
-            <span *ngIf="i < 3">{{resena?.fecha.slice(0, resena?.fecha.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
+            <span *ngIf="i < 3">{{resena?.fecha?.slice(0, resena?.fecha?.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
           </div>
           <p class="card__paragh" *ngIf="i < 3">{{resena?.descripcion}}</p>
           <a class="link" *ngIf="i == 2" (click)="showResenas(granja.id_granja)">Ver todas las reseñas</a>

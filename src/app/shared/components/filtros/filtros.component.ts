@@ -2,9 +2,6 @@ import { Component, EventEmitter,Input, OnInit, Output } from '@angular/core';
 import { AppModalService } from '../../services/app-modal.service';
 import { Filtro, MetaFiltro } from '../../../../models/filtro.model';
 import { Checkbox } from 'src/models/checkbox.model';
-
-
-
 @Component({
   selector: 'app-filtro',
   templateUrl: './filtros.component.html',
@@ -20,13 +17,12 @@ export class FiltrosComponent implements OnInit {
   @Input() filtroSeleccionado: MetaFiltro | null = null;
   @Output() onFilterSeleccionado: EventEmitter<any> = new EventEmitter();
   @Output() onArrayCheckboxSelec: EventEmitter<any[]> = new EventEmitter();
-  arrayCheckboxSelec: any[] = [];
-  encontradodatafilterCheckbox: any[] = [];
+  @Input() arrayCheckboxSelec: any[] = [];
   constructor(private appModalService: AppModalService) {}
 
   ngOnInit(): void {}
   filterSeleccionado(filtroSelecOptionData: MetaFiltro) {
-   if (this.filtroSeleccionado == null) {
+    if (this.filtroSeleccionado == null) {
       /* Si el filtro esta seleccionado lo marca  */
       this.filtroSeleccionado = filtroSelecOptionData;
       this.onFilterSeleccionado.emit(filtroSelecOptionData);
@@ -35,7 +31,7 @@ export class FiltrosComponent implements OnInit {
       deseleccionamos */
       this.filtroSeleccionado = null;
       this.onFilterSeleccionado.emit(null);
-    }else {
+    } else {
       /* Si el que filtro que seleccionamos es diferente, del que  tenia guaradado
       deseleccinamos el nuevo filtro */
       this.filtroSeleccionado = filtroSelecOptionData;

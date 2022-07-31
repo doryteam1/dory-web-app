@@ -66,6 +66,7 @@ export class GranjaDetalleComponent implements OnInit {
          .subscribe(
            (response) => {
              this.miresena = response.data.resena;
+             console.log('mi reseña',this.miresena)
              this.editedDescResena = this.miresena?.descripcion;
            },
            (err) => {}
