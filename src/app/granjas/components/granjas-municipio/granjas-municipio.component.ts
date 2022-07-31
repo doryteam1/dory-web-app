@@ -72,14 +72,14 @@ export class GranjasMunicipioComponent implements OnInit {
       nameButton: 'Filtrar Granjas',
       data: [
         {
-          id:0,
+          id: 0,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Calificación',
           datoafiltrar: 'puntuacion',
           modoFiltro: 'number_ordenarmayoramenor',
         },
         {
-          id:1,
+          id: 1,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Área',
           datoafiltrar: 'area',
@@ -90,7 +90,7 @@ export class GranjasMunicipioComponent implements OnInit {
     },
   ];
   palabra: string = '';
-  filtroseleccionado!: MetaFiltro;
+  filtroseleccionado!: MetaFiltro | null;
 
   constructor(
     httpClient: HttpClient,
@@ -229,25 +229,6 @@ export class GranjasMunicipioComponent implements OnInit {
   mapainiciado() {
     this.mapaOn = true;
   }
-
-  /* funciones de busqueda granjas */
-  /*  buscarData(texto: string): any {
-    if (texto.trim().length == 0) {
-      this.granjas = this.granjasarray;
-      this.extractLatLong();
-    } else {
-      let buscardatospor: BuscarPor[] = [
-        { data1: 'nombre' },
-        { data2: 'descripcion' },
-      ];
-      this.granjas = this.searchBuscadorService.buscarData(
-        this.granjasarray,
-        texto,
-        buscardatospor
-      );
-      this.extractLatLong();
-    }
-  } */
   buscarData(texto: string): any {
     let granjassresult: any[];
     if (texto.trim().length === 0) {
@@ -282,6 +263,10 @@ export class GranjasMunicipioComponent implements OnInit {
     this.filtroseleccionado = filtro;
     this.reseteoDeBusqueda();
   }
+  delateFilter() {
+    this.filtroseleccionado = null;
+    this.reseteoDeBusqueda();
+  }
   reseteoDeBusqueda() {
     let resultados: any[] = this.buscarData(this.palabra);
     if (this.filtroseleccionado) {
@@ -290,11 +275,4 @@ export class GranjasMunicipioComponent implements OnInit {
     this.granjas = resultados;
     this.extractLatLong();
   }
-  /*   filtradoData(datafilter: any) {
-    this.granjas = this.searchBuscadorService.filterSeleccionadoList(
-      this.granjasarray,
-      datafilter
-    );
-    this.extractLatLong();
-  } */
 }

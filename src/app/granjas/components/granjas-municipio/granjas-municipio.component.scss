@@ -591,3 +591,15 @@ padding-top: 80px;
     color: black;
   }
 }
+.chip {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .chip__checkbox {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}

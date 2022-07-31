@@ -53,6 +53,16 @@
     color: black;
   }
 }
-.iconofiltro{
-  fill: var(--azul1);
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .chip__checkbox {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
 }

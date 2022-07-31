@@ -29,10 +29,23 @@
       <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar granjas...'"
         (keyEnterPressData)="onBuscarPalabra($event)">
       </app-search>
-      <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)">
+      <app-filtro
+      [filtro]="filtro"
+      [checkboxfiltro]="false"
+      (onFilterSeleccionado)="onFiltroChange($event)"
+      [filtroSeleccionado]="filtroseleccionado">
       </app-filtro>
-    </div>
-    <div *ngIf="granjas.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
+      </div>
+      <div class="chip">
+        <app-chip-con-boton-close
+        *ngIf="filtroseleccionado"
+          [iconoChip]="true"
+          [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+           [contenidoChip]="filtroseleccionado.nombrefiltro"
+          (onCloseClip)="delateFilter()">
+        </app-chip-con-boton-close>
+      </div>
+      <div *ngIf="granjas.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
       <img src="assets/icons/searchanimado.svg">
       <div>
         No se encontraron resultados
