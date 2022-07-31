@@ -1,23 +1,27 @@
 <div>
   <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <!-- Home tab pane -->
     <li class="nav-item" role="presentation">
       <a [ngClass]="{'active nav-link--mytabstilo': activeclass1}" class="nav-link nav-link--color" id="home-tab"
         data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
         aria-selected="true" (click)="activeTabClick('representante')">Donde soy representante</a>
     </li>
+    <!-- Profile-tab-pane -->
     <li class="nav-item" role="presentation">
       <a [ngClass]="{'active nav-link--mytabstilo': activeclass2}" class="nav-link nav-link--color" id="profile-tab"
         data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab"
         aria-controls="profile-tab-pane" aria-selected="false" (click)="activeTabClick('miembro')">Donde soy miembro</a>
     </li>
+    <!-- Unirme_a_una_asociacion -->
     <li class="nav-item" role="presentation">
-      <a [ngClass]="{'active nav-link--mytabstilo': activeclass3}" class="nav-link nav-link--color" id="profile-tab"
+      <a [ngClass]="{'active nav-link--mytabstilo': activeclass3}" class="nav-link nav-link--color" id="Unirme_a_una_asociacion-tab"
         data-bs-toggle="tab" data-bs-target="#Unirme_a_una_asociacion" type="button" role="tab"
-        aria-controls="profile-tab-pane" aria-selected="false"
+        aria-controls="Unirme_a_una_asociacion" aria-selected="false"
         (click)="activeTabClick('Unirme_a_una_asociacion')">Unirme a una asociación</a>
     </li>
   </ul>
   <div class="tab-content" id="myTabContent">
+    <!-- Home tab panel -->
     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
       <div class="row row-cols-2">
         <app-card-asociacion class="col" *ngFor="let asociacion of asociaciones" [asociacion]="asociacion"
@@ -33,6 +37,7 @@
         </div>
       </div>
     </div>
+    <!-- Profile-tab-pane -->
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
       <div class="row row-cols-2">
         <app-card-asociacion class="col" *ngFor="let asociacion of asociacionesIsMiembro" [asociacion]="asociacion"
@@ -47,8 +52,9 @@
         </div>
       </div>
     </div>
-    <div class="tab-pane fade" id="Unirme_a_una_asociacion" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-      <div class="buscadoryfiltro" *ngIf="!showNotFound">
+    <!-- Unirme_a_una_asociacion -->
+    <div class="tab-pane fade" id="Unirme_a_una_asociacion" role="tabpanel" aria-labelledby="Unirme_a_una_asociacion-tab" tabindex="0">
+      <div class="buscadoryfiltro">
         <div class="buscador-container">
           <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar asociacion..'"
             (keyEnterPressData)="onBuscarPalabra($event)">
@@ -107,13 +113,6 @@
                   miembro</a></li>
             </ul>
           </div>
-        </div>
-      </div>
-      <div class="search-container" *ngIf="showNotFoundAsocexistente">
-        <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/searching.svg">
-          <h3>No se han encontrado resultados</h3>
-          <p>Aún no perteneces a una asociación</p>
         </div>
       </div>
     </div>
