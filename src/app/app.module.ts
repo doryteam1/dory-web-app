@@ -21,7 +21,26 @@ import { VerifyAccountComponent } from './verify-account/verify-account.componen
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { ShareButtonsConfig } from 'ngx-sharebuttons';
 
+const customConfig: ShareButtonsConfig = {
+  include: ['whatsapp', 'email', 'copy'],
+  exclude: [],
+  theme: 'modern-light',
+  gaTracking: true,
+  prop: {
+    whatsapp: {
+      icon: ['fab', 'whatsapp'],
+      text: 'Whatsapp'
+    },
+    email: {
+      text: 'Correo'
+    },
+    copy: {
+      text: 'Copiar link'
+    }
+  }
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +60,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     NgxSpinnerModule,
     SocialLoginModule,
     SharedModule,
-    ShareButtonsModule,
+    ShareButtonsModule.withConfig(customConfig),
     ShareIconsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule

@@ -22,6 +22,7 @@ export class ResenasModalContentComponent implements OnInit {
     this.granjasService.resenasById(this.granjaId).subscribe(
       (response)=>{
         this.resenas = response.data.resenas;
+        console.log("Reseñas ",this.resenas)
         this.puntuacion = response.data.puntaje;
         if(this.resenas.length < 1){
           this.showNotFound = true;

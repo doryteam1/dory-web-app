@@ -18,9 +18,10 @@
                 <img src="{{ resena.foto_usuario ? resena.foto_usuario : 'assets/images/avatar-person.svg' }}" alt="" class="card__image">
                 <div class="card__box">
                     <span class="card__title">{{resena.nombre_usuario}}</span>
-                    <div class="span card__date"> {{resena?.fecha.slice(0, resena?.fecha.indexOf('T')) | date:'dd/MM/yyyy'}}</div>
+                    <div class="span card__date"> {{resena?.fecha?.slice(0, resena?.fecha?.indexOf('T')) | date:'dd/MM/yyyy'}}</div>
                 </div>
             </div>
+            <app-stars [selectedStar]="resena?.calificacion" size="small"></app-stars>
             <p class="card__paragh">{{resena.descripcion}}</p>
         </div>
     </div>

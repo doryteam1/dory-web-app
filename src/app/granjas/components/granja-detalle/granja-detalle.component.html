@@ -147,11 +147,7 @@
         <img class="box-miopinion__img" [src]="miresena?.foto_usuario ? miresena?.foto_usuario : 'assets/images/avatar-person.svg'">
         <div class="box-miopinion__box d-flex flex-column">
           <span class="box-miopinion__sub-title">{{miresena?.nombre_usuario}}</span>
-          <div class="box-miopinion__box d-flex flex-row flex-nowrap">
-            <app-stars class="box-miopinion__stars" [selectedStar]="miresena?.calificacion" size="small"></app-stars>
-            <span class="box-miopinion__date">{{miresena?.fecha?.slice(0, miresena?.fecha?.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
-
-          </div>
+          <span class="box-miopinion__date">{{miresena?.fecha?.slice(0, miresena?.fecha?.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
         </div>
         <div class="box-miopinion__dots">
           <div class="dropdown">
@@ -162,7 +158,11 @@
           </div>
         </div>
       </div>
-      <p class="box-miopinion__desc">{{miresena?.descripcion}}</p>
+      <div class="box-miopinion__box d-flex flex-column flex-nowrap">
+        <app-stars class="box-miopinion__stars" [selectedStar]="miresena?.calificacion" size="small"></app-stars>
+        <p class="box-miopinion__desc">{{miresena?.descripcion}}</p>
+      </div>
+      
      <!--  <div class="d-flex flex-column justify-content-start"  *ngIf="editingMiResena">
         <textarea class="box-miopinion__input form-input-text-square" [(ngModel)]="editedDescResena"></textarea>
         <button class="btn-square-white align-self-end" (click)="updateMiResena()">
@@ -192,12 +192,12 @@
                 <img src="{{ resena.foto_usuario ? resena.foto_usuario : 'assets/images/avatar-person.svg' }}" alt="" class="card__image">
                 <div class="card__box">
                     <span class="card__title">{{resena.nombre_usuario}}</span>
+                    <span *ngIf="i < 3">{{resena?.fecha?.slice(0, resena?.fecha?.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
                 </div>
               </div>
           </div>
-          <div class="d-flex flex-row justify-content-start mt-4">
+          <div class="d-flex flex-row justify-content-start mt-1">
             <app-stars class="card__stars" [selectedStar]="(resena?.calificacion == null || resena?.calificacion < 1) ? '0' : resena?.calificacion" *ngIf="i < 3" size="small"></app-stars>
-            <span *ngIf="i < 3">{{resena?.fecha?.slice(0, resena?.fecha?.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
           </div>
           <p class="card__paragh" *ngIf="i < 3">{{resena?.descripcion}}</p>
           <a class="link" *ngIf="i == 2" (click)="showResenas(granja.id_granja)">Ver todas las reseñas</a>

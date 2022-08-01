@@ -555,7 +555,6 @@ background-color: #ccc;
 }
 
 .card__paragh{
-  margin-top: 15px;
   text-align: justify;
 }
 
@@ -679,9 +678,10 @@ background-color: #ccc;
 .box-miopinion__img{
   width: 60px;
   height: 60px;
-  border-radius: 50px;
+  border-radius: 50%;
   margin-right: 20px;
   object-fit: cover;
+  min-width: 60px;
 }
 
 .box-miopinion__sub-title{
