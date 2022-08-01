@@ -24,29 +24,32 @@
     </div>
 </div>
 
-<div class="search-container" *ngIf="showNotFound">
-  <div class="search-container__box">
-    <img class="search-container__image" src="assets/images/searching.svg">
-    <h3>No se han encontrado resultados</h3>
-    <p>No encontramos pescadores en este municipio </p>
-  </div>
-</div>
-<div class="buscadoryfiltro">
-  <div class="buscador-container"  *ngIf="!showNotFound">
+<div class="buscadoryfiltro" *ngIf="pescadores.length > 0">
+  <div class="buscador-container">
     <app-search
     [buscadorpersonalizado]="true"
     [placeholderbuscador]="'Buscar pescador...'"
       (keyEnterPressData)="buscarData($event)">
     </app-search>
   </div>
-    <div *ngIf="this.pescadores.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo"
+    <!-- <div *ngIf="this.pescadores.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo"
       role="alert">
       <img src="assets/icons/searchanimado.svg">
       <div>
         No se encontraron resultados
       </div>
-    </div>
+    </div> -->
 </div>
+
+<div class="search-container" *ngIf="showNotFound">
+  <div class="search-container__box">
+    <img class="search-container__image" [ngClass]="{'search-container__image--modify':pescadores.length<1}" src="assets/images/searching.svg">
+    <h3>No se han encontrado resultados</h3>
+    <p>No encontramos resultados para esta busqueda </p>
+    <button class="btn-rounded btn--blue" (click)="goBack()">Volver al mapa</button>
+  </div>
+</div>
+
 <div class="container-map-car">
   <div class="row-map-cart">
     <div *ngIf="pescadores.length >= 1">

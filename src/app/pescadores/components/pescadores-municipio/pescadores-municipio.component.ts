@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
-import { registerLocaleData } from '@angular/common';
+import { Location, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { Router } from '@angular/router';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
@@ -75,7 +75,8 @@ export class PescadoresMunicipioComponent implements OnInit {
     private pescadoresService: PescadoresService,
     private placesService: PlacesService,
     private router: Router,
-    private searchBuscadorService: SearchBuscadorService
+    private searchBuscadorService: SearchBuscadorService,
+    private location:Location
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -206,7 +207,16 @@ export class PescadoresMunicipioComponent implements OnInit {
        texto,
        buscardatospor
      );
-      this.extractLatLong();
     }
+    this.extractLatLong();
+    if(this.pescadores.length < 1){
+      this.showNotFound = true;
+     }else{
+      this.showNotFound = false;
+     }
+  }
+
+  goBack(){
+    this.location.back()
   }
 }

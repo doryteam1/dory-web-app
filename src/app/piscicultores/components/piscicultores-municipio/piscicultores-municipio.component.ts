@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PiscicultoresService } from '../../services/piscicultores.service';
 import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
-import { registerLocaleData } from '@angular/common';
+import { Location, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { vertices } from '../../../global/constants';
@@ -52,15 +52,16 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   };
   mapaOn: boolean = false;
   showNotFound: boolean = false;
-  piscicultoresarray: any[] = [];
   piscicultores: any[] = [];
+  piscicultoresFiltered: any[] = [];
   constructor(
     httpClient: HttpClient,
     private activatedRoute: ActivatedRoute,
     private piscicultoresService: PiscicultoresService,
     private placesService: PlacesService,
     private router: Router,
-    private searchBuscadorService: SearchBuscadorService
+    private searchBuscadorService: SearchBuscadorService,
+    private location:Location
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -83,7 +84,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
       this.piscicultoresService
         .getPiscicultoresAsociacion(id)
         .subscribe((response) => {
-          this.piscicultores = response.data;
+          this.piscicultoresFiltered = response.data;
           this.municipio = response.municipio;
           this.extractLatLong();
         });
@@ -91,18 +92,18 @@ export class PiscicultoresMunicipioComponent implements OnInit {
       this.piscicultoresService
         .getPiscicultoresMunicipio(id)
         .subscribe((response) => {
+          this.piscicultoresFiltered = response.data;
           this.piscicultores = response.data;
-          this.piscicultoresarray = response.data;
-          console.log(this.piscicultores);
-          if (this.piscicultores.length !== 0) {
+          console.log(this.piscicultoresFiltered);
+          if (this.piscicultoresFiltered.length !== 0) {
             this.showNotFound = false;
           } else {
             this.showNotFound = true;
           }
           this.options = {
             center: {
-              lat: Number(this.piscicultores[0].latitud),
-              lng: Number(this.piscicultores[0].longitud),
+              lat: Number(this.piscicultoresFiltered[0].latitud),
+              lng: Number(this.piscicultoresFiltered[0].longitud),
             },
             zoom: 13,
           };
@@ -141,7 +142,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   extractLatLong() {
     this.markerPositions = [];
     this.markersInfo = [];
-    this.piscicultores.forEach((piscicultor: any) => {
+    this.piscicultoresFiltered.forEach((piscicultor: any) => {
       let markerPosition: google.maps.LatLngLiteral = {
         lat: Number(piscicultor.latitud),
         lng: Number(piscicultor.longitud),
@@ -155,23 +156,23 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   onMouseCard(piscicultor: any, indexSelected: number) {
     this.indexSelected = indexSelected;
     this.markerPosition = {
-      lat: Number(this.piscicultores[indexSelected].latitud),
-      lng: Number(this.piscicultores[indexSelected].longitud),
+      lat: Number(this.piscicultoresFiltered[indexSelected].latitud),
+      lng: Number(this.piscicultoresFiltered[indexSelected].longitud),
     };
     this.openInfoWindow(this.marker, indexSelected);
   }
   eliminInfoWindow() {
-    if (this.piscicultores.length > 0 && this.mapaOn) {
+    if (this.piscicultoresFiltered.length > 0 && this.mapaOn) {
       this.infoWindow.close();
       this.indexSelected = -1;
     }
   }
   openInfoWindow(marker: MapMarker, index: number) {
-    if (this.piscicultores.length > 0 && this.mapaOn) {
+    if (this.piscicultoresFiltered.length > 0 && this.mapaOn) {
       this.indexSelected = index;
       this.infoWindow.open(marker);
-      this.selectedPiscicultor.nombre = this.piscicultores[index].nombre;
-      this.selectedPiscicultor.dirrecion = this.piscicultores[index].direccion;
+      this.selectedPiscicultor.nombre = this.piscicultoresFiltered[index].nombre;
+      this.selectedPiscicultor.dirrecion = this.piscicultoresFiltered[index].direccion;
     }
   }
   navigate(piscicultor: any) {
@@ -185,16 +186,24 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   /* funciones de busqueda granjas */
   buscarData(texto: string):any {
     if (texto.trim().length === 0) {
-      this.piscicultores = this.piscicultoresarray;
-       this.extractLatLong();
+      this.piscicultoresFiltered = this.piscicultores;
     }else{
       let buscardatospor: BuscarPor[]= [{ data1: 'nombre' }];
-      this.piscicultores = this.searchBuscadorService.buscarData(
-        this.piscicultoresarray,
+      this.piscicultoresFiltered = this.searchBuscadorService.buscarData(
+        this.piscicultores,
         texto,
         buscardatospor
       );
-      this.extractLatLong();
     }
+    if(this.piscicultoresFiltered.length < 1){
+      this.showNotFound = true;
+    }else{
+      this.showNotFound = false;
+    }
+    this.extractLatLong();
+  }
+
+  goBack(){
+    this.location.back()
   }
 }

@@ -21,7 +21,7 @@
         </div>
     </div>
 </div>
-<div class="buscadoryfiltro" *ngIf="!showNotFound">
+<div class="buscadoryfiltro" *ngIf="piscicultores.length > 0">
   <div class="buscador-container" >
     <app-search
        [buscadorpersonalizado]="true"
@@ -29,25 +29,26 @@
        (keyEnterPressData)="buscarData($event)">
     </app-search>
   </div>
-    <div *ngIf="piscicultores.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo"
+   <!--  <div *ngIf="piscicultoresFiltered.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo"
       role="alert">
       <img src="assets/icons/searchanimado.svg">
       <div>
         No se encontraron resultados
       </div>
-    </div>
+    </div> -->
 </div>
 <div class="search-container" *ngIf="showNotFound">
   <div class="search-container__box">
-    <img class="search-container__image" src="assets/images/searching.svg">
+    <img class="search-container__image" [ngClass]="{'search-container__image--modify':piscicultores.length<1}" src="assets/images/searching.svg">
     <h3>No se han encontrado resultados</h3>
-    <p>No encontramos piscicultores en este municipio </p>
+    <p>No encontramos resultados para esta busqueda </p>
+    <button class="btn-rounded btn--blue" (click)="goBack()">Volver al mapa</button>
   </div>
 </div>
 <div class="container-map-car">
   <div class="row-map-cart">
-    <div *ngIf="piscicultores.length >= 1">
-              <app-card-piscicultor *ngFor="let piscicultor of piscicultores; let i =index " [piscicultor]="piscicultor "
+    <div *ngIf="piscicultoresFiltered.length >= 1">
+              <app-card-piscicultor *ngFor="let piscicultor of piscicultoresFiltered; let i =index " [piscicultor]="piscicultor "
                 (onDetalle)="navigate($event)" (onMouseOutCard)="eliminInfoWindow()"
                 (onMouseInsideCard)=" onMouseCard($event, i)">
               </app-card-piscicultor>
@@ -55,7 +56,7 @@
   </div>
   <div class="mYstiledivmap">
       <div class="sticky-top">
-        <div class="mapgoogle" *ngIf="piscicultores.length > 0 && (apiLoaded | async)">
+        <div class="mapgoogle" *ngIf="piscicultoresFiltered.length > 0 && (apiLoaded | async)">
           <google-map
           height="650px"
            width="785px"

@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GranjasService } from '../../services/granjas.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { registerLocaleData } from '@angular/common';
+import { Location, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
@@ -23,7 +23,7 @@ import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 export class GranjasMunicipioComponent implements OnInit {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   @ViewChild('marker') marker!: MapMarker;
-  singranjas: boolean = false;
+  showNotFound: boolean = false;
   markerPositions: google.maps.LatLngLiteral[] = [];
   markersInfo: any[] = [];
   markerOptions: google.maps.MarkerOptions = { draggable: false };
@@ -64,12 +64,12 @@ export class GranjasMunicipioComponent implements OnInit {
     },
   };
   displayblock: boolean = false;
-  granjasarray: any[] = [];
   granjas: any[] = [];
+  granjasFiltered: any[] = [];
 
   filtro: Filtro[] = [
     {
-      nameButton: 'Filtrar Granjas',
+      nameButton: 'Ordenar Granjas',
       data: [
         {
           id: 0,
@@ -98,7 +98,8 @@ export class GranjasMunicipioComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private placesService: PlacesService,
     private router: Router,
-    private searchBuscadorService: SearchBuscadorService
+    private searchBuscadorService: SearchBuscadorService,
+    private location:Location
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -118,15 +119,15 @@ export class GranjasMunicipioComponent implements OnInit {
       .getGranjasMunicipio(Number(this.activatedRoute.snapshot.url[1]))
       .subscribe(
         (response) => {
-          this.granjasarray = response.data;
           this.granjas = response.data;
-          console.log(this.granjas);
+          this.granjasFiltered = response.data;
+          console.log(this.granjasFiltered);
           this.extractLatLong();
         },
         (err) => {
           console.error('Hay un error al obtener la lista de grajas');
-          if (this.granjas.length == 0) {
-            this.singranjas = true;
+          if (this.granjasFiltered.length == 0) {
+            this.showNotFound = true;
           }
         }
       );
@@ -161,7 +162,7 @@ export class GranjasMunicipioComponent implements OnInit {
   extractLatLong() {
     this.markerPositions = [];
     this.markersInfo = [];
-    this.granjas.forEach((granja: Granja) => {
+    this.granjasFiltered.forEach((granja: Granja) => {
       let markerPosition: google.maps.LatLngLiteral = {
         lat: Number(granja.latitud),
         lng: Number(granja.longitud),
@@ -174,29 +175,29 @@ export class GranjasMunicipioComponent implements OnInit {
   onMouseCard(indexSelected: number) {
     this.indexSelected = indexSelected;
     this.markerPosition = {
-      lat: Number(this.granjas[indexSelected].latitud),
-      lng: Number(this.granjas[indexSelected].longitud),
+      lat: Number(this.granjasFiltered[indexSelected].latitud),
+      lng: Number(this.granjasFiltered[indexSelected].longitud),
     };
     this.openInfoWindow(this.marker, indexSelected);
   }
 
   eliminInfoWindow() {
     this.indexSelected = -1;
-    if (this.granjas.length > 0 && this.mapaOn) {
+    if (this.granjasFiltered.length > 0 && this.mapaOn) {
       this.infoWindow.close();
     }
   }
 
   openInfoWindow(marker: MapMarker, index: number) {
-    if (this.granjas.length > 0 && this.mapaOn) {
+    if (this.granjasFiltered.length > 0 && this.mapaOn) {
       this.indexSelected = index;
       this.infoWindow.open(marker);
-      this.selectedGranja.nombregranja = this.granjas[index].nombre;
-      this.selectedGranja.area = this.granjas[index].area;
-      this.selectedGranja.dirreciongranja = this.granjas[index].direccion;
+      this.selectedGranja.nombregranja = this.granjasFiltered[index].nombre;
+      this.selectedGranja.area = this.granjasFiltered[index].area;
+      this.selectedGranja.dirreciongranja = this.granjasFiltered[index].direccion;
       this.selectedGranja.propietario.nombre =
-        this.granjas[index].propietario ||
-        this.granjas[index].propietarios[0].nombre_completo;
+        this.granjasFiltered[index].propietario ||
+        this.granjasFiltered[index].propietarios[0].nombre_completo;
     }
   }
 
@@ -210,14 +211,14 @@ export class GranjasMunicipioComponent implements OnInit {
 
     console.log(horas.getHours());
 
-    this.granjas[i].favorita = this.granjas[i].favorita == 1 ? 0 : 1;
-    this.granjasService.esFavorita(this.granjas[i].id_granja).subscribe(
+    this.granjasFiltered[i].favorita = this.granjasFiltered[i].favorita == 1 ? 0 : 1;
+    this.granjasService.esFavorita(this.granjasFiltered[i].id_granja).subscribe(
       (response) => {
         console.log(response);
       },
       (err) => {
         console.log(err);
-        this.granjas[i].favorita = this.granjas[i].favorita == 1 ? 0 : 1;
+        this.granjasFiltered[i].favorita = this.granjasFiltered[i].favorita == 1 ? 0 : 1;
       }
     );
     //this.proveedorService.updateProducto(this.form)
@@ -232,17 +233,22 @@ export class GranjasMunicipioComponent implements OnInit {
   buscarData(texto: string): any {
     let granjassresult: any[];
     if (texto.trim().length === 0) {
-      granjassresult = this.granjasarray;
+      granjassresult = this.granjas;
     } else {
       let buscardatospor: BuscarPor[] = [
         { data1: 'nombre' },
         { data2: 'descripcion' },
       ];
       granjassresult = this.searchBuscadorService.buscarData(
-        this.granjasarray,
+        this.granjas,
         texto,
         buscardatospor
       );
+    }
+    if(granjassresult.length<1){
+      this.showNotFound = true;
+    }else{
+      this.showNotFound = false;
     }
     return granjassresult;
   }
@@ -272,7 +278,11 @@ export class GranjasMunicipioComponent implements OnInit {
     if (this.filtroseleccionado) {
       resultados = this.filtradoData(this.filtroseleccionado, resultados);
     }
-    this.granjas = resultados;
+    this.granjasFiltered = resultados;
     this.extractLatLong();
+  }
+
+  goBack(){
+    this.location.back()
   }
 }

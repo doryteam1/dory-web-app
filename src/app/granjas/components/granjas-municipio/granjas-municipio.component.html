@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <div class="buscadoryfiltro" *ngIf="!singranjas">
+  <div class="buscadoryfiltro" *ngIf="granjas.length > 0">
     <div class="buscador-container">
       <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar granjas...'"
         (keyEnterPressData)="onBuscarPalabra($event)">
@@ -45,29 +45,30 @@
           (onCloseClip)="delateFilter()">
         </app-chip-con-boton-close>
       </div>
-      <div *ngIf="granjas.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
-      <img src="assets/icons/searchanimado.svg">
-      <div>
-        No se encontraron resultados
-      </div>
-    </div>
+     <!--  <div *ngIf="granjas.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
+        <img src="assets/icons/searchanimado.svg">
+        <div>
+          No se encontraron resultados
+        </div>
+      </div> -->
   </div>
-  <div class="search-container" *ngIf="singranjas">
+  <div class="search-container" *ngIf="showNotFound">
     <div class="search-container__box">
-      <img class="search-container__image" src="assets/images/searching.svg">
+      <img class="search-container__image" [ngClass]="{'search-container__image--modify':granjas.length<1}" src="assets/images/searching.svg">
       <h3>No se han encontrado resultados</h3>
-      <p>No encontramos granjas en este municipio </p>
+      <p>No encontramos resultados para esta busqueda </p>
+      <button class="btn-rounded btn--blue" (click)="goBack()">Volver al mapa</button>
     </div>
   </div>
   <div>
     <div class="container-map-car">
       <div class="row-map-cart">
-        <div *ngIf="granjas.length >= 1">
-          <div class="blog-card" *ngFor="let granja of granjas ; let i =index" (mouseover)="onMouseCard(i)"
+        <div *ngIf="granjasFiltered.length >= 1">
+          <div class="blog-card" *ngFor="let granja of granjasFiltered ; let i =index" (mouseover)="onMouseCard(i)"
             (mouseout)="eliminInfoWindow()">
             <div class="meta">
               <div class="photo">
-                <app-carrucel-img class="card__image" [imagenes]="granjas[i].fotos"
+                <app-carrucel-img class="card__image" [imagenes]="granjasFiltered[i].fotos"
                   [indicatorsphoto]=" indicatorsphotos" [idtarge]="i"
                   (eventValueResponseClickFotoMiniSlider)="navigate(granja.id_granja)"
                   (eventValueResponseClickDivIndicadorSlider)="navigate(granja.id_granja)"
@@ -110,7 +111,7 @@
       </div>
       <div class="mYstiledivmap">
         <div class="sticky-top">
-          <div class="mapgoogle" *ngIf="granjas.length > 0 && (apiLoaded | async)">
+          <div class="mapgoogle" *ngIf="granjasFiltered.length > 0 && (apiLoaded | async)">
             <google-map height="650px" width="785px" [options]="options" (tilesloaded)="mapainiciado()">
               <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo  ; let i =index"
                 [position]="markerInfo.markerPosition" [options]="markerOptions"

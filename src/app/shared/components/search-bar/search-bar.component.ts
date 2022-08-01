@@ -23,7 +23,10 @@ export class SearchBarComponent implements OnInit {
           || route.includes('update-password')
           || route.includes('login')
           || route.includes('registro')
-          || route.includes('panel-busqueda')){
+          || route.includes('panel-busqueda')
+          || route.includes('pescadores')
+          || route.includes('granjas')
+          || route.includes('piscicultores')){
             this.isHidden = true;
           }else{
             this.isHidden = false;

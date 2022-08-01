@@ -39,16 +39,20 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-
-  .search-container__box {
-    text-align: center;
-
-    .search-container__image {
-      width: 1024px;
-      height: 628px;
-    }
-  }
 }
+.search-container__box {
+  text-align: center;
+}
+.search-container__image {
+  width: 400px;
+  height: 270px;
+  margin-top: 17px;
+}
+
+.search-container__image--modify{
+  margin-top: 60px;
+}
+
 .filters-container{
     margin-bottom: 90px;
 }
@@ -135,6 +139,7 @@ div.container-map-car>div>div:nth-child(1) {
 .buscadoryfiltro {
   display: flex;
   flex-direction: column;
+  margin-top: 21px;
 
   .buscador-container {
     display: flex;

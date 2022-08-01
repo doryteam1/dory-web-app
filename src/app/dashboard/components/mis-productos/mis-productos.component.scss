@@ -33,6 +33,9 @@
 .container{
     display: flex;
     flex-direction: column;
+    width: 80vw;
+    overflow-x: scroll;
+    padding-bottom: 20px;
 }
 
 .container__icon{
