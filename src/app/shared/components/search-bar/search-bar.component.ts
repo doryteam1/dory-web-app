@@ -8,8 +8,8 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { ElectronService } from 'ngx-electron';
 import { Location } from '@angular/common';
+import { ElectronjsService } from 'src/app/services/electronjs.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -24,38 +24,38 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private cdRef: ChangeDetectorRef,
-    private _electronService: ElectronService,
-    private location: Location
+    private location: Location,
+    private _electronService: ElectronjsService
   ) {}
 
   ngOnInit(): void {
-    this.router.events.subscribe(
-      (event)=>{
-        if(event instanceof NavigationEnd){
-          console.log(event)
-          let route:string = event.url;
-          if(route.includes('dashboard')
-          || route.includes('contacto')
-          || route.includes('update-password')
-          || route.includes('update-password')
-          || route.includes('login')
-          || route.includes('registro')
-          || route.includes('panel-busqueda')
-          || route.includes('pescadores')
-          || route.includes('granjas')
-          || route.includes('piscicultores')){
-            this.isHidden = true;
-          }else{
-            this.isHidden = false;
-          }
-
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        console.log(event);
+        let route: string = event.url;
+        if (
+          route.includes('dashboard') ||
+          route.includes('contacto') ||
+          route.includes('update-password') ||
+          route.includes('update-password') ||
+          route.includes('login') ||
+          route.includes('registro') ||
+          route.includes('panel-busqueda') ||
+          route.includes('pescadores') ||
+          route.includes('granjas') ||
+          route.includes('piscicultores')
+        ) {
+          this.isHidden = true;
+        } else {
+          this.isHidden = false;
+        }
       }
     });
     this.activatebutton();
   }
   activatebutton = (): void => {
-    this._electronService.ipcRenderer?.send('activateButtonAngular', 'activar');
-    this._electronService.ipcRenderer?.on(
+    this._electronService?.send('activateButtonAngular', 'activar');
+    this._electronService?.on(
       'activateButtonElectron',
       (event: any, arg: string) => {
         this.BotonAtrasAlante = arg === 'BotonActivado';
@@ -72,7 +72,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.location.forward();
   }
   ngOnDestroy(): void {
-    this._electronService.ipcRenderer.removeAllListeners(
+    this._electronService.removeAllListeners(
       'activateButtonElectron'
     );
   }
