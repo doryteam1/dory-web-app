@@ -1,7 +1,5 @@
 import { IpcRenderer } from 'electron';
 import { Injectable } from '@angular/core';
-
-
 @Injectable({
   providedIn: 'root',
 })
@@ -19,7 +17,7 @@ export class ElectronjsService {
       console.warn('Electron IPC was not loaded');
     }
   }
-  // ---------------------------- Las funciones que hemos añadido
+  // Las funciones que hemos añadido, para ipcRenderer
   public on(channel: string, listener: any): void {
     if (!this.ipc) {
       return;
