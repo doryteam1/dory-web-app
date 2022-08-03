@@ -2,19 +2,19 @@
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <!-- Home tab pane -->
     <li class="nav-item" role="presentation">
-      <a [ngClass]="{'active nav-link--mytabstilo': activeclass1}" class="nav-link nav-link--color" id="home-tab"
+      <a #tabSoyRep [ngClass]="{'active nav-link--mytabstilo': activeclass1}" class="nav-link nav-link--color" id="home-tab"
         data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
         aria-selected="true" (click)="activeTabClick('representante')">Donde soy representante</a>
     </li>
     <!-- Profile-tab-pane -->
     <li class="nav-item" role="presentation">
-      <a [ngClass]="{'active nav-link--mytabstilo': activeclass2}" class="nav-link nav-link--color" id="profile-tab"
+      <a #tabSoyMiemb [ngClass]="{'active nav-link--mytabstilo': activeclass2}" class="nav-link nav-link--color" id="profile-tab"
         data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab"
         aria-controls="profile-tab-pane" aria-selected="false" (click)="activeTabClick('miembro')">Donde soy miembro</a>
     </li>
     <!-- Unirme_a_una_asociacion -->
     <li class="nav-item" role="presentation">
-      <a [ngClass]="{'active nav-link--mytabstilo': activeclass3}" class="nav-link nav-link--color" id="Unirme_a_una_asociacion-tab"
+      <a #tabUnir [ngClass]="{'active nav-link--mytabstilo': activeclass3}" class="nav-link nav-link--color" id="Unirme_a_una_asociacion-tab"
         data-bs-toggle="tab" data-bs-target="#Unirme_a_una_asociacion" type="button" role="tab"
         aria-controls="Unirme_a_una_asociacion" aria-selected="false"
         (click)="activeTabClick('Unirme_a_una_asociacion')">Unirme a una asociación</a>
@@ -25,7 +25,7 @@
     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
       <div class="row row-cols-2">
         <app-card-asociacion class="col" *ngFor="let asociacion of asociaciones" [asociacion]="asociacion"
-          [delatecard]="true" [showRepLegal]="false" (onDetalle)="navigate($event,'enable')"
+          [delatecard]="true" [showRepLegal]="false" (onDetalle)="navigate($event,'enable','tabSoyRep')"
           (onDelete)="delete($event)">
         </app-card-asociacion>
       </div>
@@ -41,7 +41,7 @@
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
       <div class="row row-cols-2">
         <app-card-asociacion class="col" *ngFor="let asociacion of asociacionesIsMiembro" [asociacion]="asociacion"
-          [delatecard]="false" (onDetalle)="navigate($event,'disable')" (onDelete)="delete($event)">
+          [delatecard]="false" (onDetalle)="navigate($event,'disable','tabSoyMiemb')" (onDelete)="delete($event)">
         </app-card-asociacion>
       </div>
       <div class="search-container" *ngIf="showNotFoundAsocMiemb">
@@ -54,7 +54,7 @@
     </div>
     <!-- Unirme_a_una_asociacion -->
     <div class="tab-pane fade" id="Unirme_a_una_asociacion" role="tabpanel" aria-labelledby="Unirme_a_una_asociacion-tab" tabindex="0">
-      <div class="buscadoryfiltro">
+      <div class="buscadoryfiltro mt-4">
         <div class="buscador-container">
           <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar asociacion..'"
             (keyEnterPressData)="onBuscarPalabra($event)">
@@ -66,7 +66,7 @@
             (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
           </app-filtro>
         </div>
-        <div class="chip">
+        <div class="chip mb-4">
           <app-chip-con-boton-close
           *ngIf="filtroseleccionado"
            [iconoChip]="true"
@@ -102,8 +102,8 @@
           </div>
           <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(asociacion)"
             *ngIf="!asociacion?.estado_solicitud">Unirme</button>
-          <button class="btn-square btn--grey mt-3" (click)="invitarAnular(asociacion)"
-            *ngIf="asociacion?.estado_solicitud == 'Enviada'">Cancelar solicitud</button>
+          <button class="card__button btn-square btn--grey mt-3" (click)="invitarAnular(asociacion)"
+            *ngIf="asociacion?.estado_solicitud == 'Enviada'">Anular</button>
           <div class="btn-group mt-3" *ngIf="asociacion?.estado_solicitud == 'Aceptada'">
             <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
               data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>

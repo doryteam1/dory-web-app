@@ -24,4 +24,12 @@ export class StorageService {
     }
     this._observer.next(this._store);
   }
+
+  get(key:string){
+    return localStorage.getItem(key);
+  }
+
+  remove(key:string){
+    localStorage.removeItem(key);
+  }
 }

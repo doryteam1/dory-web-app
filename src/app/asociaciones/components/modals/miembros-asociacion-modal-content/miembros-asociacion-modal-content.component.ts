@@ -47,7 +47,7 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
   anularInvitacion(usuario:any){
       this.appModalService
       .confirm(
-        'Eliminar de miembro',
+        'Eliminar miembro',
         'Desea eliminar este miembro de esta asociación',
         'Eliminar',
         'No estoy seguro'

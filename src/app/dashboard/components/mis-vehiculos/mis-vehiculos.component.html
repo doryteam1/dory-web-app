@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="container-table-pagination">
+  <div class="container-table-pagination" *ngIf="!showNotFound">
     <table class="table mt-40">
         <thead class="table-light">
           <tr>
             <th>Imagen</th>
-            <th>Modelo del vehiculo</th>
+            <th>Modelo del vehículo</th>
             <th>Capacidad(TON)</th>
             <th>Transporta alimentos(Si/No)</th>
             <th>Acciones</th>
@@ -28,19 +28,20 @@
       <pagination-controls *ngIf="!showNotFound" class="my-pagination" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente">
       </pagination-controls>
   </div>
-    <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar nuevo vehiculo</button>
-  </div>
-  <div class="search-container" *ngIf="showNotFound">
-    <div class="search-container__box">
-        <img class="search-container__image" src="assets/images/searching.svg">
-        <h3>No se han encontrado resultados</h3>
-        <p>Aun no has registrado tus vehiculos.</p>
+    <div class="search-container" *ngIf="showNotFound">
+      <div class="search-container__box">
+          <img class="search-container__image" src="assets/images/searching.svg">
+          <h3>No se han encontrado resultados</h3>
+          <p>Aun no has registrado tus vehículos.</p>
+      </div>
     </div>
+    <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agrega un nuevo vehículo</button>
   </div>
+  
 
   <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo vehiculo' : 'Actualizar vehiculo'}}</h4>
+      <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo vehiculo' : 'Actualizar vehículo'}}</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">

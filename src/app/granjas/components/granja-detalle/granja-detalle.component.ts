@@ -136,7 +136,7 @@ export class GranjaDetalleComponent implements OnInit {
 
   openQualifyModal(content: any, editingMiResena?: number) {
     if (editingMiResena && editingMiResena == 1) {
-      this.rating = this.miresena.calificacion;
+      this.rating = -1;
       this.descResena = this.miresena.descripcion;
       this.editingMiResena = true;
     } else {

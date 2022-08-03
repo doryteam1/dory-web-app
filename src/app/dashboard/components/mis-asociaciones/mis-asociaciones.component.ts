@@ -1,5 +1,7 @@
 import { Component, OnInit ,  ElementRef,
-  ViewChild, } from '@angular/core';
+  ViewChild,
+  AfterViewInit,
+  OnDestroy, } from '@angular/core';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { HttpClient } from '@angular/common/http';
@@ -16,6 +18,7 @@ import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.s
 import { Filtro, MetaFiltro } from '../../../../models/filtro.model';
 import { Checkbox } from 'src/models/checkbox.model';
 import { BuscarPor } from '../../../../models/buscarPor.model';
+import { StorageService } from 'src/app/services/storage.service';
 const _ = require('lodash');
 
 
@@ -24,10 +27,13 @@ const _ = require('lodash');
   templateUrl: './mis-asociaciones.component.html',
   styleUrls: ['./mis-asociaciones.component.scss'],
 })
-export class MisAsociacionesComponent implements OnInit {
+export class MisAsociacionesComponent implements OnInit, AfterViewInit,OnDestroy {
   @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
   @ViewChild('map') map: any;
-  @ViewChild('fileInput') inputFileDialog!: ElementRef;
+  @ViewChild('tabSoyRep') tabSoyRep!: ElementRef;
+  @ViewChild('tabSoyMiemb') tabSoyMiemb!: ElementRef;
+  @ViewChild('tabUnir') tabUnir!: ElementRef;
+
   asociaciones: Array<any> = [];
   showNotFound: boolean = false;
   indicenegocio!: number;
@@ -140,7 +146,8 @@ export class MisAsociacionesComponent implements OnInit {
     private router: Router,
     private places: PlacesService,
     private searchBuscadorService: SearchBuscadorService,
-    private asociacionService: AsociacionesService
+    private asociacionService: AsociacionesService,
+    private storageService: StorageService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -151,6 +158,21 @@ export class MisAsociacionesComponent implements OnInit {
         map(() => true),
         catchError(() => of(false))
       );
+  }
+  ngOnDestroy(): void {
+    
+  }
+  ngAfterViewInit(): void {
+    /*Se abre el tab que estuvo seleccionado antes de ir a ver el detalle de una asociación*/
+    let selectedTab = this.storageService.get('misAsocSelecTab');
+    if(selectedTab && selectedTab == 'tabSoyRep'){
+      this.htmlElementClick(this.tabSoyRep);
+    }else if(selectedTab && selectedTab == 'tabSoyMiemb'){
+      this.htmlElementClick(this.tabSoyMiemb);
+    }else if(selectedTab && selectedTab == 'tabUnir'){
+      this.htmlElementClick(this.tabUnir);
+    }
+    this.storageService.remove('misAsocSelecTab')
   }
 
   ngOnInit(): void {
@@ -319,13 +341,15 @@ export class MisAsociacionesComponent implements OnInit {
       this.activeclass3 = true;
     }
   }
-  navigate(event: any, formState: string) {
+  navigate(event: any, formState: string, from:string) {
     console.log('formState ', formState);
     let object: any = { ...event };
     (object.action = 'update'),
       (object.formState =
         this.selectedTab == 'representante' ? 'enable' : 'disable'),
-      this.router.navigate(['/dashboard/asociacion/detalle', object]);
+
+    this.storageService.add('misAsocSelecTab',from)
+    this.router.navigate(['/dashboard/asociacion/detalle', object]);
   }
   goAssociationDetail(asociacion: any) {
     let url = this.router.serializeUrl(
@@ -420,5 +444,11 @@ export class MisAsociacionesComponent implements OnInit {
       );
     }
     this.asociacionesexistentes = resultados;
+  }
+
+  htmlElementClick(eRef:ElementRef) {
+    const element: HTMLElement = eRef.nativeElement;
+    element.click();
+    console.log("clicked!")
   }
 }

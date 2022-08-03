@@ -89,7 +89,7 @@
                 <span class="container__label">Célular</span>
                 <div class="input-wrapper">
                     <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'celular', usuario.celular)" [ngClass]="{'container__input--color':!editarperfil}"
-                      type="text" formControlName='celular' placeholder="Tu número de celular">
+                      type="number" formControlName='celular' placeholder="Tu número de celular" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
 
                 </div>
             </div>
@@ -245,7 +245,7 @@
                           formControlName='id_area_experticia' (change)="onAreaExpChange()" [ngClass]="{'container__input--color':!editarperfil}">
                         <optgroup label="Escoje un área">
                             <option *ngFor="let area of areas" [ngValue]="area.id_area">{{area.nombre}} </option>
-                            <option ngValue=-1>Otra...</option>
+                            <option [ngValue]='-1'>Otra...</option>
                         </optgroup>
                     </select>
                 </div>

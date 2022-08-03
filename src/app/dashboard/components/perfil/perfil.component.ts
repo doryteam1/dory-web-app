@@ -65,7 +65,7 @@ export class PerfilComponent implements OnInit {
     cedula: new FormControl(''),
     nombres: new FormControl(''),
     apellidos: new FormControl(''),
-    celular: new FormControl(''),
+    celular: new FormControl('',),
     direccion: new FormControl(''),
     informacion_adicional_direccion: new FormControl(''),
     id_tipo_usuario: new FormControl(''),

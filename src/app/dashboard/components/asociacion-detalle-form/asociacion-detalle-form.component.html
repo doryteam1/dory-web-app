@@ -144,7 +144,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="dateOfBirth">Fecha renovación camara de comercio</label>
+          <label for="dateOfBirth">Fecha renovación cámara de comercio</label>
           <div class="input-group">
             <input id="productName" class="form-control" type="date" placeholder="Fecha renovación" formControlName="fecha_renovacion_camarac">
           </div>
@@ -157,14 +157,14 @@
 
         <div class="download-cam" *ngIf="modalMode=='update'">
             <span *ngIf="asociacion?.foto_camarac && asociacion?.foto_camarac!='null'">
-              <a [href]="asociacion?.foto_camarac" target="_blank">Camara de comercio
+              <a [href]="asociacion?.foto_camarac" target="_blank">Descargar cámara de comercio
                  <img src="assets/icons/download_for_offline_blue1_24dp.svg">
               </a>
             </span>
         </div>
 
         <div class="mb-5" *ngIf="formState!='disable'">
-          <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.foto_camarac ? 'Actualizar camara de comercio ' : 'Subir camara de comercio' }}</label>
+          <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.foto_camarac ? 'Actualizar cámara de comercio ' : 'Subir cámara de comercio' }}</label>
           <div class="input-group">
             <input id="productName" type="file" class="form-control" placeholder="Seleccionar documento" formControlName="foto_camarac" (change)='fileChange($event)'>
           </div>
@@ -187,12 +187,12 @@
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>
         </button>
-        <button type="button" class="btn-square-blue2 container__btn container__btn--azul" (click)="updateAsociacion()"  *ngIf="modalMode=='update' && formState == 'enable'">
+        <button type="button" class="btn-rounded btn--blue container__btn container__btn--azul" (click)="updateAsociacion()"  *ngIf="modalMode=='update' && formState == 'enable'">
           <span *ngIf="!loading1">Actualizar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>
         </button>
-        <button type="button" class="btn-square-white2 container__btn" (click)="goBack()">
+        <button type="button" class="btn-rounded btn--blue container__btn" (click)="goBack()">
           <span>Atrás</span>
         </button>
       </div>

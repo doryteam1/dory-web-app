@@ -12,6 +12,7 @@ import { RegExpUtils } from 'src/app/utilities/regexps';
 export class UpdatePasswordComponent implements OnInit {
   success:boolean = false;
   visiblePass:boolean = false;
+  visibleNewPass:boolean = false;
   visibleMatchPass:boolean = false;
   
   form:FormGroup = new FormGroup({
