@@ -29,4 +29,18 @@
     color:var(--white);
     cursor:pointer;
 }
-
+.container__search{
+  display: flex;
+  gap: 20px;
+}
+.container__search--botones{
+display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 10%;
+  border: 1px solid #9b9ea2;
+  gap: 10px;
+}
+.arrow-item {
+  cursor: pointer;
+}

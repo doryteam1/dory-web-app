@@ -22,6 +22,7 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { ShareButtonsConfig } from 'ngx-sharebuttons';
+import { NgxElectronModule } from 'ngx-electron';
 
 const customConfig: ShareButtonsConfig = {
   include: ['whatsapp', 'email', 'copy'],
@@ -47,7 +48,7 @@ const customConfig: ShareButtonsConfig = {
     PoliticaComponent,
     CondicionesComponent,
     WelcomeComponent,
-    VerifyAccountComponent
+    VerifyAccountComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,29 +64,31 @@ const customConfig: ShareButtonsConfig = {
     ShareButtonsModule.withConfig(customConfig),
     ShareIconsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    NgxElectronModule,
   ],
   providers: [
     HttpsService,
     {
-    provide: 'SocialAuthServiceConfig',
-    useValue: {
-      autoLogin: true, //keeps the user signed in
-      providers: [
-        {
-          id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('170816600260-ivu404khqeskg17esu4esl9244s0dt2m.apps.googleusercontent.com') // your client id
-        }
-      ]
-    }
-  },
-  {
-    provide:HTTP_INTERCEPTORS,
-    useClass:AuthInterceptor,
-    multi:true
-  }
-
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true, //keeps the user signed in
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '170816600260-ivu404khqeskg17esu4esl9244s0dt2m.apps.googleusercontent.com'
+            ), // your client id
+          },
+        ],
+      },
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

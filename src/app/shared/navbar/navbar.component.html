@@ -93,7 +93,7 @@
           <ul #notifies class="notify__menu notify__menu dropdown-menu p-3 overflow-auto" [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }"  aria-labelledby="dropdownMenuButton1" (onresize)="onResize()">
             <li class="notify__title"><span *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
             <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span></li>
-            <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index"> 
+            <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index">
               <div class="dropdown-item d-flex flex-row align-items-start">
                 <img class="notify__avatar" [src]="invitacion.foto_representante_legal">
                 <div class="d-flex flex-column ">
@@ -112,7 +112,7 @@
             </li>
 
             <li class="notify__sub-title"><span *ngIf="invitacionesFromUsers.length > 0">Solicitudes de usuarios</span></li>
-            <li class="notify__menu-item" *ngFor="let invitacion of invitacionesFromUsers; let i=index"> 
+            <li class="notify__menu-item" *ngFor="let invitacion of invitacionesFromUsers; let i=index">
               <div class="dropdown-item d-flex flex-row align-items-start">
                 <img class="notify__avatar" [src]="invitacion.foto">
                 <div class="d-flex flex-column ">
@@ -138,7 +138,7 @@
             </div>
             <li *ngFor="let test of tests"><span>{{test}}</span></li>
           </ul>
-          
+
         </div>
 
         <div class="dropdown" *ngIf="authenticated()">
