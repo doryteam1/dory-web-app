@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "postinstall": "ng build --prod  && patch-package",
-    "heroku-postbuild": "patch-package"
+    "heroku-cleanup": "patch-package"
   },
   "engines": {
     "node": "14.17.3",
