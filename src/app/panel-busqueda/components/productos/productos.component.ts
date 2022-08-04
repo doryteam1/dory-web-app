@@ -59,7 +59,7 @@ export class ProductosComponent implements OnInit {
         this.productosFiltered = this.productos;
       }else{
         this.productosFiltered = this.productos.filter((element)=>{
-          return element.nombre_producto.toLocaleLowerCase().includes(text.toLocaleLowerCase());
+          return element.nombreProducto.toLocaleLowerCase().includes(text.toLocaleLowerCase());
         })
       }
   }
