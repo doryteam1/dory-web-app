@@ -8,7 +8,7 @@ export class PescadoresService {
   constructor(private https: HttpClient) {}
 
   getPescadores() {
-    return this.https.get('https://dory-api-rest.herokuapp.com/pescadores');
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/pescadores/todos');
   }
 
   getPescadoresMunicipio(idMunicipio: number) {

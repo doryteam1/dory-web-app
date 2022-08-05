@@ -2847,5 +2847,7 @@
     { lng: -74.5395939, lat: 8.4360142 },
     { lng: -74.5395185, lat: 8.4429741 },
   ];
-export const MODOFILTRO1 = 'number_ordenarmayoramenor'
+export const MODO_FILTRO_ORDER_DES = 'number_ordenarmayoramenor'
+export const MODO_FILTRO_ORDER_ASC = 'number_ordenarmenoramayor'
 export const MODOFILTRO2 = 'string_filtrodatosvarios'
+

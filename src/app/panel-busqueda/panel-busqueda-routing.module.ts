@@ -4,6 +4,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { NegociosComponent } from './components/negocios/negocios.component';
 import { AsociacionesComponent } from './components/asociaciones/asociaciones.component';
+import { PescadoresComponent } from './components/pescadores/pescadores.component';
+import { PiscicultoresComponent } from './components/piscicultores/piscicultores.component';
+import { GranjasComponent } from './components/granjas/granjas.component';
 
 
 const routes: Routes = [
@@ -14,6 +17,9 @@ const routes: Routes = [
       { path:'productos', component:ProductosComponent},
       {path:'negocios',component:NegociosComponent},
       {path:'asociaciones',component:AsociacionesComponent},
+      {path:'pescadores',component:PescadoresComponent},
+      {path:'piscicultores',component:PiscicultoresComponent},
+      {path:'granjas',component:GranjasComponent}
     ]
   }
 ];

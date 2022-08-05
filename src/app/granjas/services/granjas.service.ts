@@ -10,7 +10,7 @@ import { ResenasModalContentComponent } from '../components/modals/resenas-modal
 export class GranjasService {
   constructor(private https: HttpsService, private modalService: NgbModal) {}
   getGranjas() {
-    return this.https.get('https://dory-api-rest.herokuapp.com/granjas');
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/granjas/todas');
   }
 
   getGranjasMunicipio(idMunicipio: number) {

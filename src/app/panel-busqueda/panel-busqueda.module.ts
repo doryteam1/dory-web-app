@@ -14,6 +14,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NegociosComponent } from './components/negocios/negocios.component';
 import { RouterModule } from '@angular/router';
 import { AsociacionesComponent } from './components/asociaciones/asociaciones.component';
+import { PescadoresComponent } from './components/pescadores/pescadores.component';
+import { PiscicultoresComponent } from './components/piscicultores/piscicultores.component';
+import { GranjasComponent } from './components/granjas/granjas.component';
+
 
 
 @NgModule({
@@ -22,6 +26,9 @@ import { AsociacionesComponent } from './components/asociaciones/asociaciones.co
     ProductosComponent,
     NegociosComponent,
     AsociacionesComponent,
+    PescadoresComponent,
+    PiscicultoresComponent,
+    GranjasComponent
   ],
   imports: [
     CommonModule,

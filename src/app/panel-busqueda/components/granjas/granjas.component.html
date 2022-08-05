@@ -1,0 +1,72 @@
+<div class="buscadoryfiltro mt-4">
+<div class="buscador-container">
+    <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar granja...'"
+    (keyEnterPressData)="onBuscarPalabra($event)">
+    </app-search>
+    <app-filtro
+      [filtro]="filtro"
+      [checkboxfiltro]="false"
+      (onFilterSeleccionado)="onFiltroChange($event)"
+      [filtroSeleccionado]="filtroseleccionado">
+      </app-filtro>
+    <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
+    (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
+    </app-filtro>
+</div>
+<div class="chip mb-4">
+    <app-chip-con-boton-close
+    *ngIf="filtroseleccionado"
+    [iconoChip]="true"
+    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+    [contenidoChip]="filtroseleccionado.nombrefiltro"
+    (onCloseClip)="delateFilter()"
+    >
+    </app-chip-con-boton-close>
+    <div class="chip__checkbox" *ngIf="filtroseleccionadoCheckbox">
+    <app-chip-con-boton-close
+    *ngFor="let  nombre of filtroseleccionadoCheckbox; let i =index"
+        [iconoChip]="true"
+        [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+        [contenidoChip]="nombre"
+        (onCloseClip)="delateFilterCheckbox(i)"
+        >
+    </app-chip-con-boton-close>
+    </div>
+</div>
+<div *ngIf="showNotFound"
+    class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
+    <img src="assets/icons/searchanimado.svg">
+    <div>
+    No se encontraron resultados
+    </div>
+</div>
+</div>
+<div class="list overflow-auto d-flex flex-column">
+<div class="card" *ngFor="let granja of granjasFiltered">
+
+    <div class="card__row" (click)="goDetail(granja)">
+        <div class="card__item">
+            <img class="card__image" src="{{granja.imagen ? granja.imagen : '/assets/images/avatar-person.svg'}}">
+            <span class="card__title">{{granja.nombre}}</span>
+            <app-stars size="mini" [selectedStar]="granja.puntuacion"></app-stars>
+        </div>
+        
+        <span class="card__title">{{granja.area}}m²</span>
+        <!-- <div *ngIf="authRol == 'Piscicultor' || authRol == 'Pescador'">
+            <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(granja)"
+            *ngIf="!granja?.estado_solicitud">Unirme</button>
+            <button class="card__button btn-square btn--grey mt-3" (click)="invitarAnular(granja)"
+            *ngIf="granja?.estado_solicitud == 'Enviada'">Anular</button>
+            <div class="btn-group mt-3" *ngIf="granja?.estado_solicitud == 'Aceptada'">
+                <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li (click)="invitarAnular(granja)"><a class="dropdown-item"><i class="bi bi-box-arrow-left"></i> No
+                        soy
+                        miembro</a>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+    </div>
+</div>

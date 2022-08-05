@@ -1,37 +1,36 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import { registerLocaleData } from '@angular/common';
-import es from '@angular/common/locales/es';
-import { ProveedorService } from 'src/app/services/proveedor.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Filtro, MetaFiltro } from 'src/models/filtro.model';
-import { Checkbox } from 'src/models/checkbox.model';
-import { MODOFILTRO2, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES } from 'src/app/global/constants';
-import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
-import { BuscarPor } from 'src/models/buscarPor.model';
+import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
+import { MODOFILTRO2 } from 'src/app/global/constants';
+import { GranjasService } from 'src/app/granjas/services/granjas.service';
+import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PlacesService } from 'src/app/services/places.service';
+import { AppModalService } from 'src/app/shared/services/app-modal.service';
+import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
+import { Utilities } from 'src/app/utilities/utilities';
+import { BuscarPor } from 'src/models/buscarPor.model';
+import { Checkbox } from 'src/models/checkbox.model';
+import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 
 @Component({
-  selector: 'app-productos',
-  templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.scss'],
+  selector: 'app-granjas',
+  templateUrl: './granjas.component.html',
+  styleUrls: ['./granjas.component.scss']
 })
-export class ProductosComponent implements OnInit {
-  productos:Array<any> = [];
-  productosFiltered:Array<any> = [];
+export class GranjasComponent implements OnInit {
+  granjasFiltered!: any[];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
   palabra: string = '';
+  granjas!: any[];
   municipios: Array<any> = [];
   showNotFound: boolean = false;
   authUserId: number = -1;
   authRol:string = '';
   checkbox: Checkbox[] = [
     {
-      nameButton: 'Municipio de proveedor',
-      nombrecampoDB: 'municipio_proveedor',
+      nameButton: 'Municipios',
+      nombrecampoDB: 'municipio',
       modoFiltro: MODOFILTRO2,
       titulomodal: 'Municipios de sucre',
     },
@@ -40,61 +39,52 @@ export class ProductosComponent implements OnInit {
   /* varibles de buscqueda y filtros */
   filtro: Filtro[] = [
     {
-      nameButton: 'Ordenar por',
+      nameButton: 'Ordenar Granjas',
       data: [
         {
           id: 0,
-          nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio(mayor a menor)',
-          datoafiltrar: 'precio',
-          modoFiltro: MODO_FILTRO_ORDER_DES,
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Calificación',
+          datoafiltrar: 'puntuacion',
+          modoFiltro: 'number_ordenarmayoramenor',
         },
         {
           id: 1,
-          nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio(menor a mayor)',
-          datoafiltrar: 'precio',
-          modoFiltro: MODO_FILTRO_ORDER_ASC,
+          nombrecampoDB: 'tipo_asociacion',
+          nombrefiltro: 'Área',
+          datoafiltrar: 'area',
+          modoFiltro: 'number_ordenarmayoramenor',
         },
       ],
       /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
     },
   ];
- 
-  constructor(private proveedorService:ProveedorService,
-    private router:Router,
+  
+  constructor(private granjasService: GranjasService,
+    private appModalService: AppModalService,
+    private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private places: PlacesService){
+    private places: PlacesService,
+    private asociacionService:AsociacionesService) { }
 
-  }
   ngOnInit(): void {
-    registerLocaleData(es);
-    this.proveedorService.getProductosAll().subscribe(
-      (response)=>{
-        console.log(response);
-        this.productos = response.data;
-        this.productosFiltered = this.productos;
-        if (this.productosFiltered.length < 1) {
-          this.showNotFound = true;
-        } else {
-          this.showNotFound = false;
-        }
+    let token = localStorage.getItem('token');
+    let payload = Utilities.parseJwt(token!);
+    this.authUserId = payload.sub;
+    this.authRol = payload.rol;
+    /*Todas las asociaones que existen*/
+    this.granjasService.getGranjas().subscribe((response:any) => {
+      this.granjas = response.data;
+      this.granjasFiltered = this.granjas.slice();
+      console.log(this.granjasFiltered);
+      if (this.granjasFiltered.length < 1) {
+        this.showNotFound = true;
+      } else {
+        this.showNotFound = false;
       }
-    )
-
+    });
     /* municipios sucre */
     this.loadMunic();
-  }
-
-  onSearch(text:string){
-      console.log("productos ",text)
-      if(text == ''){
-        this.productosFiltered = this.productos;
-      }else{
-        this.productosFiltered = this.productos.filter((element)=>{
-          return element.nombreProducto.toLocaleLowerCase().includes(text.toLocaleLowerCase());
-        })
-      }
   }
 
   goDetail(granja: any) {
@@ -111,7 +101,8 @@ export class ProductosComponent implements OnInit {
      console.log(this.filtroseleccionadoCheckbox);
      this.reseteoDeBusqueda();
    }
-  reseteoDeBusqueda() {
+
+   reseteoDeBusqueda() {
     let resultados: any[] = this.buscarData(this.palabra);
     if (this.filtroseleccionado) {
       resultados = this.filtradoData(this.filtroseleccionado, resultados);
@@ -125,7 +116,7 @@ export class ProductosComponent implements OnInit {
         resultados
       );
     }
-    this.productosFiltered = resultados;
+    this.granjasFiltered = resultados;
   }
 
   filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
@@ -154,18 +145,18 @@ export class ProductosComponent implements OnInit {
   }
 
   buscarData(texto: string): any {
-    let result: any[];
+    let asociacionesresult: any[];
     if (texto.trim().length === 0) {
-      result = this.productos;
+      asociacionesresult = this.granjas;
     } else {
       let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }];
-      result = this.searchBuscadorService.buscarData(
-        this.productos,
+      asociacionesresult = this.searchBuscadorService.buscarData(
+        this.granjas,
         texto,
         buscardatospor
       );
     }
-    return result;
+    return asociacionesresult;
   }
 
   delateFilter() {

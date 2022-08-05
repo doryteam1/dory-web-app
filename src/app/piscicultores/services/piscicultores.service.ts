@@ -15,7 +15,7 @@ export class PiscicultoresService {
   }
 
   getPiscicultores() {
-    return this.https.get('https://dory-api-rest.herokuapp.com/piscicultores');
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/piscicultores/todos');
   }
 
   getPiscicultoresMunicipio(idMunicipio: number) {

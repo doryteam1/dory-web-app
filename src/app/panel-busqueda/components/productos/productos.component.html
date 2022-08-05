@@ -1,5 +1,35 @@
-<div class="d-flex flex-row justify-content-center mb-5 mt-4">
+<div class="search">
   <app-search (textSearch)="onSearch($event)"></app-search>
+  <app-filtro
+      class="search__filter"
+      [filtro]="filtro"
+      [checkboxfiltro]="false"
+      (onFilterSeleccionado)="onFiltroChange($event)"
+      [filtroSeleccionado]="filtroseleccionado">
+  </app-filtro>
+  <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
+    (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
+  </app-filtro>
+</div>
+<div class="chip mb-4">
+  <app-chip-con-boton-close
+  *ngIf="filtroseleccionado"
+  [iconoChip]="true"
+  [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+  [contenidoChip]="filtroseleccionado.nombrefiltro"
+  (onCloseClip)="delateFilter()"
+  >
+  </app-chip-con-boton-close>
+  <div class="chip__checkbox" *ngIf="filtroseleccionadoCheckbox">
+  <app-chip-con-boton-close
+  *ngFor="let  nombre of filtroseleccionadoCheckbox; let i =index"
+      [iconoChip]="true"
+      [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+      [contenidoChip]="nombre"
+      (onCloseClip)="delateFilterCheckbox(i)"
+      >
+  </app-chip-con-boton-close>
+  </div>
 </div>
 <div class="container">
   <div class="card" *ngFor="let producto of productosFiltered; let i = index">
@@ -10,7 +40,7 @@
                 [indicatorsphoto]="true"
                 [idtarge]="i"
                 [rounded]="false">
-              </app-carrucel-img>
+      </app-carrucel-img>
     </div>
     <div class="card-body">
       <h5 class="card__title card-title">${{producto.precio | number:'':'es'}}</h5>

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { MODOFILTRO2 } from 'src/app/global/constants';
+import { MODOFILTRO2, MODO_FILTRO_ORDER_ASC } from 'src/app/global/constants';
 import { Checkbox } from 'src/models/checkbox.model';
 import { MetaFiltro } from '../../../models/filtro.model';
-import { MODOFILTRO1 } from '../../global/constants';
+import { MODO_FILTRO_ORDER_DES } from '../../global/constants';
 import { BuscarPor } from '../../../models/buscarPor.model';
 
 @Injectable({
@@ -72,7 +72,7 @@ export class SearchBuscadorService {
     /* Ordena arrayas de mayor a menor , pasandole una referencia un valor numerico */
     let arraydatanew = arraydataabuscar.slice();
     console.log(filtroSelecOptionData);
-    if (filtroSelecOptionData.modoFiltro == MODOFILTRO1) {
+    if (filtroSelecOptionData.modoFiltro == MODO_FILTRO_ORDER_DES) {
       let filterarraydata = arraydatanew.sort((a, b) => {
         if (
           Number(a[filtroSelecOptionData.datoafiltrar!]) >
@@ -87,6 +87,12 @@ export class SearchBuscadorService {
         } else {
           return 0;
         }
+      });
+
+      return filterarraydata;
+    }else if (filtroSelecOptionData.modoFiltro == MODO_FILTRO_ORDER_ASC) {
+      let filterarraydata = arraydatanew.sort((a, b) => {
+          return Number(a[filtroSelecOptionData.datoafiltrar!])  - Number(b[filtroSelecOptionData.datoafiltrar!])
       });
 
       return filterarraydata;
