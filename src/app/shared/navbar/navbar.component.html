@@ -79,6 +79,7 @@
         <button class="btn-outline-blue boton-registro" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
         <button class="btn-rounded-blue ms-2" routerLink="/registro" *ngIf="!authenticated()">Registrate</button>
 
+        <input class="container__input form-input-text-square" type="text" placeholder="Buscar...">
         <div class="notify dropstart" *ngIf="authenticated()">
           <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
             <i class="notify__icon bi bi-bell">
