@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostBinding, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -27,6 +27,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
   @ViewChild('notifies', { read: Element }) notifies!:Element;
   resizedObserver!: ResizeObserver;
   notifiesHeigth: number = 0;
+  @HostBinding('hidden')
+  isHidden: boolean = false;
 
   constructor(
     private router:Router,
@@ -56,7 +58,19 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
       }
     )
     
-    //this.test()
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        console.log(event);
+        let route: string = event.url;
+        if (
+          route.includes('welcome')
+        ) {
+          this.isHidden = true;
+        } else {
+          this.isHidden = false;
+        }
+      }
+    });
   }
 
   test(){

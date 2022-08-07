@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { RegExpUtils } from 'src/app/utilities/regexps';
 import { Router } from '@angular/router';
+import { PlacesService } from 'src/app/services/places.service';
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
@@ -13,18 +14,27 @@ export class WelcomeComponent implements OnInit {
   isFillName:boolean = false;
   tipos:Array<any> = [];
   idTipo:number = 0;
+  idMunic:number = 0;
   nombres:string | null= '';
   apellidos:string | null = '';
   error:string = '';
   id:string | null = '';
+  municipios:any[] = [];
 
-  constructor(private ar:ActivatedRoute, private us:UsuarioService, private router:Router) {
+  constructor(private ar:ActivatedRoute, private us:UsuarioService, private router:Router, private places:PlacesService) {
     this.us.getTiposUsuario().subscribe(
       (response)=>{
         this.tipos = response.data;
       },err=>{
-        this.error="Error al cargar los tipos de usuarios";
-        console.log("Error al cargar los tipos de usuarios ",err);
+        //this.error="Error al cargar los tipos de usuarios";
+      }
+    );
+
+    this.places.getMunicipiosDepartamentos(70).subscribe(
+      (response)=>{
+        this.municipios = response.data;
+      },err=>{
+        //this.error="Error al cargar los municipios";
       }
     );
   }
@@ -58,7 +68,7 @@ export class WelcomeComponent implements OnInit {
   next(){
     console.log("actualizando usuario...");
     let usuario:any = {
-
+      id_municipio : this.idMunic
     }
 
     if(this.isFillUserType){
@@ -74,9 +84,12 @@ export class WelcomeComponent implements OnInit {
       }
       usuario.nombres = this.nombres;
       usuario.apellidos = this.apellidos;
-
     }
 
+    if(this.idMunic == 0){
+      this.error = 'Olvidastes seleccionar el municipio donde vives';
+      return;
+    }
     this.us.actualizarUsuario(parseInt(this.id as string),usuario).subscribe(
       (response)=>{
         console.log("Usuario actualizado... ",response);
@@ -94,7 +107,6 @@ export class WelcomeComponent implements OnInit {
 
   resetErrors()
   {
-    console.log("change")
     this.error = '';
   }
 }

@@ -11,13 +11,24 @@
             
             <span class="container__title" *ngIf="isFillUserType">Antes de seguir cuentanos a que te dedicas?</span>
             <div *ngIf="isFillUserType">
-                <select class="container-form__input form-input-text-square" [(ngModel)]="idTipo" (ngModelChange)="resetErrors()">
+                <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idTipo" (ngModelChange)="resetErrors()">
                     <optgroup label="Eres un">
                         <option hidden="hidden" selected="selected">Escoje uno</option>
                         <option *ngFor="let tipo of tipos" [ngValue]="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>
                     </optgroup>
                 </select>
             </div>
+
+            <span class="container__title">Por ultimo selecciona el municipio donde vives</span>
+            <div>
+                <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idMunic" (ngModelChange)="resetErrors()">
+                    <optgroup label="Eres un">
+                        <option hidden="hidden" selected="selected">Escoje uno</option>
+                        <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}</option>
+                    </optgroup>
+                </select>
+            </div>
+
             <div *ngIf="error" class="container__alert-msg danger-message">
                     {{error}}
             </div>
