@@ -1,31 +1,19 @@
 import {
   Component,
   HostBinding,
-  OnInit,
-  ChangeDetectorRef,
-  OnDestroy,
-  Output,
-  EventEmitter,
+  OnInit
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { ElectronjsService } from 'src/app/services/electronjs.service';
-
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss'],
 })
-export class SearchBarComponent implements OnInit, OnDestroy {
-  @Output() onBotonAtrasAlante: EventEmitter<boolean> = new EventEmitter();
-  BotonAtrasAlante: boolean = false;
+export class SearchBarComponent implements OnInit{
   @HostBinding('hidden')
   isHidden: boolean = false;
   constructor(
     private router: Router,
-    private cdRef: ChangeDetectorRef,
-    private location: Location,
-    private _electronService: ElectronjsService
   ) {}
 
   ngOnInit(): void {
@@ -51,29 +39,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         }
       }
     });
-    this.activatebutton();
-  }
-  activatebutton = (): void => {
-    this._electronService?.send('activateButtonAngular', 'activar');
-    this._electronService?.on(
-      'activateButtonElectron',
-      (event: any, arg: string) => {
-        this.BotonAtrasAlante = arg === 'BotonActivado';
-        this.onBotonAtrasAlante.emit(this.BotonAtrasAlante);
-        this.cdRef.detectChanges();
-      }
-    );
-  };
-  goBack(): void {
-    this.location.back();
   }
 
-  getForward(): void {
-    this.location.forward();
-  }
-  ngOnDestroy(): void {
-    this._electronService.removeAllListeners(
-      'activateButtonElectron'
-    );
-  }
 }

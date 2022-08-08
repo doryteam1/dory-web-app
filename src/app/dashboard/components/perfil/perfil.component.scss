@@ -141,7 +141,7 @@
 }
 
 .container__btn3{
-  border-radius: 5px;
+ /*  border-radius: 5px;
   height: 40px;
   width: 360px;
   padding-top: 10px;
@@ -153,7 +153,10 @@
   justify-content: center;
   -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
   box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
-  padding-bottom: 35px;
+  padding-bottom: 35px; */
+  border-radius: 5px;
+  box-shadow: -1px 4px 7px -1px rgb(0 0 0 / 18%);
+  background-color: #F0F0F0;
 }
 
 .container__icon{

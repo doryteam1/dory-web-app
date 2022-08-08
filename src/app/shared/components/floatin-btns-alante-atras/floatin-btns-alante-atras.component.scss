@@ -1,0 +1,11 @@
+.floating-btn {
+  position: fixed;
+  left: 5px;
+  bottom: 5px;
+  display: flex;
+  z-index: 1000;
+  cursor: pointer;
+  height: 35px;
+
+}
+

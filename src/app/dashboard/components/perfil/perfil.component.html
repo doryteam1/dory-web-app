@@ -107,12 +107,41 @@
             </div>
         </div>
     </div>
-
+        <div class="container__box__title">
+          <span class="container__title">Foto de perfil</span>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <div class="progress" *ngIf="percentUploaded && percentUploaded > 1 && percentUploaded < 100">
+            <div class="progress-bar" [style.width]="percentUploaded+'%'" role="progressbar"
+              [attr.aria-valuenow]="percentUploaded" aria-valuemin="0" aria-valuemax="100">{{percentUploaded | number:'':'es'}}%
+            </div>
+          </div>
+          <span class="text-danger" *ngIf="photoUpdate">Foto de perfil cargada con éxito</span>
+          <span class="text-danger" *ngIf="photoDelate">Foto de perfil eliminada con éxito</span>
+        </div>
+    <div class="d-flex flex-row justify-content-center align-items-center gap-2">
+      <button class="container__btn3 btn" *ngIf="!usuario?.foto" (click)="openAddFileDialog()">
+        <div class="container__btn3-div">
+          <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
+          <span>Escoger foto de perfil</span>
+        </div>
+      </button>
+      <button class="container__btn3 btn" *ngIf="usuario?.foto" (click)="openAddFileDialog()">
+        <div class="container__btn3-div">
+          <img src="assets/icons/update-icon-photo-perfil.svg">
+          <span>Actualizar foto de perfil</span>
+        </div>
+      </button>
+      <button class="container__btn3 btn" *ngIf="usuario?.foto" (click)="delatePhotoPerfil()">
+        <div class="container__btn3-div">
+          <img src="assets/icons/delete_black_24dp.svg">
+          <span>Eliminar foto de perfil</span>
+        </div>
+      </button>
+    </div>
     <div class="container__box__title">
         <span class="container__title">Datos de ubicación</span>
     </div>
-
-
     <div class="container-row row">
         <div class="col">
             <div class="container__box" *ngIf="mostrarPorTipo('departamento')">
@@ -301,42 +330,30 @@
                 <input class="container__input form-input-text-square"  type="text" formControlName='longitud'>
             </div>
         </div> -->
-    <div class="container__box__title">
-        <span class="container__title">Foto de perfil</span>
-    </div>
+
 
     </form>
-    <div class="progress" *ngIf="percentUploaded && percentUploaded > 1 && percentUploaded < 100">
-        <div class="progress-bar" [style.width]="percentUploaded+'%'" role="progressbar" [attr.aria-valuenow]="percentUploaded" aria-valuemin="0" aria-valuemax="100">{{percentUploaded | number:'':'es'}}%</div>
-    </div>
-    <span class="text-danger" *ngIf="photoUpdate">Foto de perfil cargada con éxito</span>
-    <span class="text-danger" *ngIf="photoDelate">Foto de perfil eliminada con éxito</span>
-    <div class="d-flex flex-column justify-content-center align-items-center">
-        <button class="container__btn3" *ngIf="!usuario?.foto" (click)="openAddFileDialog()">
-          <div class="container__btn3-div">
-            <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
-            <span>Escoger foto de perfil</span>
-          </div>
-        </button>
-        <button class="container__btn3" *ngIf="usuario?.foto" (click)="openAddFileDialog()">
-          <div class="container__btn3-div" >
-            <img   src="assets/icons/update-icon-photo-perfil.svg">
-            <span>Actualizar foto de perfil</span>
-          </div>
-        </button>
-        <button class="container__btn3" *ngIf="usuario?.foto" (click)="delatePhotoPerfil()">
-          <div class="container__btn3-div" >
-            <img src="assets/icons/delete_black_24dp.svg">
-            <span>Eliminar foto de perfil</span>
-          </div>
-        </button>
-   <!--      <button class="container__btn3 btn-square-blue2" (click)="onSubmit()">
-            <span *ngIf="!loading">Actualizar perfil</span>
-            <div class="container__spinner spinner-border text-light" role="status" *ngIf="loading">
-            </div>
-        </button> -->
-    </div>
 
+<div class="d-flex flex-row justify-content-center align-items-center gap-2 mt-3">
+  <button class="container__btn3 btn" *ngIf="!editarperfil" (click)="editarPerfi()">
+    <div class="container__btn3-div">
+      <img src="assets/icons/edit_note_azul1_24dp.svg">
+      <span>Editar perfil</span>
+    </div>
+  </button>
+  <button class="container__btn3  btn" *ngIf="editarperfil" (click)="cancelProfileEditing()">
+    <div class="container__btn3-div">
+      <img src="assets/icons/clear_azul1_24dp.svg">
+      <span>Cancelar edición</span>
+    </div>
+  </button>
+  <button class="container__btn3 btn" *ngIf="editarperfil && EditedInputValue" (click)="onSubmit()">
+    <div class="container__btn3-div">
+      <img src="assets/icons/save_as_azul1_24dp.svg">
+      <span>Guardar cambios</span>
+    </div>
+  </button>
+</div>
 
  </div>
 </div>
@@ -436,13 +453,12 @@
   </div>
 </ng-template>
 <ngx-spinner type="square-jelly-box"></ngx-spinner>
-  <app-basic-floating-btn [editar]="true" *ngIf="!editarperfil" (click)="editarPerfi()" >
-  </app-basic-floating-btn>
-
+<!--      <app-basic-floating-btn [editar]="true" *ngIf="!editarperfil" (click)="editarPerfi()" >
+    </app-basic-floating-btn>
     <app-basic-floating-btn [cancelar]="true"  *ngIf="editarperfil" (click)="cancelProfileEditing()">
     </app-basic-floating-btn>
     <app-basic-floating-btn [actualizar]="true"  *ngIf="editarperfil && EditedInputValue" (click)="onSubmit()">
     </app-basic-floating-btn>
-
+ -->
 
 

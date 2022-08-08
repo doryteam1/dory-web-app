@@ -47,6 +47,7 @@ import { NgxLongPress2Module } from 'ngx-long-press2';
 import { ModalCheckboxListComponent } from './components/modal-checkbox-list/modal-checkbox-list.component';
 import { FiltrosComponent } from './components/filtros/filtros.component';
 import { ChipConBotonCloseComponent } from './components/chip-con-boton-close/chip-con-boton-close.component';
+import { FloatinBtnsAlanteAtrasComponent } from './components/floatin-btns-alante-atras/floatin-btns-alante-atras.component';
 
 
 
@@ -82,6 +83,7 @@ import { ChipConBotonCloseComponent } from './components/chip-con-boton-close/ch
     ModalCheckboxListComponent,
     FiltrosComponent,
     ChipConBotonCloseComponent,
+    FloatinBtnsAlanteAtrasComponent,
   ],
   imports: [
     CommonModule,
@@ -122,8 +124,10 @@ import { ChipConBotonCloseComponent } from './components/chip-con-boton-close/ch
     ModalCheckboxListComponent,
     FiltrosComponent,
     ChipConBotonCloseComponent,
+    FloatinBtnsAlanteAtrasComponent,
     /*  CardphotoGoogleMapComponent, */
   ],
+
   providers: [
     ConfirmModalMapService,
     ModalGallerySliderService,

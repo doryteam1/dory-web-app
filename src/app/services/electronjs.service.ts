@@ -5,15 +5,19 @@ import { Injectable } from '@angular/core';
 })
 export class ElectronjsService {
   private ipc!: IpcRenderer;
+  public ipcActivo:boolean=false
   constructor() {
     if (window.require) {
       try {
         this.ipc = window.require('electron').ipcRenderer;
         console.log('electron aqui');
+        this.ipcActivo=true
       } catch (e) {
         throw e;
+
       }
     } else {
+        this.ipcActivo = false;
       console.warn('Electron IPC was not loaded');
     }
   }
