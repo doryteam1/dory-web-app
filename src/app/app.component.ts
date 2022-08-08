@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ElectronjsService } from 'src/app/services/electronjs.service';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { FloatingBtnAutoUpComponent } from './shared/components/floating-btn-auto-up/floating-btn-auto-up.component';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +10,9 @@ export class AppComponent {
   title = 'web-app-dory';
   isRegistering: boolean = false;
   activate: boolean = false;
+  @ViewChild(FloatingBtnAutoUpComponent) floatingBtn!:FloatingBtnAutoUpComponent;
+  @ViewChild('main') divMain!:ElementRef;
   constructor(
-    private _electronService: ElectronjsService
   ) {}
   exit(event: any) {
     console.log('exit app');
@@ -20,17 +21,8 @@ export class AppComponent {
   botonAtrasAlante(event: boolean) {
     this.activate = event
   }
-buttonMin(){
-this._electronService?.send('min-button');
-this._electronService.removeAllListeners('min-button');
-}
-buttonMax(){
-this._electronService?.send('max-button');
-this._electronService.removeAllListeners('max-button');
-}
-buttonClose(){
-this._electronService?.send('close-button');
-this._electronService.removeAllListeners('close-button');
-}
 
+  onScroll(event:any){
+    this.floatingBtn.onScrollContainer(this.divMain.nativeElement.scrollTop)
+  }
 }

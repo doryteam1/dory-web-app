@@ -48,6 +48,7 @@ import { ModalCheckboxListComponent } from './components/modal-checkbox-list/mod
 import { FiltrosComponent } from './components/filtros/filtros.component';
 import { ChipConBotonCloseComponent } from './components/chip-con-boton-close/chip-con-boton-close.component';
 import { FloatinBtnsAlanteAtrasComponent } from './components/floatin-btns-alante-atras/floatin-btns-alante-atras.component';
+import { ControlBarComponent } from './components/control-bar/control-bar.component';
 
 
 
@@ -84,6 +85,7 @@ import { FloatinBtnsAlanteAtrasComponent } from './components/floatin-btns-alant
     FiltrosComponent,
     ChipConBotonCloseComponent,
     FloatinBtnsAlanteAtrasComponent,
+    ControlBarComponent,
   ],
   imports: [
     CommonModule,
@@ -125,6 +127,7 @@ import { FloatinBtnsAlanteAtrasComponent } from './components/floatin-btns-alant
     FiltrosComponent,
     ChipConBotonCloseComponent,
     FloatinBtnsAlanteAtrasComponent,
+    ControlBarComponent
     /*  CardphotoGoogleMapComponent, */
   ],
 

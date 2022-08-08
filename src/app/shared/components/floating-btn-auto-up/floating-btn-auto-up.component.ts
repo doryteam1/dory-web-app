@@ -1,5 +1,4 @@
-import { style } from '@angular/animations';
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, Inject, HostListener, Input, ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
@@ -8,6 +7,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./floating-btn-auto-up.component.scss'],
 })
 export class FloatingBtnAutoUpComponent implements OnInit {
+  @Input() parentContainer:ElementRef | undefined;
   windowScrolled: boolean | undefined;
   constructor(@Inject(DOCUMENT) private document: Document) {}
   @HostListener('window:scroll', [])
@@ -33,6 +33,25 @@ export class FloatingBtnAutoUpComponent implements OnInit {
     })();
   }
   ngOnInit(): void {}
+
+  onScrollContainer(scrollTop:number){
+    console.log(scrollTop)
+    if (
+      scrollTop ||
+      scrollTop > 100
+    ) {
+      this.windowScrolled = true;
+    } else if (
+      scrollTop ||
+      scrollTop < 10
+    ) {
+      this.windowScrolled = false;
+    }
+  }
+
+  scrollToBottomContainer(): void {
+      this.parentContainer!.nativeElement!.scrollTop = 0;
+  }
 
   onClick() {}
   /*  scrollToBottom(): void {
