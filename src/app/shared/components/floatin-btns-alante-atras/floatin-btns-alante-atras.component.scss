@@ -1,11 +1,13 @@
 .floating-btn {
-  position: fixed;
+ /*  position: fixed;
   left: 5px;
-  bottom: 5px;
+  bottom: 5px; */
   display: flex;
-  z-index: 1000;
-  cursor: pointer;
-  height: 35px;
+  /* z-index: 1000; */
+  gap: 10px;
+  /*  height: 35px; */
 
 }
-
+#floating-btn-img{
+  cursor: pointer;
+}
