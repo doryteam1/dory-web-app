@@ -1,6 +1,10 @@
 
-  <div class=" floating-btn"*ngIf="BotonAtrasAlante">
-    <img  (click)="goBack()"class="svgpath" src="assets/icons/windows_media_atrass.svg">
-    <img (click)="getForward()" class="svgpath" src="assets/icons/windows_media_alante.svg">
+  <div class=" floating-btn">
+    <div id="floating-btn-img">
+      <img id="floating-btn-img" (click)="goBack()" src="assets/icons/arrow_atras.svg">
+    </div>
+      <div id="floating-btn-img">
+        <img  (click)="getForward()"  src="assets/icons/arrow_alante.svg">
+      </div>
   </div>
 

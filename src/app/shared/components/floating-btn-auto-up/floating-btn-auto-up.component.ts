@@ -35,7 +35,6 @@ export class FloatingBtnAutoUpComponent implements OnInit {
   ngOnInit(): void {}
 
   onScrollContainer(scrollTop:number){
-    console.log(scrollTop)
     if (
       scrollTop ||
       scrollTop > 100
@@ -50,9 +49,21 @@ export class FloatingBtnAutoUpComponent implements OnInit {
   }
 
   scrollToBottomContainer(): void {
-      this.parentContainer!.nativeElement!.scrollTop = 0;
+    console.log(this.parentContainer);
+      this.parentContainer!.nativeElement!.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start',
+      });
   }
 
+/* scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'start',
+    }); */
   onClick() {}
   /*  scrollToBottom(): void {
     console.log('Scroll');

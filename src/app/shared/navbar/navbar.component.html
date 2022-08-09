@@ -1,11 +1,16 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <img class="logo" src="assets/images/logo-no-name.svg" routerLink="/home"  placement="bottom" ngbTooltip="Inicio">
+      <img  *ngIf="!electronjs" class="logo" src="assets/images/logo-no-name.svg" routerLink="/home"  placement="bottom" ngbTooltip="Inicio">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li *ngIf="electronjs" class="nav-item">
+            <a class="nav-link " id="navbarDropdown" role="button" routerLink="/home">
+              Inicio
+            </a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Dory
@@ -16,7 +21,6 @@
               <li><a class="dropdown-item" routerLink="/contacto">Contáctanos</a></li>
             </ul>
           </li>
-
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Productores
@@ -28,7 +32,6 @@
               <li><a class="dropdown-item" routerLink="/asociaciones">Asociaciones</a></li>
             </ul>
           </li>
-
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Novedades y Actualidad

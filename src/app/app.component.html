@@ -1,10 +1,18 @@
 
-<app-control-bar></app-control-bar>
-<div #main class="main" (scroll)="onScroll($event)">
+<app-control-bar *ngIf="customTitleBarElectron"></app-control-bar>
+<div #main [ngClass]="{'main--web-app':!customTitleBarElectron}" class="main" (scroll)="onScroll($event)" >
   <app-top-alert></app-top-alert>
   <app-notification-bar></app-notification-bar>
   <app-navbar></app-navbar>
   <router-outlet></router-outlet>
-  <app-floatin-btns-alante-atras (onBotonAtrasAlante)="botonAtrasAlante($event)" ></app-floatin-btns-alante-atras>
   <app-floating-btn-auto-up [parentContainer]="divMain"></app-floating-btn-auto-up>
 </div>
+<!-- <app-control-bar></app-control-bar>
+<div #main class="main" (scroll)="onScroll($event)" >
+  <app-top-alert></app-top-alert>
+  <app-notification-bar></app-notification-bar>
+  <app-navbar></app-navbar>
+  <router-outlet></router-outlet>
+  <app-floating-btn-auto-up [parentContainer]="divMain"></app-floating-btn-auto-up>
+</div> -->
+
