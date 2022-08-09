@@ -3,13 +3,13 @@
         <img class="container__image" src="assets/images/party.svg">   
         <div class="container__box">
             <div class="container__box" *ngIf="isFillName">
-                <span class="container__title">Antes de seguir cuentanos cual es tu nombre?</span>
+                <span class="container__title">Antes de seguir cuéntanos cual es tu nombre?</span>
                 <input class="container__input form-input-text-square" type="text" [(ngModel)]="nombres" (ngModelChange)="resetErrors()">
                 <span class="container__title">Y tus apellidos?</span>
                 <input class="container__input form-input-text-square" type="text" [(ngModel)]="apellidos" (ngModelChange)="resetErrors()">
             </div>
             
-            <span class="container__title" *ngIf="isFillUserType">Antes de seguir cuentanos a que te dedicas?</span>
+            <span class="container__title" *ngIf="isFillUserType">Antes de seguir cuéntanos a que te dedicas?</span>
             <div *ngIf="isFillUserType">
                 <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idTipo" (ngModelChange)="resetErrors()">
                     <optgroup label="Eres un">
@@ -19,7 +19,7 @@
                 </select>
             </div>
 
-            <span class="container__title">Por ultimo selecciona el municipio donde vives</span>
+            <span class="container__title">Por último selecciona el municipio donde vives</span>
             <div>
                 <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idMunic" (ngModelChange)="resetErrors()">
                     <optgroup label="Eres un">

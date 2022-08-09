@@ -22,6 +22,7 @@ import { RouterModule } from '@angular/router';
 import { AsociacionDetalleFormComponent } from './components/asociacion-detalle-form/asociacion-detalle-form.component';
 import { GranjaDetalleFormComponent } from './components/granja-detalle-form/granja-detalle-form.component';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
+import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
 
 
 @NgModule({
@@ -52,6 +53,10 @@ import { AuthInterceptor } from '../interceptors/auth.interceptor';
     NgxLongPress2Module,
     NgxPaginationModule,
     RouterModule,
+    GuidedTourModule
   ],
+  providers:[
+    GuidedTourService
+  ]
 })
 export class DashboardModule {}

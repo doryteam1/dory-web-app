@@ -44,6 +44,7 @@
     "dayjs": "^1.11.3",
     "express": "^4.17.1",
     "jquery": "^3.6.0",
+    "ngx-guided-tour": "^2.0.1",
     "ngx-long-press2": "^2.0.0",
     "ngx-pagination": "^6.0.1",
     "ngx-sharebuttons": "^10.0.0",
