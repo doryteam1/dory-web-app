@@ -44,6 +44,6 @@ this.activatebutton()
     this.floatingBtn.onScrollContainer(this.divMain.nativeElement.scrollTop);
   }
   ngOnDestroy(): void {
-    this._electronService.removeAllListeners('activateButtonElectron');
+    this._electronService.removeAllListeners('activateCustomTitleBarnElectron');
   }
 }

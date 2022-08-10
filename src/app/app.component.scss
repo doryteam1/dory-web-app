@@ -3,8 +3,10 @@
     margin-top: 32px;
     width: 100vw;
     overflow-y: auto;
-    position:fixed
+    position:fixed;
+    user-select: none;
 }
 .main--web-app{
   margin-top: 0 !important;
+  user-select:auto
 }

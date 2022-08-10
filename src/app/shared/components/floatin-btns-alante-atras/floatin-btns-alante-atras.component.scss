@@ -1,13 +1,55 @@
 .floating-btn {
- /*  position: fixed;
-  left: 5px;
-  bottom: 5px; */
   display: flex;
-  /* z-index: 1000; */
   gap: 10px;
-  /*  height: 35px; */
-
 }
-#floating-btn-img{
+
+#floating-btn-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 }
+#floating-btn-img:hover {
+  background-color: rgba(99, 98, 98, 0.1);
+  border-radius: 10%;
+
+}
+/* tootil */
+ .tooltip-one {
+    padding: 0.25rem 0.5rem;
+      background: #fff;
+      position: absolute;
+      width: max-content;
+      height: max-content;
+      max-width: 300px;
+      border-radius: 0.25rem;
+      text-align: center;
+      filter: drop-shadow(0 3px 5px #ccc);
+      line-height: 1.5;
+      display: none;
+      top: calc(100% + 5px);
+      color: #fff;
+      background-color: #000;
+      z-index: 1080;
+      font-size: 0.875rem;
+
+ }
+
+ .tooltip-one:after {
+content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 50%;
+  left: calc(50% - 0.59rem);
+  width: 18px;
+  height: 18px;
+  background-color: #000;
+  transform: rotate(45deg);
+ }
+
+ .tooltip-trigger:hover+.tooltip-one {
+   display: block;
+ }
+ .botonOn{
+  fill: #747474
+ }

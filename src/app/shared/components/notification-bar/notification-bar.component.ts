@@ -16,11 +16,10 @@ export class NotificationBarComponent implements OnInit {
     this.router.events.subscribe(
       (event)=>{
         if(event instanceof NavigationEnd){
-          console.log(event)
           let route:string = event.url;
-          if(route.includes('dashboard') 
-          || route.includes('contacto') 
-          || route.includes('update-password') 
+          if(route.includes('dashboard')
+          || route.includes('contacto')
+          || route.includes('update-password')
           || route.includes('update-password')
           || route.includes('login')
           || route.includes('registro')
