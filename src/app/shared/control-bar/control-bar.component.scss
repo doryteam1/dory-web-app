@@ -2,7 +2,7 @@
 #titlebar {
   display: block;
   position: fixed;
-  height: 32px;
+  height: 50px;
   width: 100%;
   background: white;
   padding: 4px;
@@ -14,13 +14,20 @@
   height: 100%;
   -webkit-app-region: drag;
 }
+/* esyilo nuevp estra */
+#drag-region {
+display: flex;
+    align-items: center;
+      justify-content: space-between;
 
+}
+/* fiun */
 #window-controls {
   display: grid;
   grid-template-columns: repeat(3, 40px);
-  position: absolute;
+ /*  position: absolute;
   top: 0;
-  right: 0;
+  right: 0; */
   height: 100%;
 }
 
@@ -81,7 +88,7 @@
 #window-title {
   display: flex;
   gap: 10px;
-  padding-left: 10px;
+  padding-left: 15px;
   justify-content: flex-start;
   align-items: center;
   user-select: none;
@@ -96,3 +103,50 @@
 
 /*
   */
+/* tootil */
+.tooltip-one {
+  padding: 0.25rem 0.5rem;
+  background: #fff;
+  position: absolute;
+  width: max-content;
+  height: max-content;
+  max-width: 300px;
+  border-radius: 0.25rem;
+  text-align: center;
+  filter: drop-shadow(0 3px 5px #ccc);
+  line-height: 1.5;
+  display: none;
+  top: calc(100% + 5px);
+  color: #fff;
+  background-color: #000;
+  z-index: 1080;
+  font-size: 0.875rem;
+  left: 5px;
+
+}
+
+.tooltip-one:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 50%;
+  left: calc(50% - 0.59rem);
+  width: 18px;
+  height: 18px;
+  background-color: #000;
+  transform: rotate(45deg);
+}
+
+.tooltip-trigger:hover+.tooltip-one {
+  display: block;
+}
+
+.icono{
+  width: 24px;
+  height: 24px;
+  -webkit-app-region: no-drag;
+}
+.icono:hover{
+  width: 24px;
+  height: 24px;
+}
