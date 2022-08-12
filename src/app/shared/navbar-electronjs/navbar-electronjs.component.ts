@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, HostBinding, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostBinding,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -6,16 +15,17 @@ import * as dayjs from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
 dayjs.extend(relativeTime);
-require('dayjs/locale/es')
-dayjs.locale('es')
+require('dayjs/locale/es');
+dayjs.locale('es');
 import { ResizeObserver } from '@juggle/resize-observer';
-
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  selector: 'app-navbar-electronjs',
+  templateUrl: './navbar-electronjs.component.html',
+  styleUrls: ['./navbar-electronjs.component.scss'],
 })
-export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NavbarElectronjsComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   photoUser: string = '';
   nomCom: string = '';
   successMessage = 'Mensaje de prueba';
@@ -39,19 +49,20 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   notifiesHeigth: number = 0;
   @HostBinding('hidden')
   isHidden: boolean = false;
-  electronjs:boolean=false
-
+  electronjs: boolean = false;
+  currentRoute: string = '';
   constructor(
     private router: Router,
     private userService: UsuarioService,
     private storageService: StorageService,
     private elRef: ElementRef,
     private ar: ActivatedRoute,
-    private _electronService: ElectronjsService
+    private _electronService: ElectronjsService,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
-   this.electronjs= this._electronService.ipcActivo
+    this.electronjs = this._electronService.ipcActivo;
     this.photoUser = localStorage.getItem('photoUser')!;
     this.nomCom = localStorage.getItem('nomApell')!;
     this.storageService.store$.subscribe((response) => {
@@ -71,6 +82,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route: string = event.url;
+        this.currentRoute = event.url;
         if (route.includes('welcome')) {
           this.isHidden = true;
         } else {
@@ -120,15 +132,20 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   login() {
-    let isAuth = this.userService.isAuthenticated();
-
-    if (isAuth) {
-      this.router.navigateByUrl('/dashboard');
-    } else {
-      this.router.navigateByUrl('/login');
-    }
+    this.ngZone.run(() => {
+      let isAuth = this.userService.isAuthenticated();
+      if (isAuth) {
+        this.router.navigateByUrl('/dashboard');
+      } else {
+        this.router.navigateByUrl('/login');
+      }
+    });
   }
-
+  navegarRuta(ruta: string) {
+    this.ngZone.run(() => {
+      this.router.navigateByUrl(ruta);
+    });
+  }
   authenticated() {
     return this.userService.isAuthenticated();
   }
@@ -145,12 +162,16 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.userService.authenticatedWith();
   }
   logout() {
-    this.userService.logout();
-    this.router.navigateByUrl('/home');
+    this.ngZone.run(() => {
+      this.userService.logout();
+      this.router.navigateByUrl('/home');
+    });
   }
 
   updatePassword() {
-    this.router.navigateByUrl('update-password');
+    this.ngZone.run(() => {
+      this.router.navigateByUrl('update-password');
+    });
   }
 
   confirmarInvitacion(invitacion: any) {

@@ -1,10 +1,12 @@
 .main {
-    height: calc(100% - 32px);
-    margin-top: 32px;
+    height: calc(100% - 50px);
+    margin-top: 50px;
     width: 100vw;
     overflow-y: auto;
-    position:fixed
+    position:fixed;
+    user-select: none;
 }
 .main--web-app{
   margin-top: 0 !important;
+  user-select:auto
 }
