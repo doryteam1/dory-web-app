@@ -46,7 +46,7 @@
                   <span class="container__label">Nombres</span>
                   <div class="input-wrapper">
                       <input name= "nombr" class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'nombres', usuario.nombres)" [ngClass]="{'container__input--color':!editarperfil}"
-                      type="text" formControlName='nombres' placeholder="Nombres">
+                      type="text" formControlName='nombres' [placeholder]="editarperfil ? 'Nombres' : ''">
                   </div>
               </div>
           </div>
@@ -56,7 +56,7 @@
                   <span class="container__label">Apellidos</span>
                   <div class="input-wrapper">
                       <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'apellidos', usuario.apellidos)"  [ngClass]="{'container__input--color':!editarperfil}"
-                        type="text" formControlName='apellidos' placeholder="Apellidos">
+                        type="text" formControlName='apellidos' [placeholder]="editarperfil ? 'Apellidos' : ''">
                   </div>
               </div>
           </div>
@@ -80,7 +80,7 @@
                   <span class="container__label">Correo electrónico</span>
                   <div class="input-wrapper">
                       <input class="container__input form-input-text-square"  [ngClass]="{'container__input--color':true}"
-                      type="text" formControlName='email' placeholder="Ingresa tu correo electrónico">
+                      type="text" formControlName='email' [placeholder]="editarperfil ? 'Ingresa tu correo electrónico' : ''">
                   </div>
               </div>
           </div>
@@ -92,7 +92,7 @@
                   <span class="container__label">Celular</span>
                   <div class="input-wrapper">
                       <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'celular', usuario.celular)" [ngClass]="{'container__input--color':!editarperfil}"
-                        type="number" formControlName='celular' placeholder="Tu número de celular" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+                        type="number" formControlName='celular' [placeholder]="editarperfil ? 'Tu número de celular' : ''" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
                   </div>
               </div>
           </div>
@@ -102,7 +102,7 @@
                   <span class="container__label">Fecha de nacimiento: </span>
                   <div class="input-wrapper">
                       <input class="container__input form-input-text-square" (keyup)="onKeyInput($event)" [ngClass]="{'container__input--color':!editarperfil}"
-                      type="date" formControlName='fecha_nacimiento' placeholder="Fecha de nacimiento">
+                      type="date" formControlName='fecha_nacimiento' [placeholder]="editarperfil ? 'Fecha de nacimiento' : ''">
                       <!-- <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
                       <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg"> -->
                   </div>
@@ -220,7 +220,7 @@
                   <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}">
                     <input class="container__input form-input-text-square"
                     [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil}"
-                    type="text" formControlName='direccion' placeholder="Selecciona aquí tu dirección" >
+                    type="text" formControlName='direccion' [placeholder]="editarperfil ? 'Selecciona aquí tu dirección' : ''" >
                     <img *ngIf="editarperfil" class="input-icon option" src ="assets/icons/ojoanimado.svg">
                     <img *ngIf="!editarperfil" class="input-icon option" src ="assets/icons/ojoanimadocerrado.svg">
                   </div>
@@ -290,7 +290,7 @@
                 <span class="container__label">Cuéntanos sobre ti: </span>
                 <div>
                     <input class="container__input form-input-text-square"  (keyup)="onKeyInput($event ,'sobre_mi', usuario.sobre_mi)"
-                    type="text" formControlName='sobre_mi' placeholder="Cuéntanos sobre ti" [ngClass]="{'container__input--color':!editarperfil}">
+                    type="text" formControlName='sobre_mi' [placeholder]="editarperfil ? 'Cuéntanos sobre ti' : ''" [ngClass]="{'container__input--color':!editarperfil}">
                 </div>
             </div>
         </div>
@@ -303,7 +303,7 @@
                 <div>
                     <input class="container__input form-input-text-square"  type="text-area"
                     formControlName='otra_area_experticia_descripcion'
-                     placeholder="En que consiste tu área de experticia"
+                     [placeholder]="editarperfil ? 'En que consiste tu área de experticia' : ''"
                      (keyup)="onKeyInput($event ,'otra_area_experticia_descripcion', usuario.otra_area_experticia_descripcion)"
                      [ngClass]="{'container__input--color':!editarperfil}">
                 </div>
@@ -317,7 +317,7 @@
                     (keyup)="onKeyInput($event ,'otra_area_experticia', usuario.otra_area_experticia)"
                      [ngClass]="{'container__input--color':!editarperfil}"
                     formControlName='otra_area_experticia'
-                    placeholder="Tu área de experticia">
+                    [placeholder]="editarperfil ? 'Tu área de experticia' : ''">
                 </div>
             </div>
         </div>
