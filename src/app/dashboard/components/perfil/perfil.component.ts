@@ -2,10 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import {
   Component,
   ElementRef,
-  Input,
-  OnChanges,
   OnInit,
-  SimpleChanges,
   ViewChild,
 
 } from '@angular/core';
@@ -18,7 +15,6 @@ import { FirebaseStorageService } from 'src/app/services/firebase-storage.servic
 import { PlacesService } from 'src/app/services/places.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { TopAlertControllerService } from 'src/app/shared/services/top-alert-controller.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { environment } from 'src/environments/environment';
 import { MapGeocoder } from '@angular/google-maps';
@@ -179,6 +175,8 @@ export class PerfilComponent implements OnInit {
       'email',
     ],
   };
+
+
   /* Se utilizan para  validar la entra del usurio la input */
   validateInputFormObject: any[] = [
     {
@@ -275,7 +273,6 @@ export class PerfilComponent implements OnInit {
     private storageService: StorageService,
     httpClient: HttpClient,
     private storage: FirebaseStorageService,
-    private topAlertController: TopAlertControllerService,
     private geocoder: MapGeocoder,
     private confirmModalMapService: ConfirmModalMapService,
     private appModalService: AppModalService,
@@ -389,13 +386,13 @@ export class PerfilComponent implements OnInit {
 
           this.tempDir = this.form.get('direccion')?.value;
           this.tempMunicId = this.form.get('id_municipio')?.value;
-
       },
       (err) => {
         console.log(err);
       }
     );
   }
+
   myNgOnInit() {
     this.direccion?.disable();
     this.nombres?.disable();

@@ -59,6 +59,14 @@ export class FloatingBtnAutoUpComponent implements OnInit {
       });
   }
 
+  restartScroll(){
+    if(!this.parentContainer){
+      this.scrollToBottom();
+    }else{
+      this.scrollToBottomContainer();
+    }
+  }
+
 /* scrollIntoView({
       behavior: 'smooth',
       block: 'start',
