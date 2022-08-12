@@ -750,7 +750,11 @@ delatePhotoPerfil(){
           this.storageService.add('nomApell',this.getNomApell(this.nombres?.value,this.apellidos?.value))
           this.appModalService
             .modalAlertActualizadoComponent('Perfil actualizado correctamente')
-            .then((result) => {})
+            .then((result) => {
+              if(!this.celular?.value || !this.idMunic?.value || !this.direccion?.value){
+                window.location.reload();
+              }
+            })
             .catch((result) => {});
         },
         (err) => {

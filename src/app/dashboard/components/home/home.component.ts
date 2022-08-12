@@ -273,7 +273,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.stepPhoneNull,
     ],
     skipCallback:()=>{
-      setTimeout(()=>{
+      /* setTimeout(()=>{
         console.log("celular tour skiped!", this.authUser)
         if(!(this.authUser.id_municipio)){
           this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
@@ -281,10 +281,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log("start tour direccion!", this.miniGuidedDirecTour)
           this.guidedTourService.startTour(this.miniGuidedDirecTour)
         }
-      },1000)
+      },1000) */
     },
     completeCallback:()=>{
-      setTimeout(()=>{
+     /*  setTimeout(()=>{
         console.log("celular tour complete!", this.authUser)
         if(!(this.authUser.id_municipio)){
           console.log("start tour municipio!")
@@ -293,7 +293,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log("start tour direccion!", this.miniGuidedDirecTour)
           this.guidedTourService.startTour(this.miniGuidedDirecTour)
         }
-      },1000)
+      },1000) */
     }
   }
 
@@ -304,18 +304,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.stepMunicNull,
     ],
     skipCallback:()=>{
-      setTimeout(()=>{
+     /*  setTimeout(()=>{
         if(!(this.authUser.direccion)){
           this.guidedTourService.startTour(this.miniGuidedDirecTour)
         }
-      },1000)
+      },1000) */
     },
     completeCallback:()=>{
-      setTimeout(()=>{
+    /*   setTimeout(()=>{
         if(!(this.authUser.direccion)){
           this.guidedTourService.startTour(this.miniGuidedDirecTour)
         }
-      },1000)
+      },1000) */
     }
   }
 
@@ -337,17 +337,28 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    console.log("Home ng on init!")
+    let email = localStorage.getItem('email');
     if(!this.takedTour() || this.takedTour() !== 'true'){
-      console.log("tour init!")
       this.starTour();
+    }else{
+      this.us.getUsuarioByEmail(email).subscribe(
+        (response) => {
+          this.authUser = response.data[0];
+           if(!this.authUser.celular){
+              this.guidedTourService.startTour(this.miniGuidedCelularTour)
+            }else if(!this.authUser.id_municipio){
+              this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
+            }else if(!this.authUser.direccion){
+              this.guidedTourService.startTour(this.miniGuidedDirecTour)
+            }
+          } 
+      )
     }
   }
 
   public subscriber!: Subscription;
   ngOnInit(): void {
     let token = localStorage.getItem('token');
-    let email = localStorage.getItem('email');
     if (token && token != 'undefined') {
       this.tipoUsuario = Utilities.parseJwt(token!).rol;
       if (
@@ -393,20 +404,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.rutaGranjasdetalle = false;
           }
         });
-
-        this.us.getUsuarioByEmail(email).subscribe(
-          (response) => {
-            this.authUser = response.data[0];
-            if(this.takedTour()=='true'){
-              if(!this.authUser.celular){
-                this.guidedTourService.startTour(this.miniGuidedCelularTour)
-              }else if(!this.authUser.id_municipio){
-                this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
-              }else if(!this.authUser.direccion){
-                this.guidedTourService.startTour(this.miniGuidedDirecTour)
-              }
-            } 
-        })
   }
   ngOnDestroy() {
     this.subscriber?.unsubscribe();
