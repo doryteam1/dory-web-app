@@ -1149,7 +1149,7 @@ delatePhotoPerfil(){
   }
   editarPerfi() {
     this.editarperfil = true;
-    this.mensajedirecion = 'Escoge o mira aquí tu direción';
+    this.mensajedirecion = 'Escoja aquí su direción';
     this.nombres?.enable();
     this.cedula?.enable();
     this.apellidos?.enable();

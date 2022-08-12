@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SocialAuthService } from 'angularx-social-login';
 import { Observable } from 'rxjs';
 import { HttpsService } from './https.service';
 import { StorageService } from './storage.service';
@@ -8,7 +9,7 @@ import { StorageService } from './storage.service';
 })
 export class UsuarioService {
 
-  constructor(private httpsService:HttpsService, private storageService:StorageService) { }
+  constructor(private httpsService:HttpsService, private storageService:StorageService,private socialAuthService:SocialAuthService) { }
 
   registrarUsuario(usuario:any):Observable<any>{
     let body = {
@@ -50,8 +51,17 @@ export class UsuarioService {
     localStorage.removeItem('token');
     localStorage.removeItem('photoUser');
     localStorage.removeItem('nomApell');
+    console.log("logout google")
+    this.socialAuthService.signOut();
   }
 
+  logoutElectron(){
+    localStorage.removeItem('email');
+    localStorage.removeItem('token');
+    localStorage.removeItem('photoUser');
+    localStorage.removeItem('nomApell');
+    this.socialAuthService.signOut();
+  }
   recoveryPassword(email:string){
     return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/usuario/recover/password',{email:email});
   }

@@ -68,7 +68,7 @@
                   <span class="container__label">Cédula</span>
                   <div class="input-wrapper">
                       <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'cedula', usuario.cedula)" [ngClass]="{'container__input--color':!editarperfil}"
-                        type="text" formControlName='cedula' placeholder="Tu número de cédula">
+                        type="text" formControlName='cedula' [placeholder]="editarperfil ? 'Tu número de cédula' : ''">
           <!--                     <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
                       <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg"> -->
                   </div>
@@ -210,7 +210,7 @@
                   <span class="container__label">Corregimiento</span>
                   <div class="input-wrapper">
                     <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'nombre_corregimiento', usuario.nombre_corregimiento)"  [ngClass]="{'container__input--color':!editarperfil}"
-                      type="text" formControlName='nombre_corregimiento' placeholder="Corregimiento o vereda">
+                      type="text" formControlName='nombre_corregimiento' [placeholder]="editarperfil ? 'Corregimiento o vereda' : ''">
                   </div>
               </div>
           </div>
@@ -220,7 +220,7 @@
                   <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}">
                     <input class="container__input form-input-text-square"
                     [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil}"
-                    type="text" formControlName='direccion' placeholder="Selecciona aquí  tu direccón" >
+                    type="text" formControlName='direccion' placeholder="Selecciona aquí tu dirección" >
                     <img *ngIf="editarperfil" class="input-icon option" src ="assets/icons/ojoanimado.svg">
                     <img *ngIf="!editarperfil" class="input-icon option" src ="assets/icons/ojoanimadocerrado.svg">
                   </div>
@@ -239,7 +239,7 @@
                     <div class="input-wrapper">
                       <textarea  (keyup)="onKeyInput($event ,'informacion_adicional_direccion', usuario.informacion_adicional_direccion)" class="form-control" [ngClass]="{'container__input--color':!editarperfil}"
                         name="textarea" rows="3" cols="50"
-                        placeholder="Información adicional de la ubicación seleccionada"
+                        [placeholder]="editarperfil ? 'Información adicional de la ubicación seleccionada' : ''"
                         formControlName="informacion_adicional_direccion">Escribe algo aquí</textarea>
                     </div>
                   </div>

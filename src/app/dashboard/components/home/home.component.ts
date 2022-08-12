@@ -93,7 +93,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   stepDatosBasicos : TourStep = {
     selector : '#basicos',
     title : 'Datos básicos',
-    content : '<p> Por favor llena los datos basicos que falten por llenar. </p>',
+    content : '<p> Por favor llena los datos básicos que falten por llenar. </p>',
     orientation : Orientation.Top
   }
 
@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   stepFotoPerfil2 : TourStep = {
     selector : '#foto2',
     title : 'Foto de perfil',
-    content : '<p> Tambien puedes cambiarla o eliminarla si ya tienes una presionando este botón. </p>',
+    content : '<p> También puedes cambiarla o eliminarla si ya tienes una presionando este botón. </p>',
     orientation : Orientation.Bottom
   }
 

@@ -45,14 +45,14 @@ export class ProductosComponent implements OnInit {
         {
           id: 0,
           nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio(mayor a menor)',
+          nombrefiltro: 'Precio (mayor a menor)',
           datoafiltrar: 'precio',
           modoFiltro: MODO_FILTRO_ORDER_DES,
         },
         {
           id: 1,
           nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio(menor a mayor)',
+          nombrefiltro: 'Precio (menor a mayor)',
           datoafiltrar: 'precio',
           modoFiltro: MODO_FILTRO_ORDER_ASC,
         },
