@@ -338,22 +338,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     let email = localStorage.getItem('email');
-    if(!this.takedTour() || this.takedTour() !== 'true'){
-      this.starTour();
-    }else{
       this.us.getUsuarioByEmail(email).subscribe(
-        (response) => {
+        (response) => {  
           this.authUser = response.data[0];
-           if(!this.authUser.celular){
-              this.guidedTourService.startTour(this.miniGuidedCelularTour)
-            }else if(!this.authUser.id_municipio){
-              this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
-            }else if(!this.authUser.direccion){
-              this.guidedTourService.startTour(this.miniGuidedDirecTour)
-            }
-          } 
+          console.log(this.authUser)
+          if(!this.authUser.takeTour){
+            this.starTour();
+          }
+          else if(!this.authUser.celular){
+            this.guidedTourService.startTour(this.miniGuidedCelularTour)
+          }else if(!this.authUser.id_municipio){
+            this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
+          }else if(!this.authUser.direccion){
+            this.guidedTourService.startTour(this.miniGuidedDirecTour)
+          }
+        } 
       )
-    }
   }
 
   public subscriber!: Subscription;
@@ -429,7 +429,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onFinishTour(){
-    this.storage.add('takeTour',true);
+    this.userService.actualizarUsuario(this.authUser.id,{takeTour : 1}).subscribe(
+      ()=>{
+
+      },err=>{
+
+      }
+    )
     setTimeout(()=>{
       if(!this.authUser.celular){
         this.guidedTourService.startTour(this.miniGuidedCelularTour);
