@@ -1,4 +1,4 @@
-/* estilos title bar */
+/* Estilos title bar */
 #titlebar {
   display: block;
   position: fixed;
@@ -8,20 +8,18 @@
   padding: 4px;
   border-bottom: 1px solid #b0adad;
 }
-
 #titlebar #drag-region {
   width: 100%;
   height: 100%;
   -webkit-app-region: drag;
 }
-/* esyilo nuevp estra */
+/* Estilo nuevp estra */
 #drag-region {
-display: flex;
-    align-items: center;
-      justify-content: space-between;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-/* fiun */
+/* fin */
 #window-controls {
   display: grid;
   grid-template-columns: repeat(3, 40px);
@@ -30,7 +28,6 @@ display: flex;
   right: 0; */
   height: 100%;
 }
-
 #window-controls .button {
   grid-row: 1 / span 1;
   display: flex;
@@ -39,70 +36,55 @@ display: flex;
   width: 100%;
   height: 100%;
 }
-
 #min-button {
   grid-column: 1;
 }
-
 #max-button,
 #restore-button {
   grid-column: 2;
 }
-
 #close-button {
   grid-column: 3;
 }
-
 #window-controls {
   -webkit-app-region: no-drag;
 }
-
 #window-controls .button {
   user-select: none;
 }
-
 #window-controls .button:hover {
   background: rgba(99, 98, 98, 0.1);
 }
-
 #window-controls .button:active {
   background: rgba(255, 255, 255, 0.2);
 }
-
 #close-button:hover {
   background: #E81123 !important;
 }
-
 #close-button:hover .icon {
   fill: white;
 }
-
 #close-button:active {
   background: #F1707A !important;
 }
-
 #close-button:active .icon {
   fill: white;
 }
-
 #window-title {
   display: flex;
   gap: 10px;
   padding-left: 15px;
+  padding-right: 15px;
   justify-content: flex-start;
   align-items: center;
   user-select: none;
   height: 100%;
-
+  width: 100%;
 }
-
 .window-title-icon {
-  width: 24px;
-  height: 24px;
+  width: 100%;
+  height: 100%;
 }
-
-/*
-  */
 /* tootil */
 .tooltip-one {
   padding: 0.25rem 0.5rem;
@@ -121,7 +103,7 @@ display: flex;
   background-color: #000;
   z-index: 1080;
   font-size: 0.875rem;
-  left: 5px;
+  left: 10px;
 
 }
 
@@ -136,17 +118,11 @@ display: flex;
   background-color: #000;
   transform: rotate(45deg);
 }
-
 .tooltip-trigger:hover+.tooltip-one {
   display: block;
 }
-
 .icono{
-  width: 24px;
-  height: 24px;
+  width: 35px;
+  height: 35px;
   -webkit-app-region: no-drag;
-}
-.icono:hover{
-  width: 24px;
-  height: 24px;
 }

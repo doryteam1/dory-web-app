@@ -6,9 +6,10 @@ import {
   NgZone,
   OnDestroy,
   OnInit,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import {  NavigationEnd, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import * as dayjs from 'dayjs';
@@ -26,6 +27,10 @@ import { ResizeObserver } from '@juggle/resize-observer';
 export class NavbarElectronjsComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
+  @ViewChild('toggleButton') toggleButton!: ElementRef;
+  @ViewChild('notifies', { read: Element }) notifies!: Element;
+  @ViewChild('toggleButton2') toggleButton2!: ElementRef;
+  @ViewChild('botonalbondiga') botonalbondiga!: ElementRef;
   photoUser: string = '';
   nomCom: string = '';
   successMessage = 'Mensaje de prueba';
@@ -43,23 +48,31 @@ export class NavbarElectronjsComponent
     'notify__menu--height7',
   ];
   tests: string[] = [];
-
-  @ViewChild('notifies', { read: Element }) notifies!: Element;
   resizedObserver!: ResizeObserver;
   notifiesHeigth: number = 0;
   @HostBinding('hidden')
   isHidden: boolean = false;
   electronjs: boolean = false;
   currentRoute: string = '';
+  showMenu: boolean = false;
   constructor(
     private router: Router,
     private userService: UsuarioService,
     private storageService: StorageService,
-    private elRef: ElementRef,
-    private ar: ActivatedRoute,
     private _electronService: ElectronjsService,
-    private ngZone: NgZone
-  ) {}
+    private ngZone: NgZone,
+    private renderer: Renderer2
+  ) {
+    this.renderer.listen('window', 'click', (e: Event) => {
+      if (
+        !this.toggleButton.nativeElement.contains(e.target) &&
+        !this.botonalbondiga.nativeElement.contains(e.target)
+      ) {
+        /* https://www.wake-up-neo.net/es/html/como-detectar-el-clic-fuera-de-un-elemento-en-angular-7/806431830/ */
+        this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.electronjs = this._electronService.ipcActivo;
@@ -133,6 +146,7 @@ export class NavbarElectronjsComponent
 
   login() {
     this.ngZone.run(() => {
+      this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
       let isAuth = this.userService.isAuthenticated();
       if (isAuth) {
         this.router.navigateByUrl('/dashboard');
@@ -144,6 +158,7 @@ export class NavbarElectronjsComponent
   navegarRuta(ruta: string) {
     this.ngZone.run(() => {
       this.router.navigateByUrl(ruta);
+      this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
     });
   }
   authenticated() {
@@ -165,12 +180,14 @@ export class NavbarElectronjsComponent
     this.ngZone.run(() => {
       this.userService.logout();
       this.router.navigateByUrl('/home');
+      this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
     });
   }
 
   updatePassword() {
     this.ngZone.run(() => {
       this.router.navigateByUrl('update-password');
+      this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
     });
   }
 
