@@ -1,5 +1,5 @@
 
-<app-control-bar *ngIf="customTitleBarElectron"></app-control-bar>
+<app-control-bar ></app-control-bar>
 <div #main [ngClass]="{'main--web-app':!customTitleBarElectron}" class="main" (scroll)="onScroll($event)" *ngIf="customTitleBarElectron">
   <app-top-alert></app-top-alert>
   <app-notification-bar ></app-notification-bar>
@@ -9,6 +9,6 @@
 </div>
 <app-top-alert *ngIf="!customTitleBarElectron"></app-top-alert>
 <app-notification-bar *ngIf="!customTitleBarElectron"></app-notification-bar>
-<app-navbar *ngIf="!customTitleBarElectron"></app-navbar>
+<!-- <app-navbar *ngIf="!customTitleBarElectron"></app-navbar> -->
 <router-outlet *ngIf="!customTitleBarElectron"></router-outlet>
 <app-floating-btn-auto-up *ngIf="!customTitleBarElectron"></app-floating-btn-auto-up>
