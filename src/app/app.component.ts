@@ -7,7 +7,7 @@ import { ElectronjsService } from 'src/app/services/electronjs.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit{
   title = 'web-app-dory';
   isRegistering: boolean = false;
   customTitleBarElectron:boolean=false;
@@ -15,35 +15,18 @@ export class AppComponent implements OnInit, OnDestroy {
   floatingBtn!: FloatingBtnAutoUpComponent;
   @ViewChild('main') divMain!: ElementRef;
   constructor(
-    private cdRef: ChangeDetectorRef,
     private _electronService: ElectronjsService
   ) {
-
   }
   ngOnInit(): void {
-this.activatebutton()
+    this.customTitleBarElectron = this._electronService.ipcActivo;
   }
   exit(event: any) {
     console.log('exit app');
     this.isRegistering = false;
   }
-  activatebutton = (): void => {
-    this._electronService?.send(
-      'activeCustomTitleBarElectronInAngular',
-      'active'
-    );
-    this._electronService?.on(
-      'activateCustomTitleBarnElectron',
-      (event: any, arg: string) => {
-        this.customTitleBarElectron = arg === 'CustomTitleBarActivated';
-        this.cdRef.detectChanges();
-      }
-    );
-  };
   onScroll(event: any) {
     this.floatingBtn.onScrollContainer(this.divMain.nativeElement.scrollTop);
   }
-  ngOnDestroy(): void {
-    this._electronService.removeAllListeners('activateCustomTitleBarnElectron');
-  }
+
 }
