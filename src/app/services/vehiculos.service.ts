@@ -12,6 +12,10 @@ export class VehiculosService {
     return this.https.get('https://dory-api-rest.herokuapp.com/api/vehiculos/'+userId)
   }
 
+  getVehiculosAll(){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/vehiculos/')
+  }
+
   addVehiculo(vehiculo:any){
     return this.https.post('https://dory-api-rest.herokuapp.com/api/vehiculos',vehiculo)
   }

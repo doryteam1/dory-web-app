@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { MODOFILTRO2 } from 'src/app/global/constants';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
+import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
+import { InvestigadorService } from 'src/app/services/investigador.service';
 import { PlacesService } from 'src/app/services/places.service';
+import { ProveedorService } from 'src/app/services/proveedor.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { Utilities } from 'src/app/utilities/utilities';
@@ -12,16 +16,16 @@ import { Checkbox } from 'src/models/checkbox.model';
 import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 
 @Component({
-  selector: 'app-pescadores',
-  templateUrl: './pescadores.component.html',
-  styleUrls: ['./pescadores.component.scss']
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss']
 })
-export class PescadoresComponent implements OnInit {
-  pescadoresFiltered!: any[];
+export class UsersComponent implements OnInit {
+  usersFiltered!: any[];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
   palabra: string = '';
-  pescadores!: any[];
+  users!: any[];
   municipios: Array<any> = [];
   showNotFound: boolean = false;
   authUserId: number = -1;
@@ -66,24 +70,30 @@ export class PescadoresComponent implements OnInit {
     },
   ];
   
+  userType:string = '';
+
   constructor(private pescadoresService: PescadoresService,
-    private appModalService: AppModalService,
+    private piscicultoresService: PiscicultoresService,
+    private proveedoresService:ProveedorService,
+    private investigadoresServices:InvestigadorService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
     private places: PlacesService,
-    private asociacionService:AsociacionesService) { }
+    private ar:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userType = this.ar.snapshot.url[0].path!
+    console.log("userType ",this.userType)
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
     this.authRol = payload.rol;
-    /*Todas las asociaones que existen*/
-    this.pescadoresService.getPescadores().subscribe((response:any) => {
-      this.pescadores = response.data;
-      this.pescadoresFiltered = this.pescadores.slice();
-      console.log(this.pescadoresFiltered);
-      if (this.pescadoresFiltered.length < 1) {
+    /*Todas las usuarios que existen de un tipo determinado*/
+    this.getUsers()!.subscribe((response:any) => {
+      this.users = response.data;
+      this.usersFiltered = this.users.slice();
+      console.log(this.usersFiltered);
+      if (this.usersFiltered.length < 1) {
         this.showNotFound = true;
       } else {
         this.showNotFound = false;
@@ -91,6 +101,21 @@ export class PescadoresComponent implements OnInit {
     });
     /* municipios sucre */
     this.loadMunic();
+  }
+
+  getUsers():Observable<any> | null{
+    if(this.userType == 'pescadores'){
+      console.log("entro por pescadores")
+      return this.pescadoresService.getPescadores()
+    }else if(this.userType == 'piscicultores'){
+      console.log("entro por piscicultores")
+      return this.piscicultoresService.getPiscicultores()
+    }else if(this.userType == 'investigadores'){
+      return this.investigadoresServices.getInvestigadoresAll();
+    }else if(this.userType == 'proveedores'){
+      return this.proveedoresService.getProveedoresAll();
+    }
+    return null;
   }
 
   goDetail(pescador: any) {
@@ -102,7 +127,7 @@ export class PescadoresComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  delateFilterCheckbox(index: number) {
+  deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index,1);
      console.log(this.filtroseleccionadoCheckbox);
      this.reseteoDeBusqueda();
@@ -122,7 +147,7 @@ export class PescadoresComponent implements OnInit {
         resultados
       );
     }
-    this.pescadoresFiltered = resultados;
+    this.usersFiltered = resultados;
   }
 
   filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
@@ -153,11 +178,11 @@ export class PescadoresComponent implements OnInit {
   buscarData(texto: string): any {
     let asociacionesresult: any[];
     if (texto.trim().length === 0) {
-      asociacionesresult = this.pescadores;
+      asociacionesresult = this.users;
     } else {
       let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }];
       asociacionesresult = this.searchBuscadorService.buscarData(
-        this.pescadores,
+        this.users,
         texto,
         buscardatospor
       );
@@ -165,7 +190,7 @@ export class PescadoresComponent implements OnInit {
     return asociacionesresult;
   }
 
-  delateFilter() {
+  deleteFilter() {
     this.filtroseleccionado = null;
     this.reseteoDeBusqueda();
   }

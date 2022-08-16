@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
@@ -11,7 +12,7 @@ import { Utilities } from 'src/app/utilities/utilities';
 export class HomeComponent implements OnInit {
   tipoUsuario:string = '';
   error:string = '';
-  constructor(private socialService:SocialAuthService, private userService:UsuarioService) { }
+  constructor(private socialService:SocialAuthService, private userService:UsuarioService, private router:Router) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');

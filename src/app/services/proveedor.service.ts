@@ -27,4 +27,9 @@ export class ProveedorService {
   getProductosAll(){
     return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/proveedores/producto/todos')
   }
+
+  getProveedoresAll(){
+    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/usuario/proveedores/todos')
+  }
+
 }

@@ -1,6 +1,6 @@
 <div class="buscadoryfiltro mt-4">
 <div class="buscador-container">
-    <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar pescador..'"
+    <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar...'"
     (keyEnterPressData)="onBuscarPalabra($event)">
     </app-search>
     <!-- <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)"
@@ -16,7 +16,7 @@
     [iconoChip]="true"
     [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
     [contenidoChip]="filtroseleccionado.nombrefiltro"
-    (onCloseClip)="delateFilter()"
+    (onCloseClip)="deleteFilter()"
     >
     </app-chip-con-boton-close>
     <div class="chip__checkbox" *ngIf="filtroseleccionadoCheckbox">
@@ -25,12 +25,12 @@
         [iconoChip]="true"
         [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
         [contenidoChip]="nombre"
-        (onCloseClip)="delateFilterCheckbox(i)"
+        (onCloseClip)="deleteFilterCheckbox(i)"
         >
     </app-chip-con-boton-close>
     </div>
 </div>
-<div *ngIf="pescadoresFiltered?.length == 0"
+<div *ngIf="usersFiltered?.length == 0"
     class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
     <img src="assets/icons/searchanimado.svg">
     <div>
@@ -39,21 +39,21 @@
 </div>
 </div>
 <div class="list overflow-auto d-flex flex-column">
-<div class="card" *ngFor="let pescador of  pescadoresFiltered">
-    <div class="card__user-info d-flex flex-row" (click)="goDetail(pescador)">
-        <img class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person.svg'}}">
-        <span class="card__title">{{pescador.nombre}}</span>
+<div class="card" *ngFor="let user of usersFiltered">
+    <div class="card__user-info d-flex flex-row" (click)="goDetail(user)">
+        <img class="card__image" src="{{user.foto ? user.foto : '/assets/images/avatar-person.svg'}}">
+        <span class="card__title">{{user.nombre}}</span>
         </div>
         <!-- <div *ngIf="authRol == 'Piscicultor' || authRol == 'Pescador'">
-            <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(pescador)"
-            *ngIf="!pescador?.estado_solicitud">Unirme</button>
-            <button class="card__button btn-square btn--grey mt-3" (click)="invitarAnular(pescador)"
-            *ngIf="pescador?.estado_solicitud == 'Enviada'">Anular</button>
-            <div class="btn-group mt-3" *ngIf="pescador?.estado_solicitud == 'Aceptada'">
+            <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(user)"
+            *ngIf="!user?.estado_solicitud">Unirme</button>
+            <button class="card__button btn-square btn--grey mt-3" (click)="invitarAnular(user)"
+            *ngIf="user?.estado_solicitud == 'Enviada'">Anular</button>
+            <div class="btn-group mt-3" *ngIf="user?.estado_solicitud == 'Aceptada'">
                 <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
                     data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li (click)="invitarAnular(pescador)"><a class="dropdown-item"><i class="bi bi-box-arrow-left"></i> No
+                    <li (click)="invitarAnular(user)"><a class="dropdown-item"><i class="bi bi-box-arrow-left"></i> No
                         soy
                         miembro</a>
                     </li>
