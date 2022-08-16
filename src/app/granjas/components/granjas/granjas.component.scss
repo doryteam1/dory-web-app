@@ -1,250 +1,74 @@
-.container{
-    margin-top: 100px;
-    margin-bottom: 250px;
-    text-align: center;
-    position: relative;
+.stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.data-container {
+  display: flex;
+  margin-top: 100px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+.stats-container {
+  display: flex;
+  justify-content: center;
+}
+.stats-container__icon {
+  width: 40px;
+  height: 40px;
+}
+.stats-container__info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  justify-content: start;
+}
+.stats-container__title {
+  font-size: 20px;
+}
+.stats-container__title--color-blue {
+  color: var(--azul1)
+}
+.stats-container__title--color-morado {
+  color: var(--morado)
+}
+.stats-container__title--color-blue-2 {
+  color: var(--azul2)
+}
+.container {
+  margin-top: 100px;
+  margin-bottom: 250px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container__title {
+  font-size: 30px;
+}
+.container__description {
+  margin-top: 20px;
+  font-size: 20px;
+}
+.container__box {
+  position: relative;
 }
 
-.container__title{
-    font-size:40px;
-}
-
-.container__description{
-    margin-top: 20px;
-    font-size: 20px;
-}
-
-.container__box{
-    position: relative;
-}
-
-.container__image{
-    margin-top: 10px;
-    /* position:relative;
-    left: 50%;
-    transform: translateX(-50%); */
-}
-
-.container__red-point-san-onofre{
-    position: absolute;
-    top: 264px;
-    left: 378px;
-}
-
-.container__red-point-tolu{
-    position: absolute;
-    top: 393px;
-    left: 355px;
-}
-
-.container__red-point-tolu-viejo{
-    position: absolute;
-    top: 410px;
-    left: 400px;
-}
-
-.container__red-point-covenas{
-    position: absolute;
-    top: 459px;
-    left: 310px;
-    width: 30px;
-    height: 30px;
-}
-
-.container__red-point-coloso{
-    position: absolute;
-    top: 405px;
-    left: 440px;
-    width:40px;
-    height: 40px;
-}
-
-.container__red-point-chalan{
-    position: absolute;
-    top: 380px;
-    left: 462px;
-    width:40px;
-    height: 40px;
-}
-
-.container__red-point-ovejas{
-    position: absolute;
-    top: 385px;
-    left: 520px;
-}
-
-.container__red-point-palmito{
-    position: absolute;
-    top: 473px;
-    left: 350px;
-}
-
-.container__red-point-sincelejo{
-    position: absolute;
-    top: 490px;
-    left: 400px;
-}
-.container__red-point-morroa{
-    position: absolute;
-    top: 455px;
-    left: 460px;
-}
-
-.container__red-point-los-palmitos{
-    position: absolute;
-    top: 435px;
-    left: 500px;
-}
-
-.container__red-point-san-pedro{
-    position: absolute;
-    top: 455px;
-    left: 580px;
-}
-
-.container__red-point-sampues{
-    position: absolute;
-    top: 540px;
-    left: 420px;
-}
-
-.container__red-point-corozal{
-    position: absolute;
-    top: 565px;
-    left: 510px;
-}
-
-.container__red-point-san-juan-de-betulia{
-    position: absolute;
-    top: 515px;
-    left: 500px;
-}
-
-.container__red-point-since{
-    position: absolute;
-    top: 515px;
-    left: 550px;
-}
-
-.container__red-point-buenavista{
-    position: absolute;
-    top: 490px;
-    left: 620px;
-    width:35px;
-    height:35px;
-}
-
-.container__red-point-el-roble{
-    position: absolute;
-    top: 600px;
-    left: 550px;
-}
-
-.container__red-point-galeras{
-    position: absolute;
-    top: 565px;
-    left: 610px;
-}
-
-.container__red-point-san-benito-abad{
-    position: absolute;
-    top: 665px;
-    left: 610px;
-}
-
-.container__red-point-la-union{
-    position: absolute;
-    top: 720px;
-    left: 470px;
-}
-
-.container__red-point-caimito{
-    position: absolute;
-    top: 720px;
-    left: 540px;
-}
-
-.container__red-point-sucre{
-    position: absolute;
-    top: 700px;
-    left: 710px;
-}
-
-.container__red-point-san-marcos{
-    position: absolute;
-    top: 820px;
-    left: 540px;
-}
-
-.container__red-point-majagual{
-    position: absolute;
-    top: 820px;
-    left: 740px;
-}
-
-.container__red-point-guaranda{
-    position: absolute;
-    top: 924px;
-    left: 740px;
-}
-
-.tip-content{
-    text-align: left;
-    padding: 15px;
-}
-
-.tip-content__title{
-    font-size: 16px;
-}
-
-.tip-content__description{
-
-}
-
-
-/*----------------------*/
-.data-container{
-    display:flex;
+@media screen and (min-width: 550px) {
+  .container__title {
+    font-size: 40px;
+  }
+  .data-container {
     margin-top: 100px;
     justify-content: space-evenly;
-}
-.stats-container{
-    display:flex;
-    justify-content: center;
-}
-
-.stats-container__icon{
-    width:40px;
-    height:40px;
-}
-
-.stats-container__info{
-    display: flex;
-    flex-direction: column;
-    margin-left:20px;
-    justify-content: start;
-}
-
-.stats-container__title{
-    font-size: 20px;
-}
-
-.stats-container__description{
-       
-}
-
-.stats-container__title--color-morado{
-    color:var(--morado)
-}
-
-.stats-container__title--color-blue{
-    color:var(--azul1)
-}
-
-.stats-container__title--color-blue-2{
-    color:var(--azul2)
-}
-
-.stats{
- 
+    flex-direction: row;
+    align-items: center;
+  }
+  .stats {
+    display: block;
+  }
 }

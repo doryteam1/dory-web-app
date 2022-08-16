@@ -35,11 +35,9 @@
     padding-left: 42px;
     background-origin: padding-box;
     border-radius: 130px;
-    width: 200px;
     height: 45px;
     border: 0.5px solid #efefef;
     outline: none;
-    margin-right: 30px;
 }
 
 .container__input:hover{
@@ -52,9 +50,9 @@
   }
 
 .notify__box{
-    width: 32px;
+    /* width: 32px;
     height: 20px;
-    margin-right: 32px;
+    margin-right: 32px; */
 }
 
 .notify__icon{
@@ -135,4 +133,57 @@
     font-weight: 600;
     margin-top: 12px;
     margin-bottom: 7px;
+}
+.navbar-toggler--button:hover {
+  background-color: #e9ecef;
+}
+
+.dropdown-item:active {
+  background-color: var(--azul1);
+}
+.navbar-toggler:focus {
+  box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px rgb(250, 250, 250) !important;
+  outline: 0 none !important;
+}
+
+.notifyAndUserOption{
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 20px;
+}
+.searchAndRegsitroAndLogin{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.container__input {
+  width: 80%;
+  margin-right: 0
+}
+.dropdown__flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.botonRegistroAndLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.btn-mi-boton{
+  width: 120px;
+}
+@media screen and (min-width: 1400px) {
+  .searchAndRegsitroAndLogin {
+      flex-direction: row
+    }
+    .botonRegistroAndLogin {
+      flex-wrap: nowrap
+    }
+
 }

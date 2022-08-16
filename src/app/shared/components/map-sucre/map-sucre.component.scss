@@ -2,34 +2,28 @@
 .borderless {
     outline: none;
   }
-  
-  /* .miClase {
-    ;
-      fill: white;
-    transition: fill 0.5s;
+
+  .container-map{
+  height: 100%;
+  width: 100%;
+  max-width: 774px;
+  max-height: 1234px;
   }
-  
-  .miClase:hover {
-    fill: blue;
-  } */
-  
   @keyframes animate-svg-stroke-3 {
     0% {
       stroke-dashoffset: 31.109482869200132px;
       stroke-dasharray: 31.109482869200132px;
     }
-  
     100% {
       stroke-dashoffset: 0;
       stroke-dasharray: 31.109482869200132px;
     }
   }
-  
+
   @keyframes animate-svg-fill-3 {
     0% {
       fill: transparent;
     }
-  
     100% {
       fill: rgb(245, 56, 56);
     }
@@ -38,9 +32,4 @@
     animation: animate-svg-stroke-3 0s ease-out 0.24s infinite alternate both,
       animate-svg-fill-3 0.2s linear 0.4s infinite alternate both;
   }
-  /* .svg-elem-3 {
-    animation: animate-svg-stroke-3 0s ease-out 0.24s infinite alternate both,
-      animate-svg-fill-3 0.2s linear 0.4s infinite alternate both;
-  } */
-  
-  /* FIN PROPIOS */
+

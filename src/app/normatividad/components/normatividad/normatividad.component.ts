@@ -13,7 +13,7 @@ export class NormatividadComponent implements OnInit {
   normatividades:Array<Normatividad> = [
     {
       nombre:"Ley 13 de 1990 de 2015",
-      contenido:"Por la cual se dicta el estatuto general de pesca.",
+      contenido:"La presente Ley tiene por objeto regular el manejo integral y la explotación racional de los recursos pesqueros con el fin de asegurar su aprovechamiento sostenido.",
       url_descarga:"https://www.funcionpublica.gov.co/eva/gestornormativo/norma_pdf.php?i=66783",
       tipo:"ley"
     },
@@ -127,7 +127,7 @@ export class NormatividadComponent implements OnInit {
     },
     {
       nombre:"Ley 101 de 1993",
-      contenido:"Ley General de Desarrollo Agropecuario y Pesquero.",
+      contenido:"Esta ley desarrolla los artículos 64, 65 y 66 de la Constitución Nacional. En tal virtud se fundamenta en los siguientes propósitos que deben ser considerados en la interpretación de sus disposiciones, con miras a proteger el desarrollo de las actividades agropecuarias y pesqueras, y promover el mejoramiento del ingreso y calidad de vida de los productores rurales.",
       url_descarga:"https://www.minagricultura.gov.co/Normatividad/Leyes/Ley%20101%20de%201993.pdf",
       tipo:"ley"
     },

@@ -10,8 +10,9 @@
 <div class="container-normatividades">
     <div class="container" *ngFor="let normatividad of normatividadesFiltered">
         <h5 class="container__title">{{normatividad.nombre}}</h5>
-        <p class="container__description">{{normatividad.contenido}}<a class="container__button" target="_blank" [href]="normatividad.url_descarga"> Leer más...</a></p>
-
+        <p class="container__description">{{normatividad.contenido | shorter:164}}<a class="container__button"
+          target="_blank"
+           [href]="normatividad.url_descarga"> Leer más...</a></p>
         <!--<button class="container__button btn-rounded-blue">Descargar</button>-->
         <!--<a class="container__button btn-rounded-blue" target="_blank" [href]="normatividad.url_descarga">Descargar</a>-->
     </div>

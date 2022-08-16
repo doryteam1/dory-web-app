@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
   }
   ngOnInit(): void {
     this.customTitleBarElectron = this._electronService.ipcActivo;
-    console.log("cargado2")
+    console.log("cargado3")
   }
   exit(event: any) {
     console.log('exit app');

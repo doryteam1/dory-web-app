@@ -3,6 +3,7 @@
     flex-direction:row;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 10px;
     //padding-left: 40px;
 }
 .container-box{
@@ -10,12 +11,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
 }
 .novedad{
     display:grid;
     grid-template-columns: 212px 89px 0px;
-    margin-left: 30px;
-    margin-right: 30px;
+  margin-left: 10px;
+    margin-right: 10px;
     margin-top:5px;
     padding-top: 15px !important;
     height: 428px;
@@ -65,7 +71,7 @@
 }
 
 .novedad__header{
-    
+
 }
 .novedad__foto{
     width:300px;
@@ -138,7 +144,7 @@
 
 a{
  text-decoration: none;
- color: var(--black);   
+ color: var(--black);
 }
 
 

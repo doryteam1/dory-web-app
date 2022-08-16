@@ -51,10 +51,10 @@
   <div class="carousel-inner  imagenes-carrucel">
     <div class="carousel-item" *ngFor="let img of imagenes;let index = index; let isFirst = first"
       [ngClass]="{active: isFirst }" (click)="clickImagenItemSlider()" >
-      <img [ngClass]="{ 'img1item': imagenes.length==1,'img2item':imagenes.length>1,'imgitem--rounded':rounded == true }"
+      <img [ngClass]="{ 'img1item': imagenes.length==1,'img2item':imagenes.length>1,'imgitem--rounded':rounded == true ,'imgitem--scale':scale==true}"
         src="{{ img? img: 'https://admin.moodyyc.com/img/no-image.png'}}">
     </div>
-    <img class="img1item" [ngClass]="{'imgitem--rounded':rounded == true }"
+    <img class="img1item" [ngClass]="{'imgitem--rounded':rounded == true ,'imgitem--scale':scale==true}"
         src='https://admin.moodyyc.com/img/no-image.png' *ngIf="imagenes.length == 0">
     <button class="carousel-control-prev" type="button" [attr.data-bs-target]="idnumeral" data-bs-slide="prev"
       (click)="clickButtonPrevious()" *ngIf="imagenes.length > 1">

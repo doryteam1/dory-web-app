@@ -30,7 +30,7 @@
     color:var(--gris-oscuro);
     text-align: justify;
     margin-top:20px
-}   
+}
 
 .card{
     border: none;
@@ -56,6 +56,7 @@
 .card__title2{
     font-size: 19px;
     color:var(--azul1);
+    text-align: center;
 }
 
 .card__paragraph{
@@ -64,6 +65,7 @@
     margin-top: 10px;
     margin-bottom: 15px;
     font-family: OpenSans-Regular;
+    text-align: center;
     color:var(--gris-oscuro);
 }
 
@@ -72,4 +74,14 @@
     height:35px;
     margin-left: 10px;
     cursor:pointer;
+}
+@media screen and (max-width: 520px) {
+ .title{
+  font-size: 35px;
+ }
+}
+@media screen and (max-width: 296px) {
+.card__title1{
+  font-size: 26px;
+}
 }
