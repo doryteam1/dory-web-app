@@ -46,3 +46,17 @@
   object-fit: cover;
   border-radius: 8px;
 }
+
+.search{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.chip{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+}
