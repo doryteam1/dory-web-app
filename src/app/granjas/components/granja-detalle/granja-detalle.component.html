@@ -49,9 +49,9 @@
     *ngFor="let fotogranja of fotosgranja | slice:0:7; let i =index"
     (click)="fotoSele(i)">
 
-    <div class="photo-container-padre sin-img-div"  *ngIf="singranjas">
+    <!-- <div class="photo-container-padre sin-img-div"  *ngIf="singranjas">
     <img src="../../../../assets/images/sinimagen.svg">
-    </div>
+    </div> -->
 
   <button class="masimagenescontador" (click)="OpenGalleryModalOptionOne()" *ngIf="fotosgranja?.length >=7 "
       (click)=" shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"><span style=" border-bottom: 1px solid #fff;

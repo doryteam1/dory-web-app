@@ -266,6 +266,27 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  comercianteGuidedTour : GuidedTour = {
+    tourId : 'tourComerciante',
+    useOrb  : false,
+    steps : [
+      this.stepMenuPrincipal,
+      this.stepPerfil,
+      this.stepFavorito,
+      this.stepNegocios,
+      this.stepDatosBasicos,
+      this.stepFotoPerfil1,
+      this.stepFotoPerfil2,
+      this.stepUbicacion
+    ],
+    completeCallback:()=>{
+      this.onFinishTour()
+    },
+    skipCallback:()=>{
+      this.onFinishTour()
+    }
+  }
+
   miniGuidedCelularTour : GuidedTour = {
     tourId : 'miniTourCelular',
     useOrb  : false,
@@ -423,6 +444,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.guidedTourService.startTour(this.investigadorGuidedTour);
       }else if(this.tipoUsuario == 'Consumidor'){
         this.guidedTourService.startTour(this.consumidorGuidedTour);
+      }else if(this.tipoUsuario == 'Comerciante'){
+        this.guidedTourService.startTour(this.comercianteGuidedTour);
       }
     }
     
