@@ -14,13 +14,14 @@ import {
   styleUrls: ['./carrucel-img.component.scss'],
 })
 export class CarrucelImgComponent implements OnInit {
-  @Input() imagenes:any | SafeUrl[]= [];
+  @Input() imagenes: any | SafeUrl[] = [];
   @Input() imgselecmodal!: number;
   @Input() indicatorsphoto!: boolean;
   @Input() valorrows!: number;
   @Input() valorcolumns!: number;
   @Input() idtarge!: number;
-  @Input() rounded:boolean = false;
+  @Input() rounded: boolean = false;
+  @Input() scale: boolean = false;
   id!: string;
   idnumeral!: string;
   divrows!: string;
@@ -31,7 +32,7 @@ export class CarrucelImgComponent implements OnInit {
   posicionsliderleft!: string;
   posicionsliderleftindicatorssinfotos: string = 'relative';
   justyfycentercontent: string = 'none';
-  fotooverslider:boolean=false
+  fotooverslider: boolean = false;
   @Output() valueResponseIndiceActualSlider: EventEmitter<number> =
     new EventEmitter();
   @Output() eventValueResponseClickFotoMiniSlider: EventEmitter<number> =
@@ -123,7 +124,7 @@ export class CarrucelImgComponent implements OnInit {
     this.eventValueResponseClickDivIndicadorSlider.emit();
   }
   clickImagenItemSlider() {
-    this.eventValueResponseclickImagenItemSlider.emit()
+    this.eventValueResponseclickImagenItemSlider.emit();
   }
   clickButtonNext() {
     if (this.indicatorsphoto) {
