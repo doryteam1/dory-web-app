@@ -2,13 +2,16 @@
 .borderless {
     outline: none;
   }
-
   .container-map{
-  height: 100%;
-  width: 100%;
-  max-width: 774px;
-  max-height: 1234px;
+  height: 1234px;
+  width:774px ;
   }
+    @media screen and (max-width: 820px) {
+     .container-map{
+      height: 100vw;
+      width: 100vw;
+     }
+    }
   @keyframes animate-svg-stroke-3 {
     0% {
       stroke-dashoffset: 31.109482869200132px;
