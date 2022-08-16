@@ -8,7 +8,7 @@
     </div>
 
 <div class="container__box">
-  <div class="photo-container">
+  <div class="photo-container" >
    <div class="header-container">
     <div class="header-container--titulo">
       <h3 class="header-container__title">{{granja?.nombre}}</h3>
@@ -36,7 +36,7 @@
     </div>
 
 <div class="photo-container-padre" [ngClass]="{
-  'photo-container1-div': fotosgranja?.length ==1,
+  'photo-container1-div': (fotosgranja?.length ==1 || fotosgranja?.length ==0),
   'photo-container2-div': fotosgranja?.length ==2,
   'photo-container3-div': fotosgranja?.length ==3,
   'photo-container4-div': fotosgranja?.length ==4,
@@ -45,29 +45,28 @@
   'photo-container7-div': fotosgranja?.length >=7}">
 
   <img  class="photo-container-img box-shadow-efecthover" id="photo-container__photo{{i+1}}"
-    src="{{ fotogranja ? fotogranja : 'https://admin.moodyyc.com/img/no-image.png'}}"
+    src="{{ fotogranja ? fotogranja : 'assets/images/no-image.jpg'}}"
     *ngFor="let fotogranja of fotosgranja | slice:0:7; let i =index"
     (click)="fotoSele(i)">
 
-    <!-- <div class="photo-container-padre sin-img-div"  *ngIf="singranjas">
-    <img src="../../../../assets/images/sinimagen.svg">
-    </div> -->
+  <img class="photo-container-img" id="photo-container__photo1"
+  src='assets/images/no-image.jpg'
+  *ngIf="singranjas">
 
   <button class="masimagenescontador" (click)="OpenGalleryModalOptionOne()" *ngIf="fotosgranja?.length >=7 "
       (click)=" shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"><span style=" border-bottom: 1px solid #fff;
           border-bottom: 1px solid rgba(255, 255, 255, 0.5);">+ {{fotosgranja?.length-7}} fotos</span>
   </button>
 </div>
+
 <button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length >1 && fotosgranja?.length<7" >Ver fotos</button>
 <button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length ==1 " >Ver la foto</button>
 <button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length >=7 ">Ver todas las fotos</button>
 
-  </div>
-
-
 </div>
-
-<div class="proprietary-container" >
+</div>
+<h3 class="photo__foot d-flex flex-row justify-content-center" *ngIf="singranjas">No hay imagenes disponibles:(</h3>
+<div class="proprietary-container mt-5" >
     <div class="proprietary-container__info">
         <h3 class="proprietary-container__title">Propietario - {{granja?.propietarios[0]?.nombre_completo}} </h3>
         <span class="proprietary-container__description1">N° Celular  {{granja?.propietarios[0]?.celular}} </span>
