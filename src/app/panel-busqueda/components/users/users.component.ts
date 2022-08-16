@@ -39,37 +39,6 @@ export class UsersComponent implements OnInit {
     },
     /* modoFiltro: 'number_ordenarmayoramenor', */
   ];
-  /* varibles de buscqueda y filtros */
-  filtro: Filtro[] = [
-    {
-      nameButton: 'Tipo de asociación',
-      data: [
-        {
-          id: 0,
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Piscicultores',
-          datoafiltrar: 'Piscicultores',
-          modoFiltro: MODOFILTRO2,
-        },
-        {
-          id: 1,
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Pescadores',
-          datoafiltrar: 'Pescadores',
-          modoFiltro: MODOFILTRO2,
-        },
-        {
-          id: 2,
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Mixta',
-          datoafiltrar: 'Mixta',
-          modoFiltro: MODOFILTRO2,
-        },
-      ],
-      /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
-    },
-  ];
-  
   userType:string = '';
 
   constructor(private pescadoresService: PescadoresService,
@@ -118,10 +87,20 @@ export class UsersComponent implements OnInit {
     return null;
   }
 
-  goDetail(pescador: any) {
+  goDetail(user: any) {
+    let baseUrl = '';
+    if(user.tipo_usuario == 'Pescador'){
+      baseUrl = '/pescadores/municipio/detalle/'
+    }else if(user.tipo_usuario == 'Piscicultor'){
+      baseUrl = '/piscicultores/municipio/detalle/'
+    }else if(user.tipo_usuario == 'Proveedor'){
+
+    }else if(user.tipo_usuario == 'Investigador'){
+
+    }
     let url = this.router.serializeUrl(
       this.router.createUrlTree([
-        `/pescadores/municipio/detalle/${pescador.id}`,
+        baseUrl + `${user.id}`,
       ])
     );
     window.open(url, '_blank');

@@ -1,6 +1,20 @@
-<div class="d-flex flex-row justify-content-center mb-5 mt-4">
+<div class="search mb-4 mt-4">
   <app-search (textSearch)="onSearch($event)"></app-search>
+  <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
+    (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
+  </app-filtro>
 </div>
+<div class="chip mb-5">
+  <app-chip-con-boton-close
+  *ngFor="let nombre of filtroseleccionadoCheckbox; let i=index"
+      [iconoChip]="true"
+      [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+      [contenidoChip]="nombre"
+      (onCloseClip)="deleteFilterCheckbox(i)"
+      >
+  </app-chip-con-boton-close>
+</div>
+
 <div class="container">
   <div class="card" *ngFor="let negocio of negociosFiltered; let i=index;">
     <app-carrucel-img class="card__img"
