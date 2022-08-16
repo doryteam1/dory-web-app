@@ -46,7 +46,7 @@
                   <span class="container__label">Nombres</span>
                   <div class="input-wrapper">
                       <input name= "nombr" class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'nombres', usuario.nombres)" [ngClass]="{'container__input--color':!editarperfil}"
-                      type="text" formControlName='nombres' [placeholder]="editarperfil ? 'Nombres' : ''">
+                      type="text" formControlName='nombres' [placeholder]="editarperfil ? 'Ingrese su(s) nombre(s)' : ''">
                   </div>
               </div>
           </div>
@@ -56,7 +56,7 @@
                   <span class="container__label">Apellidos</span>
                   <div class="input-wrapper">
                       <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'apellidos', usuario.apellidos)"  [ngClass]="{'container__input--color':!editarperfil}"
-                        type="text" formControlName='apellidos' [placeholder]="editarperfil ? 'Apellidos' : ''">
+                        type="text" formControlName='apellidos' [placeholder]="editarperfil ? 'Ingrese su(s) apellido(s)' : ''">
                   </div>
               </div>
           </div>
@@ -68,7 +68,7 @@
                   <span class="container__label">Cédula</span>
                   <div class="input-wrapper">
                       <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'cedula', usuario.cedula)" [ngClass]="{'container__input--color':!editarperfil}"
-                        type="text" formControlName='cedula' [placeholder]="editarperfil ? 'Tu número de cédula' : ''">
+                        type="text" formControlName='cedula' [placeholder]="editarperfil ? 'Ingrese su número de cédula' : ''">
           <!--                     <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
                       <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg"> -->
                   </div>
@@ -89,10 +89,10 @@
       <div class="container-row row align-items-center">
           <div id="celular" class="col">
               <div  class="container__box" *ngIf="mostrarPorTipo('celular')">
-                  <span class="container__label">Celular</span>
+                  <span class="container__label">Celular <span class="asterisk">*</span></span>
                   <div class="input-wrapper">
                       <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'celular', usuario.celular)" [ngClass]="{'container__input--color':!editarperfil}"
-                        type="number" formControlName='celular' [placeholder]="editarperfil ? 'Tu número de celular' : ''" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+                        type="number" formControlName='celular' [placeholder]="editarperfil ? 'Ingrese su número de celular' : ''" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
                   </div>
               </div>
           </div>
@@ -163,7 +163,7 @@
 
           <div id="municipio" class="col">
               <div class="container__box left" *ngIf="mostrarPorTipo('municipio')">
-                  <span class="container__label">Municipio</span>
+                  <span class="container__label">Municipio <span class="asterisk">*</span></span>
                   <div class="input-wrapper">
                     <select class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
                         formControlName='id_municipio' (ngModelChange)='changeMunic()' >
@@ -216,7 +216,7 @@
           </div>
           <div id="direccion" class="col">
               <div class="container__box left" *ngIf="mostrarPorTipo('direccion')"   (click)="verMap()" >
-                  <span class="container__label">Dirección: </span>
+                  <span class="container__label">Dirección: <span class="asterisk">*</span></span>
                   <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}">
                     <input class="container__input form-input-text-square"
                     [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil}"
