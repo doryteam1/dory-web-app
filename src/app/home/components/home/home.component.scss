@@ -2,16 +2,20 @@
     display:flex;
     justify-content: space-evenly;
     box-shadow: 6px 8px 11px -2px #BAC1EF;
-    width: 970px;
-    height:96px;
-    margin: 0 auto;
+   width: auto;
+   margin-left: 20px;
+   margin-right: 20px;
+    height:97px;
     margin-top:128px;
     margin-bottom: 230px;
     border-radius: 10px;
     line-height: 15px;
     align-items: center;
 }
-
+.container-statics-div{
+display: flex;
+gap: 10px
+}
 .container-statics__card{
     display: flex;
 }
@@ -36,9 +40,70 @@
 }
 
 .container-information{
-    margin-top: 200px;
+    margin-top: 20px;
+}
+.carouse--miestilo{
+margin: 20px;
+height: 50vw;
+}
+.d-block--img{
+border-radius: 5px;
+}
+.carousel-inner{
+  height: 100%;
+}
+.row--miestilo{
+  flex-direction: column-reverse;
+}
+.text-start--miestilo{
+width: 100%;
+}
+.text-end {
+  width: 100% !important;
+  text-align: center !important;
+}
+.text-end-img{
+  width: 100%;
+  height: 100%;
+}
+@media screen and (min-width: 1000px) {
+  .container-statics {
+    width: 970px;
+    width: 970px;
+    margin: 128px auto 230px auto;
+  }
 }
 
+@media screen and (min-width: 680px) {
+  .row--miestilo {
+    flex-direction: row;
+  }
+.text-start--miestilo {
+  width: 50%;
+}
+.container-information {
+  margin-top: 150px;
+}
+.text-end {
+  width: 50% !important;
+text-align: right !important
+}
+.text-end-img {
+  width: 300px;
+  height: 300px;
+}
+
+}
+@media screen and (max-width: 540px) {
+  .container-statics {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    height: auto;
+  }
+    .container-statics-div {
+      flex-direction: column;
+    }
+}
 
 /* ngb-carousel {
     max-width: 100%;

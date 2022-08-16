@@ -27,8 +27,8 @@ import { ResizeObserver } from '@juggle/resize-observer';
 export class NavbarElectronjsComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @ViewChild('toggleButton') toggleButton!: ElementRef;
   @ViewChild('notifies', { read: Element }) notifies!: Element;
+  @ViewChild('toggleButton') toggleButton!: ElementRef;
   @ViewChild('toggleButton2') toggleButton2!: ElementRef;
   @ViewChild('botonalbondiga') botonalbondiga!: ElementRef;
   photoUser: string = '';

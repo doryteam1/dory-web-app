@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, HostBinding, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, HostBinding, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import {  NavigationEnd, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import * as dayjs from 'dayjs';
@@ -16,6 +16,9 @@ import { ResizeObserver } from '@juggle/resize-observer';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('toggleButton') toggleButton!: ElementRef;
+  @ViewChild('toggleButton2') toggleButton2!: ElementRef;
+  @ViewChild('botonalbondiga') botonalbondiga!: ElementRef;
   photoUser: string = '';
   nomCom: string = '';
   successMessage = 'Mensaje de prueba';
@@ -39,19 +42,28 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   notifiesHeigth: number = 0;
   @HostBinding('hidden')
   isHidden: boolean = false;
-  electronjs:boolean=false
+  electronjs: boolean = false;
 
   constructor(
     private router: Router,
     private userService: UsuarioService,
     private storageService: StorageService,
-    private elRef: ElementRef,
-    private ar: ActivatedRoute,
-    private _electronService: ElectronjsService
-  ) {}
+    private _electronService: ElectronjsService,
+    private renderer: Renderer2
+  ) {
+    this.renderer.listen('window', 'click', (e: Event) => {
+      if (
+        !this.toggleButton.nativeElement.contains(e.target) &&
+        !this.botonalbondiga.nativeElement.contains(e.target)
+      ) {
+        /* https://www.wake-up-neo.net/es/html/como-detectar-el-clic-fuera-de-un-elemento-en-angular-7/806431830/ */
+        this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
+      }
+    });
+  }
 
   ngOnInit(): void {
-   this.electronjs= this._electronService.ipcActivo
+    this.electronjs = this._electronService.ipcActivo;
     this.photoUser = localStorage.getItem('photoUser')!;
     this.nomCom = localStorage.getItem('nomApell')!;
     this.storageService.store$.subscribe((response) => {
@@ -79,7 +91,9 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
-
+  closeMenu(){
+    this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
+  }
   test() {
     setTimeout(() => {
       this.tests.push('test');
@@ -120,8 +134,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   login() {
+    this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
     let isAuth = this.userService.isAuthenticated();
-
     if (isAuth) {
       this.router.navigateByUrl('/dashboard');
     } else {
@@ -145,11 +159,13 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.userService.authenticatedWith();
   }
   logout() {
+     this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
     this.userService.logout();
     this.router.navigateByUrl('/home');
   }
 
   updatePassword() {
+     this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
     this.router.navigateByUrl('update-password');
   }
 
