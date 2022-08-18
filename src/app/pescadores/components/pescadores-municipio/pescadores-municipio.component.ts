@@ -54,20 +54,7 @@ export class PescadoresMunicipioComponent implements OnInit {
   showNotFound: boolean = false;
   pescadoresarray: any[] = [];
   pescadores: any[] = [];
-  /*  filtros: any[] = [
-    {
-      data: [
-        {
-          nombrefiltro: 'Calificación',
-          datoafiltrar: 'puntuacion',
-        },
-        {
-          nombrefiltro: 'Área',
-          datoafiltrar: 'area',
-        },
-      ],
-    },
-  ]; */
+  contador: number=0;
 
   constructor(
     httpClient: HttpClient,
@@ -76,7 +63,7 @@ export class PescadoresMunicipioComponent implements OnInit {
     private placesService: PlacesService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private location:Location
+    private location: Location
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -189,6 +176,19 @@ export class PescadoresMunicipioComponent implements OnInit {
       this.selectedPescador.celular = this.pescadores[index].celular;
     }
   }
+  openInfoWindowClick(marker: MapMarker, index: number) {
+    if (this.pescadores.length > 0 && this.mapaOn && this.contador == 0) {
+      this.contador++;
+      this.indexSelected = index;
+      this.infoWindow.open(marker);
+      this.selectedPescador.nombre = this.pescadores[index].nombre;
+      this.selectedPescador.dirrecion = this.pescadores[index].direccion;
+      this.selectedPescador.celular = this.pescadores[index].celular;
+    }else{
+this.contador = 0;
+this.eliminInfoWindow();
+    }
+  }
   mapainiciado() {
     this.mapaOn = true;
   }
@@ -199,24 +199,27 @@ export class PescadoresMunicipioComponent implements OnInit {
 
   buscarData(texto: string): any {
     if (texto.trim().length === 0) {
-       this.pescadores=this.pescadoresarray;
-    }else{
-      let buscardatospor: BuscarPor[]= [{ data1: 'nombre' }, { data2: 'celular' }];
-     this.pescadores = this.searchBuscadorService.buscarData(
-       this.pescadoresarray,
-       texto,
-       buscardatospor
-     );
+      this.pescadores = this.pescadoresarray;
+    } else {
+      let buscardatospor: BuscarPor[] = [
+        { data1: 'nombre' },
+        { data2: 'celular' },
+      ];
+      this.pescadores = this.searchBuscadorService.buscarData(
+        this.pescadoresarray,
+        texto,
+        buscardatospor
+      );
     }
     this.extractLatLong();
-    if(this.pescadores.length < 1){
+    if (this.pescadores.length < 1) {
       this.showNotFound = true;
-     }else{
+    } else {
       this.showNotFound = false;
-     }
+    }
   }
 
-  goBack(){
-    this.location.back()
+  goBack() {
+    this.location.back();
   }
 }

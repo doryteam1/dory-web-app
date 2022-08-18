@@ -6,8 +6,16 @@ import { ModalGoogleMapComponent } from '../components/modal-google-map/modal-go
 import { ModalAlertActualizadoComponent } from '../components/modal-alert-actualizado/modal-alert-actualizado.component';
 import { ModalCheckboxListComponent} from '../components/modal-checkbox-list/modal-checkbox-list.component'
 import { ModalGallerySliderVerYElimanarFotosComponent } from '../components/modal-gallery-slider-ver-y-elimanar-fotos/modal-gallery-slider-ver-y-elimanar-fotos.component';
+import { ModalGoogleGeneralComponent } from '../components/modal-google-general/modal-google-general.component';
 
 import { SafeUrl } from '@angular/platform-browser';
+interface atributos {
+  nameButton: string;
+  nombrecampoDB: string | null;
+  modoFiltro: string | null;
+  titulomodal: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -56,6 +64,7 @@ export class AppModalService {
   public GoogleMapModal(
     atributos: any = {},
     modalheader: boolean,
+    shared:boolean,
     mapElementVarios: boolean,
     iconMarkerGoogleMap: string,
     iconMarkerGoogleMap2: string
@@ -67,9 +76,29 @@ export class AppModalService {
     });
     modalRef.componentInstance.atributos = atributos;
     modalRef.componentInstance.modalheader = modalheader;
+    modalRef.componentInstance.shared = shared;
     modalRef.componentInstance.mapElementVarios = mapElementVarios;
     modalRef.componentInstance.iconMarkerGoogleMap = iconMarkerGoogleMap;
     modalRef.componentInstance.iconMarkerGoogleMap2 = iconMarkerGoogleMap2;
+    return modalRef.dismissed.toPromise();
+  }
+  /* modal google map general */
+  public CloseGoogleMapGeneralModal(): void {
+    this.modalService.dismissAll();
+  }
+  public GoogleMapModalGeneral(
+    atributos: any = {},
+    modalheader: boolean,
+    iconMarkerGoogleMap: string,
+  ): Promise<boolean> {
+    const modalRef = this.modalService.open(ModalGoogleGeneralComponent, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+      centered: true,
+    });
+    modalRef.componentInstance.atributos = atributos;
+    modalRef.componentInstance.modalheader = modalheader;
+    modalRef.componentInstance.iconMarkerGoogleMap = iconMarkerGoogleMap;
     return modalRef.dismissed.toPromise();
   }
   /* alerta modal perfil actualizado */

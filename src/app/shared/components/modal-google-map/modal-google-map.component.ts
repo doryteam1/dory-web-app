@@ -24,6 +24,7 @@ import { GranjasService } from 'src/app/granjas/services/granjas.service';
 export class ModalGoogleMapComponent implements OnInit {
   @Input() atributos: any = {};
   @Input() modalheader!: boolean;
+  @Input() shared: boolean=true;
   @Input() mapElementVarios!: boolean;
   @Input() iconMarkerGoogleMap!:string
   @Input() iconMarkerGoogleMap2!:string
@@ -67,7 +68,6 @@ export class ModalGoogleMapComponent implements OnInit {
     };
     if (this.mapElementVarios) {
       this.misfavoritas = this.atributos;
-      console.log('granjas favoritas');
       console.log(this.misfavoritas);
       this.extractLatLong();
       this.options = {
@@ -195,7 +195,7 @@ export class ModalGoogleMapComponent implements OnInit {
     }
   }
   shareFuntion() {
-    if (!this.mapElementVarios) {
+    if (!this.mapElementVarios && this.shared) {
       this.location.onPopState(() => {
         this.appModalService.closeModalShare();
       });

@@ -1,4 +1,5 @@
 <div class="data-container">
+  <div class="data-container__div">
     <div class="container">
         <img class="container__icon" src="assets/icons/build.svg">
         <div class="container__info">
@@ -20,22 +21,16 @@
             <span class="container__description">{{piscicultores.length}}</span>
         </div>
     </div>
+  </div>
 </div>
 <div class="buscadoryfiltro" *ngIf="piscicultores.length > 0">
   <div class="buscador-container" >
-    <app-search
+    <app-search class="buscador-container__search"
        [buscadorpersonalizado]="true"
        [placeholderbuscador]="'Buscar piscicultor...'"
        (keyEnterPressData)="buscarData($event)">
     </app-search>
   </div>
-   <!--  <div *ngIf="piscicultoresFiltered.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo"
-      role="alert">
-      <img src="assets/icons/searchanimado.svg">
-      <div>
-        No se encontraron resultados
-      </div>
-    </div> -->
 </div>
 <div class="search-container" *ngIf="showNotFound">
   <div class="search-container__box">
@@ -48,7 +43,9 @@
 <div class="container-map-car">
   <div class="row-map-cart">
     <div *ngIf="piscicultoresFiltered.length >= 1">
-              <app-card-piscicultor *ngFor="let piscicultor of piscicultoresFiltered; let i =index " [piscicultor]="piscicultor "
+              <app-card-piscicultor *ngFor="let piscicultor of piscicultoresFiltered; let i =index "
+               [piscicultor]="piscicultor "
+               [mapa]="true"
                 (onDetalle)="navigate($event)" (onMouseOutCard)="eliminInfoWindow()"
                 (onMouseInsideCard)=" onMouseCard($event, i)">
               </app-card-piscicultor>
@@ -58,22 +55,24 @@
       <div class="sticky-top">
         <div class="mapgoogle" *ngIf="piscicultoresFiltered.length > 0 && (apiLoaded | async)">
           <google-map
-          height="650px"
-           width="785px"
+          width="100%"
+          height="100%"
+          class="mapa__estilos"
            [options]="options"
            (tilesloaded)="mapainiciado()">
             <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i"
               [position]="markerInfo.markerPosition" [options]="markerOptions"
               icon="{{ i == indexSelected ? 'assets/icons/person_pin_circle_red_24dp.svg' : 'assets/icons/person_pin_circle_blue_24dp.svg' }}"
               (mapMouseover)="openInfoWindow(marker,i)"
-              (mapMouseout)="eliminInfoWindow()">
+              (mapMouseout)="eliminInfoWindow()"
+              (mapClick)="openInfoWindowClick(marker,i)">
             </map-marker>
             <map-polyline [path]="vertices" [options]="optionPoli"></map-polyline>
             <map-info-window [position]="markerPosition" *ngIf="mapaOn">
               <div class="myestilo-map-info-window">
                 <div class="details">
                   <div class="detais-name-piscicultor">
-                    <img class="card__icon_info_windows" src="../../../../assets/icons/person_black.svg">
+                    <img class="card__icon_info_windows" src="assets/icons/person_black.svg">
                     <span>{{selectedPiscicultor.nombre | titlecase }}</span>
                   </div>
                   <div class="container_card__description2">

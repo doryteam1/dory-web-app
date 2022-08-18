@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GranjasService } from '../../services/granjas.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location, registerLocaleData } from '@angular/common';
+import { Location, PlatformLocation, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
@@ -14,6 +14,7 @@ import { vertices } from '../../../global/constants';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { BuscarPor } from '../../../../models/buscarPor.model';
 import { Filtro, MetaFiltro } from 'src/models/filtro.model';
+import { AppModalService } from 'src/app/shared/services/app-modal.service';
 
 @Component({
   selector: 'app-granjas-municipio',
@@ -73,14 +74,14 @@ export class GranjasMunicipioComponent implements OnInit {
       data: [
         {
           id: 0,
-          nombrecampoDB: 'tipo_asociacion',
+          nombrecampoDB: 'puntuacion',
           nombrefiltro: 'Calificación',
           datoafiltrar: 'puntuacion',
           modoFiltro: 'number_ordenarmayoramenor',
         },
         {
           id: 1,
-          nombrecampoDB: 'tipo_asociacion',
+          nombrecampoDB: 'area',
           nombrefiltro: 'Área',
           datoafiltrar: 'area',
           modoFiltro: 'number_ordenarmayoramenor',
@@ -91,6 +92,7 @@ export class GranjasMunicipioComponent implements OnInit {
   ];
   palabra: string = '';
   filtroseleccionado!: MetaFiltro | null;
+  contador = 0;
 
   constructor(
     httpClient: HttpClient,
@@ -99,7 +101,9 @@ export class GranjasMunicipioComponent implements OnInit {
     private placesService: PlacesService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private location:Location
+    private location: Location,
+    private appModalService: AppModalService,
+    public location2: PlatformLocation
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -194,13 +198,51 @@ export class GranjasMunicipioComponent implements OnInit {
       this.infoWindow.open(marker);
       this.selectedGranja.nombregranja = this.granjasFiltered[index].nombre;
       this.selectedGranja.area = this.granjasFiltered[index].area;
-      this.selectedGranja.dirreciongranja = this.granjasFiltered[index].direccion;
+      this.selectedGranja.dirreciongranja =
+        this.granjasFiltered[index].direccion;
       this.selectedGranja.propietario.nombre =
         this.granjasFiltered[index].propietario ||
         this.granjasFiltered[index].propietarios[0].nombre_completo;
     }
   }
-
+  openInfoWindowClick(marker: MapMarker, index: number) {
+    if (this.granjasFiltered.length > 0 && this.mapaOn && this.contador == 0) {
+      this.contador++;
+      this.indexSelected = index;
+      this.infoWindow.open(marker);
+      this.selectedGranja.nombregranja = this.granjasFiltered[index].nombre;
+      this.selectedGranja.area = this.granjasFiltered[index].area;
+      this.selectedGranja.dirreciongranja =
+        this.granjasFiltered[index].direccion;
+      this.selectedGranja.propietario.nombre =
+        this.granjasFiltered[index].propietario ||
+        this.granjasFiltered[index].propietarios[0].nombre_completo;
+    } else {
+      this.contador = 0;
+      this.eliminInfoWindow();
+    }
+  }
+  seeFarmsMaptwo(i: number) {
+    let atributos = this.granjasFiltered[i];
+    let modalheadergooglemap = false;
+    let shared=false;
+    let mapElementVarios = false;
+    let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
+    this.location2.onPopState(() => {
+      this.appModalService.CloseGoogleMapModal();
+    });
+    this.appModalService
+      .GoogleMapModal(
+        atributos,
+        modalheadergooglemap,
+        shared,
+        mapElementVarios,
+        iconMarkerGoogleMap,
+        ''
+      )
+      .then((result) => {})
+      .catch((result) => {});
+  }
   navigate(id: number) {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + id);
   }
@@ -211,14 +253,16 @@ export class GranjasMunicipioComponent implements OnInit {
 
     console.log(horas.getHours());
 
-    this.granjasFiltered[i].favorita = this.granjasFiltered[i].favorita == 1 ? 0 : 1;
+    this.granjasFiltered[i].favorita =
+      this.granjasFiltered[i].favorita == 1 ? 0 : 1;
     this.granjasService.esFavorita(this.granjasFiltered[i].id_granja).subscribe(
       (response) => {
         console.log(response);
       },
       (err) => {
         console.log(err);
-        this.granjasFiltered[i].favorita = this.granjasFiltered[i].favorita == 1 ? 0 : 1;
+        this.granjasFiltered[i].favorita =
+          this.granjasFiltered[i].favorita == 1 ? 0 : 1;
       }
     );
     //this.proveedorService.updateProducto(this.form)
@@ -245,9 +289,9 @@ export class GranjasMunicipioComponent implements OnInit {
         buscardatospor
       );
     }
-    if(granjassresult.length<1){
+    if (granjassresult.length < 1) {
       this.showNotFound = true;
-    }else{
+    } else {
       this.showNotFound = false;
     }
     return granjassresult;
@@ -263,6 +307,7 @@ export class GranjasMunicipioComponent implements OnInit {
       arrayafiltar,
       filtroSelecOptionData
     );
+    console.log(filtroresult);
     return filtroresult;
   }
   onFiltroChange(filtro: MetaFiltro) {
@@ -282,7 +327,7 @@ export class GranjasMunicipioComponent implements OnInit {
     this.extractLatLong();
   }
 
-  goBack(){
-    this.location.back()
+  goBack() {
+    this.location.back();
   }
 }

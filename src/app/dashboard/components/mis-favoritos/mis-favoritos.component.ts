@@ -86,6 +86,7 @@ export class MisFavoritosComponent implements OnInit {
     let atributos = this.misGranjaFavoritas;
     let modalheadergooglemap = false;
     let mapElementVarios = true;
+     let shared = true;
      let iconMarkerGoogleMap = 'assets/icons/Groupfavoritowhite.svg';
      let iconMarkerGoogleMap2 = 'assets/icons/Groupfavoritoblue.svg';
     this.location.onPopState(() => {
@@ -95,6 +96,7 @@ export class MisFavoritosComponent implements OnInit {
       .GoogleMapModal(
         atributos,
         modalheadergooglemap,
+        shared ,
         mapElementVarios,
         iconMarkerGoogleMap,
         iconMarkerGoogleMap2
@@ -110,6 +112,7 @@ export class MisFavoritosComponent implements OnInit {
         let atributos = this.misGranjaFavoritas[i];
         let modalheadergooglemap = false;
         let mapElementVarios = false;
+        let shared=true
         let iconMarkerGoogleMap = 'assets/icons/Groupfavoritoblue.svg';
        /*  let iconMarkerGoogleMap =
            "i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' "; */
@@ -120,6 +123,7 @@ export class MisFavoritosComponent implements OnInit {
           .GoogleMapModal(
             atributos,
             modalheadergooglemap,
+            shared ,
             mapElementVarios,
             iconMarkerGoogleMap,
             '',

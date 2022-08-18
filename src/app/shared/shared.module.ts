@@ -50,6 +50,7 @@ import { ChipConBotonCloseComponent } from './components/chip-con-boton-close/ch
 import { FloatinBtnsAlanteAtrasComponent } from './components/floatin-btns-alante-atras/floatin-btns-alante-atras.component';
 import { ControlBarComponent } from './control-bar/control-bar.component';
 import { NavbarElectronjsComponent } from './navbar-electronjs/navbar-electronjs.component';
+import { ModalGoogleGeneralComponent } from './components/modal-google-general/modal-google-general.component';
 
 
 
@@ -88,6 +89,7 @@ import { NavbarElectronjsComponent } from './navbar-electronjs/navbar-electronjs
     FloatinBtnsAlanteAtrasComponent,
     ControlBarComponent,
     NavbarElectronjsComponent,
+    ModalGoogleGeneralComponent,
   ],
   imports: [
     CommonModule,
@@ -131,6 +133,7 @@ import { NavbarElectronjsComponent } from './navbar-electronjs/navbar-electronjs
     FloatinBtnsAlanteAtrasComponent,
     ControlBarComponent,
     NavbarElectronjsComponent,
+    ModalGoogleGeneralComponent,
     /*  CardphotoGoogleMapComponent, */
   ],
 

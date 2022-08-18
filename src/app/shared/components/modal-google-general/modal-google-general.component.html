@@ -1,0 +1,28 @@
+<div class="modal-header" *ngIf="modalheader">
+  <h4 class="modal-title textocolormodal" id="modal-title">ok</h4>
+  <div type="button" class="btn-close" aria-describedby="modal-title" (click)="dismiss()"></div>
+</div>
+<div *ngIf="!modalheader" type="button" class="btn-close my-btn-close my-btn-close-color-fondo"
+  aria-describedby="modal-title" (click)="dismiss()"></div>
+<div class="modal-body map" *ngIf="apiLoaded | async">
+  <div >
+    <google-map #miGogleMap width="1200px" height="550px" [options]="options" (tilesloaded)="mapainiciado()"
+      class="modal-dialog-centered myestilomodalmap">
+      <map-marker #marker="mapMarker" [position]="markerPosition" [options]="markerOptions"
+        [icon]=" iconMarkerGoogleMap" >
+      </map-marker>
+      <map-info-window [position]="markerPosition">
+        <div class="myestilo-map-info-window">
+          <div class="details_info_windo">
+            <div class="detais-name-info-Windo " *ngFor="let item of atributos.mapInfoWindowData">
+              <div> <img [src]="item.icon"></div>
+              <div *ngIf="item.dataNombre">{{item.dataNombre }}</div>
+              <div *ngIf="!item.dataNombre">{{item.sinDataNombre }}</div>
+            </div>
+          </div>
+        </div>
+      </map-info-window>
+    </google-map>
+  </div>
+</div>
+

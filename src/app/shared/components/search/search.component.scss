@@ -34,7 +34,10 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-
+  width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
     .buscador-containe__search {
       background-color: var(--white);
       width: 100%;
@@ -63,4 +66,4 @@
     }
 
   }
-}
+

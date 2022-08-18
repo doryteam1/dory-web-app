@@ -1,7 +1,35 @@
+<div class="data-container">
+  <div class="data-container__div">
+    <div class="container2">
+      <img class="container__icon" src="assets/icons/build.svg">
+      <div class="container__info">
+        <h3 class="container__title container__title--color-blue">Municipio</h3>
+        <span class="container__description">{{municipio}}</span>
+      </div>
+    </div>
+
+    <div class="container2">
+      <img class="container__icon" src="assets/icons/group-circle-solid.svg">
+      <div class="container__info">
+        <h3 class="container__title container__title--color-morado">Población</h3>
+        <span class="container__description">{{poblacion | number:'':'es'}}</span>
+      </div>
+    </div>
+
+    <div class="container2">
+      <img class="container__icon" src="assets/icons/asociacion_azul2_24dp.svg">
+      <div class="container__info">
+        <h3 class="container__title container__title--color-blue-2"># asociaciones</h3>
+        <span class="container__description">{{asociaciones.length}}</span>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container container--myestilo">
   <div class="buscadoryfiltro" *ngIf="!showNotFound">
     <div class="buscador-container" *ngIf="!showNotFound">
       <app-search
+      class="buscador-container__search"
          [buscadorpersonalizado]="true"
          [placeholderbuscador]="'Buscar asociacion..'"
          (keyEnterPressData)=" onBuscarPalabra($event)"
@@ -39,7 +67,7 @@
       <p>No se encontraron asociaciones en este municipio </p>
     </div>
   </div>
-  <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4" *ngIf="asociaciones.length > 0 && !showNotFound">
+  <div class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 g-4" *ngIf="asociaciones.length > 0 && !showNotFound">
       <app-card-asociacion  *ngFor="let asociacion of  asociaciones" [asociacion]="asociacion" [delatecard]="false"
         (onDetalle)="goAsociacionDetail($event)" (onDetalleRepresentante)="goDetalleRepresentante($event)">
       </app-card-asociacion>
