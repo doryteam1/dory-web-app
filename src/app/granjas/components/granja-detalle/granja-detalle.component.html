@@ -5,35 +5,12 @@
           <h4 class="detail-container__title" >Ver en el mapa</h4>
         </div>
       </div>
-    </div>
-
-<div class="container__box">
-  <div class="photo-container" >
-    <div class="header-container">
-      <div class="header-container--titulo">
-        <h3 class="header-container__title">{{granja?.nombre}}</h3>
-        <app-stars [selectedStar]="granja?.puntuacion" size="medium"></app-stars>
-      </div>
-      <div class="header-container--subtitulo">
-            <!--<img class="header-container__icon" src="assets/icons/star-filled.svg">
-            <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C' }}</span> -->
-            <span class="header-container__description">
-                {{granja?.nombre_municipio}}, Sucre.
-                <span class="header-container__resenas"
-                  (click)="showResenas(granja.id_granja,granja)">Reseñas ({{granja?.count_resenas}})
-                </span>
-            </span>
-      </div>
-    </div>
-    <div class="buttons-container1" >
-        <img class="buttons-container__image" src="assets/icons/share.svg" (click)="shareFuntion()">
-        <span class="buttons-container__description" (click)="shareFuntion()">Compartir</span>
-    </div>
-    <div class="buttons-container2">
-      <img class="buttons-container__image" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita" (click)="changeFavorite()">
-      <img class="buttons-container__image" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita" (click)="changeFavorite()">
-      <span class="buttons-container__description" (click)="changeFavorite()">Guardar</span>
-    </div>
+</div>
+<div *ngIf="!sinfotos">
+  <ng-container *ngTemplateOutlet="header"></ng-container>
+</div>
+<div class="container__box" *ngIf="!sinfotos">
+<div class="photo-container" >
 <div class="photo-container-padre" [ngClass]="{
   'photo-container1-div': (fotosgranja?.length ==1 || fotosgranja?.length ==0),
   'photo-container2-div': fotosgranja?.length ==2,
@@ -50,7 +27,7 @@
 
   <img class="photo-container-img" id="photo-container__photo1"
   src='assets/images/no-image.jpg'
-  *ngIf="singranjas">
+  *ngIf="sinfotos">
 
   <button class="masimagenescontador" (click)="OpenGalleryModalOptionOne()" *ngIf="fotosgranja?.length >=7 "
       (click)=" shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"><span style=" border-bottom: 1px solid #fff;
@@ -64,7 +41,10 @@
 
 </div>
 </div>
-<h3 class="photo__foot d-flex flex-row justify-content-center" *ngIf="singranjas">No hay imagenes disponibles :(</h3>
+<div *ngIf="sinfotos">
+<ng-container *ngTemplateOutlet="header"></ng-container>
+  <h3 class="photo__foot d-flex flex-row justify-content-center" *ngIf="sinfotos">No hay imagenes disponibles :(</h3>
+</div>
 <div class="proprietary-container mt-5" >
     <div class="proprietary-container__info">
         <h3 class="proprietary-container__title">Propietario - {{granja?.propietarios[0]?.nombre_completo}} </h3>
@@ -243,3 +223,34 @@
   </div>
 </ng-template>
 <app-footer></app-footer>
+
+<ng-template #header>
+  <div class="container-flex">
+    <div class="header">
+      <div class="header__title">
+        <h3 class="header__name">{{granja?.nombre}}</h3>
+        <app-stars class="header__stars" [selectedStar]="granja?.puntuacion" size="medium"></app-stars>
+      </div>
+      <div class="header__description">
+        <span>
+          {{granja?.nombre_municipio}}, Sucre.
+          <span
+            (click)="showResenas(granja.id_granja,granja)">Reseñas ({{granja?.count_resenas}})
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="header-buttons">
+      <div class="header-buttons__share">
+        <img class="header-buttons__share-icon" src="assets/icons/share.svg" (click)="shareFuntion()">
+        <span class="header-buttons__share-name" (click)="shareFuntion()">Compartir</span>
+      </div>
+      <div class="header-buttons__save">
+        <img class="header-buttons__save-icon" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita" (click)="changeFavorite()">
+        <img class="header-buttons__save-icon" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita" (click)="changeFavorite()">
+        <span class="header-buttons__save-name" (click)="changeFavorite()">Guardar</span>
+      </div>
+    </div>  
+  </div>
+  
+</ng-template>

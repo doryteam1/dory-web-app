@@ -38,13 +38,14 @@ export class GranjaDetalleComponent implements OnInit {
   shadoweffectindice!: number;
   showconteslaider: boolean = false;
   valorindicecarrucel!: number;
-  singranjas: boolean = false;
+  sinfotos: boolean = false;
   userToken: string | null = '';
   authUserId: number = -1;
   miresena: any;
   editedDescResena: string = '';
   editingMiResena: boolean = false;
   currentRate:any
+  showResenasNotFound: boolean = false;
   constructor(
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
@@ -80,7 +81,7 @@ export class GranjaDetalleComponent implements OnInit {
           this.currentRate = this.granja?.puntuacion;
           this.fotosgranja = response.data[0].fotos;
           if (this.fotosgranja.length == 0) {
-            this.singranjas = true;
+            this.sinfotos = true;
           }
           this.showError = false;
           this.showNotFound = false;
@@ -106,13 +107,13 @@ export class GranjaDetalleComponent implements OnInit {
         this.resenas = response.data.resenas;
         this.puntuacion = response.data.puntaje;
         if (this.resenas.length < 1) {
-          this.showNotFound = true;
+          this.showResenasNotFound = true;
         } else {
-          this.showNotFound = false;
+          this.showResenasNotFound = false;
         }
       },
       (err) => {
-        this.showNotFound = false;
+        this.showResenasNotFound = false;
         this.showErrorFound = true;
         console.log(err);
       }
