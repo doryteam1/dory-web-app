@@ -2,19 +2,17 @@
 (mouseover)="mouseInsideCard (piscicultor)"
 (mouseout)="mouseOutCard ()">
   <div class="card__meta">
-    <img  *ngIf="mapa" class="photo--verMapa" src="assets/icons/iconomapayposicion.svg" (click)="seeFarmsMaptwo()">
     <div class="card__meta-photo"   (click)="detalle (piscicultor)">
       <img class=" card__meta-photo-img"
         src="{{piscicultor?.foto ? piscicultor?.foto : '/assets/images/avatar-person-square.svg'}}">
     </div>
   </div>
-  <div class="card__description" (click)="detalle (piscicultor)">
-    <div class="card__description-header">
-<!--       <img src="assets/icons/piscicultor.svg"> -->
-      <h1>{{piscicultor?.nombre | titlecase | shorter:20 }}</h1>
+  <div class="card__description" >
+    <div class="card__description-header" (click)="detalle (piscicultor)">
+      <h1>{{piscicultor?.nombre | titlecase | shorter:15 }}</h1>
     </div>
     <p> </p>
-    <div class="card__description-body">
+    <div class="card__description-body" (click)="detalle (piscicultor)">
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/phone_msg_black_24dp.svg">
         <span class="card__phone">{{piscicultor?.celular? piscicultor?.celular : 'Contacto sin definir'}}</span>
@@ -35,7 +33,10 @@
       </div>
     </div>
     <div class="card__description-footer">
-      <p class="read-more" (click)="detalle(piscicultor)"><a>Ver detalles</a></p>
+      <p class="read-more">
+        <img *ngIf="mapa" class="photo--verMapa" src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
+        <a (click)="detalle(piscicultor)">Ver detalles</a>
+      </p>
     </div>
   </div>
 </div>

@@ -62,9 +62,10 @@
   </div>
   <div class="search-container" *ngIf="showNotFound">
     <div class="search-container__box">
-      <img class="search-container__image" src="assets/images/searching.svg">
+      <img class="search-container__image search-container__image--modify" src="assets/images/searching.svg">
       <h3>Sin resultados encontrado</h3>
       <p>No se encontraron asociaciones en este municipio </p>
+      <button class="btn-rounded btn--blue" (click)="goBack()">Volver al mapa</button>
     </div>
   </div>
   <div class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 g-4" *ngIf="asociaciones.length > 0 && !showNotFound">

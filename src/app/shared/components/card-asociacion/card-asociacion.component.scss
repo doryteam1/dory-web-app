@@ -249,7 +249,7 @@
                 &:after {
                   content: url('../../../../assets/icons/navigate_next_black_24dp.svg');
                   font-family: FontAwesome;
-                  margin-left: -10px;
+                  /* margin-left: -10px; */
                   opacity: 0;
                   vertical-align: middle;
                   transition: margin 0.3s, opacity 0.3s;

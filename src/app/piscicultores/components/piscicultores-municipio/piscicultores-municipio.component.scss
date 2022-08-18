@@ -72,6 +72,9 @@ gap: 10px;
     display:flex;
     flex-direction: row;
     justify-content: center;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
 }
 .search-container__image {
   width: 400px;
@@ -81,10 +84,12 @@ gap: 10px;
 
 .search-container__image--modify{
   margin-top: 60px;
+  width: 100%;
 }
 
 .search-container__box{
     text-align: center;
+    width: 100%;
 }
 /* mi estilo targeta nuevo map */
 .container-map-car {
@@ -105,7 +110,8 @@ gap: 10px;
   width: 100%;
 }
 div.container-map-car>div>div:nth-child(1) {
-  padding-top: 80px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .mYstiledivmap {
   display: none;
@@ -203,6 +209,10 @@ div.container-map-car>div>div:nth-child(1) {
   .row-map-cart {
     margin-right: 0;
   }
+    div.container-map-car>div>div:nth-child(1) {
+      padding-top: 80px;
+      padding-bottom: 0;
+    }
 }
 @media screen and (min-width: 770px) {
   .buscador-container {

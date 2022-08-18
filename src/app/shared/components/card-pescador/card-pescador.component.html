@@ -2,26 +2,25 @@
 (mouseover)="mouseInsideCard (pescador)"
 (mouseout)="mouseOutCard ()">
   <div class="card__meta">
-    <img *ngIf="mapa" class="photo--verMapa" src="assets/icons/iconomapayposicion.svg" (click)="seeFarmsMaptwo()">
     <div  class="card__meta-photo">
       <img class=" card__meta-photo-img" src="{{pescador?.foto ? pescador?.foto : '/assets/images/avatar-person-square.svg'}}"
        (click)="detalle (pescador)">
     </div>
   </div>
-  <div class="card__description" (click)="detalle (pescador)">
-    <div class="card__description-header">
+  <div class="card__description" >
+    <div class="card__description-header" (click)="detalle (pescador)">
      <!--  <img src="assets/icons/pescador.svg"> -->
-      <h1>{{pescador?.nombre | titlecase | shorter:20 }}</h1>
+      <h1>{{pescador?.nombre | titlecase | shorter:15 }}</h1>
     </div>
     <p> </p>
-    <div class="card__description-body">
+    <div class="card__description-body" (click)="detalle (pescador)">
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/phone_msg_black_24dp.svg">
         <span class="card__phone">{{pescador?.celular? pescador?.celular : 'Contacto sin definir'}}</span>
       </div>
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/contact_mail_black_24dp.svg">
-        <span class="card__email">{{pescador?.email}}</span>
+        <span class="card__email">{{pescador?.email| shorter:20}}</span>
       </div>
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/travel_explore_black_24dp.svg">
@@ -35,7 +34,10 @@
       </div>
     </div>
     <div class="card__description-footer">
-      <p class="read-more"  (click)="detalle(pescador)"><a>Ver detalles</a></p>
+      <p class="read-more"  >
+        <img *ngIf="mapa"class="photo--verMapa" src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
+        <a (click)="detalle(pescador)">Ver detalles</a>
+      </p>
     </div>
   </div>
 </div>

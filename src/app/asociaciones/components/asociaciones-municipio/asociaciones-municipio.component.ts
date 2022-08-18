@@ -1,9 +1,6 @@
 import {
   Component,
-  EventEmitter,
-  HostListener,
   OnInit,
-  Output,
 } from '@angular/core';
 import { AsociacionesService } from '../../services/asociaciones.service';
 import { ActivatedRoute } from '@angular/router';
@@ -12,8 +9,8 @@ import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.s
 import { BuscarPor } from '../../../../models/buscarPor.model';
 import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
-import { filter } from 'rxjs/internal/operators/filter';
 import { PlacesService } from 'src/app/services/places.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-asociaciones-municipio',
   templateUrl: './asociaciones-municipio.component.html',
@@ -61,21 +58,22 @@ export class AsociacionesMunicipioComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private placesService: PlacesService
+    private placesService: PlacesService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
     let id = this.activatedRoute.snapshot.params.id;
-     this.placesService.getMunicipioById(id).subscribe(
+    this.placesService.getMunicipioById(id).subscribe(
       /* preguntarle a renso */
-       (response) => {
-         if (response.data.length > 0) {
-           this.poblacion = response.data[0].poblacion;
-           this.municipio = response.data[0].nombre;
-         }
-       },
-       (err) => {}
-     );
+      (response) => {
+        if (response.data.length > 0) {
+          this.poblacion = response.data[0].poblacion;
+          this.municipio = response.data[0].nombre;
+        }
+      },
+      (err) => {}
+    );
     this.asociacionesService
       .getAsociacionesMunicipio(Number(this.activatedRoute.snapshot.url[1]))
       .subscribe(
@@ -93,7 +91,6 @@ export class AsociacionesMunicipioComponent implements OnInit {
           this.showNotFound = true;
         }
       );
-
   }
   goAsociacionDetail(asociacion: any) {
     this.router.navigateByUrl(
@@ -161,5 +158,8 @@ export class AsociacionesMunicipioComponent implements OnInit {
       resultados = this.filtradoData(this.filtroseleccionado, resultados);
     }
     this.asociaciones = resultados;
+  }
+  goBack() {
+    this.location.back();
   }
 }
