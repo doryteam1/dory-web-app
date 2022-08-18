@@ -4,23 +4,23 @@
         <div class="container__info">
           <div class="container__detalle">
             <img class="detail-container__image" src="assets/icons/person_black.svg">
-            <h3 class="container__title">Proveedor - {{proveedor?.nombre_completo}} </h3>
+            <h3 class="container__title">Investigador - {{investigador?.nombre_completo}} </h3>
           </div>
           <div class="container__detalle">
             <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
             <span class="container__description1">
-              {{proveedor?.municipio}}-{{proveedor?.departamento}}</span>
+              {{investigador?.municipio}}-{{investigador?.departamento}}</span>
           </div>
         </div>
         <img class="container__image"
-          src="{{proveedor?.foto ? proveedor.foto : 'assets/images/avatar-person.svg'}}">
+          src="{{investigador?.foto ? investigador.foto : 'assets/images/avatar-person.svg'}}">
       </div>
       <div class="line"></div>
       <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/icons/phone_msg_black_24dp.svg">
         <div class="detail-container__data">
           <h4 class="detail-container__title">Celular</h4>
-          <span class="detail-container__value">{{proveedor?.celular? proveedor?.celular : 'Contacto sin definir'}}
+          <span class="detail-container__value">{{investigador?.celular? investigador?.celular : 'Contacto sin definir'}}
           </span>
         </div>
       </div>
@@ -28,34 +28,34 @@
         <img class="detail-container__image" src="assets/icons/contact_mail_black_24dp.svg">
         <div class="detail-container__data">
           <h4 class="detail-container__title">Correo electrónico</h4>
-          <span class="detail-container__value">{{proveedor?.email}}</span>
+          <span class="detail-container__value">{{investigador?.email}}</span>
         </div>
       </div>
       <div class="detail-container">
         <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
         <div class="detail-container__data">
           <h4 class="detail-container__title">Dirección</h4>
-          <span *ngIf="proveedor?.direccion" class="detail-container__value">{{proveedor?.direccion? 'Dir.' : ''}}
-            {{proveedor?.direccion}} </span>
-          <span *ngIf="!proveedor?.direccion" class="detail-container__value">Dirección indefinida</span>
+          <span *ngIf="investigador?.direccion" class="detail-container__value">{{investigador?.direccion? 'Dir.' : ''}}
+            {{investigador?.direccion}} </span>
+          <span *ngIf="!investigador?.direccion" class="detail-container__value">Dirección indefinida</span>
         </div>
       </div>
-      <div class="detail-container" *ngIf="proveedor?.informacion_adicional_direccion">
+      <div class="detail-container" *ngIf="investigador?.informacion_adicional_direccion">
             <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
                 <div class="detail-container__data">
                   <h4 class="detail-container__title">Información adicional de la dirección</h4>
                   <span class="detail-container__value">
-                    {{proveedor.informacion_adicional_direccion}}</span>
+                    {{investigador.informacion_adicional_direccion}}</span>
                 </div>
               </div>
-      <div class="detail-container">
+      <!-- <div class="detail-container">
         <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
         <div class="detail-container__data">
           <h4 class="detail-container__title">Número de productos en su portafolio </h4>
           <span class="detail-container__value">0 productos en total</span>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   
   

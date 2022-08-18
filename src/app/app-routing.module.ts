@@ -88,6 +88,10 @@ const routes: Routes = [
     loadChildren: () => import('./tests/tests.module').then(m => m.TestsModule)
   },
   {
+    path:'investigadores',
+    loadChildren: () => import('./investigadores/investigadores.module').then(m => m.InvestigadoresModule)
+  },
+  {
     path:'verify-account',
     component:VerifyAccountComponent
   },

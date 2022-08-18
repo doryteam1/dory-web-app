@@ -98,7 +98,7 @@ export class UsersComponent implements OnInit {
       baseUrl = '/piscicultores/municipio/detalle/'
     }else if(user.tipo_usuario == 'Proveedor'){
       baseUrl = '/proveedores/detalle/'
-    }else if(user.tipo_usuario == 'Investigador'){
+    }else if(user.tipo_usuario == 'Investigador Experto'){
       baseUrl = '/investigadores/detalle/'
     }
     let url = this.router.serializeUrl(

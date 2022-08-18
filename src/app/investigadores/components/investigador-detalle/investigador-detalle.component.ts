@@ -3,17 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
-  selector: 'app-proveedor-detalle',
-  templateUrl: './proveedor-detalle.component.html',
-  styleUrls: ['./proveedor-detalle.component.scss']
+  selector: 'app-investigador-detalle',
+  templateUrl: './investigador-detalle.component.html',
+  styleUrls: ['./investigador-detalle.component.scss']
 })
-export class ProveedorDetalleComponent implements OnInit {
+export class InvestigadorDetalleComponent implements OnInit {
   selectedUserId: number = -1;
-  proveedor: any;
+  investigador: any;
   showNotFound: boolean = false;
   showError: boolean = false;
   errorMessage = '';
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UsuarioService,
@@ -28,8 +27,8 @@ export class ProveedorDetalleComponent implements OnInit {
       .subscribe(
         (response: any) => {
           if (response.data.length > 0) {
-            this.proveedor = response.data[0];
-            console.log(this.proveedor);
+            this.investigador = response.data[0];
+            console.log(this.investigador);
             this.showError = false;
             this.showNotFound = false;
           } else {
@@ -48,6 +47,7 @@ export class ProveedorDetalleComponent implements OnInit {
           }
         }
       );
+
   }
 
 }
