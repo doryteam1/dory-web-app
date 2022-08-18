@@ -169,7 +169,11 @@ p {
       display: flex;
       justify-content: flex-end;
       .read-more {
-        text-align: right;
+            text-align: right;
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+              align-items: flex-end;
 
         a {
           color: var(--azul1);
@@ -181,7 +185,7 @@ p {
           &:after {
             content: url('../../../../assets/icons/navigate_next_black_24dp.svg');
             font-family: FontAwesome;
-            margin-left: -10px;
+            /* margin-left: -10px; */
             opacity: 0;
             vertical-align: middle;
             transition: margin 0.3s, opacity 0.3s;
@@ -196,7 +200,7 @@ p {
     }
 }
 
-  @media (min-width: 640px) {
+  @media (min-width: 520px) {
     flex-direction: row;
     max-width: 600px;
 
@@ -227,13 +231,10 @@ p {
   }
 }
 .photo--verMapa {
-  position: absolute;
-  z-index: 100;
-  right: 0;
-  top: 0;
-  width: 35px;
-  height: 35px;
-  margin: 5px;
+z-index: 100;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 15px;
   cursor: pointer;
 }
 

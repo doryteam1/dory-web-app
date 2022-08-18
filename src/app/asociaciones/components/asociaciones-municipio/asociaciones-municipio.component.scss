@@ -52,19 +52,29 @@
 .container__title--color-blue-2 {
   color: var(--azul2)
 }
-.search-container{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
-.search-container__box{
-    text-align: center;
+.search-container__image {
+  width: 400px;
+  height: 270px;
+  margin-top: 17px;
 }
 
-.search-container__image{
-    width:1024px;
-    height: 628px;
+.search-container__image--modify {
+  margin-top: 60px;
+  width: 100%;
+}
+
+.search-container__box {
+  text-align: center;
+  width: 100%;
 }
 .container--myestilo{
   padding-bottom: 20px;
