@@ -10,43 +10,15 @@ import { AsociacionesService } from '../../services/asociaciones.service';
   styleUrls: ['./asociaciones.component.scss']
 })
 export class AsociacionesComponent implements OnInit {
-
-  sanOnofreActive:boolean = true;
-  toluActive:boolean = true;
-  toluViejoActive:boolean = true;
-  covenasActive:boolean = true;
-  colosoActive:boolean = true;
-  chalanActive:boolean = true;
-  ovejasActive:boolean = true;
-  palmitoActive:boolean = true;
-  sincelejoActive:boolean = true;
-  morroaActive:boolean = true;
-  losPalmitosActive:boolean = true;
-  sanPedroActive:boolean = true;
-  sampuesActive:boolean = true;
-  corozalActive:boolean = true;
-  sanJuanDeBetuliaActive:boolean = true;
-  sinceActive:boolean = true;
-  buenaVistaActive:boolean = true;
-  elRobleActive:boolean = true;
-  galerasActive:boolean = true;
-  sanBenitoAbadActive:boolean = true;
-  laUnionActive:boolean = true;
-  caimitoActive:boolean = true;
-  sucreActive:boolean = true;
-  sanMarcosActive:boolean = true;
-  majagualActive:boolean = true;
-  guarandaActive:boolean = true;
   poblacion:number = 0;
   asociaciones:number = 0;
-
   municSeleccionado:any = {
     municipio:"Cargando...",
     poblacion:0,
     count:0
   }
 
-  
+
   resumenDepartamento:any = [];
   constructor(private asociacionService:AsociacionesService, private router:Router) { }
 
@@ -60,7 +32,7 @@ export class AsociacionesComponent implements OnInit {
         console.log(err)
       }
     )
-    
+
   }
 
   changeSelected(codigo:number){

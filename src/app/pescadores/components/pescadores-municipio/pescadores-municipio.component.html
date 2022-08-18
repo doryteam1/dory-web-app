@@ -1,4 +1,5 @@
 <div class="data-container">
+  <div class="data-container__div">
     <div class="container">
         <img class="container__icon" src="assets/icons/build.svg">
         <div class="container__info">
@@ -22,23 +23,18 @@
             <span class="container__description">{{pescadores.length}}</span>
         </div>
     </div>
+  </div>
 </div>
 
 <div class="buscadoryfiltro" *ngIf="pescadores.length > 0">
   <div class="buscador-container">
     <app-search
+    class="buscador-container__search"
     [buscadorpersonalizado]="true"
     [placeholderbuscador]="'Buscar pescador...'"
       (keyEnterPressData)="buscarData($event)">
     </app-search>
   </div>
-    <!-- <div *ngIf="this.pescadores.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo"
-      role="alert">
-      <img src="assets/icons/searchanimado.svg">
-      <div>
-        No se encontraron resultados
-      </div>
-    </div> -->
 </div>
 
 <div class="search-container" *ngIf="showNotFound">
@@ -53,7 +49,8 @@
 <div class="container-map-car">
   <div class="row-map-cart">
     <div *ngIf="pescadores.length >= 1">
-    <app-card-pescador *ngFor="let pescador of pescadores; let i =index " [pescador]="pescador" (onDetalle)="goPescadorDetail($event)"
+    <app-card-pescador *ngFor="let pescador of pescadores; let i =index " [pescador]="pescador"
+      [mapa]=true (onDetalle)="goPescadorDetail($event)"
               (onMouseOutCard)="eliminInfoWindow()" (onMouseInsideCard)=" onMouseCard($event, i)">
     </app-card-pescador>
     </div>
@@ -62,8 +59,9 @@
     <div class="sticky-top">
       <div class="mapgoogle" *ngIf="pescadores.length > 0 && (apiLoaded | async)">
         <google-map
-         height="650px"
-         width="785px"
+         width="100%"
+          height="100%"
+          class="mapa__estilos"
          [options]="options"
          (tilesloaded)="mapainiciado()">
           <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i"
@@ -71,6 +69,7 @@
             icon="{{ i == indexSelected ? 'assets/icons/person_pin_circle_red_24dp.svg' : 'assets/icons/person_pin_circle_blue_24dp.svg' }}"
             (mapMouseover)="openInfoWindow(marker,i)"
             (mapMouseout)="eliminInfoWindow()"
+            (mapClick)="openInfoWindowClick(marker,i)"
             >
           </map-marker>
           <map-polyline [path]="vertices" [options]="optionPoli"></map-polyline>
@@ -80,10 +79,6 @@
                 <div class="myestilo-map-info-window-container-informa">
                   <img class="card__icon_info_windows" src="../../../../assets/icons/person_black.svg">
                   <span>{{selectedPescador.nombre | titlecase }}</span>
-                </div>
-                <div class="myestilo-map-info-window-container-informa">
-                  <img class="card__icon_info_windows" src="assets/icons/phone_msg_black_24dp.svg">
-                  <span> {{selectedPescador.celular? selectedPescador.celular : 'Contacto sin definir'}}</span>
                 </div>
                 <div class="myestilo-map-info-window-container-informa">
                   <img class="card__icon_info_windows" src="assets/icons/person_pin_circle_black_24dp.svg">

@@ -1,37 +1,14 @@
 <div class="card"
 (mouseover)="mouseInsideCard (piscicultor)"
-(mouseout)="mouseOutCard ()"
- (click)="detalle (piscicultor)">
+(mouseout)="mouseOutCard ()">
   <div class="card__meta">
-    <div [ngClass]="{'card__meta-photo': piscicultor?.foto, 'card__meta-photo-sin-img': !piscicultor?.foto}">
+    <img  *ngIf="mapa" class="photo--verMapa" src="assets/icons/iconomapayposicion.svg" (click)="seeFarmsMaptwo()">
+    <div class="card__meta-photo"   (click)="detalle (piscicultor)">
       <img class=" card__meta-photo-img"
-        src="{{piscicultor?.foto ? piscicultor?.foto : '/assets/images/avatar-person-square.png'}}"
-       (click)="detalle (piscicultor)">
+        src="{{piscicultor?.foto ? piscicultor?.foto : '/assets/images/avatar-person-square.svg'}}">
     </div>
-<!--     <div class="card__meta-details">
-      <div class="card__meta-details-informacion">
-        <img src="assets/icons/asociacion_white_24dp.svg">
-        <span>{{piscicultor.nombre_asociacion? piscicultor.nombre_asociacion : 'No
-          existen
-          asociaciones'}}</span>
-      </div>
-      <div class="card__meta-details-informacion">
-        <div><img src="../../../../assets/icons/set_meal_white_24dp.svg"></div>
-        <div>informacion adicinal</div>
-      </div>
-            <div class="dimensionmasmenos1200">
-        <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
-        <div> dirrecion adicional <span><a style="text-decoration: dashed underline var(--azul1) 2px;">(Ver en el
-              mapa)</a> </span>
-        </div>
-      </div>
-      <div class="card__meta-details-informacion">
-        <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
-        <div>dirrecion2 adicional</div>
-      </div>
-    </div> -->
   </div>
-  <div class="card__description">
+  <div class="card__description" (click)="detalle (piscicultor)">
     <div class="card__description-header">
 <!--       <img src="assets/icons/piscicultor.svg"> -->
       <h1>{{piscicultor?.nombre | titlecase | shorter:20 }}</h1>
@@ -44,7 +21,7 @@
       </div>
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/contact_mail_black_24dp.svg">
-        <span class="card__email">{{piscicultor?.email}}</span>
+        <span class="card__email">{{piscicultor?.email | shorter:20}}</span>
       </div>
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/travel_explore_black_24dp.svg">

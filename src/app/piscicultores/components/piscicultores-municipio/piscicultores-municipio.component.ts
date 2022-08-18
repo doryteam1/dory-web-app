@@ -54,6 +54,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
   showNotFound: boolean = false;
   piscicultores: any[] = [];
   piscicultoresFiltered: any[] = [];
+  contador = 0;
   constructor(
     httpClient: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -61,7 +62,7 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     private placesService: PlacesService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private location:Location
+    private location: Location
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -171,10 +172,27 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     if (this.piscicultoresFiltered.length > 0 && this.mapaOn) {
       this.indexSelected = index;
       this.infoWindow.open(marker);
-      this.selectedPiscicultor.nombre = this.piscicultoresFiltered[index].nombre;
-      this.selectedPiscicultor.dirrecion = this.piscicultoresFiltered[index].direccion;
+      this.selectedPiscicultor.nombre =
+        this.piscicultoresFiltered[index].nombre;
+      this.selectedPiscicultor.dirrecion =
+        this.piscicultoresFiltered[index].direccion;
     }
   }
+  openInfoWindowClick(marker: MapMarker, index: number) {
+    if (this.piscicultoresFiltered.length > 0 && this.mapaOn && this.contador == 0) {
+      this.contador++;
+      this.indexSelected = index;
+      this.infoWindow.open(marker);
+      this.selectedPiscicultor.nombre =
+        this.piscicultoresFiltered[index].nombre;
+      this.selectedPiscicultor.dirrecion =
+        this.piscicultoresFiltered[index].direccion;
+    } else {
+      this.contador = 0;
+      this.eliminInfoWindow();
+    }
+  }
+
   navigate(piscicultor: any) {
     this.router.navigateByUrl(
       '/piscicultores/municipio/detalle/' + piscicultor.id
@@ -184,26 +202,26 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     this.mapaOn = true;
   }
   /* funciones de busqueda granjas */
-  buscarData(texto: string):any {
+  buscarData(texto: string): any {
     if (texto.trim().length === 0) {
       this.piscicultoresFiltered = this.piscicultores;
-    }else{
-      let buscardatospor: BuscarPor[]= [{ data1: 'nombre' }];
+    } else {
+      let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }];
       this.piscicultoresFiltered = this.searchBuscadorService.buscarData(
         this.piscicultores,
         texto,
         buscardatospor
       );
     }
-    if(this.piscicultoresFiltered.length < 1){
+    if (this.piscicultoresFiltered.length < 1) {
       this.showNotFound = true;
-    }else{
+    } else {
       this.showNotFound = false;
     }
     this.extractLatLong();
   }
 
-  goBack(){
-    this.location.back()
+  goBack() {
+    this.location.back();
   }
 }

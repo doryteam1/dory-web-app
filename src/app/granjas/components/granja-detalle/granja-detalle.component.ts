@@ -339,6 +339,7 @@ toggle between hiding and showing the dropdown content */
     let atributos = this.granja;
     let modalheadergooglemap = false;
     let mapElementVarios = false;
+    let shared=true;
     let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
 
     this.location.onPopState(() => {
@@ -348,6 +349,7 @@ toggle between hiding and showing the dropdown content */
       .GoogleMapModal(
         atributos,
         modalheadergooglemap,
+        shared,
         mapElementVarios,
         iconMarkerGoogleMap,
         ''

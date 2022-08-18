@@ -1,11 +1,22 @@
-.data-container{
-    display:flex;
-    margin-top: 77px;
-    justify-content: center;
+.data-container {
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+  align-items: center;
+   margin-left: 10px;
+   margin-right: 10px;
+}
+.data-container__div{
+  display: flex;
+flex-direction: column;
+gap: 10px;
 }
 .container{
     display:flex;
     justify-content: center;
+    width: max-content;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .container__icon{
@@ -24,7 +35,7 @@
 }
 
 .container__description{
-    align-self: center;
+    align-self: flex-start;
 }
 
 .container__title--color-morado{
@@ -77,17 +88,16 @@
 }
 /* mi estilo targeta nuevo map */
 .container-map-car {
-  margin-left: 10px;
-  margin-right: 65px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
-
 .row-map-cart {
   display: flex;
   justify-content: center;
   flex-direction: row;
   flex-wrap: nowrap;
+  margin-left: 20px;
+  margin-right: 20px;
   width: 100%;
 }
 
@@ -98,7 +108,7 @@ div.container-map-car>div>div:nth-child(1) {
   padding-top: 80px;
 }
 .mYstiledivmap {
-  margin-left: 30px;
+  display: none;
 }
 .sticky-top {
   z-index: 1;
@@ -107,15 +117,17 @@ div.container-map-car>div>div:nth-child(1) {
 }
 .mapgoogle {
   /* border: 2px solid #6c6c6c; */
-  border-radius: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  overflow: hidden;
-  height: 650px;
-  width: 785px;
-  background-color: gainsboro;
-  border: 2px solid rgb(0 0 0 / 51%);
-  box-shadow: 4px 4px 4px rgb(0 0 0 / 15%);
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    /*  height: 650px;
+    width: 785px; */
+    height: 40vw;
+    width: 50vw;
+    background-color: gainsboro;
+    border: 2px solid rgb(0 0 0 / 51%);
+    box-shadow: 4px 4px 4px rgb(0 0 0 / 15%);
 
 }
 
@@ -148,11 +160,13 @@ div.container-map-car>div>div:nth-child(1) {
   display: flex;
   flex-direction: column;
   margin-top: 21px;
-  .buscador-container {
+.buscador-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     gap: 20px;
+    margin-bottom: 10px;
   }
 
   .alert-mi-estilo-filtro {
@@ -168,4 +182,49 @@ div.container-map-car>div>div:nth-child(1) {
     background-color: var(--azul4);
     color: black;
   }
+}
+    .buscador-container__search {
+      width: 100%
+    }
+@media screen and (min-width: 1100px) {
+  .mYstiledivmap {
+    margin-left: 30px;
+    display: block
+  }
+  .container-map-car {
+    margin-left: 10px;
+    margin-right: 65px;
+    justify-content: space-around;
+  }
+  .photo--verMapa {
+    display: none;
+  }
+
+  .row-map-cart {
+    margin-right: 0;
+  }
+}
+@media screen and (min-width: 770px) {
+  .buscador-container {
+    flex-direction: row !important;
+  }
+
+  .buscador-container__search {
+    width: auto
+  }
+}
+
+@media screen and (min-width: 580px) {
+  .data-container__div{
+    flex-direction: row;
+    width: 100%;
+    gap: 0
+  }
+.container {
+  margin-left: auto;
+  margin-right: auto;
+}
+    .container__description {
+      align-self: center
+    }
 }

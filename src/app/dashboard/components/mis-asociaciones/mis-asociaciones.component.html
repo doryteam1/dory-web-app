@@ -40,7 +40,7 @@
     <!-- Profile-tab-pane -->
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
       <div class="row row-cols-2">
-        <app-card-asociacion class="col" *ngFor="let asociacion of asociacionesIsMiembro" [asociacion]="asociacion"
+        <app-card-asociacion  class="col col--miestilo" *ngFor="let asociacion of asociacionesIsMiembro" [asociacion]="asociacion"
           [delatecard]="false" (onDetalle)="navigate($event,'disable','tabSoyMiemb')" (onDelete)="delete($event)">
         </app-card-asociacion>
       </div>

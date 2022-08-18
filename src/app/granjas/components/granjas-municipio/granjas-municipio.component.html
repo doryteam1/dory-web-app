@@ -1,32 +1,32 @@
 <div>
   <div class="data-container">
-    <div class="container">
-      <img class="container__icon" src="assets/icons/build.svg">
-      <div class="container__info">
-        <h3 class="container__title container__title--color-blue">Municipio</h3>
-        <span class="container__description">{{municipio}}</span>
+    <div class="data-container__div">
+      <div class="container">
+        <img class="container__icon" src="assets/icons/build.svg">
+        <div class="container__info">
+          <h3 class="container__title container__title--color-blue">Municipio</h3>
+          <span class="container__description">{{municipio}}</span>
+        </div>
       </div>
-    </div>
-
-    <div class="container">
-      <img class="container__icon" src="assets/icons/group-circle-solid.svg">
-      <div class="container__info">
-        <h3 class="container__title container__title--color-morado">Población</h3>
-        <span class="container__description">{{poblacion | number:'':'es'}}</span>
+      <div class="container">
+        <img class="container__icon" src="assets/icons/group-circle-solid.svg">
+        <div class="container__info">
+          <h3 class="container__title container__title--color-morado">Población</h3>
+          <span class="container__description">{{poblacion | number:'':'es'}}</span>
+        </div>
       </div>
-    </div>
-
-    <div class="container">
-      <img class="container__icon" src="assets/icons/fish.svg">
-      <div class="container__info">
-        <h3 class="container__title container__title--color-blue-2"># granjas</h3>
-        <span class="container__description">{{granjas.length}}</span>
+      <div class="container">
+        <img class="container__icon" src="assets/icons/fish.svg">
+        <div class="container__info">
+          <h3 class="container__title container__title--color-blue-2"># granjas</h3>
+          <span class="container__description">{{granjas.length}}</span>
+        </div>
       </div>
     </div>
   </div>
   <div class="buscadoryfiltro" *ngIf="granjas.length > 0">
     <div class="buscador-container">
-      <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar granjas...'"
+      <app-search class="buscador-container__search" [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar granjas...'"
         (keyEnterPressData)="onBuscarPalabra($event)">
       </app-search>
       <app-filtro
@@ -45,12 +45,6 @@
           (onCloseClip)="delateFilter()">
         </app-chip-con-boton-close>
       </div>
-     <!--  <div *ngIf="granjas.length == 0" class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
-        <img src="assets/icons/searchanimado.svg">
-        <div>
-          No se encontraron resultados
-        </div>
-      </div> -->
   </div>
   <div class="search-container" *ngIf="showNotFound">
     <div class="search-container__box">
@@ -68,6 +62,7 @@
             (mouseout)="eliminInfoWindow()">
             <div class="meta">
               <div class="photo">
+                <img class="photo--verMapa" src="assets/icons/iconomapayposicion.svg" (click)="seeFarmsMaptwo(i)">
                 <app-carrucel-img class="card__image" [imagenes]="granjasFiltered[i].fotos"
                   [indicatorsphoto]=" indicatorsphotos" [idtarge]="i"
                   (eventValueResponseClickFotoMiniSlider)="navigate(granja.id_granja)"
@@ -88,7 +83,7 @@
                   (click)="changeFavorite(i)">
               </div>
               <div class="mas_description_info" (click)="navigate(granja.id_granja)">
-                <p class="estilo-p-card" (click)="navigate(granja.id_granja)"> {{granja.descripcion | shorter:100}}</p>
+                <p class="estilo-p-card" (click)="navigate(granja.id_granja)"> {{granja.descripcion | shorter:80}}</p>
               </div>
               <div class="card__rating-container">
                 <div class="card__rating-container_info">
@@ -112,11 +107,15 @@
       <div class="mYstiledivmap">
         <div class="sticky-top">
           <div class="mapgoogle" *ngIf="granjasFiltered.length > 0 && (apiLoaded | async)">
-            <google-map height="650px" width="785px" [options]="options" (tilesloaded)="mapainiciado()">
+            <google-map   width="100%" height="100%" class="mapa__estilos"  [options]="options"
+               (tilesloaded)="mapainiciado()">
               <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo  ; let i =index"
                 [position]="markerInfo.markerPosition" [options]="markerOptions"
                 icon="{{ i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' }}"
-                (mapMouseover)="openInfoWindow(marker,i)" (mapMouseout)="eliminInfoWindow()">
+                (mapMouseover)="openInfoWindow(marker,i)"
+                (mapMouseout)="eliminInfoWindow()"
+                (mapClick)="openInfoWindowClick(marker,i)"
+                 >
               </map-marker>
               <map-polyline [path]="vertices" [options]="optionPoli"></map-polyline>
               <map-info-window [position]="markerPosition" *ngIf="mapaOn">
@@ -130,10 +129,6 @@
                       <div><img src="assets/icons/set_meal_black_24dp.svg"></div>
                       <div> {{selectedGranja.nombregranja | titlecase}}</div>
                     </div>
-                 <!--    <div class="details-area-granja_info_windo ">
-                      <div><img src="assets/icons/areaterreno_black.svg"></div>
-                      <div>{{selectedGranja.area | number:'':'es'}} m²</div>
-                    </div> -->
                     <div class="details-area-direccion_info_windo ">
                       <div><img src="assets/icons/location_on_black_24dp.svg"></div>
                       <div *ngIf="!selectedGranja.dirreciongranja">Dirección indefinida</div>
@@ -143,14 +138,9 @@
                 </div>
               </map-info-window>
             </google-map>
-            <!-- <div  class="container-loader" *ngIf="!apiLoaded">
-                      <div class="loader-icon">
-                      </div>
-                    </div> -->
           </div>
         </div>
       </div>
     </div>
-    <!--<app-footer></app-footer>-->
   </div>
 </div>

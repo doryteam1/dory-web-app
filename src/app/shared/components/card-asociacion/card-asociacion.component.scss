@@ -1,8 +1,8 @@
 .card {
     display: flex;
     flex-direction: column;
-    margin: 1rem auto;
-    margin-bottom: 1.6%;
+
+    margin: 16px;
     background: #f7f7f7;
     line-height: 1.4;
     font-family: sans-serif;
@@ -237,6 +237,7 @@
         display: flex;
         justify-content: flex-end ;
         .read-more {
+          margin: 0;
               text-align: right;
               a {
                 color: var(--azul1);
@@ -263,9 +264,17 @@
       }
     }
 
+.second {
+  height: 100%;
+}
+
+.card__description-container {
+  margin-top: 20px;
+}
     @media (min-width: 640px) {
          flex-direction: row;
          max-width: 600px;
+        margin: 1rem auto;
          .card__meta {
            flex-basis: 40%;
            height: auto;
@@ -287,9 +296,5 @@
            }
          }
      }
-
   }
-.second{
-  height: 310.650px;
-}
 

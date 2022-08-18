@@ -81,14 +81,13 @@ export class SearchBuscadorService {
           return -1;
         } else if (
           Number(a[filtroSelecOptionData.datoafiltrar!]) <
-          Number(a[filtroSelecOptionData.datoafiltrar!])
+          Number(b[filtroSelecOptionData.datoafiltrar!])
         ) {
           return 1;
         } else {
           return 0;
         }
       });
-
       return filterarraydata;
     }else if (filtroSelecOptionData.modoFiltro == MODO_FILTRO_ORDER_ASC) {
       let filterarraydata = arraydatanew.sort((a, b) => {
