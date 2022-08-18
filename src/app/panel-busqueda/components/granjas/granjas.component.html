@@ -64,7 +64,10 @@
         <div class="card__item">
             <img class="card__image" src="{{granja.imagen ? granja.imagen : '/assets/images/avatar-person.svg'}}">
             <span class="card__title">{{granja.nombre}}</span>
-            <app-stars size="mini" [selectedStar]="granja.puntuacion"></app-stars>
+            <div class="card__label">
+                <app-stars size="mini" [selectedStar]="granja.puntuacion"></app-stars>
+                <span>Reseñas({{granja?.count_resenas}})</span>
+            </div>
         </div>
         
         <span class="card__title">{{granja.area}}m²</span>

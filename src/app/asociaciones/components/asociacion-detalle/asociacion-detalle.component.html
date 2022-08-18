@@ -13,7 +13,7 @@
         </div>
       </div>
       <img class="asociacion-container__image"
-        src="{{asociacion?.foto ? asociacion.foto : '/assets/images/avatar-person-square.png'}}">
+        src="{{asociacion?.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
     </div>
     <div *ngIf="userService.isAuthenticated() && (tipoUsuario == 'Pescador' || tipoUsuario == 'Piscicultor')">
       <button class="btn-square btn--blue mt-3" (click)="invitarAnular(asociacion)" *ngIf="!asociacion?.estado_solicitud">Indicar que soy miembro</button>

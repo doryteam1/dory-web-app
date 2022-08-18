@@ -48,6 +48,10 @@ const routes: Routes = [
     loadChildren: () => import('./pescadores/pescadores.module').then(m => m.PescadoresModule)
   },
   {
+    path:'proveedores',
+    loadChildren: () => import('./proveedores/proveedores.module').then(m => m.ProveedoresModule)
+  },
+  {
     path:'asociaciones',
     loadChildren: () => import('./asociaciones/asociaciones.module').then(m => m.AsociacionesModule)
   },

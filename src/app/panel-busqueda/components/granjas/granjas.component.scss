@@ -343,6 +343,7 @@
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: nowrap;
+    align-items: center;
   }
 
   .card__image {
@@ -357,6 +358,13 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .card__label{
+    display: flex;
+    font-size: 12px;
+    align-items: center;
   }
 
   .card__button {

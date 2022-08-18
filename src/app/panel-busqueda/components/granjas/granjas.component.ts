@@ -69,6 +69,13 @@ export class GranjasComponent implements OnInit {
           nombrefiltro: 'Área (Menor a mayor)',
           datoafiltrar: 'area',
           modoFiltro: MODO_FILTRO_ORDER_ASC,
+        },
+        {
+          id: 4,
+          nombrecampoDB: 'count_resenas',
+          nombrefiltro: 'Cantidad de reseñas (Mayor a menor)',
+          datoafiltrar: 'count_resenas',
+          modoFiltro: MODO_FILTRO_ORDER_DES,
         }
       ],
       /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */

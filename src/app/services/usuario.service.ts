@@ -34,6 +34,10 @@ export class UsuarioService {
     return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/buscar/usuario/email/'+email); 
   }
 
+  getDetail(id:number){
+    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/usuario/id/'+id)
+  }
+
   actualizarUsuario(id:number, dataUser:any){
     return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/usuario/parcial/'+id,dataUser);
   }

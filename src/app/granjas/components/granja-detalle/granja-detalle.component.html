@@ -51,7 +51,7 @@
         <span class="proprietary-container__description1">N° Celular  {{granja?.propietarios[0]?.celular}} </span>
         <span class="proprietary-container__description2">{{granja?.propietarios[0]?.direccion}} </span>
     </div>
-    <img class="proprietary-container__image" [src]="granja?.propietarios[0]?.foto">
+    <img class="proprietary-container__image" [src]="granja?.propietarios[0]?.foto ? granja?.propietarios[0]?.foto : 'assets/images/avatar-person.svg'">
 </div>
 
 <div class="line"></div>

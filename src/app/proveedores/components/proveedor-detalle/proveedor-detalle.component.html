@@ -1,0 +1,61 @@
+<div class="container mycontainer">
+    <div class="mycontainer_info">
+      <div class="piscicultor-container">
+        <div class="piscicultor-container__info">
+          <div class="piscicultor-container__detalle">
+            <img class="detail-container__image" src="assets/icons/person_black.svg">
+            <h3 class="piscicultor-container__title">Proveedor - {{proveedor?.nombre_completo}} </h3>
+          </div>
+          <div class="piscicultor-container__detalle">
+            <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
+            <span class="piscicultor-container__description1">
+              {{proveedor?.municipio}}-{{proveedor?.departamento}}</span>
+          </div>
+        </div>
+        <img class="piscicultor-container__image"
+          src="{{proveedor?.foto ? proveedor.foto : 'assets/images/avatar-person.svg'}}">
+      </div>
+      <div class="line"></div>
+      <div class="detail-container mt-4">
+        <img class="detail-container__image" src="assets/icons/phone_msg_black_24dp.svg">
+        <div class="detail-container__data">
+          <h4 class="detail-container__title">Celular</h4>
+          <span class="detail-container__value">{{proveedor?.celular? proveedor?.celular : 'Contacto sin definir'}}
+          </span>
+        </div>
+      </div>
+      <div class="detail-container">
+        <img class="detail-container__image" src="assets/icons/contact_mail_black_24dp.svg">
+        <div class="detail-container__data">
+          <h4 class="detail-container__title">Correo electrónico</h4>
+          <span class="detail-container__value">{{proveedor?.email}}</span>
+        </div>
+      </div>
+      <div class="detail-container">
+        <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
+        <div class="detail-container__data">
+          <h4 class="detail-container__title">Dirección</h4>
+          <span *ngIf="proveedor?.direccion" class="detail-container__value">{{proveedor?.direccion? 'Dir.' : ''}}
+            {{proveedor?.direccion}} </span>
+          <span *ngIf="!proveedor?.direccion" class="detail-container__value">Dirección indefinida</span>
+        </div>
+      </div>
+      <div class="detail-container" *ngIf="proveedor?.informacion_adicional_direccion">
+            <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
+                <div class="detail-container__data">
+                  <h4 class="detail-container__title">Información adicional de la dirección</h4>
+                  <span class="detail-container__value">
+                    {{proveedor.informacion_adicional_direccion}}</span>
+                </div>
+              </div>
+      <div class="detail-container">
+        <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
+        <div class="detail-container__data">
+          <h4 class="detail-container__title">Número de productos en su portafolio </h4>
+          <span class="detail-container__value">0 productos en total</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
