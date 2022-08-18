@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MODOFILTRO2 } from 'src/app/global/constants';
+import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES } from 'src/app/global/constants';
 import { PlacesService } from 'src/app/services/places.service';
 import { VehiculosService } from 'src/app/services/vehiculos.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { Checkbox } from 'src/models/checkbox.model';
+import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 const _ = require('lodash');
 
 @Component({
@@ -15,17 +16,57 @@ export class VehiculosComponent implements OnInit {
   vehiculos:Array<any> = [];
   vehiculosFiltered:Array<any> = [];
   filtroseleccionadoCheckbox: string[] = [];
+  selectedOrderFilter!: MetaFiltro | any;
+  selectedFilter!: MetaFiltro | any;
   checkbox: Checkbox[] = [
     {
       nameButton: 'Municipios',
       nombrecampoDB: 'municipio_propietario',
-      modoFiltro: MODOFILTRO2,
+      modoFiltro: MODO_FILTRO_DATOS_VARIOS,
       titulomodal: 'Municipios de sucre',
-    },
-    /* modoFiltro: 'number_ordenarmayoramenor', */
+    }
   ];
   palabra: string = '';
   municipios: any;
+
+  /* varibles de buscqueda y filtros */
+  orderFilters: Filtro[] = [
+    {
+      nameButton: 'Ordenar',
+      data: [
+        {
+          id: 0,
+          nombrecampoDB: 'capacidad',
+          nombrefiltro: 'Capacidad (mayor a menor) ',
+          datoafiltrar: 'capacidad',
+          modoFiltro: MODO_FILTRO_ORDER_DES,
+        },
+        {
+          id: 1,
+          nombrecampoDB: 'capacidad',
+          nombrefiltro: 'Capacidad (menor a mayor)',
+          datoafiltrar: 'capacidad',
+          modoFiltro: MODO_FILTRO_ORDER_ASC,
+        }
+      ],
+    },
+  ];
+
+  filters: Filtro[] = [
+    {
+      nameButton: 'Filtro',
+      data: [
+        {
+          id: 0,
+          nombrecampoDB: 'transporte_alimento',
+          nombrefiltro: 'Transporta alimento',
+          datoafiltrar: '1',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        }
+      ],
+    },
+  ];
+
   ngOnInit(): void {
     this.loadMunic()
   }
@@ -59,18 +100,37 @@ deleteFilterCheckbox(index: number) {
   return filtroresult;
 }
 
+filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
+  let filtroresult: any[] = [];
+  filtroresult = this.searchBuscadorService.filterSeleccionadoList(
+    arrayafiltar,
+    filtroSelecOptionData
+  );
+  return filtroresult;
+}
+
+transportaAlimentoFilter(vehiculos:Array<any>){
+  return this.vehiculos.filter((vehiculo)=> vehiculo.transporte_alimento == 1)
+}
+
 searchReset() {
-  let results: any[] = this.filterByText(this.palabra);
+  let result: any[] = this.filterByText(this.palabra);
+  if(this.selectedFilter){
+    result = this.transportaAlimentoFilter(result);
+  }
+  if (this.selectedOrderFilter) {
+      result = this.filtradoData(this.selectedOrderFilter, result);
+  }
   if (
     this.filtroseleccionadoCheckbox &&
     this.filtroseleccionadoCheckbox.length > 0
   ) {
-    results = this.filtradoDataCheckbox(
+    result = this.filtradoDataCheckbox(
       this.filtroseleccionadoCheckbox,
-      results
+      result
     );
   }
-  this.vehiculosFiltered = results;
+  this.vehiculosFiltered = result;
 }
 
 onSearch(text:string){
@@ -104,5 +164,25 @@ loadMunic(): any[] {
     }
   );
   return this.municipios;
+}
+
+onOrderFiltersChange(filter: MetaFiltro) {
+  this.selectedOrderFilter = filter;
+  this.searchReset();
+}
+
+onFilterChange(filter: MetaFiltro) {
+  this.selectedFilter = filter;
+  this.searchReset();
+}
+
+deleteOrderFilter(){
+  this.selectedOrderFilter = null;
+  this.searchReset();
+}
+
+deleteFilter(){
+  this.selectedFilter = null;
+  this.searchReset();
 }
 }

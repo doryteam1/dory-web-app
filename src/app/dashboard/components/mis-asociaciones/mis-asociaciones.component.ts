@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map,finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { MODOFILTRO2, vertices } from '../../../global/constants';
+import { MODO_FILTRO_DATOS_VARIOS, vertices } from '../../../global/constants';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
@@ -105,21 +105,21 @@ export class MisAsociacionesComponent implements OnInit, AfterViewInit,OnDestroy
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Piscicultores',
           datoafiltrar: 'Piscicultores',
-          modoFiltro: MODOFILTRO2,
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
         {
           id: 1,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Pescadores',
           datoafiltrar: 'Pescadores',
-          modoFiltro: MODOFILTRO2,
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
         {
           id: 2,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Mixta',
           datoafiltrar: 'Mixta',
-          modoFiltro: MODOFILTRO2,
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
       ],
       /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
@@ -129,7 +129,7 @@ export class MisAsociacionesComponent implements OnInit, AfterViewInit,OnDestroy
     {
       nameButton: 'Municipios',
       nombrecampoDB: 'municipio',
-      modoFiltro: MODOFILTRO2,
+      modoFiltro: MODO_FILTRO_DATOS_VARIOS,
       titulomodal: 'Municipios de sucre',
     },
     /* modoFiltro: 'number_ordenarmayoramenor', */

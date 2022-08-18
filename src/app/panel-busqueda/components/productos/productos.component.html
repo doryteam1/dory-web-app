@@ -1,18 +1,27 @@
 <div class="search">
   <app-search (textSearch)="onSearch($event)"></app-search>
+</div>
+<div class="d-flex flex-row justify-content-center">
   <app-filtro
-      class="search__filter"
-      [filtro]="filtro"
-      [checkboxfiltro]="false"
-      (onFilterSeleccionado)="onFiltroChange($event)"
-      [filtroSeleccionado]="filtroseleccionado">
+  class="search__filter"
+  [filtro]="filtro"
+  [checkboxfiltro]="false"
+  (onFilterSeleccionado)="onFiltroChange($event)"
+  [filtroSeleccionado]="filtroseleccionado">
+  </app-filtro>
+  <app-filtro
+  class="search__filter"
+  [filtro]="orderFilter"
+  [checkboxfiltro]="false"
+  (onFilterSeleccionado)="onPriceFilterChange($event)"
+  [filtroSeleccionado]="selectedPriceFilter">
   </app-filtro>
   <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
-    (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
+  (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
   </app-filtro>
 </div>
-<div class="chip mb-4">
-  <app-chip-con-boton-close
+<div class="chip-container">
+  <app-chip-con-boton-close class="chip-container__element"
   *ngIf="filtroseleccionado"
   [iconoChip]="true"
   [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
@@ -20,8 +29,15 @@
   (onCloseClip)="delateFilter()"
   >
   </app-chip-con-boton-close>
-  <div class="chip__checkbox" *ngIf="filtroseleccionadoCheckbox">
-  <app-chip-con-boton-close
+  <app-chip-con-boton-close class="chip-container__element"
+  *ngIf="selectedPriceFilter"
+  [iconoChip]="true"
+  [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+  [contenidoChip]="selectedPriceFilter.nombrefiltro"
+  (onCloseClip)="deletePriceFilter()"
+  >
+  </app-chip-con-boton-close>
+  <app-chip-con-boton-close class="chip-container__element"
   *ngFor="let  nombre of filtroseleccionadoCheckbox; let i =index"
       [iconoChip]="true"
       [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
@@ -29,7 +45,6 @@
       (onCloseClip)="delateFilterCheckbox(i)"
       >
   </app-chip-con-boton-close>
-  </div>
 </div>
 <div class="container">
   <div class="card" *ngFor="let producto of productosFiltered; let i = index">

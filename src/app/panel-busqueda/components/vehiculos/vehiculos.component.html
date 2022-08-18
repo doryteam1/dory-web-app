@@ -1,17 +1,44 @@
-<div class="search mb-4 mt-4">
+<div class="search">
   <app-search (textSearch)="onSearch($event)"></app-search>
-  <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
-    (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
+</div>
+<div class="d-flex flex-row justify-content-center">
+  <app-filtro class="filter" [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
+  (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
+  </app-filtro>
+  <app-filtro class="filter"
+  [filtro]="filters"
+  [checkboxfiltro]="false"
+  (onFilterSeleccionado)="onFilterChange($event)"
+  [filtroSeleccionado]="selectedFilter">
+  </app-filtro>
+  <app-filtro class="filter"
+      [filtro]="orderFilters"
+      [checkboxfiltro]="false"
+      (onFilterSeleccionado)="onOrderFiltersChange($event)"
+      [filtroSeleccionado]="selectedOrderFilter">
   </app-filtro>
 </div>
-<div class="chip mb-5">
+<div class="chip">
+  <app-chip-con-boton-close
+    *ngIf="selectedFilter"
+    [iconoChip]="true"
+    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+    [contenidoChip]="selectedFilter.nombrefiltro"
+    (onCloseClip)="deleteFilter()">
+  </app-chip-con-boton-close>
+  <app-chip-con-boton-close
+    *ngIf="selectedOrderFilter"
+    [iconoChip]="true"
+    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+    [contenidoChip]="selectedOrderFilter.nombrefiltro"
+    (onCloseClip)="deleteOrderFilter()">
+  </app-chip-con-boton-close>
   <app-chip-con-boton-close
   *ngFor="let nombre of filtroseleccionadoCheckbox; let i=index"
       [iconoChip]="true"
       [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
       [contenidoChip]="nombre"
-      (onCloseClip)="deleteFilterCheckbox(i)"
-      >
+      (onCloseClip)="deleteFilterCheckbox(i)">
   </app-chip-con-boton-close>
 </div>
 
@@ -21,7 +48,9 @@
                 [imagenes]="vehiculo.fotos"
                 [indicatorsphoto]="true"
                 [idtarge]="i"
-                [rounded]="true">
+                [rounded]="true"
+                [efect]="true"
+                [cover]="true">
               </app-carrucel-img>
     <!-- <img src="https://www.megamall.com.co/fotosalmacenes/macro_almacen-l_h-1564775241.jpg" alt="" class="card__img"> -->
     <span class="card__title">{{vehiculo.modelo | shorter:28}}</span>

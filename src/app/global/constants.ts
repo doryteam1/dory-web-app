@@ -2849,5 +2849,5 @@
   ];
 export const MODO_FILTRO_ORDER_DES = 'number_ordenarmayoramenor'
 export const MODO_FILTRO_ORDER_ASC = 'number_ordenarmenoramayor'
-export const MODOFILTRO2 = 'string_filtrodatosvarios'
+export const MODO_FILTRO_DATOS_VARIOS = 'string_filtrodatosvarios'
 

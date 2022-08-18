@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MODOFILTRO2 } from 'src/app/global/constants';
+import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { NegociosService } from 'src/app/services/negocios.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
-import { BuscarPor } from 'src/models/buscarPor.model';
 import { Checkbox } from 'src/models/checkbox.model';
 const _ = require('lodash');
 
@@ -20,7 +19,7 @@ export class NegociosComponent implements OnInit {
     {
       nameButton: 'Municipios',
       nombrecampoDB: 'nombre_municipio',
-      modoFiltro: MODOFILTRO2,
+      modoFiltro: MODO_FILTRO_DATOS_VARIOS,
       titulomodal: 'Municipios de sucre',
     },
     /* modoFiltro: 'number_ordenarmayoramenor', */

@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { BuscarPor } from '../../../../models/buscarPor.model';
 import { Filtro, MetaFiltro } from 'src/models/filtro.model';
-import { MODOFILTRO2 } from 'src/app/global/constants';
+import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { filter } from 'rxjs/internal/operators/filter';
 @Component({
   selector: 'app-asociaciones-municipio',
@@ -32,21 +32,21 @@ export class AsociacionesMunicipioComponent implements OnInit {
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Piscicultores',
           datoafiltrar: 'Piscicultores',
-          modoFiltro: MODOFILTRO2,
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
         {
           id: 1,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Pescadores',
           datoafiltrar: 'Pescadores',
-          modoFiltro: MODOFILTRO2,
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
         {
           id: 2,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Mixta',
           datoafiltrar: 'Mixta',
-          modoFiltro: MODOFILTRO2,
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
       ],
     },

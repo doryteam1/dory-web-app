@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
-import { MODOFILTRO2 } from 'src/app/global/constants';
+import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PlacesService } from 'src/app/services/places.service';
@@ -31,7 +31,7 @@ export class GranjasComponent implements OnInit {
     {
       nameButton: 'Municipios',
       nombrecampoDB: 'municipio',
-      modoFiltro: MODOFILTRO2,
+      modoFiltro: MODO_FILTRO_DATOS_VARIOS,
       titulomodal: 'Municipios de sucre',
     },
     /* modoFiltro: 'number_ordenarmayoramenor', */
@@ -69,9 +69,11 @@ export class GranjasComponent implements OnInit {
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');
-    let payload = Utilities.parseJwt(token!);
-    this.authUserId = payload.sub;
-    this.authRol = payload.rol;
+    if(token){
+      let payload = Utilities.parseJwt(token!);
+      this.authUserId = payload.sub;
+      this.authRol = payload.rol;
+    }
     /*Todas las asociaones que existen*/
     this.granjasService.getGranjas().subscribe((response:any) => {
       this.granjas = response.data;

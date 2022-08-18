@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MODOFILTRO2, MODO_FILTRO_ORDER_ASC } from 'src/app/global/constants';
+import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC } from 'src/app/global/constants';
 import { Checkbox } from 'src/models/checkbox.model';
 import { MetaFiltro } from '../../../models/filtro.model';
 import { MODO_FILTRO_ORDER_DES } from '../../global/constants';
@@ -96,7 +96,7 @@ export class SearchBuscadorService {
       });
 
       return filterarraydata;
-    } else if (filtroSelecOptionData.modoFiltro == MODOFILTRO2) {
+    } else if (filtroSelecOptionData.modoFiltro == MODO_FILTRO_DATOS_VARIOS) {
       if (
         filtroSelecOptionData.nombrecampoDB == null ||
         filtroSelecOptionData.datoafiltrar == null ||
@@ -120,7 +120,7 @@ export class SearchBuscadorService {
     filtroSelecOptionData: Checkbox[]
   ): any {
     console.log(arrayCheckboxSelec);
-    if (filtroSelecOptionData[0].modoFiltro == MODOFILTRO2) {
+    if (filtroSelecOptionData[0].modoFiltro == MODO_FILTRO_DATOS_VARIOS) {
       let arraydataabuscarnew = arraydataabuscar.slice();
       let _arraydatafilter: any[] = [];
       let queryList: any[] = arrayCheckboxSelec;

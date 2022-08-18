@@ -2,7 +2,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
-import { MODOFILTRO2 } from 'src/app/global/constants';
+import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { PlacesService } from 'src/app/services/places.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
@@ -30,7 +30,7 @@ export class AsociacionesComponent implements OnInit {
     {
       nameButton: 'Municipios',
       nombrecampoDB: 'municipio',
-      modoFiltro: MODOFILTRO2,
+      modoFiltro: MODO_FILTRO_DATOS_VARIOS,
       titulomodal: 'Municipios de sucre',
     },
     /* modoFiltro: 'number_ordenarmayoramenor', */
@@ -45,21 +45,21 @@ export class AsociacionesComponent implements OnInit {
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Piscicultores',
           datoafiltrar: 'Piscicultores',
-          modoFiltro: MODOFILTRO2,
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
         {
           id: 1,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Pescadores',
           datoafiltrar: 'Pescadores',
-          modoFiltro: MODOFILTRO2,
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
         {
           id: 2,
           nombrecampoDB: 'tipo_asociacion',
           nombrefiltro: 'Mixta',
           datoafiltrar: 'Mixta',
-          modoFiltro: MODOFILTRO2,
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
       ],
       /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */

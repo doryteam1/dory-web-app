@@ -22,6 +22,8 @@ export class CarrucelImgComponent implements OnInit {
   @Input() idtarge!: number;
   @Input() rounded: boolean = false;
   @Input() scale: boolean = false;
+  @Input() efect: boolean = false;
+  @Input() cover: boolean = false;
   id!: string;
   idnumeral!: string;
   divrows!: string;

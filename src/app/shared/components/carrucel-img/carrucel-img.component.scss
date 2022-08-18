@@ -268,12 +268,24 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
 
 }
 
-.imgitem--rounded{
+.img1item--rounded{
   border-radius: 8px;
 }
-.imgitem--scale
+.img1item--scale
 {
   object-fit: scale-down;
+}
+.img1item--efect{
+  filter:brightness(85%);
+}
+
+.img1item--cover{
+  object-fit: cover;
+}
+
+.img1item--efect:hover{
+  filter:brightness(100%);
+  animation: scale 1.5s infinite alternate;
 }
 /* .carousel-item {
   width: 100%;
@@ -282,3 +294,12 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
   background-repeat: no-repeat;
   background-color: #000;
 } */
+
+@keyframes scale{
+  to{
+    transform: scale(1);
+  }
+  from{
+    transform: scale(1.05);
+  }
+}

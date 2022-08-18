@@ -8,7 +8,7 @@ import { ProveedorService } from 'src/app/services/proveedor.service';
 import { Router } from '@angular/router';
 import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 import { Checkbox } from 'src/models/checkbox.model';
-import { MODOFILTRO2, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES } from 'src/app/global/constants';
+import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES } from 'src/app/global/constants';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { BuscarPor } from 'src/models/buscarPor.model';
 import { PlacesService } from 'src/app/services/places.service';
@@ -23,6 +23,7 @@ export class ProductosComponent implements OnInit {
   productosFiltered:Array<any> = [];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
+  selectedPriceFilter!: MetaFiltro | any;
   palabra: string = '';
   municipios: Array<any> = [];
   showNotFound: boolean = false;
@@ -32,7 +33,7 @@ export class ProductosComponent implements OnInit {
     {
       nameButton: 'Municipio de proveedor',
       nombrecampoDB: 'municipio_proveedor',
-      modoFiltro: MODOFILTRO2,
+      modoFiltro: MODO_FILTRO_DATOS_VARIOS,
       titulomodal: 'Municipios de sucre',
     },
     /* modoFiltro: 'number_ordenarmayoramenor', */
@@ -40,7 +41,7 @@ export class ProductosComponent implements OnInit {
   /* varibles de buscqueda y filtros */
   filtro: Filtro[] = [
     {
-      nameButton: 'Ordenar por',
+      nameButton: 'Ordenar',
       data: [
         {
           id: 0,
@@ -60,7 +61,45 @@ export class ProductosComponent implements OnInit {
       /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
     },
   ];
- 
+
+  orderFilter: Filtro[] = [
+    {
+      nameButton: 'Precio',
+      data: [
+        {
+          id: 0,
+          nombrecampoDB: 'precio',
+          nombrefiltro: 'Precio ($0 - $100.000)',
+          datoafiltrar: 'precio',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+        {
+          id: 1,
+          nombrecampoDB: 'precio',
+          nombrefiltro: 'Precio ($100.000 - $200.000)',
+          datoafiltrar: 'precio',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+        {
+          id: 2,
+          nombrecampoDB: 'precio',
+          nombrefiltro: 'Precio ($200.000 - $500.000)',
+          datoafiltrar: 'precio',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+        {
+          id: 3,
+          nombrecampoDB: 'precio',
+          nombrefiltro: 'Precio (más de $500.000)',
+          datoafiltrar: 'precio',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        }
+      ],
+      /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
+    },
+  ];
+
+
   constructor(private proveedorService:ProveedorService,
     private router:Router,
     private searchBuscadorService: SearchBuscadorService,
@@ -113,6 +152,9 @@ export class ProductosComponent implements OnInit {
    }
   reseteoDeBusqueda() {
     let resultados: any[] = this.buscarData(this.palabra);
+    if(this.selectedPriceFilter){
+      resultados = this.priceFilter(resultados);
+    }
     if (this.filtroseleccionado) {
       resultados = this.filtradoData(this.filtroseleccionado, resultados);
     }
@@ -173,6 +215,11 @@ export class ProductosComponent implements OnInit {
     this.reseteoDeBusqueda();
   }
 
+  deletePriceFilter(){
+    this.selectedPriceFilter = null;
+    this.reseteoDeBusqueda();
+  }
+
   onFiltroChangeCheckbox(checkboxs: string[]) {
     this.filtroseleccionadoCheckbox = checkboxs;
     this.reseteoDeBusqueda();
@@ -180,6 +227,11 @@ export class ProductosComponent implements OnInit {
 
   onFiltroChange(filtro: MetaFiltro) {
     this.filtroseleccionado = filtro;
+    this.reseteoDeBusqueda();
+  }
+
+  onPriceFilterChange(filter: MetaFiltro){
+    this.selectedPriceFilter = filter;
     this.reseteoDeBusqueda();
   }
 
@@ -193,5 +245,28 @@ export class ProductosComponent implements OnInit {
       }
     );
     return this.municipios;
+  }
+
+  priceFilter(productos:Array<any>){
+    let result = productos.slice()
+    console.log(this.selectedPriceFilter.id)
+    if(this.selectedPriceFilter.id == 0){//0-100
+      result = productos.filter((element)=>{
+        return element.precio <= 100000
+      })  
+    }else if(this.selectedPriceFilter.id == 1){//100-200
+      result = productos.filter((element)=>{
+        return element.precio >= 100000 && element.precio <= 200000 
+      })
+    }else if(this.selectedPriceFilter.id == 2){//200 - 500
+      result = productos.filter((element)=>{
+        return element.precio >= 200000 && element.precio <= 500000 
+      })
+    }else if(this.selectedPriceFilter.id == 3){//+500
+      result = productos.filter((element)=>{
+        return element.precio > 500000
+      })
+    }
+    return result;
   }
 }

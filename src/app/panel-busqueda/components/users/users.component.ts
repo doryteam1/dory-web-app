@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
-import { MODOFILTRO2 } from 'src/app/global/constants';
+import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
 import { InvestigadorService } from 'src/app/services/investigador.service';
@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit {
     {
       nameButton: 'Municipios',
       nombrecampoDB: 'municipio',
-      modoFiltro: MODOFILTRO2,
+      modoFiltro: MODO_FILTRO_DATOS_VARIOS,
       titulomodal: 'Municipios de sucre',
     },
     /* modoFiltro: 'number_ordenarmayoramenor', */
@@ -54,9 +54,12 @@ export class UsersComponent implements OnInit {
     this.userType = this.ar.snapshot.url[0].path!
     console.log("userType ",this.userType)
     let token = localStorage.getItem('token');
-    let payload = Utilities.parseJwt(token!);
-    this.authUserId = payload.sub;
-    this.authRol = payload.rol;
+    if(token){
+      let payload = Utilities.parseJwt(token!);
+      this.authUserId = payload.sub;
+      this.authRol = payload.rol;
+    }
+    
     /*Todas las usuarios que existen de un tipo determinado*/
     this.getUsers()!.subscribe((response:any) => {
       this.users = response.data;
