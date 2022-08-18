@@ -179,11 +179,11 @@ export class GranjaDetalleComponent implements OnInit {
     );
   }
 
-  showResenas(idGranja: number,granja?:any) {
+  showResenas(granja:any) {
     this.granjasService.showResenasModal(
       `Reseñas (${granja?.count_resenas})`,
       'Cerrar',
-      idGranja
+      granja.id_granja
     );
   }
 
