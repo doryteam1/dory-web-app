@@ -399,29 +399,49 @@
     display: flex;
     flex-direction: column;
   
-    .buscador-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
-  
-    .alert-mi-estilo {
-      margin-bottom: 0;
-      width: 100%;
-      background-color: var(--azul4);
-      color: black;
-    }
+  .buscador-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .alert-mi-estilo {
+    margin-bottom: 0;
+    width: 100%;
+    background-color: var(--azul4);
+    color: black;
+  }
   }
   .chip{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
-    .chip__checkbox{
+    margin-top: 20px;
+  }
+
+  .chip__element{
+    margin-right: 5px;
+    margin-bottom: 10px;
+  }
+
+  .chip__checkbox{
     display: flex;
     flex-direction: row;
     gap: 10px;
     flex-wrap: wrap;
-    }
   }
   
+  .filters{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 5px;
+  }
+
+  .filter{
+    margin-right:10px;
+  }

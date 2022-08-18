@@ -9,22 +9,22 @@
 
 <div class="container__box">
   <div class="photo-container" >
-   <div class="header-container">
-    <div class="header-container--titulo">
-      <h3 class="header-container__title">{{granja?.nombre}}</h3>
-      <app-stars [selectedStar]="granja?.puntuacion" size="medium"></app-stars>
+    <div class="header-container">
+      <div class="header-container--titulo">
+        <h3 class="header-container__title">{{granja?.nombre}}</h3>
+        <app-stars [selectedStar]="granja?.puntuacion" size="medium"></app-stars>
+      </div>
+      <div class="header-container--subtitulo">
+            <!--<img class="header-container__icon" src="assets/icons/star-filled.svg">
+            <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C' }}</span> -->
+            <span class="header-container__description">
+                {{granja?.nombre_municipio}}, Sucre.
+                <span class="header-container__resenas"
+                  (click)="showResenas(granja.id_granja,granja)">Reseñas ({{granja?.count_resenas}})
+                </span>
+            </span>
+      </div>
     </div>
-    <div class="header-container--subtitulo">
- <!--          <img class="header-container__icon" src="assets/icons/star-filled.svg">
-          <span class="header-container__rating">{{granja?.puntuacion ? (granja.puntuacion | number:'1.1-1') : 'S/C' }}</span> -->
-           <span class="header-container__description">
-              {{granja?.nombre_municipio}}, Sucre.
-              <span class="header-container__resenas"
-                (click)="showResenas(granja.id_granja,granja)">Reseñas ({{granja?.count_resenas}})
-              </span>
-          </span>
-    </div>
-   </div>
     <div class="buttons-container1" >
         <img class="buttons-container__image" src="assets/icons/share.svg" (click)="shareFuntion()">
         <span class="buttons-container__description" (click)="shareFuntion()">Compartir</span>
@@ -32,9 +32,8 @@
     <div class="buttons-container2">
       <img class="buttons-container__image" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita" (click)="changeFavorite()">
       <img class="buttons-container__image" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita" (click)="changeFavorite()">
-        <span class="buttons-container__description" (click)="changeFavorite()">Guardar</span>
+      <span class="buttons-container__description" (click)="changeFavorite()">Guardar</span>
     </div>
-
 <div class="photo-container-padre" [ngClass]="{
   'photo-container1-div': (fotosgranja?.length ==1 || fotosgranja?.length ==0),
   'photo-container2-div': fotosgranja?.length ==2,

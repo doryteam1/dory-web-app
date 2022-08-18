@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
-import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
+import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES } from 'src/app/global/constants';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PlacesService } from 'src/app/services/places.service';
@@ -20,7 +20,8 @@ import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 export class GranjasComponent implements OnInit {
   granjasFiltered!: any[];
   filtroseleccionadoCheckbox: string[] = [];
-  filtroseleccionado!: MetaFiltro | any;
+  selectedOrderFilter!: MetaFiltro | any;
+  selectedStarFilter!: MetaFiltro | any;
   palabra: string = '';
   granjas!: any[];
   municipios: Array<any> = [];
@@ -37,29 +38,94 @@ export class GranjasComponent implements OnInit {
     /* modoFiltro: 'number_ordenarmayoramenor', */
   ];
   /* varibles de buscqueda y filtros */
-  filtro: Filtro[] = [
+  orderFilter: Filtro[] = [
     {
-      nameButton: 'Ordenar Granjas',
+      nameButton: 'Ordenar por',
       data: [
         {
           id: 0,
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Calificación',
+          nombrecampoDB: 'puntuacion',
+          nombrefiltro: 'Calificación (Mayor a menor)',
           datoafiltrar: 'puntuacion',
-          modoFiltro: 'number_ordenarmayoramenor',
+          modoFiltro: MODO_FILTRO_ORDER_DES,
         },
         {
           id: 1,
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Área',
-          datoafiltrar: 'area',
-          modoFiltro: 'number_ordenarmayoramenor',
+          nombrecampoDB: 'puntuacion',
+          nombrefiltro: 'Calificación (Menor a mayor)',
+          datoafiltrar: 'puntuacion',
+          modoFiltro: MODO_FILTRO_ORDER_ASC,
         },
+        {
+          id: 2,
+          nombrecampoDB: 'area',
+          nombrefiltro: 'Área (Mayor a menor)',
+          datoafiltrar: 'area',
+          modoFiltro: MODO_FILTRO_ORDER_DES,
+        },
+        {
+          id: 3,
+          nombrecampoDB: 'area',
+          nombrefiltro: 'Área (Menor a mayor)',
+          datoafiltrar: 'area',
+          modoFiltro: MODO_FILTRO_ORDER_ASC,
+        }
       ],
       /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
     },
   ];
   
+  starsFilter: Filtro[] = [
+    {
+      nameButton: 'Filtrar por',
+      data: [
+        {
+          id: 0,
+          nombrecampoDB: 'puntuacion',
+          nombrefiltro: 'Sin calificación',
+          datoafiltrar: '',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+        {
+          id: 1,
+          nombrecampoDB: 'puntuacion',
+          nombrefiltro: '1 Estrella',
+          datoafiltrar: '',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+        {
+          id: 2,
+          nombrecampoDB: 'puntuacion',
+          nombrefiltro: '2 Estrellas',
+          datoafiltrar: '',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+        {
+          id: 3,
+          nombrecampoDB: 'puntuacion',
+          nombrefiltro: '3 Estrellas',
+          datoafiltrar: '',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+        {
+          id: 4,
+          nombrecampoDB: 'puntuacion',
+          nombrefiltro: '4 Estrellas',
+          datoafiltrar: '',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+        {
+          id: 5,
+          nombrecampoDB: 'puntuacion',
+          nombrefiltro: '5 Estrellas',
+          datoafiltrar: '',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        }
+      ],
+      /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
+    },
+  ];
+
   constructor(private granjasService: GranjasService,
     private appModalService: AppModalService,
     private router: Router,
@@ -98,16 +164,19 @@ export class GranjasComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  delateFilterCheckbox(index: number) {
+  deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index,1);
      console.log(this.filtroseleccionadoCheckbox);
-     this.reseteoDeBusqueda();
+     this.searchReset();
    }
 
-   reseteoDeBusqueda() {
+   searchReset() {
     let resultados: any[] = this.buscarData(this.palabra);
-    if (this.filtroseleccionado) {
-      resultados = this.filtradoData(this.filtroseleccionado, resultados);
+    if(this.selectedStarFilter){
+      resultados = this.starFilter(resultados)
+    }
+    if (this.selectedOrderFilter) {
+      resultados = this.filtradoData(this.selectedOrderFilter, resultados);
     }
     if (
       this.filtroseleccionadoCheckbox &&
@@ -119,6 +188,24 @@ export class GranjasComponent implements OnInit {
       );
     }
     this.granjasFiltered = resultados;
+  }
+
+  starFilter(granjas:Array<any>){
+    let filteredResult = granjas.slice(0); 
+    if(this.selectedStarFilter.id == 0){//sin calificación
+      filteredResult = granjas.filter((element)=>{ return !element?.puntuacion })
+    }else if(this.selectedStarFilter.id == 1){//1 estrella
+      filteredResult = granjas.filter((element)=>{ return element?.puntuacion && element?.puntuacion >= 1 && element.puntuacion < 2})
+    }else if(this.selectedStarFilter.id == 2){//2 estrella
+      filteredResult = granjas.filter((element)=>{ return element?.puntuacion && element?.puntuacion >= 2 && element.puntuacion < 3})
+    }else if(this.selectedStarFilter.id == 3){//3 estrella
+      filteredResult = granjas.filter((element)=>{ return element?.puntuacion && element?.puntuacion >= 3 && element.puntuacion < 4})
+    }else if(this.selectedStarFilter.id == 4){//4 estrella
+      filteredResult = granjas.filter((element)=>{ return element?.puntuacion && element?.puntuacion >= 4 && element.puntuacion < 5})
+    }else if(this.selectedStarFilter.id == 5){//5 estrella
+      filteredResult = granjas.filter((element)=>{ return element?.puntuacion && element?.puntuacion == 5 })
+    }
+    return filteredResult;
   }
 
   filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
@@ -143,7 +230,7 @@ export class GranjasComponent implements OnInit {
 
   onBuscarPalabra(palabra: string) {
     this.palabra = palabra;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   buscarData(texto: string): any {
@@ -161,19 +248,29 @@ export class GranjasComponent implements OnInit {
     return asociacionesresult;
   }
 
-  delateFilter() {
-    this.filtroseleccionado = null;
-    this.reseteoDeBusqueda();
+  deleteOrderFilter() {
+    this.selectedOrderFilter = null;
+    this.searchReset();
+  }
+
+  deleteStarFilter(){
+    this.selectedStarFilter = null;
+    this.searchReset();
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
     this.filtroseleccionadoCheckbox = checkboxs;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
-  onFiltroChange(filtro: MetaFiltro) {
-    this.filtroseleccionado = filtro;
-    this.reseteoDeBusqueda();
+  onOrderFilterChange(filter: MetaFiltro) {
+    this.selectedOrderFilter = filter;
+    this.searchReset();
+  }
+
+  onStarFilterChange(filtro: MetaFiltro) {
+    this.selectedStarFilter = filtro;
+    this.searchReset();
   }
 
   loadMunic(): any[] {

@@ -41,19 +41,19 @@ export class ProductosComponent implements OnInit {
   /* varibles de buscqueda y filtros */
   filtro: Filtro[] = [
     {
-      nameButton: 'Ordenar',
+      nameButton: 'Ordenar por',
       data: [
         {
           id: 0,
           nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio (mayor a menor)',
+          nombrefiltro: 'Precio (Mayor a menor)',
           datoafiltrar: 'precio',
           modoFiltro: MODO_FILTRO_ORDER_DES,
         },
         {
           id: 1,
           nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio (menor a mayor)',
+          nombrefiltro: 'Precio (Menor a mayor)',
           datoafiltrar: 'precio',
           modoFiltro: MODO_FILTRO_ORDER_ASC,
         },
