@@ -20,7 +20,7 @@
   <button type="button" *ngIf="showconteslaider" (click)="closeslider()" class="btn-close" aria-label="Close"></button>
 </div>
 <!-- gallery contenido -->
-<div class="modal-body" *ngIf="!showconteslaider" >
+<div class="modal-body" *ngIf="!showconteslaider"  >
   <div class="photos-container-div" (click)="shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"
     style="position: relative;">
           <div class="container__box">
@@ -51,10 +51,10 @@
   </div>
 </div>
 <!-- slaider contenido -->
-<div class="modal-body modalbody" *ngIf="showconteslaider && !isPhotoSelectingToDel" >
+<div  class="modal-body modalbody" *ngIf="showconteslaider && !isPhotoSelectingToDel" >
   <app-ng-gallery-slider
-  [imagenes]="ArrayFotos"
-  [imgselecmodal]="imgselecmodal"
+    [imagenes]="ArrayFotos"
+    [imgselecmodal]="imgselecmodal"
    (eventClickOnPreviousOrNew)="eventClickOnPreviousOrNewSlider()"
    (valueResponseIndiceActualSlider)="selcCarruselImg($event)"
    (eventValueResponseClickFotoMiniSlider)="eventValueResponseClickFotoMiniSlider($event)">

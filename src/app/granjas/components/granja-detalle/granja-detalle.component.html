@@ -11,7 +11,8 @@
 </div>
 <div class="container__box" *ngIf="!sinfotos">
 <div class="photo-container" >
-<div class="photo-container-padre" [ngClass]="{
+<div class="photo-container-padre"
+[ngClass]="{
   'photo-container1-div': (fotosgranja?.length ==1 || fotosgranja?.length ==0),
   'photo-container2-div': fotosgranja?.length ==2,
   'photo-container3-div': fotosgranja?.length ==3,
@@ -28,17 +29,29 @@
   <img class="photo-container-img" id="photo-container__photo1"
   src='assets/images/no-image.jpg'
   *ngIf="sinfotos">
-
-  <button class="masimagenescontador" (click)="OpenGalleryModalOptionOne()" *ngIf="fotosgranja?.length >=7 "
-      (click)=" shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"><span style=" border-bottom: 1px solid #fff;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.5);">+ {{fotosgranja?.length-7}} fotos</span>
+  <button class="masimagenescontador" (click)="OpenGalleryModalOptionOne()" *ngIf="fotosgranja?.length >7 "
+      (click)=" shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1">
+      <span *ngIf="fotosgranja?.length - 7 >1 "style=" border-bottom: 1px solid #fff;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.5);">+ {{fotosgranja?.length-7}} fotos
+      </span>
+      <span *ngIf="fotosgranja?.length - 7 ==1 " style=" border-bottom: 1px solid #fff;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.5);">+ {{fotosgranja?.length-7}} foto
+      </span>
   </button>
 </div>
-
 <button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length >1 && fotosgranja?.length<7" >Ver fotos</button>
 <button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length ==1 " >Ver la foto</button>
 <button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length >=7 ">Ver todas las fotos</button>
-
+</div>
+<div class="photo-container-slider">
+<app-ng-gallery-slider
+[fullScreen]="true"
+[contador]="false"
+[imagenes]="fotosgranja"
+class="galleryslider"
+[id]="'granjasFotos'"
+>
+</app-ng-gallery-slider>
 </div>
 </div>
 <div *ngIf="sinfotos">
@@ -140,7 +153,7 @@
         <app-stars class="box-miopinion__stars" [selectedStar]="miresena?.calificacion" size="small"></app-stars>
         <p class="box-miopinion__desc">{{miresena?.descripcion}}</p>
       </div>
-      
+
      <!--  <div class="d-flex flex-column justify-content-start"  *ngIf="editingMiResena">
         <textarea class="box-miopinion__input form-input-text-square" [(ngModel)]="editedDescResena"></textarea>
         <button class="btn-square-white align-self-end" (click)="updateMiResena()">
@@ -250,7 +263,7 @@
         <img class="header-buttons__save-icon" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita" (click)="changeFavorite()">
         <span class="header-buttons__save-name" (click)="changeFavorite()">Guardar</span>
       </div>
-    </div>  
+    </div>
   </div>
-  
+
 </ng-template>

@@ -74,25 +74,7 @@ display: grid;
     width: 100%
 }
 .photo-container {
-  /* display: grid;
-  grid-template-columns: repeat(12, 98.2508333333px);
-  grid-template-rows: repeat(11, 46.1272727273px) 65.5px;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  grid-template-areas: ". . . . . . . . button1 button1  button2 button2"
-    ". div div div div div div div div div . ."
-    ". div div div div div div div div div . ."
-    ". div div div div div div div div div . ."
-    ". div div div div div div div div div . ."
-    ". div div div div div div div div div . ."
-    ". div div div div div div div div div . ."
-    ". div div div div div div div div div . ."
-    ". div div div div div div div div div . ."
-    ". div div div div div div div div div . ."
-    ". div div div div div div div div div . ."
-    "button button button button button button button button button button button button"; */
     display: grid;
-      //grid-template-rows: repeat(12, 46.1272727273px) 65.5px;
       grid-template-columns: repeat(12, 98.2508333333px);
       grid-column-gap: 0px;
         grid-row-gap: 0px;
@@ -806,7 +788,7 @@ margin-bottom: 0;
   display: flex;
   flex-direction: row;
 }
- 
+
 .header__name{
   margin-right: 10px;
 }
@@ -868,4 +850,31 @@ margin-bottom: 0;
   text-decoration: none;
   color: var(--black);
   cursor: pointer;
+}
+.photo-container-slider{
+display: none;
+}
+@media screen and (max-width: 1010px) {
+  .photo-container-slider {
+      /* display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      grid-template-columns: repeat(5, 1fr);
+      grid-column-gap: 0px;
+      grid-row-gap: 0px;
+      grid-template-areas:
+        '. div div div .'
+        '. div div div .'; */
+        display: block;
+        height: 100%;
+        width: 90vw;
+          margin: 30px 0 30px 0;
+
+    }
+.galleryslider {
+  display: block;
+  width: 100%;
+}
+.photo-container {
+  display: none;
+}
 }

@@ -44,6 +44,7 @@ export class GranjaDetalleComponent implements OnInit {
   editingMiResena: boolean = false;
   currentRate: any;
   showResenasNotFound: boolean = false;
+  arrayFotosGranja:any[]=[]
   constructor(
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
@@ -74,9 +75,12 @@ export class GranjaDetalleComponent implements OnInit {
       (response) => {
         if (response.data.length > 0) {
           this.granja = response.data[0];
-          console.log(this.granja);
           this.currentRate = this.granja?.puntuacion;
           this.fotosgranja = response.data[0].fotos;
+
+        /*   if (this.fotosgranja.length >= 7) {
+            this.arrayFotosGranja = this.fotosgranja.slice(0, 7);
+          } */
           if (this.fotosgranja.length == 0) {
             this.sinfotos = true;
           }
