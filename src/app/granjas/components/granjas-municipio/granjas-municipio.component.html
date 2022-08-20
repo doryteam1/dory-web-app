@@ -62,8 +62,11 @@
             (mouseout)="eliminInfoWindow()">
             <div class="meta">
               <div class="photo">
-                <app-carrucel-img class="card__image" [imagenes]="granjasFiltered[i].fotos"
-                  [indicatorsphoto]=" indicatorsphotos" [idtarge]="i"
+                <app-carrucel-img
+                   class="card__image"
+                   [imagenes]="granjasFiltered[i].fotos"
+                  [indicatorsphoto]=" indicatorsphotos"
+                  [idtarge]="i"
                   (eventValueResponseClickFotoMiniSlider)="navigate(granja.id_granja)"
                   (eventValueResponseClickDivIndicadorSlider)="navigate(granja.id_granja)"
                   (eventValueResponseclickImagenItemSlider)="navigate(granja.id_granja)">

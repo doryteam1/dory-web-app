@@ -20,7 +20,7 @@
   <button type="button" *ngIf="showconteslaider" (click)="closeslider()" class="btn-close" aria-label="Close"></button>
 </div>
 <!-- gallery contenido -->
-<div class="modal-body" *ngIf="!showconteslaider">
+<div class="modal-body" *ngIf="!showconteslaider" >
   <div class="photos-container-div" (click)="shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1"
     style="position: relative;">
           <div class="container__box">
@@ -35,8 +35,7 @@
               </div>
             </div>
           </div>
-    <div class="image-box"  *ngFor="let photo of ArrayFotos; let i=index" #myItemLists>
-
+    <div class="image-box"  *ngFor="let photo of ArrayFotos; let i=index" #myItemLists >
       <img
         class="photo-container-gallery animate__bounceIn" alt="image"
         [ngClass]="{'box-shadow-efect':  shadoweffectindice==i ||   valorindicecarrucel==i || imgselecmodal==i}"
@@ -52,13 +51,14 @@
   </div>
 </div>
 <!-- slaider contenido -->
-<div class="modal-body modalbody" *ngIf="showconteslaider && !isPhotoSelectingToDel">
-  <app-carrucel-img [imagenes]="ArrayFotos" [imgselecmodal]="imgselecmodal"
-    (valueResponseIndiceActualSlider)="selcCarruselImg($event)"
-    (eventClickOnPreviousOrNew)="eventClickOnPreviousOrNewSlider()"
-    (eventValueResponseClickFotoMiniSlider)="eventValueResponseClickFotoMiniSlider($event)" [valorrows]="valorrows"
-    [valorcolumns]='valorcolumns' [indicatorsphoto]="indicatorsphotos">
-  </app-carrucel-img>
+<div class="modal-body modalbody" *ngIf="showconteslaider && !isPhotoSelectingToDel" >
+  <app-ng-gallery-slider
+  [imagenes]="ArrayFotos"
+  [imgselecmodal]="imgselecmodal"
+   (eventClickOnPreviousOrNew)="eventClickOnPreviousOrNewSlider()"
+   (valueResponseIndiceActualSlider)="selcCarruselImg($event)"
+   (eventValueResponseClickFotoMiniSlider)="eventValueResponseClickFotoMiniSlider($event)">
+  </app-ng-gallery-slider>
 </div>
 <div class="modal-footer" *ngIf="!showconteslaider && veryadicionar">
   <button [disabled]="loading2" type="button" class="btn btn-success container__btn2"

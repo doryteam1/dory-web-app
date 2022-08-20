@@ -117,7 +117,6 @@ export class AppModalService {
   }
 
   /* modal gallery slider ver y adicionar y eleimar fotos */
-  /* modal google map */
   public CloseModalGalleryVerAdiconarEliminarFotos(): void {
     this.modalService.dismissAll();
   }

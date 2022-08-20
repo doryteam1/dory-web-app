@@ -130,6 +130,11 @@ background-color: var(--gris3);
   }
 
 }
+    button:focus {
+      border-color: none !important;
+      box-shadow: none;
+      outline: 0 none !important;
+    }
 .modalbody {
   height: 100%;
 }

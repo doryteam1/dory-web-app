@@ -19,8 +19,6 @@ import { AppModalService } from './services/app-modal.service';
 import { ConfirmModalMapService } from './services/confirm-modal-map.service';
 import { ShorterPipe } from '../pipes/shorter.pipe';
 import { StarsComponent } from './components/stars/stars.component';
-import { ModalGallerySliderComponent } from './components/modal-gallery-slider/modal-gallery-slider.component';
-import { ModalGallerySliderService } from './services/modal-gallery-slider.service';
 import { CarrucelImgComponent } from './components/carrucel-img/carrucel-img.component';
 import { GranjasService } from '../../app/granjas/services/granjas.service';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
@@ -51,8 +49,9 @@ import { FloatinBtnsAlanteAtrasComponent } from './components/floatin-btns-alant
 import { ControlBarComponent } from './control-bar/control-bar.component';
 import { NavbarElectronjsComponent } from './navbar-electronjs/navbar-electronjs.component';
 import { ModalGoogleGeneralComponent } from './components/modal-google-general/modal-google-general.component';
-
-
+import { NgGallerySliderComponent } from './components/ng-gallery-slider/ng-gallery-slider.component';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 
 @NgModule({
   declarations: [
@@ -70,9 +69,7 @@ import { ModalGoogleGeneralComponent } from './components/modal-google-general/m
     ConfirmModalMapComponent,
     ShorterPipe,
     StarsComponent,
-    ModalGallerySliderComponent,
     CarrucelImgComponent,
-    ModalGallerySliderComponent,
     CarrucelImgComponent,
     ModalShareButtonComponent,
     ModalGoogleMapComponent,
@@ -90,6 +87,7 @@ import { ModalGoogleGeneralComponent } from './components/modal-google-general/m
     ControlBarComponent,
     NavbarElectronjsComponent,
     ModalGoogleGeneralComponent,
+    NgGallerySliderComponent,
   ],
   imports: [
     CommonModule,
@@ -102,6 +100,9 @@ import { ModalGoogleGeneralComponent } from './components/modal-google-general/m
     ShareIconsModule,
     GoogleMapsModule,
     NgxLongPress2Module,
+    GalleryModule,
+    LightboxModule,
+
   ],
   exports: [
     NavbarComponent,
@@ -134,12 +135,12 @@ import { ModalGoogleGeneralComponent } from './components/modal-google-general/m
     ControlBarComponent,
     NavbarElectronjsComponent,
     ModalGoogleGeneralComponent,
+    NgGallerySliderComponent,
     /*  CardphotoGoogleMapComponent, */
   ],
 
   providers: [
     ConfirmModalMapService,
-    ModalGallerySliderService,
     GranjasService,
     ConfirmModalMapService,
     AppModalService,
