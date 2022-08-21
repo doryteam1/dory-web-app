@@ -6,7 +6,6 @@ import {
   Output,
   EventEmitter,
   SimpleChanges,
-  OnDestroy,
 } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
@@ -17,7 +16,7 @@ import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
   styleUrls: ['./ng-gallery-slider.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgGallerySliderComponent implements OnInit, OnDestroy {
+export class NgGallerySliderComponent implements OnInit{
   @Output() valueResponseIndiceActualSlider: EventEmitter<number> =
     new EventEmitter();
   @Output() eventValueResponseClickFotoMiniSlider: EventEmitter<number> =
@@ -46,9 +45,6 @@ export class NgGallerySliderComponent implements OnInit, OnDestroy {
     }
   }
   constructor(public gallery: Gallery) {}
-  ngOnDestroy(): void {
-    /*  this.gallery.destroyAll() */
-  }
 
   ngOnInit() {
     this.lightboxRef = this.gallery.ref(this.id);
