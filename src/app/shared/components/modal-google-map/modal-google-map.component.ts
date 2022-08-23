@@ -187,6 +187,7 @@ export class ModalGoogleMapComponent implements OnInit {
       this.selectedfavorito.granja.direccion = this.atributos.direccion;
       this.selectedfavorito.granja.area = this.atributos.area;
       this.selectedfavorito.propietario.nombre = this.atributos.propietario || this.atributos.propietarios[0].nombre_completo;
+      console.log(this.selectedfavorito)
     }
   }
   eliminInfoWindow() {

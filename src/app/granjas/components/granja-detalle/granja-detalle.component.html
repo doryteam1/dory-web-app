@@ -60,9 +60,20 @@ class="galleryslider"
 </div>
 <div class="proprietary-container mt-5" >
     <div class="proprietary-container__info">
-        <h3 class="proprietary-container__title">Propietario - {{granja?.propietarios[0]?.nombre_completo}} </h3>
-        <span class="proprietary-container__description1">N° Celular  {{granja?.propietarios[0]?.celular}} </span>
-        <span class="proprietary-container__description2">{{granja?.propietarios[0]?.direccion}} </span>
+      <div class="proprietary-container__data">
+        <span><h4 class="detail-container__title">Propietario: </h4></span>
+        <span><h4 class="proprietary-container__description">{{granja?.propietarios[0]?.nombre_completo}}</h4></span>
+      </div>
+      <div class="proprietary-container__data">
+        <span><h4 class="detail-container__title">Contacto:</h4></span>
+        <span><h4 class="proprietary-container__description">{{granja?.propietarios[0]?.celular}}</h4></span>
+      </div>
+      <div class="proprietary-container__data">
+        <span><h4 class="detail-container__title">Dirección:</h4></span>
+        <span><h4 class="proprietary-container__description">{{granja?.propietarios[0]?.direccion}}</h4></span>
+      </div>
+      <!--   <span class="proprietary-container__description">N° Celular  {{granja?.propietarios[0]?.celular}} </span>
+        <span class="proprietary-container__description">{{granja?.propietarios[0]?.direccion}} </span> -->
     </div>
     <img class="proprietary-container__image" [src]="granja?.propietarios[0]?.foto ? granja?.propietarios[0]?.foto : 'assets/images/avatar-person.svg'">
 </div>
@@ -85,7 +96,7 @@ class="galleryslider"
         </div>
     </div>
 
-    <div class="detail-container">
+    <div class="detail-container mt-4" >
       <img class="detail-container__image" src="assets/icons/text.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Descripción de la granja</h4>
@@ -101,7 +112,7 @@ class="galleryslider"
         </div>
     </div>
 
-    <div class="detail-container">
+    <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/images/fish.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Especies cultivadas</h4>
@@ -109,7 +120,7 @@ class="galleryslider"
         </div>
     </div>
 
-    <div class="detail-container">
+    <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/images/worker.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Trabajadores</h4>
@@ -117,7 +128,7 @@ class="galleryslider"
         </div>
     </div>
 
-    <div class="detail-container">
+    <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/images/weigth.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Producción estimada al mes (kg)</h4>
@@ -125,7 +136,7 @@ class="galleryslider"
         </div>
     </div>
 
-    <div class="detail-container">
+    <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/images/wave.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Tipo de infraestructura</h4>
@@ -144,7 +155,10 @@ class="galleryslider"
           <div class="dropdown">
             <i class="bi bi-three-dots-vertical" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li class="box-miopinion__option dropdown-item" (click)="deleteResena(miresena.id)"><span>Eliminar</span> <i class="bi bi-trash"></i></li>
+              <li class="box-miopinion__option dropdown-item" (click)="deleteResena(miresena.id)">
+                <i class="bi bi-trash"></i>
+                <span>Eliminar</span>
+                </li>
             </ul>
           </div>
         </div>
@@ -153,15 +167,6 @@ class="galleryslider"
         <app-stars class="box-miopinion__stars" [selectedStar]="miresena?.calificacion" size="small"></app-stars>
         <p class="box-miopinion__desc">{{miresena?.descripcion}}</p>
       </div>
-
-     <!--  <div class="d-flex flex-column justify-content-start"  *ngIf="editingMiResena">
-        <textarea class="box-miopinion__input form-input-text-square" [(ngModel)]="editedDescResena"></textarea>
-        <button class="btn-square-white align-self-end" (click)="updateMiResena()">
-          <span *ngIf="!loading">Actualizar</span>
-          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
-          </div>
-        </button>
-      </div> -->
       <span class="box-miopinion__link link" (click)="openQualifyModal(qualifyModal,1)">Editar opinión</span>
     </div>
 
@@ -214,14 +219,15 @@ class="galleryslider"
 </div>
 <ng-template #qualifyModal let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title" *ngIf="!success">Danos tu opinion sobre esta granja!😀</h4>
+    <h4 class="modal-title" id="modal-basic-title" *ngIf="!success">Calificar esta granja</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
   </div>
   <div class="modal-body">
     <div class="qualify-modal__container" *ngIf="!success">
       <app-stars class="qualify-modal__stars" [selectedStar]="rating" (rating)="onRating($event)" [editMode]="editingMiResena"></app-stars>
-      <textarea class="qualify-modal__input form-input-text-square" placeholder="Describe tu experiencia(opcional)" [(ngModel)]="descResena"></textarea>
-      <button class="qualify-modal__button btn-rounded-blue" [ngClass]="(rating < 1 || rating > 5) ? 'disabled' : ''" (click)="publicarResena()" [disabled]="rating < 1 || rating > 5">
+      <textarea class="qualify-modal__input form-input-text-square" placeholder="Describe tu experiencia (opcional)" [(ngModel)]="descResena"></textarea>
+
+      <button class="btn qualify-modal__button mi-btn-rounded-blue" [ngClass]="(rating < 1 || rating > 5) ? 'disabled' : ''" (click)="publicarResena()" [disabled]="rating < 1 || rating > 5">
         <span *ngIf="!loading">Publicar</span>
         <div class="qualify__spinner spinner-border" role="status" *ngIf="loading">
         </div>
@@ -245,7 +251,7 @@ class="galleryslider"
         <app-stars class="header__stars" [selectedStar]="granja?.puntuacion" size="medium"></app-stars>
       </div>
       <div class="header__description">
-        <span>
+        <span class="header__description0">
           {{granja?.nombre_municipio}}, Sucre.
           <span class="header__description1"
             (click)="showResenas(granja)">Reseñas ({{granja?.count_resenas}})

@@ -1,5 +1,5 @@
 import { PlatformLocation } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { AppModalService } from '../../services/app-modal.service';
 
 @Component({
@@ -9,10 +9,11 @@ import { AppModalService } from '../../services/app-modal.service';
 })
 export class CardPiscicultorComponent implements OnInit {
   @Input() piscicultor: any;
-  @Input() mapa: boolean=false;
+  @Input() mapa: boolean = false;
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   @Output() onMouseOutCard: EventEmitter<any> = new EventEmitter();
   @Output() onMouseInsideCard: EventEmitter<any> = new EventEmitter();
+  modalGogleMapOpen:boolean=false;
   constructor(
     private appModalService: AppModalService,
     public location2: PlatformLocation
@@ -23,7 +24,15 @@ export class CardPiscicultorComponent implements OnInit {
   detalle(piscicultor: any) {
     return this.onDetalle.emit(piscicultor);
   }
+  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth >= 1100) {
+      if (this.modalGogleMapOpen) {
+        this.appModalService.CloseGoogleMapModal();
+      }
+    }
+  }
   seeFarmsMaptwo() {
+     this.modalGogleMapOpen = true;
     let modalheadergooglemap = false;
     let atributos = {
       longAndLat: {
@@ -51,10 +60,10 @@ export class CardPiscicultorComponent implements OnInit {
       .GoogleMapModalGeneral(
         atributos,
         modalheadergooglemap,
-        iconMarkerGoogleMap,
+        iconMarkerGoogleMap
       )
-      .then((result) => {})
-      .catch((result) => {});
+      .then((result) => { this.modalGogleMapOpen=false})
+      .catch((result) => { this.modalGogleMapOpen = false;});
   }
   mouseOutCard() {
     return this.onMouseOutCard.emit('Fuera de la targeta');

@@ -28,6 +28,7 @@
   --yellow: #ffd200;
   --red: #ff0f00;
   --grey: #abacae;
+  --shadow-2: rgba(0, 0, 0, 0.2);
 }
 
 /*Fonts*/
@@ -379,6 +380,12 @@ textarea:focus, input:focus{
 .miestilofondosharedmodal {
   background-color: transparent !important;
 }
+/* .modal-full-scree{
+  background-color: #1b8d06;
+}
+.modal-full-scree2{
+  background-color: #758a71;
+} */
 .ndb-ratingx {
   .sr-only {
     display: none !important;

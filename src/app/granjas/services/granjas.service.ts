@@ -131,7 +131,11 @@ export class GranjasService {
     btnCancelText: string = 'Cerrar',
     granjaId: number
   ): Promise<boolean> {
-    const modalRef = this.modalService.open(ResenasModalContentComponent);
+    const modalRef = this.modalService.open(ResenasModalContentComponent, {
+   /*    modalDialogClass: 'modal-full-scree2',
+      windowClass: 'modal-full-scree', */
+      centered: true,
+    });
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.btnCancelText = btnCancelText;
     modalRef.componentInstance.granjaId = granjaId;

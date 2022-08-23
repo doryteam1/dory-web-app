@@ -1,5 +1,5 @@
 import { PlatformLocation } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { AppModalService } from '../../services/app-modal.service';
 
 @Component({
@@ -13,13 +13,22 @@ export class CardPescadorComponent implements OnInit {
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   @Output() onMouseOutCard: EventEmitter<any> = new EventEmitter();
   @Output() onMouseInsideCard: EventEmitter<any> = new EventEmitter();
+  modalGogleMapOpen: boolean=false;
   constructor(
     private appModalService: AppModalService,
     public location2: PlatformLocation
   ) {}
 
   ngOnInit(): void {}
+  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth >= 1100) {
+      if (this.modalGogleMapOpen) {
+        this.appModalService.CloseGoogleMapModal();
+      }
+    }
+  }
   seeFarmsMaptwo() {
+     this.modalGogleMapOpen = true;
     let modalheadergooglemap = false;
     let atributos = {
       longAndLat: {
@@ -49,8 +58,12 @@ export class CardPescadorComponent implements OnInit {
         modalheadergooglemap,
         iconMarkerGoogleMap
       )
-      .then((result) => {})
-      .catch((result) => {});
+      .then((result) => {
+        this.modalGogleMapOpen=false
+      })
+      .catch((result) => {
+        this.modalGogleMapOpen = false;
+      });
   }
   detalle(pescador: any) {
     return this.onDetalle.emit(pescador);

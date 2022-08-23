@@ -44,7 +44,7 @@ export class GranjaDetalleComponent implements OnInit {
   editingMiResena: boolean = false;
   currentRate: any;
   showResenasNotFound: boolean = false;
-  arrayFotosGranja:any[]=[]
+  arrayFotosGranja: any[] = [];
   constructor(
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
@@ -78,7 +78,7 @@ export class GranjaDetalleComponent implements OnInit {
           this.currentRate = this.granja?.puntuacion;
           this.fotosgranja = response.data[0].fotos;
 
-        /*   if (this.fotosgranja.length >= 7) {
+          /*   if (this.fotosgranja.length >= 7) {
             this.arrayFotosGranja = this.fotosgranja.slice(0, 7);
           } */
           if (this.fotosgranja.length == 0) {
@@ -235,7 +235,6 @@ export class GranjaDetalleComponent implements OnInit {
 
   acumCalif() {
     let calif = 0;
-
     this.granja.resenas.forEach((resena: any) => {
       calif += resena.calificacion;
     });
@@ -247,10 +246,10 @@ export class GranjaDetalleComponent implements OnInit {
     this.imgselecmodal = -1;
     this.OpenGalleryModalOptionOne();
   }
- OpenGalleryModalOptionOne() {
-     this.location.onPopState(() => {
+  OpenGalleryModalOptionOne() {
+    this.location.onPopState(() => {
       console.log('pressed back!');
-        this.appModalService.CloseModalGalleryVerAdiconarEliminarFotos()
+      this.appModalService.CloseModalGalleryVerAdiconarEliminarFotos();
       //  detecta  cuando se da click atras detecta y cierra la cualquiera modal activa
     });
     //  console.log( this.location.pushState(null, '', location.pathname))
@@ -325,17 +324,12 @@ export class GranjaDetalleComponent implements OnInit {
     );
   }
 
-  options: google.maps.MapOptions = {
-    center: { lat: 40, lng: -20 },
-    zoom: 4,
-  };
   ModalGoogleMap() {
     let atributos = this.granja;
     let modalheadergooglemap = false;
     let mapElementVarios = false;
     let shared = true;
     let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
-
     this.location.onPopState(() => {
       this.appModalService.CloseGoogleMapModal();
     });

@@ -24,7 +24,6 @@ import { AppModalService } from 'src/app/shared/services/app-modal.service';
 export class GranjasMunicipioComponent implements OnInit {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   @ViewChild('marker') marker!: MapMarker;
-  /* mobileMedia: any = window.matchMedia('(max-width: 1100px)'); */
   showNotFound: boolean = false;
   markerPositions: google.maps.LatLngLiteral[] = [];
   markersInfo: any[] = [];
@@ -92,6 +91,7 @@ export class GranjasMunicipioComponent implements OnInit {
   palabra: string = '';
   filtroseleccionado!: MetaFiltro | null;
   contador = 0;
+  modalGogleMapOpen: boolean=false;
 
   constructor(
     httpClient: HttpClient,
@@ -113,7 +113,7 @@ export class GranjasMunicipioComponent implements OnInit {
         map(() => true),
         catchError(() => of(false))
       );
-   /*  if (this.mobileMedia.matches) {
+    /*  if (this.mobileMedia.matches) {
       alert('media activa');
     } */
   }
@@ -225,7 +225,15 @@ export class GranjasMunicipioComponent implements OnInit {
       this.eliminInfoWindow();
     }
   }
+  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth >= 1100) {
+      if ((this.modalGogleMapOpen)) {
+        this.appModalService.CloseGoogleMapModal();
+      }
+    }
+  }
   seeFarmsMaptwo(i: number) {
+    this.modalGogleMapOpen=true
     let atributos = this.granjasFiltered[i];
     let modalheadergooglemap = false;
     let shared = false;
@@ -243,8 +251,12 @@ export class GranjasMunicipioComponent implements OnInit {
         iconMarkerGoogleMap,
         ''
       )
-      .then((result) => {})
-      .catch((result) => {});
+      .then((result) => {
+        this.modalGogleMapOpen=false
+      })
+      .catch((result) => {
+        this.modalGogleMapOpen = false;
+      });
   }
   navigate(id: number) {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + id);

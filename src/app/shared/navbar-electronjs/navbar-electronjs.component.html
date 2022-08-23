@@ -3,11 +3,9 @@
     <!-- Se muestran cuando es responsibe -->
     <div class="container-fluid-miestilo__1">
       <!-- Botón albondiga -->
-      <button  #botonalbondiga class="navbar-toggler navbar-toggler--button" type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
+      <button #botonalbondiga class="navbar-toggler navbar-toggler--button" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon" style="height: 20px; -webkit-app-region: no-drag;"></span>
       </button>
       <div class="navbar-toggler--miestilo navbar-toggler ">
@@ -22,8 +20,9 @@
           <div class="no-drag notify dropstart" *ngIf="authenticated()">
             <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown"
               aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
-              <i class="notify__icon bi bi-bell">
-              </i>
+              <div class="notify__icon--container">
+                <i class="notify__icon bi bi-bell"></i>
+              </div>
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                 *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
                 {{invitaciones.length}}
@@ -97,31 +96,46 @@
           </div>
           <!-- Dropdown, usuarios registrados-->
           <div class=" no-drag dropdown--miestilo-login dropdown" *ngIf="authenticated()">
-            <img class="container__img"
-              [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'">
-            <button class="container__button btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+            <img class="container__img container__img--button"
+              [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'"
+              id="dropdownMenu2"
               data-bs-toggle="dropdown" aria-expanded="false">
-              {{authUserNomApell()}}
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <li><button class="dropdown-item" type="button" (click)="navegarRuta('/dashboard')">Mi cuenta</button>
+            <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
+                    <div class="usuarioFotoYnombre">
+                      <img class="container__img container__img--button "
+                        [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'"
+                         (click)="navegarRuta('/dashboard')">
+                      <span>{{authUserTipo_usuario()}}</span>
+                      <button class="container__button btn btn-secondary" type="button" (click)="navegarRuta('/dashboard')">
+                        {{authUserNomApell()}}
+                      </button>
+                    </div>
+              <li class="dropdown-item--container" (click)="navegarRuta('/dashboard')">
+                <img class="dropdown-item--icon" src="assets/icons/cuenta.svg">
+                <button class="dropdown-item dropdown-item-miestilo" type="button">Mi cuenta</button>
               </li>
-              <li><button class="dropdown-item" type="button" (click)="navegarRuta('/dashboard/mis-favoritos')">Mis
-                  favoritos</button>
+              <li class="dropdown-item--container" (click)="navegarRuta('/dashboard/mis-favoritos')">
+                <img class="dropdown-item--icon" src="assets/icons/favoritos-targe.svg">
+                <button class="dropdown-item  dropdown-item-miestilo" type="button">Mis favoritos</button>
               </li>
-              <li><button class="dropdown-item" type="button" (click)="updatePassword()"
-                  *ngIf="authWith()=='email'">Cambiar
-                  contraseña</button></li>
-              <li><button class="dropdown-item" type="button" (click)="logout()">Salir</button></li>
+              <li class="dropdown-item--container" (click)="updatePassword()" *ngIf="authWith()=='email'">
+                <img class="dropdown-item--icon" src="assets/icons/change-password.svg">
+                <button class="dropdown-item dropdown-item-miestilo" type="button">Cambiar
+                  contraseña</button>
+              </li>
+              <li class="dropdown-item--container" (click)="logout()">
+                <img class="dropdown-item--icon" src="assets/icons/Logout.svg">
+                <button class="dropdown-item dropdown-item-miestilo" type="button">Cerrar sesión</button>
+              </li>
             </ul>
           </div>
         </div>
       </div>
     </div>
     <!-- Fin responsibe -->
-    <div  #toggleButton2 class="collapse--miestilo collapse navbar-collapse" id="navbarSupportedContent">
+    <div #toggleButton2 class="collapse--miestilo collapse navbar-collapse" id="navbarSupportedContent">
       <ul #toggleButton class="navbar-nav--miestilo navbar-nav  mb-2 mb-lg-0 bg-light">
-        <li  *ngIf="electronjs && currentRoute !== '/home'" class=" no-drag nav-item">
+        <li *ngIf="electronjs && currentRoute !== '/home'" class=" no-drag nav-item">
           <a class="nav-link " id="navbarDropdown" role="button" (click)="navegarRuta('/home')">
             <span class="title-dropdown-toggle">
               Inicio
@@ -220,20 +234,21 @@
           </a>
         </li>
       </ul>
+      <div class="d-flex " style="padding-right: 20px;">
+        <input class="container__input2 form-input-text-square" type="text" placeholder="Buscar...">
+      </div>
       <!-- Solo estara disponible Cuando no sea responsibe la ventana
       sistema de notificaciones y menu de usuarios registrados-->
       <div class="buscadorAndRegistro">
-        <div class="d-flex" style="    padding-right: 20px;">
-          <input class="container__input2 form-input-text-square" type="text" placeholder="Buscar...">
-        </div>
         <button class=" no-drag boton-ingresar" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
         <button class=" no-drag ms-2 boton-registrate" (click)="navegarRuta('/registro')"
           *ngIf="!authenticated()">Registrate</button>
         <div class=" no-drag notify dropstart" *ngIf="authenticated()">
           <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown"
             aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
-            <i class="notify__icon bi bi-bell">
-            </i>
+            <div class="notify__icon--container">
+              <i class="notify__icon bi bi-bell"></i>
+            </div>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
               *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
               {{invitaciones.length}}
@@ -304,13 +319,21 @@
 
         </div>
         <div class="no-drag dropdown" *ngIf="authenticated()">
-          <img class="container__img"
-            [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'">
-          <button class="container__button btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+          <img class="container__img container__img--button"
+            [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'"
+            type="button"
+            id="dropdownMenu2"
             data-bs-toggle="dropdown" aria-expanded="false">
-            {{authUserNomApell()}}
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
+            <div class="usuarioFotoYnombre">
+              <img class="container__img container__img--button "
+                [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'"
+                (click)="navegarRuta('/dashboard')">
+              <span>{{authUserTipo_usuario()}}</span>
+              <button class="container__button btn btn-secondary" type="button" (click)="navegarRuta('/dashboard')">
+                {{authUserNomApell()}}
+              </button>
+            </div>
             <li><button class="dropdown-item" type="button" (click)="navegarRuta('/dashboard')">Mi cuenta</button></li>
             <li><button class="dropdown-item" type="button" (click)="navegarRuta('/dashboard/mis-favoritos')">Mis
                 favoritos</button>
