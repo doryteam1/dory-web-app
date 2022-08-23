@@ -70,7 +70,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
     if(this.isLegalConstituida?.value == '0' || (this.asociacion.foto_camarac && this.asociacion.foto_camarac != 'null') ){
       this.fotoCamc?.clearValidators();
       this.fotoCamc?.updateValueAndValidity();
-      console.log("Se quitaron los validadores")
+      //Se quitaron los validadores de la foto camara comercio
     }
     
     if (!this.form.valid){
@@ -81,7 +81,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
     this.fotoCamc?.setValidators([Validators.required])
     this.fotoCamc?.updateValueAndValidity();
-    if(this.fotoCamc?.invalid){
+    if(this.fotoCamc?.invalid || this.isLegalConstituida?.value == '0'){
       let updatedAsociacion = { ...this.form.getRawValue() }
       updatedAsociacion.foto_camarac = this.asociacion.foto_camarac;
       this.asociacionesService
@@ -300,6 +300,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
       this.infoAdicionalDir?.setValue(asociacion.informacion_adicional_direccion);
       this.nombre?.setValue(asociacion.nombre);
       this.isLegalConstituida?.setValue(asociacion.legalconstituida);
+      this.telefono?.setValue(asociacion.telefono);
       let fechaRenv:string = '';
       if(asociacion?.fecha_renovacion_camarac){
         fechaRenv = (asociacion?.fecha_renovacion_camarac) as string;
@@ -373,5 +374,9 @@ export class AsociacionDetalleFormComponent implements OnInit {
 
   get corregVereda(){
     return this.form.get('corregimiento_vereda');
+  }
+
+  get telefono(){
+    return this.form.get('telefono')
   }
 }
