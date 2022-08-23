@@ -9,7 +9,7 @@
     </div>
 
     <div class="modal-body">
-      <form  [formGroup]="form"  >
+      <form  [formGroup]="form">
         <div class="mb-3">
           <label for="dateOfBirth">Nombre</label>
           <div class="input-group">
@@ -61,7 +61,7 @@
         <div class="mb-3">
           <label for="dateOfBirth">Nit</label>
           <div class="input-group">
-            <input id="productName" class="form-control" placeholder="Nit" formControlName="nit">
+            <input id="productName" class="form-control" placeholder="Nit" formControlName="nit" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
           </div>
           <div *ngIf="invalid('nit')" class="container__alert-msg danger-message">
             <div *ngIf="nit?.errors?.['required']">
@@ -118,7 +118,19 @@
         <div class="mb-3">
           <label for="dateOfBirth">Dirección</label>
           <div class="input-group">
-            <input id="productName" class="form-control" placeholder="Dirección del negocio" formControlName="direccion">
+            <input id="productName" class="form-control" placeholder="Dirección de asociación" formControlName="direccion">
+          </div>
+          <div *ngIf="invalid('direccion')" class="container__alert-msg danger-message">
+            <div *ngIf="direccion?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dateOfBirth">Teléfono</label>
+          <div class="input-group">
+            <input id="productName" class="form-control" placeholder="Teléfono" formControlName="telefono" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
           </div>
           <div *ngIf="invalid('direccion')" class="container__alert-msg danger-message">
             <div *ngIf="direccion?.errors?.['required']">

@@ -1,0 +1,40 @@
+.radio-filters1{
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-filter1__input{
+    color:var(-azul1);
+}  
+
+.radio-filter1__label{
+    margin-left: 5px;
+}
+
+.custom-control-input {
+    border-color: #E91E63;
+    background-color: #E91E63;
+}
+  
+.custom-control-input:focus~.custom-control-label::before {
+box-shadow: none;
+}
+
+.chip-filter1{
+    margin-right: 10px;
+}
+
+.chip-filter1__button{
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.chip-filter1__button--clicked{
+    background-color:var(--azul1);
+    color:white;
+    border:none;
+}
+
+.modal-content{
+    height: 90vh;
+}

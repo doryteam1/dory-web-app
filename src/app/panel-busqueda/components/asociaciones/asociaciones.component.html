@@ -1,6 +1,6 @@
 <div class="buscadoryfiltro mt-4">
 <div class="buscador-container">
-    <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar asociacion..'"
+    <app-search [placeholderbuscador]="'Buscar asociacion..'"
     (keyEnterPressData)="onBuscarPalabra($event)">
     </app-search>
     <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)"

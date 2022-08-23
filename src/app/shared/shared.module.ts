@@ -7,7 +7,7 @@ import { FloatingBtnComponent } from './components/floating-btn/floating-btn.com
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
 import { SearchComponent } from './components/search/search.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FloatingBtnAutoUpComponent } from './components/floating-btn-auto-up/floating-btn-auto-up.component';
 import { BasicMessageComponent } from '../components/basic-message/basic-message.component';
 import { MapSucreComponent } from './components/map-sucre/map-sucre.component';
@@ -51,6 +51,7 @@ import { FloatinBtnsAlanteAtrasComponent } from './components/floatin-btns-alant
 import { ControlBarComponent } from './control-bar/control-bar.component';
 import { NavbarElectronjsComponent } from './navbar-electronjs/navbar-electronjs.component';
 import { ModalGoogleGeneralComponent } from './components/modal-google-general/modal-google-general.component';
+import { ModalMultiFiltersComponent } from './filtros/components/modal-multi-filters/modal-multi-filters.component';
 
 
 
@@ -90,6 +91,7 @@ import { ModalGoogleGeneralComponent } from './components/modal-google-general/m
     ControlBarComponent,
     NavbarElectronjsComponent,
     ModalGoogleGeneralComponent,
+    ModalMultiFiltersComponent
   ],
   imports: [
     CommonModule,
@@ -102,6 +104,7 @@ import { ModalGoogleGeneralComponent } from './components/modal-google-general/m
     ShareIconsModule,
     GoogleMapsModule,
     NgxLongPress2Module,
+    ReactiveFormsModule
   ],
   exports: [
     NavbarComponent,
@@ -134,6 +137,7 @@ import { ModalGoogleGeneralComponent } from './components/modal-google-general/m
     ControlBarComponent,
     NavbarElectronjsComponent,
     ModalGoogleGeneralComponent,
+    ModalMultiFiltersComponent
     /*  CardphotoGoogleMapComponent, */
   ],
 

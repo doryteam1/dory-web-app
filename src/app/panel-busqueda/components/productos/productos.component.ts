@@ -39,7 +39,7 @@ export class ProductosComponent implements OnInit {
     /* modoFiltro: 'number_ordenarmayoramenor', */
   ];
   /* varibles de buscqueda y filtros */
-  filtro: Filtro[] = [
+  filtro: Filtro = 
     {
       nameButton: 'Ordenar por',
       data: [
@@ -57,47 +57,43 @@ export class ProductosComponent implements OnInit {
           datoafiltrar: 'precio',
           modoFiltro: MODO_FILTRO_ORDER_ASC,
         },
-      ],
-      /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
-    },
-  ];
+      ]
+    };
 
-  orderFilter: Filtro[] = [
+  orderFilter: Filtro = 
     {
       nameButton: 'Precio',
       data: [
         {
           id: 0,
           nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio ($0 - $100.000)',
+          nombrefiltro: '$0 - $100.000',
           datoafiltrar: 'precio',
           modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
         {
           id: 1,
           nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio ($100.000 - $200.000)',
+          nombrefiltro: '$100.000 - $200.000',
           datoafiltrar: 'precio',
           modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
         {
           id: 2,
           nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio ($200.000 - $500.000)',
+          nombrefiltro: '$200.000 - $500.000',
           datoafiltrar: 'precio',
           modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
         {
           id: 3,
           nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio (más de $500.000)',
+          nombrefiltro: 'Más de $500.000',
           datoafiltrar: 'precio',
           modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         }
-      ],
-      /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
-    },
-  ];
+      ]
+    };
 
 
   constructor(private proveedorService:ProveedorService,
@@ -268,5 +264,12 @@ export class ProductosComponent implements OnInit {
       })
     }
     return result;
+  }
+
+  onFiltersAplied(result:any){
+    this.selectedPriceFilter = result.chipFilter1;
+    this.filtroseleccionado = result.radioFilter1;
+    this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
+    this.reseteoDeBusqueda();
   }
 }

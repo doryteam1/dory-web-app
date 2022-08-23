@@ -26,6 +26,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
   form: FormGroup = new FormGroup({
     nit: new FormControl('',[Validators.required]),
     direccion: new FormControl('', [Validators.required]),
+    telefono: new FormControl('', [Validators.required]),
     nombre: new FormControl('', [Validators.required]),
     legalconstituida: new FormControl('', [Validators.required]),
     informacion_adicional_direccion:new FormControl('',),
@@ -141,7 +142,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
 
   addAsociaciones() {
     console.log('addAsociaciones');
-    console.log(this.form.getRawValue());
+    console.log("form asociaciones ",this.form.getRawValue());
     console.log(this.form.controls);
     this.loading1 = true;
     if(this.isLegalConstituida?.value == '0'){
@@ -169,7 +170,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
           this.loading1 = false;
           console.log(err);
           if(err.status == 400){
-            this.error = 'Ya existe una asociación con el Nit '+ asociacion.nit
+            this.error = err.error.message;
           }else{
             this.error = 'A ocurrido un error'
           }

@@ -1,6 +1,5 @@
-<div class="buscadoryfiltro mt-4">
-<div class="buscador-container">
-    <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar...'"
+<div class="search mt-4">
+    <app-search [placeholderbuscador]="'Buscar...'"
     (keyEnterPressData)="onBuscarPalabra($event)">
     </app-search>
     <!-- <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)"
@@ -37,7 +36,7 @@
     No se encontraron resultados
     </div>
 </div>
-</div>
+
 <div class="list overflow-auto d-flex flex-column">
 <div class="card" *ngFor="let user of usersFiltered">
     <div class="card__user-info d-flex flex-row" (click)="goDetail(user)">

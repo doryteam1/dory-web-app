@@ -1,7 +1,11 @@
-<div class="search">
-  <app-search (textSearch)="onSearch($event)"></app-search>
+<div class="mt-5">
+  <div class="search">
+    <app-search (textSearch)="onSearch($event)"></app-search>
+    <app-modal-multi-filters [radioFilter1]="filtro" [chipFilter1]="orderFilter" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
+  </div>
 </div>
-<div class="d-flex flex-row justify-content-center">
+
+<!-- <div class="d-flex flex-row justify-content-center">
   <app-filtro
   class="search__filter"
   [filtro]="filtro"
@@ -20,7 +24,7 @@
   (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
   </app-filtro>
 </div>
-<div class="chip-container">
+ --><div class="chip-container">
   <app-chip-con-boton-close class="chip-container__element"
   *ngIf="filtroseleccionado"
   [iconoChip]="true"

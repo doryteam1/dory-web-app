@@ -2,7 +2,7 @@
 
 
 :root {
-  --morado: #6685b4;
+  --morado: hsl(216, 34%, 55%);
   --azul1: #26a5b8;
   --azul2: #a7cfcf;
   --azul3: #dbf3f3;
@@ -73,8 +73,7 @@
   border-radius: 20px;
   border: 1px solid var(--black);
   color: var(--black);
-  width: 150px;
-  height: 40px;
+  padding: 5px 20px 5px 20px;
 }
 
 .btn-square{
@@ -202,6 +201,17 @@
   justify-content: center;
   -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
   box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
+}
+
+.btn-filter{
+  height: 45px;
+  background-color: var(--white);
+  border-radius: 20px;
+  color: var(--black);
+  border: none;
+  padding: 5px 20px 5px 20px;
+  -webkit-box-shadow: -1px 3px 8px 3px rgba(0,0,0,0.14);
+  box-shadow: -1px 3px 8px 3px rgba(0,0,0,0.14);
 }
 
 .form-input-text-square {

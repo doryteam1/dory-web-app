@@ -1,0 +1,39 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Filtros</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <h6>Ordenar por:</h6>
+        <form [formGroup]="form">
+            <div class="radio-filter1" *ngFor="let option of radioFilter1.data; let i=index">
+                <input class="radio-filter1__input custom-control-input"
+                  [id]="i"
+                  type="radio"
+                  [value]="i"
+                  formControlName="radioFilter1"
+                />
+                <label class="radio-filter1__label" [for]="i">{{option.nombrefiltro}}</label>
+            </div>
+        </form>
+        <h6 class="mt-4">Filtrar por precio:</h6>
+        <div class="chip-filter1" *ngIf="chipFilter1">
+            <button class="btn-outline-black chip-filter1__button" [ngClass]="{'chip-filter1__button--clicked':this.form.get('chipFilter1')?.value == i}" *ngFor="let chip of chipFilter1.data; let i=index" (click)="onchangeChipFilter1(i)">{{chip.nombrefiltro}}</button>
+        </div>
+        
+        <h6 class="mt-4">Municipio(s)</h6>
+        <div class="row row-cols-2">
+            <div *ngFor="let item of checkboxOptions">
+                <label>
+                <input type="checkbox"  [value] ="item.nombre" (change)="onCheckboxChange($event)"
+                    [checked]="isChecked(item.nombre)"/>
+                    {{item.nombre}}
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Filtrar</button>
+    </div>
+  </ng-template>
+  <button class="btn-filter" (click)="open(content)"><i class="bi bi-funnel"></i> Filtros</button>
