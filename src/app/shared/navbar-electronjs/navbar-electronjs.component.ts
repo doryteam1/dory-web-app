@@ -213,7 +213,9 @@ export class NavbarElectronjsComponent
       }
     );
   }
-
+  authUserTipo_usuario(): any {
+    return this.userService.getAuthUserTipo_usuario();
+  }
   timeToNow(date: string) {
     dayjs.extend(relativeTime);
     return dayjs().toNow(true);

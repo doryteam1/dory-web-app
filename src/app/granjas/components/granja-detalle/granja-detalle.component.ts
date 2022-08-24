@@ -3,8 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { GranjasService } from '../../services/granjas.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Utilities } from 'src/app/utilities/utilities';
-
-import { ModalGallerySliderService } from '../../../shared/services/modal-gallery-slider.service';
 import { PlatformLocation } from '@angular/common'
 import { AppModalService } from '../../../shared/services/app-modal.service';
 import * as dayjs from 'dayjs'
@@ -44,12 +42,12 @@ export class GranjaDetalleComponent implements OnInit {
   miresena: any;
   editedDescResena: string = '';
   editingMiResena: boolean = false;
-  currentRate:any
+  currentRate: any;
   showResenasNotFound: boolean = false;
+  arrayFotosGranja: any[] = [];
   constructor(
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
-    private modalGallerySliderService: ModalGallerySliderService,
     public location: PlatformLocation,
     private modalService: NgbModal,
     private appModalService: AppModalService
@@ -62,24 +60,27 @@ export class GranjaDetalleComponent implements OnInit {
     if (this.userToken) {
       let payload = Utilities.parseJwt(this.userToken);
       this.authUserId = payload.sub;
-     this.granjasService
-         .resenasUserByIdGranja(this.selectedGranjaId)
-         .subscribe(
-           (response) => {
-             this.miresena = response.data.resena;
-             console.log('mi reseña',this.miresena)
-             this.editedDescResena = this.miresena?.descripcion;
-           },
-           (err) => {}
-         );
+      this.granjasService
+        .resenasUserByIdGranja(this.selectedGranjaId)
+        .subscribe(
+          (response) => {
+            this.miresena = response.data.resena;
+            console.log('mi reseña', this.miresena);
+            this.editedDescResena = this.miresena?.descripcion;
+          },
+          (err) => {}
+        );
     }
     this.granjasService.getGranjaDetalle(this.selectedGranjaId).subscribe(
       (response) => {
         if (response.data.length > 0) {
           this.granja = response.data[0];
-          console.log(this.granja)
           this.currentRate = this.granja?.puntuacion;
           this.fotosgranja = response.data[0].fotos;
+
+          /*   if (this.fotosgranja.length >= 7) {
+            this.arrayFotosGranja = this.fotosgranja.slice(0, 7);
+          } */
           if (this.fotosgranja.length == 0) {
             this.sinfotos = true;
           }
@@ -102,7 +103,7 @@ export class GranjaDetalleComponent implements OnInit {
       }
     );
 
-   this.granjasService.resenasById(this.selectedGranjaId).subscribe(
+    this.granjasService.resenasById(this.selectedGranjaId).subscribe(
       (response) => {
         this.resenas = response.data.resenas;
         this.puntuacion = response.data.puntaje;
@@ -162,7 +163,7 @@ export class GranjaDetalleComponent implements OnInit {
           this.success = false;
           this.descResena = '';
           this.editingMiResena = false;
-           this.ngOnInit();
+          this.ngOnInit();
           /* window.location.reload(); */
         }
       );
@@ -179,7 +180,7 @@ export class GranjaDetalleComponent implements OnInit {
     );
   }
 
-  showResenas(granja:any) {
+  showResenas(granja: any) {
     this.granjasService.showResenasModal(
       `Reseñas (${granja?.count_resenas})`,
       'Cerrar',
@@ -206,7 +207,7 @@ export class GranjaDetalleComponent implements OnInit {
     console.log(resena);
 
     if (this.editingMiResena) {
-     this.granjasService.updateResena(resena, this.miresena.id).subscribe(
+      this.granjasService.updateResena(resena, this.miresena.id).subscribe(
         (respose) => {
           this.loading = false;
           this.success = true;
@@ -234,52 +235,43 @@ export class GranjaDetalleComponent implements OnInit {
 
   acumCalif() {
     let calif = 0;
-
     this.granja.resenas.forEach((resena: any) => {
       calif += resena.calificacion;
     });
     return calif;
   }
-  // @HostListener('window:popstate', ['$event']) onPopState(event: any) {
-  //   // this.modalGallerySliderService.closeModal();
-  //   if (this.modalGallerySliderService) {
-  //     //  this.location.back();
-  //     console.log('hello');
-  //   }
-  // }
-
   OpenGalleryModalOptionTwo() {
     this.shadoweffectindice = -1;
     this.valorindicecarrucel = -1;
     this.imgselecmodal = -1;
     this.OpenGalleryModalOptionOne();
   }
-
   OpenGalleryModalOptionOne() {
     this.location.onPopState(() => {
       console.log('pressed back!');
-      this.modalGallerySliderService.closeModal();
+      this.appModalService.CloseModalGalleryVerAdiconarEliminarFotos();
       //  detecta  cuando se da click atras detecta y cierra la cualquiera modal activa
     });
     //  console.log( this.location.pushState(null, '', location.pathname))
 
-    this.showconteslaider = false;
-    this.modalGallerySliderService
-      .confirm(
+    let showconteslaider = false;
+    let veryadicionar = false;
+    let arrayFotos = this.fotosgranja;
+    let action = 'create';
+    this.appModalService
+      .modalGalleryVerAdiconarEliminarFoto(
         this.shadoweffectindice,
         this.imgselecmodal,
         this.valorindicecarrucel,
-        this.showconteslaider,
-        this.granja,
-        this.fotosgranja
+        showconteslaider,
+        veryadicionar,
+        arrayFotos,
+        '',
+        action
       )
-      .then((result) => {})
+      .then((result: any) => {})
       .catch((result) => {});
-    /*    history.pushState(null, '', window.location.pathname); */
   }
-
-  /* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
   myFunction(id: string) {
     document.getElementById(id)!.classList.toggle('show');
   }
@@ -332,17 +324,12 @@ toggle between hiding and showing the dropdown content */
     );
   }
 
-  options: google.maps.MapOptions = {
-    center: { lat: 40, lng: -20 },
-    zoom: 4,
-  };
   ModalGoogleMap() {
     let atributos = this.granja;
     let modalheadergooglemap = false;
     let mapElementVarios = false;
-    let shared=true;
+    let shared = true;
     let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
-
     this.location.onPopState(() => {
       this.appModalService.CloseGoogleMapModal();
     });

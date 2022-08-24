@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostBinding, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostBinding, HostListener, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import {  NavigationEnd, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -38,12 +38,17 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   tests: string[] = [];
 
   @ViewChild('notifies', { read: Element }) notifies!: Element;
+  @ViewChild('closebuttonModalNotificacion')
+  closebuttonModalNotificacion!: ElementRef;
+  @ViewChild('miModalNotificacion')
+  miModalNotificacion!: ElementRef<HTMLElement>;
+  @ViewChild('dropdownNotificacion')
+  dropdownNotificacion!: ElementRef<HTMLElement>;
   resizedObserver!: ResizeObserver;
   notifiesHeigth: number = 0;
   @HostBinding('hidden')
   isHidden: boolean = false;
   electronjs: boolean = false;
-
   constructor(
     private router: Router,
     private userService: UsuarioService,
@@ -63,6 +68,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.userService);
     this.electronjs = this._electronService.ipcActivo;
     this.photoUser = localStorage.getItem('photoUser')!;
     this.nomCom = localStorage.getItem('nomApell')!;
@@ -91,7 +97,25 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
-  closeMenu(){
+  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth >= 950) {
+      if (this.miModalNotificacion.nativeElement.className.includes('show')) {
+        this.closebuttonModalNotificacion.nativeElement.click();
+      }
+
+
+    } else if (event.target.innerWidth <=950) {
+      if (this.dropdownNotificacion.nativeElement.className.includes('show')) {
+        this.dropdownNotificacion.nativeElement.click();
+       }
+    }
+
+  }
+
+  onResize() {
+    console.log('resize!');
+  }
+  closeMenu() {
     this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
   }
   test() {
@@ -126,9 +150,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log('ng on destroy');
     //this.resizedObserver.disconnect();// Stop observing
   }
-  onResize() {
-    console.log('resize!');
-  }
+
   onClick(event: any) {
     console.log(event);
   }
@@ -154,18 +176,21 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   authUserNomApell(): any {
     return this.userService.getAuthUserNomApell();
   }
+  authUserTipo_usuario(): any {
+    return this.userService.getAuthUserTipo_usuario();
+  }
 
   authWith() {
     return this.userService.authenticatedWith();
   }
   logout() {
-     this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
+    this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
     this.userService.logout();
     this.router.navigateByUrl('/home');
   }
 
   updatePassword() {
-     this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
+    this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
     this.router.navigateByUrl('update-password');
   }
 

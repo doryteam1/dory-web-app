@@ -56,3 +56,42 @@
           color: var(--azul1);
         }
 
+@media screen and (max-width: 250px) {
+.container__icon-medium {
+    font-size: 25px;
+  }
+
+  .container__icon-small {
+    font-size: 18px;
+  }
+
+  .container__icon-mini {
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 240px) {
+.container__icon-medium {
+    font-size: 23px;
+  }
+
+  .container__icon-small {
+    font-size: 16px;
+  }
+
+  .container__icon-mini {
+    font-size: 11px;
+  }
+}
+@media screen and (max-width: 235px) {
+.container__icon-medium {
+    font-size: 21px;
+  }
+
+  .container__icon-small {
+    font-size: 14px;
+  }
+
+  .container__icon-mini {
+    font-size: 9px;
+  }
+}

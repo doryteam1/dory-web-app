@@ -28,8 +28,6 @@ export class ModalGallerySliderVerYElimanarFotosComponent
   showGallery: boolean = false;
   indx!: number;
   indicatorsphotos!: boolean;
-  valorrows: number = 44.499975;
-  valorcolumns: number = 98.5;
   /* variables nuevas */
   photosAppArray: Array<string | SafeUrl> = [];
   isPhotoSelectingToDel: boolean = false;
@@ -84,6 +82,7 @@ export class ModalGallerySliderVerYElimanarFotosComponent
   selcCarruselImg(idx: number) {
     this.valorindicecarrucel = idx;
     localStorage.setItem('index', idx.toString());
+     this.imgselecmodal = -1;
   }
   eventClickOnPreviousOrNewSlider() {
     this.imgselecmodal = -1;
@@ -126,36 +125,44 @@ export class ModalGallerySliderVerYElimanarFotosComponent
   }
 
   onLongPress() {
-    this.isPhotoSelectingToDel = true;
-    this.shadoweffectindice = -1;
-    this.valorindicecarrucel = -1;
-    this.imgselecmodal = -1;
+    if (this.veryadicionar) {
+      this.isPhotoSelectingToDel = true;
+      this.shadoweffectindice = -1;
+      this.valorindicecarrucel = -1;
+      this.imgselecmodal = -1;
+    }
   }
 
   onReleasePressing() {
-    this.shadoweffectindice = -1;
-    this.valorindicecarrucel = -1;
-    this.imgselecmodal = -1;
+    if (this.veryadicionar) {
+      this.shadoweffectindice = -1;
+      this.valorindicecarrucel = -1;
+      this.imgselecmodal = -1;
+    }
   }
 
   abortDeleting() {
-    this.isPhotoSelectingToDel = false;
-    this.cancelarseleccionphoto = false;
-    this.photosArrayUrlToDel = [];
+    if (this.veryadicionar) {
+      this.isPhotoSelectingToDel = false;
+      this.cancelarseleccionphoto = false;
+      this.photosArrayUrlToDel = [];
+    }
   }
   addPhotoToDel(photoUrl: string | SafeUrl, idx: number) {
-    if (!this.isPhotoSelectingToDel) {
-      this.showconteslaider = true;
-      this.imgselecmodal = idx;
-    }
-    if (!this.isPhotoSelectingToDel) {
-      return;
-    }
-    let i = this.photosArrayUrlToDel.indexOf(photoUrl);
-    if (i > -1) {
-      this.photosArrayUrlToDel.splice(i, 1);
-    } else {
-      this.photosArrayUrlToDel.push(photoUrl);
+    if (this.veryadicionar) {
+      if (!this.isPhotoSelectingToDel) {
+        this.showconteslaider = true;
+        this.imgselecmodal = idx;
+      }
+      if (!this.isPhotoSelectingToDel) {
+        return;
+      }
+      let i = this.photosArrayUrlToDel.indexOf(photoUrl);
+      if (i > -1) {
+        this.photosArrayUrlToDel.splice(i, 1);
+      } else {
+        this.photosArrayUrlToDel.push(photoUrl);
+      }
     }
   }
   isPhotoIncludeToDelete(photoUrl: string | SafeUrl) {
@@ -302,9 +309,7 @@ export class ModalGallerySliderVerYElimanarFotosComponent
         this.isPhotoSelectingToDel = !this.isPhotoSelectingToDel;
       }
   }
-
   public dismiss() {
-
     this._modalService.dismiss(this.arrayamandar);
   }
 }

@@ -368,10 +368,14 @@ export class PerfilComponent implements OnInit {
         this.loadCorregVeredas();
         this.nomCorregVeredasubs();
         this.storageService.add('photoUser', this.usuario.foto);
+        this.storageService.add('tipoUser',
+        this.usuario.tipo_usuario
+        );
         this.storageService.add(
           'nomApell',
           this.getNomApell(this.usuario.nombres, this.usuario.apellidos)
         );
+
         if (
           !this.usuario.tipo_usuario ||
           !(this.usuario.nombres && this.usuario.apellidos)

@@ -19,8 +19,6 @@ import { AppModalService } from './services/app-modal.service';
 import { ConfirmModalMapService } from './services/confirm-modal-map.service';
 import { ShorterPipe } from '../pipes/shorter.pipe';
 import { StarsComponent } from './components/stars/stars.component';
-import { ModalGallerySliderComponent } from './components/modal-gallery-slider/modal-gallery-slider.component';
-import { ModalGallerySliderService } from './services/modal-gallery-slider.service';
 import { CarrucelImgComponent } from './components/carrucel-img/carrucel-img.component';
 import { GranjasService } from '../../app/granjas/services/granjas.service';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
@@ -52,8 +50,9 @@ import { ControlBarComponent } from './control-bar/control-bar.component';
 import { NavbarElectronjsComponent } from './navbar-electronjs/navbar-electronjs.component';
 import { ModalGoogleGeneralComponent } from './components/modal-google-general/modal-google-general.component';
 import { ModalMultiFiltersComponent } from './filtros/components/modal-multi-filters/modal-multi-filters.component';
-
-
+import { NgGallerySliderComponent } from './components/ng-gallery-slider/ng-gallery-slider.component';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 
 @NgModule({
   declarations: [
@@ -71,9 +70,7 @@ import { ModalMultiFiltersComponent } from './filtros/components/modal-multi-fil
     ConfirmModalMapComponent,
     ShorterPipe,
     StarsComponent,
-    ModalGallerySliderComponent,
     CarrucelImgComponent,
-    ModalGallerySliderComponent,
     CarrucelImgComponent,
     ModalShareButtonComponent,
     ModalGoogleMapComponent,
@@ -92,6 +89,7 @@ import { ModalMultiFiltersComponent } from './filtros/components/modal-multi-fil
     NavbarElectronjsComponent,
     ModalGoogleGeneralComponent,
     ModalMultiFiltersComponent
+    NgGallerySliderComponent,
   ],
   imports: [
     CommonModule,
@@ -105,6 +103,8 @@ import { ModalMultiFiltersComponent } from './filtros/components/modal-multi-fil
     GoogleMapsModule,
     NgxLongPress2Module,
     ReactiveFormsModule
+    GalleryModule,
+    LightboxModule,
   ],
   exports: [
     NavbarComponent,
@@ -138,12 +138,12 @@ import { ModalMultiFiltersComponent } from './filtros/components/modal-multi-fil
     NavbarElectronjsComponent,
     ModalGoogleGeneralComponent,
     ModalMultiFiltersComponent
+    NgGallerySliderComponent,
     /*  CardphotoGoogleMapComponent, */
   ],
 
   providers: [
     ConfirmModalMapService,
-    ModalGallerySliderService,
     GranjasService,
     ConfirmModalMapService,
     AppModalService,

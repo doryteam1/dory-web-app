@@ -1028,25 +1028,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         action
       )
       .then((result: any) => {
-        /*     console.log(result);
-        if (result[0].length >0) {
-          for (let index = 0; index < result[0].length; index++) {
-            const element = result[0][index];
-            this.photosGranjaArray = result[0];
-          }
-        }else{
-          this.photosGranjaArray=[]
-        }
-        for (let index = 0; index < result[1].length; index++) {
-          const element = result[1][index];
-          this.filesfinalCreate.push(element);
-        }
-        for (let index = 0; index < result[2].length; index++) {
-          const element = result[2][index];
-          this.filesfinalCreate.splice(element, 1);
-        }
-        console.log(this.photosGranjaArray);
-        console.log(this.filesfinalCreate); */
       })
       .catch((result) => {});
   }

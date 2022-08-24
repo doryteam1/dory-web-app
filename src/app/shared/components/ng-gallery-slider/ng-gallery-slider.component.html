@@ -1,0 +1,14 @@
+<div class="basic-container">
+  <gallery
+  class="gallery--class"
+   [counter]="contador"
+  [attr.fluid]  ="fullScreen"
+  [loadingStrategy]="'lazy'"
+  [panSensitivity]="10"
+    id="{{id}}"
+  [items]="items "
+  (indexChange)="indexFoto($event)"
+  (thumbClick)="clickImgMiniatura($event)"
+  (itemsChange)="itemsChange($event)">
+  </gallery>
+</div>

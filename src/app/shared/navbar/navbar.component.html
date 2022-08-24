@@ -1,132 +1,116 @@
 <nav class="navbar sticky-top navbar-expand-xxl navbar-light bg-light">
-    <div class="container-fluid">
-      <img  *ngIf="!electronjs" class="logo" src="assets/images/logo-no-name.svg" routerLink="/home"  placement="bottom" ngbTooltip="Inicio">
-      <button  #botonalbondiga  class="navbar-toggler navbar-toggler--button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div #toggleButton class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li *ngIf="electronjs" class="nav-item">
-            <a class="nav-link " id="navbarDropdown" (click)="closeMenu()" role="button" routerLink="/home">
-              Inicio
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dory
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item"(click)="closeMenu()"  routerLink="/nosotros">¿Quiénes somos?</a></li>
-              <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/equipo">Equipo de trabajo</a></li>
-              <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/contacto">Contáctanos</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Productores
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item"(click)="closeMenu()"  routerLink="/granjas">Granjas</a></li>
-              <li><a class="dropdown-item"(click)="closeMenu()"  routerLink="/piscicultores">Piscicultores</a></li>
-              <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/pescadores">Pescadores</a></li>
-              <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/asociaciones">Asociaciones</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Novedades y Actualidad
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/novedades/articulos">Artículos</a></li>
-              <li><a class="dropdown-item"(click)="closeMenu()"  routerLink="/novedades/articulos-colombia">Artículos Colombianos</a></li>
-              <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/novedades/revistas">Revistas</a></li>
-              <li><a class="dropdown-item" (click)="closeMenu()"  routerLink="/novedades/noticias">Noticias</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Eventos
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item"(click)="closeMenu()"  routerLink="/eventos/cursos">Cursos</a></li>
-              <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/eventos/capacitaciones">Capacitaciones</a></li>
-              <li><a class="dropdown-item"(click)="closeMenu()"  routerLink="/eventos/congresos">Congresos</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Normatividad
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/normatividad/leyes">Leyes</a></li>
-              <!--<li><a class="dropdown-item" routerLink="/normatividad/estatutos">Estatutos</a></li>-->
-              <li><a class="dropdown-item"(click)="closeMenu()"  routerLink="/normatividad/decretos">Decretos</a></li>
-              <li><a class="dropdown-item"(click)="closeMenu()"  routerLink="/normatividad/resoluciones">Resoluciones</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link" id="navbarDropdown"
-            (click)="closeMenu()"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            routerLink="/panel-busqueda">
-              Panel de búsqueda
-            </a>
-          </li>
-        </ul>
-        <div class="searchAndRegsitroAndLogin">
-          <input class="container__input form-input-text-square" type="text" placeholder="Buscar...">
-          <div class="botonRegistroAndLogin">
-            <button class="btn-outline-blue btn-mi-boton" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
-            <button class="btn-rounded-blue ms-2 btn-mi-boton" (click)="closeMenu()"
-            routerLink="/registro" *ngIf="!authenticated()">Registrate</button>
-          </div>
-          <div class="notifyAndUserOption">
+  <div class="container-fluid">
+    <img *ngIf="!electronjs" class="logo1" src="assets/images/logo-no-name.svg" routerLink="/home" placement="bottom"
+      ngbTooltip="Inicio">
+    <!-- esta seccioón solo esta dispobibles 1400px-->
+    <div class="container-fluid-miestilo__1">
+      <div class="logoAndSearch">
+        <img *ngIf="!electronjs" class="logo2 heightAndWidth" src="assets/images/logo-no-name.svg" routerLink="/home"
+          placement="bottom" ngbTooltip="Inicio">
+        <div class="buscador--container-icon heightAndWidth">
+          <img src="/assets/icons/search.svg">
+        </div>
+      </div>
+      <div class="menuAndNotify">
+        <div class="navbar-toggler--miestilo navbar-toggler ">
+          <div class="navbar-toggler--miestilo__1">
+            <!-- Botones registro y login -->
+            <div class="dropdown" *ngIf="!authenticated()">
+              <div id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="container__img container__img--button heightAndWidth" src="assets/images/loginyregistro.svg">
+              </div>
+              <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
+                <li class="dropdown-item--container" (click)="login()">
+                  <img class="dropdown-item--icon" src="assets/icons/ingresar.svg">
+                  <button class="dropdown-item dropdown-item-miestilo" type="button">Ingresar</button>
+                </li>
+                <li class="dropdown-item--container" routerLink="/registro">
+                  <img class="dropdown-item--icon" src="assets/icons/registro.svg">
+                  <button class="dropdown-item  dropdown-item-miestilo" type="button">Registrate</button>
+                </li>
+              </ul>
+            </div>
+            <!-- Interfas de notificaciones -->
             <div class="notify dropstart" *ngIf="authenticated()">
-              <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
-                <i class="notify__icon bi bi-bell">
-                </i>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
-                  {{invitaciones?.length}}
+              <!-- Boton notificacion se muestra cuando es  menor 960px -->
+              <div class="notify__box position-relative notify-modal-icon " placement="bottom" ngbTooltip="Notificaciones" data-bs-toggle="modal"
+                data-bs-target="#ModalNotificacion" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
+                <div class="notify__icon--container heightAndWidth">
+                  <i class="notify__icon bi bi-bell"></i>
+                </div>
+                <span class="position-absolute top-4px  start-100 translate-middle badge rounded-pill bg-danger"
+                  *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
+                  {{invitaciones.length}}
                   <span class="visually-hidden">tienes notificaciones</span>
                 </span>
               </div>
-
+              <!-- Boton notificacion se muestra cuando es mayor 960px -->
+              <div #dropdownNotificacion class="notify__box position-relative notify-dropdown-icon"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                data-bs-auto-close="outside"
+                (click)="notificatiosOpened = true"
+                >
+                <div class="notify__icon--container heightAndWidth" placement="bottom" ngbTooltip="Notificaciones">
+                  <i class="notify__icon bi bi-bell"></i>
+                </div>
+                <span class="position-absolute top-4px start-100 translate-middle badge rounded-pill bg-danger"
+                  *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
+                  {{invitaciones.length}}
+                  <span class="visually-hidden">tienes notificaciones</span>
+                </span>
+              </div>
               <!-- [ngClass]="[(invitaciones.length + invitacionesFromUsers.length) < 9 ? notifyHeights[(invitaciones.length + invitacionesFromUsers.length)] : '',]" -->
-              <ul #notifies class="notify__menu notify__menu dropdown-menu p-3 overflow-auto" [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }"  aria-labelledby="dropdownMenuButton1" (onresize)="onResize()">
-                <li class="notify__title"><span *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
-                <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span></li>
+              <ul #notifies class="notify__menu  dropdown-menu p-3 overflow-auto"
+                [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }"
+                aria-labelledby="dropdownMenuButton1"
+                (onresize)="onResize()">
+                <li class="notify__title"><span
+                    *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
+                <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span>
+                </li>
                 <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index">
                   <div class="dropdown-item d-flex flex-row align-items-start">
                     <img class="notify__avatar" [src]="invitacion.foto_representante_legal">
                     <div class="d-flex flex-column ">
-                      <span class="notify__description"><span class="notify__label">{{invitacion?.representante_legal}}</span> te han invitado a indicar que eres miembro de <span class="notify__label">{{invitacion.asociacion}}</span></span>
+                      <span class="notify__description"><span
+                          class="notify__label">{{invitacion?.representante_legal}}</span>
+                        te han invitado a indicar que eres miembro de <span
+                          class="notify__label">{{invitacion.asociacion}}</span></span>
                       <span class="notify__sub-description">
                         {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Te gustaria ser miembro?
                       </span>
                       <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
-                        <button class="notify-button btn-square btn--blue" (click)="confirmarInvitacion(invitacion)">Confirmar</button>
-                        <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion(invitacion)">Eliminar</button>
+                        <button class="notify-button btn-square btn--blue"
+                          (click)="confirmarInvitacion(invitacion)">Confirmar</button>
+                        <button class="notify-button btn-square btn--grey"
+                          (click)="eliminarInvitacion(invitacion)">Eliminar</button>
                       </div>
                       <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
                     </div>
                   </div>
                   <hr class="dropdown-divider" *ngIf="i < invitaciones.length - 1">
                 </li>
-
-                <li class="notify__sub-title"><span *ngIf="invitacionesFromUsers.length > 0">Solicitudes de usuarios</span></li>
+                <li class="notify__sub-title"><span *ngIf="invitacionesFromUsers.length > 0">Solicitudes de
+                    usuarios</span>
+                </li>
                 <li class="notify__menu-item" *ngFor="let invitacion of invitacionesFromUsers; let i=index">
                   <div class="dropdown-item d-flex flex-row align-items-start">
                     <img class="notify__avatar" [src]="invitacion.foto">
                     <div class="d-flex flex-column ">
-                      <span class="notify__description"><span class="notify__label">{{invitacion?.nombre_quien_envia}}</span> ha indicado que es miembro de la asociación <span class="notify__label">{{invitacion.asociacion}}</span></span>
+                      <span class="notify__description"><span
+                          class="notify__label">{{invitacion?.nombre_quien_envia}}</span>
+                        ha indicado que es miembro de la asociación <span
+                          class="notify__label">{{invitacion.asociacion}}</span></span>
                       <span class="notify__sub-description">
                         {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Es miembro de esta asociación?
                       </span>
                       <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
-                        <button class="notify-button btn-square btn--blue" (click)="confirmarInvitacion(invitacion)">Confirmar</button>
-                        <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion(invitacion)">Eliminar</button>
+                        <button class="notify-button btn-square btn--blue"
+                          (click)="confirmarInvitacion(invitacion)">Confirmar</button>
+                        <button class="notify-button btn-square btn--grey"
+                          (click)="eliminarInvitacion(invitacion)">Eliminar</button>
                       </div>
                       <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
                     </div>
@@ -135,29 +119,311 @@
                 </li>
                 <div class="search-container" *ngIf="invitaciones.length < 1 && invitacionesFromUsers.length < 1">
                   <div class="search-container__box">
-                      <img class="search-container__image" src="assets/images/inbox_cleanup.svg">
-                      <h3 class="search-container__title">No se han encontrado resultados</h3>
-                      <p class="search-container__description">No tienes notificaciones </p>
+                    <img class="search-container__image" src="assets/images/inbox_cleanup.svg">
+                    <h3 class="search-container__title">No se han encontrado resultados</h3>
+                    <p class="search-container__description">No tienes notificaciones </p>
                   </div>
                 </div>
                 <li *ngFor="let test of tests"><span>{{test}}</span></li>
               </ul>
-
             </div>
-            <div class="dropdown dropdown__flex" *ngIf="authenticated()">
-              <img class="container__img" [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'">
-              <button class="container__button btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                {{authUserNomApell()}}
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li><button class="dropdown-item" type="button" (click)="closeMenu()"  routerLink="/dashboard">Mi cuenta</button></li>
-                 <li><button class="dropdown-item" type="button"(click)="closeMenu()"   routerLink="/dashboard/mis-favoritos">Mis favoritos</button></li>
-                <li><button class="dropdown-item" type="button"  (click)="updatePassword()" *ngIf="authWith()=='email'">Cambiar contraseña</button></li>
-                <li><button class="dropdown-item" type="button" (click)="logout()">Salir</button></li>
+            <!-- fin interfas de notificaciones  -->
+
+
+            <!-- Dropdown, usuarios registrados-->
+            <div class="dropdown" *ngIf="authenticated()">
+              <div id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false" placement="bottom"
+                ngbTooltip="cuenta">
+                <img class="container__img container__img--button heightAndWidth"
+                  [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'">
+              </div>
+              <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
+                <div class="usuarioFotoYnombre">
+                  <img class="container__img container__img--button heightAndWidth "
+                    [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'">
+                    <span>{{authUserTipo_usuario()}}</span>
+                  <button class="container__button btn btn-secondary" type="button" routerLink="/dashboard">
+                    {{authUserNomApell()}}
+                  </button>
+                </div>
+                <li class="dropdown-item--container" routerLink="/dashboard">
+                  <img class="dropdown-item--icon" src="assets/icons/cuenta.svg">
+                  <button class="dropdown-item dropdown-item-miestilo" type="button">Mi cuenta</button>
+                </li>
+                <li class="dropdown-item--container" routerLink="/dashboard/mis-favoritos">
+                  <img class="dropdown-item--icon" src="assets/icons/favoritos-targe.svg">
+                  <button class="dropdown-item  dropdown-item-miestilo" type="button">Mis favoritos</button>
+                </li>
+                <li class="dropdown-item--container" (click)="updatePassword()" *ngIf="authWith()=='email'">
+                  <img class="dropdown-item--icon" src="assets/icons/change-password.svg">
+                  <button class="dropdown-item dropdown-item-miestilo" type="button">Cambiar
+                    contraseña</button>
+                </li>
+                <li class="dropdown-item--container" (click)="logout()">
+                  <img class="dropdown-item--icon" src="assets/icons/Logout.svg">
+                  <button class="dropdown-item dropdown-item-miestilo" type="button">Cerrar sesión</button>
+                </li>
               </ul>
             </div>
           </div>
         </div>
+        <!-- boton menu desplegable -->
+        <button #botonalbondiga class="navbar-toggler navbar-toggler--button heightAndWidth" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </div>
     </div>
-  </nav>
+    <div #toggleButton class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li *ngIf="electronjs" class="nav-item">
+          <a class="nav-link " id="navbarDropdown" (click)="closeMenu()" role="button" routerLink="/home">
+            Inicio
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Dory
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/nosotros">¿Quiénes somos?</a></li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/equipo">Equipo de trabajo</a></li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/contacto">Contáctanos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Productores
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/granjas">Granjas</a></li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/piscicultores">Piscicultores</a></li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/pescadores">Pescadores</a></li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/asociaciones">Asociaciones</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Novedades y Actualidad
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/novedades/articulos">Artículos</a></li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/novedades/articulos-colombia">Artículos
+                Colombianos</a></li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/novedades/revistas">Revistas</a></li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/novedades/noticias">Noticias</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Eventos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/eventos/cursos">Cursos</a></li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/eventos/capacitaciones">Capacitaciones</a>
+            </li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/eventos/congresos">Congresos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Normatividad
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/normatividad/leyes">Leyes</a></li>
+            <!--<li><a class="dropdown-item" routerLink="/normatividad/estatutos">Estatutos</a></li>-->
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/normatividad/decretos">Decretos</a></li>
+            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/normatividad/resoluciones">Resoluciones</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" id="navbarDropdown" (click)="closeMenu()" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false" routerLink="/panel-busqueda">
+            Panel de búsqueda
+          </a>
+        </li>
+      </ul>
+      <div class="searchAndRegsitroAndLogin">
+        <input class="container__input form-input-text-square container__input--none" type="text"
+          placeholder="Buscar...">
+        <div class="botonRegistroAndLogin">
+          <button class="btn-outline-blue btn-mi-boton" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
+          <button class="btn-rounded-blue ms-2 btn-mi-boton" (click)="closeMenu()" routerLink="/registro"
+            *ngIf="!authenticated()">Registrate</button>
+        </div>
+        <div class="notifyAndUserOption">
+          <div class="notify dropstart" *ngIf="authenticated()">
+            <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown"
+              aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
+              <i class="notify__icon bi bi-bell"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
+                {{invitaciones?.length}}
+                <span class="visually-hidden">tienes notificaciones</span>
+              </span>
+            </div>
+            <ul #notifies class="notify__menu dropdown-menu p-3 overflow-auto"
+              [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }" aria-labelledby="dropdownMenuButton1"
+              (onresize)="onResize()">
+              <li class="notify__title"><span
+                  *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
+              <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span>
+              </li>
+              <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index">
+                <div class="dropdown-item d-flex flex-row align-items-start">
+                  <img class="notify__avatar" [src]="invitacion.foto_representante_legal">
+                  <div class="d-flex flex-column ">
+                    <span class="notify__description"><span
+                        class="notify__label">{{invitacion?.representante_legal}}</span> te han invitado a indicar que
+                      eres miembro de <span class="notify__label">{{invitacion.asociacion}}</span></span>
+                    <span class="notify__sub-description">
+                      {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Te gustaria ser miembro?
+                    </span>
+                    <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
+                      <button class="notify-button btn-square btn--blue"
+                        (click)="confirmarInvitacion(invitacion)">Confirmar</button>
+                      <button class="notify-button btn-square btn--grey"
+                        (click)="eliminarInvitacion(invitacion)">Eliminar</button>
+                    </div>
+                    <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
+                  </div>
+                </div>
+                <hr class="dropdown-divider" *ngIf="i < invitaciones.length - 1">
+              </li>
+
+              <li class="notify__sub-title"><span *ngIf="invitacionesFromUsers.length > 0">Solicitudes de
+                  usuarios</span></li>
+              <li class="notify__menu-item" *ngFor="let invitacion of invitacionesFromUsers; let i=index">
+                <div class="dropdown-item d-flex flex-row align-items-start">
+                  <img class="notify__avatar" [src]="invitacion.foto">
+                  <div class="d-flex flex-column ">
+                    <span class="notify__description"><span
+                        class="notify__label">{{invitacion?.nombre_quien_envia}}</span> ha indicado que es miembro de la
+                      asociación <span class="notify__label">{{invitacion.asociacion}}</span></span>
+                    <span class="notify__sub-description">
+                      {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Es miembro de esta asociación?
+                    </span>
+                    <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
+                      <button class="notify-button btn-square btn--blue"
+                        (click)="confirmarInvitacion(invitacion)">Confirmar</button>
+                      <button class="notify-button btn-square btn--grey"
+                        (click)="eliminarInvitacion(invitacion)">Eliminar</button>
+                    </div>
+                    <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
+                  </div>
+                </div>
+                <hr class="dropdown-divider" *ngIf="i < invitacionesFromUsers.length - 1">
+              </li>
+              <div class="search-container" *ngIf="invitaciones.length < 1 && invitacionesFromUsers.length < 1">
+                <div class="search-container__box">
+                  <img class="search-container__image" src="assets/images/inbox_cleanup.svg">
+                  <h3 class="search-container__title">No se han encontrado resultados</h3>
+                  <p class="search-container__description">No tienes notificaciones </p>
+                </div>
+              </div>
+              <li *ngFor="let test of tests"><span>{{test}}</span></li>
+            </ul>
+          </div>
+          <div class="dropdown dropdown__flex" *ngIf="authenticated()">
+            <img class="container__img"
+              [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'">
+            <button class="container__button btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              {{authUserNomApell()}}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <li><button class="dropdown-item" type="button" (click)="closeMenu()" routerLink="/dashboard">Mi
+                  cuenta</button></li>
+              <li><button class="dropdown-item" type="button" (click)="closeMenu()"
+                  routerLink="/dashboard/mis-favoritos">Mis favoritos</button></li>
+              <li><button class="dropdown-item" type="button" (click)="updatePassword()"
+                  *ngIf="authWith()=='email'">Cambiar contraseña</button></li>
+              <li><button class="dropdown-item" type="button" (click)="logout()">Salir</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<ng-container *ngTemplateOutlet="modalnotificacion"></ng-container>
+<ng-template #modalnotificacion>
+  <div #miModalNotificacion class="modal fade modalNotificacio" id="ModalNotificacion" tabindex="-1"
+    aria-labelledby="ModalNotificacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalNotificacionLabel">Notificaciones</h5>
+          <button #closebuttonModalNotificacion type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <ul  class="p-3">
+              <li class="notify__title"><span
+                  *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
+              <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span>
+              </li>
+              <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index">
+                <div class="dropdown-item d-flex flex-row align-items-start">
+                  <img class="notify__avatar" [src]="invitacion.foto_representante_legal">
+                  <div class="d-flex flex-column ">
+                    <span class="notify__description"><span class="notify__label">{{invitacion?.representante_legal}}</span> te han
+                      invitado a indicar que
+                      eres miembro de <span class="notify__label">{{invitacion.asociacion}}</span></span>
+                    <span class="notify__sub-description">
+                      {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Te gustaria ser miembro?
+                    </span>
+                    <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
+                      <button class="notify-button btn-square btn--blue"
+                        (click)="confirmarInvitacion(invitacion)">Confirmar</button>
+                      <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion(invitacion)">Eliminar</button>
+                    </div>
+                    <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
+                  </div>
+                </div>
+                <hr class="dropdown-divider" *ngIf="i < invitaciones.length - 1">
+              </li>
+
+              <li class="notify__sub-title"><span *ngIf="invitacionesFromUsers.length > 0">Solicitudes de
+                  usuarios</span></li>
+              <li class="notify__menu-item" *ngFor="let invitacion of invitacionesFromUsers; let i=index">
+                <div class="dropdown-item d-flex flex-row align-items-start">
+                  <img class="notify__avatar" [src]="invitacion.foto">
+                  <div class="d-flex flex-column ">
+                    <span class="notify__description"><span class="notify__label">{{invitacion?.nombre_quien_envia}}</span> ha
+                      indicado que es miembro de la
+                      asociación <span class="notify__label">{{invitacion.asociacion}}</span></span>
+                    <span class="notify__sub-description">
+                      {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Es miembro de esta asociación?
+                    </span>
+                    <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
+                      <button class="notify-button btn-square btn--blue"
+                        (click)="confirmarInvitacion(invitacion)">Confirmar</button>
+                      <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion(invitacion)">Eliminar</button>
+                    </div>
+                    <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
+                  </div>
+                </div>
+                <hr class="dropdown-divider" *ngIf="i < invitacionesFromUsers.length - 1">
+              </li>
+              <div class="search-container" *ngIf="invitaciones.length < 1 && invitacionesFromUsers.length < 1">
+                <div class="search-container__box">
+                  <img class="search-container__image" src="assets/images/inbox_cleanup.svg">
+                  <h3 class="search-container__title">No se han encontrado resultados</h3>
+                  <p class="search-container__description">No tienes notificaciones </p>
+                </div>
+              </div>
+              <li *ngFor="let test of tests"><span>{{test}}</span></li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

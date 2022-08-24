@@ -4,9 +4,7 @@
 </div>
 <div class="modal-body">
     <div class="card__rating-container">
-        <!-- <img class="card__icon-rating" src="assets/icons/star-filled.svg"> -->
         <app-stars [selectedStar]="puntuacion"  size="medium"></app-stars>
-
     </div>
     <div class="container overflow-auto" *ngIf="!showNotFound && !showErrorFound">
         <div class="card" *ngFor="let resena of resenas">

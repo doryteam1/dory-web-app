@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -32,8 +32,6 @@ export class GranjasMunicipioComponent implements OnInit {
   granjaDetailRoute: string = '';
   poblacion: number = 0;
   municipio: string = '';
-  valorrows: number = 18.25;
-  valorcolumns: number = 21.8333333333;
   indicatorsphotos: boolean = true;
   activaapiLoader: boolean = true;
   mapaOn: boolean = false;
@@ -93,6 +91,7 @@ export class GranjasMunicipioComponent implements OnInit {
   palabra: string = '';
   filtroseleccionado!: MetaFiltro | null;
   contador = 0;
+  modalGogleMapOpen: boolean=false;
 
   constructor(
     httpClient: HttpClient,
@@ -114,7 +113,11 @@ export class GranjasMunicipioComponent implements OnInit {
         map(() => true),
         catchError(() => of(false))
       );
+    /*  if (this.mobileMedia.matches) {
+      alert('media activa');
+    } */
   }
+
   ngOnInit(): void {
     registerLocaleData(es);
     this.granjaDetailRoute =
@@ -222,10 +225,18 @@ export class GranjasMunicipioComponent implements OnInit {
       this.eliminInfoWindow();
     }
   }
+  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth >= 1100) {
+      if ((this.modalGogleMapOpen)) {
+        this.appModalService.CloseGoogleMapModal();
+      }
+    }
+  }
   seeFarmsMaptwo(i: number) {
+    this.modalGogleMapOpen=true
     let atributos = this.granjasFiltered[i];
     let modalheadergooglemap = false;
-    let shared=false;
+    let shared = false;
     let mapElementVarios = false;
     let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
     this.location2.onPopState(() => {
@@ -240,8 +251,12 @@ export class GranjasMunicipioComponent implements OnInit {
         iconMarkerGoogleMap,
         ''
       )
-      .then((result) => {})
-      .catch((result) => {});
+      .then((result) => {
+        this.modalGogleMapOpen=false
+      })
+      .catch((result) => {
+        this.modalGogleMapOpen = false;
+      });
   }
   navigate(id: number) {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + id);

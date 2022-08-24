@@ -3,125 +3,150 @@
     <!-- Se muestran cuando es responsibe -->
     <div class="container-fluid-miestilo__1">
       <!-- Botón albondiga -->
-      <button  #botonalbondiga class="navbar-toggler navbar-toggler--button" type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
+      <button #botonalbondiga class="navbar-toggler navbar-toggler--button" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon" style="height: 20px; -webkit-app-region: no-drag;"></span>
       </button>
       <div class="navbar-toggler--miestilo navbar-toggler ">
         <div class="navbar-toggler--miestilo__1">
           <!-- Buscador -->
-          <input class="container__input form-input-text-square" type="text" placeholder="Buscar...">
-          <!-- Botones registro y login -->
-          <button class="no-drag boton-ingresar2 btn" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
-          <button class=" no-drag ms-2 boton-registrate2 btn" (click)="navegarRuta('/registro')"
-            *ngIf="!authenticated()">Registrate</button>
-          <!-- Interfas de notificaciones -->
-          <div class="no-drag notify dropstart" *ngIf="authenticated()">
-            <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown"
-              aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
-              <i class="notify__icon bi bi-bell">
-              </i>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
-                {{invitaciones.length}}
-                <span class="visually-hidden">tienes notificaciones</span>
-              </span>
+          <!-- <input class="container__input form-input-text-square" type="text" placeholder="Buscar..."> -->
+            <div class=" no-drag buscador--container-icon heightAndWidth">
+              <img src="/assets/icons/search.svg">
             </div>
-            <!-- [ngClass]="[(invitaciones.length + invitacionesFromUsers.length) < 9 ? notifyHeights[(invitaciones.length + invitacionesFromUsers.length)] : '',]" -->
-            <ul #notifies class="notify__menu notify__menu dropdown-menu p-3 overflow-auto"
-              [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }" aria-labelledby="dropdownMenuButton1"
-              (onresize)="onResize()" style="-webkit-app-region: no-drag;">
-              <li class="notify__title"><span
-                  *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
-              <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span>
-              </li>
-              <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index">
-                <div class="dropdown-item d-flex flex-row align-items-start">
-                  <img class="notify__avatar" [src]="invitacion.foto_representante_legal">
-                  <div class="d-flex flex-column ">
-                    <span class="notify__description"><span
-                        class="notify__label">{{invitacion?.representante_legal}}</span>
-                      te han invitado a indicar que eres miembro de <span
-                        class="notify__label">{{invitacion.asociacion}}</span></span>
-                    <span class="notify__sub-description">
-                      {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Te gustaria ser miembro?
-                    </span>
-                    <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
-                      <button class="notify-button btn-square btn--blue"
-                        (click)="confirmarInvitacion(invitacion)">Confirmar</button>
-                      <button class="notify-button btn-square btn--grey"
-                        (click)="eliminarInvitacion(invitacion)">Eliminar</button>
-                    </div>
-                    <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
-                  </div>
-                </div>
-                <hr class="dropdown-divider" *ngIf="i < invitaciones.length - 1">
-              </li>
-              <li class="notify__sub-title"><span *ngIf="invitacionesFromUsers.length > 0">Solicitudes de
-                  usuarios</span>
-              </li>
-              <li class="notify__menu-item" *ngFor="let invitacion of invitacionesFromUsers; let i=index">
-                <div class="dropdown-item d-flex flex-row align-items-start">
-                  <img class="notify__avatar" [src]="invitacion.foto">
-                  <div class="d-flex flex-column ">
-                    <span class="notify__description"><span
-                        class="notify__label">{{invitacion?.nombre_quien_envia}}</span>
-                      ha indicado que es miembro de la asociación <span
-                        class="notify__label">{{invitacion.asociacion}}</span></span>
-                    <span class="notify__sub-description">
-                      {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Es miembro de esta asociación?
-                    </span>
-                    <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
-                      <button class="notify-button btn-square btn--blue"
-                        (click)="confirmarInvitacion(invitacion)">Confirmar</button>
-                      <button class="notify-button btn-square btn--grey"
-                        (click)="eliminarInvitacion(invitacion)">Eliminar</button>
-                    </div>
-                    <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
-                  </div>
-                </div>
-                <hr class="dropdown-divider" *ngIf="i < invitacionesFromUsers.length - 1">
-              </li>
-              <div class="search-container" *ngIf="invitaciones.length < 1 && invitacionesFromUsers.length < 1">
-                <div class="search-container__box">
-                  <img class="search-container__image" src="assets/images/inbox_cleanup.svg">
-                  <h3 class="search-container__title">No se han encontrado resultados</h3>
-                  <p class="search-container__description">No tienes notificaciones </p>
-                </div>
-              </div>
-              <li *ngFor="let test of tests"><span>{{test}}</span></li>
-            </ul>
+          <!-- Botones registro y login -->
+          <div style="display: flex; align-items: center;height: 100%;">
+            <button class="no-drag boton-ingresar2 btn" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
+            <button class=" no-drag ms-2 boton-registrate2 btn" (click)="navegarRuta('/registro')"
+              *ngIf="!authenticated()">Registrate</button>
           </div>
-          <!-- Dropdown, usuarios registrados-->
-          <div class=" no-drag dropdown--miestilo-login dropdown" *ngIf="authenticated()">
-            <img class="container__img"
-              [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'">
-            <button class="container__button btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              {{authUserNomApell()}}
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <li><button class="dropdown-item" type="button" (click)="navegarRuta('/dashboard')">Mi cuenta</button>
-              </li>
-              <li><button class="dropdown-item" type="button" (click)="navegarRuta('/dashboard/mis-favoritos')">Mis
-                  favoritos</button>
-              </li>
-              <li><button class="dropdown-item" type="button" (click)="updatePassword()"
-                  *ngIf="authWith()=='email'">Cambiar
-                  contraseña</button></li>
-              <li><button class="dropdown-item" type="button" (click)="logout()">Salir</button></li>
-            </ul>
+          <div style="display: flex; align-items: center;height: 100%;"  *ngIf="authenticated()">
+            <!-- Interfas de notificaciones -->
+            <div class="no-drag notify dropstart">
+              <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
+                <div class="notify__icon--container">
+                  <i class="notify__icon bi bi-bell"></i>
+                </div>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                  *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
+                  {{invitaciones.length}}
+                  <span class="visually-hidden">tienes notificaciones</span>
+                </span>
+              </div>
+              <!-- [ngClass]="[(invitaciones.length + invitacionesFromUsers.length) < 9 ? notifyHeights[(invitaciones.length + invitacionesFromUsers.length)] : '',]" -->
+              <ul #notifies class="notify__menu notify__menu dropdown-menu p-3 overflow-auto"
+                [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }" aria-labelledby="dropdownMenuButton1"
+                (onresize)="onResize()" style="-webkit-app-region: no-drag;">
+                <li class="notify__title"><span
+                    *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
+                <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span>
+                </li>
+                <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index">
+                  <div class="dropdown-item d-flex flex-row align-items-start">
+                    <img class="notify__avatar" [src]="invitacion.foto_representante_legal">
+                    <div class="d-flex flex-column ">
+                      <span class="notify__description"><span
+                          class="notify__label">{{invitacion?.representante_legal}}</span>
+                        te han invitado a indicar que eres miembro de <span
+                          class="notify__label">{{invitacion.asociacion}}</span></span>
+                      <span class="notify__sub-description">
+                        {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Te gustaria ser miembro?
+                      </span>
+                      <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
+                        <button class="notify-button btn-square btn--blue"
+                          (click)="confirmarInvitacion(invitacion)">Confirmar</button>
+                        <button class="notify-button btn-square btn--grey"
+                          (click)="eliminarInvitacion(invitacion)">Eliminar</button>
+                      </div>
+                      <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
+                    </div>
+                  </div>
+                  <hr class="dropdown-divider" *ngIf="i < invitaciones.length - 1">
+                </li>
+                <li class="notify__sub-title"><span *ngIf="invitacionesFromUsers.length > 0">Solicitudes de
+                    usuarios</span>
+                </li>
+                <li class="notify__menu-item" *ngFor="let invitacion of invitacionesFromUsers; let i=index">
+                  <div class="dropdown-item d-flex flex-row align-items-start">
+                    <img class="notify__avatar" [src]="invitacion.foto">
+                    <div class="d-flex flex-column ">
+                      <span class="notify__description"><span
+                          class="notify__label">{{invitacion?.nombre_quien_envia}}</span>
+                        ha indicado que es miembro de la asociación <span
+                          class="notify__label">{{invitacion.asociacion}}</span></span>
+                      <span class="notify__sub-description">
+                        {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Es miembro de esta asociación?
+                      </span>
+                      <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
+                        <button class="notify-button btn-square btn--blue"
+                          (click)="confirmarInvitacion(invitacion)">Confirmar</button>
+                        <button class="notify-button btn-square btn--grey"
+                          (click)="eliminarInvitacion(invitacion)">Eliminar</button>
+                      </div>
+                      <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
+                    </div>
+                  </div>
+                  <hr class="dropdown-divider" *ngIf="i < invitacionesFromUsers.length - 1">
+                </li>
+                <div class="search-container" *ngIf="invitaciones.length < 1 && invitacionesFromUsers.length < 1">
+                  <div class="search-container__box">
+                    <img class="search-container__image" src="assets/images/inbox_cleanup.svg">
+                    <h3 class="search-container__title">No se han encontrado resultados</h3>
+                    <p class="search-container__description">No tienes notificaciones </p>
+                  </div>
+                </div>
+                <li *ngFor="let test of tests"><span>{{test}}</span></li>
+              </ul>
+            </div>
+            <!-- Dropdown, usuarios registrados-->
+            <div class=" no-drag dropdown--miestilo-login dropdown" >
+              <img class="container__img container__img--button"
+                [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'"
+                id="dropdownMenu2"
+                data-bs-toggle="dropdown" aria-expanded="false">
+              <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
+                      <div class="usuarioFotoYnombre">
+                        <img class="container__img container__img--button "
+                          [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'"
+                           (click)="navegarRuta('/dashboard')">
+                        <span>{{authUserTipo_usuario()}}</span>
+                        <button class="container__button btn btn-secondary" type="button" (click)="navegarRuta('/dashboard')">
+                          {{authUserNomApell()}}
+                        </button>
+                      </div>
+                <li class="dropdown-item--container" (click)="navegarRuta('/dashboard')">
+                  <img class="dropdown-item--icon" src="assets/icons/cuenta.svg">
+                  <button class="dropdown-item dropdown-item-miestilo" type="button">Mi cuenta</button>
+                </li>
+                <li class="dropdown-item--container" (click)="navegarRuta('/dashboard/mis-favoritos')">
+                  <img class="dropdown-item--icon" src="assets/icons/favoritos-targe.svg">
+                  <button class="dropdown-item  dropdown-item-miestilo" type="button">Mis favoritos</button>
+                </li>
+                <li class="dropdown-item--container" (click)="updatePassword()" *ngIf="authWith()=='email'">
+                  <img class="dropdown-item--icon" src="assets/icons/change-password.svg">
+                  <button class="dropdown-item dropdown-item-miestilo" type="button">Cambiar
+                    contraseña</button>
+                </li>
+                <li class="dropdown-item--container" (click)="logout()">
+                  <img class="dropdown-item--icon" src="assets/icons/Logout.svg">
+                  <button class="dropdown-item dropdown-item-miestilo" type="button">Cerrar sesión</button>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Fin responsibe -->
-    <div  #toggleButton2 class="collapse--miestilo collapse navbar-collapse" id="navbarSupportedContent">
+    <div #toggleButton2 class="collapse--miestilo collapse navbar-collapse" id="navbarSupportedContent">
+      <div style="display: flex; align-items: center;height: 100%;">
+        <div class=" no-drag buscador--container-icon heightAndWidth buscador-container-otro">
+          <img src="/assets/icons/search.svg">
+        </div>
       <ul #toggleButton class="navbar-nav--miestilo navbar-nav  mb-2 mb-lg-0 bg-light">
-        <li  *ngIf="electronjs && currentRoute !== '/home'" class=" no-drag nav-item">
+        <li *ngIf="electronjs && currentRoute !== '/home'" class=" no-drag nav-item">
           <a class="nav-link " id="navbarDropdown" role="button" (click)="navegarRuta('/home')">
             <span class="title-dropdown-toggle">
               Inicio
@@ -220,20 +245,23 @@
           </a>
         </li>
       </ul>
+      </div>
+<!--       <div class="d-flex " style="padding-right: 20px;">
+        <input class="container__input2 form-input-text-square" type="text" placeholder="Buscar...">
+      </div> -->
+
       <!-- Solo estara disponible Cuando no sea responsibe la ventana
       sistema de notificaciones y menu de usuarios registrados-->
       <div class="buscadorAndRegistro">
-        <div class="d-flex" style="    padding-right: 20px;">
-          <input class="container__input2 form-input-text-square" type="text" placeholder="Buscar...">
-        </div>
         <button class=" no-drag boton-ingresar" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
         <button class=" no-drag ms-2 boton-registrate" (click)="navegarRuta('/registro')"
           *ngIf="!authenticated()">Registrate</button>
         <div class=" no-drag notify dropstart" *ngIf="authenticated()">
           <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown"
             aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
-            <i class="notify__icon bi bi-bell">
-            </i>
+            <div class="notify__icon--container">
+              <i class="notify__icon bi bi-bell"></i>
+            </div>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
               *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
               {{invitaciones.length}}
@@ -304,13 +332,21 @@
 
         </div>
         <div class="no-drag dropdown" *ngIf="authenticated()">
-          <img class="container__img"
-            [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'">
-          <button class="container__button btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+          <img class="container__img container__img--button"
+            [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'"
+            type="button"
+            id="dropdownMenu2"
             data-bs-toggle="dropdown" aria-expanded="false">
-            {{authUserNomApell()}}
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
+            <div class="usuarioFotoYnombre">
+              <img class="container__img container__img--button "
+                [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'"
+                (click)="navegarRuta('/dashboard')">
+              <span>{{authUserTipo_usuario()}}</span>
+              <button class="container__button btn btn-secondary" type="button" (click)="navegarRuta('/dashboard')">
+                {{authUserNomApell()}}
+              </button>
+            </div>
             <li><button class="dropdown-item" type="button" (click)="navegarRuta('/dashboard')">Mi cuenta</button></li>
             <li><button class="dropdown-item" type="button" (click)="navegarRuta('/dashboard/mis-favoritos')">Mis
                 favoritos</button>
