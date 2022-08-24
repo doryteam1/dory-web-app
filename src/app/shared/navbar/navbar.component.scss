@@ -199,6 +199,7 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  gap: 5px;
 }
 
 .btn-mi-boton {
@@ -216,6 +217,7 @@
 }
 
 .buscador--container-icon {
+  cursor: pointer;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -232,7 +234,7 @@
 
 .navbar-toggler--button {
   height: 40px;
-  width: 45px;
+  width: 40px;
   text-align: center;
   justify-items: center;
   display: flex;
@@ -248,7 +250,7 @@
 
 .navbar-toggler--miestilo__1 {
   display: flex;
-  gap: 5px;
+  gap: 20px;
   height: 100%;
   justify-content: center;
   align-items: center;
@@ -269,7 +271,7 @@
 }
 
 .dropdown-menu-login {
-  right: 0;
+  right: -10px;
   left: unset;
 }
 
@@ -317,6 +319,13 @@
     background-color: #E9ECEF;
     }
 }
+.notify-modal-icon{
+  display: none;
+}
+.top-4px{
+  top: 4px;
+}
+
 @media screen and (min-width: 1400px) {
   .searchAndRegsitroAndLogin {
     flex-direction: row
@@ -347,5 +356,25 @@
 
   .container__input--none {
     display: block;
+  }
+}
+@media screen and (max-width: 951px) {
+.notify-modal-icon{
+  display: block;
+}
+.notify-dropdown-icon {
+  display: none;
+}
+
+}
+@media screen and (max-width: 290px) {
+  .heightAndWidth {
+    width: 35px;
+    height: 35px;
+  }
+}
+@media screen and (max-width: 265px) {
+.dropdown-menu-login {
+    right: -30px;
   }
 }

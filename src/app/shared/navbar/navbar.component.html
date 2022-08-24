@@ -5,9 +5,9 @@
     <!-- esta seccioón solo esta dispobibles 1400px-->
     <div class="container-fluid-miestilo__1">
       <div class="logoAndSearch">
-        <img *ngIf="!electronjs" class="logo2" src="assets/images/logo-no-name.svg" routerLink="/home"
+        <img *ngIf="!electronjs" class="logo2 heightAndWidth" src="assets/images/logo-no-name.svg" routerLink="/home"
           placement="bottom" ngbTooltip="Inicio">
-        <div class="buscador--container-icon">
+        <div class="buscador--container-icon heightAndWidth">
           <img src="/assets/icons/search.svg">
         </div>
       </div>
@@ -17,7 +17,7 @@
             <!-- Botones registro y login -->
             <div class="dropdown" *ngIf="!authenticated()">
               <div id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                <img class="container__img container__img--button" src="assets/images/loginyregistro.svg">
+                <img class="container__img container__img--button heightAndWidth" src="assets/images/loginyregistro.svg">
               </div>
               <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
                 <li class="dropdown-item--container" (click)="login()">
@@ -32,31 +32,39 @@
             </div>
             <!-- Interfas de notificaciones -->
             <div class="notify dropstart" *ngIf="authenticated()">
-              <div class="notify__box position-relative " placement="bottom" ngbTooltip="Notificaciones" data-bs-toggle="modal"
+              <!-- Boton notificacion se muestra cuando es  menor 960px -->
+              <div class="notify__box position-relative notify-modal-icon " placement="bottom" ngbTooltip="Notificaciones" data-bs-toggle="modal"
                 data-bs-target="#ModalNotificacion" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
-                <div class="notify__icon--container">
+                <div class="notify__icon--container heightAndWidth">
                   <i class="notify__icon bi bi-bell"></i>
                 </div>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                <span class="position-absolute top-4px  start-100 translate-middle badge rounded-pill bg-danger"
                   *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
                   {{invitaciones.length}}
                   <span class="visually-hidden">tienes notificaciones</span>
                 </span>
               </div>
-              <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
-                <div class="notify__icon--container" placement="bottom" ngbTooltip="Notificaciones">
+              <!-- Boton notificacion se muestra cuando es mayor 960px -->
+              <div #dropdownNotificacion class="notify__box position-relative notify-dropdown-icon"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                data-bs-auto-close="outside"
+                (click)="notificatiosOpened = true"
+                >
+                <div class="notify__icon--container heightAndWidth" placement="bottom" ngbTooltip="Notificaciones">
                   <i class="notify__icon bi bi-bell"></i>
                 </div>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                <span class="position-absolute top-4px start-100 translate-middle badge rounded-pill bg-danger"
                   *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
                   {{invitaciones.length}}
                   <span class="visually-hidden">tienes notificaciones</span>
                 </span>
               </div>
               <!-- [ngClass]="[(invitaciones.length + invitacionesFromUsers.length) < 9 ? notifyHeights[(invitaciones.length + invitacionesFromUsers.length)] : '',]" -->
-              <ul #notifies class="notify__menu notify__menu dropdown-menu p-3 overflow-auto"
-                [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }" aria-labelledby="dropdownMenuButton1"
+              <ul #notifies class="notify__menu  dropdown-menu p-3 overflow-auto"
+                [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }"
+                aria-labelledby="dropdownMenuButton1"
                 (onresize)="onResize()">
                 <li class="notify__title"><span
                     *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
@@ -126,12 +134,12 @@
             <div class="dropdown" *ngIf="authenticated()">
               <div id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false" placement="bottom"
                 ngbTooltip="cuenta">
-                <img class="container__img container__img--button"
+                <img class="container__img container__img--button heightAndWidth"
                   [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'">
               </div>
               <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
                 <div class="usuarioFotoYnombre">
-                  <img class="container__img container__img--button "
+                  <img class="container__img container__img--button heightAndWidth "
                     [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'">
                     <span>{{authUserTipo_usuario()}}</span>
                   <button class="container__button btn btn-secondary" type="button" routerLink="/dashboard">
@@ -160,7 +168,7 @@
           </div>
         </div>
         <!-- boton menu desplegable -->
-        <button #botonalbondiga class="navbar-toggler navbar-toggler--button" type="button" data-bs-toggle="collapse"
+        <button #botonalbondiga class="navbar-toggler navbar-toggler--button heightAndWidth" type="button" data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
           aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -261,7 +269,7 @@
                 <span class="visually-hidden">tienes notificaciones</span>
               </span>
             </div>
-            <ul #notifies class="notify__menu notify__menu dropdown-menu p-3 overflow-auto"
+            <ul #notifies class="notify__menu dropdown-menu p-3 overflow-auto"
               [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }" aria-labelledby="dropdownMenuButton1"
               (onresize)="onResize()">
               <li class="notify__title"><span
@@ -357,7 +365,7 @@
             aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <ul  class="notify__menu p-3">
+            <ul  class="p-3">
               <li class="notify__title"><span
                   *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
               <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span>

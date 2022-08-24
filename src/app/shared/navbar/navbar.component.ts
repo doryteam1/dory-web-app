@@ -42,6 +42,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   closebuttonModalNotificacion!: ElementRef;
   @ViewChild('miModalNotificacion')
   miModalNotificacion!: ElementRef<HTMLElement>;
+  @ViewChild('dropdownNotificacion')
+  dropdownNotificacion!: ElementRef<HTMLElement>;
   resizedObserver!: ResizeObserver;
   notifiesHeigth: number = 0;
   @HostBinding('hidden')
@@ -96,17 +98,19 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
   @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
-    if (event.target.innerWidth >= 1400) {
+    if (event.target.innerWidth >= 950) {
       if (this.miModalNotificacion.nativeElement.className.includes('show')) {
         this.closebuttonModalNotificacion.nativeElement.click();
       }
+
+
+    } else if (event.target.innerWidth <=950) {
+      if (this.dropdownNotificacion.nativeElement.className.includes('show')) {
+        this.dropdownNotificacion.nativeElement.click();
+       }
     }
+
   }
-  /* @HostListener('document:shown.bs.modal', ['$event'])
-  modalHiden(event?: any) {
-   let evento =event
-    return evento;
-  } */
 
   onResize() {
     console.log('resize!');

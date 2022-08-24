@@ -293,7 +293,7 @@
   display: flex;
   gap: 5px;
   height: 100%;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -434,8 +434,23 @@
 .d-flex {
   display: none !important;
 }
+.buscador--container-icon {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e4e6eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-@media screen and (min-width: 1380px) {
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media screen and (min-width: 1250px) {
   .navbar-expand-miestilo {
     flex-wrap: nowrap !important;
     justify-content: flex-start !important;
@@ -488,7 +503,6 @@
 
   .navbar-expand-miestilo .navbar-nav {
     flex-direction: row !important;
-    min-width: 800px;
   }
 
   .navbar-expand-miestilo .navbar-collapse {
