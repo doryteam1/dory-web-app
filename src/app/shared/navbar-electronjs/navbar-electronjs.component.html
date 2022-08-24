@@ -12,7 +12,7 @@
         <div class="navbar-toggler--miestilo__1">
           <!-- Buscador -->
           <!-- <input class="container__input form-input-text-square" type="text" placeholder="Buscar..."> -->
-            <div class="buscador--container-icon heightAndWidth">
+            <div class=" no-drag buscador--container-icon heightAndWidth">
               <img src="/assets/icons/search.svg">
             </div>
           <!-- Botones registro y login -->
@@ -21,9 +21,9 @@
             <button class=" no-drag ms-2 boton-registrate2 btn" (click)="navegarRuta('/registro')"
               *ngIf="!authenticated()">Registrate</button>
           </div>
-          <div style="display: flex; align-items: center;height: 100%;">
+          <div style="display: flex; align-items: center;height: 100%;"  *ngIf="authenticated()">
             <!-- Interfas de notificaciones -->
-            <div class="no-drag notify dropstart" *ngIf="authenticated()">
+            <div class="no-drag notify dropstart">
               <div class="notify__box position-relative " id="dropdownMenuButton1" data-bs-toggle="dropdown"
                 aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
                 <div class="notify__icon--container">
@@ -101,7 +101,7 @@
               </ul>
             </div>
             <!-- Dropdown, usuarios registrados-->
-            <div class=" no-drag dropdown--miestilo-login dropdown" *ngIf="authenticated()">
+            <div class=" no-drag dropdown--miestilo-login dropdown" >
               <img class="container__img container__img--button"
                 [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'"
                 id="dropdownMenu2"
@@ -142,7 +142,7 @@
     <!-- Fin responsibe -->
     <div #toggleButton2 class="collapse--miestilo collapse navbar-collapse" id="navbarSupportedContent">
       <div style="display: flex; align-items: center;height: 100%;">
-        <div class="buscador--container-icon heightAndWidth">
+        <div class=" no-drag buscador--container-icon heightAndWidth buscador-container-otro">
           <img src="/assets/icons/search.svg">
         </div>
       <ul #toggleButton class="navbar-nav--miestilo navbar-nav  mb-2 mb-lg-0 bg-light">

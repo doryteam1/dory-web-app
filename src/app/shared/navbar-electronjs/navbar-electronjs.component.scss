@@ -449,8 +449,14 @@ width: 30px;
     height: 18px;
   }
 }
+.buscador-container-otro {
+  display: none ;
+}
 
-@media screen and (min-width: 1250px) {
+@media screen and (min-width: 1373px) {
+  .buscador-container-otro {
+      display: flex;
+    }
   .navbar-expand-miestilo {
     flex-wrap: nowrap !important;
     justify-content: flex-start !important;
