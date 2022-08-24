@@ -88,7 +88,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
     ControlBarComponent,
     NavbarElectronjsComponent,
     ModalGoogleGeneralComponent,
-    ModalMultiFiltersComponent
+    ModalMultiFiltersComponent,
     NgGallerySliderComponent,
   ],
   imports: [
@@ -102,7 +102,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
     ShareIconsModule,
     GoogleMapsModule,
     NgxLongPress2Module,
-    ReactiveFormsModule
+    ReactiveFormsModule,
     GalleryModule,
     LightboxModule,
   ],
@@ -137,7 +137,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
     ControlBarComponent,
     NavbarElectronjsComponent,
     ModalGoogleGeneralComponent,
-    ModalMultiFiltersComponent
+    ModalMultiFiltersComponent,
     NgGallerySliderComponent,
     /*  CardphotoGoogleMapComponent, */
   ],
