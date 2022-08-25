@@ -76,15 +76,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.photoUser = response.photoUser;
       this.nomCom = response.nomApell;
     });
-    this.userService.solicitudesDeAsociaciones().subscribe((response) => {
-      this.invitaciones = response.data;
-    });
-
-    this.userService
-      .solicitudesParaAsociacionesRepresentante()
-      .subscribe((response) => {
-        this.invitacionesFromUsers = response.data;
-      });
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -93,6 +84,12 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isHidden = true;
         } else {
           this.isHidden = false;
+        }
+
+        if(route.includes('dashboard')){
+          if(this.userService.isAuthenticated()){
+            this.updateAsocRequest()
+          }
         }
       }
     });
@@ -110,6 +107,18 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
        }
     }
 
+  }
+
+  updateAsocRequest(){
+    this.userService.solicitudesDeAsociaciones().subscribe((response) => {
+      this.invitaciones = response.data;
+    });
+
+    this.userService
+      .solicitudesParaAsociacionesRepresentante()
+      .subscribe((response) => {
+        this.invitacionesFromUsers = response.data;
+    });
   }
 
   onResize() {
