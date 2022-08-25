@@ -4,7 +4,7 @@
     <app-modal-multi-filters [radioFilter1]="filtro" [chipFilter1]="orderFilter" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
   </div>
 </div>
-
+<app-not-found class="app-not-found" *ngIf="showNotFound" objectName="productos"></app-not-found>
 <!-- <div class="d-flex flex-row justify-content-center">
   <app-filtro
   class="search__filter"
@@ -42,7 +42,7 @@
   >
   </app-chip-con-boton-close>
   <app-chip-con-boton-close class="chip-container__element"
-  *ngFor="let  nombre of filtroseleccionadoCheckbox; let i =index"
+  *ngFor="let nombre of filtroseleccionadoCheckbox; let i =index"
       [iconoChip]="true"
       [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
       [contenidoChip]="nombre"

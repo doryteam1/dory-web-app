@@ -30,9 +30,9 @@ export class VehiculosComponent implements OnInit {
   municipios: any;
 
   /* varibles de buscqueda y filtros */
-  orderFilters: Filtro[] = [
+  orderFilters: Filtro = 
     {
-      nameButton: 'Ordenar',
+      nameButton: 'Ordenar por',
       data: [
         {
           id: 0,
@@ -49,23 +49,36 @@ export class VehiculosComponent implements OnInit {
           modoFiltro: MODO_FILTRO_ORDER_ASC,
         }
       ],
-    },
-  ];
+    };
 
-  filters: Filtro[] = [
+  filters: Filtro = 
     {
-      nameButton: 'Filtro',
+      nameButton: '¿Transporta alimentos?',
       data: [
         {
           id: 0,
           nombrecampoDB: 'transporte_alimento',
-          nombrefiltro: 'Transporta alimento',
+          nombrefiltro: 'Si',
           datoafiltrar: '1',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+        {
+          id: 1,
+          nombrecampoDB: 'transporte_alimento',
+          nombrefiltro: 'No',
+          datoafiltrar: '0',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+        {
+          id: 2,
+          nombrecampoDB: 'transporte_alimento',
+          nombrefiltro: 'Ambos',
+          datoafiltrar: '2',
           modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         }
       ],
-    },
-  ];
+    };
+  showNotFound: boolean = false;
 
   ngOnInit(): void {
     this.loadMunic()
@@ -78,6 +91,11 @@ export class VehiculosComponent implements OnInit {
       (response)=>{
         this.vehiculos = response.data;
         this.vehiculosFiltered = this.vehiculos;
+        if(this.vehiculosFiltered.length < 1){
+          this.showNotFound = true;
+        }else{
+          this.showNotFound = false;
+        }
       }
     )
   }
@@ -110,13 +128,16 @@ filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
 }
 
 transportaAlimentoFilter(vehiculos:Array<any>){
-  return this.vehiculos.filter((vehiculo)=> vehiculo.transporte_alimento == 1)
+  if(!this.selectedFilter){
+    return null;
+  }
+  return this.vehiculos.filter((vehiculo)=> vehiculo.transporte_alimento == this.selectedFilter.datoafiltrar)
 }
 
 searchReset() {
   let result: any[] = this.filterByText(this.palabra);
-  if(this.selectedFilter){
-    result = this.transportaAlimentoFilter(result);
+  if(this.selectedFilter && this.selectedFilter.id<2){
+    result = this.transportaAlimentoFilter(result)!;
   }
   if (this.selectedOrderFilter) {
       result = this.filtradoData(this.selectedOrderFilter, result);
@@ -131,6 +152,11 @@ searchReset() {
     );
   }
   this.vehiculosFiltered = result;
+  if(this.vehiculosFiltered.length < 1){
+    this.showNotFound = true;
+  }else{
+    this.showNotFound = false;
+  }
 }
 
 onSearch(text:string){
@@ -183,6 +209,13 @@ deleteOrderFilter(){
 
 deleteFilter(){
   this.selectedFilter = null;
+  this.searchReset();
+}
+
+onFiltersAplied(result:any){
+  this.selectedFilter = result.chipFilter1;
+  this.selectedOrderFilter = result.radioFilter1;
+  this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
   this.searchReset();
 }
 }

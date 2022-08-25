@@ -1,9 +1,10 @@
-<div class="search mb-4 mt-4">
+<div class="search mb-4 mt-5">
   <app-search (textSearch)="onSearch($event)"></app-search>
   <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
     (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
   </app-filtro>
 </div>
+<app-not-found *ngIf="showNotFound" objectName="negocios"></app-not-found>
 <div class="chip mb-5">
   <app-chip-con-boton-close
   *ngFor="let nombre of filtroseleccionadoCheckbox; let i=index"

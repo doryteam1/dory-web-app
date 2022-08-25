@@ -12,6 +12,7 @@ export class SearchBuscadorService {
 
   buscarData(arraydata: any[], query: string, buscarpor: BuscarPor []) {
     let arraydatanew = arraydata.slice();
+    query = query.toLowerCase();
     let newArray = arraydatanew.filter((dataarray) => {
       if (buscarpor.length == 1) {
         let dataanalisis = dataarray[buscarpor[0].data1!]

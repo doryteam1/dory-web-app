@@ -27,7 +27,7 @@ export class ModalMultiFiltersComponent implements OnInit {
   }
 
   open(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result:any) => {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass:'app-custom-modal'}).result.then((result:any) => {
       this.filtersAplied.emit(this.filterApply())
     }, (reason:any) => {
       console.log("reason ",reason)
@@ -46,6 +46,10 @@ export class ModalMultiFiltersComponent implements OnInit {
   }
 
   onchangeChipFilter1(value:number){
+    if(value == this.form.get('chipFilter1')?.value){
+      this.form.get('chipFilter1')?.setValue(-1);
+      return;
+    }
     this.form.get('chipFilter1')?.setValue(value)
   }
 
@@ -78,12 +82,12 @@ export class ModalMultiFiltersComponent implements OnInit {
   }
 
   filterApply(){
-    let radioFilter1Index = this.radioFilter1.data.findIndex((element)=> element.id == this.form.get('radioFilter1')?.value)
-    let chipFilter1Index = this.chipFilter1.data.findIndex((element)=> element.id == this.form.get('chipFilter1')?.value)
+    let radioFilter1Index = this.radioFilter1 ? this.radioFilter1.data.findIndex((element)=> element.id == this.form.get('radioFilter1')?.value) : -1;
+    let chipFilter1Index = this.chipFilter1 ? this.chipFilter1.data.findIndex((element)=> element.id == this.form.get('chipFilter1')?.value) : -1;
     let filters = {
       "radioFilter1" : radioFilter1Index > -1 ? this.radioFilter1.data[radioFilter1Index] : null,
       "chipFilter1" : chipFilter1Index > -1 ? this.chipFilter1.data[chipFilter1Index] : null,
-      "selectedCheckboxs" : this.checkArray
+      "selectedCheckboxs" : this.checkArray.slice()
     };
     return filters;
   }

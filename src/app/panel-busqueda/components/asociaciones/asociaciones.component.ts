@@ -17,13 +17,13 @@ import { Filtro, MetaFiltro } from 'src/models/filtro.model';
   styleUrls: ['./asociaciones.component.scss']
 })
 export class AsociacionesComponent implements OnInit {
-  asociacionesexistentes!: any[];
+  asociacionesFiltered!: any[];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
   palabra: string = '';
-  asociasionesexistentesarray!: any[];
+  asociasiones!: any[];
   municipios: Array<any> = [];
-  showNotFoundAsocexistente: boolean = false;
+  showNotFound: boolean = false;
   authUserId: number = -1;
   authRol:string = '';
   checkbox: Checkbox[] = [
@@ -36,7 +36,7 @@ export class AsociacionesComponent implements OnInit {
     /* modoFiltro: 'number_ordenarmayoramenor', */
   ];
   /* varibles de buscqueda y filtros */
-  filtro: Filtro[] = [
+  filtro: Filtro = 
     {
       nameButton: 'Tipo de asociación',
       data: [
@@ -61,10 +61,8 @@ export class AsociacionesComponent implements OnInit {
           datoafiltrar: 'Mixta',
           modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
-      ],
-      /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
-    },
-  ];
+      ]
+    };
   
   constructor(private asociacionService: AsociacionesService,
     private appModalService: AppModalService,
@@ -79,17 +77,17 @@ export class AsociacionesComponent implements OnInit {
     this.authRol = payload.rol;
     /*Todas las asociaones que existen*/
     this.asociacionService.getAsociacionesTodas().subscribe((response) => {
-      this.asociasionesexistentesarray = response.data;
-      this.asociasionesexistentesarray =
-        this.asociasionesexistentesarray.filter((asociacion) => {
+      this.asociasiones = response.data;
+      this.asociasiones =
+        this.asociasiones.filter((asociacion) => {
           return asociacion.id_propietario !== this.authUserId;
         });
-      this.asociacionesexistentes = this.asociasionesexistentesarray.slice();
-      console.log(this.asociacionesexistentes);
-      if (this.asociacionesexistentes.length < 1) {
-        this.showNotFoundAsocexistente = true;
+      this.asociacionesFiltered = this.asociasiones.slice();
+      console.log(this.asociacionesFiltered);
+      if (this.asociacionesFiltered.length < 1) {
+        this.showNotFound = true;
       } else {
-        this.showNotFoundAsocexistente = false;
+        this.showNotFound = false;
       }
     });
     /* municipios sucre */
@@ -177,10 +175,10 @@ export class AsociacionesComponent implements OnInit {
   delateFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index,1);
      console.log(this.filtroseleccionadoCheckbox);
-     this.reseteoDeBusqueda();
+     this.searchReset();
    }
 
-   reseteoDeBusqueda() {
+   searchReset() {
     let resultados: any[] = this.buscarData(this.palabra);
     if (this.filtroseleccionado) {
       resultados = this.filtradoData(this.filtroseleccionado, resultados);
@@ -194,7 +192,12 @@ export class AsociacionesComponent implements OnInit {
         resultados
       );
     }
-    this.asociacionesexistentes = resultados;
+    this.asociacionesFiltered = resultados;
+    if (this.asociacionesFiltered.length < 1) {
+      this.showNotFound = true;
+    } else {
+      this.showNotFound = false;
+    }
   }
 
   filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
@@ -219,17 +222,17 @@ export class AsociacionesComponent implements OnInit {
 
   onBuscarPalabra(palabra: string) {
     this.palabra = palabra;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   buscarData(texto: string): any {
     let asociacionesresult: any[];
     if (texto.trim().length === 0) {
-      asociacionesresult = this.asociasionesexistentesarray;
+      asociacionesresult = this.asociasiones;
     } else {
       let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }, { data3: 'nit' }];
       asociacionesresult = this.searchBuscadorService.buscarData(
-        this.asociasionesexistentesarray,
+        this.asociasiones,
         texto,
         buscardatospor
       );
@@ -239,17 +242,17 @@ export class AsociacionesComponent implements OnInit {
 
   delateFilter() {
     this.filtroseleccionado = null;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
     this.filtroseleccionadoCheckbox = checkboxs;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   onFiltroChange(filtro: MetaFiltro) {
     this.filtroseleccionado = filtro;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   loadMunic(): any[] {
@@ -262,5 +265,11 @@ export class AsociacionesComponent implements OnInit {
       }
     );
     return this.municipios;
+  }
+
+  onFiltersAplied(result:any){
+    this.filtroseleccionado = result.radioFilter1;
+    this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
+    this.searchReset();
   }
 }

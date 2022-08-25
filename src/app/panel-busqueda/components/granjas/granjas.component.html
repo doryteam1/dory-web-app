@@ -1,26 +1,10 @@
-<div class="buscadoryfiltro mt-4">
-<div class="buscador-container">
+<div class="search mt-5">
     <app-search [placeholderbuscador]="'Buscar granja...'"
-    (keyEnterPressData)="onBuscarPalabra($event)">
+    (textSearch)="onBuscarPalabra($event)">
     </app-search>
-</div>
-<div class="filters">
-    <app-filtro class="filter"
-      [filtro]="orderFilter"
-      [checkboxfiltro]="false"
-      (onFilterSeleccionado)="onOrderFilterChange($event)"
-      [filtroSeleccionado]="selectedOrderFilter">
-    </app-filtro>
-    <app-filtro class="filter"
-      [filtro]="starsFilter"
-      [checkboxfiltro]="false"
-      (onFilterSeleccionado)="onStarFilterChange($event)"
-      [filtroSeleccionado]="selectedStarFilter">
-    </app-filtro>
-    <app-filtro class="filter" [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
-    (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
-    </app-filtro>
-</div>
+    <app-modal-multi-filters [radioFilter1]="orderFilters" [chipFilter1]="starsFilter" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
+</div>   
+<app-not-found *ngIf="showNotFound" objectName="granjas"></app-not-found>
 <div class="chip mb-4">
     <app-chip-con-boton-close class="chip__element"
     *ngIf="selectedOrderFilter"
@@ -38,25 +22,22 @@
     (onCloseClip)="deleteStarFilter()"
     >
     </app-chip-con-boton-close>
-    <div *ngIf="filtroseleccionadoCheckbox">
-        <app-chip-con-boton-close class="chip__element"
-        *ngFor="let  nombre of filtroseleccionadoCheckbox; let i =index"
-            [iconoChip]="true"
-            [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
-            [contenidoChip]="nombre"
-            (onCloseClip)="deleteFilterCheckbox(i)"
-            >
-        </app-chip-con-boton-close>
-    </div>
+    <app-chip-con-boton-close class="chip__element"
+    *ngFor="let  nombre of filtroseleccionadoCheckbox; let i =index"
+        [iconoChip]="true"
+        [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+        [contenidoChip]="nombre"
+        (onCloseClip)="deleteFilterCheckbox(i)"
+        >
+    </app-chip-con-boton-close>
 </div>
-<div *ngIf="showNotFound"
+<!-- <div *ngIf="showNotFound"
     class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
     <img src="assets/icons/searchanimado.svg">
     <div>
     No se encontraron resultados
     </div>
-</div>
-</div>
+</div> -->
 <div class="list overflow-auto d-flex flex-column">
 <div class="card" *ngFor="let granja of granjasFiltered">
 

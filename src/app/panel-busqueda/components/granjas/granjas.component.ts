@@ -38,7 +38,7 @@ export class GranjasComponent implements OnInit {
     /* modoFiltro: 'number_ordenarmayoramenor', */
   ];
   /* varibles de buscqueda y filtros */
-  orderFilter: Filtro[] = [
+  orderFilters: Filtro = 
     {
       nameButton: 'Ordenar por',
       data: [
@@ -79,10 +79,9 @@ export class GranjasComponent implements OnInit {
         }
       ],
       /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
-    },
-  ];
+    };
   
-  starsFilter: Filtro[] = [
+  starsFilter: Filtro = 
     {
       nameButton: 'Filtrar por',
       data: [
@@ -130,8 +129,7 @@ export class GranjasComponent implements OnInit {
         }
       ],
       /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
-    },
-  ];
+    };
 
   constructor(private granjasService: GranjasService,
     private appModalService: AppModalService,
@@ -195,6 +193,11 @@ export class GranjasComponent implements OnInit {
       );
     }
     this.granjasFiltered = resultados;
+    if (this.granjasFiltered.length < 1) {
+      this.showNotFound = true;
+    } else {
+      this.showNotFound = false;
+    }
   }
 
   starFilter(granjas:Array<any>){
@@ -290,5 +293,12 @@ export class GranjasComponent implements OnInit {
       }
     );
     return this.municipios;
+  }
+
+  onFiltersAplied(result:any){
+    this.selectedStarFilter = result.chipFilter1;
+    this.selectedOrderFilter = result.radioFilter1;
+    this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
+    this.searchReset();
   }
 }

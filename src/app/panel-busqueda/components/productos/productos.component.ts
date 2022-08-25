@@ -62,7 +62,7 @@ export class ProductosComponent implements OnInit {
 
   orderFilter: Filtro = 
     {
-      nameButton: 'Precio',
+      nameButton: 'Filtrar por precio',
       data: [
         {
           id: 0,
@@ -122,14 +122,8 @@ export class ProductosComponent implements OnInit {
   }
 
   onSearch(text:string){
-      console.log("productos ",text)
-      if(text == ''){
-        this.productosFiltered = this.productos;
-      }else{
-        this.productosFiltered = this.productos.filter((element)=>{
-          return element.nombreProducto.toLocaleLowerCase().includes(text.toLocaleLowerCase());
-        })
-      }
+      this.palabra = text;
+      this.searchReset();
   }
 
   goDetail(granja: any) {
@@ -144,9 +138,9 @@ export class ProductosComponent implements OnInit {
   delateFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index,1);
      console.log(this.filtroseleccionadoCheckbox);
-     this.reseteoDeBusqueda();
+     this.searchReset();
    }
-  reseteoDeBusqueda() {
+  searchReset() {
     let resultados: any[] = this.buscarData(this.palabra);
     if(this.selectedPriceFilter){
       resultados = this.priceFilter(resultados);
@@ -164,6 +158,13 @@ export class ProductosComponent implements OnInit {
       );
     }
     this.productosFiltered = resultados;
+    if(this.productosFiltered.length < 1){
+      this.showNotFound = true;
+    }else{
+      this.showNotFound = false;
+    }
+
+    console.log("showNotFound ",this.showNotFound)
   }
 
   filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
@@ -188,7 +189,7 @@ export class ProductosComponent implements OnInit {
 
   onBuscarPalabra(palabra: string) {
     this.palabra = palabra;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   buscarData(texto: string): any {
@@ -196,7 +197,7 @@ export class ProductosComponent implements OnInit {
     if (texto.trim().length === 0) {
       result = this.productos;
     } else {
-      let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }];
+      let buscardatospor: BuscarPor[] = [{ data1: 'nombreProducto' }];
       result = this.searchBuscadorService.buscarData(
         this.productos,
         texto,
@@ -208,27 +209,27 @@ export class ProductosComponent implements OnInit {
 
   delateFilter() {
     this.filtroseleccionado = null;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   deletePriceFilter(){
     this.selectedPriceFilter = null;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
     this.filtroseleccionadoCheckbox = checkboxs;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   onFiltroChange(filtro: MetaFiltro) {
     this.filtroseleccionado = filtro;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   onPriceFilterChange(filter: MetaFiltro){
     this.selectedPriceFilter = filter;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   loadMunic(): any[] {
@@ -270,6 +271,6 @@ export class ProductosComponent implements OnInit {
     this.selectedPriceFilter = result.chipFilter1;
     this.filtroseleccionado = result.radioFilter1;
     this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 }

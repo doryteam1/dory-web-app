@@ -413,6 +413,26 @@ textarea:focus, input:focus{
         stroke: white
       }
     }
+
+.app-custom-modal .modal-content{
+      height: 90vh;
+}
+
+.app-custom-modal .modal-content .modal-body{
+  height: 70vh;
+  overflow-y: auto;
+}
+
+.app-custom-modal .modal-content .modal-footer .btn:focus{
+  background-color: var(--azul1);
+  border: none;
+}
+
+.app-custom-modal .modal-content .modal-footer .btn:hover{
+  background-color: var(--azul1);
+  border: none;
+}
+
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 @import "~animate.css/animate.min";

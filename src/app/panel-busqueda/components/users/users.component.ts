@@ -112,10 +112,10 @@ export class UsersComponent implements OnInit {
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index,1);
      console.log(this.filtroseleccionadoCheckbox);
-     this.reseteoDeBusqueda();
+     this.searchReset();
    }
 
-   reseteoDeBusqueda() {
+   searchReset() {
     let resultados: any[] = this.buscarData(this.palabra);
     /* if (this.filtroseleccionado) {
       resultados = this.filtradoData(this.filtroseleccionado, resultados);
@@ -130,6 +130,11 @@ export class UsersComponent implements OnInit {
       );
     }
     this.usersFiltered = resultados;
+    if(this.usersFiltered.length < 1){
+      this.showNotFound = true;
+    }else{
+      this.showNotFound = false;
+    }
   }
 
   filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
@@ -154,37 +159,37 @@ export class UsersComponent implements OnInit {
 
   onBuscarPalabra(palabra: string) {
     this.palabra = palabra;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   buscarData(texto: string): any {
-    let asociacionesresult: any[];
+    let result: any[];
     if (texto.trim().length === 0) {
-      asociacionesresult = this.users;
+      result = this.users;
     } else {
       let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }];
-      asociacionesresult = this.searchBuscadorService.buscarData(
+      result = this.searchBuscadorService.buscarData(
         this.users,
         texto,
         buscardatospor
       );
     }
-    return asociacionesresult;
+    return result;
   }
 
   deleteFilter() {
     this.filtroseleccionado = null;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
     this.filtroseleccionadoCheckbox = checkboxs;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   onFiltroChange(filtro: MetaFiltro) {
     this.filtroseleccionado = filtro;
-    this.reseteoDeBusqueda();
+    this.searchReset();
   }
 
   loadMunic(): any[] {

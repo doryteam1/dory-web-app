@@ -208,19 +208,6 @@
   
   }
   
-  .search {
-    display: flex;
-    align-items: center;
-    background-color: var(--white);
-    background-origin: padding-box;
-    border-radius: 133px;
-    width: 90%;
-    height: 45px;
-    border: 0.5px solid var(--gris4);
-    -webkit-box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
-    box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
-  }
-  
   .container__input2 {
     background-size: 20px;
     background-color: var(--white);
@@ -395,13 +382,18 @@
   }
   .chip{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
-    .chip__checkbox{
+    margin-top: 20px;
+  }
+
+  .search{
     display: flex;
     flex-direction: row;
-    gap: 10px;
-    flex-wrap: wrap;
-    }
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
   }
-  

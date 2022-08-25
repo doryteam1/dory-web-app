@@ -1,6 +1,6 @@
-<div class="search mt-4">
+<div class="search mt-5">
     <app-search [placeholderbuscador]="'Buscar...'"
-    (keyEnterPressData)="onBuscarPalabra($event)">
+    (textSearch)="onBuscarPalabra($event)">
     </app-search>
     <!-- <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)"
     [filtroSeleccionado]="filtroseleccionado">
@@ -18,7 +18,6 @@
     (onCloseClip)="deleteFilter()"
     >
     </app-chip-con-boton-close>
-    <div class="chip__checkbox" *ngIf="filtroseleccionadoCheckbox">
     <app-chip-con-boton-close
     *ngFor="let  nombre of filtroseleccionadoCheckbox; let i =index"
         [iconoChip]="true"
@@ -27,16 +26,15 @@
         (onCloseClip)="deleteFilterCheckbox(i)"
         >
     </app-chip-con-boton-close>
-    </div>
 </div>
-<div *ngIf="usersFiltered?.length == 0"
+<!-- <div *ngIf="usersFiltered?.length == 0"
     class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
     <img src="assets/icons/searchanimado.svg">
     <div>
     No se encontraron resultados
     </div>
-</div>
-
+</div> -->
+<app-not-found *ngIf="showNotFound" [objectName]="userType"></app-not-found>
 <div class="list overflow-auto d-flex flex-column">
 <div class="card" *ngFor="let user of usersFiltered">
     <div class="card__user-info d-flex flex-row" (click)="goDetail(user)">

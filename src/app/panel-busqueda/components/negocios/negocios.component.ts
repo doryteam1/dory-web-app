@@ -15,6 +15,7 @@ export class NegociosComponent implements OnInit {
   negocios:Array<any> = [];
   negociosFiltered:Array<any> = [];
   filtroseleccionadoCheckbox: string[] = [];
+  showNotFound:boolean = false;
   checkbox: Checkbox[] = [
     {
       nameButton: 'Municipios',
@@ -37,6 +38,11 @@ export class NegociosComponent implements OnInit {
       (response)=>{
         this.negocios = response.data;
         this.negociosFiltered = this.negocios;
+        if(this.negociosFiltered.length < 1){
+          this.showNotFound = true;
+        }else{
+          this.showNotFound = false;
+        }
       }
     )
   }
@@ -74,6 +80,11 @@ searchReset() {
     );
   }
   this.negociosFiltered = results;
+  if(this.negociosFiltered.length < 1){
+    this.showNotFound = true;
+  }else{
+    this.showNotFound = false;
+  }
 }
 
 

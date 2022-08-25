@@ -49,10 +49,11 @@ import { FloatinBtnsAlanteAtrasComponent } from './components/floatin-btns-alant
 import { ControlBarComponent } from './control-bar/control-bar.component';
 import { NavbarElectronjsComponent } from './navbar-electronjs/navbar-electronjs.component';
 import { ModalGoogleGeneralComponent } from './components/modal-google-general/modal-google-general.component';
-import { ModalMultiFiltersComponent } from './filtros/components/modal-multi-filters/modal-multi-filters.component';
 import { NgGallerySliderComponent } from './components/ng-gallery-slider/ng-gallery-slider.component';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
+import { ModalMultiFiltersComponent } from './components/filtros/modal-multi-filters/modal-multi-filters.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
     ModalGoogleGeneralComponent,
     ModalMultiFiltersComponent,
     NgGallerySliderComponent,
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,
@@ -139,6 +141,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
     ModalGoogleGeneralComponent,
     ModalMultiFiltersComponent,
     NgGallerySliderComponent,
+    NotFoundComponent
     /*  CardphotoGoogleMapComponent, */
   ],
 

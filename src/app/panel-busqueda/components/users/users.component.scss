@@ -205,16 +205,13 @@
   
   .chip{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
     gap: 10px;
   }
-
-  .chip__checkbox{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    flex-wrap: wrap;
-    }
   
   .search{
     display: flex;
