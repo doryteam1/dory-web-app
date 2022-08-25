@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   HostBinding,
+  HostListener,
   NgZone,
   OnDestroy,
   OnInit,
@@ -19,6 +20,7 @@ dayjs.extend(relativeTime);
 require('dayjs/locale/es');
 dayjs.locale('es');
 import { ResizeObserver } from '@juggle/resize-observer';
+declare var window: any;
 @Component({
   selector: 'app-navbar-electronjs',
   templateUrl: './navbar-electronjs.component.html',
@@ -31,6 +33,13 @@ export class NavbarElectronjsComponent
   @ViewChild('toggleButton') toggleButton!: ElementRef;
   @ViewChild('toggleButton2') toggleButton2!: ElementRef;
   @ViewChild('botonalbondiga') botonalbondiga!: ElementRef;
+  @ViewChild('miModalNotificacion')
+  miModalNotificacion!: ElementRef<HTMLElement>;
+  @ViewChild('dropdownNotificacion')
+  dropdownNotificacion!: ElementRef<HTMLElement>;
+  @ViewChild('notifyModalDropdown')
+  notifyModalDropdown!: ElementRef<HTMLElement>;
+  formModal: any;
   photoUser: string = '';
   nomCom: string = '';
   successMessage = 'Mensaje de prueba';
@@ -55,6 +64,7 @@ export class NavbarElectronjsComponent
   electronjs: boolean = false;
   currentRoute: string = '';
   showMenu: boolean = false;
+  notifyStyloContainer: boolean = false;
   constructor(
     private router: Router,
     private userService: UsuarioService,
@@ -75,6 +85,13 @@ export class NavbarElectronjsComponent
   }
 
   ngOnInit(): void {
+    /* https://www.learmoreseekmore.com/2022/01/usage-of-bootstrap-v5-modal-in-angularv13.html */
+    this.formModal = new window.bootstrap.Modal(
+      document.getElementById('ModalNotificacion'),
+      {
+        backdrop: false,
+      }
+    );
     this.electronjs = this._electronService.ipcActivo;
     this.photoUser = localStorage.getItem('photoUser')!;
     this.nomCom = localStorage.getItem('nomApell')!;
@@ -104,7 +121,28 @@ export class NavbarElectronjsComponent
       }
     });
   }
-
+  openFormModal() {
+    this.formModal.show();
+  }
+  closeModalNotificacion() {
+    this.formModal.hide();
+  }
+  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth >= 1373) {
+      if (this.miModalNotificacion?.nativeElement.className.includes('show')) {
+        this.closeModalNotificacion();
+      }
+    } else if (event.target.innerWidth <= 1373) {
+      if (this.dropdownNotificacion?.nativeElement.className.includes('show')) {
+        this.dropdownNotificacion?.nativeElement.click();
+      }
+    }
+    if (event.target.innerWidth >= 450) {
+      if (this.notifyModalDropdown?.nativeElement.className.includes('show')) {
+        this.notifyModalDropdown?.nativeElement.click();
+      }
+    }
+  }
   test() {
     setTimeout(() => {
       this.tests.push('test');
