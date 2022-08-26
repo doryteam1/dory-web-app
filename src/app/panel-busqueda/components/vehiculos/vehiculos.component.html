@@ -28,7 +28,7 @@
 </div>
 
 <div class="container">
-  <div class="card" *ngFor="let vehiculo of vehiculosFiltered; let i=index;">
+  <div class="card" *ngFor="let vehiculo of vehiculosFiltered; let i=index;" (click)="goDetail(vehiculo.id_vehiculo)">
     <app-carrucel-img class="card__img"
                 [imagenes]="vehiculo.fotos"
                 [indicatorsphoto]="true"

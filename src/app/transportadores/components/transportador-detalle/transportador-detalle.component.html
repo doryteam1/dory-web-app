@@ -4,23 +4,23 @@
         <div class="container__info">
           <div class="container__detalle">
             <img class="detail-container__image" src="assets/icons/person_black.svg">
-            <h3 class="container__title">Investigador - {{investigador?.nombre_completo}} </h3>
+            <h3 class="container__title">Transportador - {{transportador?.nombre_completo}} </h3>
           </div>
           <div class="container__detalle">
             <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
             <span class="container__description1">
-              {{investigador?.municipio}}-{{investigador?.departamento}}</span>
+              {{transportador?.municipio}}-{{transportador?.departamento}}</span>
           </div>
         </div>
         <img class="container__image"
-          src="{{investigador?.foto ? investigador.foto : 'assets/images/avatar-person.svg'}}">
+          src="{{transportador?.foto ? transportador.foto : 'assets/images/avatar-person.svg'}}">
       </div>
       <div class="line"></div>
       <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/icons/phone_msg_black_24dp.svg">
         <div class="detail-container__data">
           <h4 class="detail-container__title">Celular</h4>
-          <span class="detail-container__value">{{investigador?.celular? investigador?.celular : 'Contacto sin definir'}}
+          <span class="detail-container__value">{{transportador?.celular? transportador?.celular : 'Contacto sin definir'}}
           </span>
         </div>
       </div>
@@ -28,34 +28,33 @@
         <img class="detail-container__image" src="assets/icons/contact_mail_black_24dp.svg">
         <div class="detail-container__data">
           <h4 class="detail-container__title">Correo electrónico</h4>
-          <span class="detail-container__value">{{investigador?.email}}</span>
+          <span class="detail-container__value">{{transportador?.email}}</span>
         </div>
       </div>
       <div class="detail-container">
         <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
         <div class="detail-container__data">
           <h4 class="detail-container__title">Dirección</h4>
-          <span *ngIf="investigador?.direccion" class="detail-container__value">{{investigador?.direccion? 'Dir.' : ''}}
-            {{investigador?.direccion}} </span>
-          <span *ngIf="!investigador?.direccion" class="detail-container__value">Dirección indefinida</span>
+          <span *ngIf="transportador?.direccion" class="detail-container__value">{{transportador?.direccion? 'Dir.' : ''}}
+            {{transportador?.direccion}} </span>
+          <span *ngIf="!transportador?.direccion" class="detail-container__value">Dirección indefinida</span>
         </div>
       </div>
-      <div class="detail-container" *ngIf="investigador?.informacion_adicional_direccion">
+      <div class="detail-container" *ngIf="transportador?.informacion_adicional_direccion">
             <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
                 <div class="detail-container__data">
                   <h4 class="detail-container__title">Información adicional de la dirección</h4>
                   <span class="detail-container__value">
-                    {{investigador?.informacion_adicional_direccion}}</span>
+                    {{transportador?.informacion_adicional_direccion}}</span>
                 </div>
               </div>
-      <div class="detail-container">
+      <!-- <div class="detail-container">
         <i class="detail-container__image detail-container__image--2 bi bi-person-fill"></i>
         <div class="detail-container__data">
           <h4 class="detail-container__title">Area de experticia</h4>
-          <span class="detail-container__value">{{investigador?.area_experticia ? investigador?.area_experticia : 'No especificada'}}</span>
+          <span class="detail-container__value">{{transportador?.area_experticia ? transportador?.area_experticia : 'No especificada'}}</span>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
-  
   

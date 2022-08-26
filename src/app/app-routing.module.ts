@@ -52,8 +52,16 @@ const routes: Routes = [
     loadChildren: () => import('./proveedores/proveedores.module').then(m => m.ProveedoresModule)
   },
   {
+    path:'transportadores',
+    loadChildren: () => import('./transportadores/transportadores.module').then(m => m.TransportadoresModule)
+  },
+  {
     path:'asociaciones',
     loadChildren: () => import('./asociaciones/asociaciones.module').then(m => m.AsociacionesModule)
+  },
+  {
+    path:'vehiculos',
+    loadChildren: () => import('./vehiculos/vehiculos.module').then(m => m.VehiculosModule)
   },
   {
     path:'dashboard',

@@ -8,6 +8,7 @@ import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultor
 import { InvestigadorService } from 'src/app/services/investigador.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { ProveedorService } from 'src/app/services/proveedor.service';
+import { TransportadoresService } from 'src/app/services/transportadores.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { Utilities } from 'src/app/utilities/utilities';
@@ -45,6 +46,7 @@ export class UsersComponent implements OnInit {
     private piscicultoresService: PiscicultoresService,
     private proveedoresService:ProveedorService,
     private investigadoresServices:InvestigadorService,
+    private transportadoresService:TransportadoresService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
     private places: PlacesService,
@@ -86,6 +88,8 @@ export class UsersComponent implements OnInit {
       return this.investigadoresServices.getInvestigadoresAll();
     }else if(this.userType == 'proveedores'){
       return this.proveedoresService.getProveedoresAll();
+    }else if(this.userType == 'transportadores'){
+      return this.transportadoresService.getTransportadoresAll();
     }
     return null;
   }
@@ -100,6 +104,8 @@ export class UsersComponent implements OnInit {
       baseUrl = '/proveedores/detalle/'
     }else if(user.tipo_usuario == 'Investigador Experto'){
       baseUrl = '/investigadores/detalle/'
+    }else if(user.tipo_usuario == 'Transportador'){
+      baseUrl = '/transportadores/detalle/'
     }
     let url = this.router.serializeUrl(
       this.router.createUrlTree([

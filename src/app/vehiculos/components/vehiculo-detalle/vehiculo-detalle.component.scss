@@ -1,0 +1,15 @@
+.card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.card__carrusel{
+    display: flex;
+    flex-direction: column;
+}
+
+.card__description{
+    display: flex;
+    flex-direction: column;
+}

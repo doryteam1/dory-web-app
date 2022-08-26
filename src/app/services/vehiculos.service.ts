@@ -27,4 +27,8 @@ export class VehiculosService {
   deleteVehiculo(id:number){
     return this.https.delete('https://dory-api-rest.herokuapp.com/api/vehiculos/'+id)
   }
+
+  getDetail(id:number){
+    return this.https.get('https://dory-api-rest.herokuapp.com/api/vehiculos/detailed/'+id)
+  }
 }

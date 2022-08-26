@@ -22,7 +22,8 @@ const routes: Routes = [
       {path:'proveedores',component:UsersComponent},
       {path:'investigadores',component:UsersComponent},
       {path:'granjas',component:GranjasComponent},
-      {path:'vehiculos',component:VehiculosComponent}
+      {path:'vehiculos',component:VehiculosComponent},
+      {path:'transportadores',component:UsersComponent}
     ]
   }
 ];

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES } from 'src/app/global/constants';
 import { PlacesService } from 'src/app/services/places.service';
 import { VehiculosService } from 'src/app/services/vehiculos.service';
@@ -86,7 +87,8 @@ export class VehiculosComponent implements OnInit {
 
   constructor(private vehiculosService:VehiculosService,
     private searchBuscadorService: SearchBuscadorService,
-    private places: PlacesService){
+    private places: PlacesService,
+    private router: Router){
     this.vehiculosService.getVehiculosAll().subscribe(
       (response)=>{
         this.vehiculos = response.data;
@@ -217,5 +219,14 @@ onFiltersAplied(result:any){
   this.selectedOrderFilter = result.radioFilter1;
   this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
   this.searchReset();
+}
+
+goDetail(id:number){
+  let url = this.router.serializeUrl(
+    this.router.createUrlTree([
+      'vehiculos/detalle/'+id,
+    ])
+  );
+  window.open(url, '_blank');
 }
 }
