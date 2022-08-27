@@ -74,9 +74,30 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "qa": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "20kb",
+                  "maximumError": "20kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ],
+              "outputHashing": "all"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "qa"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -86,6 +107,9 @@
             },
             "development": {
               "browserTarget": "web-app-dory:build:development"
+            },
+            "qa": {
+              "browserTarget": "web-app-dory:build:qa"
             }
           },
           "defaultConfiguration": "development"

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { HttpsService } from './https.service';
 
 @Injectable({
@@ -9,27 +10,27 @@ export class ProveedorService {
   constructor(private httpsService:HttpsService) { }
 
   getProductosById(userId:number){
-    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/proveedores/productos/userId/'+userId)
+    return this.httpsService.get(environment.doryApiRestBaseUrl+'/proveedores/productos/userId/'+userId)
   }
 
   addProducto(producto:any){
-    return this.httpsService.post('https://dory-api-rest.herokuapp.com/api/proveedores/producto',producto)
+    return this.httpsService.post(environment.doryApiRestBaseUrl+'/proveedores/producto',producto)
   }
 
   deleteProducto(id:number){
-    return this.httpsService.delete('https://dory-api-rest.herokuapp.com/api/proveedores/producto/'+id)
+    return this.httpsService.delete(environment.doryApiRestBaseUrl+'/proveedores/producto/'+id)
   }
 
   updateProducto(producto:any,id:number){
-    return this.httpsService.put('https://dory-api-rest.herokuapp.com/api/proveedores/producto/'+id,producto)
+    return this.httpsService.put(environment.doryApiRestBaseUrl+'/proveedores/producto/'+id,producto)
   }
 
   getProductosAll(){
-    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/proveedores/producto/todos')
+    return this.httpsService.get(environment.doryApiRestBaseUrl+'/proveedores/producto/todos')
   }
 
   getProveedoresAll(){
-    return this.httpsService.get('https://dory-api-rest.herokuapp.com/api/usuario/proveedores/todos')
+    return this.httpsService.get(environment.doryApiRestBaseUrl+'/usuario/proveedores/todos')
   }
 
 }

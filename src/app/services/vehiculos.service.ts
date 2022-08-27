@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { HttpsService } from './https.service';
 
 @Injectable({
@@ -9,26 +10,26 @@ export class VehiculosService {
   constructor(private https:HttpsService) { }
 
   getVehiculosUser(userId:number){
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/vehiculos/'+userId)
+    return this.https.get(environment.doryApiRestBaseUrl+'/vehiculos/'+userId)
   }
 
   getVehiculosAll(){
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/vehiculos/')
+    return this.https.get(environment.doryApiRestBaseUrl+'/vehiculos/')
   }
 
   addVehiculo(vehiculo:any){
-    return this.https.post('https://dory-api-rest.herokuapp.com/api/vehiculos',vehiculo)
+    return this.https.post(environment.doryApiRestBaseUrl+'/vehiculos',vehiculo)
   }
 
   updateVehiculo(vehiculo:any, id:number){
-    return this.https.put('https://dory-api-rest.herokuapp.com/api/vehiculos/'+id,vehiculo)
+    return this.https.put(environment.doryApiRestBaseUrl+'/vehiculos/'+id,vehiculo)
   }
 
   deleteVehiculo(id:number){
-    return this.https.delete('https://dory-api-rest.herokuapp.com/api/vehiculos/'+id)
+    return this.https.delete(environment.doryApiRestBaseUrl+'/vehiculos/'+id)
   }
 
   getDetail(id:number){
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/vehiculos/detailed/'+id)
+    return this.https.get(environment.doryApiRestBaseUrl+'/vehiculos/detailed/'+id)
   }
 }

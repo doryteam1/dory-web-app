@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -8,51 +9,51 @@ export class PescadoresService {
   constructor(private https: HttpClient) {}
 
   getPescadores() {
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/pescadores/todos');
+    return this.https.get(environment.doryApiRestBaseUrl+'/pescadores/todos');
   }
 
   getPescadoresMunicipio(idMunicipio: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/pescadores/municipio/' +
+      environment.doryApiRestBaseUrl+'/pescadores/municipio/' +
         idMunicipio
     );
   }
 
   getPescadoresAsociacion(idAsociacion: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/pescadores/asociacion/' +
+      environment.doryApiRestBaseUrl+'/pescadores/asociacion/' +
         idAsociacion
     );
   }
 
   getPescadoresDepartamento(idDpto: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/pescadores/departamento/' +
+      environment.doryApiRestBaseUrl+'/pescadores/departamento/' +
         idDpto
     );
   }
 
   getPescadoresEstadoSolicitud(nit: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/usuario/pescador/asociacion/' +
+      environment.doryApiRestBaseUrl+'/usuario/pescador/asociacion/' +
         nit
     );
   }
   getPescadoresPorAsociacion(nit: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/pescadores/asociacion/' + nit
+      environment.doryApiRestBaseUrl+'/pescadores/asociacion/' + nit
     );
   }
 
   /* sin terminar */
   getPescadorDetalle(id: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/usuario/id/' + id
+      environment.doryApiRestBaseUrl+'/usuario/id/' + id
     );
   }
   getPescadorDetalleAsociaciones(id: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/asociaciones/usuario/' + id
+      environment.doryApiRestBaseUrl+'/asociaciones/usuario/' + id
     );
   }
 }

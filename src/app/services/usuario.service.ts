@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SocialAuthService } from 'angularx-social-login';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { HttpsService } from './https.service';
 import { StorageService } from './storage.service';
 
@@ -27,46 +28,46 @@ export class UsuarioService {
       creadoCon: usuario.creadoCon || '',
     };
     return this.httpsService.post(
-      'https://dory-api-rest.herokuapp.com/api/usuario/create',
+      environment.doryApiRestBaseUrl+'/usuario/create',
       body
     );
   }
 
   getTiposUsuario() {
     return this.httpsService.get(
-      'https://dory-api-rest.herokuapp.com/api/tipos-usuarios'
+      environment.doryApiRestBaseUrl+'/tipos-usuarios'
     );
   }
 
   getUsuarioByEmail(email: string | null) {
     return this.httpsService.get(
-      'https://dory-api-rest.herokuapp.com/api/buscar/usuario/email/' + email
+      environment.doryApiRestBaseUrl+'/buscar/usuario/email/' + email
     );
   }
 
   getDetail(id: number) {
     return this.httpsService.get(
-      'https://dory-api-rest.herokuapp.com/api/usuario/id/' + id
+      environment.doryApiRestBaseUrl+'/usuario/id/' + id
     );
   }
 
   actualizarUsuario(id: number, dataUser: any) {
     return this.httpsService.put(
-      'https://dory-api-rest.herokuapp.com/api/usuario/parcial/' + id,
+      environment.doryApiRestBaseUrl+'/usuario/parcial/' + id,
       dataUser
     );
   }
 
   login(userData: { email: string; password: string }) {
     return this.httpsService.post(
-      'https://dory-api-rest.herokuapp.com/api/login',
+      environment.doryApiRestBaseUrl+'/login',
       userData
     );
   }
 
   loginWithGoogle(token: string) {
     return this.httpsService.post(
-      'https://dory-api-rest.herokuapp.com/api/login/google',
+      environment.doryApiRestBaseUrl+'/login/google',
       { token: token }
     );
   }
@@ -89,21 +90,21 @@ export class UsuarioService {
   }
   recoveryPassword(email: string) {
     return this.httpsService.post(
-      'https://dory-api-rest.herokuapp.com/api/usuario/recover/password',
+      environment.doryApiRestBaseUrl+'/usuario/recover/password',
       { email: email }
     );
   }
 
   resetPassword(body: { newPassword: string; token: string }) {
     return this.httpsService.put(
-      'https://dory-api-rest.herokuapp.com/api/usuario/update/password',
+      environment.doryApiRestBaseUrl+'/usuario/update/password',
       body
     );
   }
 
   changePassword(body: { antiguoPassword: string; newPassword: string }) {
     return this.httpsService.put(
-      'https://dory-api-rest.herokuapp.com/api/usuario/change/password',
+      environment.doryApiRestBaseUrl+'/usuario/change/password',
       body
     );
   }
@@ -149,33 +150,33 @@ export class UsuarioService {
 
   verifyAccount(token: string) {
     return this.httpsService.put(
-      'https://dory-api-rest.herokuapp.com/api/usuario/verify/account',
+      environment.doryApiRestBaseUrl+'/usuario/verify/account',
       { token: token }
     );
   }
 
   solicitudesDeAsociaciones() {
     return this.httpsService.get(
-      'https://dory-api-rest.herokuapp.com/api/usuario/solicitudes/noaceptadas/porusuario'
+      environment.doryApiRestBaseUrl+'/usuario/solicitudes/noaceptadas/porusuario'
     );
   }
 
   solicitudesParaAsociacionesRepresentante() {
     return this.httpsService.get(
-      'https://dory-api-rest.herokuapp.com/api/usuario/solicitudes/noaceptadas/representante'
+      environment.doryApiRestBaseUrl+'/usuario/solicitudes/noaceptadas/representante'
     );
   }
 
   eliminarSolicitud(idSolicitud: number) {
     return this.httpsService.delete(
-      'https://dory-api-rest.herokuapp.com/api/asociaciones/solicitud/eliminar/' +
+      environment.doryApiRestBaseUrl+'/asociaciones/solicitud/eliminar/' +
         idSolicitud
     );
   }
 
   aceptarInvitacion(idSolicitud: number) {
     return this.httpsService.put(
-      'https://dory-api-rest.herokuapp.com/api/asociaciones/aceptarSolicitudAsociacion/' +
+      environment.doryApiRestBaseUrl+'/asociaciones/aceptarSolicitudAsociacion/' +
         idSolicitud,
       null
     );

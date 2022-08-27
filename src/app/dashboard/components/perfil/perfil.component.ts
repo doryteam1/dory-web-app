@@ -280,7 +280,7 @@ export class PerfilComponent implements OnInit {
   ) {
     this.apiLoaded = httpClient
       .jsonp(
-        'https://maps.googleapis.com/maps/api/js?key=' + environment.doryApiKey,
+        'https://maps.googleapis.com/maps/api/js?key=' + environment.mapsApiKey,
         'callback'
       )
       .pipe(

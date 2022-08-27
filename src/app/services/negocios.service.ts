@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 import { HttpsService } from './https.service';
 
 @Injectable({
@@ -10,38 +11,38 @@ export class NegociosService {
 
   getNegociosByUserId(id: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/negocios/usuario/' + id
+      environment.doryApiRestBaseUrl+'/negocios/usuario/' + id
     );
   }
 
   getNegociosAll() {
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/negocios/');
+    return this.https.get(environment.doryApiRestBaseUrl+'/negocios/');
   }
 
   addNegocio(negocio: any) {
     return this.https.post(
-      'https://dory-api-rest.herokuapp.com/api/negocios',
+      environment.doryApiRestBaseUrl+'/negocios',
       negocio
     );
   }
 
   updateNegocio(idNegocio: number, negocio: any) {
     return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/negocios/update/' + idNegocio,
+      environment.doryApiRestBaseUrl+'/negocios/update/' + idNegocio,
       negocio
     );
   }
 
   updateParcialNegocio(idNegocio: number, parcialNegocio: any) {
     return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/negocios/parcial/' + idNegocio,
+      environment.doryApiRestBaseUrl+'/negocios/parcial/' + idNegocio,
       parcialNegocio
     );
   }
 
   updatePhotos(idNegocio: number, arrayFotos: Array<string | SafeUrl>) {
     return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/negocios/update/photos/' +
+      environment.doryApiRestBaseUrl+'/negocios/update/photos/' +
         idNegocio,
       { arrayFotos: arrayFotos }
     );
@@ -49,13 +50,13 @@ export class NegociosService {
 
   deleteNegocio(idNegocio: number) {
     return this.https.delete(
-      'https://dory-api-rest.herokuapp.com/api/negocios/eliminar/' + idNegocio
+      environment.doryApiRestBaseUrl+'/negocios/eliminar/' + idNegocio
     );
   }
 
   detail(idNegocio: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/negocios/detailed/' + idNegocio
+      environment.doryApiRestBaseUrl+'/negocios/detailed/' + idNegocio
     );
   }
 }

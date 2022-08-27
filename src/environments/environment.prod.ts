@@ -1,13 +1,13 @@
 export const environment = {
   firebase: {
-    projectId: 'dory-qa-83409',
-    appId: '1:170816600260:web:3ecb1b742c41763559f191',
-    storageBucket: 'dory-qa-83409.appspot.com',
-    locationId: 'us-central',
-    apiKey: 'AIzaSyBoYqkThi_lV_YldjGTEuNyODt4OjBG4Z4',
-    authDomain: 'dory-qa-83409.firebaseapp.com',
-    messagingSenderId: '170816600260',
+    apiKey: "AIzaSyAcUqFO0UXX9wdgiYY2xCumxyzC-EGl83M",
+    authDomain: "dory-prod-d7a48.firebaseapp.com",
+    projectId: "dory-prod-d7a48",
+    storageBucket: "dory-prod-d7a48.appspot.com",
+    messagingSenderId: "448784702076",
+    appId: "1:448784702076:web:2b499c999cb3f0949a07f9"
   },
-  doryApiKey:'AIzaSyDxAJesdH6yoUCT79wtRqXYKSevJsPD0TU',
-  production: true
+  mapsApiKey:'AIzaSyDxAJesdH6yoUCT79wtRqXYKSevJsPD0TU',
+  production: true,
+  doryApiRestBaseUrl:'https://dory-api-rest-prod.herokuapp.com/api'
 };

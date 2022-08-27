@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpsService } from 'src/app/services/https.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,57 +10,57 @@ export class PiscicultoresService {
 
   getPiscicultoresAsociacion(idAsociacion: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/piscicultores/asociacion/' +
+      environment.doryApiRestBaseUrl+'/piscicultores/asociacion/' +
         idAsociacion
     );
   }
 
   getPiscicultores() {
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/piscicultores/todos');
+    return this.https.get(environment.doryApiRestBaseUrl+'/piscicultores/todos');
   }
 
   getPiscicultoresMunicipio(idMunicipio: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/piscicultores/municipio/' +
+      environment.doryApiRestBaseUrl+'/piscicultores/municipio/' +
         idMunicipio
     );
   }
 
   getPiscicultoresDepartamento(idDpto: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/piscicultores/departamento/' +
+      environment.doryApiRestBaseUrl+'/piscicultores/departamento/' +
         idDpto
     );
   }
   getPiscicultorDetalle(id: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/usuario/id/' + id
+      environment.doryApiRestBaseUrl+'/usuario/id/' + id
     );
   }
   getPiscicultorDetalleGranjas(id: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/granjas/user/' + id
+      environment.doryApiRestBaseUrl+'/granjas/user/' + id
     );
   }
   getPiscicultorDetalleAsociaciones(id: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/asociaciones/usuario/' + id
+      environment.doryApiRestBaseUrl+'/asociaciones/usuario/' + id
     );
   }
   esFavorita(id: number) {
     return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/granjas/esfavorita/' + id,
+      environment.doryApiRestBaseUrl+'/granjas/esfavorita/' + id,
       null
     );
   }
   getPiscicultorPorAsociacion(nit: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/piscicultores/asociacion/' + nit
+      environment.doryApiRestBaseUrl+'/piscicultores/asociacion/' + nit
     );
   }
   getPiscicultoresEstadoSolicitud(nit: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/usuario/piscicultor/asociacion/' +
+      environment.doryApiRestBaseUrl+'/usuario/piscicultor/asociacion/' +
         nit
     );
   }

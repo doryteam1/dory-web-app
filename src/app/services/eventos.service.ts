@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { HttpsService } from './https.service';
 
 @Injectable({
@@ -9,18 +10,18 @@ export class EventosService {
   constructor(private https:HttpsService) { }
 
   getCursosByString(text:string){
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/buscar/evento/curso/'+text)
+    return this.https.get(environment.doryApiRestBaseUrl+'/buscar/evento/curso/'+text)
   }
 
   getCongresosByString(text:string){
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/buscar/evento/congreso/'+text)
+    return this.https.get(environment.doryApiRestBaseUrl+'/buscar/evento/congreso/'+text)
   }
 
   getCapacitacionesByString(text:string){
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/buscar/evento/capacitacion/'+text)
+    return this.https.get(environment.doryApiRestBaseUrl+'/buscar/evento/capacitacion/'+text)
   }
 
   getEventoByTipo(text:string){
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/buscar/evento/tipo/'+text)
+    return this.https.get(environment.doryApiRestBaseUrl+'/buscar/evento/tipo/'+text)
   }
 }

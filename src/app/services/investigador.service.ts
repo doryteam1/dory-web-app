@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { HttpsService } from './https.service';
 
 @Injectable({
@@ -9,6 +10,6 @@ export class InvestigadorService {
   constructor(private httpService:HttpsService) { }
 
   getInvestigadoresAll(){
-    return this.httpService.get('https://dory-api-rest.herokuapp.com/api/usuario/investigadores/todos')
+    return this.httpService.get(environment.doryApiRestBaseUrl+'/usuario/investigadores/todos')
   }
 }

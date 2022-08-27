@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 /* import { Subject,Observable, pipe } from 'rxjs'; */
 import { HttpsService } from 'src/app/services/https.service';
+import { environment } from 'src/environments/environment';
 import { ResenasModalContentComponent } from '../components/modals/resenas-modal-content/resenas-modal-content.component';
 /* import {tap  } from "rxjs/operators"; */
 @Injectable({
@@ -10,23 +11,23 @@ import { ResenasModalContentComponent } from '../components/modals/resenas-modal
 export class GranjasService {
   constructor(private https: HttpsService, private modalService: NgbModal) {}
   getGranjas() {
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/granjas/todas');
+    return this.https.get(environment.doryApiRestBaseUrl+'/granjas/todas');
   }
 
   getGranjasMunicipio(idMunicipio: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/granjas/municipio/' + idMunicipio
+      environment.doryApiRestBaseUrl+'/granjas/municipio/' + idMunicipio
     );
   }
 
   getGranja(id: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/granja/' + id
+      environment.doryApiRestBaseUrl+'/granja/' + id
     );
   }
   getGranjaSearch(cadena: string, idMunicipio: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/buscar/granja/municipio?idMunicipio=' +
+      environment.doryApiRestBaseUrl+'/buscar/granja/municipio?idMunicipio=' +
         idMunicipio +
         '&cadena=' +
         cadena
@@ -35,7 +36,7 @@ export class GranjasService {
 
   getInformeGranjasPorDepartamento() {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/granjas/departamento'
+      environment.doryApiRestBaseUrl+'/granjas/departamento'
     );
   }
 
@@ -48,53 +49,53 @@ export class GranjasService {
 
   getGranjaByUserId(userId: string) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/granjas/user/' + userId
+      environment.doryApiRestBaseUrl+'/granjas/user/' + userId
     );
   }
 
   deleteGranja(idGranja: number) {
     return this.https.delete(
-      'https://dory-api-rest.herokuapp.com/api/granjas/eliminar/' + idGranja
+      environment.doryApiRestBaseUrl+'/granjas/eliminar/' + idGranja
     );
   }
 
   updateGranja(id: number, updatedGranja: any) {
     return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/granjas/general/' + id,
+      environment.doryApiRestBaseUrl+'/granjas/general/' + id,
       updatedGranja
     );
   }
 
   getInfraestructuras() {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/infraestructuras'
+      environment.doryApiRestBaseUrl+'/infraestructuras'
     );
   }
 
   getEspecies() {
-    return this.https.get('https://dory-api-rest.herokuapp.com/api/especies');
+    return this.https.get(environment.doryApiRestBaseUrl+'/especies');
   }
 
   getGranjaDetalle(id: number) {
     return this.https
-      .get('https://dory-api-rest.herokuapp.com/api/granjas/detailed/' + id)
+      .get(environment.doryApiRestBaseUrl+'/granjas/detailed/' + id)
   }
   updateParcial(id: number, datos: any) {
     return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/granjas/parcial/' + id,
+      environment.doryApiRestBaseUrl+'/granjas/parcial/' + id,
       datos
     );
   }
   esFavorita(id: number) {
     return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/granjas/esfavorita/' + id,
+      environment.doryApiRestBaseUrl+'/granjas/esfavorita/' + id,
       null
     );
   }
 
   updatePhotos(idGranja: number, photos: any) {
     return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/granjas/update/photos/' +
+      environment.doryApiRestBaseUrl+'/granjas/update/photos/' +
         idGranja,
       photos
     );
@@ -102,26 +103,26 @@ export class GranjasService {
 
   misFavoritas() {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/granjas/misfavoritas'
+      environment.doryApiRestBaseUrl+'/granjas/misfavoritas'
     );
   }
 
   resenasById(id: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/resenas/granja/' + id
+      environment.doryApiRestBaseUrl+'/resenas/granja/' + id
     );
   }
 
   addResena(resena: any) {
     return this.https.post(
-      'https://dory-api-rest.herokuapp.com/api/resenas',
+      environment.doryApiRestBaseUrl+'/resenas',
       resena
     );
   }
 
   updateResena(resenaEdited: any, idResena: number) {
     return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/resenas/' + idResena,
+      environment.doryApiRestBaseUrl+'/resenas/' + idResena,
       resenaEdited
     );
   }
@@ -144,21 +145,21 @@ export class GranjasService {
 
   calificarGranja(idGranja: number, calificacion: number) {
     return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/granjas/calificar/' + idGranja,
+      environment.doryApiRestBaseUrl+'/granjas/calificar/' + idGranja,
       { calificacion: calificacion }
     );
   }
 
   resenasUserByIdGranja(idGranja: number) {
     return this.https.get(
-      'https://dory-api-rest.herokuapp.com/api/resenas/usuario/granja/' +
+      environment.doryApiRestBaseUrl+'/resenas/usuario/granja/' +
         idGranja
     );
   }
 
   deleteResena(idResena: number) {
     return this.https.delete(
-      'https://dory-api-rest.herokuapp.com/api/resenas/' + idResena
+      environment.doryApiRestBaseUrl+'/resenas/' + idResena
     );
   }
 }

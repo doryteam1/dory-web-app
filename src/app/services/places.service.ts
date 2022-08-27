@@ -13,23 +13,23 @@ export class PlacesService {
   constructor(private https:HttpsService, private httpClient:HttpClient) { }
 
   getDepartamentos(){
-    return this.https.get("https://dory-api-rest.herokuapp.com/api/departamentos");
+    return this.https.get(environment.doryApiRestBaseUrl+"/departamentos");
   }
 
   getMunicipiosDepartamentos(idDepartamento:number){
-    return this.https.get("https://dory-api-rest.herokuapp.com/api/municipios/departamento/"+idDepartamento);
+    return this.https.get(environment.doryApiRestBaseUrl+"/municipios/departamento/"+idDepartamento);
   }
 
   getCorregimientosMunicipio(idMunicipio:number){
-    return this.https.get("https://dory-api-rest.herokuapp.com/api/corregimientos/municipio/"+idMunicipio);
+    return this.https.get(environment.doryApiRestBaseUrl+"/corregimientos/municipio/"+idMunicipio);
   }
 
   getVeredasMunicipio(idMunicipio:number){
-    return this.https.get("https://dory-api-rest.herokuapp.com/api/veredas/municipio/"+idMunicipio);
+    return this.https.get(environment.doryApiRestBaseUrl+"/veredas/municipio/"+idMunicipio);
   }
 
   getMunicipioById(idMunicipio:number){
-    return this.https.get("https://dory-api-rest.herokuapp.com/api/municipios/"+idMunicipio);
+    return this.https.get(environment.doryApiRestBaseUrl+"/municipios/"+idMunicipio);
   }
 
   geocodeLatLng(location: google.maps.LatLngLiteral): Promise<GeocoderResponse> {
