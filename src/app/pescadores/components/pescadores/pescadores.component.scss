@@ -66,10 +66,21 @@
   font-size: 20px;
 }
 
-.container__box {
+.container_box {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 100%;
+  margin: 10px;
+
 }
 
+.mapaMunicipios {
+  height: 100%;
+  width: 100%;
+}
 @media screen and (min-width: 550px) {
   .container__title {
     font-size: 40px;
@@ -84,5 +95,16 @@
 
   .stats {
     display: block;
+  }
+}
+@media screen and (max-width: 520px) {
+  .container_box {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .container_box {
+    width: 250px;
   }
 }

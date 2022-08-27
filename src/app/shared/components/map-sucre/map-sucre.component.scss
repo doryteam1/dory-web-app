@@ -1,40 +1,75 @@
 /* PROPIOS */
 .borderless {
-    outline: none;
-  }
-  .container-map{
-    height: 60vw;
-    width: 60vw;
-  }
-    @media screen and (max-width: 820px) {
+  outline: none;
+}
+
+.container-map {
+  height: 100%;
+  width: 100%;
+}
+
+/*     @media screen and (max-width: 820px) {
      .container-map{
       height: 130vw;
       width: 100vw;
      }
-    }
-  @keyframes animate-svg-stroke-3 {
-    0% {
-      stroke-dashoffset: 31.109482869200132px;
-      stroke-dasharray: 31.109482869200132px;
-    }
-    100% {
-      stroke-dashoffset: 0;
-      stroke-dasharray: 31.109482869200132px;
-    }
+    } */
+@keyframes animate-svg-stroke-3 {
+  0% {
+    stroke-dashoffset: 31.109482869200132px;
+    stroke-dasharray: 31.109482869200132px;
   }
 
-  @keyframes animate-svg-fill-3 {
-    0% {
-      fill: transparent;
-    }
-    100% {
-      fill: rgb(245, 56, 56);
-    }
+  100% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 31.109482869200132px;
   }
-  .regionhover:hover .svg-elem-3 {
-    animation: animate-svg-stroke-3 0s ease-out 0.24s infinite alternate both,
-      animate-svg-fill-3 0.2s linear 0.4s infinite alternate both;
+}
+
+@keyframes animate-svg-fill-3 {
+  0% {
+    fill: transparent;
   }
+
+  100% {
+    fill: rgb(245, 56, 56);
+  }
+}
+
+.regionhover:hover .svg-elem-3 {
+  animation: animate-svg-stroke-3 0s ease-out 0.24s infinite alternate both,
+    animate-svg-fill-3 0.2s linear 0.4s infinite alternate both;
+}
+
+.mi-clase {
+  transform: matrix(1, 0, 0, 1, 0, 0) !important;
+}
+
+.controllerZoom {
+display: flex;
+  justify-content: flex-start;
+  grid-gap: 10px;
+  gap: 10px;
+  height: 45px;
+  width: 150px;
+  margin-bottom: 10px;
+
+  svg {
+    border-radius: max(0px, min(8px, -999900% - 39996px + 999900vw))/8px;
+    box-shadow: 0 2px 12px var(--shadow-2);
+    cursor: pointer;
+  }
+  svg:hover{
+    background-color: #e9ecef;
+  }
+}
+.zoomControlBotton{
+  opacity: 0.3;
+  cursor:default !important;
+}
+.controlOpacity{
+  opacity: 1;
+}
 
 /*  svg {
    opacity: 0.5;

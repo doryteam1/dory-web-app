@@ -70,7 +70,7 @@ export class FloatingBtnAutoUpComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         let route: string = event.url;
         if (
-          route.includes('dashboard') ||
+          route.includes('asociaciones') ||
           route.includes('contacto') ||
           route.includes('update-password') ||
           route.includes('update-password') ||

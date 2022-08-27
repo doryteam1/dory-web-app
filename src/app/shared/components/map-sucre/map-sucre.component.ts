@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import * as SvgPanZoom from 'svg-pan-zoom';
 import * as Hammer from 'hammerjs';
 
@@ -11,7 +21,8 @@ export class MapSucreComponent implements OnInit {
   @Output() munClick: EventEmitter<number> = new EventEmitter();
   @Output() munOver: EventEmitter<number> = new EventEmitter();
   @Input() idMapa: any = 'idMapa';
-
+  @Input() zoom: boolean = false;
+  @ViewChild('svgelemento ') svgelemento!: ElementRef;
   @Input() munData: any = {
     nombre: 'Not Selected',
     poblacion: 0,
@@ -20,10 +31,14 @@ export class MapSucreComponent implements OnInit {
 
   @Input() labelTooltip: string = '';
   svgPanZoom!: SvgPanZoom.Instance;
-  constructor() {}
+  zoomMapa: boolean = false;
+  activeClass: boolean = false;
+  zoomInActive:boolean=false
+  constructor(private renderer: Renderer2) {}
 
   ngOnInit(): void {}
-  ngAfterViewInit0() {
+  activarZoomMapa() {
+    this.zoomMapa = true;
     var eventsHandler;
     /*    var svgActive = false,
         svgHovered = false; */
@@ -45,12 +60,12 @@ export class MapSucreComponent implements OnInit {
           pannedY = 0;
         // Init Hammer
         // Listen only for pointer and touch events
+
         this.hammer = new Hammer(options.svgElement, {
           inputClass: Hammer.TouchMouseInput
             ? Hammer.PointerEventInput
             : Hammer.TouchInput,
         });
-
         // Enable pinch
         this.hammer.get('pinch').set({ enable: true });
 
@@ -98,105 +113,83 @@ export class MapSucreComponent implements OnInit {
         options.svgElement.addEventListener('touchmove', function (e: any) {
           e.preventDefault();
         });
-        /*        function updateSvgClassName() {
-          options.svgElement.setAttribute(
-            'class',
-            '' + (svgActive ? 'active' : '') + (svgHovered ? ' hovered' : '')
-          );
-        } */
-
-        /*  this.listeners = {
-          click: function () {
-            if (svgActive) {
-              options.instance.disableZoom();
-              svgActive = false;
-            } else {
-              options.instance.enableZoom();
-              svgActive = true;
-            }
-
-            updateSvgClassName();
-          },
-          mouseenter: function () {
-            svgHovered = true;
-
-            updateSvgClassName();
-          },
-          mouseleave: function () {
-            svgActive = false;
-            svgHovered = false;
-            options.instance.disableZoom();
-
-            updateSvgClassName();
-          },
-        }; */
-
-        /*    this.listeners.mousemove = this.listeners.mouseenter;
-
-        for (var eventName in this.listeners) {
-          options.svgElement.addEventListener(
-            eventName,
-            this.listeners[eventName]
-          );
-        } */
       },
-      destroy: function (options: any) {
+      destroy: function () {
         this.hammer.destroy();
-        /*      for (var eventName in this.listeners) {
-          options.svgElement.removeEventListener(
-            eventName,
-            this.listeners[eventName]
-          );
-        } */
       },
     };
 
     // initializing the function
 
     this.svgPanZoom = SvgPanZoom(`#${this.idMapa}`, {
-      zoomEnabled: false,
+      viewportSelector: '.svg-pan-zoom_viewport',
+      zoomEnabled: true,
       controlIconsEnabled: false,
       fit: true,
       center: true,
+      minZoom: 1,
       customEventsHandler: eventsHandler,
-
+      beforePan: this.beforePan,
     });
   }
-
-  activarZoom() {
-    this.ngAfterViewInit0()
-    /*     if (this.svgPanZoom.isZoomEnabled()) {
-      this.svgPanZoom.disableZoom();
-    } else {
-      this.svgPanZoom.enableZoom();
-    } */
-    /*    this.svgPanZoom.zoomIn()
-    this.svgPanZoom.zoomIn() */
-    /* this.svgPanZoom.reset() */
+  beforePan = (oldPan: any, newPan: { x: number; y: number }) => {
+    var stopHorizontal = false,
+      stopVertical = false,
+      gutterWidth = 200,
+      gutterHeight = 200,
+      // Computed variables
+      sizes: any = this.svgPanZoom.getSizes(),
+      leftLimit =
+        -((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom) +
+        gutterWidth,
+      rightLimit = sizes.width - gutterWidth - sizes.viewBox.x * sizes.realZoom,
+      topLimit =
+        -((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom) +
+        gutterHeight,
+      bottomLimit =
+        sizes.height - gutterHeight - sizes.viewBox.y * sizes.realZoom;
+    var customPan = {
+      x: Math.max(leftLimit, Math.min(rightLimit, newPan.x)),
+      y: Math.max(topLimit, Math.min(bottomLimit, newPan.y)),
+    };
+    return customPan;
+  };
+  zoomIn() {
+    /* Aumentar zoom */
+    this.zoomInActive=true
+    if (this.zoomMapa) {
+      this.svgPanZoom.zoomIn();
+    } else if (!this.zoomMapa) {
+      this.activeClass = false;
+      this.activarZoomMapa();
+    }
   }
-  zoomMas(){
-  this.svgPanZoom.zoomIn();
+  zooOut() {
+    /* Disminuir zoom */
+    if (this.zoomInActive) {
+      this.svgPanZoom.zoomOut();
+    }
   }
-  zooMenos(){
-this.svgPanZoom.zoomOut();
+  resetZoom() {
+    /* Reiniciar el zoom y configuración */
+    if (this.zoomMapa) {
+      this.svgPanZoom.resize();
+      this.svgPanZoom.fit();
+      this.svgPanZoom.center();
+      this.svgPanZoom.destroy();
+      this.renderer.setAttribute(
+        this.svgelemento.nativeElement,
+        'viewBox',
+        '0 0 774 1234'
+      );
+      this.activeClass = true;
+      this.zoomMapa = false;
+      this.zoomInActive=false
+    }
   }
-  resetZoom(){
-this.svgPanZoom.reset();
-  }
-  desaptivaZoom() {
-    this.svgPanZoom.destroy();
-    /* this.svgPanZoom.disableControlIcons();
-    this.svgPanZoom.disableMouseWheelZoom();
-    this.svgPanZoom.disableDblClickZoom();
-    this.svgPanZoom.disablePan();
-    this.svgPanZoom.disableZoom(); */
-  }
-  zoomLupa() {}
   munSelected(num: number) {
-    console.log(num);
     this.munClick.emit(num);
   }
-
   mouseOver(num: number) {
     this.munOver.emit(num);
   }

@@ -38,7 +38,7 @@
 </div>
 <div class="container_box">
   <app-map-sucre (munClick)="munClick($event)" (munOver)="munOver($event)" [munData]="municSeleccionado"
-    labelTooltip="Pescadores" [idMapa]="'pescador'"></app-map-sucre>
+    labelTooltip="Pescadores" [idMapa]="'pescador'"[zoom]="true" class="mapaMunicipios"></app-map-sucre>
 </div>
 <div class="search-container" *ngIf="showNotFound">
   <div class="search-container__box">
