@@ -2,11 +2,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   HostBinding,
   HostListener,
   NgZone,
   OnDestroy,
   OnInit,
+  Output,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -29,6 +31,7 @@ declare var window: any;
 export class NavbarElectronjsComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
+  @Output() onNotify: EventEmitter<boolean> = new EventEmitter();
   @ViewChild('notifies', { read: Element }) notifies!: Element;
   @ViewChild('toggleButton') toggleButton!: ElementRef;
   @ViewChild('toggleButton2') toggleButton2!: ElementRef;
@@ -46,6 +49,7 @@ export class NavbarElectronjsComponent
   invitaciones: Array<any> = [];
   notificatiosOpened: boolean = false;
   invitacionesFromUsers: Array<any> = [];
+  ocultarHtml: boolean = false;
   notifyHeights: string[] = [
     '',
     'notify__menu--height1',
@@ -123,9 +127,13 @@ export class NavbarElectronjsComponent
   }
   openFormModal() {
     this.formModal.show();
+    this.ocultarHtml = true;
+    this.onNotify.emit(true)
   }
   closeModalNotificacion() {
     this.formModal.hide();
+    this.ocultarHtml = false;
+    this.onNotify.emit(false);
   }
   @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
     if (event.target.innerWidth >= 1373) {

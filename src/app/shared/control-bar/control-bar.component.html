@@ -9,11 +9,11 @@
         </div>
         <!-- <span>Dory</span> -->
         <app-floatin-btns-alante-atras
-          style=" -webkit-app-region: no-drag;padding-left: 25px;">
+          style=" -webkit-app-region: no-drag;padding-left: 25px;" *ngIf="!ocultarHtml">
         </app-floatin-btns-alante-atras >
           <app-navbar-electronjs
           style="width: 100%;
-           height: 100%;max-width: 100%; display: flex;">
+           height: 100%;max-width: 100%; display: flex;"(onNotify)="notifyActive($event)">
            </app-navbar-electronjs>
       </div>
       <div id="window-controls">

@@ -8,15 +8,17 @@ import { ElectronjsService } from 'src/app/services/electronjs.service';
   styleUrls: ['./control-bar.component.scss'],
 })
 export class ControlBarComponent implements OnInit {
+  ocultarHtml: boolean = false;
   constructor(
     private _electronService: ElectronjsService,
     private ngZone: NgZone,
-    private router: Router,
-  ) {
-
-  }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
+  notifyActive(event:boolean) {
+    this.ocultarHtml=event
+  }
   navegarRuta(ruta: string) {
     this.ngZone.run(() => {
       this.router.navigateByUrl(ruta);

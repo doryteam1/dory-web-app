@@ -36,7 +36,10 @@
     </app-search>
   </div>
 </div>
-
+<div class="container_box">
+  <app-map-sucre (munClick)="munClick($event)" (munOver)="munOver($event)" [munData]="municSeleccionado"
+    labelTooltip="Pescadores" [idMapa]="'pescador'"></app-map-sucre>
+</div>
 <div class="search-container" *ngIf="showNotFound">
   <div class="search-container__box">
     <img class="search-container__image" [ngClass]="{'search-container__image--modify':pescadores.length<1}" src="assets/images/searching.svg">

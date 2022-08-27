@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-miestilo navbar-light bg-light navbar--mi-stilo">
   <div class=" container-fluid-miestilo container-fluid bg-light ">
     <!-- Se muestran cuando es responsibe -->
-    <div class="container-fluid-miestilo__1">
+    <div class="container-fluid-miestilo__1" *ngIf="!ocultarHtml">
       <!-- Botón albondiga -->
       <button #botonalbondiga class="navbar-toggler navbar-toggler--button" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -25,14 +25,14 @@
             <!-- Interfas de notificaciones este boton abre la modal -->
             <div class="no-drag notify dropstart">
               <div
-                  class="notify__box position-relative "
+                  class="notify__box-miestilo position-relative "
                   placement="bottom"
                   ngbTooltip="Notificaciones"
                  (click)="openFormModal()">
                 <div class="notify__icon--container">
                   <i class="notify__icon bi bi-bell"></i>
                 </div>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                <span class="position-absolute topAndLetNotyfyIcon start-100 translate-middle badge rounded-pill bg-danger"
                   *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
                   {{invitaciones.length}}
                   <span class="visually-hidden">tienes notificaciones</span>
@@ -44,7 +44,8 @@
               <img class="container__img container__img--button"
                 [src]="authUserPhoto() ? authUserPhoto() : '../../../assets/images/avatar-person.svg'"
                 id="dropdownMenu2"
-                data-bs-toggle="dropdown" aria-expanded="false">
+                data-bs-toggle="dropdown"
+                 aria-expanded="false">
               <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
                       <div class="usuarioFotoYnombre">
                         <img class="container__img container__img--button "
@@ -198,19 +199,20 @@
         <div class=" no-drag notify dropstart" *ngIf="authenticated()">
           <div
            #dropdownNotificacion
-          class="notify__box position-relative "
+           class="notify__box position-relative "
            id="dropdownMenuButton1"
-          data-bs-toggle="dropdown"
+           data-bs-toggle="dropdown"
             aria-expanded="false" data-bs-auto-close="outside" (click)="notificatiosOpened = true">
             <div class="notify__icon--container">
               <i class="notify__icon bi bi-bell"></i>
             </div>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            <span class="position-absolute top-3px start-100 translate-middle badge rounded-pill bg-danger"
               *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
               {{invitaciones.length}}
               <span class="visually-hidden">tienes notificaciones</span>
             </span>
           </div>
+
         <ul #notifies class="notify__menu notify__menu dropdown-menu p-3 overflow-auto"
           [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }" aria-labelledby="dropdownMenuButton1"
           (onresize)="onResize()" style="-webkit-app-region: no-drag;">

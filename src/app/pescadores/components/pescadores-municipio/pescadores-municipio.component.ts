@@ -54,8 +54,13 @@ export class PescadoresMunicipioComponent implements OnInit {
   showNotFound: boolean = false;
   pescadoresarray: any[] = [];
   pescadores: any[] = [];
-  contador: number=0;
-
+  contador: number = 0;
+  resumenDepartamento: Array<any> = [];
+  municSeleccionado: any = {
+    municipio: 'Cargando...',
+    poblacion: 0,
+    count: 0,
+  };
   constructor(
     httpClient: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -78,6 +83,14 @@ export class PescadoresMunicipioComponent implements OnInit {
 
   ngOnInit(): void {
     registerLocaleData(es);
+    this.pescadoresService.getPescadoresDepartamento(70).subscribe(
+      (response: any) => {
+        this.resumenDepartamento = response.data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
     let path = this.activatedRoute.snapshot.url[0].path;
     let id = this.activatedRoute.snapshot.params.id;
 
@@ -85,7 +98,6 @@ export class PescadoresMunicipioComponent implements OnInit {
       this.pescadoresService
         .getPescadoresAsociacion(id)
         .subscribe((response: any) => {
-          console.log(response);
           this.pescadores = response.data;
           this.municipio = response.municipio;
           this.extractLatLong();
@@ -94,10 +106,8 @@ export class PescadoresMunicipioComponent implements OnInit {
       this.pescadoresService
         .getPescadoresMunicipio(id)
         .subscribe((response: any) => {
-          console.log(response);
           this.pescadores = response.data;
           this.pescadoresarray = response.data;
-          console.log(this.pescadoresarray);
           if (this.pescadores.length !== 0) {
             this.showNotFound = false;
           } else {
@@ -133,7 +143,6 @@ export class PescadoresMunicipioComponent implements OnInit {
           this.extractLatLong();
         });
     }
-    console.log(this.activatedRoute.snapshot.url[0].path);
   }
 
   extractLatLong() {
@@ -184,9 +193,9 @@ export class PescadoresMunicipioComponent implements OnInit {
       this.selectedPescador.nombre = this.pescadores[index].nombre;
       this.selectedPescador.dirrecion = this.pescadores[index].direccion;
       this.selectedPescador.celular = this.pescadores[index].celular;
-    }else{
-this.contador = 0;
-this.eliminInfoWindow();
+    } else {
+      this.contador = 0;
+      this.eliminInfoWindow();
     }
   }
   mapainiciado() {
@@ -221,5 +230,25 @@ this.eliminInfoWindow();
 
   goBack() {
     this.location.back();
+  }
+  changeSelected(codigo: number) {
+    let index = this.resumenDepartamento.findIndex(
+      (dataMunic) => dataMunic.id_municipio == codigo
+    );
+    if (index != -1) {
+      this.municSeleccionado = {
+        nombre: this.resumenDepartamento[index].nombre,
+        poblacion: this.resumenDepartamento[index].poblacion,
+        count: this.resumenDepartamento[index].count_pescadores,
+      };
+    }
+  }
+  munClick(mun: number) {
+    this.changeSelected(mun);
+    this.router.navigateByUrl('/pescadores/municipio/' + mun);
+  }
+
+  munOver(mun: number) {
+    this.changeSelected(mun);
   }
 }

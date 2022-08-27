@@ -452,7 +452,16 @@ width: 30px;
 .buscador-container-otro {
   display: none ;
 }
-
+.top-3px{
+  top:3.5px
+}
+.topAndLetNotyfyIcon{
+  top:5px;
+  left: 35px !important;
+}
+.notify__box-miestilo{
+  margin-right: 23px;
+}
 @media screen and (min-width: 1373px) {
   .buscador-container-otro {
       display: flex;
@@ -534,7 +543,9 @@ width: 30px;
 .modal-title {
   font-weight: 600;
 }
-
+.modal{
+  top: 50px;
+}
 .modal-header {
   border-bottom: none;
 }

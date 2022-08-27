@@ -11,42 +11,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./pescadores.component.scss']
 })
 export class PescadoresComponent implements OnInit {
-  sanOnofreActive:boolean = true;
-  toluActive:boolean = true;
-  toluViejoActive:boolean = true;
-  covenasActive:boolean = true;
-  colosoActive:boolean = true;
-  chalanActive:boolean = true;
-  ovejasActive:boolean = true;
-  palmitoActive:boolean = true;
-  sincelejoActive:boolean = true;
-  morroaActive:boolean = true;
-  losPalmitosActive:boolean = true;
-  sanPedroActive:boolean = true;
-  sampuesActive:boolean = true;
-  corozalActive:boolean = true;
-  sanJuanDeBetuliaActive:boolean = true;
-  sinceActive:boolean = true;
-  buenaVistaActive:boolean = true;
-  elRobleActive:boolean = true;
-  galerasActive:boolean = true;
-  sanBenitoAbadActive:boolean = true;
-  laUnionActive:boolean = true;
-  caimitoActive:boolean = true;
-  sucreActive:boolean = true;
-  sanMarcosActive:boolean = true;
-  majagualActive:boolean = true;
-  guarandaActive:boolean = true;
   poblacion:number = 0;
   pescadores:number = 0;
-
   municSeleccionado:any = {
     municipio:"Cargando...",
     poblacion:0,
     count:0
   }
-
-  
   resumenDepartamento:Array<any> = []
   constructor(private pService:PescadoresService, private router:Router) { }
 
@@ -81,6 +52,7 @@ export class PescadoresComponent implements OnInit {
   }
 
   munClick(mun:number){
+    console.log(mun)
     this.changeSelected(mun);
     this.router.navigateByUrl('/pescadores/municipio/'+mun)
   }

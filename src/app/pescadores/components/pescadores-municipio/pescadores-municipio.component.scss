@@ -208,6 +208,11 @@ div.container-map-car>div>div:nth-child(1) {
 .buscador-container__search {
   width: 100%
 }
+.container_box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media screen and (min-width: 1100px) {
   .mYstiledivmap {

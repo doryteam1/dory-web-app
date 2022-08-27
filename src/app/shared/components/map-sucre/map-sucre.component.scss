@@ -3,13 +3,13 @@
     outline: none;
   }
   .container-map{
-    height: 50vw;
-    width: 50vw;
+    height: 60vw;
+    width: 60vw;
   }
     @media screen and (max-width: 820px) {
      .container-map{
       height: 130vw;
-      width: 100%;
+      width: 100vw;
      }
     }
   @keyframes animate-svg-stroke-3 {
@@ -36,3 +36,14 @@
       animate-svg-fill-3 0.2s linear 0.4s infinite alternate both;
   }
 
+/*  svg {
+   opacity: 0.5;
+ }
+
+ svg.active {
+   opacity: 1;
+ }
+
+ svg.active.hovered {
+   border: 3px solid blue;
+ } */
