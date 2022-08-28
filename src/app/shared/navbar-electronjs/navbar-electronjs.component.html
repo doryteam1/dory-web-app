@@ -23,8 +23,9 @@
           </div>
           <div style="display: flex; align-items: center;height: 100%;"  *ngIf="authenticated()">
             <!-- Interfas de notificaciones este boton abre la modal -->
-            <div class="no-drag notify dropstart">
+            <div #buttonOpenModalNotify class="no-drag notify dropstart">
               <div
+
                   class="notify__box-miestilo position-relative "
                   placement="bottom"
                   ngbTooltip="Notificaciones"
@@ -313,8 +314,8 @@
   tabindex="-1"
   aria-labelledby="ModalNotificacionLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div  #miModalNotificacionContent class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0"
           id="ModalNotificacionLabel">Notificaciones</h5>

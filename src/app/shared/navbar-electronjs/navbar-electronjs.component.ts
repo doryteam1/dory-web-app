@@ -31,13 +31,16 @@ declare var window: any;
 export class NavbarElectronjsComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @Output() onNotify: EventEmitter<boolean> = new EventEmitter();
   @ViewChild('notifies', { read: Element }) notifies!: Element;
   @ViewChild('toggleButton') toggleButton!: ElementRef;
   @ViewChild('toggleButton2') toggleButton2!: ElementRef;
   @ViewChild('botonalbondiga') botonalbondiga!: ElementRef;
   @ViewChild('miModalNotificacion')
-  miModalNotificacion!: ElementRef<HTMLElement>;
+  miModalNotificacion!: ElementRef;
+  @ViewChild('miModalNotificacionContent')
+  miModalNotificacionContent!: ElementRef;
+  @ViewChild('buttonOpenModalNotify')
+  buttonOpenModalNotify!: ElementRef;
   @ViewChild('dropdownNotificacion')
   dropdownNotificacion!: ElementRef<HTMLElement>;
   @ViewChild('notifyModalDropdown')
@@ -79,11 +82,19 @@ export class NavbarElectronjsComponent
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
-        !this.toggleButton.nativeElement.contains(e.target) &&
-        !this.botonalbondiga.nativeElement.contains(e.target)
+        !this.toggleButton?.nativeElement.contains(e.target) &&
+        !this.botonalbondiga?.nativeElement.contains(e.target)
       ) {
         /* https://www.wake-up-neo.net/es/html/como-detectar-el-clic-fuera-de-un-elemento-en-angular-7/806431830/ */
-        this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
+        this.renderer.removeClass(this.toggleButton2?.nativeElement, 'show');
+      }
+      if (this.miModalNotificacion?.nativeElement.className.includes('show')) {
+        if (
+          !this.miModalNotificacionContent?.nativeElement.contains(e.target) &&
+          !this.buttonOpenModalNotify?.nativeElement.contains(e.target)
+        ) {
+          this.closeModalNotificacion();
+        }
       }
     });
   }
@@ -127,13 +138,9 @@ export class NavbarElectronjsComponent
   }
   openFormModal() {
     this.formModal.show();
-    this.ocultarHtml = true;
-    this.onNotify.emit(true)
   }
   closeModalNotificacion() {
     this.formModal.hide();
-    this.ocultarHtml = false;
-    this.onNotify.emit(false);
   }
   @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
     if (event.target.innerWidth >= 1373) {

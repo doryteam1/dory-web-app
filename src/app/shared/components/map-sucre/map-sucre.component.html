@@ -40,7 +40,12 @@
     </svg>
   </div>
 
-  <svg id="{{idMapa}}"  #svgelemento  width="100%" height="100%" viewBox="0 0 774 1234" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg id="{{idMapa}}"  #svgelemento  [ngClass]="{'mi-clase2': activeClass}"
+  width="100%"
+  height="100%"
+   viewBox="0 0 774 1234"
+    fill="none"
+     xmlns="http://www.w3.org/2000/svg">
     <!-- width="774" height="1234"  -->
     <!-- chalan -->
     <g class="svg-pan-zoom_viewport" [ngClass]="{'mi-clase': activeClass}">

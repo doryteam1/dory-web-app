@@ -22,7 +22,7 @@ export class MapSucreComponent implements OnInit {
   @Output() munOver: EventEmitter<number> = new EventEmitter();
   @Input() idMapa: any = 'idMapa';
   @Input() zoom: boolean = false;
-  @ViewChild('svgelemento ') svgelemento!: ElementRef;
+  @ViewChild('svgelemento ') svgelemento!: ElementRef<HTMLElement>;
   @Input() munData: any = {
     nombre: 'Not Selected',
     poblacion: 0,
@@ -185,6 +185,7 @@ export class MapSucreComponent implements OnInit {
       this.activeClass = true;
       this.zoomMapa = false;
       this.zoomInActive=false
+      this.svgelemento.nativeElement.removeAllListeners!('touchmove');
     }
   }
   munSelected(num: number) {

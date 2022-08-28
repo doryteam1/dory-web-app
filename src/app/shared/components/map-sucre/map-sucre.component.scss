@@ -44,6 +44,9 @@
 .mi-clase {
   transform: matrix(1, 0, 0, 1, 0, 0) !important;
 }
+.mi-clase2 {
+ touch-action: auto !important;
+}
 
 .controllerZoom {
 display: flex;
