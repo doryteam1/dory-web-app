@@ -44,3 +44,8 @@
   color: var(--azul1) ;
   background-color: var(--gris4);
 }
+        button:focus {
+          border-color: none !important;
+          box-shadow: none !important;
+          outline: 0 none !important;
+        }

@@ -15,6 +15,7 @@ export class MisFavoritosComponent implements OnInit {
   showNotFound: boolean = false;
   misfavoritoscargados: boolean = false;
   sinfavoritos: boolean = false;
+  shorterNumber: number = 12;
   constructor(
     private granjasService: GranjasService,
     private router: Router,
@@ -23,7 +24,6 @@ export class MisFavoritosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     registerLocaleData(es);
     this.granjasService.misFavoritas().subscribe(
       (response) => {
@@ -86,9 +86,9 @@ export class MisFavoritosComponent implements OnInit {
     let atributos = this.misGranjaFavoritas;
     let modalheadergooglemap = false;
     let mapElementVarios = true;
-     let shared = true;
-     let iconMarkerGoogleMap = 'assets/icons/Groupfavoritowhite.svg';
-     let iconMarkerGoogleMap2 = 'assets/icons/Groupfavoritoblue.svg';
+    let shared = true;
+    let iconMarkerGoogleMap = 'assets/icons/Groupfavoritowhite.svg';
+    let iconMarkerGoogleMap2 = 'assets/icons/Groupfavoritoblue.svg';
     this.location.onPopState(() => {
       this.appModalService.CloseGoogleMapModal();
     });
@@ -96,7 +96,7 @@ export class MisFavoritosComponent implements OnInit {
       .GoogleMapModal(
         atributos,
         modalheadergooglemap,
-        shared ,
+        shared,
         mapElementVarios,
         iconMarkerGoogleMap,
         iconMarkerGoogleMap2
@@ -108,35 +108,41 @@ export class MisFavoritosComponent implements OnInit {
       })
       .catch((result) => {});
   }
-  seeFarmsMaptwo(i:number){
-        let atributos = this.misGranjaFavoritas[i];
-        let modalheadergooglemap = false;
-        let mapElementVarios = false;
-        let shared=true
-        let iconMarkerGoogleMap = 'assets/icons/Groupfavoritoblue.svg';
-       /*  let iconMarkerGoogleMap =
+  seeFarmsMaptwo(i: number) {
+    let atributos = this.misGranjaFavoritas[i];
+    let modalheadergooglemap = false;
+    let mapElementVarios = false;
+    let shared = true;
+    let iconMarkerGoogleMap = 'assets/icons/Groupfavoritoblue.svg';
+    /*  let iconMarkerGoogleMap =
            "i == indexSelected ? 'assets/icons/fish-marker-red.svg' : 'assets/icons/fish-marker.svg' "; */
-        this.location.onPopState(() => {
-          this.appModalService.CloseGoogleMapModal();
-        });
-        this.appModalService
-          .GoogleMapModal(
-            atributos,
-            modalheadergooglemap,
-            shared ,
-            mapElementVarios,
-            iconMarkerGoogleMap,
-            '',
-          )
-          .then((result) => {
-            if (this.misGranjaFavoritas.length <= 0) {
-              this.sinfavoritos = true;
-            }
-          })
-          .catch((result) => {});
-
+    this.location.onPopState(() => {
+      this.appModalService.CloseGoogleMapModal();
+    });
+    this.appModalService
+      .GoogleMapModal(
+        atributos,
+        modalheadergooglemap,
+        shared,
+        mapElementVarios,
+        iconMarkerGoogleMap,
+        ''
+      )
+      .then((result) => {
+        if (this.misGranjaFavoritas.length <= 0) {
+          this.sinfavoritos = true;
+        }
+      })
+      .catch((result) => {});
   }
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
+  }
+  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth <= 300) {
+      this.shorterNumber = 8;
+    } else {
+      this.shorterNumber = 12;
+    }
   }
 }

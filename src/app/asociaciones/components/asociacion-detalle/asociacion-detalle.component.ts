@@ -49,7 +49,7 @@ export class AsociacionDetalleComponent implements OnInit {
     if(token && token!='undefined'){
       this.tipoUsuario = Utilities.parseJwt(token!).rol;
     }
-    
+
     this.selectedAsociacionnit = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
@@ -204,7 +204,7 @@ export class AsociacionDetalleComponent implements OnInit {
         'Salir de la asociación',
         'Usted ya no es miembro de esta asociación',
         'No soy miembro',
-        'No estoy seguro'
+        'Cancelar'
       )
       .then((result) => {
         if (result == true) {
@@ -251,7 +251,7 @@ export class AsociacionDetalleComponent implements OnInit {
         },err=>{
           asociacion.estado_solicitud = null;
           asociacion.solicitud_enviada_por = null
-          console.log(err)     
+          console.log(err)
         }
       )
     }

@@ -329,3 +329,13 @@
      display: none;
    }
  }
+@media screen and (max-width: 350px) {
+  .description {
+    h1 {
+      font-size: 1.35rem !important;
+    }
+    p {
+      font-size: 0.85rem !important;
+    }
+  }
+}

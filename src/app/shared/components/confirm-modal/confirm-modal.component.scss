@@ -8,3 +8,8 @@
 border: var(--azul1) !important;;
   background-color: var(--azul1) !important;
 }
+    button:focus {
+      border-color: none !important;
+      box-shadow: none !important;
+      outline: 0 none !important;
+    }

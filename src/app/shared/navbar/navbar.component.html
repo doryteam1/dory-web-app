@@ -77,9 +77,10 @@
                 </li>
                 <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index">
                   <div class="dropdown-item d-flex flex-row align-items-start">
-                    <img class="notify__avatar" [src]="invitacion.foto_representante_legal">
+                        <img class="notify__avatar"
+                          [src]="invitacion?.foto_representante_legal ? invitacion?.foto_representante_legal : 'assets/images/avatar-person.svg'">
                     <div class="d-flex flex-column ">
-                      <span class="notify__description"><span
+                      <span class="notify__description notify__description-miestilo"><span
                           class="notify__label">{{invitacion?.representante_legal}}</span>
                         te han invitado a indicar que eres miembro de <span
                           class="notify__label">{{invitacion.asociacion}}</span></span>
@@ -102,9 +103,9 @@
                 </li>
                 <li class="notify__menu-item" *ngFor="let invitacion of invitacionesFromUsers; let i=index">
                   <div class="dropdown-item d-flex flex-row align-items-start">
-                    <img class="notify__avatar" [src]="invitacion.foto">
+                    <img class="notify__avatar" [src]="invitacion?.foto ? invitacion?.foto : 'assets/images/avatar-person.svg'" alt="user2">
                     <div class="d-flex flex-column ">
-                      <span class="notify__description"><span
+                      <span class="notify__description notify__description-miestilo"><span
                           class="notify__label">{{invitacion?.nombre_quien_envia}}</span>
                         ha indicado que es miembro de la asociación <span
                           class="notify__label">{{invitacion.asociacion}}</span></span>
@@ -284,7 +285,8 @@
               </li>
               <li class="notify__menu-item" *ngFor="let invitacion of invitaciones; let i=index">
                 <div class="dropdown-item d-flex flex-row align-items-start">
-                  <img class="notify__avatar" [src]="invitacion.foto_representante_legal">
+                  <img class="notify__avatar"
+                    [src]="invitacion?.foto_representante_legal ? invitacion?.foto_representante_legal : 'assets/images/avatar-person.svg'">
                   <div class="d-flex flex-column ">
                     <span class="notify__description"><span
                         class="notify__label">{{invitacion?.representante_legal}}</span> te han invitado a indicar que
@@ -308,7 +310,7 @@
                   usuarios</span></li>
               <li class="notify__menu-item" *ngFor="let invitacion of invitacionesFromUsers; let i=index">
                 <div class="dropdown-item d-flex flex-row align-items-start">
-                  <img class="notify__avatar" [src]="invitacion.foto">
+                  <img class="notify__avatar" [src]="invitacion?.foto ? invitacion?.foto : 'assets/images/avatar-person.svg'" alt="user2">
                   <div class="d-flex flex-column ">
                     <span class="notify__description"><span
                         class="notify__label">{{invitacion?.nombre_quien_envia}}</span> ha indicado que es miembro de la

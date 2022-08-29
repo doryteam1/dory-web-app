@@ -59,7 +59,7 @@
       </div>
       <div class="description">
         <div>
-          <h1  (click)="navigate(i)">{{granja.nombre | shorter:15}}</h1>
+          <h1  (click)="navigate(i)" style="color: var(--azul1);">{{granja.nombre | shorter:shorterNumber}}</h1>
           <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
             (click)="changeFavorite(i)">
           <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita"
@@ -77,7 +77,7 @@
                 <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)">Reseñas: {{granja.cantidad_resenas}}
                 </span>
             </div>
-             <p class="read-more" (click)="navigate(i)"><a >Ver detalles</a></p>
+             <p class="read-more" (click)="navigate(i)"><a >Detalles</a></p>
         </div>
       </div>
   </div>

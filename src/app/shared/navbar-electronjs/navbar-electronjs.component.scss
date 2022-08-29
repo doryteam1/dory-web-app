@@ -632,3 +632,11 @@ width: 30px;
    box-shadow:none !important;
    outline: 0 none !important;
  }
+ .notify__menu-item {
+   width: 700px;
+ }
+ .notify__description-miestilo {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 5px;
+ }

@@ -13,7 +13,9 @@ export class CardPescadorComponent implements OnInit {
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   @Output() onMouseOutCard: EventEmitter<any> = new EventEmitter();
   @Output() onMouseInsideCard: EventEmitter<any> = new EventEmitter();
-  modalGogleMapOpen: boolean=false;
+  modalGogleMapOpen: boolean = false;
+  shorterNumber: number = 12;
+  shorterNumber2: number = 17;
   constructor(
     private appModalService: AppModalService,
     public location2: PlatformLocation
@@ -26,9 +28,16 @@ export class CardPescadorComponent implements OnInit {
         this.appModalService.CloseGoogleMapModal();
       }
     }
+    if (event.target.innerWidth <= 300) {
+      this.shorterNumber = 8;
+      this.shorterNumber2=12
+    } else {
+      this.shorterNumber = 12;
+      this.shorterNumber2 = 17;
+    }
   }
   seeFarmsMaptwo() {
-     this.modalGogleMapOpen = true;
+    this.modalGogleMapOpen = true;
     let modalheadergooglemap = false;
     let atributos = {
       longAndLat: {
@@ -59,7 +68,7 @@ export class CardPescadorComponent implements OnInit {
         iconMarkerGoogleMap
       )
       .then((result) => {
-        this.modalGogleMapOpen=false
+        this.modalGogleMapOpen = false;
       })
       .catch((result) => {
         this.modalGogleMapOpen = false;
