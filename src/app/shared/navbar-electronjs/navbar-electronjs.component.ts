@@ -2,11 +2,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   HostBinding,
   HostListener,
   NgZone,
   OnDestroy,
   OnInit,
+  Output,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -34,7 +36,11 @@ export class NavbarElectronjsComponent
   @ViewChild('toggleButton2') toggleButton2!: ElementRef;
   @ViewChild('botonalbondiga') botonalbondiga!: ElementRef;
   @ViewChild('miModalNotificacion')
-  miModalNotificacion!: ElementRef<HTMLElement>;
+  miModalNotificacion!: ElementRef;
+  @ViewChild('miModalNotificacionContent')
+  miModalNotificacionContent!: ElementRef;
+  @ViewChild('buttonOpenModalNotify')
+  buttonOpenModalNotify!: ElementRef;
   @ViewChild('dropdownNotificacion')
   dropdownNotificacion!: ElementRef<HTMLElement>;
   @ViewChild('notifyModalDropdown')
@@ -46,6 +52,7 @@ export class NavbarElectronjsComponent
   invitaciones: Array<any> = [];
   notificatiosOpened: boolean = false;
   invitacionesFromUsers: Array<any> = [];
+  ocultarHtml: boolean = false;
   notifyHeights: string[] = [
     '',
     'notify__menu--height1',
@@ -75,11 +82,19 @@ export class NavbarElectronjsComponent
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
-        !this.toggleButton.nativeElement.contains(e.target) &&
-        !this.botonalbondiga.nativeElement.contains(e.target)
+        !this.toggleButton?.nativeElement.contains(e.target) &&
+        !this.botonalbondiga?.nativeElement.contains(e.target)
       ) {
         /* https://www.wake-up-neo.net/es/html/como-detectar-el-clic-fuera-de-un-elemento-en-angular-7/806431830/ */
-        this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
+        this.renderer.removeClass(this.toggleButton2?.nativeElement, 'show');
+      }
+      if (this.miModalNotificacion?.nativeElement.className.includes('show')) {
+        if (
+          !this.miModalNotificacionContent?.nativeElement.contains(e.target) &&
+          !this.buttonOpenModalNotify?.nativeElement.contains(e.target)
+        ) {
+          this.closeModalNotificacion();
+        }
       }
     });
   }

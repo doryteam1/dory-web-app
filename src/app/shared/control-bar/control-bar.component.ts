@@ -11,10 +11,8 @@ export class ControlBarComponent implements OnInit {
   constructor(
     private _electronService: ElectronjsService,
     private ngZone: NgZone,
-    private router: Router,
-  ) {
-
-  }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
   navegarRuta(ruta: string) {

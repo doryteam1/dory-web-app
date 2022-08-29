@@ -326,61 +326,6 @@
 .top-4px{
   top: 4px;
 }
-
-
-@media screen and (min-width: 1400px) {
-  .searchAndRegsitroAndLogin {
-    flex-direction: row
-  }
-
-  .botonRegistroAndLogin {
-    flex-wrap: nowrap
-  }
-
-  .container-fluid-miestilo__1 {
-    display: none;
-  }
-
-  .logo1 {
-    display: block;
-  }
-
-  .logo2 {
-    display: none;
-  }
-
-  .notifyAndUserOption {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .container__input--none {
-    display: block;
-  }
-}
-@media screen and (max-width: 951px) {
-.notify-modal-icon{
-  display: block;
-}
-.notify-dropdown-icon {
-  display: none;
-}
-
-}
-@media screen and (max-width: 290px) {
-  .heightAndWidth {
-    width: 35px;
-    height: 35px;
-  }
-}
-@media screen and (max-width: 265px) {
-.dropdown-menu-login {
-    right: -30px;
-  }
-}
-
 /* estilo modal notificacion */
 .modal-title {
   font-weight: 600;
@@ -492,7 +437,49 @@
   margin-right: 0;
   width: 100%;
 }
+@media screen and (min-width: 1400px) {
+  .searchAndRegsitroAndLogin {
+    flex-direction: row
+  }
 
+  .botonRegistroAndLogin {
+    flex-wrap: nowrap
+  }
+
+  .container-fluid-miestilo__1 {
+    display: none;
+  }
+
+  .logo1 {
+    display: block;
+  }
+
+  .logo2 {
+    display: none;
+  }
+
+  .notifyAndUserOption {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .container__input--none {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 951px) {
+  .notify-modal-icon {
+    display: block;
+  }
+
+  .notify-dropdown-icon {
+    display: none;
+  }
+
+}
 @media screen and (max-width: 450px) {
   .notification-list_feature-img {
     display: flex;
@@ -510,3 +497,16 @@
     display: none !important;
   }
 }
+@media screen and (max-width: 290px) {
+  .heightAndWidth {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media screen and (max-width: 265px) {
+  .dropdown-menu-login {
+    right: -30px;
+  }
+}
+
