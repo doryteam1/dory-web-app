@@ -2,7 +2,6 @@
   display: flex;
   margin-left: 0px;
   margin-top: 30px;
-  margin-bottom: 10px;
 }
 
 .detail-container__data {
@@ -21,6 +20,7 @@ cursor: pointer;
 
 .detail-container__title {
   font-size: 20px;
+  font-weight: 550;
 }
 .detail-container__title--legal:hover{
   color: var(--azul1);
@@ -55,7 +55,7 @@ cursor: pointer;
 
 .line {
   border-top: 1px solid var(--black);
-  margin-top: 30px;
+  margin-top: 15px;
 }
 
 .asociacion-container__info {
@@ -66,7 +66,7 @@ cursor: pointer;
 
 .asociacion-container__detalle {
   display: flex;
-align-items: center;
+  gap: 5px;
 }
 
 .asociacion-container__title {
@@ -82,17 +82,15 @@ align-items: center;
   padding-top: 10px;
 }
 
-.mynav-link {
-  background-color: #E4F4FF !important;
-}
-
 .container_mytarget {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #F8F9FA;
   margin-bottom: 20px;
-  box-shadow: 4px 4px 4px rgb(0 0 0 / 10%);
+  /* box-shadow: 4px 4px 4px rgb(0 0 0 / 10%); */
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    border-radius: max(0px, min(8px, -999900% - 39996px + 999900vw))/8px;
 }
 
 .mytarget {
@@ -106,14 +104,16 @@ align-items: center;
 }
 
 .mycontainer_info {
-  padding-top: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 /* estilos anucio sin asociaciones y sin granjas */
 .row--mi-estilo {
   width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+    padding: 15px;
+    margin-right: 0;
+    margin-left: 0;
 }
 
 .search-container__box {
@@ -194,4 +194,46 @@ align-items: center;
         }
 .detail-container__title--font{
   font-size: 16px;
+}
+.asociacion-container__title{
+  font-size: 20px;
+    font-weight: 350;
+}
+.mynav-link {
+  background-color: var(--gris4) !important;
+  color: var(--azul1) !important;
+}
+
+.nav-link--color {
+  color: var(--gris-oscuro);
+}
+.dropdown-menu{
+  cursor: pointer;
+}
+@media screen and (max-width: 775px) {
+  .asociacion-container {
+    justify-content: center;
+    flex-direction: column-reverse;
+    grid-gap: 10px;
+    gap: 10px;
+    margin-top: 20px !important;
+  }
+
+  .asociacion-container__image{
+    width: 100px;
+    height: 100px;
+  }
+
+  .mycontainer_info {
+    padding-top: 0;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .mynavtabs {
+    .nav-item {
+      width: 100%;
+    }
+  }
 }

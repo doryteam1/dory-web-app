@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,HostListener,OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GranjasService } from '../../services/granjas.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -344,6 +344,11 @@ export class GranjaDetalleComponent implements OnInit {
       )
       .then((result) => {})
       .catch((result) => {});
+  }
+  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth <= 1009) {
+    this.appModalService.CloseModalGalleryVerAdiconarEliminarFotos();
+    }
   }
 }
 

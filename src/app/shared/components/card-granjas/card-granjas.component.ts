@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { PiscicultoresService } from '../../../piscicultores/services/piscicultores.service';
 
 @Component({
@@ -16,7 +16,8 @@ export class CardGranjasComponent implements OnInit {
   showError: boolean = false;
   errorMessage = '';
   ngOnlnitPiscicultorDetalle: boolean = false;
-  ran!:number;
+  ran!: number;
+  shorterNumber: number = 12;
   constructor(private piscicultoresService: PiscicultoresService) {}
   ngOnInit(): void {
     this.ran = Math.floor(this.granja.fotos.length * Math.random());
@@ -32,5 +33,13 @@ export class CardGranjasComponent implements OnInit {
         granja.esfavorita = granja.esfavorita == 1 ? 0 : 1;
       }
     );
+  }
+
+  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth <= 300) {
+      this.shorterNumber=8
+    }else{
+      this.shorterNumber = 12;
+    }
   }
 }

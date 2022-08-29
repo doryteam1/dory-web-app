@@ -437,6 +437,14 @@
   margin-right: 0;
   width: 100%;
 }
+.notify__menu-item {
+  width: 700px;
+}
+.notify__description-miestilo{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+}
 @media screen and (min-width: 1400px) {
   .searchAndRegsitroAndLogin {
     flex-direction: row

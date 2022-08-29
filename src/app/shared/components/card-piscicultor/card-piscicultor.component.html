@@ -9,7 +9,7 @@
   </div>
   <div class="card__description" >
     <div class="card__description-header" (click)="detalle (piscicultor)">
-      <h1>{{piscicultor?.nombre | titlecase | shorter:15 }}</h1>
+      <h1>{{piscicultor?.nombre | titlecase | shorter:shorterNumber }}</h1>
     </div>
     <p> </p>
     <div class="card__description-body" (click)="detalle (piscicultor)">
@@ -19,7 +19,7 @@
       </div>
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/contact_mail_black_24dp.svg">
-        <span class="card__email">{{piscicultor?.email | shorter:20}}</span>
+        <span class="card__email">{{piscicultor?.email | shorter:shorterNumber2}}</span>
       </div>
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/travel_explore_black_24dp.svg">
@@ -35,7 +35,7 @@
     <div class="card__description-footer">
       <p class="read-more">
         <img *ngIf="mapa" class="photo--verMapa" src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
-        <a (click)="detalle(piscicultor)">Ver detalles</a>
+        <a (click)="detalle(piscicultor)">Detalles</a>
       </p>
     </div>
   </div>

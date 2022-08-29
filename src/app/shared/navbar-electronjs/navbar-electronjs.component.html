@@ -25,7 +25,6 @@
             <!-- Interfas de notificaciones este boton abre la modal -->
             <div #buttonOpenModalNotify class="no-drag notify dropstart">
               <div
-
                   class="notify__box-miestilo position-relative "
                   placement="bottom"
                   ngbTooltip="Notificaciones"
@@ -226,7 +225,7 @@
               <img class="notify__avatar"
               [src]="invitacion?.foto_representante_legal ? invitacion?.foto_representante_legal : 'assets/images/avatar-person.svg'">
               <div class="d-flex flex-column ">
-                <span class="notify__description"><span class="notify__label">{{invitacion?.representante_legal}}</span>
+                <span class="notify__description notify__description-miestilo"><span class="notify__label">{{invitacion?.representante_legal}}</span>
                   te han invitado a indicar que eres miembro de <span
                     class="notify__label">{{invitacion.asociacion}}</span></span>
                 <span class="notify__sub-description">
@@ -249,7 +248,7 @@
             <div class="dropdown-item d-flex flex-row align-items-start">
               <img class="notify__avatar" [src]="invitacion?.foto ? invitacion?.foto : 'assets/images/avatar-person.svg'">
               <div class="d-flex flex-column ">
-                <span class="notify__description"><span class="notify__label">{{invitacion?.nombre_quien_envia}}</span>
+                <span class="notify__description notify__description-miestilo"><span class="notify__label">{{invitacion?.nombre_quien_envia}}</span>
                   ha indicado que es miembro de la asociación <span
                     class="notify__label">{{invitacion.asociacion}}</span></span>
                 <span class="notify__sub-description">

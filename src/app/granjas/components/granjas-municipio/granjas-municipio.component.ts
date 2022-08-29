@@ -36,7 +36,7 @@ export class GranjasMunicipioComponent implements OnInit {
   activaapiLoader: boolean = true;
   mapaOn: boolean = false;
   apiLoaded!: Observable<boolean>;
-
+  shorterNumber: number = 12;
   valor: boolean = false;
   vertices = vertices;
   optionPoli: google.maps.PolylineOptions = {
@@ -91,7 +91,7 @@ export class GranjasMunicipioComponent implements OnInit {
   palabra: string = '';
   filtroseleccionado!: MetaFiltro | null;
   contador = 0;
-  modalGogleMapOpen: boolean=false;
+  modalGogleMapOpen: boolean = false;
 
   constructor(
     httpClient: HttpClient,
@@ -113,9 +113,6 @@ export class GranjasMunicipioComponent implements OnInit {
         map(() => true),
         catchError(() => of(false))
       );
-    /*  if (this.mobileMedia.matches) {
-      alert('media activa');
-    } */
   }
 
   ngOnInit(): void {
@@ -227,13 +224,18 @@ export class GranjasMunicipioComponent implements OnInit {
   }
   @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
     if (event.target.innerWidth >= 1100) {
-      if ((this.modalGogleMapOpen)) {
+      if (this.modalGogleMapOpen) {
         this.appModalService.CloseGoogleMapModal();
       }
     }
+    if (event.target.innerWidth <= 300) {
+      this.shorterNumber = 8;
+    } else {
+      this.shorterNumber = 12;
+    }
   }
   seeFarmsMaptwo(i: number) {
-    this.modalGogleMapOpen=true
+    this.modalGogleMapOpen = true;
     let atributos = this.granjasFiltered[i];
     let modalheadergooglemap = false;
     let shared = false;
@@ -252,7 +254,7 @@ export class GranjasMunicipioComponent implements OnInit {
         ''
       )
       .then((result) => {
-        this.modalGogleMapOpen=false
+        this.modalGogleMapOpen = false;
       })
       .catch((result) => {
         this.modalGogleMapOpen = false;

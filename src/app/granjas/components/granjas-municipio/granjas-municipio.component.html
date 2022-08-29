@@ -77,7 +77,7 @@
               <div class="description_title_fauvourite">
                 <div>
                   <h1 class="description_title_fauvourite--h1" (click)="navigate(granja.id_granja)">{{granja.nombre |
-                    shorter:15}}</h1>
+                    shorter:shorterNumber}}</h1>
                 </div>
                 <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita"
                   (click)="changeFavorite(i)">
@@ -99,7 +99,7 @@
                 </div>
                 <p class="read-more">
                   <img class="photo--verMapa" src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo(i)">
-                  <a (click)="navigate(granja.id_granja)">Ver detalles</a>
+                  <a (click)="navigate(granja.id_granja)">Detalles</a>
                 </p>
               </div>
             </div>

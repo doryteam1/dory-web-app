@@ -27,7 +27,7 @@
   <div class="card__description">
     <div class="card__description-header">
       <div>
-        <h1 (click)="detalle(granja)">{{granja.nombre | shorter:15}}</h1>
+        <h1 (click)="detalle(granja)">{{granja.nombre | shorter:shorterNumber}}</h1>
       </div>
       <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
         (click)="changeFavorite(granja)">
@@ -40,7 +40,7 @@
     <div class="card__description-container_footer">
       <div class="card__description-container_footer-rating">
         <div class="card__rating-container_puntos">
-<!--           <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
+  <!--   <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
             (granja.puntuacion |
             number:'1.1-1') : '0'}}</span> -->
           <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
@@ -48,7 +48,7 @@
         <span class="card__rating__detail" >Reseñas: {{granja.count_resenas}}</span>
       </div>
       <p class="read-more"  (click)="detalle(granja)">
-        <a>Ver detalles</a>
+        <a>Detalles</a>
       </p>
     </div>
   </div>

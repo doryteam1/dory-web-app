@@ -12,13 +12,27 @@ vereda: null
     <div class="piscicultor-container">
       <div class="piscicultor-container__info">
         <div class="piscicultor-container__detalle">
-          <img class="detail-container__image" src="assets/icons/person_black.svg">
-          <h3 class="piscicultor-container__title">Pescador - {{pescador?.nombre_completo}} </h3>
+          <span>
+            <h4 class="detail-container__title">Pescador: </h4>
+          </span>
+          <span>
+            <h4 class="piscicultor-container__title">{{pescador?.nombre_completo}}</h4>
+          </span>
+         <!--  <img class="detail-container__image" src="assets/icons/person_black.svg">
+          <h3 class="piscicultor-container__title">Pescador - {{pescador?.nombre_completo}} </h3> -->
         </div>
+
         <div class="piscicultor-container__detalle">
-          <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
+              <span>
+                <h4 class="detail-container__title">Municipio: </h4>
+              </span>
+              <span>
+                <!--  <img class="detail-container__image" src="assets/icons/person_black.svg"> -->
+                <h4 class="piscicultor-container__title">{{pescador?.municipio}}-{{pescador?.departamento}}</h4>
+              </span>
+       <!--    <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
           <span class="piscicultor-container__description1">
-            {{pescador?.municipio}}-{{pescador?.departamento}}</span>
+            {{pescador?.municipio}}-{{pescador?.departamento}}</span> -->
         </div>
       </div>
       <img class="piscicultor-container__image"
@@ -33,14 +47,14 @@ vereda: null
         </span>
       </div>
     </div>
-    <div class="detail-container">
+    <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/contact_mail_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Correo electrónico</h4>
         <span class="detail-container__value">{{pescador?.email}}</span>
       </div>
     </div>
-    <div class="detail-container">
+    <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Dirección</h4>
@@ -49,7 +63,7 @@ vereda: null
         <span *ngIf="!pescador?.direccion" class="detail-container__value">Dirección indefinida</span>
       </div>
     </div>
-    <div class="detail-container" *ngIf="pescador?.informacion_adicional_direccion">
+    <div class="detail-container mt-4" *ngIf="pescador?.informacion_adicional_direccion">
           <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
               <div class="detail-container__data">
                 <h4 class="detail-container__title">Información adicional de la dirección</h4>
@@ -57,7 +71,7 @@ vereda: null
                   {{pescador.informacion_adicional_direccion}}</span>
               </div>
             </div>
-    <div class="detail-container">
+    <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Número de asociaciones a las que pertenece </h4>
@@ -76,7 +90,7 @@ vereda: null
   <div class="mynavtabs" *ngIf="pescadorasociaciones?.length > 0">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link" [ngClass]="{'active mynav-link': activatelistasociacion}" aria-current="page">
+        <a class="nav-link nav-link--color" [ngClass]="{'active mynav-link': activatelistasociacion}" aria-current="page">
           <span>
             <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
           </span> Asociaciones
@@ -86,7 +100,7 @@ vereda: null
   </div>
   <div class="container_mytarget" *ngIf="pescadorasociaciones?.length > 0">
     <div class="mytarget" *ngIf="activatelistasociacion ">
-      <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 row--mi-estilo"
+      <div class="row row-cols-1 row-cols-sm-1 row-cols-xl-2 g-4 row--mi-estilo"
         [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound,'container--flex-center':pescadorasociaciones?.length==1}">
         <div *ngIf="changeItem" class="mychangeitem">
           <div>

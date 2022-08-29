@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import {  Router } from '@angular/router';
 
 @Component({
@@ -20,10 +20,11 @@ export class CardAsociacionComponent implements OnInit {
   errorMessage = '';
   ngOnlnitPiscicultorDetalle: boolean = false;
   foto_camaracpdf!: string;
+  shorterNumber: number = 15;
   ngOnInit(): void {}
 
   detalle(asociacion: any) {
-    console.log(asociacion)
+    console.log(asociacion);
     return this.onDetalle.emit(asociacion);
   }
 
@@ -33,5 +34,12 @@ export class CardAsociacionComponent implements OnInit {
   goDetalleRepresentante(asociacion: any) {
     console.log(asociacion);
     return this.onDetalleRepresentante.emit(asociacion);
+  }
+  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth <= 382) {
+      this.shorterNumber = 10;
+    } else {
+      this.shorterNumber = 15;
+    }
   }
 }
