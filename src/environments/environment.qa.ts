@@ -10,5 +10,5 @@ export const environment = {
     },
     mapsApiKey:'AIzaSyDxAJesdH6yoUCT79wtRqXYKSevJsPD0TU',
     production: false,
-    doryApiRestBaseUrl:'https://dory-api-rest-pruebas.herokuapp.com//api'
+    doryApiRestBaseUrl:'https://dory-api-rest-pruebas.herokuapp.com/api'
   };
