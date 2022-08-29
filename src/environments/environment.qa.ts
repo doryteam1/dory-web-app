@@ -8,7 +8,7 @@ export const environment = {
       authDomain: 'dory-qa-83409.firebaseapp.com',
       messagingSenderId: '170816600260',
     },
-    doryApiKey:'AIzaSyDxAJesdH6yoUCT79wtRqXYKSevJsPD0TU',
+    mapsApiKey:'AIzaSyDxAJesdH6yoUCT79wtRqXYKSevJsPD0TU',
     production: false,
     doryApiRestBaseUrl:'https://dory-api-rest-pruebas.herokuapp.com//api'
   };
