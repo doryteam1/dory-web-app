@@ -43,7 +43,7 @@
       <div id="nombre" class="container-row row gx-5 align-items-center">
           <div class="col">
               <div class="container__box" *ngIf="mostrarPorTipo('nombres')">
-                  <span class="container__label">Nombres</span>
+                  <span class="container__label">Nombres: <span class="asterisk">*</span></span>
                   <div class="input-wrapper">
                       <input name= "nombr" class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'nombres', usuario.nombres)" [ngClass]="{'container__input--color':!editarperfil}"
                       type="text" formControlName='nombres' [placeholder]="editarperfil ? 'Ingrese su(s) nombre(s)' : ''">
@@ -53,7 +53,7 @@
 
           <div class="col">
               <div class="container__box left" *ngIf="mostrarPorTipo('apellidos')">
-                  <span class="container__label">Apellidos</span>
+                  <span class="container__label">Apellidos: <span class="asterisk">*</span></span>
                   <div class="input-wrapper">
                       <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'apellidos', usuario.apellidos)"  [ngClass]="{'container__input--color':!editarperfil}"
                         type="text" formControlName='apellidos' [placeholder]="editarperfil ? 'Ingrese su(s) apellido(s)' : ''">
