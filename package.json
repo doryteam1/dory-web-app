@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "ng build --prod",
+    "build": "ng build --prod NG_APP_OAUTH_CLIENT_ID = $NG_APP_OAUTH_CLIENT_ID",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "postinstall": "ng build --prod"
