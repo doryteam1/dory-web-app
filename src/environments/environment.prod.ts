@@ -1,14 +1,15 @@
 export const environment = {
   firebase: {
-    apiKey: "AIzaSyAcUqFO0UXX9wdgiYY2xCumxyzC-EGl83M",
-    authDomain: "dory-prod-d7a48.firebaseapp.com",
-    projectId: "dory-prod-d7a48",
-    storageBucket: "dory-prod-d7a48.appspot.com",
-    messagingSenderId: "448784702076",
-    appId: "1:448784702076:web:2b499c999cb3f0949a07f9"
+    projectId: process.env.NG_APP_FIREBASE_PROJECT_ID,
+    appId: process.env.NG_APP_FIREBASE_APP_ID,
+    storageBucket: process.env.NG_APP_FIREBASE_STORAGE_BUCKET,
+    locationId: process.env.NG_APP_FIREBASE_LOCATION_ID,
+    apiKey: process.env.NG_APP_FIREBASE_API_KEY,
+    authDomain: process.env.NG_APP_FIREBASE_AUTH_DOMAIN,
+    messagingSenderId: process.env.NG_APP_FIREBASE_MESSAGING_SENDER_ID,
   },
-  mapsApiKey:'AIzaSyDxAJesdH6yoUCT79wtRqXYKSevJsPD0TU',
-  production: true,
-  doryApiRestBaseUrl:'https://dory-api-rest-prod.herokuapp.com/api',
-  oAuthClientId:'170816600260-ivu404khqeskg17esu4esl9244s0dt2m.apps.googleusercontent.com'
+  mapsApiKey:process.env.NG_APP_MAPS_API_KEY,
+  production: false,
+  doryApiRestBaseUrl:'https://dory-api-rest-pruebas.herokuapp.com/api',
+  oAuthClientId:process.env.NG_APP_OAUTH_CLIENT_ID
 };
