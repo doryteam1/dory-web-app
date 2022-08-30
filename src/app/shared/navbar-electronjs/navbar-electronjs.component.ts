@@ -133,8 +133,24 @@ export class NavbarElectronjsComponent
         } else {
           this.isHidden = false;
         }
+        if (route.includes('dashboard')) {
+          if (this.userService.isAuthenticated()) {
+            this.updateAsocRequest();
+          }
+        }
       }
     });
+  }
+  updateAsocRequest() {
+    this.userService.solicitudesDeAsociaciones().subscribe((response) => {
+      this.invitaciones = response.data;
+    });
+
+    this.userService
+      .solicitudesParaAsociacionesRepresentante()
+      .subscribe((response) => {
+        this.invitacionesFromUsers = response.data;
+      });
   }
   openFormModal() {
     this.formModal.show();

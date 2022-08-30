@@ -71,31 +71,35 @@ export class FloatingBtnAutoUpComponent implements OnInit {
         let route: string = event.url;
         if (
           route.includes('asociaciones') ||
-          route.includes('contacto') ||
-          route.includes('update-password') ||
-          route.includes('update-password') ||
-          route.includes('login') ||
-          route.includes('registro') ||
+          route.includes('novedades/') ||
+          route.includes('eventos/') ||
+          route.includes('normatividad/') ||
+          route.includes('equipo') ||
+          route.includes('nosotros') ||
           route.includes('pescadores') ||
           route.includes('granjas') ||
           route.includes('piscicultores') ||
-          route.includes('panel-busqueda')
+          route.includes('dashboard/mis-favoritos') ||
+          route.includes('home') ||
+          route.includes('panel-busqueda/productos') ||
+          route.includes('panel-busqueda/vehiculos') ||
+          route.includes('panel-busqueda/negocios')
         ) {
-          this.isHidden = true;
-        } else {
           this.isHidden = false;
+          if (
+            route.includes('/dashboard/granjas') ||
+            route.includes('dashboard/mis-asociaciones') ||
+            route.includes('panel-busqueda/asociaciones') ||
+            route.includes('panel-busqueda/pescadores') ||
+            route.includes('panel-busqueda/piscicultores') ||
+            route.includes('panel-busqueda/granjas')
+          ) {
+            this.isHidden = true;
+          }
+        } else {
+          this.isHidden = true;
         }
       }
     });
   }
-  /* scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'start',
-    }); */
-  onClick() {}
-  /*  scrollToBottom(): void {
-    console.log('Scroll');
-    window.scrollTo(0, 0);
-  } */
 }

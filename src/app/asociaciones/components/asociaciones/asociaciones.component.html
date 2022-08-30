@@ -24,8 +24,19 @@
     </div>
 </div>
 <div class="container">
-    <h4 class="container__title">Asociaciones productoras en Sucre</h4>
-    <p class="container__description">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</p>
+    <h4 class="container__title">Asociaciones piscicultoras o pescadoras en el departamento de Sucre</h4>
+    <p class="container__description">En esta sección se podrá ver el mapa con los distintos municipios del departamento de
+    Sucre, permitiendo elegir el de su interés. Al seleccionarlo podrá ver un listado de las
+    distintas asociaciones, así mismo ubicar en el mapa para referenciar con precisión. Se
+    selecciona la asociación en el listado dando clic en cualquier parte de la tarjeta o en ¨ver
+    detalles¨.
+  </p>
+  <p class="container__description">
+    Luego de dar clic en ¨ver detalles¨, podrá visualizar la información minuciosamente de la
+    asociación y su delegado. También apreciar la información perteneciente a la asociación
+    como: el tipo de asociación, el representante legal, si la asociación se encuentra
+    constituida legalmente, su documento de cámara de comercio, la dirección y los
+    pescadores integrados en esa asociación.</p>
     <div class="container_box">
         <app-map-sucre class="mapaMunicipios" (munClick)="munClick($event)" (munOver)="munOver($event)" [munData]="municSeleccionado" labelTooltip="Asociaciones"></app-map-sucre>
     </div>
