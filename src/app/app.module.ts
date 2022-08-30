@@ -79,7 +79,7 @@ const customConfig: ShareButtonsConfig = {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '170816600260-ivu404khqeskg17esu4esl9244s0dt2m.apps.googleusercontent.com'
+              environment.oAuthClientId
             ), // your client id
           },
         ],

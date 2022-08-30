@@ -14,7 +14,8 @@ export const environment = {
   },
   mapsApiKey:'AIzaSyDxAJesdH6yoUCT79wtRqXYKSevJsPD0TU',
   production: false,
-  doryApiRestBaseUrl:'https://dory-api-rest-pruebas.herokuapp.com/api'
+  doryApiRestBaseUrl:'https://dory-api-rest-pruebas.herokuapp.com/api',
+  oAuthClientId:'170816600260-ivu404khqeskg17esu4esl9244s0dt2m.apps.googleusercontent.com'
 };
 
 /*
