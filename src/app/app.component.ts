@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FloatingBtnAutoUpComponent } from './shared/components/floating-btn-auto-up/floating-btn-auto-up.component';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
-
+declare const process: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,6 +19,7 @@ export class AppComponent implements OnInit{
   ) {
   }
   ngOnInit(): void {
+    console.log("process.env.FIREBASE_PROJECT_ID ", process.env.FIREBASE_PROJECT_ID)
     this.customTitleBarElectron = this._electronService.ipcActivo;
   }
   exit(event: any) {
