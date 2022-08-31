@@ -1,8 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FloatingBtnAutoUpComponent } from './shared/components/floating-btn-auto-up/floating-btn-auto-up.component';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
-declare const VERSION: string;
-declare const process: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

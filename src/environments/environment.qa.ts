@@ -1,3 +1,5 @@
+declare const process: any;
+
 export const environment = {
     firebase: {
       projectId: process.env.FIREBASE_PROJECT_ID,
