@@ -19,7 +19,8 @@ export class AppComponent implements OnInit{
   ) {
   }
   ngOnInit(): void {
-    console.log("process.env.FIREBASE_PROJECT_ID ", process.env.FIREBASE_PROJECT_ID)
+    console.log("test")
+    //console.log("process.env.FIREBASE_PROJECT_ID ", process.env.FIREBASE_PROJECT_ID)
     this.customTitleBarElectron = this._electronService.ipcActivo;
   }
   exit(event: any) {
