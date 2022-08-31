@@ -12,7 +12,8 @@ module.exports = {
             "process.env.FIREBASE_MESSAGING_SENDER_ID": process.env.FIREBASE_MESSAGING_SENDER_ID,
             "process.env.MAPS_API_KEY": process.env.MAPS_API_KEY,
             "process.env.DORY_API_REST": process.env.DORY_API_REST,
-            "process.env.OAUTH_CLIENT_ID": process.env.OAUTH_CLIENT_ID
+            "process.env.OAUTH_CLIENT_ID": process.env.OAUTH_CLIENT_ID,
+            "VERSION": JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN)
         })
     ]
 }
