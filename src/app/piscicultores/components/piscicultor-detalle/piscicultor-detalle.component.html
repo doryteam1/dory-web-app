@@ -19,7 +19,7 @@
           </span>
           <span>
             <!--  <img class="detail-container__image" src="assets/icons/person_black.svg"> -->
-            <h4 class="piscicultor-container__title">{{piscicultor?.municipio}}-{{piscicultor?.departamento}}</h4>
+            <h4 class="piscicultor-container__title">{{piscicultor?.municipio}}, {{piscicultor?.departamento}}</h4>
           </span>
         </div>
       </div>
@@ -61,7 +61,7 @@
     <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
       <div class="detail-container__data">
-        <h4 class="detail-container__title">Sus asociaciones </h4>
+        <h4 class="detail-container__title">Asociaciones </h4>
         <span class="detail-container__value"
           *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}} asociaciones en
           total</span>
@@ -75,7 +75,7 @@
     <div class="detail-container mt-4">
       <img class="detail-container__image" src="../../../../assets/icons/set_meal_black_24dp.svg">
       <div class="detail-container__data">
-        <h4 class="detail-container__title">Sus granjas</h4>
+        <h4 class="detail-container__title">Granjas</h4>
         <span class="detail-container__value" *ngIf="piscicultorgranjas?.length>1">{{piscicultorgranjas?.length}}
           granjas en total</span>
         <span class="detail-container__value" *ngIf="piscicultorgranjas?.length==1">{{piscicultorgranjas?.length}}

@@ -5,7 +5,7 @@
 
 .radio-filter1__input{
     color:var(-azul1);
-}  
+}
 
 .radio-filter1__label{
     margin-left: 5px;
@@ -15,7 +15,7 @@
     border-color: #E91E63;
     background-color: #E91E63;
 }
-  
+
 .custom-control-input:focus~.custom-control-label::before {
 box-shadow: none;
 }
@@ -37,4 +37,7 @@ box-shadow: none;
 
 .app-custom-modal .modal-content{
     height: 90vh;
+}
+.btn-filter{
+  color: rgba(0, 0, 0, 0.55) !important;
 }
