@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
   ) {
   }
   ngOnInit(): void {
-    console.log("test version ", process.env.FIREBASE_PROJECT_ID)
+    console.log("api rest url ", process.env.DORY_API_REST)
     //console.log("process.env.FIREBASE_PROJECT_ID ", process.env.FIREBASE_PROJECT_ID)
     this.customTitleBarElectron = this._electronService.ipcActivo;
   }
