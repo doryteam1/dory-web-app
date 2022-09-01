@@ -94,7 +94,9 @@ gap: 10px;
 /* mi estilo targeta nuevo map */
 .container-map-car {
   display: flex;
-  justify-content: center;
+   justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
 }
 .row-map-cart {
   display: flex;
@@ -103,6 +105,8 @@ gap: 10px;
   flex-wrap: nowrap;
   margin-left: 20px;
   margin-right: 20px;
+  padding-right: 20px;
+   padding-left: 20px;
   width: 100%;
 }
 
@@ -113,9 +117,9 @@ div.container-map-car>div>div:nth-child(1) {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-.mYstiledivmap {
+/* .mYstiledivmap {
   display: none;
-}
+} */
 .sticky-top {
   z-index: 1;
   height: auto;
@@ -124,13 +128,9 @@ div.container-map-car>div>div:nth-child(1) {
 .mapgoogle {
   /* border: 2px solid #6c6c6c; */
     border-radius: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
     overflow: hidden;
-    /*  height: 650px;
-    width: 785px; */
-    height: 40vw;
-    width: 50vw;
+    height: 300px;
+    width: 300px;
     background-color: gainsboro;
     border: 2px solid rgb(0 0 0 / 51%);
     box-shadow: 4px 4px 4px rgb(0 0 0 / 15%);
@@ -201,6 +201,8 @@ div.container-map-car>div>div:nth-child(1) {
     margin-left: 10px;
     margin-right: 65px;
     justify-content: space-around;
+    align-items: normal;
+      flex-direction: row;
   }
   .photo--verMapa {
     display: none;
@@ -208,11 +210,19 @@ div.container-map-car>div>div:nth-child(1) {
 
   .row-map-cart {
     margin-right: 0;
+    padding-right: 0px;
+      padding-left: 0px;
   }
     div.container-map-car>div>div:nth-child(1) {
       padding-top: 80px;
       padding-bottom: 0;
     }
+            .mapgoogle {
+              margin-right: 10px;
+              margin-bottom: 10px;
+              height: 40vw !important;
+              width: 50vw !important;
+            }
 }
 @media screen and (min-width: 770px) {
   .buscador-container {
@@ -237,4 +247,23 @@ div.container-map-car>div>div:nth-child(1) {
     .container__description {
       align-self: center
     }
+}
+@media screen and (min-width: 400px) {
+  .mapgoogle {
+    height: 350px;
+    width: 350px;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .mapgoogle {
+    height: 400px;
+    width: 400px;
+  }
+}
+@media screen and (max-width: 350px) {
+  .mapgoogle {
+    height: 85vw;
+    width: 80vw;
+  }
 }

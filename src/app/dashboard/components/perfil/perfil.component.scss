@@ -7,7 +7,7 @@
     margin-bottom: 30px;
     margin-left: 0;
     margin-right: 0;
-    padding-left: 35px;
+    /* padding-left: 35px; */
     width: 100%;
 }
 
@@ -20,7 +20,7 @@
 .container__box__title{
   border:1px var(--azul1) solid;
   border-radius: 5px;
-  width: 80vw;
+  /* width: 80vw; */
   text-align: center;
   margin-bottom: 30px;
   margin-top: 30px;
@@ -39,8 +39,8 @@
 }
 
 .container__title{
-  font-size: 30px;
-  color:var(--azul1)
+  color: var(--azul1);
+  font-size: calc(1rem + 1vw);
 }
 
 .container__image{
@@ -91,10 +91,12 @@
 }
 
 .container__label2{
+  text-align: center;
+   font-size: calc(1rem + 1vw);
   font-weight: 500;
   display: block;
   color:var(--gris7);
-  font-size: 30px;
+  /* font-size: 30px; */
 }
 
 .container__title{
@@ -141,19 +143,7 @@
 }
 
 .container__btn3{
- /*  border-radius: 5px;
-  height: 40px;
-  width: 360px;
-  padding-top: 10px;
-  border:none;
-  margin-top: 20px;
-  align-self: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
-  box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.18);
-  padding-bottom: 35px; */
+  width: 226.24px;
   border-radius: 5px;
   box-shadow: -1px 4px 7px -1px rgb(0 0 0 / 18%);
   background-color: #F0F0F0;
@@ -172,8 +162,8 @@
   width: 30px;
   height: 30px;
   position: absolute;
-  right: 80px;
-  bottom: 80px;
+  right: 85px;
+  bottom: 85px;
 }
 
 .row{
@@ -186,8 +176,8 @@
 /* mi  estilo */
 
 .button_close {
-  margin-left: 60px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 
 }
 
@@ -197,7 +187,7 @@
   background-color: var(--white);
   background-origin: padding-box;
   border-radius: 133px;
-  width: 90%;
+  width: 100%;
   height: 45px;
   border: 0.5px solid var(--gris4);
   -webkit-box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
@@ -361,6 +351,7 @@
 .dropdown-menu--li{
   display: flex;
   gap: 5px;
+   padding-left: 5px;
 }
 .dropdown-item-myestilo{
 padding-left: 0;
@@ -376,4 +367,50 @@ padding-left: 0;
 
 .asterisk{
   color:red;
+}
+.d-flex-miestilo{
+  width: 100%;
+}
+.formControl{
+  width: 100%;
+}
+.dropdown-menu-photo{
+  inset: 17px auto auto 0px !important;
+}
+@media screen and (max-width: 1000px) {
+.container-row {
+  flex-direction: column;
+};
+.left{
+  margin-left: 0;
+}
+.container__box-image{
+width: 130px;
+height: 130px;
+}
+.container__spinner-photo{
+  right: 50px;
+  bottom: 50px;
+}
+}
+@media (max-width: 575px) {
+  .myestilomodalmap {
+    margin: 0px !important;
+    /* ajusta el boton de pantalla completa del mapa */
+  }
+}
+@media (max-width: 540px) {
+.d-flex-delate-add-photo{
+flex-direction: column !important;
+}
+.d-flex-edit-cancel-perfil{
+flex-direction: column !important;
+}
+}
+@media (max-width: 430px) {
+
+  .dropdown-menu-photo{
+    left: -115px !important;
+    transform: none !important;
+  }
 }

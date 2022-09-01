@@ -166,8 +166,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         (arrayFiles) => {
           if (arrayFiles.length > 0) {
             if (action == 'create') {
-              console.log('files ngOnlnit create');
-              /*          console.log(arrayFiles); */
               if (arrayFiles[0].length > 0) {
                 for (let index = 0; index < arrayFiles[0].length; index++) {
                   const element = arrayFiles[0][index];
