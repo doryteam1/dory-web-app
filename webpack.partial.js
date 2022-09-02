@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-
+const Dotenv = require('dotenv-webpack');
 module.exports = {
     plugins: [
         new webpack.DefinePlugin({
@@ -13,6 +13,7 @@ module.exports = {
             "process.env.MAPS_API_KEY": JSON.stringify(process.env.MAPS_API_KEY),
             "process.env.DORY_API_REST": JSON.stringify(process.env.DORY_API_REST),
             "process.env.OAUTH_CLIENT_ID": JSON.stringify(process.env.OAUTH_CLIENT_ID)
-        })
+        }),
+        new Dotenv()
     ]
 }
