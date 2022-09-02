@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FloatingBtnAutoUpComponent } from './shared/components/floating-btn-auto-up/floating-btn-auto-up.component';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
+import { environment } from 'src/environments/environment';
 declare const process: any;
 
 @Component({
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit{
   ) {
   }
   ngOnInit(): void {
-    console.log("api rest url ", process.env.DORY_API_REST)
+    console.log("api rest url ", environment.doryApiRestBaseUrl)
     //console.log("process.env.FIREBASE_PROJECT_ID ", process.env.FIREBASE_PROJECT_ID)
     this.customTitleBarElectron = this._electronService.ipcActivo;
   }
