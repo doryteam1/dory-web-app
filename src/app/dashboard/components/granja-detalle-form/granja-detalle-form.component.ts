@@ -884,6 +884,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   /* funciones necesarias para cargar y adicionar fotos */
   @HostListener('loadPhotos')
   async loadPhotos(event: any) {
+    console.log(event)
     if (this.granja.action == 'create') {
       /* Se ejecuta cuando se esta creando una granja */
       try {
@@ -893,7 +894,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
           '/granja' +
           this.id_granjanew +
           '/foto';
-        console.log(fileNameBase);
         let files: Array<any> = event;
         console.log(files);
         let arrayFotos: Array<any> = [];

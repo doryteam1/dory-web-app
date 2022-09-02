@@ -499,7 +499,6 @@ export class PerfilComponent implements OnInit {
       });
   }
   async fileChange(event: any) {
-    console.log(event)
     this.loadingPhoto = true;
     const imageFile = event.target.files[0];
     event.srcElement.value = '';
