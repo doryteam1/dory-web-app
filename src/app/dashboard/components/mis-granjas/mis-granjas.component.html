@@ -13,8 +13,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let granja of granjas |  paginate: { itemsPerPage: 3, currentPage: p }; let i=index">
-                <td>{{granja.nombre}}</td>
-                <td>{{granja.descripcion | shorter:50}}</td>
+                <td>{{granja.nombre | shorter:25}}</td>
+                <td>{{granja.descripcion | shorter:20}}</td>
                 <td>{{granja.area}}</td>
                 <td>{{granja.numero_trabajadores}}</td>
                 <td>{{granja.produccion_estimada_mes}}</td>
@@ -45,7 +45,7 @@
       <div class="modal-header footerheadermodal">
           <!-- header modal -->
           <div class="search" >
-            <input  class="container__input2" placeholder="Buscar en Google Map"   (keyup)="onKey($event)" (keyup.enter)="buscar()"
+            <input  class="container__input2" placeholder="Buscar..."   (keyup)="onKey($event)" (keyup.enter)="buscar()"
               [(ngModel)]="buscarx" >
               <img src="assets/icons/loadingseart.svg" *ngIf="loadingseart">
             <i class="bi bi-search img-search" (click)="buscar()" placement="bottom" ngbTooltip="Búsqueda" *ngIf="!loadingseart" ></i>
@@ -109,7 +109,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           </div>
-          <google-map width="1200px" height="550px" class="modal-dialog-centered" [options]="options"
+          <google-map width="1200px" height="550px"  class="modal-dialog-centered myestilomodalmap" [options]="options"
             (mapClick)="addMarker($event)">
             <map-marker [position]="markerPosition" [options]="markerOptions" title="Title"></map-marker>
             <map-polyline [path]="vertices" [options]="optionPoli">

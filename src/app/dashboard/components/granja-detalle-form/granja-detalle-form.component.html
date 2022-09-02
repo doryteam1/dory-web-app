@@ -138,7 +138,7 @@
         </div>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3" >
         <label class="mb-2" for="dateOfBirth">Tipos de infraestructura:</label>
         <div *ngFor="let data of infraestructurasData; let i=index">
           <label>
@@ -150,9 +150,9 @@
         </div>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3" >
         <label class="mb-2" for="dateOfBirth">Especies cultivadas:</label>
-        <div class="row row-cols-4">
+        <div  class="row row-cols-1 row-cols-sm-3 row-cols-lg-4" >
           <div *ngFor="let data of especiesData; let i=index">
             <label>
               <input type="checkbox" [value]="data.id_especie" (change)="onCheckboxChange($event,'arrayEspecies')"
@@ -163,7 +163,7 @@
         </div>
       </div>
       <!-- update -->
-      <div class="mb-5" *ngIf="granja.action=='update'">
+      <div class="mb-5 clasfotoMiniyBoton" *ngIf="granja.action=='update'">
         <div *ngIf="photosGranjaArray.length > 0 " class="Photos-mini">
           <div class="Photos-mini--div" *ngFor="let fotogranja of photosGranjaArray | slice:0:3; let i =index">
             <img class="Photos-mini__img" [src]="fotogranja" (click)="openPhotosModalUpdate()">
@@ -209,7 +209,7 @@
 
       </div>
       <!-- create -->
-      <div class="mb-5" *ngIf="granja.action=='create'">
+      <div class="mb-5 clasfotoMiniyBoton" *ngIf="granja.action=='create'">
         <div *ngIf="photosGranjaArray.length > 0 " class="Photos-mini">
           <div class="Photos-mini--div" *ngFor="let fotogranja of photosGranjaArray | slice:0:3; let i =index">
             <img class="Photos-mini__img" [src]="fotogranja" (click)="openPhotosModalCreate()">
@@ -279,7 +279,7 @@
   <div class="modal-header footerheadermodal">
     <!-- header modal -->
     <div class="search">
-      <input class="container__input2" placeholder="Buscar en Google Map" (keyup)="onKey($event)"
+      <input class="container__input2" placeholder="Buscar" (keyup)="onKey($event)"
         (keyup.enter)="buscar()" [(ngModel)]="buscarx">
       <img src="assets/icons/loadingseart.svg" *ngIf="loadingseart">
       <i class="bi bi-search img-search" (click)="buscar()" placement="bottom" ngbTooltip="Búsqueda"
@@ -346,7 +346,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     </div>
-    <google-map width="1200px" height="550px" class="modal-dialog-centered" [options]="options"
+    <google-map width="1200px" height="550px" class="modal-dialog-centered myestilomodalmap" [options]="options"
       (mapClick)="addMarker($event)">
       <map-marker [position]="markerPosition" [options]="markerOptions" title="Title"></map-marker>
       <map-polyline [path]="vertices" [options]="optionPoli">

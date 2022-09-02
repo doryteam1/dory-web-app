@@ -22,6 +22,7 @@ import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-m
 import { vertices } from '../../../global/constants';
 import { SafeUrl } from '@angular/platform-browser';
 import { ComunicacionEntreComponentesService } from '../../../shared/services/comunicacion-entre-componentes.service';
+import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 
 const _ = require('lodash');
 @Component({
@@ -98,6 +99,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     arrayTiposInfraestructuras: new FormArray([]),
     arrayEspecies: new FormArray([]),
   });
+
   constructor(
     private granjaService: GranjasService,
     private modalService: NgbModal,
@@ -110,7 +112,8 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     private location: Location,
     public platformLocation: PlatformLocation,
     private appModalService: AppModalService,
-    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService
+    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
+    private compressImageSizeService:CompressImageSizeService,
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -200,6 +203,11 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         }
       );
   }
+/*   @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
+    if (event.target.innerWidth <= 710 && event.target.innerWidth > 560) {
+
+    }
+  } */
   ngOnDestroy(): void {
     /* cancelamos las subcripciones del servicio */
     this.changeArray?.unsubscribe();
@@ -448,10 +456,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
                 }, 30000);
                 this.faltadireccion = true;
               } else {
-                /*  this.latitud?.setValue(this.granja.latitud);
-                this.longitud?.setValue(this.granja.longitud);
-                this.direccion?.setValue(this.granja.direccion);
-                this.faltadireccion = false; */
                 this.latitud?.setValue(response.data[0].latitud);
                 this.longitud?.setValue(response.data[0].longitud);
                 this.direccion?.setValue('');
@@ -884,18 +888,17 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   /* funciones necesarias para cargar y adicionar fotos */
   @HostListener('loadPhotos')
   async loadPhotos(event: any) {
-    console.log(event)
     if (this.granja.action == 'create') {
       /* Se ejecuta cuando se esta creando una granja */
       try {
+        const compressedFiles =await this.compressImageSizeService.handleImageArrayUpload(event);
         let fileNameBase =
           '/granjas/User' +
           this.authUserId +
           '/granja' +
           this.id_granjanew +
           '/foto';
-        let files: Array<any> = event;
-        console.log(files);
+        let files: Array<any> = compressedFiles;
         let arrayFotos: Array<any> = [];
         for (let i = 0; i < files.length; i++) {
           let nowTimestamp = new Date().getTime().toString();
@@ -903,13 +906,12 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
             .cloudStorageTask(fileNameBase + nowTimestamp, files[i])
             .percentageChanges()
             .toPromise();
-
           let downloadUrl = await this.storage
             .cloudStorageRef(fileNameBase + nowTimestamp)
             .getDownloadURL()
             .toPromise();
-
           arrayFotos.push(downloadUrl);
+          console.log('Fotos guardadas');
         }
         this.photosGranjaArray = [];
         this.photosGranjaArray = this.photosGranjaArray.concat(arrayFotos);
@@ -920,14 +922,16 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     } else if (this.granja.action == 'update') {
       /* Se ejecuta cuando se esta editando una granja */
       try {
+        const compressedFiles =
+          await this.compressImageSizeService.handleImageArrayUpload(event);
         let fileNameBase =
           '/granjas/User' +
           this.authUserId +
           '/granja' +
           this.granja.id_granja +
           '/foto';
-        console.log(fileNameBase);
-        let files: Array<any> = event;
+        let files: Array<any> = compressedFiles;
+        console.log(files)
         let arrayFotos: Array<any> = [];
         for (let i = 0; i < files.length; i++) {
           let nowTimestamp = new Date().getTime().toString();
@@ -935,14 +939,13 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
             .cloudStorageTask(fileNameBase + nowTimestamp, files[i])
             .percentageChanges()
             .toPromise();
-
           let downloadUrl = await this.storage
             .cloudStorageRef(fileNameBase + nowTimestamp)
             .getDownloadURL()
             .toPromise();
           arrayFotos.push(downloadUrl);
+          console.log('Fotos guardadas');
         }
-        console.log('Fotos granjas guardadas en firebase');
         this.photosGranjaArray = this.photosGranjaArray.concat(arrayFotos);
         /* entrega las ultimas fotos que se cargaron, las manda al componente
         que las necesite */
@@ -1025,8 +1028,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         filesCreate,
         action
       )
-      .then((result: any) => {
-      })
+      .then((result: any) => {})
       .catch((result) => {});
   }
   openPhotosModalUpdate() {
@@ -1048,9 +1050,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         -1,
         action
       )
-      .then((result: any) => {
-
-      })
+      .then((result: any) => {})
       .catch((result) => {});
   }
   get idDpto() {

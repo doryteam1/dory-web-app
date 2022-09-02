@@ -83,7 +83,8 @@ export class FloatingBtnAutoUpComponent implements OnInit {
           route.includes('home') ||
           route.includes('panel-busqueda/productos') ||
           route.includes('panel-busqueda/vehiculos') ||
-          route.includes('panel-busqueda/negocios')
+          route.includes('panel-busqueda/negocios') ||
+          route.includes('dashboard/granja/detalle')
         ) {
           this.isHidden = false;
           if (

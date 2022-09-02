@@ -51,7 +51,7 @@
   background-color: var(--white);
   background-origin: padding-box;
   border-radius: 133px;
-  width: 90%;
+  width: 100%;
   height: 45px;
   border: 0.5px solid var(--gris4);
   -webkit-box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
@@ -86,8 +86,8 @@
   cursor: pointer
 }
 .button_close {
-  margin-left: 60px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 
 }
  .map {
@@ -258,4 +258,26 @@
       }
     }
   }
+}
+@media (max-width: 575px) {
+  .myestilomodalmap {
+    margin: 0px !important;
+    /* ajusta el boton de pantalla completa del mapa */
+  }
+}
+@media screen and (max-width: 550px) {
+  .Photos-mini--div {
+    display: none;
+  }
+  .masimagenescontador{
+    display: none;
+  }
+  .clasfotoMiniyBoton{
+    margin-bottom: 10px !important;
+  }
+}
+@media screen and (max-width: 480px) {
+.container__btn{
+  width: 100px;
+}
 }

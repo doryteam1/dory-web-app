@@ -312,7 +312,6 @@ export class PerfilComponent implements OnInit {
       (response) => {
         /* console.log('usuario por email ', response); */
         this.usuario = response.data[0];
-        console.log(this.usuario);
         this.form.get('id')?.setValue(this.usuario.id);
         this.form.get('cedula')?.setValue(this.usuario.cedula);
         this.form.get('nombres')?.setValue(this.usuario.nombres);
@@ -501,49 +500,59 @@ export class PerfilComponent implements OnInit {
   async fileChange(event: any) {
     this.loadingPhoto = true;
     const imageFile = event.target.files[0];
+    console.log(imageFile)
     event.srcElement.value = '';
-    const options = {
-      maxSizeMB: 1,
-      maxWidthOrHeight: 1920,
-      useWebWorker: true,
-    };
     try {
       const compressedFile =
-        await this.compressImageSizeService.handleImageUpload(
-          imageFile,
-          options
-        );
-      await this.uploadToServer(compressedFile); // write your own logic
+        await this.compressImageSizeService.handleImageUpload(imageFile);
+        await this.uploadToServer(compressedFile); // write your own logic
     } catch (error) {
       console.log(error);
     }
   }
   delatePhotoPerfil() {
-    let fileName = '/perfil/user_' + this.id?.value;
-    this.storage.deletephotoPerfil(fileName).subscribe(
-      (result) => {
-        this.us.actualizarUsuario(this.id?.value, { foto: '' }).subscribe(
-          (response) => {
-            this.usuario.foto = '';
-            this.us.setAuthUserPhoto(this.usuario.foto);
-            this.storageService.add('photoUser', '');
-            this.photoDelate = true;
-            this.usuario;
-            setTimeout(() => {
-              this.photoDelate = false;
-              /*  window.location.reload(); */
-            }, 3000);
-          },
-          (err) => {
+      this.us.actualizarUsuario(this.id?.value, { foto: '' }).subscribe(
+        (response) => {
+          this.usuario.foto = '';
+          this.us.setAuthUserPhoto(this.usuario.foto);
+          this.storageService.add('photoUser', '');
+          this.photoDelate = true;
+          this.usuario;
+          setTimeout(() => {
             this.photoDelate = false;
-            console.log(err);
-          }
-        );
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+            /*  window.location.reload(); */
+          }, 3000);
+        },
+        (err) => {
+          this.photoDelate = false;
+          console.log(err);
+        }
+      );
+    // let fileName = '/perfil/user_' + this.id?.value;
+    // this.storage.deletephotoPerfil(fileName).subscribe(
+    //   (result) => {
+    //     this.us.actualizarUsuario(this.id?.value, { foto: '' }).subscribe(
+    //       (response) => {
+    //         this.usuario.foto = '';
+    //         this.us.setAuthUserPhoto(this.usuario.foto);
+    //         this.storageService.add('photoUser', '');
+    //         this.photoDelate = true;
+    //         this.usuario;
+    //         setTimeout(() => {
+    //           this.photoDelate = false;
+    //           /*  window.location.reload(); */
+    //         }, 3000);
+    //       },
+    //       (err) => {
+    //         this.photoDelate = false;
+    //         console.log(err);
+    //       }
+    //     );
+    //   },
+    //   (err) => {
+    //     console.log(err);
+    //   }
+    // );
   }
 
   nomCorregVeredasubs() {
@@ -1203,6 +1212,7 @@ export class PerfilComponent implements OnInit {
         });
     } else {
       this.editarperfil = false;
+      this.mensajedirecion=''
       this.nombres?.disable();
       this.cedula?.disable();
       this.apellidos?.disable();

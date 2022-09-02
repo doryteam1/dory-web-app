@@ -20,6 +20,7 @@ import { vertices } from '../../../global/constants';
 import { NegociosService } from 'src/app/services/negocios.service';
 import { PlatformLocation } from '@angular/common';
 import { ComunicacionEntreComponentesService } from 'src/app/shared/services/comunicacion-entre-componentes.service';
+import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 const _ = require('lodash');
 
 @Component({
@@ -113,7 +114,8 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
     private geocoder: MapGeocoder,
     private confirmModalMapService: ConfirmModalMapService,
     public platformLocation: PlatformLocation,
-    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService
+    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
+    private compressImageSizeService: CompressImageSizeService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -131,24 +133,22 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
     this.direccion?.disable();
     this.AutoNgOnInit();
     this.loadDptos();
-        this.changeArray =
-          this.comunicacionEntreComponentesService.changeArray.subscribe(
-            (arrayFiles) => {
-              if (arrayFiles.length > 0) {
-                  console.log('files ngOnlnit update');
-                  console.log(arrayFiles);
-                  this.loadPhotos(arrayFiles);
-              }
-            }
-          );
-        this.ArrayDelate =
-          this.comunicacionEntreComponentesService.ArrayDelate.subscribe(
-            (arrayFotoDelate) => {
-              this.photosDelete(arrayFotoDelate);
-
-            }
-          );
-
+    this.changeArray =
+      this.comunicacionEntreComponentesService.changeArray.subscribe(
+        (arrayFiles) => {
+          if (arrayFiles.length > 0) {
+            console.log('files ngOnlnit update');
+            console.log(arrayFiles);
+            this.loadPhotos(arrayFiles);
+          }
+        }
+      );
+    this.ArrayDelate =
+      this.comunicacionEntreComponentesService.ArrayDelate.subscribe(
+        (arrayFotoDelate) => {
+          this.photosDelete(arrayFotoDelate);
+        }
+      );
   }
   AutoNgOnInit(): void {
     let token = localStorage.getItem('token');
@@ -244,7 +244,6 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
         nuevoNegocio.nombre_departamento =
           this.departamentos[indexDepto].nombre_departamento;
         this.loading1 = false;
-        console.log(nuevoNegocio);
         this.negocios.push(nuevoNegocio);
         this.modalService.dismissAll();
         //this.verMap(this.negocios.length - 1);
@@ -257,11 +256,7 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
   }
 
   fileChange(event: any) {
-    console.log('change', event);
     this.file = event.target.files[0];
-    /* let productImagePath:any = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(event.target.files[0]))
-    console.log(productImagePath.changingThisBreaksApplicationSecurity) */
-    //this.productImagePath = productImagePath.changingThisBreaksApplicationSecurity;
   }
 
   deleteNegocio(negocio: any) {
@@ -422,10 +417,6 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
                 }, 30000);
                 this.faltadireccion = true;
               } else {
-                /*      this.latitud?.setValue(this.negocio.latitud);
-                this.longitud?.setValue(this.negocio.longitud);
-                this.direccion?.setValue(this.negocio.direccion); */
-                /* this.faltadireccion = false; */
                 this.latitud?.setValue(response.data[0].latitud);
                 this.longitud?.setValue(response.data[0].longitud);
                 this.direccion?.setValue('');
@@ -553,20 +544,7 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
                   }
                 }
               })
-              .catch((result) => {
-                /*      this.options = {
-                  center: {
-                    lat: parseFloat(this.latitud?.value),
-                    lng: parseFloat(this.longitud?.value),
-                  },
-                  zoom: 12,
-                  scrollwheel: true,
-                };
-                this.markerPosition = {
-                  lat: parseFloat(this.latitud?.value),
-                  lng: parseFloat(this.longitud?.value),
-                }; */
-              });
+              .catch((result) => {});
           } else if (this.modalMode == 'create') {
             this.confirmModalMapService
               .confirm(
@@ -949,14 +927,15 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
   async loadPhotos(event: any) {
     this.loading2 = true;
     try {
+      const compressedFiles =
+        await this.compressImageSizeService.handleImageArrayUpload(event);
       let fileNameBase =
         '/negocios/User' +
         this.authUserId +
         '/negocio' +
         this.negocios[this.itemUpdateIndex].id_negocio +
         '/foto';
-      console.log(fileNameBase);
-      let files: Array<any> = event;
+      let files: Array<any> = compressedFiles; ;
       let arrayFotos: Array<any> = [];
       for (let i = 0; i < files.length; i++) {
         let nowTimestamp = new Date().getTime().toString();
@@ -990,7 +969,7 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
       .subscribe(
         (response) => {
           console.log('fotos guardadas: ');
-           this.AutoNgOnInit();
+          this.AutoNgOnInit();
           console.log(response);
         },
         (err) => {
@@ -1004,7 +983,7 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
       .subscribe(
         (response) => {
           this.photosNegocioArray = arraydelate;
-           this.AutoNgOnInit();
+          this.AutoNgOnInit();
           console.log(response);
           console.log(this.photosNegocioArray);
         },
@@ -1027,7 +1006,7 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
 
     console.log('arrayFotosNegocio ', this.photosNegocioArray);
 
- /*    this.negociosService.detail(this.negocios[index].id_negocio).subscribe(
+    /*    this.negociosService.detail(this.negocios[index].id_negocio).subscribe(
       (response) => {
         this.photosNegocioArray = response.data[0].fotos_negocio;
       },
@@ -1050,12 +1029,8 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
         -1,
         action
       )
-      .then((result: any) => {
-
-      })
-      .catch((result) => {
-
-      });
+      .then((result: any) => {})
+      .catch((result) => {});
   }
 
   get idDpto() {

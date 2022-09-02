@@ -19,7 +19,10 @@
     flex-direction: column;
     width: 80vw;
     overflow-x: scroll;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
     padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .container__icon1{
@@ -180,9 +183,8 @@ color: var(--azul1);
 /* mi  estilo */
 
 .button_close{
-  margin-left: 60px;
-  margin-right: 20px;
-
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .search {
@@ -191,7 +193,7 @@ color: var(--azul1);
   background-color: var(--white);
   background-origin: padding-box;
   border-radius: 133px;
-  width: 90%;
+  width: 100%;
   height: 45px;
   border: 0.5px solid var(--gris4);
   -webkit-box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
@@ -238,7 +240,12 @@ color: var(--azul1);
     padding: 10px;
   }
 
-
+@media (max-width: 575px) {
+  .myestilomodalmap {
+    margin: 0px !important;
+    /* ajusta el boton de pantalla completa del mapa */
+  }
+}
 /* fin mi estilo */
 /* prueba estilo */
 
