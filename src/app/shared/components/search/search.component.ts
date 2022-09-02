@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
+/* import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Subscription,Observable, of } from 'rxjs';
-import { ComunicacionEntreComponentesService } from '../../services/comunicacion-entre-componentes.service';
+import { ComunicacionEntreComponentesService } from '../../services/comunicacion-entre-componentes.service'; */
 
 @Component({
   selector: 'app-search',

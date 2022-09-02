@@ -56,11 +56,6 @@ export class PescadoresMunicipioComponent implements OnInit {
   pescadores: any[] = [];
   contador: number = 0;
   resumenDepartamento: Array<any> = [];
-  municSeleccionado: any = {
-    municipio: 'Cargando...',
-    poblacion: 0,
-    count: 0,
-  };
   constructor(
     httpClient: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -230,25 +225,5 @@ export class PescadoresMunicipioComponent implements OnInit {
 
   goBack() {
     this.location.back();
-  }
-  changeSelected(codigo: number) {
-    let index = this.resumenDepartamento.findIndex(
-      (dataMunic) => dataMunic.id_municipio == codigo
-    );
-    if (index != -1) {
-      this.municSeleccionado = {
-        nombre: this.resumenDepartamento[index].nombre,
-        poblacion: this.resumenDepartamento[index].poblacion,
-        count: this.resumenDepartamento[index].count_pescadores,
-      };
-    }
-  }
-  munClick(mun: number) {
-    this.changeSelected(mun);
-    this.router.navigateByUrl('/pescadores/municipio/' + mun);
-  }
-
-  munOver(mun: number) {
-    this.changeSelected(mun);
   }
 }

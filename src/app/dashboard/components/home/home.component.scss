@@ -1,75 +1,113 @@
 body {
-    font-size: .875rem;
-  }
+  font-size: .875rem;
+}
 
-  .feather {
-    width: 16px;
-    height: 16px;
-    vertical-align: text-bottom;
-  }
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding: 48px 0 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
 
 
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Scrollable contents if viewport is shorter than content. */
+}
 
- /*
-   * Sidebar
-   */
+.nav-link {
+  font-weight: 500;
+  color: var(--gris-oscuro);
+}
 
-   .sidebar {
-    position: fixed;
-    top: 0;
-    /* rtl:raw:
-    right: 0;
-    */
-    bottom: 0;
-    /* rtl:remove */
-    left: 0;
-    z-index: 100; /* Behind the navbar */
-    padding: 48px 0 0; /* Height of navbar */
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-  }
+.nav-link .feather {
+  margin-right: 4px;
+  color: #727272;
+}
 
-  @media (max-width: 767.98px) {
-    .sidebar {
-      top: 5rem;
+.nav-link.active {
+  color: var(--azul1);
+}
+
+.nav-link:hover .feather,
+.nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+.container {
+  display: flex;
+}
+
+.miclase {
+  color: var(--azul1) !important;
+}
+
+.nav-offcanvas {
+  width: 100%;
+}
+
+.offcanvas-header {
+  justify-content: flex-end;
+}
+
+.offcanvas-start {
+  /* width: calc(max-content + 10px); */
+  width: max-content;
+}
+
+button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+}
+    .buttonOpenOffCamvas {
+      display: none;
     }
+@media screen and (max-width: 1000px) {
+  .sidebar {
+    display: none !important;
   }
 
-  .sidebar-sticky {
-    position: relative;
-    top: 0;
-    height: calc(100vh - 48px);
-    padding-top: .5rem;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  .miclassmain {
+    margin: 0 !important;
+    width: 100%;
   }
 
-  .sidebar .nav-link {
-    font-weight: 500;
-    color: var(--gris-oscuro);
+  .mirow {
+    width: 100%;
+    margin: 0;
   }
 
-  .sidebar .nav-link .feather {
-    margin-right: 4px;
-    color: #727272;
+  .container-fluid {
+    width: 100%;
   }
+        .buttonOpenOffCamvas {
+          display: block;
+        }
 
-  .sidebar .nav-link.active {
-    color: var(--azul1);
-  }
+}
 
-  .sidebar .nav-link:hover .feather,
-  .sidebar .nav-link.active .feather {
-    color: inherit;
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
   }
-
-  .sidebar-heading {
-    font-size: .75rem;
-    text-transform: uppercase;
-  }
-
-  .container{
-    display: flex;
-  }
-  .miclase{
-    color: var(--azul1) !important;
-  }
+}

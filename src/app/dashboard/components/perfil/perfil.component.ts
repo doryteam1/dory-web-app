@@ -25,6 +25,7 @@ import { vertices } from '../../../global/constants';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import imageCompression from 'browser-image-compression';
+import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 
 @Component({
   selector: 'app-perfil',
@@ -61,7 +62,7 @@ export class PerfilComponent implements OnInit {
     cedula: new FormControl(''),
     nombres: new FormControl(''),
     apellidos: new FormControl(''),
-    celular: new FormControl('',),
+    celular: new FormControl(''),
     direccion: new FormControl(''),
     informacion_adicional_direccion: new FormControl(''),
     id_tipo_usuario: new FormControl(''),
@@ -176,7 +177,6 @@ export class PerfilComponent implements OnInit {
     ],
   };
 
-
   /* Se utilizan para  validar la entra del usurio la input */
   validateInputFormObject: any[] = [
     {
@@ -263,8 +263,8 @@ export class PerfilComponent implements OnInit {
   mensajedirecion!: string;
   EditedInputValue: boolean = false;
   canceladoedir: boolean = false;
-  photoDelate: boolean=false;
-  photoUpdate: boolean=false
+  photoDelate: boolean = false;
+  photoUpdate: boolean = false;
   constructor(
     private us: UsuarioService,
     private aes: AreasExperticiaService,
@@ -276,7 +276,8 @@ export class PerfilComponent implements OnInit {
     private geocoder: MapGeocoder,
     private confirmModalMapService: ConfirmModalMapService,
     private appModalService: AppModalService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private compressImageSizeService:CompressImageSizeService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -300,8 +301,8 @@ export class PerfilComponent implements OnInit {
     this.direccion?.disable();
     this.idAreaExpert?.disable();
     this.sobre_mi?.disable();
-    this.otraAreaExp?.disable()
-    this.otraAreaExpDesc?.disable()
+    this.otraAreaExp?.disable();
+    this.otraAreaExpDesc?.disable();
     this.latitud?.disable();
     this.longitud?.disable();
     this.email?.disable();
@@ -311,7 +312,7 @@ export class PerfilComponent implements OnInit {
       (response) => {
         /* console.log('usuario por email ', response); */
         this.usuario = response.data[0];
-        console.log(this.usuario)
+        console.log(this.usuario);
         this.form.get('id')?.setValue(this.usuario.id);
         this.form.get('cedula')?.setValue(this.usuario.cedula);
         this.form.get('nombres')?.setValue(this.usuario.nombres);
@@ -353,7 +354,10 @@ export class PerfilComponent implements OnInit {
           this.usuario.otra_area_experticia_descripcion
         );
 
-        if (this.usuario.id_departamento == 0 || this.usuario.id_departamento == null) {
+        if (
+          this.usuario.id_departamento == 0 ||
+          this.usuario.id_departamento == null
+        ) {
           this.form.get('id_departamento')?.setValue(70);
         } else {
           this.form
@@ -368,9 +372,7 @@ export class PerfilComponent implements OnInit {
         this.loadCorregVeredas();
         this.nomCorregVeredasubs();
         this.storageService.add('photoUser', this.usuario.foto);
-        this.storageService.add('tipoUser',
-        this.usuario.tipo_usuario
-        );
+        this.storageService.add('tipoUser', this.usuario.tipo_usuario);
         this.storageService.add(
           'nomApell',
           this.getNomApell(this.usuario.nombres, this.usuario.apellidos)
@@ -379,17 +381,17 @@ export class PerfilComponent implements OnInit {
         if (
           !this.usuario.tipo_usuario ||
           !(this.usuario.nombres && this.usuario.apellidos)
-          ) {
-            this.router.navigate(['/welcome', this.usuario]);
-          }
-          this.us.setAuthUserPhoto(this.usuario.foto);
-          this.markerPosition = {
-            lat: parseFloat(this.latitud?.value),
-            lng: parseFloat(this.longitud?.value),
-          };
+        ) {
+          this.router.navigate(['/welcome', this.usuario]);
+        }
+        this.us.setAuthUserPhoto(this.usuario.foto);
+        this.markerPosition = {
+          lat: parseFloat(this.latitud?.value),
+          lng: parseFloat(this.longitud?.value),
+        };
 
-          this.tempDir = this.form.get('direccion')?.value;
-          this.tempMunicId = this.form.get('id_municipio')?.value;
+        this.tempDir = this.form.get('direccion')?.value;
+        this.tempMunicId = this.form.get('id_municipio')?.value;
       },
       (err) => {
         console.log(err);
@@ -407,7 +409,7 @@ export class PerfilComponent implements OnInit {
     this.nombre_corregimiento?.disable();
     this.idMunic?.disable();
     this.idAreaExpert?.disable();
-    this.sobre_mi?.disable()
+    this.sobre_mi?.disable();
     this.otraAreaExp?.disable();
     this.otraAreaExpDesc?.disable();
     this.form.get('id')?.setValue(this.usuario.id);
@@ -424,7 +426,7 @@ export class PerfilComponent implements OnInit {
     this.form
       .get('id_area_experticia')
       ?.setValue(this.usuario.id_area_experticia);
-      this.form.get('sobre_mi')?.setValue(this.usuario.sobre_mi);
+    this.form.get('sobre_mi')?.setValue(this.usuario.sobre_mi);
     this.form.get('nombre_negocio')?.setValue(this.usuario.nombre_negocio);
     this.form.get('foto')?.setValue(this.usuario.foto);
     this.form
@@ -442,10 +444,10 @@ export class PerfilComponent implements OnInit {
     this.form
       .get('nombre_corregimiento')
       ?.setValue(this.usuario.nombre_corregimiento);
-             this.otraAreaExp?.setValue(this.usuario.otra_area_experticia);
-             this.otraAreaExpDesc?.setValue(
-               this.usuario.otra_area_experticia_descripcion
-             );
+    this.otraAreaExp?.setValue(this.usuario.otra_area_experticia);
+    this.otraAreaExpDesc?.setValue(
+      this.usuario.otra_area_experticia_descripcion
+    );
   }
 
   openAddFileDialog() {
@@ -455,8 +457,6 @@ export class PerfilComponent implements OnInit {
 
   uploadToServer(file: any) {
     let fileName = '/perfil/user_' + this.id?.value;
-    console.log(fileName);
-    console.log(file);
     this.storage
       .cloudStorageTask(fileName, file)
       .percentageChanges()
@@ -477,65 +477,31 @@ export class PerfilComponent implements OnInit {
                       this.usuario.foto = downloadUrl;
                       this.us.setAuthUserPhoto(this.usuario.foto);
                       this.loadingPhoto = false;
-                      this.photoUpdate=true
-                                      setTimeout(() => {
-                                        this.photoUpdate = false;
-                                        /* window.location.reload(); */
-                                      }, 3000);
-
+                      this.photoUpdate = true;
+                      setTimeout(() => {
+                        this.photoUpdate = false;
+                      }, 3000);
                     },
                     (err) => {
                       this.loadingPhoto = false;
-                       this.photoUpdate = false;
+                      this.photoUpdate = false;
                       console.log(err);
                     }
                   );
               },
               (err) => {
                 this.loadingPhoto = false;
-                 this.photoUpdate = false;
+                this.photoUpdate = false;
                 console.log(err);
               }
             );
         }
       });
   }
-delatePhotoPerfil(){
-     let fileName = '/perfil/user_' + this.id?.value;
-     this.storage.deletephotoPerfil(fileName).subscribe(
-       (result) => {
-          this.us
-            .actualizarUsuario(this.id?.value, { foto: '' })
-            .subscribe(
-              (response) => {
-                this.usuario.foto = '';
-                this.us.setAuthUserPhoto(this.usuario.foto);
-                this.storageService.add('photoUser', '');
-                this.photoDelate=true
-                this.usuario
-                setTimeout(() => {
-                  this.photoDelate = false;
-                 /*  window.location.reload(); */
-                }, 3000);
-              },
-              (err) => {
-                this.photoDelate = false;
-                console.log(err);
-              }
-            );
-
-       },
-       (err) => {
-         console.log(err);
-       }
-     );
-
-  }
   async fileChange(event: any) {
+    console.log(event)
     this.loadingPhoto = true;
     const imageFile = event.target.files[0];
-    console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
-    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
     event.srcElement.value = '';
     const options = {
       maxSizeMB: 1,
@@ -543,19 +509,42 @@ delatePhotoPerfil(){
       useWebWorker: true,
     };
     try {
-      const compressedFile = await imageCompression(imageFile, options);
-      console.log(
-        'compressedFile instanceof Blob',
-        compressedFile instanceof Blob
-      ); // true
-      console.log(
-        `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
-      ); // smaller than maxSizeMB
-
+      const compressedFile =
+        await this.compressImageSizeService.handleImageUpload(
+          imageFile,
+          options
+        );
       await this.uploadToServer(compressedFile); // write your own logic
     } catch (error) {
       console.log(error);
     }
+  }
+  delatePhotoPerfil() {
+    let fileName = '/perfil/user_' + this.id?.value;
+    this.storage.deletephotoPerfil(fileName).subscribe(
+      (result) => {
+        this.us.actualizarUsuario(this.id?.value, { foto: '' }).subscribe(
+          (response) => {
+            this.usuario.foto = '';
+            this.us.setAuthUserPhoto(this.usuario.foto);
+            this.storageService.add('photoUser', '');
+            this.photoDelate = true;
+            this.usuario;
+            setTimeout(() => {
+              this.photoDelate = false;
+              /*  window.location.reload(); */
+            }, 3000);
+          },
+          (err) => {
+            this.photoDelate = false;
+            console.log(err);
+          }
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   nomCorregVeredasubs() {
@@ -585,7 +574,6 @@ delatePhotoPerfil(){
     this.aes.getAreasDeExperticia().subscribe(
       (response) => {
         this.areas = response.data;
-        console.log(this.areas)
       },
       (err) => {
         console.log(err);
@@ -597,7 +585,6 @@ delatePhotoPerfil(){
     this.places.getDepartamentos().subscribe(
       (response) => {
         this.departamentos = response.data;
-        console.log(this.departamentos)
       },
       (err) => {
         console.log(err);
@@ -611,7 +598,6 @@ delatePhotoPerfil(){
       .subscribe(
         (response) => {
           this.municipios = response.data;
-          console.log(this.municipios)
         },
         (err) => {
           console.log(err);
@@ -738,9 +724,9 @@ delatePhotoPerfil(){
           this.informacion_adicional_direccion?.disable();
           this.nombre_corregimiento?.disable();
           this.idMunic?.disable();
-           this.idAreaExpert?.disable();
-           this.sobre_mi?.disable();
-           this.otraAreaExp?.disable();
+          this.idAreaExpert?.disable();
+          this.sobre_mi?.disable();
+          this.otraAreaExp?.disable();
           this.otraAreaExpDesc?.disable();
           this.mensajedirecion = '';
           this.EditedInputValue = false;
@@ -751,11 +737,18 @@ delatePhotoPerfil(){
               o[clave] = false;
             }
           });
-          this.storageService.add('nomApell',this.getNomApell(this.nombres?.value,this.apellidos?.value))
+          this.storageService.add(
+            'nomApell',
+            this.getNomApell(this.nombres?.value, this.apellidos?.value)
+          );
           this.appModalService
             .modalAlertActualizadoComponent('Perfil actualizado correctamente')
             .then((result) => {
-              if(!this.celular?.value || !this.idMunic?.value || !this.direccion?.value){
+              if (
+                !this.celular?.value ||
+                !this.idMunic?.value ||
+                !this.direccion?.value
+              ) {
                 window.location.reload();
               }
             })
@@ -773,10 +766,10 @@ delatePhotoPerfil(){
           this.informacion_adicional_direccion?.disable();
           this.nombre_corregimiento?.disable();
           this.idMunic?.disable();
-           this.idAreaExpert?.disable();
-           this.sobre_mi?.disable();
-               this.otraAreaExp?.disable();
-               this.otraAreaExpDesc?.disable();
+          this.idAreaExpert?.disable();
+          this.sobre_mi?.disable();
+          this.otraAreaExp?.disable();
+          this.otraAreaExpDesc?.disable();
           this.mensajedirecion = '';
           this.EditedInputValue = false;
           this.validateInputFormObject.forEach((o) => {
@@ -821,11 +814,11 @@ delatePhotoPerfil(){
         } else {
           this.EditedInputValue = false;
         }
-      } else{
+      } else {
         this.EditedInputValue = false;
-                this.validateInputFormObject.forEach((o) => {
-                  o.id_area_experticia = false;
-                });
+        this.validateInputFormObject.forEach((o) => {
+          o.id_area_experticia = false;
+        });
       }
     }
   }
@@ -866,7 +859,7 @@ delatePhotoPerfil(){
             .confirm(
               '../../../../assets/icons/editar.svg',
               '../../../../assets/icons/save.svg',
-              'Actualizar  mi ubicación',
+              'Actualizar ubicación',
               'Estás a punto de cambiar tu ubicación por: ',
               'Si',
               'No estoy seguro',
@@ -879,7 +872,7 @@ delatePhotoPerfil(){
                 this.direccion?.setValue(response.results[0].formatted_address);
                 this.tempDir = this.direccion?.value;
                 this.tempMunicId = this.idMunic?.value;
-                this.foto?.setValue('')
+                this.foto?.setValue('');
                 if (event.latLng) {
                   this.markerPosition = event.latLng.toJSON();
                   this.latitud?.setValue(event.latLng.toJSON().lat);
@@ -1165,9 +1158,9 @@ delatePhotoPerfil(){
     this.informacion_adicional_direccion?.enable();
     this.nombre_corregimiento?.enable();
     this.idMunic?.enable();
-     this.idAreaExpert?.enable();
-     this.sobre_mi?.enable();
-     this.otraAreaExp?.enable();
+    this.idAreaExpert?.enable();
+    this.sobre_mi?.enable();
+    this.otraAreaExp?.enable();
     this.otraAreaExpDesc?.enable();
   }
   cancelProfileEditing() {
@@ -1179,7 +1172,7 @@ delatePhotoPerfil(){
         .confirm(
           '../../../../assets/icons/editar.svg',
           '../../../../assets/icons/save.svg',
-          'Cancelar edicion del perfil',
+          'Cancelar edicion ',
           'Estás apunto de cancelar la edición',
           'Si',
           'No estoy seguro',
