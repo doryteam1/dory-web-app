@@ -158,7 +158,6 @@ export class PescadoresMunicipioComponent implements OnInit {
   }
   onMouseCard(pescador: any, indexSelected: number) {
     this.indexSelected = indexSelected;
-    console.log(this.indexSelected);
     this.markerPosition = {
       lat: Number(pescador.latitud),
       lng: Number(pescador.longitud),

@@ -1,5 +1,7 @@
 
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { MediaQueryService } from 'src/app/services/media-query.service';
 import { PiscicultoresService } from '../../../piscicultores/services/piscicultores.service';
 
 @Component({
@@ -7,7 +9,7 @@ import { PiscicultoresService } from '../../../piscicultores/services/pisciculto
   templateUrl: './card-granjas.component.html',
   styleUrls: ['./card-granjas.component.scss'],
 })
-export class CardGranjasComponent implements OnInit {
+export class CardGranjasComponent implements OnInit, OnDestroy {
   @Input() granja: any;
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   showNotFound: boolean = false;
@@ -18,9 +20,26 @@ export class CardGranjasComponent implements OnInit {
   ngOnlnitPiscicultorDetalle: boolean = false;
   ran!: number;
   shorterNumber: number = 12;
-  constructor(private piscicultoresService: PiscicultoresService) {}
+  constructor(
+    private piscicultoresService: PiscicultoresService,
+    public mediaQueryService: MediaQueryService
+  ) {}
+  cardGranjaMediaQuery1!: Subscription;
   ngOnInit(): void {
     this.ran = Math.floor(this.granja.fotos.length * Math.random());
+       this.cardGranjaMediaQuery1 = this.mediaQueryService
+         .mediaQuery('max-width: 316px')
+         .subscribe((matches) => {
+           if (matches) {
+             this.shorterNumber = 8;
+           } else {
+             this.shorterNumber = 12;
+           }
+         });
+  }
+  ngOnDestroy(): void {
+    console.log("granja")
+    this.cardGranjaMediaQuery1.unsubscribe();
   }
   detalle(granja: any) {
     return this.onDetalle.emit(granja);
@@ -35,11 +54,4 @@ export class CardGranjasComponent implements OnInit {
     );
   }
 
-  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
-    if (event.target.innerWidth <= 300) {
-      this.shorterNumber=8
-    }else{
-      this.shorterNumber = 12;
-    }
-  }
 }

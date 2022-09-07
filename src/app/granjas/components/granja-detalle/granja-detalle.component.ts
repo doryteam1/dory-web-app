@@ -1,4 +1,4 @@
-import { Component,HostListener,OnInit } from '@angular/core';
+import { Component,HostListener,OnDestroy,OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GranjasService } from '../../services/granjas.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -7,13 +7,14 @@ import { PlatformLocation } from '@angular/common'
 import { AppModalService } from '../../../shared/services/app-modal.service';
 import * as dayjs from 'dayjs'
 import { Subscription } from 'rxjs';
+import { MediaQueryService } from 'src/app/services/media-query.service';
 
 @Component({
   selector: 'app-granja-detalle',
   templateUrl: './granja-detalle.component.html',
   styleUrls: ['./granja-detalle.component.scss'],
 })
-export class GranjaDetalleComponent implements OnInit {
+export class GranjaDetalleComponent implements OnInit,OnDestroy  {
   granja: any;
   fotosgranja: any = [];
   showNotFound: boolean = false;
@@ -45,13 +46,16 @@ export class GranjaDetalleComponent implements OnInit {
   currentRate: any;
   showResenasNotFound: boolean = false;
   arrayFotosGranja: any[] = [];
+  modalGogleMapOpen: boolean = false;
   constructor(
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
     public location: PlatformLocation,
     private modalService: NgbModal,
-    private appModalService: AppModalService
+    private appModalService: AppModalService,
+    public mediaQueryService: MediaQueryService
   ) {}
+  mediaQuery1!: Subscription;
   ngOnInit(): void {
     this.selectedGranjaId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
@@ -65,7 +69,7 @@ export class GranjaDetalleComponent implements OnInit {
         .subscribe(
           (response) => {
             this.miresena = response.data.resena;
-            console.log('mi reseña', this.miresena);
+            /* console.log('mi reseña', this.miresena); */
             this.editedDescResena = this.miresena?.descripcion;
           },
           (err) => {}
@@ -119,6 +123,18 @@ export class GranjaDetalleComponent implements OnInit {
         console.log(err);
       }
     );
+    this.mediaQuery1 = this.mediaQueryService
+      .mediaQuery('max-width: 1009px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.appModalService.CloseModalGalleryVerAdiconarEliminarFotos();
+        } else {
+          this.appModalService.CloseGoogleMapGeneralModal();
+        }
+      });
+  }
+  ngOnDestroy(): void {
+    this.mediaQuery1.unsubscribe();
   }
   fotoSele(i: number) {
     this.shadoweffectindice = i;
@@ -323,35 +339,50 @@ export class GranjaDetalleComponent implements OnInit {
       dayjs(date).year()
     );
   }
-
   ModalGoogleMap() {
-    let atributos = this.granja;
+    this.modalGogleMapOpen = true;
     let modalheadergooglemap = false;
-    let mapElementVarios = false;
-    let shared = true;
+    let shared = false;
+    let atributos = {
+      longAndLat: {
+        lat: this.granja.latitud,
+        lng: this.granja.longitud,
+      },
+      mapInfoWindowData: [
+        {
+          icon: 'assets/icons/person_black.svg',
+          dataNombre: this.granja.nombre,
+          sinDataNombre: 'Nombre indefinido',
+        },
+        {
+          icon: 'assets/icons/person_pin_circle_black_24dp.svg',
+          dataNombre: this.granja.direccion,
+          sinDataNombre: 'Dirección indefinida',
+        },
+      ],
+      nombreAtributo: {
+        dato1: 'Compartir ubicación de la granja',
+      },
+    };
     let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
     this.location.onPopState(() => {
-      this.appModalService.CloseGoogleMapModal();
+      this.appModalService.CloseGoogleMapGeneralModal();
     });
     this.appModalService
-      .GoogleMapModal(
+      .GoogleMapModalGeneral(
         atributos,
         modalheadergooglemap,
-        shared,
-        mapElementVarios,
         iconMarkerGoogleMap,
-        ''
+        shared
       )
-      .then((result) => {})
-      .catch((result) => {});
-  }
-  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
-    if (event.target.innerWidth <= 1009) {
-    this.appModalService.CloseModalGalleryVerAdiconarEliminarFotos();
-    }
+      .then((result) => {
+        this.modalGogleMapOpen = false;
+      })
+      .catch((result) => {
+        this.modalGogleMapOpen = false;
+      });
   }
 }
-
 
 
 

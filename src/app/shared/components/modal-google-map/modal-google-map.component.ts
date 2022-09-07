@@ -25,7 +25,6 @@ export class ModalGoogleMapComponent implements OnInit {
   @Input() atributos: any = {};
   @Input() modalheader!: boolean;
   @Input() shared: boolean=true;
-  @Input() mapElementVarios!: boolean;
   @Input() iconMarkerGoogleMap!:string
   @Input() iconMarkerGoogleMap2!:string
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
@@ -59,14 +58,12 @@ export class ModalGoogleMapComponent implements OnInit {
     },
   };
   ngOnInit(): void {
-    console.log(this.iconMarkerGoogleMap)
     const sucreColombia = {
       north: 10.184454,
       south: 8.136442,
       west: -75.842392,
       east: -74.324908,
     };
-    if (this.mapElementVarios) {
       this.misfavoritas = this.atributos;
       console.log(this.misfavoritas);
       this.extractLatLong();
@@ -89,27 +86,8 @@ export class ModalGoogleMapComponent implements OnInit {
         lat: parseFloat(this.misfavoritas[0].latitud),
         lng: parseFloat(this.misfavoritas[0].longitud),
       };
-    }
-    if (!this.mapElementVarios) {
-      this.options = {
-        center: {
-          lat: parseFloat(this.atributos.latitud),
-          lng: parseFloat(this.atributos.longitud),
-        },
-        zoom: 13,
-        scrollwheel: true,
-        restriction: {
-          latLngBounds: sucreColombia,
-          strictBounds: false,
-        },
-        streetViewControl: false,
-        fullscreenControl: false,
-      };
-      this.markerPosition = {
-        lat: parseFloat(this.atributos.latitud),
-        lng: parseFloat(this.atributos.longitud),
-      };
-    }
+
+
   }
 
   constructor(
@@ -132,15 +110,9 @@ export class ModalGoogleMapComponent implements OnInit {
   }
   mapainiciado() {
     /* https://www.freakyjolly.com/angular-google-maps-integration-with-markers-info-windows-tutorial/ */
-    if (!this.mapElementVarios) {
-      this.openInfoWindow(this.marker)
-      this.mapaOn = true;
-    }else if (this.mapElementVarios) {
       this.mapaOn=true
-    }
   }
   extractLatLong() {
-    if (this.mapElementVarios) {
       this.misfavoritas.forEach((favoritoslatlong: any) => {
         let markerPosition: google.maps.LatLngLiteral = {
           lat: Number(favoritoslatlong.latitud),
@@ -149,7 +121,6 @@ export class ModalGoogleMapComponent implements OnInit {
         this.markerPositions.push(markerPosition);
         this.markersInfo.push({ markerPosition: markerPosition });
       });
-    }
   }
 
   public decline() {
@@ -162,7 +133,7 @@ export class ModalGoogleMapComponent implements OnInit {
     this._modalService.dismiss();
   }
   openInfoWindowvarios(marker: MapMarker, index: number) {
-    if (this.mapElementVarios && this.mapaOn) {
+    if (this.mapaOn) {
       this.infoWindow.open(marker);
       this.indexSelected=index
       this.selectedfavorito.granja.nombre = this.misfavoritas[index].nombre;
@@ -174,45 +145,12 @@ export class ModalGoogleMapComponent implements OnInit {
     }
   }
   eliminInfoWindowvarios() {
-    if (this.mapElementVarios && this.mapaOn) {
+    if (this.mapaOn) {
       this.infoWindow.close();
       this.indexSelected = -1;
     }
   }
-  openInfoWindow(marker: MapMarker) {
-    if (!this.mapElementVarios) {
-      console.log(this.atributos)
-      this.infoWindow.open(marker);
-      this.selectedfavorito.granja.nombre = this.atributos.nombre;
-      this.selectedfavorito.granja.direccion = this.atributos.direccion;
-      this.selectedfavorito.granja.area = this.atributos.area;
-      this.selectedfavorito.propietario.nombre = this.atributos.propietario || this.atributos.propietarios[0].nombre_completo;
-      console.log(this.selectedfavorito)
-    }
-  }
-  eliminInfoWindow() {
-    if (!this.mapElementVarios) {
-      this.infoWindow.close();
-    }
-  }
-  shareFuntion() {
-    if (!this.mapElementVarios && this.shared) {
-      this.location.onPopState(() => {
-        this.appModalService.closeModalShare();
-      });
-      this.appModalService
-        .shared(
-          'Compartir ubicación de la granja',
-          true,
-          `https://www.google.com/maps?q=${this.atributos.latitud},${this.atributos.longitud}`,
-          `Echa un vistazo a la ubicación de la granja piscícola: ${this.atributos.nombre}`
-        )
-        .then((result) => {})
-        .catch((result) => {});
-    }
-  }
   shareFuntionvarios(i: number) {
-    if (this.mapElementVarios) {
       this.location.onPopState(() => {
         this.appModalService.closeModalShare();
       });
@@ -221,14 +159,12 @@ export class ModalGoogleMapComponent implements OnInit {
           'Compartir ubicación de la granja',
           true,
           `https://www.google.com/maps?q=${this.misfavoritas[i].latitud},${this.misfavoritas[i].longitud}`,
-          `Echa un vistazo a la ubicación de la granja piscícola: ${this.misfavoritas[i].nombre}`
+          `Echa un vistazo a la ubicación de la granja: ${this.misfavoritas[i].nombre}`
         )
         .then((result) => {})
         .catch((result) => {});
-    }
   }
   navigate(i: number) {
-    if (this.mapElementVarios) {
       // Converts the route into a string that can be used
       // with the window.open() function
       const url = this.router.serializeUrl(
@@ -237,10 +173,9 @@ export class ModalGoogleMapComponent implements OnInit {
         ])
       );
       window.open(url, '_blank');
-    }
+
   }
   changeFavorite(i: number) {
-    if (this.mapElementVarios) {
         this.appModalService
           .confirm(
             'Eliminar de favoritos',
@@ -273,14 +208,12 @@ export class ModalGoogleMapComponent implements OnInit {
             }
           })
           .catch((result) => {});
-    }
-
   }
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
   onMouseCard(indexSelected: number) {
-    if (this.mapaOn && this.mapElementVarios) {
+    if (this.mapaOn) {
       this.indexSelected = indexSelected;
       this.markerPosition = {
         lat: Number(this.misfavoritas[indexSelected].latitud),

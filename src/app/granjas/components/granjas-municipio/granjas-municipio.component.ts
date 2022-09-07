@@ -1,7 +1,7 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GranjasService } from '../../services/granjas.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,13 +15,14 @@ import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.s
 import { BuscarPor } from '../../../../models/buscarPor.model';
 import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
+import { MediaQueryService } from 'src/app/services/media-query.service';
 
 @Component({
   selector: 'app-granjas-municipio',
   templateUrl: './granjas-municipio.component.html',
   styleUrls: ['./granjas-municipio.component.scss'],
 })
-export class GranjasMunicipioComponent implements OnInit {
+export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   @ViewChild('marker') marker!: MapMarker;
   showNotFound: boolean = false;
@@ -102,7 +103,8 @@ export class GranjasMunicipioComponent implements OnInit {
     private searchBuscadorService: SearchBuscadorService,
     private location: Location,
     private appModalService: AppModalService,
-    public location2: PlatformLocation
+    public location2: PlatformLocation,
+    public mediaQueryService: MediaQueryService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -114,7 +116,8 @@ export class GranjasMunicipioComponent implements OnInit {
         catchError(() => of(false))
       );
   }
-
+  mediaQuery1!: Subscription;
+  mediaQuery2!: Subscription;
   ngOnInit(): void {
     registerLocaleData(es);
     this.granjaDetailRoute =
@@ -161,8 +164,27 @@ export class GranjasMunicipioComponent implements OnInit {
           };
         }
       });
+          this.mediaQuery1 = this.mediaQueryService
+            .mediaQuery('max-width: 300px')
+            .subscribe((matches) => {
+              if (matches) {
+                this.shorterNumber = 8;
+              } else {
+                this.shorterNumber = 12;
+              }
+            });
+          this.mediaQuery2 = this.mediaQueryService
+            .mediaQuery('min-width: 1100px')
+            .subscribe((matches) => {
+              if (matches && this.modalGogleMapOpen) {
+                this.appModalService.CloseGoogleMapGeneralModal();
+              }
+            });
   }
-
+  ngOnDestroy(): void {
+    this.mediaQuery1.unsubscribe();
+    this.mediaQuery2.unsubscribe();
+  }
   extractLatLong() {
     this.markerPositions = [];
     this.markersInfo = [];
@@ -222,36 +244,41 @@ export class GranjasMunicipioComponent implements OnInit {
       this.eliminInfoWindow();
     }
   }
-  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
-    if (event.target.innerWidth >= 1100) {
-      if (this.modalGogleMapOpen) {
-        this.appModalService.CloseGoogleMapModal();
-      }
-    }
-    if (event.target.innerWidth <= 300) {
-      this.shorterNumber = 8;
-    } else {
-      this.shorterNumber = 12;
-    }
-  }
   seeFarmsMaptwo(i: number) {
     this.modalGogleMapOpen = true;
-    let atributos = this.granjasFiltered[i];
     let modalheadergooglemap = false;
     let shared = false;
-    let mapElementVarios = false;
+    let atributos = {
+      longAndLat: {
+        lat: this.granjasFiltered[i].latitud,
+        lng: this.granjasFiltered[i].longitud,
+      },
+      mapInfoWindowData: [
+        {
+          icon: 'assets/icons/person_black.svg',
+          dataNombre: this.granjasFiltered[i].nombre,
+          sinDataNombre: 'Nombre indefinido',
+        },
+        {
+          icon: 'assets/icons/person_pin_circle_black_24dp.svg',
+          dataNombre: this.granjasFiltered[i].direccion,
+          sinDataNombre: 'Dirección indefinida',
+        },
+      ],
+      nombreAtributo: {
+        dato1: 'Compartir ubicación de la granja',
+      },
+    };
     let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
     this.location2.onPopState(() => {
-      this.appModalService.CloseGoogleMapModal();
+      this.appModalService.CloseGoogleMapGeneralModal();
     });
     this.appModalService
-      .GoogleMapModal(
+      .GoogleMapModalGeneral(
         atributos,
         modalheadergooglemap,
-        shared,
-        mapElementVarios,
         iconMarkerGoogleMap,
-        ''
+        shared
       )
       .then((result) => {
         this.modalGogleMapOpen = false;

@@ -16,10 +16,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./modal-google-general.component.scss'],
 })
 export class ModalGoogleGeneralComponent implements OnInit {
-
   @Input() atributos: any = {};
   @Input() modalheader!: boolean;
   @Input() iconMarkerGoogleMap!: string;
+  @Input() shared: boolean = false;
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   @ViewChild('marker') marker!: MapMarker;
   @ViewChild('myGoogleMap', { static: false })
@@ -40,7 +40,6 @@ export class ModalGoogleGeneralComponent implements OnInit {
   apiLoaded!: Observable<boolean>;
   indexSelected: number = -1;
   ngOnInit(): void {
-    console.log(this.iconMarkerGoogleMap);
     const sucreColombia = {
       north: 10.184454,
       south: 8.136442,
@@ -104,5 +103,20 @@ export class ModalGoogleGeneralComponent implements OnInit {
   eliminInfoWindow() {
     this.infoWindow.close();
   }
-
+  share() {
+    if(this.shared){
+      this.location.onPopState(() => {
+        this.appModalService.closeModalShare();
+      });
+      this.appModalService
+        .shared(
+          `${this.atributos.nombreAtributo.dato1}`,
+          true,
+          `https://www.google.com/maps?q=${this.atributos.longAndLat.lat},${this.atributos.longAndLat.lng}`,
+          ``
+        )
+        .then((result) => {})
+        .catch((result) => {});
+    }
+    }
 }

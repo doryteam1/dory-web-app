@@ -64,8 +64,7 @@ export class AppModalService {
   public GoogleMapModal(
     atributos: any = {},
     modalheader: boolean,
-    shared:boolean,
-    mapElementVarios: boolean,
+    shared: boolean,
     iconMarkerGoogleMap: string,
     iconMarkerGoogleMap2: string
   ): Promise<boolean> {
@@ -77,7 +76,6 @@ export class AppModalService {
     modalRef.componentInstance.atributos = atributos;
     modalRef.componentInstance.modalheader = modalheader;
     modalRef.componentInstance.shared = shared;
-    modalRef.componentInstance.mapElementVarios = mapElementVarios;
     modalRef.componentInstance.iconMarkerGoogleMap = iconMarkerGoogleMap;
     modalRef.componentInstance.iconMarkerGoogleMap2 = iconMarkerGoogleMap2;
     return modalRef.dismissed.toPromise();
@@ -90,6 +88,7 @@ export class AppModalService {
     atributos: any = {},
     modalheader: boolean,
     iconMarkerGoogleMap: string,
+    shared?: boolean
   ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalGoogleGeneralComponent, {
       ariaLabelledBy: 'modal-basic-title',
@@ -99,6 +98,7 @@ export class AppModalService {
     modalRef.componentInstance.atributos = atributos;
     modalRef.componentInstance.modalheader = modalheader;
     modalRef.componentInstance.iconMarkerGoogleMap = iconMarkerGoogleMap;
+    modalRef.componentInstance.shared = shared;
     return modalRef.dismissed.toPromise();
   }
   /* alerta modal perfil actualizado */
@@ -172,9 +172,9 @@ export class AppModalService {
   }
   public modalCheckboxListComponent(
     arrayCheckbox: any[],
-    arrayCheckboxSelec:any[],
-    titleModal:string
-    ): Promise<boolean> {
+    arrayCheckboxSelec: any[],
+    titleModal: string
+  ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalCheckboxListComponent, {
       size: 'md',
       centered: true,

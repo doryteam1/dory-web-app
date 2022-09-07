@@ -36,7 +36,7 @@ export class PerfilComponent implements OnInit {
   @ViewChild('map') map: any;
   usuario: any;
   @ViewChild('fileInput') inputFileDialog!: ElementRef;
-
+  inputOn: boolean = true;
   buscarx: string = '';
   fueraDirecion: boolean = false;
   loading: boolean = false;
@@ -277,7 +277,7 @@ export class PerfilComponent implements OnInit {
     private confirmModalMapService: ConfirmModalMapService,
     private appModalService: AppModalService,
     private modalService: NgbModal,
-    private compressImageSizeService:CompressImageSizeService
+    private compressImageSizeService: CompressImageSizeService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -298,7 +298,6 @@ export class PerfilComponent implements OnInit {
     this.informacion_adicional_direccion?.disable();
     this.nombre_corregimiento?.disable();
     this.idMunic?.disable();
-    this.direccion?.disable();
     this.idAreaExpert?.disable();
     this.sobre_mi?.disable();
     this.otraAreaExp?.disable();
@@ -500,34 +499,34 @@ export class PerfilComponent implements OnInit {
   async fileChange(event: any) {
     this.loadingPhoto = true;
     const imageFile = event.target.files[0];
-    console.log(imageFile)
+    console.log(imageFile);
     event.srcElement.value = '';
     try {
       const compressedFile =
         await this.compressImageSizeService.handleImageUpload(imageFile);
-        await this.uploadToServer(compressedFile); // write your own logic
+      await this.uploadToServer(compressedFile); // write your own logic
     } catch (error) {
       console.log(error);
     }
   }
   delatePhotoPerfil() {
-      this.us.actualizarUsuario(this.id?.value, { foto: '' }).subscribe(
-        (response) => {
-          this.usuario.foto = '';
-          this.us.setAuthUserPhoto(this.usuario.foto);
-          this.storageService.add('photoUser', '');
-          this.photoDelate = true;
-          this.usuario;
-          setTimeout(() => {
-            this.photoDelate = false;
-            /*  window.location.reload(); */
-          }, 3000);
-        },
-        (err) => {
+    this.us.actualizarUsuario(this.id?.value, { foto: '' }).subscribe(
+      (response) => {
+        this.usuario.foto = '';
+        this.us.setAuthUserPhoto(this.usuario.foto);
+        this.storageService.add('photoUser', '');
+        this.photoDelate = true;
+        this.usuario;
+        setTimeout(() => {
           this.photoDelate = false;
-          console.log(err);
-        }
-      );
+          /*  window.location.reload(); */
+        }, 3000);
+      },
+      (err) => {
+        this.photoDelate = false;
+        console.log(err);
+      }
+    );
     // let fileName = '/perfil/user_' + this.id?.value;
     // this.storage.deletephotoPerfil(fileName).subscribe(
     //   (result) => {
@@ -946,6 +945,7 @@ export class PerfilComponent implements OnInit {
     });
   }
   verMap() {
+    console.log("ok")
     if (this.editarperfil) {
       const sucreColombia = {
         north: 10.184454,
@@ -1100,7 +1100,9 @@ export class PerfilComponent implements OnInit {
       this.borrarseart = false;
     }
   }
-
+inputEnable(){
+this.inputOn = false;
+}
   mostrarPorTipo(campo: string) {
     let index = -1;
 
@@ -1212,7 +1214,7 @@ export class PerfilComponent implements OnInit {
         });
     } else {
       this.editarperfil = false;
-      this.mensajedirecion=''
+      this.mensajedirecion = '';
       this.nombres?.disable();
       this.cedula?.disable();
       this.apellidos?.disable();

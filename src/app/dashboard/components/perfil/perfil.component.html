@@ -217,12 +217,13 @@
               </div>
           </div>
           <div id="direccion" class="col">
-              <div class="container__box left" *ngIf="mostrarPorTipo('direccion')"   (click)="verMap()" >
+              <div class="container__box left" *ngIf="mostrarPorTipo('direccion')"  >
                   <span class="container__label">Dirección: <span class="asterisk">*</span></span>
-                  <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}">
-                    <input class="container__input form-input-text-square"
+                  <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}" (click)="verMap()">
+                    <input readonly class="container__input form-input-text-square"
                     [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil}"
-                    type="text" formControlName='direccion' [placeholder]="editarperfil ? 'Selecciona aquí tu dirección' : ''" >
+                    type="text" formControlName='direccion' [placeholder]="editarperfil ? 'Selecciona aquí tu dirección' : ''"
+                    >
                     <img *ngIf="editarperfil" class="input-icon option" src ="assets/icons/ojoanimado.svg">
                     <img *ngIf="!editarperfil" class="input-icon option" src ="assets/icons/ojoanimadocerrado.svg">
                   </div>
@@ -347,21 +348,17 @@
   <div class="modal-header footerheadermodal">
     <!-- header modal -->
   <div class="search">
-    <input class="container__input2" placeholder="Buscar..." (keyup)="onKey($event)" (keyup.enter)="buscar()"
+    <input [readonly]="inputOn" (click)="inputOn=!inputOn" class="container__input2" placeholder="Buscar..." (keyup)="onKey($event)" (keyup.enter)="buscar()"
       [(ngModel)]="buscarx">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="none" *ngIf="loadingseart">
       <path stroke="#0A0A30" stroke-linecap="round" stroke-width="1.5"
         d="M12 6.864v1.333m0 7.606v1.333M17.136 12h-1.333m-7.606 0H6.864m8.768 3.632l-.943-.943M9.311 9.311l-.943-.943m0 7.264l.943-.943m5.378-5.378l.943-.943"
         style="animation:loader4 1.5s linear infinite both;transform-origin:center center" />
     </svg>
-    <i class="bi bi-search img-search" (click)="buscar()" placement="bottom" ngbTooltip="Búsqueda"
-      *ngIf="!loadingseart"></i>
-    <div class="d-flex" style="height: 34px;color: rgb(158, 158, 167);">
-      <div class="vr">
-      </div>
-    </div>
     <i class="bi bi-x img-x" (click)="borrarBusqueda()" placement="bottom" ngbTooltip="Borrar búsqueda"
       *ngIf="borrarseart"></i>
+    <i class="bi bi-search img-search" (click)="buscar()" placement="bottom" ngbTooltip="Búsqueda"
+      *ngIf="!loadingseart"></i>
   </div>
     <!-- button close- modal -->
     <button type="button" class="btn-close button_close" aria-label="Close" (click)="modal.dismiss('Cross click')"
@@ -402,7 +399,7 @@
         </div>
         <div class="p-2 bd-highlight">
           Google Maps no puede encontrar <strong>{{valorbuscarx}}</strong>
-          Asegúrese de que su búsqueda esté escrita correctamente. Intente agregar una ciudad, estado o código postal.
+          Asegúrese de que su búsqueda esté escrita correctamente
         </div>
         <div class="ms-auto p-2 bd-highlight">
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -427,8 +424,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         </div>
-
-    <google-map width="1200px" height="550px" class="modal-dialog-centered" [options]="options"
+    <google-map width="1200px" height="450px" class="modal-dialog-centered" [options]="options"
       (mapClick)="addMarker($event)" class="modal-dialog-centered myestilomodalmap">
       <map-marker [position]="markerPosition" [options]="markerOptions" title="Title"></map-marker>
       <map-polyline [path]="vertices" [options]="optionPoli">

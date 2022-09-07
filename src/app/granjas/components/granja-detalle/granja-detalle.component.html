@@ -66,7 +66,9 @@ class="galleryslider"
       </div>
       <div class="proprietary-container__data">
         <span><h4 class="detail-container__title">Contacto:</h4></span>
-        <span><h4 class="proprietary-container__description">{{granja?.propietarios[0]?.celular}}</h4></span>
+        <span><h4 class="proprietary-container__description">
+          {{granja?.propietarios[0]?.celular ? granja?.propietarios[0]?.celular : 'Contacto sin definir'}}
+        </h4></span>
       </div>
       <div class="proprietary-container__data">
         <span><h4 class="detail-container__title">Dirección:</h4></span>
@@ -90,7 +92,9 @@ class="galleryslider"
         <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Información adicional de la dirección</h4>
-            <span class="detail-container__value">{{granja?.informacion_adicional_direccion}}</span>
+            <span class="detail-container__value">
+              {{granja?.informacion_adicional_direccion ? granja?.informacion_adicional_direccion : 'No existe información'}}
+            </span>
         </div>
     </div>
 
@@ -98,7 +102,9 @@ class="galleryslider"
       <img class="detail-container__image" src="assets/icons/text.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Descripción de la granja</h4>
-        <p class="detail-container__value">{{granja?.descripcion}}</p>
+        <p class="detail-container__value">{{granja?.descripcion}}
+          {{granja?.descripcion ? granja?.descripcion : 'No existe información'}}
+        </p>
       </div>
     </div>
 

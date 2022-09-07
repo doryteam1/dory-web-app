@@ -1,12 +1,14 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import {  Router } from '@angular/router';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { MediaQueryService } from 'src/app/services/media-query.service';
 
 @Component({
   selector: 'app-card-asociacion',
   templateUrl: './card-asociacion.component.html',
   styleUrls: ['./card-asociacion.component.scss'],
 })
-export class CardAsociacionComponent implements OnInit {
+export class CardAsociacionComponent implements OnInit, OnDestroy {
   @Input() asociacion: any;
   @Input() delatecard!: boolean;
   @Input() showRepLegal: boolean = true;
@@ -21,8 +23,23 @@ export class CardAsociacionComponent implements OnInit {
   ngOnlnitPiscicultorDetalle: boolean = false;
   foto_camaracpdf!: string;
   shorterNumber: number = 15;
-  ngOnInit(): void {}
+  constructor(public mediaQueryService: MediaQueryService) {}
+  cardAsociaMediaQuery1!: Subscription;
 
+  ngOnInit(): void {
+    this.cardAsociaMediaQuery1 = this.mediaQueryService
+      .mediaQuery('max-width: 382px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 10;
+        } else {
+          this.shorterNumber = 15;
+        }
+      });
+  }
+  ngOnDestroy(): void {
+    this.cardAsociaMediaQuery1.unsubscribe();
+  }
   detalle(asociacion: any) {
     console.log(asociacion);
     return this.onDetalle.emit(asociacion);
@@ -34,12 +51,5 @@ export class CardAsociacionComponent implements OnInit {
   goDetalleRepresentante(asociacion: any) {
     console.log(asociacion);
     return this.onDetalleRepresentante.emit(asociacion);
-  }
-  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
-    if (event.target.innerWidth <= 382) {
-      this.shorterNumber = 10;
-    } else {
-      this.shorterNumber = 15;
-    }
   }
 }

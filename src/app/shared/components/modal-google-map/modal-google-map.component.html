@@ -1,128 +1,75 @@
-
-  <div class="modal-header" *ngIf="modalheader">
-    <h4 class="modal-title textocolormodal" id="modal-title">ok</h4>
-    <div type="button" class="btn-close" aria-describedby="modal-title" (click)="dismiss()"></div>
-  </div>
-  <div *ngIf="!modalheader" type="button" class="btn-close my-btn-close my-btn-close-color-fondo" aria-describedby="modal-title" (click)="dismiss()"></div>
-  <div class="modal-body map" *ngIf="apiLoaded | async">
-  <!--   <div *ngIf="!mapaOn" class="cargandomapa">
-    </div> -->
-    <div *ngIf="mapElementVarios">
-      <div  class="targefavoritainmap" >
-        <div class="blog-card" *ngFor="let granja of misfavoritas; let i = index" (mouseover)="onMouseCard(i)" (mouseout)="eliminInfoWindowvarios()">
-          <div class="meta"(click)="navigate(i)">
-            <div class="photo">
-              <img class="card__image"
-                src="{{ granja.fotos[0] ? granja.fotos[0] : 'https://admin.moodyyc.com/img/no-image.png'}}">
-            </div>
+<div class="modal-header" *ngIf="modalheader">
+  <h4 class="modal-title textocolormodal" id="modal-title">ok</h4>
+  <div type="button" class="btn-close" aria-describedby="modal-title" (click)="dismiss()"></div>
+</div>
+<div *ngIf="!modalheader" type="button" class="btn-close my-btn-close my-btn-close-color-fondo"
+  aria-describedby="modal-title" (click)="dismiss()"></div>
+<div class="modal-body map" *ngIf="apiLoaded | async">
+  <div>
+    <div class="targefavoritainmap">
+      <div class="blog-card" *ngFor="let granja of misfavoritas; let i = index" (mouseover)="onMouseCard(i)"
+        (mouseout)="eliminInfoWindowvarios()">
+        <div class="meta" (click)="navigate(i)">
+          <div class="photo">
+            <img class="card__image"
+              src="{{ granja.fotos[0] ? granja.fotos[0] : 'https://admin.moodyyc.com/img/no-image.png'}}">
           </div>
-          <div class="description">
-            <div>
-              <h1 (click)="navigate(i)">{{granja.nombre | shorter:15}}</h1>
-              <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
-                (click)="changeFavorite(i)">
-              <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita"
-                (click)="changeFavorite(i)">
-            </div>
-            <div class="estilo-p-card" (click)="navigate(i)"></div>
-            <div class="card__rating-container" >
-                          <div class="card__rating-container_info">
-                            <div class="card__rating-container_puntos" (click)="showResenas(granja?.id_granja)">
-                              <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
-                                (granja.puntuacion |
-                                number:'1.1-1') : '0'}}</span>
-                              <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
-                            </div>
-                            <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)">Reseñas: {{granja.cantidad_resenas}}
-                            </span>
-                          </div>
+        </div>
+        <div class="description">
+          <div>
+            <h1 (click)="navigate(i)">{{granja.nombre | shorter:15}}</h1>
+            <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
+              (click)="changeFavorite(i)">
+            <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita"
+              (click)="changeFavorite(i)">
+          </div>
+          <div class="estilo-p-card" (click)="navigate(i)"></div>
+          <div class="card__rating-container">
+            <div class="card__rating-container_info">
+              <div class="card__rating-container_puntos" (click)="showResenas(granja?.id_granja)">
+                <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
+                  (granja.puntuacion |
+                  number:'1.1-1') : '0'}}</span>
+                <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
+              </div>
+              <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)">Reseñas:
+                {{granja.cantidad_resenas}}
+              </span>
             </div>
           </div>
         </div>
-
       </div>
-      <google-map
-      #miGogleMap
-      width="800px"
-      height="550px"
-      [options]="options"
-      (tilesloaded)="mapainiciado()"
-      class="modal-dialog-centered myestilomodalmapvarios"
-       >
-       <map-marker #marker="mapMarker"
-               *ngFor="let markerInfo of markersInfo; index as i"
-               [position]="markerInfo.markerPosition"
-                [options]="markerOptions"
-               [icon]="i == indexSelected ? iconMarkerGoogleMap2: iconMarkerGoogleMap"
-               (mapMouseover)="openInfoWindowvarios(marker,i)"
-               (mapMouseout)="eliminInfoWindowvarios()"
-            (mapClick)="shareFuntionvarios(i) ">
-          </map-marker>
-            <map-info-window [position]="markerPosition">
-              <div class="myestilo-map-info-window">
-                <div class="details">
-                  <div class="detais-name-propietario">
-                    <div> <img src="../../../../assets/icons/person_black.svg"></div>
-                    <div>{{selectedfavorito.propietario.nombre | titlecase }}</div>
-                  </div>
-                  <div class="details-area-nombre-granja" >
-                    <div><img src="../../../../assets/icons/set_meal_black_24dp.svg"></div>
-                    <div > {{selectedfavorito.granja.nombre | titlecase}}</div>
-                  </div>
-                  <div class="details-area-granja">
-                    <div><img src="../../../../assets/icons/areaterreno_black.svg"></div>
-                    <div>{{selectedfavorito.granja.area | number:'':'es'}} m²</div>
-                  </div>
-                  <div class="details-area-direccion">
-                    <div><img src="../../../../assets/icons/location_on_black_24dp.svg"></div>
-                    <div>{{selectedfavorito.granja.direccion}}</div>
-                  </div>
-                </div>
-              </div>
-            </map-info-window>
-      </google-map>
     </div>
-    <!-- elementos 1 -->
-    <div *ngIf="!mapElementVarios">
-      <google-map
-      #miGogleMap
-      width="1200px"
-      height="550px"
-      [options]="options"
-      (tilesloaded)="mapainiciado()"
-      class="modal-dialog-centered myestilomodalmap"
-       >
-          <map-marker #marker="mapMarker"
-            [position]="markerPosition"
-             [options]="markerOptions"
-             [icon]=" iconMarkerGoogleMap"
-            (mapClick)="shareFuntion() ">
-          </map-marker>
-          <map-info-window [position]="markerPosition">
-            <div class="myestilo-map-info-window">
-              <div class="details_info_windo" >
-                <div class="detais-name-propietario">
-                  <div> <img src="../../../../assets/icons/person_black.svg"></div>
-                  <div>{{selectedfavorito.propietario.nombre | titlecase }}</div>
-                </div>
-                <div class="details-area-nombre-granja">
-                  <div><img src="../../../../assets/icons/set_meal_black_24dp.svg"></div>
-                  <div> {{selectedfavorito.granja.nombre | titlecase}}</div>
-                </div>
-                <div class="details-area-granja">
-                  <div><img src="../../../../assets/icons/areaterreno_black.svg"></div>
-                  <div>{{selectedfavorito.granja.area | number}} m²</div>
-                </div>
-                <div class="details-area-direccion">
-                  <div><img src="../../../../assets/icons/location_on_black_24dp.svg"></div>
-                  <div>{{selectedfavorito.granja.direccion}}</div>
-                </div>
-              </div>
+    <google-map #miGogleMap width="100%" height="450px" [options]="options" (tilesloaded)="mapainiciado()"
+      class="modal-dialog-centered myestilomodalmapvarios">
+      <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i"
+        [position]="markerInfo.markerPosition" [options]="markerOptions"
+        [icon]="i == indexSelected ? iconMarkerGoogleMap2: iconMarkerGoogleMap"
+        (mapMouseover)="openInfoWindowvarios(marker,i)" (mapMouseout)="eliminInfoWindowvarios()"
+        (mapClick)="shareFuntionvarios(i) ">
+      </map-marker>
+      <map-info-window [position]="markerPosition">
+        <div class="myestilo-map-info-window">
+          <div class="details">
+            <div class="detais-name-propietario">
+              <div> <img src="assets/icons/person_black.svg"></div>
+              <div>{{selectedfavorito.propietario.nombre | titlecase }}</div>
             </div>
-          </map-info-window>
-      </google-map>
-    </div>
+            <div class="details-area-nombre-granja">
+              <div><img src="assets/icons/set_meal_black_24dp.svg"></div>
+              <div> {{selectedfavorito.granja.nombre | titlecase}}</div>
+            </div>
+            <div class="details-area-granja">
+              <div><img src="assets/icons/areaterreno_black.svg"></div>
+              <div>{{selectedfavorito.granja.area | number:'':'es'}} m²</div>
+            </div>
+            <div class="details-area-direccion">
+              <div><img src="assets/icons/location_on_black_24dp.svg"></div>
+              <div>{{selectedfavorito.granja.direccion}}</div>
+            </div>
+          </div>
+        </div>
+      </map-info-window>
+    </google-map>
   </div>
-
-
-
+</div>

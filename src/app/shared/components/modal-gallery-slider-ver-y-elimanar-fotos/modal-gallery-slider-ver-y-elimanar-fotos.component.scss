@@ -141,6 +141,9 @@ background-color: var(--gris3);
 .modal-footer{
   justify-content: center;
 }
+.modal-header{
+  padding: 0.5rem 1rem !important;
+}
 @media screen and (max-width: 600px) {
 .search-container__image2 {
     width: 50vw;

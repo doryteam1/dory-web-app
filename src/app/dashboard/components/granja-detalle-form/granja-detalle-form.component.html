@@ -115,7 +115,7 @@
       <div class="mb-3">
         <label for="dateOfBirth">Dirección</label>
         <div class="input-group" (click)="verMapaDireccion()">
-          <input id="productName" class="form-control direccion-class"
+          <input readonly id="productName" class="form-control direccion-class"
             placeholder="Selecciona aquí la dirreción de la granja en el mapa" formControlName="direccion">
         </div>
         <div *ngIf="invalid('direccion') || faltadireccion" class="container__alert-msg danger-message">
@@ -279,17 +279,13 @@
   <div class="modal-header footerheadermodal">
     <!-- header modal -->
     <div class="search">
-      <input class="container__input2" placeholder="Buscar" (keyup)="onKey($event)"
+      <input [readonly]="inputOn" (click)="inputOn=!inputOn"  class="container__input2" placeholder="Buscar" (keyup)="onKey($event)"
         (keyup.enter)="buscar()" [(ngModel)]="buscarx">
       <img src="assets/icons/loadingseart.svg" *ngIf="loadingseart">
-      <i class="bi bi-search img-search" (click)="buscar()" placement="bottom" ngbTooltip="Búsqueda"
-        *ngIf="!loadingseart"></i>
-      <div class="d-flex" style="height: 34px;color: rgb(158, 158, 167);">
-        <div class="vr">
-        </div>
-      </div>
       <i class="bi bi-x img-x" (click)="borrarBusqueda()" placement="bottom" ngbTooltip="Borrar búsqueda"
         *ngIf="borrarseart"></i>
+      <i class="bi bi-search img-search" (click)="buscar()" placement="bottom" ngbTooltip="Búsqueda"
+        *ngIf="!loadingseart"></i>
     </div>
     <!-- button close- modal -->
     <button type="button" class="btn-close button_close" aria-label="Close" (click)="closeMap()" placement="bottom"
@@ -328,7 +324,7 @@
       </div>
       <div class="p-2 bd-highlight">
         Google Maps no puede encontrar <strong>{{valorbuscarx}}</strong>
-        Asegúrese de que su búsqueda esté escrita correctamente. Intente agregar una ciudad, estado o código postal.
+        Asegúrese de que su búsqueda esté escrita correctamente
       </div>
       <div class="ms-auto p-2 bd-highlight">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -346,7 +342,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     </div>
-    <google-map width="1200px" height="550px" class="modal-dialog-centered myestilomodalmap" [options]="options"
+    <google-map width="1200px" height="450px" class="modal-dialog-centered myestilomodalmap" [options]="options"
       (mapClick)="addMarker($event)">
       <map-marker [position]="markerPosition" [options]="markerOptions" title="Title"></map-marker>
       <map-polyline [path]="vertices" [options]="optionPoli">

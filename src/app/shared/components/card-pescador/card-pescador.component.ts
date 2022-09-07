@@ -1,5 +1,7 @@
 import { PlatformLocation } from '@angular/common';
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { MediaQueryService } from 'src/app/services/media-query.service';
 import { AppModalService } from '../../services/app-modal.service';
 
 @Component({
@@ -7,7 +9,7 @@ import { AppModalService } from '../../services/app-modal.service';
   templateUrl: './card-pescador.component.html',
   styleUrls: ['./card-pescador.component.scss'],
 })
-export class CardPescadorComponent implements OnInit {
+export class CardPescadorComponent implements OnInit, OnDestroy {
   @Input() pescador: any;
   @Input() mapa: boolean = false;
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
@@ -18,23 +20,34 @@ export class CardPescadorComponent implements OnInit {
   shorterNumber2: number = 17;
   constructor(
     private appModalService: AppModalService,
-    public location2: PlatformLocation
+    public location2: PlatformLocation,
+    public mediaQueryService: MediaQueryService
   ) {}
-
-  ngOnInit(): void {}
-  @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
-    if (event.target.innerWidth >= 1100) {
-      if (this.modalGogleMapOpen) {
-        this.appModalService.CloseGoogleMapModal();
-      }
-    }
-    if (event.target.innerWidth <= 300) {
-      this.shorterNumber = 8;
-      this.shorterNumber2=12
-    } else {
-      this.shorterNumber = 12;
-      this.shorterNumber2 = 17;
-    }
+  cardPescadmediaQuery1!: Subscription;
+  cardPescadmediaQuery2!: Subscription;
+  ngOnDestroy(): void {
+    this.cardPescadmediaQuery1.unsubscribe();
+    this.cardPescadmediaQuery2!.unsubscribe();
+  }
+  ngOnInit(): void {
+    this.cardPescadmediaQuery1 = this.mediaQueryService
+      .mediaQuery('min-width: 1100px')
+      .subscribe((matches) => {
+        if (matches && this.modalGogleMapOpen) {
+          this.appModalService.CloseGoogleMapModal();
+        }
+      });
+    this.cardPescadmediaQuery2 = this.mediaQueryService
+      .mediaQuery('max-width: 382px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 8;
+          this.shorterNumber2 = 12;
+        } else {
+          this.shorterNumber = 12;
+          this.shorterNumber2 = 17;
+        }
+      });
   }
   seeFarmsMaptwo() {
     this.modalGogleMapOpen = true;

@@ -6,6 +6,7 @@ import {
   Output,
   EventEmitter,
   SimpleChanges,
+  HostListener,
 } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
@@ -47,9 +48,22 @@ export class NgGallerySliderComponent implements OnInit{
   constructor(public gallery: Gallery) {}
 
   ngOnInit() {
-    this.lightboxRef = this.gallery.ref(this.id);
+    this.lightboxRef = this.gallery.ref(this.id)
     this.lightboxRef.set(this.imgselecmodal);
   }
+  nex(){
+    this.lightboxRef.next()
+
+  }
+   @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    /* console.log(event); */
+    if (event.key === 'ArrowRight') {
+       this.lightboxRef.next()
+    }else if (event.key === 'ArrowLeft'){
+       this.lightboxRef.prev()
+    }
+}
   indexFoto(event: any) {
     this.valueResponseIndiceActualSlider.emit(event.currIndex);
   }

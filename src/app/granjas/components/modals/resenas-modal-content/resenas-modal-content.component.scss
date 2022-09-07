@@ -2,7 +2,9 @@
 .card__rating-container{
     margin-bottom: 35px;
 }
-
+.modal-body{
+height: 370px !important;
+}
 .card__icon-rating{
     height: 20px;
     width: 20px;
@@ -22,7 +24,7 @@
 .container{
     display: flex;
     flex-direction: column;
-    height: 450px;
+    height: 75%;
 }
 
 .card{
@@ -76,3 +78,11 @@
   margin-top: 60px;
   width: 100%;
 }
+.btn-button-close{
+  border: 2px solid gray;
+}
+    button:focus {
+      border-color: none !important;
+      box-shadow: none !important;
+      outline: 0 none !important;
+    }

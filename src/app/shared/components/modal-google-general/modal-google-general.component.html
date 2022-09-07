@@ -6,10 +6,14 @@
   aria-describedby="modal-title" (click)="dismiss()"></div>
 <div class="modal-body map" *ngIf="apiLoaded | async">
   <div >
-    <google-map #miGogleMap width="1200px" height="550px" [options]="options" (tilesloaded)="mapainiciado()"
+    <google-map #miGogleMap width="1200px" height="450px" [options]="options" (tilesloaded)="mapainiciado()"
       class="modal-dialog-centered myestilomodalmap">
-      <map-marker #marker="mapMarker" [position]="markerPosition" [options]="markerOptions"
-        [icon]=" iconMarkerGoogleMap" >
+      <map-marker
+       #marker="mapMarker"
+      [position]="markerPosition"
+       [options]="markerOptions"
+        [icon]=" iconMarkerGoogleMap"
+        (mapClick)="share() ">
       </map-marker>
       <map-info-window [position]="markerPosition">
         <div class="myestilo-map-info-window">

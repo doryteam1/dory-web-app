@@ -1,6 +1,7 @@
 
 .gallery--class{
-background-color: white
+background-color: white;
+height: 70vh ;
 }
 @media (max-width: 640px) {
   .gallery--class {
@@ -8,33 +9,7 @@ background-color: white
   }
 }
 
-/* @media (max-width: 575px) {
-.gallery--class {
-    height: 490px;
-  }
-}
-@media (max-width: 550px) {
-.gallery--class {
-    height: 470px;
-  }
-}
-@media (max-width: 530px) {
-.gallery--class {
-    height: 450px;
-  }
-}
-@media (max-width: 510px) {
-.gallery--class {
-    height: 430px;
-  }
-}
-@media (max-width: 490px) {
-.gallery--class {
-    height: 410px;
-  }
-}
 
- */
 
 
 

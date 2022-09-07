@@ -36,6 +36,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   modalMode: string = 'update';
   granja: any;
   file: any = null;
+  inputOn: boolean = true;
   /* error: string = ''; */
   action!: string;
   infraestructurasData: Array<any> = [];
@@ -113,7 +114,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     public platformLocation: PlatformLocation,
     private appModalService: AppModalService,
     private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
-    private compressImageSizeService:CompressImageSizeService,
+    private compressImageSizeService: CompressImageSizeService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -130,7 +131,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   public ArrayDelate!: Subscription;
 
   ngOnInit(): void {
-    this.direccion?.disable();
+    /*   this.direccion?.disable(); */
     registerLocaleData(es);
     this.granja = this.ar.snapshot.params;
     /*  console.log(this.granja); */
@@ -203,11 +204,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         }
       );
   }
-/*   @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
-    if (event.target.innerWidth <= 710 && event.target.innerWidth > 560) {
 
-    }
-  } */
   ngOnDestroy(): void {
     /* cancelamos las subcripciones del servicio */
     this.changeArray?.unsubscribe();
@@ -891,7 +888,8 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     if (this.granja.action == 'create') {
       /* Se ejecuta cuando se esta creando una granja */
       try {
-        const compressedFiles =await this.compressImageSizeService.handleImageArrayUpload(event);
+        const compressedFiles =
+          await this.compressImageSizeService.handleImageArrayUpload(event);
         let fileNameBase =
           '/granjas/User' +
           this.authUserId +
@@ -931,7 +929,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
           this.granja.id_granja +
           '/foto';
         let files: Array<any> = compressedFiles;
-        console.log(files)
+        console.log(files);
         let arrayFotos: Array<any> = [];
         for (let i = 0; i < files.length; i++) {
           let nowTimestamp = new Date().getTime().toString();
