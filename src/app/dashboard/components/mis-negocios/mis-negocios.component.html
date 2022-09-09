@@ -1,5 +1,12 @@
 <div class="container">
-    <div class="container__table">
+      <div class="search-container" *ngIf="showNotFound">
+        <div class="search-container__box">
+          <img class="search-container__image" src="assets/images/searching.svg">
+          <h3>No se han encontrado resultados</h3>
+          <p>Aun no has registrado tus negocios</p>
+        </div>
+      </div>
+    <div class="container__table" *ngIf="!showNotFound">
         <table class="table mt-40">
             <thead class="table-light">
             <tr>
@@ -36,13 +43,7 @@
     </div>
     <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar negocio</button>
 </div>
-    <div class="search-container" *ngIf="showNotFound">
-      <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/searching.svg">
-          <h3>No se han encontrado resultados</h3>
-          <p>Aun no has registrado tus negocios</p>
-      </div>
-    </div>
+
      <!-- modal 1 detalles -->
     <ng-template  #content   let-modal>
       <div class="modal-header">
@@ -126,19 +127,19 @@
               </div>
             </div>
           </div>
-
-          <div class="mb-3">
-            <label for="dateOfBirth">Información adicional dirección</label>
-            <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Información adicional dirección" formControlName="informacion_adicional_direccion">
-              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
-            </div>
-            <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
-              <div *ngIf="infoAdicionalDir?.errors?.['required']">
-                  Campo requerido
+            <div class="mb-3">
+              <label for="dateOfBirth">Información adicional de la ubicación</label>
+              <div class="input-group">
+                <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
+                  placeholder="Información adicional de la ubicación seleccionada"
+                  formControlName="informacion_adicional_direccion">Write something here</textarea>
               </div>
+                  <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
+                    <div *ngIf="infoAdicionalDir?.errors?.['required']">
+                      Campo requerido
+                    </div>
+                  </div>
             </div>
-          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -159,19 +160,15 @@
       <div class="modal-header footerheadermodal">
           <!-- header modal -->
           <div class="search" >
-            <input  class="container__input2" placeholder="Buscar en Google Map"   (keyup)="onKey($event)" (keyup.enter)="buscar()"
+            <input  class="container__input2" placeholder="Buscar..."   (keyup)="onKey($event)" (keyup.enter)="buscar()"
               [(ngModel)]="buscarx" >
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="none" *ngIf="loadingseart">
                 <path stroke="#0A0A30" stroke-linecap="round" stroke-width="1.5"
                   d="M12 6.864v1.333m0 7.606v1.333M17.136 12h-1.333m-7.606 0H6.864m8.768 3.632l-.943-.943M9.311 9.311l-.943-.943m0 7.264l.943-.943m5.378-5.378l.943-.943"
                   style="animation:loader4 1.5s linear infinite both;transform-origin:center center" />
               </svg>
+              <i class="bi bi-x img-x" (click)="borrarBusqueda()"  placement="bottom" ngbTooltip="Borrar búsqueda"*ngIf="borrarseart"></i>
             <i class="bi bi-search img-search" (click)="buscar()" placement="bottom" ngbTooltip="Búsqueda" *ngIf="!loadingseart" ></i>
-              <div class="d-flex" style="height: 34px;color: rgb(158, 158, 167);">
-              <div class="vr">
-              </div>
-             </div>
-               <i class="bi bi-x img-x" (click)="borrarBusqueda()"  placement="bottom" ngbTooltip="Borrar búsqueda"*ngIf="borrarseart"></i>
           </div>
           <!-- button close- modal -->
           <div type="button" class="btn-close button_close" aria-label="Close" (click)="closeMap()"  placement="bottom" ngbTooltip="Salir"></div>
@@ -230,7 +227,7 @@
             </div>
             <div class="p-2 bd-highlight">
             Google Maps no puede encontrar <strong>{{valorbuscarx}}</strong>
-            Asegúrese de que su búsqueda esté escrita correctamente. Intente agregar una ciudad, estado o código postal.
+            Asegúrese de que su búsqueda esté escrita correctamente
             </div>
             <div class="ms-auto p-2 bd-highlight">
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -248,7 +245,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             </div>
-          <google-map width="1200px" height="550px" class="modal-dialog-centered" [options]="options"
+          <google-map width="1200px" height="450px" class="modal-dialog-centered myestilomodalmap" [options]="options"
             (mapClick)="addMarker($event)">
             <map-marker [position]="markerPosition" [options]="markerOptions" title="Title"></map-marker>
             <map-polyline [path]="vertices" [options]="optionPoli">

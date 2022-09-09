@@ -246,8 +246,8 @@
    text-align: center;
  }
  .search-container__image {
-   width: 1024px;
-   height: 370px;
+    width: 80vw;
+    max-height: 350px;
  }
  .search-container {
    display: flex;

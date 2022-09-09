@@ -3,7 +3,7 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <app-search (textSearch)="onSearch($event)"></app-search>
+    <app-search class="app-search" (textSearch)="onSearch($event)"></app-search>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" (click)="selectedTab = 'piscicultores'">Piscicultores</button>
@@ -18,7 +18,11 @@
               <div class="card" *ngFor="let piscicultor of piscicultoresFiltered">
                   <div class="card__user-info d-flex flex-row" (click)="navigateDetalle(piscicultor)">
                       <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person.svg'}}">
-                      <span class="card__title">{{piscicultor.nombre}}</span>
+                        <div class="container-nombre">
+                          <span class="card__title">{{piscicultor.nombre | shorter:shorterNumber}}
+                          </span>
+                          <small>Detalles</small>
+                        </div>
                   </div>
                   <button class="card__button" (click)="anularInvitacion(piscicultor)"><i class="bi bi-x-lg"></i></button>
               </div>
@@ -29,7 +33,11 @@
               <div class="card" *ngFor="let pescador of pescadoresFiltered">
                   <div class="card__user-info d-flex flex-row" (click)="navigateDetalle(pescador)">
                       <img class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person.svg'}}">
-                      <span class="card__title">{{pescador.nombre}}</span>
+                        <div class="container-nombre">
+                          <span class="card__title">{{pescador.nombre | shorter:shorterNumber}}
+                          </span>
+                          <small>Detalles</small>
+                        </div>
                   </div>
                   <button class="card__button" (click)="anularInvitacion(pescador)"><i class="bi bi-x-lg"></i></button>
               </div>

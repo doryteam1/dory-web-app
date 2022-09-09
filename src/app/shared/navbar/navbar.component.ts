@@ -146,7 +146,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     observer.observe(this.notifies) */
     //console.log(this.elRef.nativeElement.querySelector('.notify__menu'))
     const notifies = document.querySelector('.notify__menu')!;
-
     const ro = new ResizeObserver((entries, observer) => {
       if (this.notifiesHeigth < 356) {
         this.notifiesHeigth = entries[0].contentRect.height;

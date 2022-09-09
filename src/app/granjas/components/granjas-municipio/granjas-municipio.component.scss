@@ -103,8 +103,11 @@
   justify-content: center;
   flex-direction: row;
   flex-wrap: nowrap;
+  width: 100%;
   margin-left: 20px;
   margin-right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .row-map-cart>div {
@@ -176,8 +179,6 @@ div.container-map-car>div>div:nth-child(1) {
 .card__icon-rating {
   height: 20px;
   width: 20px;
-  /* margin-bottom: 10px;
-    margin-right: 10px; */
 }
 
 .card__rating {
@@ -190,9 +191,6 @@ div.container-map-car>div>div:nth-child(1) {
 }
 
 .card__data {
-  /*   grid-area:data; */
-  /*  justify-self: end;
-    align-self: end; */
   font-size: 22px;
   font-weight: 700;
   cursor: pointer;
@@ -655,6 +653,8 @@ div.container-map-car>div>div:nth-child(1) {
 
   .row-map-cart {
     margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   div.container-map-car>div>div:nth-child(1) {

@@ -47,12 +47,14 @@ export class MisVehiculosComponent implements OnInit {
     this.vehiculosService.getVehiculosUser(payload.sub).subscribe(
       (respose) => {
         this.vehiculos = respose.data;
-        if (this.vehiculos.length < 1) {
+        if (this.vehiculos.length < 1 || this.vehiculos.length ==0) {
           this.showNotFound = true;
         }
       },
       (err) => {
-        console.log(err);
+         if (err.status == 404) {
+           this.showNotFound = true;
+         }
       }
     );
   }
@@ -172,10 +174,10 @@ export class MisVehiculosComponent implements OnInit {
     });
     this.appModalService
       .confirm(
-        'Eliminar vehiculo',
-        'Esta seguro que desea eliminar el vehiculo con id',
+        'Eliminar vehículo',
+        'Esta seguro que desea eliminar el vehículo con id',
         'Eliminar',
-        'No estoy seguro',
+        'Cancelar',
         this.vehiculos[i].modelo
       )
       .then((result) => {
@@ -206,7 +208,6 @@ export class MisVehiculosComponent implements OnInit {
       this.loading = false;
       return;
     }
-
     if (!this.file) {
       let newVehiculo = {
         modelo: this.modelo?.value,

@@ -27,3 +27,36 @@
 .btn-add{
   margin-right: 15px;
 }
+.justify-content-between{
+  align-items: center;
+}
+.btn-mi-estilo{
+  width: 174.13px;
+}
+@media screen and (max-width: 600px) {
+.justify-content-between {
+    flex-direction: column !important;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 500px) {
+.d-flex-button-footer{
+  flex-direction: column;
+  gap: 10px;
+}
+.modal-footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+}
+@media screen and (max-width: 400px) {
+  .d-flex-button{
+    flex-direction: column-reverse !important;
+    gap: 10px;
+    align-items: center;
+  }
+  .btn-show{
+    margin-right: 0;
+  }
+}

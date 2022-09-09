@@ -1,32 +1,4 @@
-<!--<ngb-carousel *ngIf="images">
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
-        <img [src]="images[0]" alt="Random first slide">
-      </div>
-      <div class="carousel-caption">
-        <h3>First slide label</h3>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-      </div>
-    </ng-template>
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
-        <img [src]="images[1]" alt="Random second slide">
-      </div>
-      <div class="carousel-caption">
-        <h3>Second slide label</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </div>
-    </ng-template>
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
-        <img [src]="images[2]" alt="Random third slide">
-      </div>
-      <div class="carousel-caption">
-        <h3>Third slide label</h3>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-      </div>
-    </ng-template>
-  </ngb-carousel>-->
+
 
   <div id="carouselExampleCaptions" class="carousel slide carouse--miestilo" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -67,7 +39,81 @@
     </button>
   </div>
 
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  modal
+</button> -->
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body card">
+        <button type="button" class="btn-close btn-close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="head">
+              <div class="circle"></div>
+              <div class="img">
+                <img
+                  src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1049&q=80"
+                  alt="">
+              </div>
+            </div>
+            <div class="description">
+              <h5>Pescador</h5>
+              <h4>Rosa Maria Gamarra Davila</h4>
+                <nav class="nav-estilo">
+                  <a class="datos">
+                    <div class="icon">
+                      <div>
+                        <svg viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g clip-path="url(#clip0_1093_1059)">
+                            <path
+                              d="M0.435654 12.6881C0.435654 9.17421 0.435654 5.69643 0.435654 2.1537C0.579531 2.23036 0.671482 2.27263 0.756687 2.32572C4.2219 4.48501 7.69131 6.63762 11.1467 8.81249C11.7639 9.20093 12.2983 9.20892 12.9178 8.81893C16.3627 6.65008 19.8212 4.50289 23.2753 2.34869C23.3665 2.29185 23.4604 2.23955 23.6122 2.15039C23.622 2.33919 23.6363 2.48769 23.6364 2.6362C23.6376 6.18872 23.6255 9.74131 23.6432 13.2937C23.6502 14.697 22.5814 15.5394 21.3942 15.5351C15.1714 15.5123 8.94828 15.5093 2.72544 15.537C1.45525 15.5426 0.367564 14.6593 0.434582 13.2316C0.442506 13.0628 0.435656 12.8933 0.435654 12.6881Z"
+                              fill="white" />
+                            <path
+                              d="M19.7577 1.77695C17.2553 3.34125 14.7749 4.89075 12.2932 6.43847C12.1563 6.52386 12.0455 6.61035 11.8468 6.48552C8.67686 4.49382 5.49872 2.51516 2.32275 0.53304C2.30403 0.521356 2.28955 0.502878 2.24023 0.457031C8.77847 0.457031 15.2835 0.457031 21.8757 0.457031C21.1342 0.918475 20.4567 1.34013 19.7577 1.77695Z"
+                              fill="white" />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_1093_1059">
+                              <rect width="24" height="15.8066" fill="white" />
+                            </clipPath>
+                          </defs>
+                        </svg>
 
+                      </div>
+                    </div>
+                    <div class="content">
+                      <h1>Correo</h1>
+                      <span>Riccavallo@gmail.com</span>
+                    </div>
+                  </a>
+                  <a class="datos">
+                    <div class="icon">
+                      <div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M6.62 10.79C8.06 13.62 10.38 15.93 13.21 17.38L15.41 15.18C15.68 14.91 16.08 14.82 16.43 14.94C17.55 15.31 18.76 15.51 20 15.51C20.55 15.51 21 15.96 21 16.51V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z"
+                            fill="white" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="content">
+                      <h1>Teléfono</h1>
+                      <span>3003954997</span>
+                    </div>
+                  </a>
+                </nav>
+              <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, eligendi!</p> -->
+            </div>
+            <div class="contact">
+              <a >Detalles</a>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal -->
 <div class="container container-information">
     <div class="row align-items-center row--miestilo">
         <div class="col-6 text-start text-start--miestilo">

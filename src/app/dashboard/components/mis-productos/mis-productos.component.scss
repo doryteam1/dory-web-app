@@ -30,12 +30,16 @@
     align-self: center;
 }
 
-.container{
-    display: flex;
-    flex-direction: column;
-    width: 80vw;
-    overflow-x: scroll;
-    padding-bottom: 20px;
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  overflow-x: scroll;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .container__icon{
@@ -74,8 +78,8 @@ color: var(--gris-oscuro) !important;
 }
 
 .search-container__image{
-    width:1024px;
-    height: 370px;
+  width: 80vw;
+  max-height: 350px;
 }
 
 .modal__image{
@@ -100,16 +104,19 @@ color: var(--gris-oscuro) !important;
     height: 20px;
 }
 .container-table-pagination {
+  width: 800px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-/* .my-paginationn ::ng-deep .ngx-pagination .current {
-  background: var(--azul1);
+button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
 }
-
-.my-paginationn ::ng-deep .ngx-pagination {
-  font-size: 15px;
-  padding-left: 0px;
-} */
+@media screen and (min-width: 1000px) {
+  .container-table-pagination {
+    width: 100% !important;
+  }
+}
 

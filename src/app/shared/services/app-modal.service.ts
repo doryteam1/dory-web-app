@@ -29,7 +29,10 @@ export class AppModalService {
     btnCancelText: string = 'Cancelar',
     resourceId: string = ''
   ): Promise<boolean> {
-    const modalRef = this.modalService.open(ConfirmModalComponent);
+    const modalRef = this.modalService.open(ConfirmModalComponent, {
+      size: 'sm',
+      centered: true,
+    });
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.message = message;
     modalRef.componentInstance.btnOkText = btnOkText;

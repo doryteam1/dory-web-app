@@ -1,4 +1,4 @@
-<div>
+<div class="container-misasociaciones">
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <!-- Home tab pane -->
     <li class="nav-item" role="presentation">
@@ -23,7 +23,7 @@
   <div class="tab-content" id="myTabContent">
     <!-- Home tab panel -->
     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-      <div class="row row-cols-2">
+      <div class="row row-cols-1 row-cols-md-2">
         <app-card-asociacion class="col" *ngFor="let asociacion of asociaciones" [asociacion]="asociacion"
           [delatecard]="true" [showRepLegal]="false" (onDetalle)="navigate($event,'enable','tabSoyRep')"
           (onDelete)="delete($event)">
@@ -39,7 +39,7 @@
     </div>
     <!-- Profile-tab-pane -->
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-      <div class="row row-cols-2">
+      <div class="row row-cols-1 row-cols-md-2 ">
         <app-card-asociacion  class="col col--miestilo" *ngFor="let asociacion of asociacionesIsMiembro" [asociacion]="asociacion"
           [delatecard]="false" (onDetalle)="navigate($event,'disable','tabSoyMiemb')" (onDelete)="delete($event)">
         </app-card-asociacion>
@@ -56,15 +56,17 @@
     <div class="tab-pane fade" id="Unirme_a_una_asociacion" role="tabpanel" aria-labelledby="Unirme_a_una_asociacion-tab" tabindex="0">
       <div class="buscadoryfiltro mt-4">
         <div class="buscador-container">
-          <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar asociacion..'"
+          <app-search class="app-search" [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar asociacion..'"
             (keyEnterPressData)="onBuscarPalabra($event)">
           </app-search>
-          <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)"
-            [filtroSeleccionado]="filtroseleccionado">
-          </app-filtro>
-          <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
-            (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
-          </app-filtro>
+          <div class="container-filtros">
+            <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)"
+              [filtroSeleccionado]="filtroseleccionado">
+            </app-filtro>
+            <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
+              (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
+            </app-filtro>
+          </div>
         </div>
         <div class="chip mb-4">
           <app-chip-con-boton-close
@@ -97,14 +99,18 @@
       <div class="list overflow-auto d-flex flex-column">
         <div class="card" *ngFor="let asociacion of  asociacionesexistentes">
           <div class="card__user-info d-flex flex-row" (click)="goAssociationDetail(asociacion)">
-            <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
-            <span class="card__title">{{asociacion.nombre}}</span>
+              <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
+              <div class="asociacion-nombre">
+                <span class="card__title">{{asociacion.nombre | shorter:shorterNumber}}
+                </span>
+                  <small>Detalles</small>
+              </div>
           </div>
-          <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(asociacion)"
+          <button class="card__button btn-square btn--azul1 " (click)="invitarAnular(asociacion)"
             *ngIf="!asociacion?.estado_solicitud">Unirme</button>
-          <button class="card__button btn-square btn--grey mt-3" (click)="invitarAnular(asociacion)"
+          <button class="card__button btn-square btn--grey " (click)="invitarAnular(asociacion)"
             *ngIf="asociacion?.estado_solicitud == 'Enviada'">Anular</button>
-          <div class="btn-group mt-3" *ngIf="asociacion?.estado_solicitud == 'Aceptada'">
+          <div class="btn-group " *ngIf="asociacion?.estado_solicitud == 'Aceptada'">
             <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
               data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">

@@ -104,13 +104,14 @@ export class MisGranjasComponent implements OnInit {
     this.granjaService.getGranjaByUserId(payload.sub).subscribe(
       (respose) => {
         this.granjas = respose.data;
-        console.log(this.granjas);
-        if (this.granjas.length < 1) {
+        if (this.granjas.length < 1 || this.granjas.length == 0) {
           this.showNotFound = true;
         }
       },
       (err) => {
-        console.log(err);
+         if (err.status == 404) {
+           this.showNotFound = true;
+         }
       }
     );
 
@@ -421,6 +422,5 @@ export class MisGranjasComponent implements OnInit {
       (object.authUserId = this.authUserId);
       this.router.navigate(['/dashboard/granja/detalle', object]);
   }
-
 
 }

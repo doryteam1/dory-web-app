@@ -47,11 +47,15 @@ export class MisProductosComponent implements OnInit {
     this.proveedorService.getProductosById(payload.sub).subscribe(
       (respose) => {
         this.productos = respose.data;
-        if (this.productos.length < 1) {
+        console.log(this.productos.length);
+        if (this.productos.length < 1 || this.productos.length == 0) {
           this.showNotFound = true;
         }
       },
       (err) => {
+        if (err.status == 404) {
+          this.showNotFound = true;
+        }
         console.log(err);
       }
     );
@@ -207,7 +211,6 @@ export class MisProductosComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-
     if (!this.file) {
       let newProducto = {
         nombreProducto: this.nombreProducto?.value,

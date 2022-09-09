@@ -107,7 +107,6 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
     private negociosService: NegociosService,
     private modalService: NgbModal,
     private storage: FirebaseStorageService,
-    private sanitizer: DomSanitizer,
     private places: PlacesService,
     private appModalService: AppModalService,
     httpClient: HttpClient,
@@ -157,12 +156,14 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
     this.negociosService.getNegociosByUserId(payload.sub).subscribe(
       (respose) => {
         this.negocios = respose.data;
-        if (this.negocios.length < 1) {
+        if (this.negocios.length < 1 || this.negocios.length==0) {
           this.showNotFound = true;
         }
       },
       (err) => {
-        console.log(err);
+          if (err.status == 404) {
+            this.showNotFound = true;
+          }
       }
     );
   }
@@ -244,6 +245,7 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
         nuevoNegocio.nombre_departamento =
           this.departamentos[indexDepto].nombre_departamento;
         this.loading1 = false;
+        this.showNotFound = false;
         this.negocios.push(nuevoNegocio);
         this.modalService.dismissAll();
         //this.verMap(this.negocios.length - 1);
@@ -265,7 +267,7 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
         'Eliminar negocio',
         'Esta seguro que desea eliminar este negocio',
         'Eliminar',
-        'No estoy seguro',
+        'Cancelar',
         negocio.nombre
       )
       .then((result) => {
@@ -276,6 +278,9 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
                 (element) => element.id_negocio == negocio.id_negocio
               );
               this.negocios.splice(index, 1);
+                 if (this.negocios.length <= 0) {
+                   this.showNotFound = true;
+                 }
             },
             (err) => {
               console.log(err);
@@ -500,7 +505,7 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
               .confirm(
                 '../../../../assets/icons/editar.svg',
                 '../../../../assets/icons/save.svg',
-                'Actualizar  mi ubicación',
+                'Actualizar ubicación',
                 'Estás a punto de cambiar tu ubicación por: ',
                 'Si',
                 'No estoy seguro',
@@ -601,7 +606,7 @@ export class MisNegociosComponent implements OnInit, OnDestroy {
               .confirm(
                 '../../../../assets/icons/editar.svg',
                 '../../../../assets/icons/save.svg',
-                'Actualizar  mi ubicación',
+                'Actualizar ubicación',
                 'Estás a punto de cambiar tu ubicación por: ',
                 'Si',
                 'No estoy seguro',

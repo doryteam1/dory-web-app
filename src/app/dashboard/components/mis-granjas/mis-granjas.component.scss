@@ -23,6 +23,7 @@
     padding-left: 0 !important;
     padding-bottom: 20px;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .container__icon1{
@@ -66,15 +67,9 @@ color: var(--azul1);
 }
 
 .search-container__image{
-    width:1024px;
-    height: 370px;
+width: 80vw;
+max-height: 350px;
 }
-
-.search-container__image2{
-  width:396px;
-  height: 370px;
-}
-
 .modal__image{
     width: 100px;
     height: 100px;
@@ -88,10 +83,10 @@ color: var(--azul1);
 }
 
 .container__table{
-    width: 1200px;
-      display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .container__input{

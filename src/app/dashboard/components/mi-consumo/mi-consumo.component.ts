@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConsumidorService } from 'src/app/services/consumidor.service';
 import { EspeciesService } from 'src/app/services/especies.service';
-import { Especie } from 'src/models/especie.model';
 
 @Component({
   selector: 'app-mi-consumo',
@@ -12,7 +11,6 @@ export class MiConsumoComponent implements OnInit {
   consumos:Array<any> = []
   misConsumos:Array<any> = [];
   loading:boolean = false;
-  
   constructor(private especiesService:EspeciesService, private consumidorService:ConsumidorService){ }
 
   ngOnInit(): void {

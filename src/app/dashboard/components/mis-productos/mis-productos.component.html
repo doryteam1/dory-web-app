@@ -1,5 +1,12 @@
 <div class="container">
-  <div class="container-table-pagination">
+  <div class="search-container" *ngIf="showNotFound">
+    <div class="search-container__box">
+      <img class="search-container__image" src="assets/images/searching.svg">
+      <h3>No se han encontrado resultados</h3>
+      <p>Aun no has registrado los productos que vendes.</p>
+    </div>
+  </div>
+  <div class="container-table-pagination" *ngIf="!showNotFound">
     <table class="table mt-40">
         <thead class="table-light micolortablelight">
           <tr>
@@ -36,14 +43,6 @@
   </div>
   <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar nuevo producto</button>
 </div>
-<div class="search-container" *ngIf="showNotFound">
-  <div class="search-container__box">
-      <img class="search-container__image" src="assets/images/searching.svg">
-      <h3>No se han encontrado resultados</h3>
-      <p>Aun no has registrado los productos que vendes.</p>
-  </div>
-</div>
-
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title modalmytitle" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo Producto' : 'Actualizar Producto'}}</h4>

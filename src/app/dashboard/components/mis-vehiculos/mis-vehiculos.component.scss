@@ -1,71 +1,86 @@
-.container-row{
-    display: flex;
-    justify-content: stretch;
+.container-row {
+  display: flex;
+  justify-content: stretch;
 }
 
-.container_img{
-    width:  160px;
-    height: 130px;
-    object-fit: cover;
+.container_img {
+  width: 160px;
+  height: 130px;
+  object-fit: cover;
 }
 
-.button{
-    width: 200px;
-    align-self: center;
+.button {
+  width: 200px;
+  align-self: center;
 }
 
-.container{
-    display: flex;
-    flex-direction: column;
-    width: 80vw;
-    overflow-x: scroll;
-    padding-bottom: 20px;
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  overflow-x: scroll;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
-.container__icon{
-    cursor: pointer;
-    color:var(--azul1)
+.container__icon {
+  cursor: pointer;
+  color: var(--azul1)
 }
 
-.search-container{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.search-container__box{
-    text-align: center;
+.search-container__box {
+  text-align: center;
 }
 
-.search-container__image{
-    width: 400px;
-    height: 270px;
-    margin-top: 100px;
-  }
-
-.modal__image{
-    width: 160px;
-    height: 130px;
-    object-fit: cover;
-    display: block;
+.search-container__image {
+  width: 80vw;
+  max-height: 350px;
+}
+.modal__image {
+  width: 160px;
+  height: 130px;
+  object-fit: cover;
+  display: block;
 }
 
-.modal__box{
-    display: flex;
-    flex-direction: column;
+.modal__box {
+  display: flex;
+  flex-direction: column;
 }
 
-.container__btn{
-    width: 100px;
-    height: 38px;
+.container__btn {
+  width: 100px;
+  height: 38px;
 }
 
-.container__spinner{
-    width: 20px;
-    height: 20px;
+.container__spinner {
+  width: 20px;
+  height: 20px;
 }
+
 .container-table-pagination {
+  width: 800px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+}
+@media screen and (min-width: 1000px) {
+.container-table-pagination{
+  width: 100% !important;
+}
 }

@@ -1,5 +1,12 @@
 <div class="container">
-    <div class="container__table">
+    <div class="search-container" *ngIf="showNotFound">
+      <div class="search-container__box">
+        <img class="search-container__image" src="assets/images/searching.svg">
+        <h3>No se han encontrado resultados</h3>
+        <p>Aun no has registrado tus granjas</p>
+      </div>
+    </div>
+    <div class="container__table" *ngIf="!showNotFound">
         <table class="table mt-40">
             <thead class="table-light">
             <tr>
@@ -33,13 +40,7 @@
     </div>
     <button class="btn-outline-blue button" (click)="createNewGranja()">Agregar nueva granja</button>
 </div>
-    <div class="search-container" *ngIf="showNotFound">
-      <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/searching.svg">
-          <h3>No se han encontrado resultados</h3>
-          <p>Aun no has registrado tus granjas</p>
-      </div>
-    </div>
+
       <!-- modal 2 mapa -->
     <ng-template  #map   let-modal>
       <div class="modal-header footerheadermodal">

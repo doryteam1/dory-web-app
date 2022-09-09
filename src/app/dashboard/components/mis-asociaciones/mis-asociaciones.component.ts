@@ -5,7 +5,7 @@ import { Component, OnInit ,  ElementRef,
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { catchError, map,finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MODO_FILTRO_DATOS_VARIOS, vertices } from '../../../global/constants';
@@ -19,6 +19,7 @@ import { Filtro, MetaFiltro } from '../../../../models/filtro.model';
 import { Checkbox } from 'src/models/checkbox.model';
 import { BuscarPor } from '../../../../models/buscarPor.model';
 import { StorageService } from 'src/app/services/storage.service';
+import { MediaQueryService } from 'src/app/services/media-query.service';
 const _ = require('lodash');
 
 
@@ -27,7 +28,9 @@ const _ = require('lodash');
   templateUrl: './mis-asociaciones.component.html',
   styleUrls: ['./mis-asociaciones.component.scss'],
 })
-export class MisAsociacionesComponent implements OnInit, AfterViewInit,OnDestroy {
+export class MisAsociacionesComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
   @ViewChild('map') map: any;
   @ViewChild('tabSoyRep') tabSoyRep!: ElementRef;
@@ -139,6 +142,7 @@ export class MisAsociacionesComponent implements OnInit, AfterViewInit,OnDestroy
   palabra: string = '';
   filtroseleccionado!: MetaFiltro | any;
   filtroseleccionadoCheckbox: string[] = [];
+  shorterNumber: number=20;
   constructor(
     private asociacionesService: AsociacionesService,
     private appModalService: AppModalService,
@@ -147,7 +151,8 @@ export class MisAsociacionesComponent implements OnInit, AfterViewInit,OnDestroy
     private places: PlacesService,
     private searchBuscadorService: SearchBuscadorService,
     private asociacionService: AsociacionesService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public mediaQueryService: MediaQueryService
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -159,23 +164,56 @@ export class MisAsociacionesComponent implements OnInit, AfterViewInit,OnDestroy
         catchError(() => of(false))
       );
   }
+  mediaQuery1Asocia!: Subscription;
+  mediaQuery2Asocia!: Subscription;
+  mediaQuery3Asocia!: Subscription;
   ngOnDestroy(): void {
-    
+    this.mediaQuery1Asocia.unsubscribe();
+    this.mediaQuery2Asocia!.unsubscribe();
+    this.mediaQuery3Asocia!.unsubscribe();
   }
+
   ngAfterViewInit(): void {
     /*Se abre el tab que estuvo seleccionado antes de ir a ver el detalle de una asociación*/
     let selectedTab = this.storageService.get('misAsocSelecTab');
-    if(selectedTab && selectedTab == 'tabSoyRep'){
+    if (selectedTab && selectedTab == 'tabSoyRep') {
       this.htmlElementClick(this.tabSoyRep);
-    }else if(selectedTab && selectedTab == 'tabSoyMiemb'){
+    } else if (selectedTab && selectedTab == 'tabSoyMiemb') {
       this.htmlElementClick(this.tabSoyMiemb);
-    }else if(selectedTab && selectedTab == 'tabUnir'){
+    } else if (selectedTab && selectedTab == 'tabUnir') {
       this.htmlElementClick(this.tabUnir);
     }
-    this.storageService.remove('misAsocSelecTab')
+    this.storageService.remove('misAsocSelecTab');
   }
 
   ngOnInit(): void {
+    this.mediaQuery1Asocia = this.mediaQueryService
+      .mediaQuery('max-width: 415px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 15;
+        } else {
+          this.shorterNumber =20;
+        }
+      });
+    this.mediaQuery2Asocia = this.mediaQueryService
+      .mediaQuery('max-width: 375px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 10;
+        } else {
+          this.shorterNumber =15;
+        }
+      });
+    this.mediaQuery3Asocia = this.mediaQueryService
+      .mediaQuery('max-width: 337px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 7;
+        } else {
+          this.shorterNumber =10;
+        }
+      });
     registerLocaleData(es);
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
@@ -341,14 +379,13 @@ export class MisAsociacionesComponent implements OnInit, AfterViewInit,OnDestroy
       this.activeclass3 = true;
     }
   }
-  navigate(event: any, formState: string, from:string) {
+  navigate(event: any, formState: string, from: string) {
     console.log('formState ', formState);
     let object: any = { ...event };
     (object.action = 'update'),
       (object.formState =
         this.selectedTab == 'representante' ? 'enable' : 'disable'),
-
-    this.storageService.add('misAsocSelecTab',from)
+      this.storageService.add('misAsocSelecTab', from);
     this.router.navigate(['/dashboard/asociacion/detalle', object]);
   }
   goAssociationDetail(asociacion: any) {
@@ -425,7 +462,7 @@ export class MisAsociacionesComponent implements OnInit, AfterViewInit,OnDestroy
     this.reseteoDeBusqueda();
   }
   delateFilterCheckbox(index: number) {
-   this.filtroseleccionadoCheckbox.splice(index,1);
+    this.filtroseleccionadoCheckbox.splice(index, 1);
     console.log(this.filtroseleccionadoCheckbox);
     this.reseteoDeBusqueda();
   }
@@ -446,9 +483,9 @@ export class MisAsociacionesComponent implements OnInit, AfterViewInit,OnDestroy
     this.asociacionesexistentes = resultados;
   }
 
-  htmlElementClick(eRef:ElementRef) {
+  htmlElementClick(eRef: ElementRef) {
     const element: HTMLElement = eRef.nativeElement;
     element.click();
-    console.log("clicked!")
+    console.log('clicked!');
   }
 }

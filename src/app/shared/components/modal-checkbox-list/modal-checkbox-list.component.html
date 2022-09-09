@@ -1,9 +1,9 @@
 <div class="modal-header">
-  <h4 class="modal-title">{{titleModal}}</h4>
+  <h5 class="modal-title">{{titleModal}}</h5>
   <div type="button" class="btn-close" (click)="decline()"></div>
 </div>
 <div class="modal-body">
-<div class="row row-cols-2">
+<div class="row row row-cols-1 row-cols-md-2 ">
   <div *ngFor="let item of arrayCheckbox">
     <label>
       <input type="checkbox"  [value] ="item.nombre" (change)="onCheckboxChange($event)"

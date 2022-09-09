@@ -2,8 +2,8 @@
       <div class="search-container" *ngIf="showNotFound ||  sinfavoritos">
         <div class="search-container__box">
           <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
-          <h3>
-            Parece que no tienes ningún elemento agregado como favorito
+          <h5>
+           No existen ningún elemento agregado como favorito
             <span>
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
                 <g style="
@@ -17,7 +17,7 @@
                 </g>
               </svg>
             </span>
-          </h3>
+          </h5>
         </div>
       </div>
       <div *ngIf="misfavoritoscargados && !showNotFound && misGranjaFavoritas.length>0" class="container-button-open-map">

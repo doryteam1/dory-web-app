@@ -3,7 +3,9 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <app-search (textSearch)="onSearch($event)"></app-search>
+    <div class="buscador-container">
+      <app-search class="app-search" (textSearch)="onSearch($event)"></app-search>
+    </div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active"
@@ -31,7 +33,11 @@
               <div class="card" *ngFor="let piscicultor of piscicultoresFiltered">
                   <div class="card__user-info d-flex flex-row" (click)="navigateDetalle(piscicultor)">
                       <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person.svg'}}">
-                      <span class="card__title">{{piscicultor.nombres}}</span>
+                          <div class="container-nombre">
+                            <span class="card__title">{{piscicultor.nombres | shorter:shorterNumber}}
+                            </span>
+                            <small>Detalles</small>
+                          </div>
                   </div>
 
                   <button class="card__button btn-square btn--grey" (click)="invitarAnular(piscicultor)" *ngIf="piscicultor.estado_solicitud == 'Enviada' && piscicultor.solicitud_enviada_por == 'asociacion'">Anular</button>
@@ -51,7 +57,11 @@
               <div class="card" *ngFor="let pescador of pescadoresFiltered">
                   <div class="card__user-info d-flex flex-row" (click)="navigateDetalle(pescador)">
                       <img class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person.svg'}}">
-                      <span class="card__title">{{pescador.nombres}}</span>
+                          <div class="container-nombre">
+                            <span class="card__title">{{pescador.nombres | shorter:shorterNumber}}
+                            </span>
+                            <small>Detalles</small>
+                          </div>
                   </div>
                   <button class="card__button btn-square btn--grey" (click)="invitarAnular(pescador)" *ngIf="pescador.estado_solicitud == 'Enviada' && pescador.solicitud_enviada_por == 'asociacion'">Anular</button>
                   <button class="card__button btn-square btn--blue" (click)="invitarAnular(pescador)" *ngIf="pescador.estado_solicitud == 'Enviada' && pescador.solicitud_enviada_por == 'usuario'">Confirmar</button>
@@ -70,3 +80,4 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Cerrar</button>
   </div>
+

@@ -1,10 +1,10 @@
 <div>
-    <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-row justify-content-between mt-3">
       <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='enable'">{{modalMode == 'create' ? 'Nueva Asociación' : 'Actualizar Asociación'}}</h4>
       <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='disable'">Detalle Asociación</h4>
-      <div class="d-flex flex-row mt-3">
-        <button class="btn-show btn-square btn--blue" (click)="verMiembros()" *ngIf="formState == 'enable'">Ver miembros</button>
-        <button class="btn-add btn-square btn--blue" (click)="agregarMiembro()" *ngIf="formState == 'enable'"><i class="icon-add bi bi-person-plus"></i>Agregar miembros</button>
+      <div class="d-flex flex-row  d-flex-button">
+        <button class="btn-show btn-square btn--blue btn-mi-estilo" (click)="verMiembros()" *ngIf="formState == 'enable'">Ver miembros</button>
+        <button class="btn-square btn--blue btn-mi-estilo" (click)="agregarMiembro()" *ngIf="formState == 'enable'"><i class="icon-add bi bi-person-plus"></i>Agregar miembros</button>
       </div>
     </div>
 
@@ -193,7 +193,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <div class="d-flex flex-direction-row justify-content-center align-items-center">
+      <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
         <button type="button" class="btn-rounded btn--blue container__btn container__btn--azul" (click)="addAsociaciones()" *ngIf="modalMode=='create' && formState == 'enable'">
           <span *ngIf="!loading1">Guardar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">

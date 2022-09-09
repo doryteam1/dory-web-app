@@ -1,4 +1,11 @@
 <div class="container">
+  <div class="search-container" *ngIf="showNotFound">
+    <div class="search-container__box">
+      <img class="search-container__image" src="assets/images/searching.svg">
+      <h3>No se han encontrado resultados</h3>
+      <p>Aun no has registrado tus vehículos.</p>
+    </div>
+  </div>
   <div class="container-table-pagination" *ngIf="!showNotFound">
     <table class="table mt-40">
         <thead class="table-light">
@@ -28,18 +35,10 @@
       <pagination-controls *ngIf="!showNotFound" class="my-pagination" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente">
       </pagination-controls>
   </div>
-    <div class="search-container" *ngIf="showNotFound">
-      <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/searching.svg">
-          <h3>No se han encontrado resultados</h3>
-          <p>Aun no has registrado tus vehículos.</p>
-      </div>
-    </div>
-    <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agrega un nuevo vehículo</button>
-  </div>
-  
+  <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agrega un nuevo vehículo</button>
+</div>
 
-  <ng-template #content let-modal>
+<ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo vehiculo' : 'Actualizar vehículo'}}</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
@@ -118,4 +117,4 @@
         </div>
       </button>
     </div>
-  </ng-template>
+</ng-template>

@@ -5,9 +5,11 @@
     background-color: var(--white);
     border-radius: 20px;
     width: max-content;
+    box-shadow: -1px 3px 8px 3px rgb(0 0 0 / 14%);
     .buscador-container-option-div {
       background-color: transparent;
-      color: #6c757d;
+      border-radius: 20px;
+      color: rgba(0, 0, 0, 0.55) !important;
     }
     .buscador-container-option-div:hover {
       background-color: var(--azul4);
@@ -27,7 +29,6 @@
  .filtroactivo{
 fill: var(--azul1);
  }
-
 .btn-filter {
   color: rgba(0, 0, 0, 0.55) !important;
 }
