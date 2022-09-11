@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NotFoundComponent implements OnInit {
   @Input() objectName:string = 'objetos'
+  @Input() message:string = ''
   constructor() { }
 
   ngOnInit(): void {

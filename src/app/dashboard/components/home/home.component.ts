@@ -372,6 +372,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.us.getUsuarioByEmail(email).subscribe((response) => {
       this.authUser = response.data[0];
       if (!this.authUser.takeTour) {
+        console.log("No take tour")
         this.starTour();
       } else if (!this.authUser.celular) {
         this.guidedTourService.startTour(this.miniGuidedCelularTour);

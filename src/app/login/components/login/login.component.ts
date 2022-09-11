@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
           localStorage.removeItem('rememberEmail');
         }
         this.loading = false;
-        this.router.navigateByUrl('/dashboard');    
+        this.navigateTo(data.email)   
       },err=>{
         if(err.status == 400 || err.status == 404){
           this.error = err.error.message;
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('email',email);
         this.userService.getUsuarioByEmail(email).subscribe(
           response=>{
-           this.getTokenWithGoogleIdToken(idToken);
+           this.getTokenWithGoogleIdToken(idToken,email);
           },err=>{
             if(err.status == 404){ // el usuario no existe
               this.userService.registrarUsuario({
@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit {
                 creadoCon:'google'
               }).subscribe(
                 (response)=>{
-                  this.getTokenWithGoogleIdToken(idToken);
+                  this.getTokenWithGoogleIdToken(idToken,email);
                 },(err)=>{
                   this.form.markAsUntouched();
                   this.error = err.error.message
@@ -128,18 +128,35 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  getTokenWithGoogleIdToken(idToken:string){
+  getTokenWithGoogleIdToken(idToken:string,email:string){
     this.userService.loginWithGoogle(idToken).subscribe(
       (response)=>{
         localStorage.setItem('token',response.body.token);
         this.userService.setAuthWith('google');
-        this.router.navigateByUrl('/dashboard');
+        this.navigateTo(email)
       },err=>{
         console.log(err);
         this.error = 'No se pudo iniciar sessión';
       }
     )
   }
+
+  navigateTo(email:string){
+    this.userService.getUsuarioByEmail(email).subscribe(
+      response=>{
+        let usuario = response.data[0];
+        if (
+          !usuario.tipo_usuario ||
+          !(usuario.nombres && usuario.apellidos)
+        ) {
+          this.router.navigate(['/welcome', usuario]);
+        }else{
+          this.router.navigateByUrl('/dashboard');
+        }
+      }
+    )
+  }
+
   recordarmeOnChange(){
     this.recordarme = !this.recordarme;
     console.log(this.recordarme);

@@ -132,8 +132,7 @@ export class RegistroComponent implements OnInit {
           creadoCon:'google'
         }).subscribe(
           (response)=>{
-            this.success = true;
-            this.getTokenWithGoogleIdToken(idToken);
+            this.getTokenWithGoogleIdToken(idToken,email);
           },(err)=>{
             this.form.markAsUntouched();
             if(err.error.message == 'El registro ya existe'){
@@ -151,14 +150,31 @@ export class RegistroComponent implements OnInit {
     );
   }
 
-  getTokenWithGoogleIdToken(idToken:string){
+  getTokenWithGoogleIdToken(idToken:string,email:string){
     this.userService.loginWithGoogle(idToken).subscribe(
       (response)=>{
-        localStorage.setItem('token',response.token);
-        this.router.navigateByUrl('/dashboard');
+        localStorage.setItem('token',response.body.token);
+        this.userService.setAuthWith('google');
+        this.navigateTo(email)
       },err=>{
         console.log(err);
         this.error = 'No se pudo iniciar sessión';
+      }
+    )
+  }
+
+  navigateTo(email:string){
+    this.userService.getUsuarioByEmail(email).subscribe(
+      response=>{
+        let usuario = response.data[0];
+        if (
+          !usuario.tipo_usuario ||
+          !(usuario.nombres && usuario.apellidos)
+        ) {
+          this.router.navigate(['/welcome', usuario]);
+        }else{
+          this.router.navigateByUrl('/dashboard');
+        }
       }
     )
   }

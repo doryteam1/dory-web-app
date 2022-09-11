@@ -419,6 +419,10 @@ small{
   display: flex;
   flex-direction: column;
 }
+
+.not-found{
+  margin-top: 150px;
+}
 @media screen and (max-width: 1150px) {
 .buscador-container{
   flex-direction: column;

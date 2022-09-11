@@ -27,6 +27,7 @@ import es from '@angular/common/locales/es';
 import imageCompression from 'browser-image-compression';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -376,12 +377,6 @@ export class PerfilComponent implements OnInit {
           this.getNomApell(this.usuario.nombres, this.usuario.apellidos)
         );
 
-        if (
-          !this.usuario.tipo_usuario ||
-          !(this.usuario.nombres && this.usuario.apellidos)
-        ) {
-          this.router.navigate(['/welcome', this.usuario]);
-        }
         this.us.setAuthUserPhoto(this.usuario.foto);
         this.markerPosition = {
           lat: parseFloat(this.latitud?.value),

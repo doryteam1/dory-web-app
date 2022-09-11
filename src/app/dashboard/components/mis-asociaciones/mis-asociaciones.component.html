@@ -29,12 +29,8 @@
           (onDelete)="delete($event)">
         </app-card-asociacion>
       </div>
-      <div class="search-container" *ngIf="showNotFound">
-        <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/searching.svg">
-          <h3>No se han encontrado resultados</h3>
-          <p>Aun no has registrado tus asociaciones</p>
-        </div>
+      <div class="not-found" *ngIf="showNotFound">
+        <app-not-found message="Aún no has registrado tus asociaciones"></app-not-found>
       </div>
     </div>
     <!-- Profile-tab-pane -->
@@ -44,12 +40,8 @@
           [delatecard]="false" (onDetalle)="navigate($event,'disable','tabSoyMiemb')" (onDelete)="delete($event)">
         </app-card-asociacion>
       </div>
-      <div class="search-container" *ngIf="showNotFoundAsocMiemb">
-        <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/searching.svg">
-          <h3>No se han encontrado resultados</h3>
-          <p>Aún no perteneces a una asociación</p>
-        </div>
+      <div class="not-found" *ngIf="showNotFoundAsocMiemb">
+        <app-not-found message="Aún no perteneces a una asociación"></app-not-found>
       </div>
     </div>
     <!-- Unirme_a_una_asociacion -->
