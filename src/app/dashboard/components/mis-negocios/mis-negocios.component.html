@@ -20,8 +20,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let negocio of negocios |  paginate: { itemsPerPage: 5, currentPage: p }; let i=index">
-                <td>{{negocio?.nombre_negocio}}</td>
-                <td>{{negocio?.descripcion_negocio | shorter:200}}</td>
+                <td>{{negocio?.nombre_negocio | shorter:25}}</td>
+                <td>{{negocio?.descripcion_negocio | shorter:25}}</td>
                 <td>{{negocio?.nombre_municipio}}</td>
                 <td>{{negocio?.nombre_departamento}}</td>
                 <td>{{negocio?.direccion}}</td>
@@ -29,10 +29,9 @@
                     <div class="container-row">
                         <!-- <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i> -->
                         <!--<span class="container__link link" (click)="openModal(content,'update',i)">Ver detalle</span>-->
-                        <i class="container__icon1 bi bi-pencil text-success me-2"  (click)="openModal(content,'update',negocio)" ngbTooltip="Crear y actualizar"></i>
+                        <i class="container__icon1 bi bi-pencil text-success me-2"  (click)="editarNegocio(negocio)" ngbTooltip="Crear y actualizar"></i>
                         <i class="container__icon2 bi bi-trash text-danger me-2" (click)="deleteNegocio(negocio)" ngbTooltip="Eliminar"></i>
                         <i class="container__icon3 bi bi-geo-alt-fill text-danger me-2" (click)="verMap(negocio.id_negocio)"  ngbTooltip="Mi ubicación"></i>
-                        <i class="container__icon4 bi bi-images text-success" ngbTooltip="Actualizar fotos" (click)="openPhotosModalUpdate(negocio)"></i>
                     </div>
                 </td>
             </tr>
@@ -41,120 +40,8 @@
         <pagination-controls *ngIf="!showNotFound" class="my-pagination" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente">
         </pagination-controls>
     </div>
-    <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agregar negocio</button>
+    <button class="btn-outline-blue button" (click)="createNewNegocio()">Agregar negocio</button>
 </div>
-
-     <!-- modal 1 detalles -->
-    <ng-template  #content   let-modal>
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo Negocio' : 'Actualizar Negocio'}}</h4>
-        <div type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></div>
-      </div>
-      <div class="modal-body">
-        <form  [formGroup]="form"  >
-          <div class="mb-3">
-            <label for="dateOfBirth">Nombre</label>
-            <div class="input-group">
-              <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre_negocio">
-              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
-            </div>
-            <div *ngIf="invalid('nombre_negocio')" class="container__alert-msg danger-message">
-              <div *ngIf="nombreNegocio?.errors?.['required']">
-                  Campo requerido
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="dateOfBirth">Descripción</label>
-            <div class="input-group">
-              <textarea class="form-control" name="textarea" rows="5" cols="50" formControlName="descripcion_negocio">Write something here</textarea>
-              <!-- <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion"> -->
-              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
-            </div>
-            <div *ngIf="invalid('descripcion_negocio')" class="container__alert-msg danger-message">
-              <div *ngIf="descripcion?.errors?.['required']">
-                  Campo requerido
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <span class="container__title">Departamento</span>
-            <div>
-                <select class="form-control" formControlName='id_departamento' (ngModelChange)='changeDpto()'>
-                    <optgroup label="Escoje un departamento" value="70">
-                        <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
-                    </optgroup>
-                </select>
-            </div>
-            <div *ngIf="invalid('id_departamento')" class="container__alert-msg danger-message">
-              <div *ngIf="idDpto?.errors?.['required']">
-                  Campo requerido
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <span class="container__title">Municipio</span>
-            <div>
-                <select class="form-control" formControlName='id_municipio'   (change)="idmunicipioselec()">
-                    <optgroup label="Escoge un municipio">
-                        <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio"  >{{municipio.nombre}}</option>
-                    </optgroup>
-                </select>
-            </div>
-
-            <div *ngIf="invalid('id_municipio') || faltanargumentos" class="container__alert-msg danger-message">
-              <div *ngIf="idMunic?.errors?.['required'] || faltanargumentos">
-                  Campo requerido
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="dateOfBirth">Dirección</label>
-            <div class="input-group"  (click)="verMapaDireccion()">
-              <input id="productName" class="form-control direccion-class"
-              placeholder="Selecciona aquí la dirección del negocio"
-              formControlName="direccion"
-             >
-              <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
-            </div>
-            <div *ngIf="invalid('direccion') || faltadireccion" class="container__alert-msg danger-message">
-              <div *ngIf="direccion?.errors?.['required'] || faltadireccion">
-                  Campo requerido
-              </div>
-            </div>
-          </div>
-            <div class="mb-3">
-              <label for="dateOfBirth">Información adicional de la ubicación</label>
-              <div class="input-group">
-                <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
-                  placeholder="Información adicional de la ubicación seleccionada"
-                  formControlName="informacion_adicional_direccion">Write something here</textarea>
-              </div>
-                  <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
-                    <div *ngIf="infoAdicionalDir?.errors?.['required']">
-                      Campo requerido
-                    </div>
-                  </div>
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark container__btn" (click)="addNegocio()" *ngIf="modalMode=='create'">
-          <span *ngIf="!loading1">Guardar</span>
-          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading1">
-          </div>
-        </button>
-        <button type="button" class="btn btn-outline-dark container__btn" (click)="updateNegocio()"  *ngIf="modalMode=='update'">
-          <span *ngIf="!loading1" >Actualizar</span>
-          <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading1">
-          </div>
-        </button>
-      </div>
-    </ng-template>
       <!-- modal 2 mapa -->
     <ng-template  #map   let-modal>
       <div class="modal-header footerheadermodal">

@@ -23,6 +23,9 @@ import { AsociacionDetalleFormComponent } from './components/asociacion-detalle-
 import { GranjaDetalleFormComponent } from './components/granja-detalle-form/granja-detalle-form.component';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
+import { ProductoDetalleFormComponent } from './components/producto-detalle-form/producto-detalle-form.component';
+import { VehiculoDetalleFormComponent } from './components/vehiculo-detalle-form/vehiculo-detalle-form.component';
+import { NegocioDtalleFormComponent } from './components/negocio-dtalle-form/negocio-dtalle-form.component';
 
 
 @NgModule({
@@ -38,6 +41,9 @@ import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
     MisAsociacionesComponent,
     AsociacionDetalleFormComponent,
     GranjaDetalleFormComponent,
+    ProductoDetalleFormComponent,
+    VehiculoDetalleFormComponent,
+    NegocioDtalleFormComponent,
   ],
   imports: [
     CommonModule,

@@ -332,7 +332,7 @@ textarea:focus, input:focus{
   } */
 
 ::-webkit-scrollbar {
-  background: white;
+  /* background: white; */
   /* background: #26a5b8; */
   width: 13px;
 }
@@ -406,6 +406,11 @@ textarea:focus, input:focus{
   box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px rgb(82, 81, 81) !important;
   outline: 0 none !important;
   }
+  .form-select:focus{
+  border-color: rgb(82, 81, 81) !important;
+  box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px rgb(82, 81, 81) !important;
+  outline: 0 none !important;
+  }
   /* estilo ng slider  */
     .g-nav-next , .g-nav-prev{
       svg > path{
@@ -432,7 +437,15 @@ textarea:focus, input:focus{
   background-color: var(--azul1);
   border: none;
 }
+.modalDialogClassContactCard{
+  width: 100vw;
+    max-width: 300px;
+    margin: 1.75rem auto !important;
+}
+.backdropClassContactCard{
+  background-color: transparent !important;
 
+}
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 @import "~animate.css/animate.min";

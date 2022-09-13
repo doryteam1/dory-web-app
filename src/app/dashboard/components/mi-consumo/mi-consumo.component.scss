@@ -4,6 +4,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
   margin-top: 40px;
+  padding: 0;
 }
 
 .card {
@@ -80,4 +81,12 @@
 .spinner {
   width: 25px;
   height: 25px;
+}
+.btn-square-blue2{
+  width: 250px !important;
+}
+@media screen and (max-width: 950px) {
+.card{
+  margin-right: 0;
+}
 }

@@ -13,7 +13,9 @@ import { AppModalService } from 'src/app/shared/services/app-modal.service';
   templateUrl: './miembros-asociacion-modal-content.component.html',
   styleUrls: ['./miembros-asociacion-modal-content.component.scss'],
 })
-export class MiembrosAsociacionModalContentComponent implements OnInit, OnDestroy {
+export class MiembrosAsociacionModalContentComponent
+  implements OnInit, OnDestroy
+{
   @Input() title = 'Agregar miembros';
   @Input() nit = -1;
   piscicultores: Array<any> = [];
@@ -21,7 +23,7 @@ export class MiembrosAsociacionModalContentComponent implements OnInit, OnDestro
   selectedTab: string = 'piscicultores';
   piscicultoresFiltered: any[] = [];
   pescadoresFiltered: any[] = [];
-  shorterNumber: number=20;
+  shorterNumber: number = 20;
   constructor(
     public activeModal: NgbActiveModal,
     private pescadoresService: PescadoresService,
@@ -50,15 +52,15 @@ export class MiembrosAsociacionModalContentComponent implements OnInit, OnDestro
         this.piscicultores = response.data;
         this.piscicultoresFiltered = this.piscicultores;
       });
-         this.mediaQuery1Mienbr = this.mediaQueryService
-           .mediaQuery('max-width: 300px')
-           .subscribe((matches) => {
-             if (matches) {
-               this.shorterNumber = 15;
-             } else {
-               this.shorterNumber = 20;
-             }
-           });
+    this.mediaQuery1Mienbr = this.mediaQueryService
+      .mediaQuery('max-width: 300px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 15;
+        } else {
+          this.shorterNumber = 20;
+        }
+      });
   }
 
   anularInvitacion(usuario: any) {
@@ -100,7 +102,35 @@ export class MiembrosAsociacionModalContentComponent implements OnInit, OnDestro
       })
       .catch((result) => {});
   }
+  datosContactoPescador(pescador: any) {
+    let object:any ={
+      nombreUser:pescador.nombre,
+      tipoUser:'Pescador',
+      foto:pescador.foto,
+      correoUser:pescador.email,
+      telefonoUser:pescador.telefono,
+      rutaUserDetalle:`/pescadores/detalle/${pescador.id}`
 
+    }
+      this.appModalService
+        .modalContactCardComponent(object)
+        .then((result) => {})
+        .catch((result) => {});
+  }
+  datosContactoPiscicultor(piscicultor: any) {
+      let object: any = {
+        nombreUser: piscicultor.nombre,
+        tipoUser: 'Piscicultor',
+        foto:piscicultor.foto,
+        correoUser: piscicultor.email,
+        telefonoUser: piscicultor.telefono,
+        rutaUserDetalle: `/piscicultores/detalle/${piscicultor.id}`,
+      };
+      this.appModalService
+        .modalContactCardComponent(object)
+        .then((result) => {})
+        .catch((result) => {});
+  }
   onSearch(text: string) {
     if (this.selectedTab == 'piscicultores') {
       console.log('piscicultores ', text);

@@ -43,6 +43,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin: 10px;
 }
 
 .search-container__box {
@@ -71,16 +72,6 @@ max-height: 350px;
   flex-direction: column;
   align-items: flex-start;
 }
-
-/* .my-pagination ::ng-deep .ngx-pagination .current {
-  background: var(--azul1);
-} */
-
-/* .my-pagination ::ng-deep .ngx-pagination {
-  font-size: 15px;
-  padding-left: 0px;
-} */
-
 
 .container__input {
   width: 100%;

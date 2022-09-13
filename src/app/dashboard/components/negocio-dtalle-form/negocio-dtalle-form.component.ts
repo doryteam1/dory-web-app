@@ -1,18 +1,23 @@
-
-import { Component, OnInit,
+import {
+  Component,
+  OnInit,
   ViewChild,
   HostListener,
-  OnDestroy} from '@angular/core';
-  import { FormControl, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
+  OnDestroy,
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
-import { PlacesService } from 'src/app/services/places.service';
-import { PlatformLocation } from '@angular/common';
+import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
-import {  NgbModal,NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { GranjasService } from 'src/app/granjas/services/granjas.service';
+import { PlacesService } from 'src/app/services/places.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -20,28 +25,21 @@ import { environment } from 'src/environments/environment';
 import { MapGeocoder } from '@angular/google-maps';
 import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { vertices } from '../../../global/constants';
-import { SafeUrl } from '@angular/platform-browser';
+import { NegociosService } from 'src/app/services/negocios.service';
+import { PlatformLocation } from '@angular/common';
 import { ComunicacionEntreComponentesService } from '../../../shared/services/comunicacion-entre-componentes.service';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 
-const _ = require('lodash');
 @Component({
-  selector: 'app-granja-detalle-form',
-  templateUrl: './granja-detalle-form.component.html',
-  styleUrls: ['./granja-detalle-form.component.scss'],
+  selector: 'app-negocio-dtalle-form',
+  templateUrl: './negocio-dtalle-form.component.html',
+  styleUrls: ['./negocio-dtalle-form.component.scss'],
 })
-export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
+export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: any;
-  formState = 'enable';
   modalMode: string = 'update';
-  granja: any;
-  file: any = null;
-  inputOn: boolean = true;
-  /* error: string = ''; */
-  action!: string;
-  infraestructurasData: Array<any> = [];
-  especiesData: Array<any> = [];
-  photosGranjaArray: Array<string | SafeUrl> = [];
+  negocio: any;
+  photosNegocioArray: Array<string | SafeUrl> = [];
   municipios: Array<any> = [];
   departamentos: Array<any> = [];
   filesfinalCreate: any[] = [];
@@ -49,7 +47,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   loadingphoto: boolean = false;
   cargandodata: boolean = false;
   authUserId: number = -1;
-  id_granjanew: any;
   /* Mapa variables */
   apiLoaded: Observable<boolean>;
   mylatitudidmunicipio!: number;
@@ -81,28 +78,22 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     strokeWeight: 3,
     visible: true,
   };
+  inputOn: boolean = true;
   /* form declaraciones*/
   form: FormGroup = new FormGroup({
-    nombre_granja: new FormControl('', [Validators.required]),
-    area: new FormControl(0, [Validators.required]),
-    numero_trabajadores: new FormControl(0, [Validators.required]),
-    produccion_estimada_mes: new FormControl(0, [Validators.required]),
+    nombre_negocio: new FormControl('',[Validators.required]),
     direccion: new FormControl('', [Validators.required]),
-    informacion_adicional_direccion: new FormControl('', [Validators.required]),
+    informacion_adicional_direccion: new FormControl(''),
     latitud: new FormControl(0, [Validators.required]),
     longitud: new FormControl(0, [Validators.required]),
-    descripcion: new FormControl('', [Validators.required]),
+    descripcion_negocio: new FormControl('', [Validators.required]),
     id_departamento: new FormControl(70, [Validators.required]),
-    id_municipio: new FormControl(0, [Validators.required]),
-    id_vereda: new FormControl(0),
-    id_corregimiento: new FormControl(0),
+    id_municipio: new FormControl('', [Validators.required]),
     corregimiento_vereda: new FormControl(''),
-    arrayTiposInfraestructuras: new FormArray([]),
-    arrayEspecies: new FormArray([]),
   });
-
+  id_negocio!: number;
   constructor(
-    private granjaService: GranjasService,
+    private negociosService: NegociosService,
     private modalService: NgbModal,
     httpClient: HttpClient,
     private geocoder: MapGeocoder,
@@ -128,48 +119,28 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   /* agregar esto para camcelar el subscribe de  comunicacionEntreComponentesService*/
   public changeArray!: Subscription;
   public ArrayDelate!: Subscription;
-
   ngOnInit(): void {
-    /*   this.direccion?.disable(); */
     registerLocaleData(es);
-    this.granja = this.ar.snapshot.params;
-    /*  console.log(this.granja); */
-    let action = this.ar.snapshot.paramMap.get('action');
-    this.formState = this.ar.snapshot.paramMap.get('formState')!;
+    this.negocio = this.ar.snapshot.params;
+    console.log(this.negocio);
+    this.modalMode = this.ar.snapshot.paramMap.get('action')!;
     this.authUserId = Number(this.ar.snapshot.paramMap.get('authUserId')!);
-    this.prepareForm(action!, this.granja);
+    this.prepareForm();
     this.loadDptos();
-    this.granjaService.getInfraestructuras().subscribe(
-      (response) => {
-        this.infraestructurasData = response.data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-
-    this.granjaService.getEspecies().subscribe(
-      (response) => {
-        this.especiesData = response.data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
     /* escucha el componente que carga los files desde la modal */
     this.changeArray =
       this.comunicacionEntreComponentesService.changeArray.subscribe(
         (arrayFiles) => {
           if (arrayFiles.length > 0) {
-            if (action == 'create') {
+            if (this.modalMode == 'create') {
               if (arrayFiles[0].length > 0) {
                 for (let index = 0; index < arrayFiles[0].length; index++) {
                   const element = arrayFiles[0][index];
-                  this.photosGranjaArray = arrayFiles[0];
-                  console.log(this.photosGranjaArray);
+                  this.photosNegocioArray = arrayFiles[0];
+                  console.log(this.photosNegocioArray);
                 }
               } else {
-                this.photosGranjaArray = [];
+                this.photosNegocioArray = [];
               }
               for (let index = 0; index < arrayFiles[1].length; index++) {
                 const element = arrayFiles[1][index];
@@ -179,9 +150,9 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
                 const element = arrayFiles[2][index];
                 this.filesfinalCreate.splice(element, 1);
               }
-              console.log(this.photosGranjaArray);
+              console.log(this.photosNegocioArray);
               console.log(this.filesfinalCreate);
-            } else if (action == 'update') {
+            } else if (this.modalMode == 'update') {
               console.log('files ngOnlnit update');
               console.log(arrayFiles);
               this.loadPhotos(arrayFiles);
@@ -202,7 +173,8 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     this.changeArray?.unsubscribe();
     this.ArrayDelate?.unsubscribe();
   }
-  addGranja() {
+
+  addNegocio() {
     this.loading1 = true;
     if (!this.form.valid) {
       if (this.form.getRawValue().direccion == '') {
@@ -219,9 +191,11 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
       this.form.disable();
       this.cargandodata = true;
       this.faltadireccion = false;
-      this.granjaService.addGranja(this.form.getRawValue()).subscribe(
+      console.log(this.form.getRawValue());
+      this.negociosService.addNegocio(this.form.getRawValue()).subscribe(
         (response) => {
-          this.id_granjanew = response.body.insertId;
+          console.log(response);
+          this.id_negocio = response.body.insertId;
           if (this.filesfinalCreate.length !== 0) {
             this.loadPhotos(this.filesfinalCreate);
             this.loadingphoto = true;
@@ -231,6 +205,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
           }
         },
         (err) => {
+          this.goBack();
           this.form.enable();
           this.cargandodata = false;
           this.loading1 = false;
@@ -243,7 +218,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateGranja() {
+  updateNegocio() {
     this.loading1 = true;
     if (!this.form.valid) {
       if (this.form.getRawValue().direccion == '') {
@@ -260,14 +235,17 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
       this.form.disable();
       this.cargandodata = true;
       this.faltadireccion = false;
-      this.granjaService
-        .updateGranja(this.granja.id_granja, this.form.getRawValue())
+      console.log(this.form.getRawValue());
+      this.negociosService
+        .updateNegocio(Number(this.negocio.id_negocio), this.form.getRawValue())
         .subscribe(
           (response) => {
+            console.log(response);
             this.loading1 = false;
             this.goBack();
           },
           (err) => {
+            this.goBack();
             this.form.enable();
             this.cargandodata = false;
             console.log(err);
@@ -279,6 +257,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
       this.faltadireccion = true;
     }
   }
+
   loadDptos() {
     this.places.getDepartamentos().subscribe(
       (response) => {
@@ -292,7 +271,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
       }
     );
   }
-
   loadMunic() {
     this.places.getMunicipiosDepartamentos(this.idDpto?.value).subscribe(
       (response) => {
@@ -303,7 +281,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
       }
     );
   }
-
   invalid(controlFormName: string) {
     return (
       this.form.get(controlFormName)?.invalid &&
@@ -311,115 +288,45 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         this.form.get(controlFormName)?.touched)
     );
   }
-
-  onCheckboxChange(e: any, controlName: string) {
-    const checkArray: FormArray = this.form.get(controlName) as FormArray;
-    if (e.target.checked) {
-      checkArray.push(new FormControl(e.target.value));
-    } else {
-      let i: number = 0;
-      checkArray.controls.forEach(
-        (
-          item: AbstractControl,
-          i: number,
-          controls: Array<AbstractControl>
-        ) => {
-          if (item.value == e.target.value) {
-            checkArray.removeAt(i);
-            return;
-          }
-          i++;
-        }
-      );
-    }
-  }
-
-  isChecked(controlName: string, value: number) {
-    let checked: boolean = false;
-    const checkArray: FormArray = this.form.get(controlName) as FormArray;
-    checkArray.controls.forEach(
-      (item: AbstractControl, i: number, controls: Array<AbstractControl>) => {
-        if (item.value == value) {
-          checked = true;
-        }
-      }
-    );
-    return checked;
-  }
-
   initForm() {
     this.idmunicipioselec();
-    this.nombreGranja?.setValue('');
-    this.area?.setValue(0);
-    this.numeroTrabajadores?.setValue(0);
-    this.prodEstimadaMes?.setValue(0);
     this.direccion?.setValue('');
-    this.informacionAdicionalDireccion?.setValue('');
     this.latitud?.setValue(0);
     this.longitud?.setValue(0);
     this.descripcion?.setValue('');
     this.idDpto?.setValue(70);
     this.idMunic?.setValue(null);
-    this.idVereda?.setValue(0);
-    this.idCorregimiento?.setValue(0);
-    this.corregimiento_vereda?.setValue('');
-    this.infraestructuras.clear();
-    this.especies.clear();
   }
-
-  prepareForm(action: string, granja?: any) {
+  prepareForm() {
     this.faltanargumentos = false;
     this.faltadireccion = false;
-    this.modalMode = action;
+    this.id_negocio = -1;
     this.form.reset();
     this.initForm();
     this.idDpto?.setValue(70);
-    if (action == 'update') {
-      this.granjaService
-        .getGranjaDetalle(this.granja.id_granja)
-        .subscribe((granja) => {
-          let granjaDetalle = granja.data[0];
-          this.photosGranjaArray = granjaDetalle.fotos;
-          this.nombreGranja?.setValue(granjaDetalle.nombre);
-          this.area?.setValue(granjaDetalle.area);
-          this.numeroTrabajadores?.setValue(granjaDetalle.numero_trabajadores);
-          this.prodEstimadaMes?.setValue(granjaDetalle.produccion_estimada_mes);
-          this.direccion?.setValue(granjaDetalle.direccion);
-          this.informacionAdicionalDireccion?.setValue(
-            granjaDetalle.informacion_adicional_direccion
+    if (this.modalMode == 'update') {
+      this.negociosService.detail(Number(this.negocio.id_negocio)).subscribe(
+        (response) => {
+          console.log(response);
+          let negocio = response.data[0];
+          this.photosNegocioArray = response.data[0].fotos_negocio;
+          this.id_negocio = negocio.id_negocio;
+          this.nombreNegocio?.setValue(negocio.nombre_negocio);
+          this.direccion?.setValue(negocio.direccion);
+          this.infoAdicionalDir?.setValue(
+            negocio.informacion_adicional_direccion
           );
-          this.latitud?.setValue(granjaDetalle.latitud);
-          this.longitud?.setValue(granjaDetalle.longitud);
-          this.descripcion?.setValue(granjaDetalle.descripcion);
-          this.idDpto?.setValue(granjaDetalle.id_departamento);
-          this.idMunic?.setValue(granjaDetalle.id_municipio);
-          this.idVereda?.setValue(granjaDetalle.id_vereda);
-          this.idCorregimiento?.setValue(granjaDetalle.id_corregimiento);
-          this.corregimiento_vereda?.setValue(
-            granjaDetalle.corregimiento_vereda
-          );
-          if (
-            granjaDetalle.infraestructuras &&
-            granjaDetalle.infraestructuras.length > 0
-          ) {
-            granjaDetalle.infraestructuras.forEach((element: any) => {
-              this.infraestructuras?.push(
-                new FormControl(element.id_infraestructura)
-              );
-            });
-          }
-
-          if (granjaDetalle.especies && granjaDetalle.especies.length > 0) {
-            granjaDetalle.especies.forEach((element: any) => {
-              this.especies?.push(new FormControl(element.id_especie));
-            });
-          }
-        });
-      if (this.formState == 'disable') {
-        this.form.disable();
-      }
+          this.latitud?.setValue(negocio.latitud);
+          this.longitud?.setValue(negocio.longitud);
+          this.descripcion?.setValue(negocio.descripcion_negocio);
+          this.idDpto?.setValue(negocio.id_departamento);
+          this.idMunic?.setValue(negocio.id_municipio);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     }
-    /*   console.log('granjas cargada en form ', this.form.getRawValue()); */
   }
   goBack() {
     this.platformLocation.back();
@@ -434,7 +341,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
             if (response.data != 0) {
               if (
                 this.form.get('id_municipio')?.value !==
-                this.granja.id_municipio
+                Number(this.negocio.id_municipio)
               ) {
                 this.latitud?.setValue(response.data[0].latitud);
                 this.longitud?.setValue(response.data[0].longitud);
@@ -741,7 +648,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
             lat: event.latLng!.toJSON().lat,
             lng: event.latLng!.toJSON().lng,
           };
-          /* console.log(this.granjas[this.indicegranja!]); */
           if (this.modalMode == 'update') {
             this.confirmModalMapService
               .confirm(
@@ -758,6 +664,8 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
                   if (this.form.get('id_municipio')?.value == idMunipio) {
                     this.latitud?.setValue(event.latLng!.toJSON().lat);
                     this.longitud?.setValue(event.latLng!.toJSON().lng);
+                    console.log(this.latitud);
+                    console.log(this.longitud);
                     this.direccion?.setValue(
                       response.results[0].formatted_address
                     );
@@ -766,6 +674,8 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
                   } else {
                     this.latitud?.setValue(event.latLng!.toJSON().lat);
                     this.longitud?.setValue(event.latLng!.toJSON().lng);
+                    console.log(this.latitud);
+                    console.log(this.longitud);
                     this.direccion?.setValue(
                       response.results[0].formatted_address
                     );
@@ -806,20 +716,22 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
               .then((result) => {
                 if (result == true) {
                   if (this.form.get('id_municipio')?.value == idMunipio) {
-                    console.log('igual');
                     this.latitud?.setValue(event.latLng!.toJSON().lat);
                     this.longitud?.setValue(event.latLng!.toJSON().lng);
+                    console.log(this.latitud);
+                    console.log(this.longitud);
                     this.direccion?.setValue(
                       response.results[0].formatted_address
                     );
                     this.closeMap();
                   } else {
-                    console.log('difrente');
                     this.latitud?.setValue(event.latLng!.toJSON().lat);
                     this.longitud?.setValue(event.latLng!.toJSON().lng);
                     this.direccion?.setValue(
                       response.results[0].formatted_address
                     );
+                    console.log(this.latitud);
+                    console.log(this.longitud);
                     this.idMunic?.setValue(idMunipio);
                     this.closeMap();
                   }
@@ -857,16 +769,16 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   /* funciones necesarias para cargar y adicionar fotos */
   @HostListener('loadPhotos')
   async loadPhotos(event: any) {
-    if (this.granja.action == 'create') {
+    if (this.modalMode == 'create') {
       /* Se ejecuta cuando se esta creando una granja */
       try {
         const compressedFiles =
           await this.compressImageSizeService.handleImageArrayUpload(event);
         let fileNameBase =
-          '/granjas/User' +
-          this.authUserId +
-          '/granja' +
-          this.id_granjanew +
+          '/negocios/User' +
+          Number(this.authUserId) +
+          '/negocio' +
+          Number(this.id_negocio) +
           '/foto';
         let files: Array<any> = compressedFiles;
         let arrayFotos: Array<any> = [];
@@ -883,22 +795,21 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
           arrayFotos.push(downloadUrl);
           console.log('Fotos guardadas');
         }
-        this.photosGranjaArray = [];
-        this.photosGranjaArray = this.photosGranjaArray.concat(arrayFotos);
+        this.photosNegocioArray = [];
+        this.photosNegocioArray = this.photosNegocioArray.concat(arrayFotos);
         this.photosUpdate();
       } catch (err) {
         console.log(err);
       }
-    } else if (this.granja.action == 'update') {
-      /* Se ejecuta cuando se esta editando una granja */
+    } else if (this.modalMode == 'update') {
       try {
         const compressedFiles =
           await this.compressImageSizeService.handleImageArrayUpload(event);
         let fileNameBase =
-          '/granjas/User' +
-          this.authUserId +
-          '/granja' +
-          this.granja.id_granja +
+          '/negocios/User' +
+          Number(this.authUserId) +
+          '/negocio' +
+          Number(this.negocio.id_negocio) +
           '/foto';
         let files: Array<any> = compressedFiles;
         console.log(files);
@@ -916,7 +827,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
           arrayFotos.push(downloadUrl);
           console.log('Fotos guardadas');
         }
-        this.photosGranjaArray = this.photosGranjaArray.concat(arrayFotos);
+        this.photosNegocioArray = this.photosNegocioArray.concat(arrayFotos);
         /* entrega las ultimas fotos que se cargaron, las manda al componente
         que las necesite */
         this.comunicacionEntreComponentesService.changeMyArray2(arrayFotos);
@@ -926,13 +837,10 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
       }
     }
   }
-
   photosUpdate() {
-    if (this.granja.action == 'update') {
-      this.granjaService
-        .updatePhotos(this.granja.id_granja, {
-          arrayFotos: this.photosGranjaArray,
-        })
+    if (this.modalMode == 'update') {
+      this.negociosService
+        .updatePhotos(Number(this.id_negocio), this.photosNegocioArray)
         .subscribe(
           (response) => {
             console.log('fotos guardadas: ');
@@ -940,21 +848,22 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
             this.loading1 = false;
           },
           (err) => {
+            this.loading1 = false;
             console.log(err);
           }
         );
-    } else if (this.granja.action == 'create') {
+    } else if (this.modalMode == 'create') {
       /* Sube las fotos a la BD */
-      this.granjaService
-        .updatePhotos(this.id_granjanew, {
-          arrayFotos: this.photosGranjaArray,
-        })
+      this.negociosService
+        .updatePhotos(Number(this.id_negocio), this.photosNegocioArray)
         .subscribe(
           (response) => {
             this.loading1 = false;
             this.goBack();
           },
           (err) => {
+            this.loading1 = false;
+            this.goBack();
             console.log(err);
           }
         );
@@ -962,29 +871,26 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   }
   photosDelete(arraydelate: any[]) {
     console.log('nuevas fotos a actualizar despues de un delate');
-    this.granjaService
-      .updatePhotos(this.granja.id_granja, {
-        arrayFotos: arraydelate,
-      })
+    this.negociosService
+      .updatePhotos(Number(this.id_negocio), arraydelate)
       .subscribe(
         (response) => {
-          this.photosGranjaArray = arraydelate;
+          this.photosNegocioArray = arraydelate;
           console.log(response);
-          console.log(this.photosGranjaArray);
+          console.log(this.photosNegocioArray);
         },
         (err) => {
           console.log(err);
         }
       );
   }
-
   openPhotosModal() {
     this.platformLocation.onPopState(() => {
       this.appModalService.CloseModalGalleryVerAdiconarEliminarFotos();
     });
     let showconteslaider = false;
     let veryadicionar = true;
-    let arrayFotos = this.photosGranjaArray;
+    let arrayFotos = this.photosNegocioArray;
     let filesCreate: any;
     if (this.modalMode == 'create') {
       filesCreate = this.filesfinalCreate;
@@ -1014,34 +920,21 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     return this.form.get('id_municipio');
   }
 
-  get nombreGranja() {
-    return this.form.get('nombre_granja');
+  get nombreNegocio() {
+    return this.form.get('nombre_negocio');
   }
 
   get descripcion() {
-    return this.form.get('descripcion');
-  }
-
-  get area() {
-    return this.form.get('area');
-  }
-
-  get numeroTrabajadores() {
-    return this.form.get('numero_trabajadores');
-  }
-
-  get prodEstimadaMes() {
-    return this.form.get('produccion_estimada_mes');
+    return this.form.get('descripcion_negocio');
   }
 
   get direccion() {
     return this.form.get('direccion');
   }
 
-  get corregimiento_vereda() {
-    return this.form.get('corregimiento_vereda');
+  get infoAdicionalDir() {
+    return this.form.get('informacion_adicional_direccion');
   }
-
   get latitud() {
     return this.form.get('latitud');
   }
@@ -1049,24 +942,4 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   get longitud() {
     return this.form.get('longitud');
   }
-
-  get idVereda() {
-    return this.form.get('id_vereda');
-  }
-
-  get idCorregimiento() {
-    return this.form.get('id_corregimiento');
-  }
-
-  get infraestructuras() {
-    return this.form.get('arrayTiposInfraestructuras') as FormArray;
-  }
-
-  get especies() {
-    return this.form.get('arrayEspecies') as FormArray;
-  }
-  get informacionAdicionalDireccion() {
-    return this.form.get('informacion_adicional_direccion');
-  }
 }
-

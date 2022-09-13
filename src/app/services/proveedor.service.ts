@@ -3,34 +3,59 @@ import { environment } from 'src/environments/environment';
 import { HttpsService } from './https.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProveedorService {
+  constructor(private httpsService: HttpsService) {}
 
-  constructor(private httpsService:HttpsService) { }
-
-  getProductosById(userId:number){
-    return this.httpsService.get(environment.doryApiRestBaseUrl+'/proveedores/productos/userId/'+userId)
+  getProductosById(userId: number) {
+    return this.httpsService.get(
+      environment.doryApiRestBaseUrl + '/proveedores/productos/userId/' + userId
+    );
   }
 
-  addProducto(producto:any){
-    return this.httpsService.post(environment.doryApiRestBaseUrl+'/proveedores/producto',producto)
+  addProducto(producto: any) {
+    return this.httpsService.post(
+      environment.doryApiRestBaseUrl + '/proveedores/producto',
+      producto
+    );
   }
 
-  deleteProducto(id:number){
-    return this.httpsService.delete(environment.doryApiRestBaseUrl+'/proveedores/producto/'+id)
+  deleteProducto(id: number) {
+    return this.httpsService.delete(
+      environment.doryApiRestBaseUrl + '/proveedores/producto/' + id
+    );
   }
 
-  updateProducto(producto:any,id:number){
-    return this.httpsService.put(environment.doryApiRestBaseUrl+'/proveedores/producto/'+id,producto)
+  updateProducto(producto: any, id: number) {
+    return this.httpsService.put(
+      environment.doryApiRestBaseUrl + '/proveedores/producto/' + id,
+      producto
+    );
   }
 
-  getProductosAll(){
-    return this.httpsService.get(environment.doryApiRestBaseUrl+'/proveedores/producto/todos')
+  getProductosAll() {
+    return this.httpsService.get(
+      environment.doryApiRestBaseUrl + '/proveedores/producto/todos'
+    );
   }
 
-  getProveedoresAll(){
-    return this.httpsService.get(environment.doryApiRestBaseUrl+'/usuario/proveedores/todos')
+  getProveedoresAll() {
+    return this.httpsService.get(
+      environment.doryApiRestBaseUrl + '/usuario/proveedores/todos'
+    );
   }
-
+  getDetail(codigo: number) {
+    return this.httpsService.get(
+      environment.doryApiRestBaseUrl + '/proveedores/detailed/' + codigo
+    );
+  }
+  updatePhotosProducto(codigo: number, photos: any) {
+    return this.httpsService.put(
+      environment.doryApiRestBaseUrl + '/proveedores/update/photos/' + codigo,
+      photos
+    );
+  }
 }
+
+

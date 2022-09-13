@@ -54,33 +54,33 @@ export class SolicitudesModalContentComponent implements OnInit, OnDestroy {
         this.piscicultores = response.data;
         this.piscicultoresFiltered = this.piscicultores;
       });
-       this.mediaQuery1Solicit = this.mediaQueryService
-         .mediaQuery('max-width: 400px')
-         .subscribe((matches) => {
-           if (matches) {
-             this.shorterNumber = 15;
-           } else {
-             this.shorterNumber = 20;
-           }
-         });
-               this.mediaQuery2Solicit = this.mediaQueryService
-                 .mediaQuery('max-width: 370px')
-                 .subscribe((matches) => {
-                   if (matches) {
-                     this.shorterNumber = 10;
-                   } else {
-                     this.shorterNumber = 15;
-                   }
-                 });
-                  this.mediaQuery3Solicit = this.mediaQueryService
-                    .mediaQuery('max-width: 337px')
-                    .subscribe((matches) => {
-                      if (matches) {
-                        this.shorterNumber = 7;
-                      } else {
-                        this.shorterNumber = 10;
-                      }
-                    });
+    this.mediaQuery1Solicit = this.mediaQueryService
+      .mediaQuery('max-width: 400px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 15;
+        } else {
+          this.shorterNumber = 20;
+        }
+      });
+    this.mediaQuery2Solicit = this.mediaQueryService
+      .mediaQuery('max-width: 370px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 10;
+        } else {
+          this.shorterNumber = 15;
+        }
+      });
+    this.mediaQuery3Solicit = this.mediaQueryService
+      .mediaQuery('max-width: 337px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 7;
+        } else {
+          this.shorterNumber = 10;
+        }
+      });
   }
 
   invitarAnular(usuario: any) {
@@ -149,7 +149,34 @@ export class SolicitudesModalContentComponent implements OnInit, OnDestroy {
       );
     }
   }
-
+  datosContactoPescador(pescador: any) {
+    let object: any = {
+      nombreUser: pescador.nombres,
+      tipoUser: 'Pescador',
+      foto: pescador.foto,
+      correoUser: pescador.email,
+      telefonoUser: pescador.telefono,
+      rutaUserDetalle: `/pescadores/detalle/${pescador.id}`,
+    };
+    this.appModalService
+      .modalContactCardComponent(object)
+      .then((result) => {})
+      .catch((result) => {});
+  }
+  datosContactoPiscicultor(piscicultor: any) {
+    let object: any = {
+      nombreUser: piscicultor.nombres,
+      tipoUser: 'Piscicultor',
+      foto: piscicultor.foto,
+      correoUser: piscicultor.email,
+      telefonoUser: piscicultor.telefono,
+      rutaUserDetalle: `/piscicultores/detalle/${piscicultor.id}`,
+    };
+    this.appModalService
+      .modalContactCardComponent(object)
+      .then((result) => {})
+      .catch((result) => {});
+  }
   onSearch(text: string) {
     if (text == '') {
       this.piscicultoresFiltered = this.piscicultores;

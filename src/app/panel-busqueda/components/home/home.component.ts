@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
                 this.tipoUsuario = Utilities.parseJwt(response.body.token).rol;
               },err=>{
                 console.log(err);
-                this.error = 'No se pudo iniciar sessión';
+                this.error = 'No se pudo iniciar sesión';
               }
             )
           }

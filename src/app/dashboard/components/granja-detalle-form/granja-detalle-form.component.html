@@ -2,7 +2,6 @@
   <div class="d-flex flex-row justify-content-between">
     <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='enable'">{{modalMode == 'create' ? 'Nueva granja'
       : 'Actualizar Granja'}}</h4>
-    <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='disable'">Detalle Graja</h4>
   </div>
 
   <div class="modal-body">
@@ -115,7 +114,7 @@
       <div class="mb-3">
         <label for="dateOfBirth">Dirección</label>
         <div class="input-group" (click)="verMapaDireccion()">
-          <input readonly id="productName" class="form-control direccion-class"
+          <input [readonly]="true" id="productName" class="form-control direccion-class"
             placeholder="Selecciona aquí la dirreción de la granja en el mapa" formControlName="direccion">
         </div>
         <div *ngIf="invalid('direccion') || faltadireccion" class="container__alert-msg danger-message">
@@ -162,114 +161,70 @@
           </div>
         </div>
       </div>
-      <!-- update -->
-      <div class="mb-5 clasfotoMiniyBoton" *ngIf="granja.action=='update'">
-        <div *ngIf="photosGranjaArray.length > 0 " class="Photos-mini">
-          <div class="Photos-mini--div" *ngFor="let fotogranja of photosGranjaArray | slice:0:3; let i =index">
-            <img class="Photos-mini__img" [src]="fotogranja" (click)="openPhotosModalUpdate()">
-          </div>
-          <div class="masimagenescontador" *ngIf="photosGranjaArray.length >3" (click)="openPhotosModalUpdate()">
-            <img class="Photos-mini__img" *ngFor="let fotogranja of photosGranjaArray | slice:3:4; let i =index"
-              [src]="fotogranja">
-            <div  *ngIf="photosGranjaArray.length > 4">
-              <p>+ {{photosGranjaArray.length-4}} </p>
-            </div>
-          </div>
-          <div type="button" class="btn btn-primary container__btn--azul1"
-            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-            (click)="openPhotosModalUpdate()">
-            <div>
-              <img *ngIf="photosGranjaArray.length > 0 " src="assets/icons/pngegg.svg">
-              <span *ngIf="photosGranjaArray.length == 1 ">
-                Ver Foto
-              </span>
-              <span *ngIf="photosGranjaArray.length >=2">
-                Ver Fotos
-              </span>
-            </div>
-          </div>
-        </div>
-        <div type="button" class="btn btn-primary container__btn--azul1"
-          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-          (click)="openPhotosModalUpdate()" *ngIf="photosGranjaArray.length == 0 ">
-          <div>
-            <img src="assets/icons/file_upload_black_24dp.svg">
-            <span>
-              Subir Fotos
-            </span>
-          </div>
-        </div>
-        <div class="input-group">
-        </div>
-        <div *ngIf="loadingphoto" class="container__alert-msg danger-message">
-          <div>
-            Por favor; espere miestras se cargan las fotos
-          </div>
-        </div>
-
-      </div>
-      <!-- create -->
-      <div class="mb-5 clasfotoMiniyBoton" *ngIf="granja.action=='create'">
-        <div *ngIf="photosGranjaArray.length > 0 " class="Photos-mini">
-          <div class="Photos-mini--div" *ngFor="let fotogranja of photosGranjaArray | slice:0:3; let i =index">
-            <img class="Photos-mini__img" [src]="fotogranja" (click)="openPhotosModalCreate()">
-          </div>
-          <div class="masimagenescontador" *ngIf="photosGranjaArray.length > 3" (click)="openPhotosModalCreate()">
-            <img class="Photos-mini__img" *ngFor="let fotogranja of photosGranjaArray | slice:3:4; let i =index"
-              [src]="fotogranja">
-            <div  *ngIf="photosGranjaArray.length > 4">
-              <p>+ {{photosGranjaArray.length-4}} </p>
-            </div>
-          </div>
-          <div type="button" class="btn btn-primary container__btn--azul1"
-            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-            (click)="openPhotosModalCreate()">
-            <div>
-              <img *ngIf="photosGranjaArray.length > 0 " src="assets/icons/pngegg.svg">
-              <span *ngIf="photosGranjaArray.length == 1 ">
-                Ver Foto
-              </span>
-              <span *ngIf="photosGranjaArray.length >=2">
-                Ver Fotos
-              </span>
-            </div>
-          </div>
-        </div>
-        <div type="button" class="btn btn-primary container__btn--azul1"
-          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-          (click)="openPhotosModalCreate()" *ngIf="photosGranjaArray.length == 0 ">
-          <div>
-            <img src="assets/icons/file_upload_black_24dp.svg">
-            <span>
-              Subir Fotos
-            </span>
-          </div>
-        </div>
-        <div class="input-group">
-        </div>
-        <div *ngIf="loadingphoto" class="container__alert-msg danger-message">
-          <div>
-            Por favor; espere miestras se cargan las fotos
-          </div>
-        </div>
-      </div>
+              <!-- Fotos mini -->
+              <div class="clasfotoMiniy" *ngIf="photosGranjaArray.length > 0">
+                <div class="Photos-mini-container">
+                  <div class="Photos-mini-data">
+                    <div class="Photos-mini--div" *ngFor="let foto of photosGranjaArray | slice:0:3; let i =index">
+                      <img class="Photos-mini__img" [src]="foto" (click)="openPhotosModal()">
+                    </div>
+                    <div class="masimagenescontador" *ngIf="photosGranjaArray.length >3" (click)="openPhotosModal()">
+                      <img class="Photos-mini__img" *ngFor="let fotogranja of photosGranjaArray | slice:3:4; let i =index"
+                        [src]="fotogranja">
+                      <div *ngIf="photosGranjaArray.length > 4">
+                        <p>+ {{photosGranjaArray.length-4}} </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div type="button" class="btn btn-primary container__btn--azul1"
+                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                    (click)="openPhotosModal()">
+                    <div>
+                      <img *ngIf="photosGranjaArray.length > 0 " src="assets/icons/pngegg.svg">
+                      <span *ngIf="photosGranjaArray.length == 1 ">
+                        Ver Foto
+                      </span>
+                      <span *ngIf="photosGranjaArray.length >=2">
+                        Ver Fotos
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="loadingphoto && modalMode != 'update'" class="container__alert-msg danger-message">
+                  <div>
+                    Por favor; espere miestras se cargan las fotos
+                  </div>
+                </div>
+              </div>
+              <div class="clasfotoMiniyBoton" *ngIf="photosGranjaArray.length <= 0">
+                <div type="button" class="btn btn-primary container__btn--azul1"
+                  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                  (click)="openPhotosModal()" *ngIf="photosGranjaArray.length == 0 ">
+                  <div>
+                    <img src="assets/icons/file_upload_black_24dp.svg">
+                    <span>
+                      Subir Fotos
+                    </span>
+                  </div>
+                </div>
+              </div>
     </form>
   </div>
   <div class="modal-footer">
-    <div class="d-flex flex-direction-row justify-content-center align-items-center">
-      <button type="button" class="btn-square-blue2 container__btn container__btn--azul" (click)="addGranja()"
-        *ngIf="modalMode=='create' && formState == 'enable'">
+    <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
+      <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn container__btn--azul"
+       (click)="addGranja()" *ngIf="modalMode=='create'">
         <span *ngIf="!loading1">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
         </div>
       </button>
-      <button type="button" class="btn-square-blue2 container__btn container__btn--azul" (click)="updateGranja()"
-        *ngIf="modalMode=='update' && formState == 'enable'">
+      <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn container__btn--azul"
+        (click)="updateGranja()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading1">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
         </div>
       </button>
-      <button type="button" class="btn-square-white2 container__btn" (click)="goBack()">
+      <button type="button" class="btn-rounded btn--blue container__btn" (click)="goBack()">
         <span>Atrás</span>
       </button>
     </div>

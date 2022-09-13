@@ -358,6 +358,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     steps: [this.stepDirecNull],
   };
   authUser: any;
+  rutaProductosdetalle: boolean=false;
+  rutaVehiculosdetalle: boolean=false;
+  rutaNegociosdetalle: boolean=false;
   constructor(
     private socialService: SocialAuthService,
     private userService: UsuarioService,
@@ -403,7 +406,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             (err) => {
               console.log(err);
-              this.error = 'No se pudo iniciar sessión';
+              this.error = 'No se pudoIniciar sesión';
             }
           );
         });
@@ -414,22 +417,58 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.rutaGranjasdetalle = true;
     } else if (urlactiva.includes('/dashboard/asociacion/detalle')) {
       this.rutaAsociacionesdetalle = true;
+    } else if (urlactiva.includes('/dashboard/producto/detalle')) {
+      this.rutaProductosdetalle = true;
+    } else if (urlactiva.includes('/dashboard/vehiculo/detalle')) {
+      this.rutaVehiculosdetalle = true;
+    } else if (urlactiva.includes('/dashboard/negocio/detalle')) {
+      this.rutaNegociosdetalle = true;
     }
     this.subscriber = this._router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.rutaGranjasdetalle = false;
         this.rutaAsociacionesdetalle = false;
+        this.rutaProductosdetalle = false;
+         this.rutaVehiculosdetalle = false;
+         this.rutaNegociosdetalle = false;
         let urlactiva = event.url;
         if (urlactiva.includes('/dashboard/granja/detalle')) {
           this.rutaGranjasdetalle = true;
           this.rutaAsociacionesdetalle = false;
+          this.rutaProductosdetalle = false;
+          this.rutaVehiculosdetalle = false;
+          this.rutaNegociosdetalle = false;
         } else if (urlactiva.includes('/dashboard/asociacion/detalle')) {
           this.rutaAsociacionesdetalle = true;
           this.rutaGranjasdetalle = false;
+          this.rutaProductosdetalle = false;
+          this.rutaVehiculosdetalle = false;
+          this.rutaNegociosdetalle = false;
+        } else if (urlactiva.includes('/dashboard/producto/detalle')) {
+          this.rutaProductosdetalle = true;
+          this.rutaVehiculosdetalle = false;
+          this.rutaAsociacionesdetalle = false;
+          this.rutaGranjasdetalle = false;
+          this.rutaNegociosdetalle = false;
+        } else if (urlactiva.includes('/dashboard/vehiculo/detalle')) {
+          this.rutaVehiculosdetalle = true;
+          this.rutaProductosdetalle = false;
+          this.rutaAsociacionesdetalle = false;
+          this.rutaGranjasdetalle = false;
+          this.rutaNegociosdetalle = false;
+        } else if (urlactiva.includes('/dashboard/negocio/detalle')) {
+          this.rutaVehiculosdetalle = false;
+          this.rutaProductosdetalle = false;
+          this.rutaAsociacionesdetalle = false;
+          this.rutaGranjasdetalle = false;
+          this.rutaNegociosdetalle = true;
         } else {
           this.rutaAsociacionesdetalle = false;
           this.rutaGranjasdetalle = false;
+          this.rutaProductosdetalle = false;
+          this.rutaVehiculosdetalle = false;
+          this.rutaNegociosdetalle = false;
         }
       });
   }

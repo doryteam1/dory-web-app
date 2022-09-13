@@ -17,13 +17,13 @@
               </a>
             </li>
             <li id="misproductos" class="nav-item" *ngIf="tipoUsuario == 'Proveedor'">
-              <a class="nav-link" [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
+              <a class="nav-link" [ngClass]="{'miclase':rutaProductosdetalle }" [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
                 <span data-feather="file"></span>
                 Mis productos
               </a>
             </li>
             <li id="misvehiculos" class="nav-item" *ngIf="tipoUsuario == 'Transportador'">
-              <a class="nav-link" [routerLink]="['/dashboard/mis-vehiculos']" routerLinkActive="active">
+              <a class="nav-link" [ngClass]="{'miclase':rutaVehiculosdetalle }" [routerLink]="['/dashboard/mis-vehiculos']" routerLinkActive="active">
                 <span data-feather="file"></span>
                 Mis vehículos
               </a>
@@ -41,7 +41,7 @@
               </a>
             </li>
             <li id="misnegocios" class="nav-item" *ngIf="tipoUsuario == 'Comerciante'">
-              <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-negocios']" routerLinkActive="active">
+              <a class="nav-link" [ngClass]="{'miclase':rutaNegociosdetalle}" aria-current="page" [routerLink]="['/dashboard/mis-negocios']" routerLinkActive="active">
                 <span data-feather="home"></span>
                 Mis negocios
               </a>
@@ -99,14 +99,14 @@ aria-labelledby="offcanvasScrollingLabel">
                 Mis granjas
               </a>
             </li>
-            <li id="misproductos" class="nav-item" *ngIf="tipoUsuario == 'Proveedor'"  data-bs-dismiss="offcanvas" aria-label="Close">
-              <a class="nav-link" [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
+            <li id="misproductos" class="nav-item"  *ngIf="tipoUsuario == 'Proveedor'"  data-bs-dismiss="offcanvas" aria-label="Close">
+              <a class="nav-link" [ngClass]="{'miclase':rutaProductosdetalle }" [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
                 <span data-feather="file"></span>
                 Mis productos
               </a>
             </li>
-            <li id="misvehiculos" class="nav-item" *ngIf="tipoUsuario == 'Transportador'"  data-bs-dismiss="offcanvas" aria-label="Close">
-              <a class="nav-link" [routerLink]="['/dashboard/mis-vehiculos']" routerLinkActive="active">
+            <li id="misvehiculos" class="nav-item"   *ngIf="tipoUsuario == 'Transportador'"  data-bs-dismiss="offcanvas" aria-label="Close">
+              <a class="nav-link" [ngClass]="{'miclase':rutaVehiculosdetalle }" [routerLink]="['/dashboard/mis-vehiculos']" routerLinkActive="active">
                 <span data-feather="file"></span>
                 Mis vehículos
               </a>
@@ -124,7 +124,7 @@ aria-labelledby="offcanvasScrollingLabel">
               </a>
             </li>
             <li id="misnegocios" class="nav-item" *ngIf="tipoUsuario == 'Comerciante'"  data-bs-dismiss="offcanvas" aria-label="Close">
-              <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-negocios']" routerLinkActive="active">
+              <a class="nav-link" [ngClass]="{'miclase':rutaNegociosdetalle }" aria-current="page" [routerLink]="['/dashboard/mis-negocios']" routerLinkActive="active">
                 <span data-feather="home"></span>
                 Mis negocios
               </a>

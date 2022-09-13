@@ -54,6 +54,7 @@ import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 import { ModalMultiFiltersComponent } from './components/filtros/modal-multi-filters/modal-multi-filters.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ModalContactCardComponent } from './components/modal-contact-card/modal-contact-card.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     ModalMultiFiltersComponent,
     NgGallerySliderComponent,
     NotFoundComponent,
+    ModalContactCardComponent,
   ],
   imports: [
     CommonModule,
@@ -141,7 +143,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     ModalGoogleGeneralComponent,
     ModalMultiFiltersComponent,
     NgGallerySliderComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ModalContactCardComponent,
     /*  CardphotoGoogleMapComponent, */
   ],
 

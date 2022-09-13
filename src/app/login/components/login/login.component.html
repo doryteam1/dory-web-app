@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container-f">
     <div class="container-form">
+      <div class="container-form-title">
         <h4 class="container__title">Inicia sesión</h4>
         <img class="container__logo" src="assets/images/logo-no-name.svg">
-
+      </div>
         <form [formGroup]="form">
-
             <div class="container-form__box">
                 <span class="container-form__label">Correo electrónico: <span class="container-form__simbol">*</span></span>
                 <input class="container-form__input" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" formControlName="email" (input)="onChange()">
@@ -25,7 +25,7 @@
                     <i class="glyphicon bi bi-eye" (click)="visiblePass = !visiblePass" *ngIf="visiblePass"></i>
                     <input class="container-form__input" [ngClass]="invalid('password') ? 'invalid-input' : ''" [type]="visiblePass  ? 'text' : 'password'" formControlName="password" (input)="onChange()">
                 </div>
-                
+
                 <div *ngIf="invalid('password')" class="container__alert-msg danger-message">
                     <div *ngIf="password?.errors?.['required']">
                         *Campo obligatorio
@@ -52,10 +52,11 @@
                 </button>
                 <button class="container-form__button-white btn-rounded btn--white" (click)="loginWithGoogle()"><img class="container-form__icon" src="assets/icons/google-icon-grey.svg"><span class="container-form__button-text">Iniciar con Google</span></button>
             </div>
-            
+
         </form>
-        <a class="container__link mt-4" routerLink="forgot-password">¿Haz olvidado tu contraseña?</a>
-        <a class="container__link" routerLink="/registro">¿No tienes cuenta? Regístrate</a>
+        <div  class="container-form-title-2">
+          <p style="cursor: pointer;" class="container__link mt-3" routerLink="forgot-password">¿Haz olvidado tu contraseña?</p>
+          <p class="container__link" >¿No tienes una cuenta? <a routerLink="/registro">Regístrate</a> </p>
+        </div>
     </div>
     </div>
-    
