@@ -56,5 +56,22 @@
         </div>
       </div> -->
     </div>
+    <h2 class="mt-5">Vehiculos de este transportador</h2>
+    <div class="container-card">
+      <div class="card" *ngFor="let vehiculo of vehiculosFiltered; let i=index;">
+        <app-carrucel-img class="card__img"
+                    [imagenes]="vehiculo.fotos"
+                    [indicatorsphoto]="true"
+                    [idtarge]="i"
+                    [rounded]="true"
+                    [efect]="true"
+                    [cover]="true">
+                  </app-carrucel-img>
+        <!-- <img src="https://www.megamall.com.co/fotosalmacenes/macro_almacen-l_h-1564775241.jpg" alt="" class="card__img"> -->
+        <span class="card__title">{{vehiculo.modelo | shorter:28}}</span>
+        <span class="card__sub-title">{{vehiculo.capacidad}} TON</span>
+        <span class="card__description">Transporta alimentos : {{vehiculo.transporte_alimento ? 'Si' : 'No'}}</span>
+        <span class="link" (click)="goDetail(vehiculo.id_vehiculo)">Ver detalle</span>
+      </div>
+    </div>
   </div>
-  

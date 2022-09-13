@@ -41,5 +41,6 @@
     <span class="card__title">{{vehiculo.modelo | shorter:28}}</span>
     <span class="card__sub-title">{{vehiculo.capacidad}} TON</span>
     <span class="card__description">Transporta alimentos : {{vehiculo.transporte_alimento ? 'Si' : 'No'}}</span>
+    <span class="link" (click)="goDetail(vehiculo.id_vehiculo)">Ver detalle</span>
   </div>
 </div>

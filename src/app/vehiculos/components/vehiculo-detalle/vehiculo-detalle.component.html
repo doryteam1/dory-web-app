@@ -1,16 +1,27 @@
 <div class="card">
     <div class="card__carrusel">
-        <h5>{{vehiculo?.modelo}}</h5>
-        <span>{{vehiculo?.capacidad}} TON</span>
-    </div>
-    <div class="card__description">
-        <h5>Modelo</h5>
-        <span>{{vehiculo?.modelo}}</span>
-        <h5>Municipio</h5>
-        <span>{{vehiculo?.municipio}}</span>
-        <h5>Capacidad</h5>
-        <span>{{vehiculo?.capacidad}}TON</span>
-        <h5>Transporta Alimento</h5>
-        <span>{{vehiculo?.transporte_alimento ? 'Si' : 'No'}}</span>
-    </div>
+        <span class="card__title">{{vehiculo?.modelo}}</span>
+        <span class="card__info mb-4">{{vehiculo?.capacidad}} TON</span>
+        <div class="d-flex flex-row">
+            <div class="card__image-container">
+                <gallery class="card__image" [items]="images"
+                [thumbHeight]="70"
+                [thumbWidth]="80"
+                [thumbMode]="'free'"></gallery>
+            </div>
+            <div class="card__container">
+                <span class="card__title2">Modelo</span>
+                <span class="card__description">{{vehiculo?.modelo}}</span>
+                <span class="card__title2">Municipio</span>
+                <span class="card__description">No enviado</span>
+                <span class="card__description">{{vehiculo?.municipio_propietario}}</span>
+                <span class="card__title2">Capacidad</span>
+                <span class="card__description">{{vehiculo?.capacidad}}TON</span>
+                <span class="card__title2">Transporta Alimento</span>
+                <span class="card__description">{{vehiculo?.transporte_alimento ? 'Si' : 'No'}}</span>
+                <span class="link" (click)="goDetail(vehiculo.usuarios_id)">Ver detalle propietario</span>
+            </div>
+        </div>
+    </div> 
+   
 </div>

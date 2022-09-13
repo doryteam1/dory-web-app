@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { VehiculosService } from 'src/app/services/vehiculos.service';
 
 @Component({
   selector: 'app-transportador-detalle',
@@ -13,9 +14,12 @@ export class TransportadorDetalleComponent implements OnInit {
   showNotFound: boolean = false;
   showError: boolean = false;
   errorMessage = '';
+  vehiculosFiltered:Array<any> = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UsuarioService,
+    private vehiculoService:VehiculosService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +52,19 @@ export class TransportadorDetalleComponent implements OnInit {
         }
       );
 
+      this.vehiculoService.getVehiculosUser(this.selectedUserId).subscribe(
+        (response)=>{
+          this.vehiculosFiltered = response.data;
+        }
+      )
   }
 
+  goDetail(id:number){
+    let url = this.router.serializeUrl(
+      this.router.createUrlTree([
+        'vehiculos/detalle/'+id,
+      ])
+    );
+    window.open(url, '_blank');
+  }
 }

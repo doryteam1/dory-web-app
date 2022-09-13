@@ -4,12 +4,44 @@
     flex-wrap: nowrap;
 }
 
+.card__image-container{
+    width:60vw;
+    height: 60vh;
+}
+
+.card__image{
+    background-color: white;
+    height: 60vh ;
+}
+
 .card__carrusel{
+    display: flex;
+    flex-direction: column;
+    padding-left: 40px;
+    padding-top: 40px;
+}
+
+.card__container{
     display: flex;
     flex-direction: column;
 }
 
+.card__title{
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.card__title2{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.card__info{
+    color:var(--morado);
+    font-weight: 600;
+}
+
 .card__description{
-    display: flex;
-    flex-direction: column;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
