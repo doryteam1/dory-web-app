@@ -4,20 +4,14 @@ html, body {
     padding: 5px;
 }
 
-.container{
-    width: 100vw;
-    height: 100vh;
+.container-f{
     display: flex;
-    max-width: 100%;
-    max-height: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color:var(--azul1);
-    //background-image: url("https://revistas.unimagdalena.edu.co/public/journals/2/article_3292_cover_es_ES.jpg");
-    background-repeat: no-repeat;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--azul1);
+      color: var(--gris-oscuro);
 }
-
 .container-form{
     display: flex;
     justify-content: center;
@@ -78,13 +72,15 @@ html, body {
 
 .container-form__input{
     width: 300px;
-    border-radius: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
     border:0.5px solid var(--gris3);
     outline:none;
 }
 
 .container-form__input--textarea{
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .container__alert-msg{
@@ -100,6 +96,15 @@ html, body {
     color:var(--white);
     width: 20px;
     height: 20px;
+}
+/* Quitar las flechas de aumentar numero en input type number */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 @media screen and (max-width: 355px) {
 .container-form__input {
