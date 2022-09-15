@@ -373,12 +373,6 @@ textarea:focus, input:focus{
 .miestilofondosharedmodal {
   background-color: transparent !important;
 }
-/* .modal-full-scree{
-  background-color: #1b8d06;
-}
-.modal-full-scree2{
-  background-color: #758a71;
-} */
 .ndb-ratingx {
   .sr-only {
     display: none !important;
@@ -403,31 +397,22 @@ textarea:focus, input:focus{
     }
 
 .app-custom-modal .modal-content{
-      height: 90vh;
+  max-height: 70vh;
 }
 
 .app-custom-modal .modal-content .modal-body{
-  height: 70vh;
+  max-height: 100%;
   overflow-y: auto;
 }
-
 .app-custom-modal .modal-content .modal-footer .btn:focus{
   background-color: var(--azul1);
   border: none;
 }
-
 .app-custom-modal .modal-content .modal-footer .btn:hover{
   background-color: var(--azul1);
   border: none;
 }
-.modalDialogClassContactCard{
-  width: 100vw;
-    max-width: 300px;
-    margin: 1.75rem auto !important;
-}
-.backdropClassContactCard{
-  background-color: transparent !important;
-}
+
 .modal-equipo-trabajo-BackdropClass{
   background-color: white !important;
   opacity: 0.9 !important;
@@ -445,6 +430,15 @@ textarea:focus, input:focus{
     margin: 30px !important;
     /* ajusta el boton de pantalla completa del mapa */
   }
+}
+.modalDialogClassContactCard {
+  width: 100vw;
+  max-width: 280px;
+  margin: 1.75rem auto !important;
+}
+
+.backdropClassContactCard {
+  background-color: transparent !important;
 }
 @media (max-width: 574px) {
   .modal-equipo-trabajo-DialogClass{

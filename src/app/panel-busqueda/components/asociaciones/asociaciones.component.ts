@@ -1,8 +1,10 @@
-import { ThisReceiver } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
+import { MediaQueryService } from 'src/app/services/media-query.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
@@ -14,9 +16,9 @@ import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 @Component({
   selector: 'app-asociaciones',
   templateUrl: './asociaciones.component.html',
-  styleUrls: ['./asociaciones.component.scss']
+  styleUrls: ['./asociaciones.component.scss'],
 })
-export class AsociacionesComponent implements OnInit {
+export class AsociacionesComponent implements OnInit, OnDestroy {
   asociacionesFiltered!: any[];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
@@ -25,7 +27,7 @@ export class AsociacionesComponent implements OnInit {
   municipios: Array<any> = [];
   showNotFound: boolean = false;
   authUserId: number = -1;
-  authRol:string = '';
+  authRol: string = '';
   checkbox: Checkbox[] = [
     {
       nameButton: 'Municipios',
@@ -36,39 +38,47 @@ export class AsociacionesComponent implements OnInit {
     /* modoFiltro: 'number_ordenarmayoramenor', */
   ];
   /* varibles de buscqueda y filtros */
-  filtro: Filtro = 
-    {
-      nameButton: 'Tipo de asociación',
-      data: [
-        {
-          id: 0,
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Piscicultores',
-          datoafiltrar: 'Piscicultores',
-          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
-        },
-        {
-          id: 1,
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Pescadores',
-          datoafiltrar: 'Pescadores',
-          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
-        },
-        {
-          id: 2,
-          nombrecampoDB: 'tipo_asociacion',
-          nombrefiltro: 'Mixta',
-          datoafiltrar: 'Mixta',
-          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
-        },
-      ]
-    };
-  
-  constructor(private asociacionService: AsociacionesService,
+  filtro: Filtro = {
+    nameButton: 'Tipo de asociación',
+    data: [
+      {
+        id: 0,
+        nombrecampoDB: 'tipo_asociacion',
+        nombrefiltro: 'Piscicultores',
+        datoafiltrar: 'Piscicultores',
+        modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+      },
+      {
+        id: 1,
+        nombrecampoDB: 'tipo_asociacion',
+        nombrefiltro: 'Pescadores',
+        datoafiltrar: 'Pescadores',
+        modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+      },
+      {
+        id: 2,
+        nombrecampoDB: 'tipo_asociacion',
+        nombrefiltro: 'Mixta',
+        datoafiltrar: 'Mixta',
+        modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+      },
+    ],
+  };
+  shorterNumber: number = 20;
+  mediaQueryAsocia!: Subscription;
+  mediaQueryAsocia2!: Subscription;
+  ngOnDestroy(): void {
+    this.mediaQueryAsocia.unsubscribe();
+    this.mediaQueryAsocia2.unsubscribe();
+  }
+  constructor(
+    private asociacionService: AsociacionesService,
     private appModalService: AppModalService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private places: PlacesService) { }
+    private places: PlacesService,
+    public mediaQueryService: MediaQueryService
+  ) {}
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');
@@ -78,10 +88,9 @@ export class AsociacionesComponent implements OnInit {
     /*Todas las asociaones que existen*/
     this.asociacionService.getAsociacionesTodas().subscribe((response) => {
       this.asociasiones = response.data;
-      this.asociasiones =
-        this.asociasiones.filter((asociacion) => {
-          return asociacion.id_propietario !== this.authUserId;
-        });
+      this.asociasiones = this.asociasiones.filter((asociacion) => {
+        return asociacion.id_propietario !== this.authUserId;
+      });
       this.asociacionesFiltered = this.asociasiones.slice();
       console.log(this.asociacionesFiltered);
       if (this.asociacionesFiltered.length < 1) {
@@ -91,9 +100,42 @@ export class AsociacionesComponent implements OnInit {
       }
     });
     /* municipios sucre */
+    this.mediaQueryAsocia = this.mediaQueryService
+      .mediaQuery('max-width: 450px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 10;
+        } else {
+          this.shorterNumber = 20;
+        }
+      });
+    this.mediaQueryAsocia2 = this.mediaQueryService
+      .mediaQuery('max-width: 340px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.shorterNumber = 6;
+        } else {
+          this.shorterNumber = 10;
+        }
+      });
     this.loadMunic();
   }
+  datosContactoAsociacion(user: any) {
+    console.log(user)
+    let object: any = {
+      nombreUser: user.nombre,
+      tipoUser: user.tipo_asociacion,
+      foto: user.foto,
+      correoUser: user.email_propietario,
+      telefonoUser: user.telefono,
+      rutaUserDetalle: `/asociaciones/municipio/detalle/${user.nit}`,
+    };
 
+    this.appModalService
+      .modalContactCardComponent(object)
+      .then((result) => {})
+      .catch((result) => {});
+  }
   invitarAnular(asociacion: any) {
     if (asociacion.estado_solicictud == 'Aceptada') {
       this.appModalService
@@ -173,12 +215,12 @@ export class AsociacionesComponent implements OnInit {
   }
 
   delateFilterCheckbox(index: number) {
-    this.filtroseleccionadoCheckbox.splice(index,1);
-     console.log(this.filtroseleccionadoCheckbox);
-     this.searchReset();
-   }
+    this.filtroseleccionadoCheckbox.splice(index, 1);
+    console.log(this.filtroseleccionadoCheckbox);
+    this.searchReset();
+  }
 
-   searchReset() {
+  searchReset() {
     let resultados: any[] = this.buscarData(this.palabra);
     if (this.filtroseleccionado) {
       resultados = this.filtradoData(this.filtroseleccionado, resultados);
@@ -267,7 +309,7 @@ export class AsociacionesComponent implements OnInit {
     return this.municipios;
   }
 
-  onFiltersAplied(result:any){
+  onFiltersAplied(result: any) {
     this.filtroseleccionado = result.radioFilter1;
     this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
     this.searchReset();

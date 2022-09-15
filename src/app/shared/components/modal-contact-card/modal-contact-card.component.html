@@ -9,8 +9,8 @@
           </div>
         </div>
         <div class="description">
-          <h5>{{datos?.tipoUser}}</h5>
-          <h4>{{datos?.nombreUser}}</h4>
+          <h5> {{datos?.tipoUser ? datos?.tipoUser : 'Sin definir'}}</h5>
+          <h4> {{datos?.nombreUser ? datos?.nombreUser : 'Sin definir'}}</h4>
           <nav class="nav-estilo">
             <a class="datos">
               <div class="icon">
@@ -35,7 +35,7 @@
               </div>
               <div class="content">
                 <h1>Correo</h1>
-                <span>{{datos?.correoUser}}</span>
+                <span>{{datos?.correoUser ? datos?.correoUser : 'Correo sin definir'}}</span>
               </div>
             </a>
             <a class="datos">

@@ -20,13 +20,12 @@ export class HomeComponent implements OnInit {
   constructor(
     private socialService: SocialAuthService,
     private userService: UsuarioService,
-    private router: Router,
     public mediaQueryService: MediaQueryService
   ) {}
 
   ngOnInit(): void {
     this.offcanvas = new window.bootstrap.Offcanvas(
-      document.getElementById('offcanvasScrolling'),
+      document.getElementById('offcanvasScrollingx'),
       {
         backdrop: true,
       }

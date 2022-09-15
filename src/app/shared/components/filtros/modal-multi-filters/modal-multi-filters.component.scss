@@ -1,35 +1,56 @@
-.radio-filters1{
-    display: flex;
-    flex-direction: column;
+.radio-filters1 {
+  display: flex;
+  flex-direction: column;
 }
-.radio-filter1__input{
-    color:var(-azul1);
+
+.radio-filter1__input {
+  color: var(-azul1);
 }
-.radio-filter1__label{
-    margin-left: 5px;
+
+.radio-filter1__label {
+  margin-left: 5px;
 }
+
 .custom-control-input {
-    border-color: #E91E63;
-    background-color: #E91E63;
+  border-color: #E91E63;
+  background-color: #E91E63;
 }
+
 .custom-control-input:focus~.custom-control-label::before {
-box-shadow: none;
+  box-shadow: none;
 }
-.chip-filter1{
-    margin-right: 10px;
+
+.chip-filter1 {
+  margin-right: 10px;
+  margin-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 }
-.chip-filter1__button{
-    margin-right: 5px;
-    margin-bottom: 5px;
+
+.chip-filter1__button {
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
-.chip-filter1__button--clicked{
-    background-color:var(--azul1);
-    color:white;
-    border:none;
+
+.chip-filter1__button--clicked {
+  background-color: var(--azul1);
+  color: white;
+  border: none;
 }
-.app-custom-modal .modal-content{
-    height: 90vh;
+
+.app-custom-modal .modal-content {
+  height: 90vh;
 }
-.btn-filter{
+
+.btn-filter {
   color: rgba(0, 0, 0, 0.55) !important;
+}
+
+button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
 }

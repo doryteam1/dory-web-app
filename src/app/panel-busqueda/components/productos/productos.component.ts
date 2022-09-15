@@ -19,8 +19,8 @@ import { PlacesService } from 'src/app/services/places.service';
   styleUrls: ['./productos.component.scss'],
 })
 export class ProductosComponent implements OnInit {
-  productos:Array<any> = [];
-  productosFiltered:Array<any> = [];
+  productos: Array<any> = [];
+  productosFiltered: Array<any> = [];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
   selectedPriceFilter!: MetaFiltro | any;
@@ -28,7 +28,7 @@ export class ProductosComponent implements OnInit {
   municipios: Array<any> = [];
   showNotFound: boolean = false;
   authUserId: number = -1;
-  authRol:string = '';
+  authRol: string = '';
   checkbox: Checkbox[] = [
     {
       nameButton: 'Municipio de proveedor',
@@ -39,110 +39,102 @@ export class ProductosComponent implements OnInit {
     /* modoFiltro: 'number_ordenarmayoramenor', */
   ];
   /* varibles de buscqueda y filtros */
-  filtro: Filtro = 
-    {
-      nameButton: 'Ordenar por',
-      data: [
-        {
-          id: 0,
-          nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio (Mayor a menor)',
-          datoafiltrar: 'precio',
-          modoFiltro: MODO_FILTRO_ORDER_DES,
-        },
-        {
-          id: 1,
-          nombrecampoDB: 'precio',
-          nombrefiltro: 'Precio (Menor a mayor)',
-          datoafiltrar: 'precio',
-          modoFiltro: MODO_FILTRO_ORDER_ASC,
-        },
-      ]
-    };
+  filtro: Filtro = {
+    nameButton: 'Ordenar por',
+    data: [
+      {
+        id: 0,
+        nombrecampoDB: 'precio',
+        nombrefiltro: 'Precio (Mayor a menor)',
+        datoafiltrar: 'precio',
+        modoFiltro: MODO_FILTRO_ORDER_DES,
+      },
+      {
+        id: 1,
+        nombrecampoDB: 'precio',
+        nombrefiltro: 'Precio (Menor a mayor)',
+        datoafiltrar: 'precio',
+        modoFiltro: MODO_FILTRO_ORDER_ASC,
+      },
+    ],
+  };
 
-  orderFilter: Filtro = 
-    {
-      nameButton: 'Filtrar por precio',
-      data: [
-        {
-          id: 0,
-          nombrecampoDB: 'precio',
-          nombrefiltro: '$0 - $100.000',
-          datoafiltrar: 'precio',
-          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
-        },
-        {
-          id: 1,
-          nombrecampoDB: 'precio',
-          nombrefiltro: '$100.000 - $200.000',
-          datoafiltrar: 'precio',
-          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
-        },
-        {
-          id: 2,
-          nombrecampoDB: 'precio',
-          nombrefiltro: '$200.000 - $500.000',
-          datoafiltrar: 'precio',
-          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
-        },
-        {
-          id: 3,
-          nombrecampoDB: 'precio',
-          nombrefiltro: 'Más de $500.000',
-          datoafiltrar: 'precio',
-          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
-        }
-      ]
-    };
+  orderFilter: Filtro = {
+    nameButton: 'Filtrar por precio',
+    data: [
+      {
+        id: 0,
+        nombrecampoDB: 'precio',
+        nombrefiltro: '$0 - $100.000',
+        datoafiltrar: 'precio',
+        modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+      },
+      {
+        id: 1,
+        nombrecampoDB: 'precio',
+        nombrefiltro: '$100.000 - $200.000',
+        datoafiltrar: 'precio',
+        modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+      },
+      {
+        id: 2,
+        nombrecampoDB: 'precio',
+        nombrefiltro: '$200.000 - $500.000',
+        datoafiltrar: 'precio',
+        modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+      },
+      {
+        id: 3,
+        nombrecampoDB: 'precio',
+        nombrefiltro: 'Más de $500.000',
+        datoafiltrar: 'precio',
+        modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+      },
+    ],
+  };
 
-
-  constructor(private proveedorService:ProveedorService,
-    private router:Router,
+  constructor(
+    private proveedorService: ProveedorService,
+    private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private places: PlacesService){
-
-  }
+    private places: PlacesService
+  ) {}
   ngOnInit(): void {
     registerLocaleData(es);
-    this.proveedorService.getProductosAll().subscribe(
-      (response)=>{
-        console.log(response);
-        this.productos = response.data;
-        this.productosFiltered = this.productos;
-        if (this.productosFiltered.length < 1) {
-          this.showNotFound = true;
-        } else {
-          this.showNotFound = false;
-        }
+    this.proveedorService.getProductosAll().subscribe((response) => {
+      console.log(response);
+      this.productos = response.data;
+      this.productosFiltered = this.productos;
+      if (this.productosFiltered.length < 1) {
+        this.showNotFound = true;
+      } else {
+        this.showNotFound = false;
       }
-    )
+    });
 
     /* municipios sucre */
     this.loadMunic();
   }
 
-  onSearch(text:string){
-      this.palabra = text;
-      this.searchReset();
+  onSearch(text: string) {
+    this.palabra = text;
+    this.searchReset();
   }
 
-  goDetail(granja: any) {
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree([
-        `/granjas/municipio/detalle/${granja.id_granja}`,
-      ])
+  goDetail() {
+ /*    let url = this.router.serializeUrl(
+      this.router.createUrlTree(['productoss/detalle/' + id])
     );
-    window.open(url, '_blank');
+    window.open(url, '_blank'); */
   }
-
   delateFilterCheckbox(index: number) {
-    this.filtroseleccionadoCheckbox.splice(index,1);
-     console.log(this.filtroseleccionadoCheckbox);
-     this.searchReset();
-   }
+    this.filtroseleccionadoCheckbox.splice(index, 1);
+    console.log(this.filtroseleccionadoCheckbox);
+    this.searchReset();
+  }
   searchReset() {
     let resultados: any[] = this.buscarData(this.palabra);
-    if(this.selectedPriceFilter){
+    if (this.selectedPriceFilter) {
       resultados = this.priceFilter(resultados);
     }
     if (this.filtroseleccionado) {
@@ -158,13 +150,13 @@ export class ProductosComponent implements OnInit {
       );
     }
     this.productosFiltered = resultados;
-    if(this.productosFiltered.length < 1){
+    if (this.productosFiltered.length < 1) {
       this.showNotFound = true;
-    }else{
+    } else {
       this.showNotFound = false;
     }
 
-    console.log("showNotFound ",this.showNotFound)
+    console.log('showNotFound ', this.showNotFound);
   }
 
   filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
@@ -212,7 +204,7 @@ export class ProductosComponent implements OnInit {
     this.searchReset();
   }
 
-  deletePriceFilter(){
+  deletePriceFilter() {
     this.selectedPriceFilter = null;
     this.searchReset();
   }
@@ -227,7 +219,7 @@ export class ProductosComponent implements OnInit {
     this.searchReset();
   }
 
-  onPriceFilterChange(filter: MetaFiltro){
+  onPriceFilterChange(filter: MetaFiltro) {
     this.selectedPriceFilter = filter;
     this.searchReset();
   }
@@ -244,30 +236,34 @@ export class ProductosComponent implements OnInit {
     return this.municipios;
   }
 
-  priceFilter(productos:Array<any>){
-    let result = productos.slice()
-    console.log(this.selectedPriceFilter.id)
-    if(this.selectedPriceFilter.id == 0){//0-100
-      result = productos.filter((element)=>{
-        return element.precio <= 100000
-      })  
-    }else if(this.selectedPriceFilter.id == 1){//100-200
-      result = productos.filter((element)=>{
-        return element.precio >= 100000 && element.precio <= 200000 
-      })
-    }else if(this.selectedPriceFilter.id == 2){//200 - 500
-      result = productos.filter((element)=>{
-        return element.precio >= 200000 && element.precio <= 500000 
-      })
-    }else if(this.selectedPriceFilter.id == 3){//+500
-      result = productos.filter((element)=>{
-        return element.precio > 500000
-      })
+  priceFilter(productos: Array<any>) {
+    let result = productos.slice();
+    console.log(this.selectedPriceFilter.id);
+    if (this.selectedPriceFilter.id == 0) {
+      //0-100
+      result = productos.filter((element) => {
+        return element.precio <= 100000;
+      });
+    } else if (this.selectedPriceFilter.id == 1) {
+      //100-200
+      result = productos.filter((element) => {
+        return element.precio >= 100000 && element.precio <= 200000;
+      });
+    } else if (this.selectedPriceFilter.id == 2) {
+      //200 - 500
+      result = productos.filter((element) => {
+        return element.precio >= 200000 && element.precio <= 500000;
+      });
+    } else if (this.selectedPriceFilter.id == 3) {
+      //+500
+      result = productos.filter((element) => {
+        return element.precio > 500000;
+      });
     }
     return result;
   }
 
-  onFiltersAplied(result:any){
+  onFiltersAplied(result: any) {
     this.selectedPriceFilter = result.chipFilter1;
     this.filtroseleccionado = result.radioFilter1;
     this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
