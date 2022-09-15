@@ -1,7 +1,8 @@
 <div class="container-fluid container-fluid ">
     <div class="row mirow">
-      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse mt-5">
+      <nav  *ngIf="!sidebar" id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse mt-5">
         <div class="position-sticky pt-3">
+          <!-- <button (click)="starTour()">ok</button> -->
           <ul id="menuOptions" class="nav flex-column">
             <li id="perfil" class="nav-item">
               <a class="nav-link " aria-current="page" [routerLink]="['/dashboard/perfil']" routerLinkActive="active" >
@@ -17,13 +18,13 @@
               </a>
             </li>
             <li id="misproductos" class="nav-item" *ngIf="tipoUsuario == 'Proveedor'">
-              <a class="nav-link" [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
+              <a class="nav-link" [ngClass]="{'miclase':rutaProductosdetalle }" [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
                 <span data-feather="file"></span>
                 Mis productos
               </a>
             </li>
             <li id="misvehiculos" class="nav-item" *ngIf="tipoUsuario == 'Transportador'">
-              <a class="nav-link" [routerLink]="['/dashboard/mis-vehiculos']" routerLinkActive="active">
+              <a class="nav-link" [ngClass]="{'miclase':rutaVehiculosdetalle }" [routerLink]="['/dashboard/mis-vehiculos']" routerLinkActive="active">
                 <span data-feather="file"></span>
                 Mis vehículos
               </a>
@@ -41,7 +42,7 @@
               </a>
             </li>
             <li id="misnegocios" class="nav-item" *ngIf="tipoUsuario == 'Comerciante'">
-              <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-negocios']" routerLinkActive="active">
+              <a class="nav-link" [ngClass]="{'miclase':rutaNegociosdetalle}" aria-current="page" [routerLink]="['/dashboard/mis-negocios']" routerLinkActive="active">
                 <span data-feather="home"></span>
                 Mis negocios
               </a>
@@ -58,8 +59,7 @@
         </div>
       </nav>
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-x miclassmain">
-        <div class="buttonOpenOffCamvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-          aria-controls="offcanvasScrolling" style="width: 45px;height: 45px;">
+        <div class="buttonOpenOffCamvas" type="button" (click)="openOffcanvas()" style="width: 45px;height: 45px;">
            <svg width="100%" height="100%" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="25" cy="25" r="25" fill="#26A5B8" />
         <rect x="9" y="14" width="32" height="4" rx="2" fill="white" />
@@ -67,7 +67,7 @@
         <rect x="9" y="32" width="32" height="4" rx="2" fill="white" />
            </svg>
         </div>
-        <ngx-guided-tour nextText="Siguiente" skipText="Omitir" backText="Atrás" doneText="Listo" [topOfPageAdjustment]=32></ngx-guided-tour>
+        <ngx-guided-tour  nextText="Siguiente" skipText="Omitir" backText="Atrás" doneText="Listo" [topOfPageAdjustment]=32></ngx-guided-tour>
         <router-outlet></router-outlet>
       </main>
     </div>
@@ -79,58 +79,57 @@ tabindex="-1"
  id="offcanvasScrolling"
 aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header bg-light">
-    <!-- <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdrop with scrolling</h5> -->
-    <button #buttonCloseOffCanvas type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <button  type="button" class="btn-close text-reset" (click)="closeOffcanvas()"></button>
   </div>
   <div class="offcanvas-body bg-light">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light nav-offcanvas">
         <div class="pt-3">
           <ul id="menuOptions" class="nav flex-column">
-            <li id="perfil" class="nav-item"  data-bs-dismiss="offcanvas" aria-label="Close">
+            <li id="perfil" class="nav-item"  (click)="closeOffcanvas()">
               <a class="nav-link " aria-current="page" [routerLink]="['/dashboard/perfil']" routerLinkActive="active">
                 <span data-feather="home"></span>
                 Perfil
               </a>
             </li>
-            <li id="misgranjas" class="nav-item" *ngIf="tipoUsuario == 'Piscicultor'"  data-bs-dismiss="offcanvas" aria-label="Close">
+            <li id="misgranjas" class="nav-item" *ngIf="tipoUsuario == 'Piscicultor'"  (click)="closeOffcanvas()">
               <a class="nav-link" [ngClass]="{'miclase':rutaGranjasdetalle }" [routerLink]="['/dashboard/granjas']"
                 routerLinkActive="active">
                 <span data-feather="file"></span>
                 Mis granjas
               </a>
             </li>
-            <li id="misproductos" class="nav-item" *ngIf="tipoUsuario == 'Proveedor'"  data-bs-dismiss="offcanvas" aria-label="Close">
-              <a class="nav-link" [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
+            <li id="misproductos" class="nav-item"  *ngIf="tipoUsuario == 'Proveedor'"  (click)="closeOffcanvas()">
+              <a class="nav-link" [ngClass]="{'miclase':rutaProductosdetalle }" [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
                 <span data-feather="file"></span>
                 Mis productos
               </a>
             </li>
-            <li id="misvehiculos" class="nav-item" *ngIf="tipoUsuario == 'Transportador'"  data-bs-dismiss="offcanvas" aria-label="Close">
-              <a class="nav-link" [routerLink]="['/dashboard/mis-vehiculos']" routerLinkActive="active">
+            <li id="misvehiculos" class="nav-item"   *ngIf="tipoUsuario == 'Transportador'"  (click)="closeOffcanvas()">
+              <a class="nav-link" [ngClass]="{'miclase':rutaVehiculosdetalle }" [routerLink]="['/dashboard/mis-vehiculos']" routerLinkActive="active">
                 <span data-feather="file"></span>
                 Mis vehículos
               </a>
             </li>
-            <li id="consumo" class="nav-item" *ngIf="tipoUsuario == 'Consumidor'"  data-bs-dismiss="offcanvas" aria-label="Close">
+            <li id="consumo" class="nav-item" *ngIf="tipoUsuario == 'Consumidor'"  (click)="closeOffcanvas()">
               <a class="nav-link" [routerLink]="['/dashboard/mi-consumo']" routerLinkActive="active">
                 <span data-feather="file"></span>
                 Consumo
               </a>
             </li>
-            <li id="misfavoritos" class="nav-item"  data-bs-dismiss="offcanvas" aria-label="Close">
+            <li id="misfavoritos" class="nav-item"  (click)="closeOffcanvas()">
               <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-favoritos']" routerLinkActive="active">
                 <span data-feather="home"></span>
                 Mis favoritos
               </a>
             </li>
-            <li id="misnegocios" class="nav-item" *ngIf="tipoUsuario == 'Comerciante'"  data-bs-dismiss="offcanvas" aria-label="Close">
-              <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-negocios']" routerLinkActive="active">
+            <li id="misnegocios" class="nav-item" *ngIf="tipoUsuario == 'Comerciante'"  (click)="closeOffcanvas()">
+              <a class="nav-link" [ngClass]="{'miclase':rutaNegociosdetalle }" aria-current="page" [routerLink]="['/dashboard/mis-negocios']" routerLinkActive="active">
                 <span data-feather="home"></span>
                 Mis negocios
               </a>
             </li>
             <li id="misasociaciones" class="nav-item" *ngIf="tipoUsuario == 'Piscicultor' || tipoUsuario == 'Pescador'"
-            data-bs-dismiss="offcanvas" aria-label="Close">
+            (click)="closeOffcanvas()">
               <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-asociaciones']"
                 [ngClass]="{'miclase': rutaAsociacionesdetalle }" routerLinkActive="active">
                 <span data-feather="home"></span>

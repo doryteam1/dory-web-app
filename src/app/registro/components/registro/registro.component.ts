@@ -41,12 +41,12 @@ export class RegistroComponent implements OnInit {
   success:boolean = false;
 
   sucreLatLng = {
-    lat:9.176187, 
+    lat:9.176187,
     lng:-75.110196
   }
 
-  constructor(private usuarioService:UsuarioService, private spinner: NgxSpinnerService, private router:Router, private socialAuthService:SocialAuthService,private modalService: NgbModal, private userService:UsuarioService) { 
-    
+  constructor(private usuarioService:UsuarioService, private spinner: NgxSpinnerService, private router:Router, private socialAuthService:SocialAuthService,private modalService: NgbModal, private userService:UsuarioService) {
+
   }
 
 
@@ -86,7 +86,8 @@ export class RegistroComponent implements OnInit {
         },(err)=>{
           this.success = false;
           if(err.error.message == 'El registro ya existe'){
-            this.error='El usuario ya se encuentra registrado. Intente iniciar sessión'
+            this.error =
+              'El usuario ya se encuentra registrado. Intente iniciar sesión';
           }else{
             this.error = err.error.message
           }
@@ -136,7 +137,8 @@ export class RegistroComponent implements OnInit {
           },(err)=>{
             this.form.markAsUntouched();
             if(err.error.message == 'El registro ya existe'){
-              this.error='El usuario ya se encuentra registrado. Intente iniciar sessión'
+              this.error =
+                'El usuario ya se encuentra registrado. Intente iniciar sesión';
             }else{
               this.error = err.error.message
             }
@@ -158,7 +160,7 @@ export class RegistroComponent implements OnInit {
         this.navigateTo(email)
       },err=>{
         console.log(err);
-        this.error = 'No se pudo iniciar sessión';
+        this.error = 'No se pudo iniciar sesión';
       }
     )
   }

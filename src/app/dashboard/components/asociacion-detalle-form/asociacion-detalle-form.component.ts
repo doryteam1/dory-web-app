@@ -41,11 +41,10 @@ export class AsociacionDetalleFormComponent implements OnInit {
   departamentos: any;
   municipios: any;
   constructor(
-    private asociacionesService:AsociacionesService, 
+    private asociacionesService:AsociacionesService,
     private storage: FirebaseStorageService,
     private places: PlacesService,
     private ar:ActivatedRoute,
-    private router:Router,
     private location:Location) { }
 
   ngOnInit(): void {
@@ -72,7 +71,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
       this.fotoCamc?.updateValueAndValidity();
       //Se quitaron los validadores de la foto camara comercio
     }
-    
+
     if (!this.form.valid){
       console.log('Not valid!');
       this.form.markAllAsTouched();
@@ -304,7 +303,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
       let fechaRenv:string = '';
       if(asociacion?.fecha_renovacion_camarac){
         fechaRenv = (asociacion?.fecha_renovacion_camarac) as string;
-        fechaRenv = fechaRenv.split('T')[0]; 
+        fechaRenv = fechaRenv.split('T')[0];
       }
       this.fechRenvCamc?.setValue(formatDate(fechaRenv,'yyyy-MM-dd','es'));
       //this.fotoCamc?.setValue(asociacion.foto_camarac);

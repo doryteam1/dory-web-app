@@ -1,30 +1,11 @@
 <div class="mt-5">
   <div class="search">
-    <app-search (textSearch)="onSearch($event)"></app-search>
+    <app-search class="app-search" (textSearch)="onSearch($event)"></app-search>
     <app-modal-multi-filters [radioFilter1]="filtro" [chipFilter1]="orderFilter" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
   </div>
 </div>
 <app-not-found class="app-not-found" *ngIf="showNotFound" objectName="productos"></app-not-found>
-<!-- <div class="d-flex flex-row justify-content-center">
-  <app-filtro
-  class="search__filter"
-  [filtro]="filtro"
-  [checkboxfiltro]="false"
-  (onFilterSeleccionado)="onFiltroChange($event)"
-  [filtroSeleccionado]="filtroseleccionado">
-  </app-filtro>
-  <app-filtro
-  class="search__filter"
-  [filtro]="orderFilter"
-  [checkboxfiltro]="false"
-  (onFilterSeleccionado)="onPriceFilterChange($event)"
-  [filtroSeleccionado]="selectedPriceFilter">
-  </app-filtro>
-  <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
-  (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
-  </app-filtro>
-</div>
- --><div class="chip-container">
+<div class="chip-container">
   <app-chip-con-boton-close class="chip-container__element"
   *ngIf="filtroseleccionado"
   [iconoChip]="true"
@@ -53,21 +34,22 @@
 <div class="container">
   <div class="card" *ngFor="let producto of productosFiltered; let i = index">
     <div class="card__img-box">
-      <!-- <img class="card__img card-img-top" src="{{producto.foto ? producto.foto : 'http://bppl.kkp.go.id/uploads/publikasi/karya_tulis_ilmiah/default.jpg'}}" alt="Card image cap"> -->
-      <app-carrucel-img class="card__img"
+      <app-carrucel-img
+      *ngIf="producto.fotos.length != 0"
                 [imagenes]="producto.fotos"
                 [indicatorsphoto]="true"
                 [idtarge]="i"
                 [rounded]="false"
                 [scale]=true
+                [scaledown]="true"
                 >
       </app-carrucel-img>
+        <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="producto.fotos.length == 0">
     </div>
     <div class="card-body">
       <h5 class="card__title card-title">${{producto.precio | number:'':'es'}}</h5>
       <h5 class="card__sub-title card-title">{{producto.nombreProducto}}</h5>
       <p class="card__descripction card-text">{{producto.descripcion | shorter:200 }} </p>
-      <span class="link" (click)="goDetail(producto)">Ver detalle</span>
     </div>
   </div>
  <!--  <div class="card" *ngFor="let producto of productos">

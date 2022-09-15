@@ -9,6 +9,7 @@ import { ModalGallerySliderVerYElimanarFotosComponent } from '../components/moda
 import { ModalGoogleGeneralComponent } from '../components/modal-google-general/modal-google-general.component';
 
 import { SafeUrl } from '@angular/platform-browser';
+import { ModalContactCardComponent } from '../components/modal-contact-card/modal-contact-card.component';
 interface atributos {
   nameButton: string;
   nombrecampoDB: string | null;
@@ -115,6 +116,23 @@ export class AppModalService {
       centered: true,
     });
     modalRef.componentInstance.mensaje = mensaje;
+
+    return modalRef.dismissed.toPromise();
+  }
+  /* ModalContactCardComponent  */
+  public closeModalContactCardComponent(): void {
+    this.modalService.dismissAll();
+  }
+  public modalContactCardComponent(datos: any): Promise<boolean> {
+    const modalRef = this.modalService.open(ModalContactCardComponent, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'sm',
+      centered: true,
+      backdrop: true,
+      modalDialogClass: 'modalDialogClassContactCard',
+      backdropClass: 'backdropClassContactCard',
+    });
+    modalRef.componentInstance.datos = datos;
 
     return modalRef.dismissed.toPromise();
   }

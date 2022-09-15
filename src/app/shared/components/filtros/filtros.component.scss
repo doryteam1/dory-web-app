@@ -5,6 +5,7 @@
     background-color: var(--white);
     border-radius: 20px;
     width: max-content;
+    height: 38px;
     box-shadow: -1px 3px 8px 3px rgb(0 0 0 / 14%);
     .buscador-container-option-div {
       background-color: transparent;
@@ -30,5 +31,6 @@
 fill: var(--azul1);
  }
 .btn-filter {
+  height: 38px;
   color: rgba(0, 0, 0, 0.55) !important;
 }

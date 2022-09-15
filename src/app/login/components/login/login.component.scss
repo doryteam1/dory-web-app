@@ -1,52 +1,38 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 5px;
-}
 
-.container{
-    width: 100vw;
-    height: 100vh;
+.container-f{
     display: flex;
-    max-width: 100%;
-    max-height: 100%;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    background-color:var(--azul1);
-    //background-image: url("https://revistas.unimagdalena.edu.co/public/journals/2/article_3292_cover_es_ES.jpg");
-    background-repeat: no-repeat;
+    justify-content: center;
+    color: var(--gris-oscuro);
 }
-
 .container-form{
+    max-width: 400px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    max-width: fit-content;
-    max-height: 100%;
-    padding-top: 10px;
-    padding-bottom: 20px;
-    padding-left: 30px;
-    padding-right: 30px;
-    border-radius: 12px;
-    background-color:var(--white);
-    border: 0.5px solid var(--grey);
-    overflow-y: auto;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100%;
+      margin: 20px;
+      padding-top: 10px;
+      padding-bottom: 20px;
+      padding-left: 30px;
+      padding-right: 30px;
+      border-radius: 12px;
+      background-color: #f8f8f8;
+      box-shadow: 0 1px 15px 5px var(--shadow-2);
+
 }
 .container__logo{
     width: 80px;
     height: 80px;
     margin-bottom: 10px;
 }
-
 .container__title{
     text-align: start;
-    margin-top: 17px;
+    padding-top: 10px;
     font-size: 24px;
     color:var(--gris3)
 }
-
 .container-form__title{
     margin-top: 10px;
     margin-bottom: 5px;
@@ -56,12 +42,10 @@ html, body {
     display: flex;
     flex-direction: column;
 }
-
 .container-form__label{
     font-weight: 400;
     color:var(--gris3)
 }
-
 .container-form__simbol{
     color:var(--red);
 }
@@ -72,14 +56,14 @@ html, body {
     width: 170px;
     font-size: 12px;
 }
-
 .container-form__input{
-    width: 350px;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
     border-radius: 30px;
     border:0.5px solid var(--gris3);
     outline:none;
 }
-
 .container-form__checkbox{
     display: inline;
     margin-right: 5px;
@@ -88,12 +72,10 @@ html, body {
 .container-form__input--textarea{
     border-radius: 20px;
 }
-
 .container__alert-msg{
     font-size: 10px;
-    width: 350px;
+    width: 100%;
 }
-
 .container-box{
     display: flex;
     justify-content: center;
@@ -101,20 +83,20 @@ html, body {
     align-items: center;
     margin-top: 20px;
 }
-
 .spinner{
     color:var(--white);
     width: 20px;
     height: 20px;
 }
-
 .container__link{
-    text-decoration: none;
     color:var(--gris3);
-    margin-top: 10px;
-    font-size: 12px;
+    /* margin-top: 10px; */
+    margin-bottom: 0;
+    a{
+      text-decoration: none;
+      color: var(--azul1);
+    }
 }
-
 .container-form__button-white{
     width: 170px;
     font-size: 12px;
@@ -126,7 +108,32 @@ html, body {
     width: 18px;
     height: 18px;
 }
-
 .container-form__button-text{
     margin-left: 8px;
+}
+.container-form-title{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+.container-form-title-2{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+@media screen and (max-width: 410px) {
+.container-box{
+  flex-direction: column;
+  gap: 10px;
+}
+.container__link{
+  font-size: 0.8rem;
+}
+}
+@media screen and (max-height: 440px) {
+  .container-f {
+    height: 100%;
+  }
 }

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { Checkbox } from 'src/models/checkbox.model';
 import { Filtro } from 'src/models/filtro.model';
 
 @Component({
@@ -27,12 +26,21 @@ export class ModalMultiFiltersComponent implements OnInit {
   }
 
   open(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass:'app-custom-modal'}).result.then((result:any) => {
-      this.filtersAplied.emit(this.filterApply())
-    }, (reason:any) => {
-      console.log("reason ",reason)
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService
+      .open(content, {
+        centered: true,
+        ariaLabelledBy: 'modal-basic-title',
+        windowClass: 'app-custom-modal',
+      })
+      .result.then(
+        (result: any) => {
+          this.filtersAplied.emit(this.filterApply());
+        },
+        (reason: any) => {
+          console.log('reason ', reason);
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
 
   private getDismissReason(reason: any): string {

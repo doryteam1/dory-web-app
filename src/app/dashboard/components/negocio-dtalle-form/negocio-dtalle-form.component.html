@@ -1,0 +1,235 @@
+<div>
+  <div class="d-flex flex-row justify-content-between">
+    <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo Negocio' : 'Actualizar Negocio'}}</h4>
+  </div>
+
+  <div class="modal-body">
+      <form [formGroup]="form">
+        <div class="mb-3">
+          <label for="dateOfBirth">Nombre</label>
+          <div class="input-group">
+            <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre_negocio">
+            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+          </div>
+          <div *ngIf="invalid('nombre_negocio')" class="container__alert-msg danger-message">
+            <div *ngIf="nombreNegocio?.errors?.['required']">
+              Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dateOfBirth">Descripción</label>
+          <div class="input-group">
+            <textarea class="form-control" name="textarea" rows="5" cols="50"
+              formControlName="descripcion_negocio">Write something here</textarea>
+            <!-- <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion"> -->
+            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
+          </div>
+          <div *ngIf="invalid('descripcion_negocio')" class="container__alert-msg danger-message">
+            <div *ngIf="descripcion?.errors?.['required']">
+              Campo requerido
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <span class="container__title">Departamento</span>
+          <div>
+            <select class="form-control" formControlName='id_departamento'>
+              <optgroup label="Escoje un departamento" value="70">
+                <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}
+                </option>
+              </optgroup>
+            </select>
+          </div>
+          <div *ngIf="invalid('id_departamento')" class="container__alert-msg danger-message">
+            <div *ngIf="idDpto?.errors?.['required']">
+              Campo requerido
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <span class="container__title">Municipio</span>
+          <div>
+            <select class="form-control" formControlName='id_municipio' (change)="idmunicipioselec()">
+              <optgroup label="Escoge un municipio">
+                <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}</option>
+              </optgroup>
+            </select>
+          </div>
+          <div *ngIf="invalid('id_municipio') || faltanargumentos" class="container__alert-msg danger-message">
+            <div *ngIf="idMunic?.errors?.['required'] || faltanargumentos">
+              Campo requerido
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="dateOfBirth">Dirección</label>
+          <div class="input-group" (click)="verMapaDireccion()">
+            <input [readonly]="true" id="productName" class="form-control direccion-class"
+              placeholder="Selecciona aquí la dirección del negocio" formControlName="direccion">
+          </div>
+          <div *ngIf="invalid('direccion') || faltadireccion" class="container__alert-msg danger-message">
+            <div *ngIf="direccion?.errors?.['required'] || faltadireccion">
+              Campo requerido
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="dateOfBirth">Información adicional de la ubicación</label>
+          <div class="input-group">
+            <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
+              placeholder="Información adicional de la ubicación seleccionada"
+              formControlName="informacion_adicional_direccion">Write something here</textarea>
+          </div>
+          <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
+            <div *ngIf="infoAdicionalDir?.errors?.['required']">
+              Campo requerido
+            </div>
+          </div>
+        </div>
+            <!-- Fotos mini -->
+            <div class="clasfotoMiniy" *ngIf="photosNegocioArray.length > 0">
+              <div class="Photos-mini-container">
+                <div class="Photos-mini-data">
+                  <div class="Photos-mini--div" *ngFor="let foto of photosNegocioArray | slice:0:3; let i =index">
+                    <img class="Photos-mini__img" [src]="foto" (click)="openPhotosModal()">
+                  </div>
+                  <div class="masimagenescontador" *ngIf="photosNegocioArray.length >3" (click)="openPhotosModal()">
+                    <img class="Photos-mini__img" *ngFor="let fotogranja of photosNegocioArray | slice:3:4; let i =index"
+                      [src]="fotogranja">
+                    <div *ngIf="photosNegocioArray.length > 4">
+                      <p>+ {{photosNegocioArray.length-4}} </p>
+                    </div>
+                  </div>
+                </div>
+                <button [disabled]="loading1" type="button" class="btn btn-primary container__btn--azul1"
+                  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                  (click)="openPhotosModal()">
+                  <div>
+                    <img *ngIf="photosNegocioArray.length > 0 " src="assets/icons/pngegg.svg">
+                    <span *ngIf="photosNegocioArray.length == 1 ">
+                      Ver Foto
+                    </span>
+                    <span *ngIf="photosNegocioArray.length >=2">
+                      Ver Fotos
+                    </span>
+                  </div>
+                </button>
+              </div>
+              <div *ngIf="loadingphoto && modalMode != 'update'" class="container__alert-msg danger-message">
+                <div>
+                  Por favor; espere miestras se cargan las fotos
+                </div>
+              </div>
+            </div>
+            <div class="clasfotoMiniyBoton" *ngIf="photosNegocioArray.length <= 0">
+              <button [disabled]="loading1" type="button" class="btn btn-primary container__btn--azul1"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                (click)="openPhotosModal()" *ngIf="photosNegocioArray.length == 0 ">
+                <div>
+                  <img src="assets/icons/file_upload_black_24dp.svg">
+                  <span>
+                    Subir Fotos
+                  </span>
+                </div>
+              </button>
+            </div>
+      </form>
+  </div>
+    <div class="modal-footer">
+      <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
+        <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn container__btn--azul"
+           (click)="addNegocio()" *ngIf="modalMode=='create'">
+          <span *ngIf="!loading1">Guardar</span>
+          <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
+          </div>
+        </button>
+        <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn container__btn--azul"
+           (click)="updateNegocio()"*ngIf="modalMode=='update'">
+          <span *ngIf="!loading1">Actualizar</span>
+          <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
+          </div>
+        </button>
+        <button type="button" class="btn-rounded btn--blue container__btn" (click)="goBack()">
+          <span>Atrás</span>
+        </button>
+      </div>
+    </div>
+</div>
+<ng-template #map let-modal>
+  <div class="modal-header footerheadermodal">
+    <!-- header modal -->
+    <div class="search">
+      <input [readonly]="inputOn" (click)="inputOn=!inputOn" class="container__input2" placeholder="Buscar"
+        (keyup)="onKey($event)" (keyup.enter)="buscar()" [(ngModel)]="buscarx">
+      <img src="assets/icons/loadingseart.svg" *ngIf="loadingseart">
+      <i class="bi bi-x img-x" (click)="borrarBusqueda()" placement="bottom" ngbTooltip="Borrar búsqueda"
+        *ngIf="borrarseart"></i>
+      <i class="bi bi-search img-search" (click)="buscar()" placement="bottom" ngbTooltip="Búsqueda"
+        *ngIf="!loadingseart"></i>
+    </div>
+    <!-- button close- modal -->
+    <button type="button" class="btn-close button_close" aria-label="Close" (click)="closeMap()" placement="bottom"
+      ngbTooltip="Salir"></button>
+  </div>
+  <div class="modal-body  map" *ngIf="apiLoaded | async">
+    <!-- fuera de sucre -click fuera-->
+    <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf=" fueraDirecion" role="alert">
+      <div class="p-2 bd-highlight">
+        <img src="assets/icons/alertanimada.svg">
+      </div>
+      <div class="p-2 bd-highlight">
+        No puedes escoger una ubicación fuera del departamento de Sucre
+      </div>
+      <div class="ms-auto p-2 bd-highlight">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+    </div>
+    <!-- no ha guardado la ubicacion alerta -->
+    <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf="guarlatlog" role="alert">
+      <div class="p-2 bd-highlight">
+        <img src="assets/icons/alertanimada.svg">
+      </div>
+      <div class="p-2 bd-highlight">
+        No se ha podido guardar su ubicacion, por intente nuevamente
+      </div>
+      <div class="ms-auto p-2 bd-highlight">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+    <!-- no se encontraron datos -->
+    <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf="noexistendatos" role="alert">
+      <div class="p-2 bd-highlight">
+        <img src="assets/icons/alertanimada.svg">
+      </div>
+      <div class="p-2 bd-highlight">
+        Google Maps no puede encontrar <strong>{{valorbuscarx}}</strong>
+        Asegúrese de que su búsqueda esté escrita correctamente
+      </div>
+      <div class="ms-auto p-2 bd-highlight">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+    <!-- escoger mi ubicación -->
+    <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf="escogerdireccion" role="alert">
+      <div class="p-2 bd-highlight">
+        <img src="assets/icons/alertanimada.svg">
+      </div>
+      <div class="p-2 bd-highlight">
+        Por favor escoge tu <strong> dirección</strong>
+      </div>
+      <div class="ms-auto p-2 bd-highlight">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+    <google-map width="1200px" height="450px" class="modal-dialog-centered myestilomodalmap" [options]="options"
+      (mapClick)="addMarker($event)">
+      <map-marker [position]="markerPosition" [options]="markerOptions" title="Title"></map-marker>
+      <map-polyline [path]="vertices" [options]="optionPoli">
+      </map-polyline>
+    </google-map>
+  </div>
+</ng-template>
+

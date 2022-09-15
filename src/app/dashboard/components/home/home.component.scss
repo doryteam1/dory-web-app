@@ -79,9 +79,11 @@ button:focus {
   box-shadow: none !important;
   outline: 0 none !important;
 }
-    .buttonOpenOffCamvas {
-      display: none;
-    }
+
+.buttonOpenOffCamvas {
+  display: none;
+}
+
 @media screen and (max-width: 1000px) {
   .sidebar {
     display: none !important;
@@ -100,10 +102,11 @@ button:focus {
   .container-fluid {
     width: 100%;
   }
-        .buttonOpenOffCamvas {
-          display: block;
-          margin-top: 10px;
-        }
+
+  .buttonOpenOffCamvas {
+    display: block;
+    margin-top: 10px;
+  }
 
 }
 

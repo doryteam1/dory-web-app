@@ -176,7 +176,10 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
   filter:brightness(85%);
 }
 .img1item--cover{
-  object-fit: cover;
+  object-fit: cover !important;
+}
+.img1item--scaledown{
+  object-fit: scale-down !important;
 }
 .img1item--efect:hover{
   filter:brightness(100%);

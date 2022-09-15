@@ -1,36 +1,90 @@
-.container{
-    text-align: center;
-    margin-bottom: 0px;
-    margin-top: 50px;
+.container-f {
+  text-align: center;
+  margin-bottom: 0px;
+  background-color: #E6E6E6;
+  display: flex;
+  justify-content: center;
+  .container-f-div{
+    margin: 50px 20px;
+    background-color: white;
+    max-width: 1000px;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 1px 15px 5px var(--shadow-2);
+
+  }
+}
+.container-quienes {
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div{
+    margin-bottom: 40px;
+  }
+}
+.container-mision {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+  margin-top: 40px;
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-right: 200px;
+  }
+}
+.container-vision {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin-bottom: 0px;
+  margin-top: 40px;
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 200px;
+  }
+}
+.container__title {
+margin: 16px;
+  font-size: 40px;
+  color: var(--azul1);
 }
 
-.container__title{
-    margin-bottom:30px;
-    font-size: 40px;
-    color:var(--azul1);
+.container__description {
+  margin: 0px 16px 16px 16px;
+  text-align: justify;
+  color: var(--gris-oscuro);
 }
 
-.container__description{
-    text-align:justify;
-    color:var(--gris-oscuro);
-}
-
-.container__image{
-    width: 100%;
-    height: 100%;
-}
-
-.container__list{
-    text-align:start;
-}
-@media screen and (min-width: 540px) {
 .container__image {
-    width: 500px;
-    height: 500px;
+  width: 80vw;
+  max-width: 400px;
+}
+
+.container__image-ginelect {
+  width: 80vw;
+  max-width: 500px;
+}
+.container__list {
+  text-align: start;
+}
+@media screen and (max-width: 1000px) {
+  .container-mision,.container-vision{
+    align-items: center;
+    flex-direction: column;
+    div{
+      align-items: center;
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 }
 @media screen and (max-width: 340px) {
-.container__title {
+  .container__title {
     font-size: 30px;
   }
 }

@@ -6,7 +6,7 @@ import { Component, OnInit,
   import { FormControl, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlacesService } from 'src/app/services/places.service';
-import {Location, PlatformLocation } from '@angular/common';
+import { PlatformLocation } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
@@ -110,7 +110,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     private storage: FirebaseStorageService,
     private places: PlacesService,
     private ar: ActivatedRoute,
-    private location: Location,
     public platformLocation: PlatformLocation,
     private appModalService: AppModalService,
     private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
@@ -157,13 +156,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     );
-    if (action == 'update') {
-      this.granjaService
-        .getGranjaDetalle(this.granja.id_granja)
-        .subscribe((response) => {
-          this.photosGranjaArray = response.data[0].fotos;
-        });
-    }
     /* escucha el componente que carga los files desde la modal */
     this.changeArray =
       this.comunicacionEntreComponentesService.changeArray.subscribe(
@@ -387,6 +379,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         .getGranjaDetalle(this.granja.id_granja)
         .subscribe((granja) => {
           let granjaDetalle = granja.data[0];
+          this.photosGranjaArray = granjaDetalle.fotos;
           this.nombreGranja?.setValue(granjaDetalle.nombre);
           this.area?.setValue(granjaDetalle.area);
           this.numeroTrabajadores?.setValue(granjaDetalle.numero_trabajadores);
@@ -429,7 +422,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     /*   console.log('granjas cargada en form ', this.form.getRawValue()); */
   }
   goBack() {
-    this.location.back();
+    this.platformLocation.back();
   }
   /* Funciones necesarias para el mapa y escoger direccion */
   idmunicipioselec() {
@@ -729,40 +722,19 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     };
     this.places.geocodeLatLng(point).then((response) => {
       if (response.status == 'OK') {
-        console.log('response total');
-        console.log(response);
-        console.log('mis municipios');
-        console.log(this.municipios);
-        console.log('resul');
         let result = response.results[0].address_components;
-        console.log(result);
-        /*departamento  */
-        console.log('identificar el departamento');
-        console.log('administrative_area_level_1');
         let index = result.findIndex((element) =>
           element.types.includes('administrative_area_level_1')
         );
-        console.log(`departamento index ${index}`);
         let dpto = result[index].short_name;
-        console.log(`departamento ${dpto}`);
-        /* munisipio */
-        console.log('identificar el municipio');
-        console.log('administrative_area_level_2');
         index = result.findIndex((element) =>
           element.types.includes('administrative_area_level_2')
         );
-        console.log(`municipio index ${index}`);
         let municipio = result[index].short_name;
-        console.log(`municipio ${municipio}`);
-        /* compribar a ver si existe enla lista */
         index = this.municipios.findIndex(
           (element) => element.nombre == municipio
         );
-        console.log(`municipio index id ${index}`);
         let idMunipio = this.municipios[index]?.id_municipio;
-
-        console.log(`municipio id  mi lista ${idMunipio}`);
-
         if (dpto == 'Sucre') {
           this.fueraDirecion = false;
           this.markerPosition = {
@@ -1005,16 +977,21 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         }
       );
   }
-  openPhotosModalCreate() {
-    this.platformLocation.onPopState(() => {
-      this.modalService.dismissAll();
-    });
 
+  openPhotosModal() {
+    this.platformLocation.onPopState(() => {
+      this.appModalService.CloseModalGalleryVerAdiconarEliminarFotos();
+    });
     let showconteslaider = false;
     let veryadicionar = true;
     let arrayFotos = this.photosGranjaArray;
-    let filesCreate = this.filesfinalCreate;
-    let action = 'create';
+    let filesCreate: any;
+    if (this.modalMode == 'create') {
+      filesCreate = this.filesfinalCreate;
+    } else if (this.modalMode == 'update') {
+      filesCreate = -1;
+    }
+    console.log(filesCreate);
     this.appModalService
       .modalGalleryVerAdiconarEliminarFoto(
         -1,
@@ -1024,29 +1001,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         veryadicionar,
         arrayFotos,
         filesCreate,
-        action
-      )
-      .then((result: any) => {})
-      .catch((result) => {});
-  }
-  openPhotosModalUpdate() {
-    this.platformLocation.onPopState(() => {
-      this.modalService.dismissAll();
-    });
-    let showconteslaider = false;
-    let veryadicionar = true;
-    let action = 'update';
-    let arrayFotos = this.photosGranjaArray;
-    this.appModalService
-      .modalGalleryVerAdiconarEliminarFoto(
-        -1,
-        -1,
-        -1,
-        showconteslaider,
-        veryadicionar,
-        arrayFotos,
-        -1,
-        action
+        this.modalMode
       )
       .then((result: any) => {})
       .catch((result) => {});

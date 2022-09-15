@@ -104,6 +104,7 @@ export class MisGranjasComponent implements OnInit {
     this.granjaService.getGranjaByUserId(payload.sub).subscribe(
       (respose) => {
         this.granjas = respose.data;
+        console.log(this.granjas)
         if (this.granjas.length < 1 || this.granjas.length == 0) {
           this.showNotFound = true;
         }
@@ -315,46 +316,22 @@ export class MisGranjasComponent implements OnInit {
     };
     this.places.geocodeLatLng(point).then((response) => {
       if (response.status == 'OK') {
-        console.log('response total');
-        console.log(response);
-        console.log('mis municipios');
-        console.log(this.municipios);
-        console.log('resul');
         let result = response.results[0].address_components;
-        console.log(result);
-        /*departamento  */
-        console.log('identificar el departamento');
-        console.log('administrative_area_level_1');
         let index = result.findIndex((element) =>
           element.types.includes('administrative_area_level_1')
         );
-        console.log(`departamento index ${index}`);
         let dpto = result[index].short_name;
-        console.log(`departamento ${dpto}`);
-        /* munisipio */
-        console.log('identificar el municipio');
-        console.log('administrative_area_level_2');
         index = result.findIndex((element) =>
           element.types.includes('administrative_area_level_2')
         );
-        console.log(`municipio index ${index}`);
         let municipio = result[index].short_name;
-        console.log(`municipio ${municipio}`);
-        /* compribar a ver si existe enla lista */
         index = this.municipios.findIndex(
           (element) => element.nombre == municipio
         );
-        console.log(`municipio index id ${index}`);
         let idMunipio = this.municipios[index]?.id_municipio;
-
-        console.log(`municipio id  mi lista ${idMunipio}`);
-
         if (dpto == 'Sucre') {
+          this.markerPosition =point
           this.fueraDirecion = false;
-          this.markerPosition = {
-            lat: event.latLng!.toJSON().lat,
-            lng: event.latLng!.toJSON().lng,
-          };
           if (this.modalMode == 'updateporvermapa') {
             this.confirmModalMapService
               .confirm(

@@ -11,8 +11,9 @@ import { MisNegociosComponent } from './components/mis-negocios/mis-negocios.com
 import { MisAsociacionesComponent } from './components/mis-asociaciones/mis-asociaciones.component';
 import { AsociacionDetalleFormComponent } from './components/asociacion-detalle-form/asociacion-detalle-form.component';
 import { GranjaDetalleFormComponent } from './components/granja-detalle-form/granja-detalle-form.component';
-
-
+import { VehiculoDetalleFormComponent } from './components/vehiculo-detalle-form/vehiculo-detalle-form.component';
+import { ProductoDetalleFormComponent } from './components/producto-detalle-form/producto-detalle-form.component';
+import { NegocioDtalleFormComponent } from './components/negocio-dtalle-form/negocio-dtalle-form.component';
 const routes: Routes = [
   {
     path: '',
@@ -22,17 +23,19 @@ const routes: Routes = [
       { path: 'perfil', component: PerfilComponent },
       { path: 'granjas', component: MisGranjasComponent },
       { path: 'mis-productos', component: MisProductosComponent },
+      { path: 'producto/detalle', component: ProductoDetalleFormComponent },
       { path: 'mis-vehiculos', component: MisVehiculosComponent },
+      { path: 'vehiculo/detalle', component: VehiculoDetalleFormComponent },
       { path: 'mis-favoritos', component: MisFavoritosComponent },
       { path: 'mi-consumo', component: MiConsumoComponent },
       { path: 'mis-negocios', component: MisNegociosComponent },
+      { path: 'negocio/detalle', component: NegocioDtalleFormComponent },
       { path: 'mis-asociaciones', component: MisAsociacionesComponent },
       { path: 'asociacion/detalle', component: AsociacionDetalleFormComponent },
       { path: 'granja/detalle', component: GranjaDetalleFormComponent },
     ],
   },
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

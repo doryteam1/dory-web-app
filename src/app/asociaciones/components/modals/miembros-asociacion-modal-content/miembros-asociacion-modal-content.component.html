@@ -16,12 +16,12 @@
       <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
           <div class="list overflow-auto d-flex flex-column">
               <div class="card" *ngFor="let piscicultor of piscicultoresFiltered">
-                  <div class="card__user-info d-flex flex-row" (click)="navigateDetalle(piscicultor)">
-                      <img class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person.svg'}}">
+                  <div class="card__user-info d-flex flex-row" >
+                      <img (click)="navigateDetalle(piscicultor)" class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person.svg'}}">
                         <div class="container-nombre">
-                          <span class="card__title">{{piscicultor.nombre | shorter:shorterNumber}}
+                          <span class="card__title" (click)="datosContactoPiscicultor(piscicultor)">{{piscicultor.nombre | shorter:shorterNumber}}
                           </span>
-                          <small>Detalles</small>
+                          <small (click)="navigateDetalle(piscicultor)">Detalles</small>
                         </div>
                   </div>
                   <button class="card__button" (click)="anularInvitacion(piscicultor)"><i class="bi bi-x-lg"></i></button>
@@ -31,12 +31,12 @@
       <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
           <div class="list overflow-auto d-flex flex-column">
               <div class="card" *ngFor="let pescador of pescadoresFiltered">
-                  <div class="card__user-info d-flex flex-row" (click)="navigateDetalle(pescador)">
-                      <img class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person.svg'}}">
+                  <div class="card__user-info d-flex flex-row">
+                      <img (click)="navigateDetalle(pescador)"class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person.svg'}}">
                         <div class="container-nombre">
-                          <span class="card__title">{{pescador.nombre | shorter:shorterNumber}}
+                          <span class="card__title" (click)="datosContactoPescador(pescador)">{{pescador.nombre | shorter:shorterNumber}}
                           </span>
-                          <small>Detalles</small>
+                          <small (click)="navigateDetalle(pescador)">Detalles</small>
                         </div>
                   </div>
                   <button class="card__button" (click)="anularInvitacion(pescador)"><i class="bi bi-x-lg"></i></button>

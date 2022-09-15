@@ -32,9 +32,14 @@
 </div> -->
 <div class="list overflow-auto d-flex flex-column">
 <div class="card" *ngFor="let asociacion of  asociacionesFiltered">
-    <div class="card__user-info d-flex flex-row" (click)="goAssociationDetail(asociacion)">
+    <div class="card__user-info d-flex flex-row" >
         <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
-        <span class="card__title">{{asociacion.nombre}}</span>
+          <div class="container-nombre">
+            <span class="card__title" (click)="datosContactoAsociacion(asociacion)">{{asociacion.nombre |
+              shorter:shorterNumber}}
+            </span>
+            <small (click)="goAssociationDetail(asociacion)">Detalles</small>
+          </div>
         </div>
         <div *ngIf="authRol == 'Piscicultor' || authRol == 'Pescador'">
             <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(asociacion)"

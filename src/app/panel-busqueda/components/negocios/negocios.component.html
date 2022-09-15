@@ -18,17 +18,25 @@
 
 <div class="container">
   <div class="card" *ngFor="let negocio of negociosFiltered; let i=index;">
-    <app-carrucel-img class="card__img"
-                [imagenes]="negocio.fotos"
-                [indicatorsphoto]="true"
-                [idtarge]="i"
-                [rounded]="true"
-                [cover]="true"
-                [efect]="true">
-              </app-carrucel-img>
-    <!-- <img src="https://www.megamall.com.co/fotosalmacenes/macro_almacen-l_h-1564775241.jpg" alt="" class="card__img"> -->
-    <span class="card__title">{{negocio.nombre_negocio | shorter:28}}</span>
-    <span class="card__sub-title">{{negocio.nombre_municipio}}</span>
-    <span class="card__description">{{negocio.direccion}}</span>
+    <div class="card__img-box">
+      <app-carrucel-img
+                 *ngIf="negocio.fotos.length != 0"
+                  [imagenes]="negocio.fotos"
+                  [indicatorsphoto]="true"
+                  [idtarge]="i"
+                  [rounded]="true"
+                  [scaledown]="true"
+                  [efect]="true">
+                </app-carrucel-img>
+      <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="negocio.fotos.length == 0">
+    </div>
+      <div class="card-body">
+        <span class="card__title">{{negocio.nombre_negocio | shorter:20}}</span>
+        <span class="card__sub-title">{{negocio.nombre_municipio}}</span>
+        <span class="card__description">{{negocio.direccion| shorter:20}}</span>
+          <div>
+            <span class="link" (click)="goDetail()">Ver detalle</span>
+          </div>
+      </div>
   </div>
 </div>

@@ -1,46 +1,40 @@
 <div class="search mt-5">
   <app-search (textSearch)="onSearch($event)"></app-search>
-  <app-modal-multi-filters [radioFilter1]="orderFilters" [chipFilter1]="filters" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
+  <app-modal-multi-filters [radioFilter1]="orderFilters" [chipFilter1]="filters" [checkboxOptions]="municipios"
+    (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
 </div>
 <app-not-found *ngIf="showNotFound" objectName="vehiculos"></app-not-found>
 <div class="chip">
-  <app-chip-con-boton-close
-    *ngIf="selectedFilter"
-    [iconoChip]="true"
-    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
-    [contenidoChip]="selectedFilter.nombrefiltro"
+  <app-chip-con-boton-close *ngIf="selectedFilter" [iconoChip]="true"
+    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'" [contenidoChip]="selectedFilter.nombrefiltro"
     (onCloseClip)="deleteFilter()">
   </app-chip-con-boton-close>
-  <app-chip-con-boton-close
-    *ngIf="selectedOrderFilter"
-    [iconoChip]="true"
-    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
-    [contenidoChip]="selectedOrderFilter.nombrefiltro"
+  <app-chip-con-boton-close *ngIf="selectedOrderFilter" [iconoChip]="true"
+    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'" [contenidoChip]="selectedOrderFilter.nombrefiltro"
     (onCloseClip)="deleteOrderFilter()">
   </app-chip-con-boton-close>
-  <app-chip-con-boton-close
-  *ngFor="let nombre of filtroseleccionadoCheckbox; let i=index"
-      [iconoChip]="true"
-      [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
-      [contenidoChip]="nombre"
-      (onCloseClip)="deleteFilterCheckbox(i)">
+  <app-chip-con-boton-close *ngFor="let nombre of filtroseleccionadoCheckbox; let i=index" [iconoChip]="true"
+    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'" [contenidoChip]="nombre"
+    (onCloseClip)="deleteFilterCheckbox(i)">
   </app-chip-con-boton-close>
 </div>
 
 <div class="container">
   <div class="card" *ngFor="let vehiculo of vehiculosFiltered; let i=index;">
-    <app-carrucel-img class="card__img"
-                [imagenes]="vehiculo.fotos"
-                [indicatorsphoto]="true"
-                [idtarge]="i"
-                [rounded]="true"
-                [efect]="true"
-                [cover]="true">
-              </app-carrucel-img>
-    <!-- <img src="https://www.megamall.com.co/fotosalmacenes/macro_almacen-l_h-1564775241.jpg" alt="" class="card__img"> -->
-    <span class="card__title">{{vehiculo.modelo | shorter:28}}</span>
-    <span class="card__sub-title">{{vehiculo.capacidad}} TON</span>
-    <span class="card__description">Transporta alimentos : {{vehiculo.transporte_alimento ? 'Si' : 'No'}}</span>
-    <span class="link" (click)="goDetail(vehiculo.id_vehiculo)">Ver detalle</span>
+    <div class="card__img-box">
+      <app-carrucel-img *ngIf="vehiculo.fotos.length != 0" class="card__img" [imagenes]="vehiculo.fotos" [indicatorsphoto]="true" [idtarge]="i"
+        [rounded]="true" [efect]="true" [scaledown]="true">
+      </app-carrucel-img>
+      <img class="sin-img"
+        src='https://admin.moodyyc.com/img/no-image.png' *ngIf="vehiculo.fotos.length == 0">
+    </div>
+    <div class="card-body">
+      <span class="card__title">{{vehiculo?.modelo | shorter:28}}</span>
+      <span class="card__sub-title">{{vehiculo?.capacidad}} TON</span>
+      <span class="card__description">Transporta alimentos : {{vehiculo?.transporte_alimento ? 'Si' : 'No'}}</span>
+      <div>
+        <span class="link" (click)="goDetail(vehiculo.id_vehiculo)">Ver detalle</span>
+      </div>
+    </div>
   </div>
 </div>

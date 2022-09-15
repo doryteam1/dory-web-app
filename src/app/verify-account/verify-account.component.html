@@ -4,8 +4,8 @@
         <img class="container__logo" src="assets/images/logo.svg">
         <span class="container__title">Verifica tu cuenta</span>
         <p class="container__paragraph">
-            <span *ngIf="!verificado && !error">Presiona el boton a continuacion para verificar tu cuenta</span>
-            <span *ngIf="verificado && !error">Su cuenta se a verificado correctamente, ahora puedes iniciar session</span>
+            <span *ngIf="!verificado && !error">Presiona el botón a continuación para verificar tu cuenta</span>
+            <span *ngIf="verificado && !error"> Su cuenta se ha verificado correctamente, ahora puedes iniciar sesión</span>
             <span class="error danger-message" *ngIf="error">{{error}}</span>
         </p>
         <div class="container-box">
@@ -15,8 +15,7 @@
                 </div>
                 <span *ngIf="!loading">Verificar cuenta</span>
             </button>
-            <button class="container-form__button btn-rounded-blue" type="submit" routerLink="/login" *ngIf="verificado"><span>Iniciar sessión</span></button>
-        </div>        
+            <button class="container-form__button btn-rounded-blue" type="submit" routerLink="/login" *ngIf="verificado"><span>Iniciar sesión</span></button>
+        </div>
 </div>
 </div>
-    

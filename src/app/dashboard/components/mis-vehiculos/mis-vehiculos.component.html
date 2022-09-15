@@ -10,7 +10,6 @@
     <table class="table mt-40">
         <thead class="table-light">
           <tr>
-            <th>Imagen</th>
             <th>Modelo del vehículo</th>
             <th>Capacidad(TON)</th>
             <th>Transporta alimentos(Si/No)</th>
@@ -19,13 +18,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let vehiculo of vehiculos |  paginate: { itemsPerPage: 3, currentPage: p };  let i=index">
-            <td><img class="container_img" [src]="vehiculo.imagen"></td>
-            <td>{{vehiculo.modelo}}</td>
+            <td>{{vehiculo.modelo| shorter:25}}</td>
             <td>{{vehiculo.capacidad}}</td>
             <td>{{vehiculo.transporte_alimento == 1 ? 'Si' : 'No'}}</td>
             <td>
                 <div class="container-row">
-                    <i class="container__icon bi bi-pencil me-3" (click)="openModal(content,'update',vehiculo.id_vehiculo)"></i>
+                    <i class="container__icon bi bi-pencil me-3" (click)=" updateVehiculo(vehiculo)"></i>
                     <i class="container__icon bi bi-trash" (click)="deleteVehiculo(vehiculo.id_vehiculo)"></i>
                 </div>
             </td>
@@ -35,86 +33,5 @@
       <pagination-controls *ngIf="!showNotFound" class="my-pagination" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente">
       </pagination-controls>
   </div>
-  <button class="btn-outline-blue button" (click)="openModal(content,'create')">Agrega un nuevo vehículo</button>
+  <button class="btn-outline-blue button" (click)="addVehiculo()">Agrega un nuevo vehículo</button>
 </div>
-
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo vehiculo' : 'Actualizar vehículo'}}</h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <form [formGroup]="form">
-        <div class="mb-3">
-          <label for="dateOfBirth">Modelo</label>
-          <div class="input-group">
-            <input id="modelo" class="form-control" placeholder="Modelo" formControlName="modelo">
-            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
-          </div>
-          <div *ngIf="invalid('modelo')" class="container__alert-msg danger-message">
-            <div *ngIf="modelo?.errors?.['required']">
-                Campo requerido
-            </div>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="dateOfBirth">Capacidad(TON)</label>
-          <div class="input-group">
-            <input id="capacidad" class="form-control" placeholder="Capacidad" formControlName="capacidad">
-            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
-          </div>
-          <div *ngIf="invalid('capacidad')" class="container__alert-msg danger-message">
-            <div *ngIf="capacidad?.errors?.['required']">
-                Campo requerido
-            </div>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="dateOfBirth">Imagen</label>
-          <div class="input-group">
-            <input id="imagen" type="file" class="form-control" placeholder="Seleccione una imagen" (change)='fileChange($event)' formControlName="imagen">
-            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
-          </div>
-          <div *ngIf="showErrorNotImageSelected" class="container__alert-msg danger-message">
-            <div *ngIf="showErrorNotImageSelected">
-                Campo requerido
-            </div>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <!-- <img id="output" class="modal__image"> -->
-          <img class="modal__image" [src]="previewImage" *ngIf="previewImage">
-        </div>
-
-        <div class="container__box mb-3">
-          <span class="container__title">¿Transportas alimentos?</span>
-          <div class="input-group">
-              <select class="form-control" formControlName='transporte_alimento'>
-                  <optgroup label="Escoge una opción">
-                      <option value=1>Si</option>
-                      <option value=0>No</option>
-                  </optgroup>
-              </select>
-          </div>
-          <div *ngIf="invalid('transporte_alimento')" class="container__alert-msg danger-message">
-            <div *ngIf="transporteAlimento?.errors?.['required']">
-                Campo requerido
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark container__btn" (click)="addVehiculo()" *ngIf="modalMode=='create'">
-        <span *ngIf="!loading">Guardar</span>
-        <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
-        </div>
-      </button>
-      <button type="button" class="btn btn-outline-dark container__btn" (click)="updateVehiculo()" *ngIf="modalMode=='update'">
-        <span *ngIf="!loading">Actualizar</span>
-        <div class="container__spinner spinner-border text-danger" role="status" *ngIf="loading">
-        </div>
-      </button>
-    </div>
-</ng-template>

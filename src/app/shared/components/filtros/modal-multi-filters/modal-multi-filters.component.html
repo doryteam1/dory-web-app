@@ -20,9 +20,9 @@
         <div class="chip-filter1" *ngIf="chipFilter1">
             <button class="btn-outline-black chip-filter1__button" [ngClass]="{'chip-filter1__button--clicked':this.form.get('chipFilter1')?.value == i}" *ngFor="let chip of chipFilter1.data; let i=index" (click)="onchangeChipFilter1(i)">{{chip.nombrefiltro}}</button>
         </div>
-        
+
         <h6 class="mt-4" *ngIf="checkboxOptions">Municipio(s)</h6>
-        <div class="row row-cols-2" *ngIf="checkboxOptions">
+        <div class="row row-cols-1 row-cols-sm-2" *ngIf="checkboxOptions">
             <div *ngFor="let item of checkboxOptions">
                 <label>
                 <input type="checkbox"  [value] ="item.nombre" (change)="onCheckboxChange($event)"

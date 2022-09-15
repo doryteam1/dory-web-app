@@ -1,111 +1,123 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 5px;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 5px;
 }
 
-.container{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    max-width: 100%;
-    max-height: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color:var(--azul1);
-    //background-image: url("https://revistas.unimagdalena.edu.co/public/journals/2/article_3292_cover_es_ES.jpg");
-    background-repeat: no-repeat;
+.container-f {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gris-oscuro);
 }
 
-.container-form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    max-width: 100%;
-    max-height: 100%;
-    padding-top: 10px;
-    padding-bottom: 20px;
-    padding-left: 30px;
-    padding-right: 30px;
-    border-radius: 12px;
-    background-color:var(--white);
-    border: 0.5px solid var(--grey);
-    overflow-y: auto;
-}
-.container__logo{
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
+.container-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 100%;
+  height: 100%;
+  margin: 20px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 12px;
+  background-color: #f8f8f8;
+  box-shadow: 0 1px 15px 5px var(--shadow-2);
 }
 
-.container__title{
-    text-align: start;
-    margin-top: 17px;
-    font-size: 24px;
-    color:var(--gris3)
+.container__logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
 }
 
-.container-form__title{
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-weight: 500;
-}
-.container-form__box{
-    display: flex;
-    flex-direction: column;
+.container__title {
+  text-align: start;
+  margin-top: 17px;
+  font-size: 24px;
+  color: var(--gris3)
 }
 
-.container-form__label{
-    font-weight: 400;
-    color:var(--gris3)
+.container-form__title {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: 500;
 }
 
-.container-form__simbol{
-    color:var(--red);
-}
-.container-form__button{
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: fit-content;
-    height: fit-content;
-    font-size: 20px;
-    margin-top: 20px;
+.container-form__box {
+  display: flex;
+  flex-direction: column;
 }
 
-.container-form__input{
-    width: 300px;
-    border-radius: 30px;
-    border:0.5px solid var(--gris3);
-    outline:none;
+.container-form__label {
+  font-weight: 400;
+  color: var(--gris3)
 }
 
-.container-form__input--textarea{
-    border-radius: 20px;
+.container-form__simbol {
+  color: var(--red);
 }
 
-.container__alert-msg{
-    font-size: 10px;
-}
-
-.container-box{
-    display: flex;
-    justify-content: center;
-}
-
-.spinner{
-    color:var(--white);
-    width: 20px;
-    height: 20px;
-}
-@media screen and (max-width: 355px) {
-.container-form__input {
-  width: 100%;
-}
-.container__title{
+.container-form__button {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: fit-content;
+  height: fit-content;
   font-size: 20px;
+  margin-top: 20px;
 }
+
+.container-form__input {
+  width: 300px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+  border: 0.5px solid var(--gris3);
+  outline: none;
+}
+
+.container-form__input--textarea {
+  border-radius: 5px;
+}
+
+.container__alert-msg {
+  font-size: 10px;
+}
+
+.container-box {
+  display: flex;
+  justify-content: center;
+}
+
+.spinner {
+  color: var(--white);
+  width: 20px;
+  height: 20px;
+}
+
+/* Quitar las flechas de aumentar numero en input type number */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media screen and (max-width: 355px) {
+  .container-form__input {
+    width: 100%;
+  }
+
+  .container__title {
+    font-size: 20px;
+  }
 }

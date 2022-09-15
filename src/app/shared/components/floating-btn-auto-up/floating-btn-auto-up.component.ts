@@ -69,6 +69,7 @@ export class FloatingBtnAutoUpComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route: string = event.url;
+        console.log(route)
         if (
           route.includes('asociaciones') ||
           route.includes('novedades/') ||
@@ -93,8 +94,10 @@ export class FloatingBtnAutoUpComponent implements OnInit {
             route.includes('panel-busqueda/asociaciones') ||
             route.includes('panel-busqueda/pescadores') ||
             route.includes('panel-busqueda/piscicultores') ||
-            route.includes('panel-busqueda/granjas')
+            route.includes('panel-busqueda/granjas') ||
+            route.includes('/welcome') 
           ) {
+
             this.isHidden = true;
           }
         } else {

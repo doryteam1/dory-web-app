@@ -27,19 +27,18 @@
         >
     </app-chip-con-boton-close>
 </div>
-<!-- <div *ngIf="usersFiltered?.length == 0"
-    class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
-    <img src="assets/icons/searchanimado.svg">
-    <div>
-    No se encontraron resultados
-    </div>
-</div> -->
+
 <app-not-found *ngIf="showNotFound" [objectName]="userType"></app-not-found>
 <div class="list overflow-auto d-flex flex-column">
 <div class="card" *ngFor="let user of usersFiltered">
-    <div class="card__user-info d-flex flex-row" (click)="goDetail(user)">
+    <div class="card__user-info d-flex flex-row">
         <img class="card__image" src="{{user.foto ? user.foto : '/assets/images/avatar-person.svg'}}">
-        <span class="card__title">{{user.nombre}}</span>
+        <div class="container-nombre">
+          <span class="card__title" (click)="datosContactoUser(user)">{{user.nombre |
+            shorter:shorterNumber}}
+          </span>
+          <small (click)="goDetail(user)">Detalles</small>
+        </div>
         </div>
         <!-- <div *ngIf="authRol == 'Piscicultor' || authRol == 'Pescador'">
             <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(user)"

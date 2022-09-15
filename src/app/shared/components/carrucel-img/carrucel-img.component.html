@@ -17,10 +17,10 @@
   <div class="carousel-inner  imagenes-carrucel">
     <div class="carousel-item" *ngFor="let img of imagenes;let index = index; let isFirst = first"
       [ngClass]="{active: isFirst }" (click)="clickImagenItemSlider()" >
-      <img [ngClass]="{ 'img1item': imagenes.length==1,'img2item':imagenes.length>1,'img1item--rounded':rounded == true ,'img1item--scale':scale==true, 'img1item--efect':efect, 'img1item--cover' : cover}"
+      <img [ngClass]="{ 'img1item': imagenes.length==1,'img2item':imagenes.length>1,'img1item--rounded':rounded == true ,'img1item--scale':scale==true, 'img1item--efect':efect, 'img1item--cover' : cover,'img1item--scaledown':scaledown}"
         src="{{ img? img: 'https://admin.moodyyc.com/img/no-image.png'}}">
     </div>
-    <img class="img1item" [ngClass]="{'img1item--rounded':rounded == true ,'img1item--scale':scale==true, 'img1item--efect':efect, 'img1item--cover' : cover}"
+    <img class="img1item" [ngClass]="{'img1item--rounded':rounded == true ,'img1item--scale':scale==true, 'img1item--efect':efect, 'img1item--cover' : cover,'img1item--scaledown':scaledown}"
         src='https://admin.moodyyc.com/img/no-image.png' *ngIf="imagenes.length == 0">
     <button class="carousel-control-prev" type="button" [attr.data-bs-target]="idnumeral" data-bs-slide="prev"
       (click)="clickButtonPrevious()" *ngIf="imagenes.length > 1">

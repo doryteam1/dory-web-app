@@ -1,14 +1,14 @@
     <div class="container">
-        <h3>Hola {{nombres}} {{apellidos}}, ¡Bienvenido a Dory!</h3>
-        <img class="container__image" src="assets/images/party.svg">   
+        <h4>Hola {{nombres}} {{apellidos}}, ¡Bienvenido a Dory!</h4>
+        <img class="container__image" src="assets/images/party.svg">
         <div class="container__box">
-            <div class="container__box" *ngIf="isFillName">
+            <div class="container__box-data" *ngIf="isFillName">
                 <span class="container__title">Antes de seguir cuéntanos cual es tu nombre?</span>
                 <input class="container__input form-input-text-square" type="text" [(ngModel)]="nombres" (ngModelChange)="resetErrors()">
                 <span class="container__title">Y tus apellidos?</span>
                 <input class="container__input form-input-text-square" type="text" [(ngModel)]="apellidos" (ngModelChange)="resetErrors()">
             </div>
-            
+
             <span class="container__title" *ngIf="isFillUserType">Antes de seguir cuéntanos a que te dedicas?</span>
             <div *ngIf="isFillUserType">
                 <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idTipo" (ngModelChange)="resetErrors()">

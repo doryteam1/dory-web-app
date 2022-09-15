@@ -4,10 +4,11 @@ import { SocialAuthService } from 'angularx-social-login';
 import { Orientation, OrientationConfiguration,GuidedTour, TourStep, GuidedTourService } from 'ngx-guided-tour';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/internal/operators/filter';
+import { MediaQueryService } from 'src/app/services/media-query.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
-
+declare var window: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -16,6 +17,7 @@ import { Utilities } from 'src/app/utilities/utilities';
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   tipoUsuario: string = '';
   error: string = '';
+  offcanvas: any;
   rutaGranjasdetalle: boolean = false;
   rutaAsociacionesdetalle: boolean = false;
   @ViewChild('dropdownNotificacion')
@@ -106,6 +108,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     title: 'Datos básicos',
     content:
       '<p> Por favor llena los datos básicos que falten por llenar. </p>',
+    action: () => {
+      if (this.sidebar) {
+
+        this.closeOffcanvas()
+      }
+    },
     orientation: Orientation.Top,
   };
 
@@ -358,21 +366,30 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     steps: [this.stepDirecNull],
   };
   authUser: any;
+  rutaProductosdetalle: boolean = false;
+  rutaVehiculosdetalle: boolean = false;
+  rutaNegociosdetalle: boolean = false;
+  sidebar: boolean = false;
   constructor(
     private socialService: SocialAuthService,
     private userService: UsuarioService,
     private _router: Router,
     private guidedTourService: GuidedTourService,
     private storage: StorageService,
-    private us: UsuarioService
+    private us: UsuarioService,
+    public mediaQueryService: MediaQueryService
   ) {}
-
+  MediaQuery!: Subscription;
+  public subscriber!: Subscription;
   ngAfterViewInit(): void {
     let email = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe((response) => {
       this.authUser = response.data[0];
       if (!this.authUser.takeTour) {
-        console.log("No take tour")
+        console.log('No take tour');
+        if (this.sidebar) {
+          this.openOffcanvas();
+        }
         this.starTour();
       } else if (!this.authUser.celular) {
         this.guidedTourService.startTour(this.miniGuidedCelularTour);
@@ -384,8 +401,24 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public subscriber!: Subscription;
   ngOnInit(): void {
+    this.offcanvas = new window.bootstrap.Offcanvas(
+      document.getElementById('offcanvasScrolling'),
+      {
+        backdrop: true,
+      }
+    );
+    this.MediaQuery = this.mediaQueryService
+      .mediaQuery('max-width: 1000px')
+      .subscribe((matches) => {
+        if (matches) {
+          this.sidebar = true;
+          console.log(this.sidebar);
+        } else {
+          this.sidebar = false;
+          console.log(this.sidebar);
+        }
+      });
     let token = localStorage.getItem('token');
     if (token && token != 'undefined') {
       this.tipoUsuario = Utilities.parseJwt(token!).rol;
@@ -403,7 +436,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             (err) => {
               console.log(err);
-              this.error = 'No se pudo iniciar sessión';
+              this.error = 'No se pudoIniciar sesión';
             }
           );
         });
@@ -414,29 +447,71 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.rutaGranjasdetalle = true;
     } else if (urlactiva.includes('/dashboard/asociacion/detalle')) {
       this.rutaAsociacionesdetalle = true;
+    } else if (urlactiva.includes('/dashboard/producto/detalle')) {
+      this.rutaProductosdetalle = true;
+    } else if (urlactiva.includes('/dashboard/vehiculo/detalle')) {
+      this.rutaVehiculosdetalle = true;
+    } else if (urlactiva.includes('/dashboard/negocio/detalle')) {
+      this.rutaNegociosdetalle = true;
     }
     this.subscriber = this._router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.rutaGranjasdetalle = false;
         this.rutaAsociacionesdetalle = false;
+        this.rutaProductosdetalle = false;
+        this.rutaVehiculosdetalle = false;
+        this.rutaNegociosdetalle = false;
         let urlactiva = event.url;
         if (urlactiva.includes('/dashboard/granja/detalle')) {
           this.rutaGranjasdetalle = true;
           this.rutaAsociacionesdetalle = false;
+          this.rutaProductosdetalle = false;
+          this.rutaVehiculosdetalle = false;
+          this.rutaNegociosdetalle = false;
         } else if (urlactiva.includes('/dashboard/asociacion/detalle')) {
           this.rutaAsociacionesdetalle = true;
           this.rutaGranjasdetalle = false;
+          this.rutaProductosdetalle = false;
+          this.rutaVehiculosdetalle = false;
+          this.rutaNegociosdetalle = false;
+        } else if (urlactiva.includes('/dashboard/producto/detalle')) {
+          this.rutaProductosdetalle = true;
+          this.rutaVehiculosdetalle = false;
+          this.rutaAsociacionesdetalle = false;
+          this.rutaGranjasdetalle = false;
+          this.rutaNegociosdetalle = false;
+        } else if (urlactiva.includes('/dashboard/vehiculo/detalle')) {
+          this.rutaVehiculosdetalle = true;
+          this.rutaProductosdetalle = false;
+          this.rutaAsociacionesdetalle = false;
+          this.rutaGranjasdetalle = false;
+          this.rutaNegociosdetalle = false;
+        } else if (urlactiva.includes('/dashboard/negocio/detalle')) {
+          this.rutaVehiculosdetalle = false;
+          this.rutaProductosdetalle = false;
+          this.rutaAsociacionesdetalle = false;
+          this.rutaGranjasdetalle = false;
+          this.rutaNegociosdetalle = true;
         } else {
           this.rutaAsociacionesdetalle = false;
           this.rutaGranjasdetalle = false;
+          this.rutaProductosdetalle = false;
+          this.rutaVehiculosdetalle = false;
+          this.rutaNegociosdetalle = false;
         }
       });
   }
   ngOnDestroy() {
     this.subscriber?.unsubscribe();
+    this.MediaQuery.unsubscribe();
   }
-
+  openOffcanvas() {
+    this.offcanvas.show();
+  }
+  closeOffcanvas() {
+    this.offcanvas.hide();
+  }
   starTour() {
     if (this.tipoUsuario) {
       if (this.tipoUsuario == 'Piscicultor') {
@@ -458,6 +533,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onFinishTour() {
+    if (this.sidebar) {
+      this.closeOffcanvas();
+    }
     this.userService
       .actualizarUsuario(this.authUser.id, { takeTour: 1 })
       .subscribe(
