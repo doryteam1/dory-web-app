@@ -126,15 +126,6 @@ export class ProductosComponent implements OnInit {
       this.searchReset();
   }
 
-  goDetail(granja: any) {
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree([
-        `/granjas/municipio/detalle/${granja.id_granja}`,
-      ])
-    );
-    window.open(url, '_blank');
-  }
-
   delateFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index,1);
      console.log(this.filtroseleccionadoCheckbox);
@@ -272,5 +263,14 @@ export class ProductosComponent implements OnInit {
     this.filtroseleccionado = result.radioFilter1;
     this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
     this.searchReset();
+  }
+
+  goDetail(producto: any) {
+    let url = this.router.serializeUrl(
+      this.router.createUrlTree([
+        `/proveedores/producto/detalle/${producto.codigo}`,
+      ])
+    );
+    window.open(url, '_blank');
   }
 }

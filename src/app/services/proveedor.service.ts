@@ -33,4 +33,7 @@ export class ProveedorService {
     return this.httpsService.get(environment.doryApiRestBaseUrl+'/usuario/proveedores/todos')
   }
 
+  getProductoDetail(id:number){
+    return this.httpsService.get(environment.doryApiRestBaseUrl+'/proveedores/producto/detailed/'+id)
+  }
 }

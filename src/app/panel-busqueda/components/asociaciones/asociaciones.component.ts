@@ -21,7 +21,7 @@ export class AsociacionesComponent implements OnInit {
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
   palabra: string = '';
-  asociasiones!: any[];
+  asociaciones!: any[];
   municipios: Array<any> = [];
   showNotFound: boolean = false;
   authUserId: number = -1;
@@ -72,17 +72,19 @@ export class AsociacionesComponent implements OnInit {
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');
-    let payload = Utilities.parseJwt(token!);
-    this.authUserId = payload.sub;
-    this.authRol = payload.rol;
+    if(token){
+      let payload = Utilities?.parseJwt(token!);
+      this.authUserId = payload.sub;
+      this.authRol = payload.rol;
+    }
     /*Todas las asociaones que existen*/
     this.asociacionService.getAsociacionesTodas().subscribe((response) => {
-      this.asociasiones = response.data;
-      this.asociasiones =
-        this.asociasiones.filter((asociacion) => {
+      this.asociaciones = response.data;
+      this.asociaciones =
+        this.asociaciones.filter((asociacion) => {
           return asociacion.id_propietario !== this.authUserId;
         });
-      this.asociacionesFiltered = this.asociasiones.slice();
+      this.asociacionesFiltered = this.asociaciones.slice();
       console.log(this.asociacionesFiltered);
       if (this.asociacionesFiltered.length < 1) {
         this.showNotFound = true;
@@ -228,11 +230,11 @@ export class AsociacionesComponent implements OnInit {
   buscarData(texto: string): any {
     let asociacionesresult: any[];
     if (texto.trim().length === 0) {
-      asociacionesresult = this.asociasiones;
+      asociacionesresult = this.asociaciones;
     } else {
       let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }, { data3: 'nit' }];
       asociacionesresult = this.searchBuscadorService.buscarData(
-        this.asociasiones,
+        this.asociaciones,
         texto,
         buscardatospor
       );
