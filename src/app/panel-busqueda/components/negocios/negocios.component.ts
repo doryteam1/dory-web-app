@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { NegociosService } from 'src/app/services/negocios.service';
 import { PlacesService } from 'src/app/services/places.service';
@@ -34,7 +35,8 @@ export class NegociosComponent implements OnInit {
   constructor(
     private negociosService: NegociosService,
     private searchBuscadorService: SearchBuscadorService,
-    private places: PlacesService
+    private places: PlacesService,
+    private router:Router
   ) {
     this.negociosService.getNegociosAll().subscribe((response) => {
       this.negocios = response.data;
@@ -111,12 +113,15 @@ export class NegociosComponent implements OnInit {
     );
     return this.municipios;
   }
-  goDetail() {
-    /*    let url = this.router.serializeUrl(
-      this.router.createUrlTree(['productoss/detalle/' + id])
+  goDetail(id:number){
+    let url = this.router.serializeUrl(
+      this.router.createUrlTree([
+        'negocios/detalle/'+id,
+      ])
     );
-    window.open(url, '_blank'); */
+    window.open(url, '_blank');
   }
+    
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
     console.log(this.filtroseleccionadoCheckbox);

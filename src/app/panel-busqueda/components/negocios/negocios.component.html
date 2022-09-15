@@ -35,7 +35,7 @@
         <span class="card__sub-title">{{negocio.nombre_municipio}}</span>
         <span class="card__description">{{negocio.direccion| shorter:20}}</span>
           <div>
-            <span class="link" (click)="goDetail()">Ver detalle</span>
+            <span class="link" (click)="goDetail(negocio.id_negocio)">Ver detalle</span>
           </div>
       </div>
   </div>

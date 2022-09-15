@@ -7,6 +7,7 @@ import { AsociacionesComponent } from './components/asociaciones/asociaciones.co
 import { GranjasComponent } from './components/granjas/granjas.component';
 import { UsersComponent } from './components/users/users.component';
 import { VehiculosComponent } from './components/vehiculos/vehiculos.component';
+import { ConsumosComponent } from './components/consumos/consumos.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
       {path:'granjas',component:GranjasComponent},
       {path:'vehiculos',component:VehiculosComponent},
       {path:'vehiculos',component:VehiculosComponent},
-      {path:'transportadores',component:UsersComponent}
+      {path:'transportadores',component:UsersComponent},
+      {path:'consumos',component:ConsumosComponent}
     ]
   }
 ];

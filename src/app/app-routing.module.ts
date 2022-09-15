@@ -100,6 +100,10 @@ const routes: Routes = [
     loadChildren: () => import('./investigadores/investigadores.module').then(m => m.InvestigadoresModule)
   },
   {
+    path:'negocios',
+    loadChildren: () => import('./negocios/negocios.module').then(m => m.NegociosModule)
+  },
+  {
     path:'verify-account',
     component:VerifyAccountComponent
   },

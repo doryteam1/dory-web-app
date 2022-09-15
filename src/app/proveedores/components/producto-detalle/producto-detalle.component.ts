@@ -19,15 +19,16 @@ export class ProductoDetalleComponent implements OnInit {
     this.selectedId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
+    console.log("Detalle producto..")
     this.proveedorService.getProductoDetail(this.selectedId).subscribe(
       (response)=>{
-        console.log(response)
+        console.log("Detalle producto dentro",response)
         this.producto = response?.data[0]
         if(this.producto && this.producto.fotos_producto){
           this.images = this.mapImages(this.producto.fotos_producto);
         }
       },err=>{
-        
+        console.log(err)
       }
     )
   }

@@ -48,8 +48,8 @@ export class ProductoDetalleFormComponent implements OnInit {
     this.prepareForm(this.modalMode!, this.producto);
     if (this.modalMode == 'update') {
       this.proveedorService
-        .getDetail(Number(this.producto.codigo))
-        .subscribe((response) => {
+        .getProductoDetail(Number(this.producto.codigo))
+        .subscribe((response:any) => {
           console.log(response);
           this.photosProducArray = response.data[0].fotos_producto;
         });

@@ -17,6 +17,7 @@ import { AsociacionesComponent } from './components/asociaciones/asociaciones.co
 import { GranjasComponent } from './components/granjas/granjas.component';
 import { UsersComponent } from './components/users/users.component';
 import { VehiculosComponent } from './components/vehiculos/vehiculos.component';
+import { ConsumosComponent } from './components/consumos/consumos.component';
 
 
 
@@ -28,7 +29,8 @@ import { VehiculosComponent } from './components/vehiculos/vehiculos.component';
     AsociacionesComponent,
     UsersComponent,
     GranjasComponent,
-    VehiculosComponent
+    VehiculosComponent,
+    ConsumosComponent
   ],
   imports: [
     CommonModule,

@@ -43,6 +43,13 @@ export class ProveedorService {
   }
 
   getProductoDetail(id:number){
-    return this.httpsService.get(environment.doryApiRestBaseUrl+'/api/proveedores/producto/detailed/'+id)
+    return this.httpsService.get(environment.doryApiRestBaseUrl+'/proveedores/producto/detailed/'+id)
+  }
+
+  updatePhotosProducto(codigo: number, photos: any) {
+    return this.httpsService.put(
+      environment.doryApiRestBaseUrl + '/proveedores/update/photos/' + codigo,
+      photos
+    );
   }
 }
