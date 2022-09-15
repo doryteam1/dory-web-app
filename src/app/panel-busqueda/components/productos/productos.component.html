@@ -1,30 +1,11 @@
 <div class="mt-5">
   <div class="search">
-    <app-search (textSearch)="onSearch($event)"></app-search>
+    <app-search class="app-search" (textSearch)="onSearch($event)"></app-search>
     <app-modal-multi-filters [radioFilter1]="filtro" [chipFilter1]="orderFilter" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
   </div>
 </div>
 <app-not-found class="app-not-found" *ngIf="showNotFound" objectName="productos"></app-not-found>
-<!-- <div class="d-flex flex-row justify-content-center">
-  <app-filtro
-  class="search__filter"
-  [filtro]="filtro"
-  [checkboxfiltro]="false"
-  (onFilterSeleccionado)="onFiltroChange($event)"
-  [filtroSeleccionado]="filtroseleccionado">
-  </app-filtro>
-  <app-filtro
-  class="search__filter"
-  [filtro]="orderFilter"
-  [checkboxfiltro]="false"
-  (onFilterSeleccionado)="onPriceFilterChange($event)"
-  [filtroSeleccionado]="selectedPriceFilter">
-  </app-filtro>
-  <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
-  (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
-  </app-filtro>
-</div>
- --><div class="chip-container">
+<div class="chip-container">
   <app-chip-con-boton-close class="chip-container__element"
   *ngIf="filtroseleccionado"
   [iconoChip]="true"

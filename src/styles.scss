@@ -58,17 +58,6 @@
   width: 150px;
   height: 40px;
 }
-/* mi estilo */
-
-/*      @media (max-width:320px){
-        .dark-modal .modal-content {
-        width: 200px;
-        height: 200px;
-      }
-
-} */
-
-/* fin mi etilo */
 .btn-outline-black {
   background-color: var(--white);
   border-radius: 20px;
@@ -381,12 +370,6 @@ textarea:focus, input:focus{
   /* ajusta el boton de pantalla completa del mapa */
 }
 
- @media (max-width: 575px) {
-  .modal-dialog-centered {
-      margin: 30px !important;
-      /* ajusta el boton de pantalla completa del mapa */
-    }
- }
 .miestilofondosharedmodal {
   background-color: transparent !important;
 }
@@ -444,8 +427,32 @@ textarea:focus, input:focus{
 }
 .backdropClassContactCard{
   background-color: transparent !important;
+}
+.modal-equipo-trabajo-BackdropClass{
+  background-color: white !important;
+  opacity: 0.9 !important;
+}
+.modal-equipo-trabajo-DialogClass {
+  max-width: 1140px !important;
+  margin-top: 0 !important;
+}
+.modal-equipo-trabajo-ContentClass .modal-content{
+  border: 0 !important;
 
 }
+ @media (max-width: 600px) {
+   .modal-equipo-trabajo-DialogClass{
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+   }
+ }
+ @media (max-width: 575px) {
+   .modal-dialog-centered {
+     margin: 30px !important;
+     /* ajusta el boton de pantalla completa del mapa */
+   }
+ }
+$offcanvas-backdrop-opacity: 0;
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 @import "~animate.css/animate.min";

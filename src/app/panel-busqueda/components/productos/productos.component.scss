@@ -6,15 +6,6 @@
   margin-top: 50px;
 }
 
-/* .card{
-  display: flex;
-  flex-direction: column;
-  width: 241px;
-  height: 434px;
-  padding: 17px;
-  margin-bottom: 40px;
-} */
-
 .card{
   width: 18rem;
   margin-bottom: 30px;
@@ -71,11 +62,20 @@
   gap: 10px;
   margin-top: 20px;
 }
-  
-.chip-container__element{
-
-}
-
 .app-not-found{
   margin-top: 20px;
+}
+@media screen and (max-width: 764px) {
+.card{
+  margin-right: 0;
+}
+}
+@media screen and (max-width: 730px) {
+  .app-search{
+    width: 100%;
+  }
+  .search{
+    flex-direction: column;
+    gap: 10px;
+  }
 }

@@ -4,19 +4,42 @@
         Con nuestros conocimientos y habilidades trabajamos en equipo para encontrar de manera eficiente mejoras al servicio, promoviendo la productividad y competitividad para el sector piscícola en el departamento de Sucre, contribuyendo de manera eficaz al bienestar, desarrollo y sostenibilidad.</span>
     <div class="container__box">
         <div class="card" *ngFor="let member of team">
-            <img class="card__image" [src]="member.photo">
-            <span class="card__title1">{{member.name}}</span>
-            <span class="card__title2">{{member.position}}</span>
-            <span class="card__paragraph">{{member.activities}}</span>
-            <div>
-                <a [href]="member.cvlac" target="_blank">
-                    <img class="card__icon" src="assets/images/cvlac-logo.png" *ngIf="member.cvlac">
-                </a>
-                <a [href]="member.linkedIn" target="_blank">
-                    <img class="card__icon" src="assets/icons/linkedin.svg" *ngIf="member.linkedIn">
-                </a>
-            </div>
+          <div class="container-card__imagen" >
+            <img (click)="openModal(content,member)" class="card__image animate__bounceIn" [src]="member.photo" [alt]="member.name">
+          </div>
+          <div class="container-button-detalle">
+            <h4 class="card__title1" (click)="openModal(content,member)">{{member?.name}}</h4>
+            <button class="card__button btn-square btn--azul1" (click)="openModal(content,member)">Detalles</button>
+          </div>
         </div>
     </div>
 </div>
 <app-footer></app-footer>
+<ng-template #content let-modal>
+  <div class="modal-body modal-body-user">
+    <button type="button" class="btn-close btn-close-user" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    </button>
+    <div class="container-data-user">
+      <figure class="container__figure">
+      <img class="container__figure-img animate__bounceIn" [src]="member.photo" [alt]="member.name">
+      </figure>
+      <div class="container__data-info">
+        <h4 class="container__data-info-t1">{{member?.name}}</h4>
+        <h5 class="container__data-info-t2">{{member?.location}}</h5>
+        <h5 class="container__data-info-t2">{{member?.position}}</h5>
+        <div class="container__data-paragraph">
+          <p class="container__data-paragraph-p" [innerHTML]="member.data"></p>
+          <h4 class="container__data-info-t1">Enlaces de interés</h4>
+          <div>
+            <a style="margin-right: 5px;" [href]="member.cvlac" target="_blank">
+              <img class="card__icon" src="assets/images/cvlac-logo.png" *ngIf="member.cvlac">
+            </a>
+            <a [href]="member.linkedIn" target="_blank">
+              <img class="card__icon" src="assets/icons/linkedin.svg" *ngIf="member.linkedIn">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

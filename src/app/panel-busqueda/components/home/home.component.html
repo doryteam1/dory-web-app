@@ -1,52 +1,133 @@
 <div class="container-fluid">
-    <div class="row">
-      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse mt-5">
-        <div class="position-sticky pt-3">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <div class="menu">
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/productos']" routerLinkActive="active">
-                  Productos
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/proveedores']" routerLinkActive="active">
-                  Proveedores
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/investigadores']" routerLinkActive="active">
-                  Investigadores
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/vehiculos']" routerLinkActive="active">
-                  Vehículos
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/consumos']" routerLinkActive="active">
-                  Tipos de peces
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/negocios']" routerLinkActive="active">
-                  Negocios
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/granjas']" routerLinkActive="active">
-                  Granjas
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/piscicultores']" routerLinkActive="active">
-                  Piscicultores
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/pescadores']" routerLinkActive="active">
-                  Pescadores
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/transportadores']" routerLinkActive="active">
-                  Transportadores
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/asociaciones']" routerLinkActive="active">
-                  Asociaciones
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse mt-5">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <div class="menu">
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/productos']"
+                routerLinkActive="active">
+                Productos
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/proveedores']"
+                routerLinkActive="active">
+                Proveedores
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/investigadores']"
+                routerLinkActive="active">
+                Investigadores
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/vehiculos']"
+                routerLinkActive="active">
+                Vehículos
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/consumos']"
+                routerLinkActive="active">
+                Tipos de peces
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/negocios']"
+                routerLinkActive="active">
+                Negocios
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/granjas']"
+                routerLinkActive="active">
+                Granjas
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/piscicultores']"
+                routerLinkActive="active">
+                Piscicultores
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/pescadores']"
+                routerLinkActive="active">
+                Pescadores
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/transportadores']"
+                routerLinkActive="active">
+                Transportadores
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/asociaciones']"
+                routerLinkActive="active">
+                Asociaciones
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-x">
-        <router-outlet></router-outlet>
-      </main>
-    </div>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-x miclassmain">
+      <div class="buttonOpenOffCamvas" type="button" (click)="openOffcanvas()" style="width: 45px;height: 45px;">
+        <svg width="100%" height="100%" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="25" cy="25" r="25" fill="#26A5B8" />
+          <rect x="9" y="14" width="32" height="4" rx="2" fill="white" />
+          <rect x="9" y="23" width="32" height="4" rx="2" fill="white" />
+          <rect x="9" y="32" width="32" height="4" rx="2" fill="white" />
+        </svg>
+      </div>
+      <router-outlet></router-outlet>
+    </main>
   </div>
+</div>
 
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1"
+  id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas-header bg-light">
+    <button type="button" class="btn-close text-reset" (click)="closeOffcanvas()"></button>
+  </div>
+  <div class="offcanvas-body bg-light">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light nav-offcanvas">
+      <div class="pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <div class="menu">
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/productos']" routerLinkActive="active">
+                Productos
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/proveedores']" routerLinkActive="active">
+                Proveedores
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/investigadores']" routerLinkActive="active">
+                Investigadores
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/vehiculos']" routerLinkActive="active">
+                Vehículos
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/consumos']" routerLinkActive="active">
+                Tipos de peces
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/negocios']" routerLinkActive="active">
+                Negocios
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/granjas']" routerLinkActive="active">
+                Granjas
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/piscicultores']" routerLinkActive="active">
+                Piscicultores
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/pescadores']" routerLinkActive="active">
+                Pescadores
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/transportadores']" routerLinkActive="active">
+                Transportadores
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/asociaciones']" routerLinkActive="active">
+                Asociaciones
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>
