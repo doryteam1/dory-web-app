@@ -34,12 +34,6 @@ export class ProveedorService {
     );
   }
 
-  getProductosAll() {
-    return this.httpsService.get(
-      environment.doryApiRestBaseUrl + '/proveedores/producto/todos'
-    );
-  }
-
   getProductosAll(){
     return this.httpsService.get(environment.doryApiRestBaseUrl+'/proveedores/producto/todos')
   }
@@ -48,4 +42,7 @@ export class ProveedorService {
     return this.httpsService.get(environment.doryApiRestBaseUrl+'/usuario/proveedores/todos')
   }
 
+  getProductoDetail(id:number){
+    return this.httpsService.get(environment.doryApiRestBaseUrl+'/api/proveedores/producto/detailed/'+id)
+  }
 }

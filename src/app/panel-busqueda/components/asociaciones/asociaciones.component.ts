@@ -89,12 +89,12 @@ export class AsociacionesComponent implements OnInit, OnDestroy {
     }
     /*Todas las asociaones que existen*/
     this.asociacionService.getAsociacionesTodas().subscribe((response) => {
-      this.asociasiones = response.data;
-      this.asociasiones =
-        this.asociasiones.filter((asociacion) => {
+      this.asociaciones = response.data;
+      this.asociaciones =
+        this.asociaciones.filter((asociacion) => {
           return asociacion.id_propietario !== this.authUserId;
         });
-      this.asociacionesFiltered = this.asociasiones.slice();
+      this.asociacionesFiltered = this.asociaciones.slice();
       console.log(this.asociacionesFiltered);
       if (this.asociacionesFiltered.length < 1) {
         this.showNotFound = true;
