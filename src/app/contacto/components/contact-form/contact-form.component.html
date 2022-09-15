@@ -6,7 +6,7 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="container-form__box">
             <span class="container-form__label">Nombres y Apellidos: <span class="container-form__simbol">*</span></span>
-            <input  class="container-form__input" placeholder="Nombres Y Apellidos" [ngClass]="invalid('nomCompleto') ? 'invalid-input' : ''" type="text" formControlName="nomCompleto" (input)="onChange()">
+            <input  class="container-form__input" placeholder="Escriba aquí su nombre y apellido" [ngClass]="invalid('nomCompleto') ? 'invalid-input' : ''" type="text" formControlName="nomCompleto" (input)="onChange()">
             <div *ngIf="invalid('nomCompleto')" class="container__alert-msg danger-message">
                 <div *ngIf="nomCompleto?.errors?.['required']">
                     *Campo obligatorio
@@ -16,7 +16,7 @@
 
         <div class="container-form__box">
             <span class="container-form__label">Email: <span class="container-form__simbol">*</span></span>
-            <input class="container-form__input"placeholder="Correo electrónico"  [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" formControlName="email" (input)="onChange()">
+            <input class="container-form__input"placeholder="Escriba aquí su correo electrónico"  [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" formControlName="email" (input)="onChange()">
             <div *ngIf="invalid('email')" class="container__alert-msg danger-message">
                 <div *ngIf="email?.errors?.['required']">
                     *Campo obligatorio
@@ -29,7 +29,7 @@
 
         <div class="container-form__box">
             <span class="container-form__label">Celular: <span class="container-form__simbol">*</span></span>
-              <input class="container-form__input" placeholder="Número de celular" [ngClass]="invalid('celular') ? 'invalid-input' : ''" type="number" formControlName="celular" (input)="onChange()">
+              <input class="container-form__input" placeholder="Escriba aquí su número de celular" [ngClass]="invalid('celular') ? 'invalid-input' : ''" type="number" formControlName="celular" (input)="onChange()">
             <div *ngIf="invalid('celular')" class="container__alert-msg danger-message">
                 <div *ngIf="celular?.errors?.['required']">
                     *Campo obligatorio
@@ -49,7 +49,7 @@
 
         <div class="container-form__box">
             <span class="container-form__label">Mensaje: <span class="container-form__simbol">*</span></span>
-            <textarea placeholder="¿Cuéntanos sobre tu consulta?" class="container-form__input container-form__input--textarea" [ngClass]="invalid('mensaje') ? 'invalid-input' : ''" type="textarea" formControlName="mensaje" (input)="onChange()"></textarea>
+            <textarea placeholder="Cuéntanos sobre tu consulta" class="container-form__input container-form__input--textarea" [ngClass]="invalid('mensaje') ? 'invalid-input' : ''" type="textarea" formControlName="mensaje" (input)="onChange()"></textarea>
             <div *ngIf="invalid('mensaje')" class="container__alert-msg danger-message">
                 <div *ngIf="mensaje?.errors?.['required']">
                     *Campo obligatorio

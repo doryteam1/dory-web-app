@@ -9,10 +9,8 @@
         <div class="container-form__box-title">
             <div>
                 <h4 class="container__title">Regístrate</h4>
-                <p class="container__message-2">¿Ya estás registrado?
-                  <a href="/login">Iniciar sesión</a></p>
+                <img class="container__logo" src="assets/images/logo-no-name.svg">
             </div>
-            <img class="container__logo" src="assets/images/logo-no-name.svg">
         </div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="container-form__box1">
@@ -79,8 +77,13 @@
             </div>
         </div>
         <div class="container-form__button-box">
+          <div>
             <button class="container-form__button btn-rounded-blue" type="submit">Registrar una cuenta</button>
             <button class="container-form__button-white btn-rounded btn--white" (click)="loginWithGoogle()"><img class="container-form__icon" src="assets/icons/google-icon-grey.svg"><span class="container-form__button-text">Regístrate con Google</span></button>
+          </div>
+            <p class="container__message-2">¿Ya estás registrado?
+              <a href="/login">Iniciar sesión</a>
+            </p>
         </div>
     </div>
     </form>

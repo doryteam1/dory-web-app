@@ -29,7 +29,8 @@
   font-family: OpenSans-Regular;
   color: var(--gris-oscuro);
   text-align: justify;
-  margin-top: 20px
+  margin-top: 20px;
+  margin-bottom: 30px
 }
 
 .card {
@@ -57,6 +58,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    cursor: pointer;
   }
 }
 
@@ -65,6 +67,7 @@
   margin-top: 10px;
   color: #5d5e5f;
   text-align: center;
+  cursor: pointer;
 }
 
 .card__title1:hover {
@@ -138,6 +141,7 @@ button:focus {
   margin: 0 20px 20px 20px;
 
   .container__figure-img {
+    background-color: white;
     border-radius: 10px;
     max-width: 340px;
     height: 400px;
@@ -178,29 +182,22 @@ button:focus {
 @media screen and (max-width: 750px) {
   .container-data-user {
     flex-direction: column;
-    margin-top: 0;
   }
 
   .container__figure {
-    margin: 0;
-
+    text-align: center;
     .container__figure-img {
-      width: 100%;
-      height: 100%;
-      max-width: 100%;
+      width: 80%;
+      height: 80%;
+      max-width: 80%;
     }
   }
 
   .container__data-info {
     padding-top: 20px;
     padding-bottom: 20px;
-    margin: 16px;
     overflow-y: unset;
-      max-height: 100%;
-  }
-
-  .modal-body {
-    padding: 0;
+    max-height: 100%;
   }
 }
 

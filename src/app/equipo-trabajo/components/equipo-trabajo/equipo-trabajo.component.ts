@@ -10,7 +10,7 @@ export class EquipoTrabajoComponent implements OnInit {
     {
       name: '	Ramón Antonio Álvarez López',
       position: 'Director científico y administrativo',
-      location: 'Sincelejo-sucre-colombia',
+      location: 'Sincelejo, Sucre, Colombia',
       profession: 'Ingeniero Electrónico- PhD en Ingeniería-Automática.',
       activities:
         'Planear, coordinar, dirigir y supervisar el desarrollo de la plataforma',
@@ -22,9 +22,9 @@ export class EquipoTrabajoComponent implements OnInit {
       photo: 'assets/images/photos/ramon.png',
     },
     {
-      name: 'Yaneth Patricia Romero Alvarez',
+      name: 'Yaneth Patricia Romero Álvarez',
       position: 'Coordinadora de transferencia de tecnología',
-      location: 'Sincelejo-sucre-colombia',
+      location: 'Sincelejo, Sucre, Colombia',
       profession: 'Ingeniera Industrial - MsC en Finanzas',
       activities: 'Coordinar las actividades de transferencia de tecnología',
       data: '',
@@ -37,7 +37,7 @@ export class EquipoTrabajoComponent implements OnInit {
     {
       name: 'Jose Luis Lopez Prado',
       position: 'Coordinador de Transferencia de conocimiento',
-      location: 'Sincelejo-sucre-colombia',
+      location: 'Sincelejo, Sucre, Colombia',
       profession:
         'Ingeniero Electrónico, Máster en Controles Industriales, candidato a Doctor en Ingeniería Industrial.',
       activities: 'Coordinar las actividades de transferencia de Conocimiento',
@@ -50,14 +50,14 @@ export class EquipoTrabajoComponent implements OnInit {
     {
       name: 'Sergio Antonio Sánchez Hernández',
       position: 'Coordinador técnico del proyecto',
-      location: 'Sincelejo-sucre-colombia',
+      location: 'Sincelejo, Sucre, Colombia',
       profession:
         'Ingeniero electrónico, MSc en ingeniería con énfasis en electrónica y eléctrica, estudiante de doctorado en ingeniería',
       activities: 'Coordinar las actividades técnicas del proyecto',
       data: '',
       cvlac:
         'https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001534589&lang=es',
-     /*  linkedIn: '', */
+      /*  linkedIn: '', */
       photo: 'assets/images/photos/sergio.png',
     },
     {
@@ -157,9 +157,12 @@ export class EquipoTrabajoComponent implements OnInit {
       backdropClass: 'modal-equipo-trabajo-BackdropClass',
       modalDialogClass: 'modal-equipo-trabajo-DialogClass',
       windowClass: 'modal-equipo-trabajo-ContentClass',
+      centered: true,
     });
   }
   prepararDatos(member: any) {
+    /* https://stackblitz.com/edit/angular-brujio?file=src%2Fapp%2Fapp.component.ts
+    https://es.stackoverflow.com/questions/353855/salto-de-linea-en-servicio-angular */
     member.data = member.data.split('\n').join('<p />');
     return member;
   }

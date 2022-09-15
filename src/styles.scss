@@ -434,24 +434,23 @@ textarea:focus, input:focus{
 }
 .modal-equipo-trabajo-DialogClass {
   max-width: 1140px !important;
-  margin-top: 0 !important;
+  /* margin-top: 0 !important; */
 }
 .modal-equipo-trabajo-ContentClass .modal-content{
   border: 0 !important;
 
 }
- @media (max-width: 600px) {
-   .modal-equipo-trabajo-DialogClass{
-    margin-right: 0 !important;
-    margin-left: 0 !important;
-   }
- }
- @media (max-width: 575px) {
-   .modal-dialog-centered {
-     margin: 30px !important;
-     /* ajusta el boton de pantalla completa del mapa */
-   }
- }
+@media (max-width: 575px) {
+  .modal-dialog-centered {
+    margin: 30px !important;
+    /* ajusta el boton de pantalla completa del mapa */
+  }
+}
+@media (max-width: 574px) {
+  .modal-equipo-trabajo-DialogClass{
+       margin: 0 !important;
+  }
+}
 $offcanvas-backdrop-opacity: 0;
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";

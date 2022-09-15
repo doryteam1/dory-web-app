@@ -1,39 +1,41 @@
 .container-f {
   display: flex;
-  height: 100vh;
   align-items: center;
   justify-content: center;
-  background-color: var(--azul1);
   color: var(--gris-oscuro);
 }
 
 .container-form {
-  width: 460px;
-  height: 520px;
-  overflow-y: auto;
-  max-width: fit-content;
-  display: flex;
-  flex-direction: column;
-  padding: 30px;
-  padding-left: 20px;
-  padding-right: 20px;
-  margin: 20px;
-  border-radius: 12px;
-  background-color: var(--white);
-  border: 0.5px solid var(--grey)
+    max-width: 460px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100%;
+      margin: 20px;
+      padding-top: 10px;
+      padding-bottom: 20px;
+      padding-left: 30px;
+      padding-right: 30px;
+      border-radius: 12px;
+      background-color: #f8f8f8;
+      box-shadow: 0 1px 15px 5px var(--shadow-2);
 }
 
 .container__logo {
-  width: 65px;
-  height: 65px;
+  width: 80px;
+  height: 80px;
 }
 
 .container-form__box-title {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
+  div{
+    text-align: center;
+  }
 }
 
 .container-form__alert {
@@ -51,10 +53,6 @@
 .container__message-2 {
   color: var(--gris3);
   text-align: start;
-  margin-bottom: 19px;
-  margin-right: 15px;
-  margin-top: 15px;
-
   a {
     text-decoration: none;
     color: var(--azul1);
@@ -62,8 +60,6 @@
 }
 
 .container__form-box {
-  //background-color: yellowgreen;
-  //padding: 0px 50px 0px 100px;
   width: 50vw;
   height: 100vh;
   display: flex;
@@ -111,9 +107,15 @@
 .container-form__button-box {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   width: 100%;
   align-items: center;
   margin-top: 20px;
+  gap: 10px;
+  div{
+    width: 100%;
+    display: flex;
+  }
 }
 
 .container-form__button {
@@ -212,8 +214,10 @@
 }
 @media screen and (max-width: 515px) {
   .container-form__button-box {
-    flex-direction: column;
-    gap: 10px;
+    div{
+      flex-direction: column;
+      gap: 10px;
+    }
   }
 
   .container-form__passwd-box {
@@ -222,11 +226,5 @@
 
   .container-form__sub-passwd-box {
     max-width: 100%;
-  }
-}
-
-@media screen and (max-height: 560px) {
-  .container-f {
-    height: 100%;
   }
 }
