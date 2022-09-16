@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card__data">
+    <span class="card__title">{{negocio?.nombre_negocio}}</span>
+    <span class="card__info mb-4">{{negocio?.propietario}}</span>
+    <div class="d-flex flex-row d-flex-ajuste">
+      <div class="card__image-container">
+        <app-ng-gallery-slider [fullScreen]="false" [contador]="false" [imagenes]="images"
+          [id]="'granjasFotos'">
+        </app-ng-gallery-slider>
+      </div>
+      <div class="card__container">
+        <span class="card__title2">Nombre del negocio</span>
+        <span class="card__description-title">{{negocio?.nombre_negocio}}</span>
+        <span class="card__title2">Municipio</span>
+        <span class="card__description-title">{{negocio?.municipio}}-Sucre</span>
+        <span class="card__title2">Dirección</span>
+        <span class="card__description-title">{{negocio?.direccion}}</span>
+        <span class="card__title2" *ngIf="negocio?.informacion_adicional_direccion">Información adicional de la dirección</span>
+        <span class="card__description" *ngIf="negocio?.informacion_adicional_direccion">{{negocio?.informacion_adicional_direccion}}</span>
+        <span class="card__title2">Descripción</span>
+        <span class="card__description">{{negocio?.descripcion_negocio}}</span>
+        <span class="card__title2">Propietario</span>
+        <span class="card__description-title">{{negocio?.propietario}}</span>
+        <span class="link" (click)="goDetail(negocio.usuarios_id)">Ver detalles del comerciante</span>
+      </div>
+    </div>
+  </div>
+</div>

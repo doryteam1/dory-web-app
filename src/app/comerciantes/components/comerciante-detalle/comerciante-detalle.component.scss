@@ -1,4 +1,3 @@
-
 .detail-container {
   display: flex;
   margin-left: 0px;
@@ -72,7 +71,7 @@
   display: flex;
   flex-direction: column;
 }
-/* Estilo car vehiculo */
+/* estilo card negocio */
 .container-card {
   display: flex;
   flex-direction: row;
@@ -80,7 +79,6 @@
   justify-content: center;
   margin-top: 30px;
 }
-
 .card {
   display: flex;
   flex-direction: column;
@@ -136,19 +134,19 @@
   font-size: 14px;
   margin-top: 4px;
 }
-
 @media screen and (max-width: 775px) {
   .container-ajuste {
-      justify-content: center;
-      flex-direction: column-reverse !important;
-    }
+    justify-content: center;
+    flex-direction: column-reverse !important;
+  }
 
-    .container {
-      flex-direction: column;
-      grid-gap: 10px;
-      gap: 10px;
-      margin-top: 20px !important;
-    }
+  .container {
+    flex-direction: column;
+    grid-gap: 10px;
+    gap: 10px;
+    margin-top: 20px !important;
+  }
+
   .container__image {
     width: 100px;
     height: 100px;
@@ -159,6 +157,7 @@
   }
 
 }
+
 @media screen and (max-width: 764px) {
   .card {
     margin-right: 0;

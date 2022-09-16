@@ -40,6 +40,7 @@ export class NegociosComponent implements OnInit {
   ) {
     this.negociosService.getNegociosAll().subscribe((response) => {
       this.negocios = response.data;
+      console.log(this.negocios)
       this.negociosFiltered = this.negocios;
       if (this.negociosFiltered.length < 1) {
         this.showNotFound = true;
@@ -116,12 +117,12 @@ export class NegociosComponent implements OnInit {
   goDetail(id:number){
     let url = this.router.serializeUrl(
       this.router.createUrlTree([
-        'negocios/detalle/'+id,
+        'comerciantes/negocio/detalle/'+id,
       ])
     );
     window.open(url, '_blank');
   }
-    
+
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
     console.log(this.filtroseleccionadoCheckbox);

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
@@ -9,13 +8,14 @@ import { InvestigadorService } from 'src/app/services/investigador.service';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { ProveedorService } from 'src/app/services/proveedor.service';
+import { NegociosService } from 'src/app/services/negocios.service';
 import { TransportadoresService } from 'src/app/services/transportadores.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { BuscarPor } from 'src/models/buscarPor.model';
 import { Checkbox } from 'src/models/checkbox.model';
-import { Filtro, MetaFiltro } from 'src/models/filtro.model';
+import { MetaFiltro } from 'src/models/filtro.model';
 
 @Component({
   selector: 'app-users',
@@ -52,6 +52,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     private piscicultoresService: PiscicultoresService,
     private proveedoresService: ProveedorService,
     private investigadoresServices: InvestigadorService,
+    private negociosService: NegociosService,
     private transportadoresService: TransportadoresService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
@@ -95,57 +96,62 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.loadMunic();
   }
   datosContactoUser(user: any) {
-    let object:any
-        if (user.tipo_usuario == 'Pescador') {
-           object = {
-             nombreUser: user.nombre,
-             tipoUser: user.tipo_usuario,
-             foto: user.foto,
-             correoUser: user.email,
-             telefonoUser: user.celular,
-             rutaUserDetalle: `/pescadores/detalle/${user.id}`,
-           };
-
-        } else if (user.tipo_usuario == 'Piscicultor') {
-           object = {
-             nombreUser: user.nombre,
-             tipoUser: user.tipo_usuario,
-             foto: user.foto,
-             correoUser: user.email,
-             telefonoUser: user.celular,
-             rutaUserDetalle: `/piscicultores/municipio/detalle/${user.id}`,
-           };
-
-        } else if (user.tipo_usuario == 'Proveedor') {
-           object = {
-             nombreUser: user.nombre,
-             tipoUser: user.tipo_usuario,
-             foto: user.foto,
-             correoUser: user.email,
-             telefonoUser: user.celular,
-             rutaUserDetalle: `/proveedores/detalle/${user.id}`,
-           };
-
-        } else if (user.tipo_usuario == 'Investigador Experto') {
-           object = {
-             nombreUser: user.nombre,
-             tipoUser: user.tipo_usuario,
-             foto: user.foto,
-             correoUser: user.email,
-             telefonoUser: user.celular,
-             rutaUserDetalle: `/investigadores/detalle/${user.id}`,
-           };
-
-        } else if (user.tipo_usuario == 'Transportador') {
-            object = {
-              nombreUser: user.nombre,
-              tipoUser: user.tipo_usuario,
-              foto: user.foto,
-              correoUser: user.email,
-              telefonoUser: user.celular,
-              rutaUserDetalle: `/transportadores/detalle/${user.id}`,
-            };
-        }
+    let object: any;
+    if (user.tipo_usuario == 'Pescador') {
+      object = {
+        nombreUser: user.nombre,
+        tipoUser: user.tipo_usuario,
+        foto: user.foto,
+        correoUser: user.email,
+        telefonoUser: user.celular,
+        rutaUserDetalle: `/pescadores/detalle/${user.id}`,
+      };
+    } else if (user.tipo_usuario == 'Piscicultor') {
+      object = {
+        nombreUser: user.nombre,
+        tipoUser: user.tipo_usuario,
+        foto: user.foto,
+        correoUser: user.email,
+        telefonoUser: user.celular,
+        rutaUserDetalle: `/piscicultores/municipio/detalle/${user.id}`,
+      };
+    } else if (user.tipo_usuario == 'Proveedor') {
+      object = {
+        nombreUser: user.nombre,
+        tipoUser: user.tipo_usuario,
+        foto: user.foto,
+        correoUser: user.email,
+        telefonoUser: user.celular,
+        rutaUserDetalle: `/proveedores/detalle/${user.id}`,
+      };
+    } else if (user.tipo_usuario == 'Investigador Experto') {
+      object = {
+        nombreUser: user.nombre,
+        tipoUser: user.tipo_usuario,
+        foto: user.foto,
+        correoUser: user.email,
+        telefonoUser: user.celular,
+        rutaUserDetalle: `/investigadores/detalle/${user.id}`,
+      };
+    } else if (user.tipo_usuario == 'Transportador') {
+      object = {
+        nombreUser: user.nombre,
+        tipoUser: user.tipo_usuario,
+        foto: user.foto,
+        correoUser: user.email,
+        telefonoUser: user.celular,
+        rutaUserDetalle: `/transportadores/detalle/${user.id}`,
+      };
+    } else if (user.tipo_usuario == 'Comerciante') {
+      object = {
+        nombreUser: user.nombre_completo,
+        tipoUser: user.tipo_usuario,
+        foto: user.foto,
+        correoUser: user.email,
+        telefonoUser: user.celular,
+        rutaUserDetalle: `/comerciantes/detalle/${user.id}`,
+      };
+    }
     this.appModalService
       .modalContactCardComponent(object)
       .then((result) => {})
@@ -164,6 +170,8 @@ export class UsersComponent implements OnInit, OnDestroy {
       return this.proveedoresService.getProveedoresAll();
     } else if (this.userType == 'transportadores') {
       return this.transportadoresService.getTransportadoresAll();
+    } else if (this.userType == 'comerciantes') {
+      return this.negociosService.getComerciantesAll();
     }
     return null;
   }
@@ -180,6 +188,8 @@ export class UsersComponent implements OnInit, OnDestroy {
       baseUrl = '/investigadores/detalle/';
     } else if (user.tipo_usuario == 'Transportador') {
       baseUrl = '/transportadores/detalle/';
+    } else if (user.tipo_usuario == 'Comerciante') {
+      baseUrl = '/comerciantes/detalle/';
     }
     let url = this.router.serializeUrl(
       this.router.createUrlTree([baseUrl + `${user.id}`])

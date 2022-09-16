@@ -3,13 +3,20 @@
       <div class="container">
         <div class="container__info">
           <div class="container__detalle">
-            <img class="detail-container__image" src="assets/icons/person_black.svg">
-            <h3 class="container__title">Investigador - {{investigador?.nombre_completo}} </h3>
+            <span>
+              <h4 class="detail-container__title">Investigador: </h4>
+            </span>
+            <span>
+              <h4 class="container__description1">{{investigador?.nombre_completo}}</h4>
+            </span>
           </div>
           <div class="container__detalle">
-            <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
-            <span class="container__description1">
-              {{investigador?.municipio}}-{{investigador?.departamento}}</span>
+            <span>
+              <h4 class="detail-container__title">Municipio: </h4>
+            </span>
+            <span>
+              <h4 class="container__description1">{{investigador?.municipio}}-{{investigador?.departamento}}</h4>
+            </span>
           </div>
         </div>
         <img class="container__image"
@@ -24,14 +31,14 @@
           </span>
         </div>
       </div>
-      <div class="detail-container">
+      <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/icons/contact_mail_black_24dp.svg">
         <div class="detail-container__data">
           <h4 class="detail-container__title">Correo electrónico</h4>
           <span class="detail-container__value">{{investigador?.email}}</span>
         </div>
       </div>
-      <div class="detail-container">
+      <div class="detail-container mt-4">
         <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
         <div class="detail-container__data">
           <h4 class="detail-container__title">Dirección</h4>
@@ -40,7 +47,7 @@
           <span *ngIf="!investigador?.direccion" class="detail-container__value">Dirección indefinida</span>
         </div>
       </div>
-      <div class="detail-container" *ngIf="investigador?.informacion_adicional_direccion">
+      <div class="detail-container mt-4" *ngIf="investigador?.informacion_adicional_direccion">
             <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
                 <div class="detail-container__data">
                   <h4 class="detail-container__title">Información adicional de la dirección</h4>
@@ -48,7 +55,7 @@
                     {{investigador?.informacion_adicional_direccion}}</span>
                 </div>
               </div>
-      <div class="detail-container">
+      <div class="detail-container mt-4">
         <i class="detail-container__image detail-container__image--2 bi bi-person-fill"></i>
         <div class="detail-container__data">
           <h4 class="detail-container__title">Area de experticia</h4>
@@ -57,5 +64,4 @@
       </div>
     </div>
   </div>
-  
-  
+

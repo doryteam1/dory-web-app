@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { MediaQueryService } from 'src/app/services/media-query.service';

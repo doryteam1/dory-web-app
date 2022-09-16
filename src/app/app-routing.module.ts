@@ -60,10 +60,6 @@ const routes: Routes = [
     loadChildren: () => import('./asociaciones/asociaciones.module').then(m => m.AsociacionesModule)
   },
   {
-    path:'vehiculos',
-    loadChildren: () => import('./vehiculos/vehiculos.module').then(m => m.VehiculosModule)
-  },
-  {
     path:'dashboard',
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
@@ -100,8 +96,8 @@ const routes: Routes = [
     loadChildren: () => import('./investigadores/investigadores.module').then(m => m.InvestigadoresModule)
   },
   {
-    path:'negocios',
-    loadChildren: () => import('./negocios/negocios.module').then(m => m.NegociosModule)
+    path:'comerciantes',
+    loadChildren: () => import('./comerciantes/comerciantes.module').then(m => m.ComerciantesModule)
   },
   {
     path:'verify-account',
@@ -113,8 +109,8 @@ const routes: Routes = [
   {
     path:'condiciones', component:CondicionesComponent
   },
-  { 
-    path: 'welcome', component:WelcomeComponent 
+  {
+    path: 'welcome', component:WelcomeComponent
   },
   {
     path:'basic-message', component:BasicMessageComponent
