@@ -2,9 +2,6 @@
     <app-search [placeholderbuscador]="'Buscar...'"
     (textSearch)="onBuscarPalabra($event)">
     </app-search>
-    <!-- <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)"
-    [filtroSeleccionado]="filtroseleccionado">
-    </app-filtro> -->
     <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
     (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
     </app-filtro>
@@ -29,32 +26,16 @@
 </div>
 
 <app-not-found *ngIf="showNotFound" [objectName]="userType"></app-not-found>
-<div class="list overflow-auto d-flex flex-column">
+<div   *ngIf="!showNotFound"class="list overflow-auto d-flex flex-column">
 <div class="card" *ngFor="let user of usersFiltered">
     <div class="card__user-info d-flex flex-row">
         <img class="card__image" src="{{user.foto ? user.foto : '/assets/images/avatar-person.svg'}}">
         <div class="container-nombre">
-          <span class="card__title" (click)="datosContactoUser(user)">{{user.nombre |
+          <span class="card__title" (click)="datosContactoUser(user)">{{user.nombre || user.nombre_completo |
             shorter:shorterNumber}}
           </span>
           <small (click)="goDetail(user)">Detalles</small>
         </div>
         </div>
-        <!-- <div *ngIf="authRol == 'Piscicultor' || authRol == 'Pescador'">
-            <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(user)"
-            *ngIf="!user?.estado_solicitud">Unirme</button>
-            <button class="card__button btn-square btn--grey mt-3" (click)="invitarAnular(user)"
-            *ngIf="user?.estado_solicitud == 'Enviada'">Anular</button>
-            <div class="btn-group mt-3" *ngIf="user?.estado_solicitud == 'Aceptada'">
-                <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
-                    data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li (click)="invitarAnular(user)"><a class="dropdown-item"><i class="bi bi-box-arrow-left"></i> No
-                        soy
-                        miembro</a>
-                    </li>
-                </ul>
-            </div>
-        </div> -->
     </div>
 </div>

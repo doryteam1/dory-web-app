@@ -31,7 +31,7 @@ export class VehiculosComponent implements OnInit {
   municipios: any;
 
   /* varibles de buscqueda y filtros */
-  orderFilters: Filtro = 
+  orderFilters: Filtro =
     {
       nameButton: 'Ordenar por',
       data: [
@@ -52,7 +52,7 @@ export class VehiculosComponent implements OnInit {
       ],
     };
 
-  filters: Filtro = 
+  filters: Filtro =
     {
       nameButton: '¿Transporta alimentos?',
       data: [
@@ -223,9 +223,7 @@ onFiltersAplied(result:any){
 
 goDetail(id:number){
   let url = this.router.serializeUrl(
-    this.router.createUrlTree([
-      'vehiculos/detalle/'+id,
-    ])
+    this.router.createUrlTree(['transportadores/vehiculo/detalle/' + id])
   );
   window.open(url, '_blank');
 }

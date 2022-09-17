@@ -22,8 +22,6 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { ShareButtonsConfig } from 'ngx-sharebuttons';
-import { TransportadorDetalleComponent } from './transportadores/components/transportador-detalle/transportador-detalle.component';
-import { NegocioDetalleComponent } from './negocios/components/negocio-detalle/negocio-detalle.component';
 
 const customConfig: ShareButtonsConfig = {
   include: ['whatsapp', 'email', 'copy'],
@@ -50,7 +48,6 @@ const customConfig: ShareButtonsConfig = {
     CondicionesComponent,
     WelcomeComponent,
     VerifyAccountComponent,
-    TransportadorDetalleComponent
   ],
   imports: [
     BrowserModule,

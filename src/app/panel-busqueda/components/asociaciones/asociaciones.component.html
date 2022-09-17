@@ -23,7 +23,7 @@
         >
     </app-chip-con-boton-close>
 </div>
-<div class="list overflow-auto d-flex flex-column">
+<div *ngIf="!showNotFound" class="list overflow-auto d-flex flex-column">
 <div class="card" *ngFor="let asociacion of  asociacionesFiltered">
     <div class="card__user-info d-flex flex-row" >
         <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">

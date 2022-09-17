@@ -1,48 +1,65 @@
 <div class="container-fluid">
-    <div class="row">
-      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse mt-5">
-        <div class="position-sticky pt-3">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <div class="menu">
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/productos']" routerLinkActive="active">
-                  Productos
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/proveedores']" routerLinkActive="active">
-                  Proveedores
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/investigadores']" routerLinkActive="active">
-                  Investigadores
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/vehiculos']" routerLinkActive="active">
-                  Vehículos
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/consumos']" routerLinkActive="active">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse mt-5">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <div class="menu">
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/productos']"
+                routerLinkActive="active">
+                Productos
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/proveedores']"
+                routerLinkActive="active">
+                Proveedores
+              </span>
+
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/vehiculos']"
+                routerLinkActive="active">
+                Vehículos
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/transportadores']"
+                routerLinkActive="active">
+                Transportadores
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/negocios']"
+                routerLinkActive="active">
+                Negocios
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/comerciantes']"
+                routerLinkActive="active">
+                Comerciantes
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/granjas']"
+                routerLinkActive="active">
+                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/consumos']"
+                  routerLinkActive="active">
                   Consumos
                 </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/negocios']" routerLinkActive="active">
-                  Negocios
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/granjas']" routerLinkActive="active">
-                  Granjas
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/piscicultores']" routerLinkActive="active">
-                  Piscicultores
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/pescadores']" routerLinkActive="active">
-                  Pescadores
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/transportadores']" routerLinkActive="active">
-                  Transportadores
-                </span>
-                <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/asociaciones']" routerLinkActive="active">
-                  Asociaciones
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
+                Granjas
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/piscicultores']"
+                routerLinkActive="active">
+                Piscicultores
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/pescadores']"
+                routerLinkActive="active">
+                Pescadores
+              </span>
+
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/asociaciones']"
+                routerLinkActive="active">
+                Asociaciones
+              </span>
+              <span class="menu__link nav-link" aria-current="page" [routerLink]="['/panel-busqueda/investigadores']"
+                routerLinkActive="active">
+                Investigadores
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-x miclassmain">
       <div class="buttonOpenOffCamvas" type="button" (click)="openOffcanvas()" style="width: 45px;height: 45px;">
@@ -78,20 +95,24 @@
                 Proveedores
               </span>
               <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
-                [routerLink]="['/panel-busqueda/investigadores']" routerLinkActive="active">
-                Investigadores
-              </span>
-              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
                 [routerLink]="['/panel-busqueda/vehiculos']" routerLinkActive="active">
                 Vehículos
               </span>
               <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
-                [routerLink]="['/panel-busqueda/consumos']" routerLinkActive="active">
-                Consumos
+                [routerLink]="['/panel-busqueda/transportadores']" routerLinkActive="active">
+                Transportadores
               </span>
               <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
                 [routerLink]="['/panel-busqueda/negocios']" routerLinkActive="active">
                 Negocios
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/comerciantes']" routerLinkActive="active">
+                Comerciantes
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/consumos']" routerLinkActive="active">
+                Consumos
               </span>
               <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
                 [routerLink]="['/panel-busqueda/granjas']" routerLinkActive="active">
@@ -106,12 +127,12 @@
                 Pescadores
               </span>
               <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
-                [routerLink]="['/panel-busqueda/transportadores']" routerLinkActive="active">
-                Transportadores
-              </span>
-              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
                 [routerLink]="['/panel-busqueda/asociaciones']" routerLinkActive="active">
                 Asociaciones
+              </span>
+              <span (click)="closeOffcanvas()" class="menu__link nav-link" aria-current="page"
+                [routerLink]="['/panel-busqueda/investigadores']" routerLinkActive="active">
+                Investigadores
               </span>
             </div>
           </li>

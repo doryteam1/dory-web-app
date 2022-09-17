@@ -1,26 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
+import { NegociosService } from 'src/app/services/negocios.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { VehiculosService } from 'src/app/services/vehiculos.service';
 
 @Component({
-  selector: 'app-transportador-detalle',
-  templateUrl: './transportador-detalle.component.html',
-  styleUrls: ['./transportador-detalle.component.scss'],
+  selector: 'app-comerciante-detalle',
+  templateUrl: './comerciante-detalle.component.html',
+  styleUrls: ['./comerciante-detalle.component.scss'],
 })
-export class TransportadorDetalleComponent implements OnInit {
+export class ComercianteDetalleComponent implements OnInit {
   selectedUserId: number = -1;
-  transportador: any;
+  comerciante: any;
   showNotFound: boolean = false;
   showError: boolean = false;
   errorMessage = '';
-  vehiculosFiltered: any;
   showNotFoundDataUser: boolean = false;
   showErrorDataUser: boolean = false;
+  negociosUser: any;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UsuarioService,
-    private vehiculoService: VehiculosService,
+    private negociosService: NegociosService,
     private router: Router
   ) {}
 
@@ -31,7 +32,7 @@ export class TransportadorDetalleComponent implements OnInit {
     this.userService.getDetail(this.selectedUserId).subscribe(
       (response: any) => {
         if (response.data.length > 0) {
-          this.transportador = response.data[0];
+          this.comerciante = response.data[0];
           this.showError = false;
           this.showNotFound = false;
         } else {
@@ -50,12 +51,11 @@ export class TransportadorDetalleComponent implements OnInit {
         }
       }
     );
-
-    this.vehiculoService.getVehiculosUser(this.selectedUserId).subscribe(
+    this.negociosService.getNegociosByUserId(this.selectedUserId).subscribe(
       (response) => {
         if (response.data.length > 0) {
-          this.vehiculosFiltered = response.data;
-          console.log(this.vehiculosFiltered);
+          this.negociosUser = response.data;
+          console.log(this.negociosUser);
           this.showErrorDataUser = false;
           this.showNotFoundDataUser = false;
         } else {
@@ -77,10 +77,9 @@ export class TransportadorDetalleComponent implements OnInit {
       }
     );
   }
-
   goDetail(id: number) {
     let url = this.router.serializeUrl(
-      this.router.createUrlTree(['transportadores/vehiculo/detalle/' + id])
+      this.router.createUrlTree(['comerciantes/negocio/detalle/' + id])
     );
     window.open(url, '_blank');
   }

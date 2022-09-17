@@ -20,10 +20,10 @@ const routes: Routes = [
       {path:'asociaciones',component:AsociacionesComponent},
       {path:'pescadores',component:UsersComponent},
       {path:'piscicultores',component:UsersComponent},
+      {path:'comerciantes',component:UsersComponent},
       {path:'proveedores',component:UsersComponent},
       {path:'investigadores',component:UsersComponent},
       {path:'granjas',component:GranjasComponent},
-      {path:'vehiculos',component:VehiculosComponent},
       {path:'vehiculos',component:VehiculosComponent},
       {path:'transportadores',component:UsersComponent},
       {path:'consumos',component:ConsumosComponent}

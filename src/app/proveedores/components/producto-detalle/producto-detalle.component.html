@@ -1,24 +1,24 @@
 <div class="card">
-    <div class="card__carrusel">
-        <span class="card__title">{{producto?.nombreProducto}}</span>
-        <span class="card__info mb-4">${{producto?.precio}}</span>
-        <div class="d-flex flex-row">
-            <div class="card__image-container">
-                <gallery class="card__image" [items]="images"
-                [thumbHeight]="70"
-                [thumbWidth]="80"
-                [thumbMode]="'free'"></gallery>
-            </div>
-            <div class="card__container">
-                <span class="card__title2">Nombre del producto</span>
-                <span class="card__description">{{producto?.nombreProducto}}</span>
-                <span class="card__title2">Municipio</span>
-                <span class="card__description">{{producto?.municipio_proveedor}}</span>
-                <span class="card__title2">Descripcion</span>
-                <span class="card__description">{{producto?.descripcion}}</span>
-                <span class="link" (click)="goDetail(producto.usuarios_id)">Ver detalle del proveedor</span>
-            </div>
-        </div>
-    </div> 
-   
+  <div class="card__data">
+    <span class="card__title">{{producto?.nombreProducto}} </span>
+    <span class="card__info mb-4">${{producto?.precio}}</span>
+    <div class="d-flex flex-row d-flex-ajuste">
+      <div class="card__image-container">
+        <app-ng-gallery-slider [fullScreen]="false" [contador]="false" [imagenes]="images"
+          [id]="'vehiculodetallesFotos'">
+        </app-ng-gallery-slider>
+      </div>
+      <div class="card__container">
+        <span class="card__title2">Nombre del producto</span>
+        <span class="card__description-title">{{producto?.nombreProducto}}</span>
+        <span class="card__title2">Precio del producto</span>
+        <span class="card__description-title">${{producto?.precio}}</span>
+        <span class="card__title2">Municipio</span>
+        <span class="card__description-title">{{producto?.municipio_proveedor}}-Sucre</span>
+        <span class="card__title2">Descripción</span>
+        <span class="card__description">{{producto?.descripcion}}</span>
+        <span class="link" (click)="goDetail(producto.usuarios_id)">Ver detalle del proveedor</span>
+      </div>
+    </div>
+  </div>
 </div>
