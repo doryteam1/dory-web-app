@@ -1,6 +1,6 @@
 <div class="box d-flex flex-column align-items-center">
     <div class="container">
-        <div class="card" [ngClass]="consumo.check ? 'card--border-blue' : ''" *ngFor="let consumo of consumos">
+        <div class="card" [ngClass]="consumo.check ? 'card--border-blue' : ''" *ngFor="let consumo of consumos" (click)="onCheck(consumo,$event, consumo.id_especie)"> 
             <div class="card__header">
                 <span class="card__title">
                     {{consumo.nombre}}
@@ -15,7 +15,7 @@
                     ¿Cuantos kilos al mes consumes?
                 </span>
                 <div class="d-flex flex-row mt-2">
-                    <input class="card__input2" type="number" [(ngModel)]="consumo.cantidad_consumo">
+                    <input [id]="consumo.id_especie"class="card__input2" type="number" [(ngModel)]="consumo.cantidad_consumo" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" (ngModelChange)="onChange(consumo,$event)">
                     <span class="card__label">Kg/mes</span>
                 </div>
             </div>

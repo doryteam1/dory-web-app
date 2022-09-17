@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ConsumidorService } from 'src/app/services/consumidor.service';
 import { EspeciesService } from 'src/app/services/especies.service';
 
@@ -7,11 +7,13 @@ import { EspeciesService } from 'src/app/services/especies.service';
   templateUrl: './mi-consumo.component.html',
   styleUrls: ['./mi-consumo.component.scss']
 })
-export class MiConsumoComponent implements OnInit {
+export class MiConsumoComponent implements OnInit, AfterViewInit {
   consumos:Array<any> = []
   misConsumos:Array<any> = [];
   loading:boolean = false;
   constructor(private especiesService:EspeciesService, private consumidorService:ConsumidorService){ }
+  ngAfterViewInit(): void {
+  }
 
   ngOnInit(): void {
     this.especiesService.getEspecies().subscribe(
@@ -57,4 +59,21 @@ export class MiConsumoComponent implements OnInit {
     )
   }
 
+  onCheck(consumo:any, event:any, idEspecie:string){
+    let input = document.getElementById(idEspecie);
+    if (event.target === input) return;
+      consumo.check = !consumo.check;
+  }
+
+  onChange(consumo:any, value:number){
+    if(value>0) {
+      consumo.check = true;
+    }else{
+      consumo.check = false;
+    }
+  }
+
+  test(){
+    console.log("test")
+  }
 }
