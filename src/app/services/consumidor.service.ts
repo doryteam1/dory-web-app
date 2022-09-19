@@ -18,4 +18,8 @@ export class ConsumidorService {
   updateConsumo(arrayConsumos:any){
     return this.https.put(environment.doryApiRestBaseUrl+'/usuario/update/misconsumos',{arrayConsumos:arrayConsumos})
   }
+
+  getConsumosMunicipios(){
+    return this.https.get(environment.doryApiRestBaseUrl+'/municipios/consumo/especies/total/nuevo')
+  }
 }

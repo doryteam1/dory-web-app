@@ -18,7 +18,7 @@ import { GranjasComponent } from './components/granjas/granjas.component';
 import { UsersComponent } from './components/users/users.component';
 import { VehiculosComponent } from './components/vehiculos/vehiculos.component';
 import { ConsumosComponent } from './components/consumos/consumos.component';
-
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -45,7 +45,8 @@ import { ConsumosComponent } from './components/consumos/consumos.component';
     NgbModule,
     NgxLongPress2Module,
     NgxPaginationModule,
-    RouterModule
+    RouterModule,
+    NgChartsModule
   ],
 })
 export class PanelBusquedaModule {}
