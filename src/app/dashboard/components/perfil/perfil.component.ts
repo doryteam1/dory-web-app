@@ -84,6 +84,8 @@ export class PerfilComponent implements OnInit {
     otra_area_experticia: new FormControl(''),
     otra_area_experticia_descripcion: new FormControl(''),
     sobre_mi: new FormControl(''),
+    id_sexo: new FormControl(null),
+    id_etnia: new FormControl(null),
   });
 
   campos: any = {
@@ -98,6 +100,8 @@ export class PerfilComponent implements OnInit {
       'direccion',
       'email',
       'coordenadas',
+      'sexo',
+      'etnia'
     ],
     investigadorexperto: [
       'cedula',
@@ -113,6 +117,8 @@ export class PerfilComponent implements OnInit {
       'otra_area_experticia_descripcion',
       'sobre_mi',
       'email',
+      'sexo',
+      'etnia'
     ],
     transportador: [
       'cedula',
@@ -125,6 +131,8 @@ export class PerfilComponent implements OnInit {
       'direccion',
       'email',
       'coordenadas',
+      'sexo',
+      'etnia'
     ],
     piscicultor: [
       'cedula',
@@ -137,6 +145,8 @@ export class PerfilComponent implements OnInit {
       'direccion',
       'email',
       'coordenadas',
+      'sexo',
+      'etnia'
     ],
     consumidor: [
       'cedula',
@@ -148,6 +158,8 @@ export class PerfilComponent implements OnInit {
       'corregimiento',
       'direccion',
       'email',
+      'sexo',
+      'etnia'
     ],
     comerciante: [
       'cedula',
@@ -161,6 +173,8 @@ export class PerfilComponent implements OnInit {
       'nombre_negocio',
       'email',
       'coordenadas',
+      'sexo',
+      'etnia'
     ],
     asociacion: [],
     pescador: [
@@ -175,6 +189,8 @@ export class PerfilComponent implements OnInit {
       'direccion',
       'coordenadas',
       'email',
+      'sexo',
+      'etnia'
     ],
   };
 
@@ -266,6 +282,8 @@ export class PerfilComponent implements OnInit {
   canceladoedir: boolean = false;
   photoDelate: boolean = false;
   photoUpdate: boolean = false;
+  sexos: any[]=[];
+  etnias:any[]=[];
   constructor(
     private us: UsuarioService,
     private aes: AreasExperticiaService,
@@ -352,6 +370,8 @@ export class PerfilComponent implements OnInit {
           this.usuario.otra_area_experticia_descripcion
         );
 
+        this.sexo?.setValue(this.usuario?.id_sexo);
+        this.etnia?.setValue(this.usuario?.id_etnia);
         if (
           this.usuario.id_departamento == 0 ||
           this.usuario.id_departamento == null
@@ -369,6 +389,8 @@ export class PerfilComponent implements OnInit {
         this.loadMunic();
         this.loadCorregVeredas();
         this.nomCorregVeredasubs();
+        this.loadSexos();
+        this.loadEtnias();
         this.storageService.add('photoUser', this.usuario.foto);
         this.storageService.add('tipoUser', this.usuario.tipo_usuario);
         this.storageService.add(
@@ -604,6 +626,28 @@ export class PerfilComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+
+  loadSexos(){
+    this.us.getSexos().subscribe(
+      (response)=>{
+        this.sexos = response.data;
+        console.log(this.sexos)
+      },err=>{
+
+      }
+    )
+  }
+
+  loadEtnias(){
+    this.us.getEtnias().subscribe(
+      (response)=>{
+        this.etnias = response.data;
+        console.log(this.etnias)
+      },err=>{
+
+      }
+    )
   }
 
   changeDpto() {
@@ -1315,5 +1359,13 @@ this.inputOn = false;
 
   get otraAreaExpDesc() {
     return this.form.get('otra_area_experticia_descripcion');
+  }
+
+  get sexo(){
+    return this.form.get('id_sexo');
+  }
+
+  get etnia(){
+    return this.form.get('id_etnia');
   }
 }

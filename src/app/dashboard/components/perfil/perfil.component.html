@@ -89,28 +89,57 @@
       </div>
 
       <div class="container-row row align-items-center">
-          <div id="celular" class="col">
-              <div  class="container__box" *ngIf="mostrarPorTipo('celular')">
-                  <span class="container__label">Celular <span class="asterisk">*</span></span>
-                  <div class="input-wrapper">
-                      <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'celular', usuario.celular)" [ngClass]="{'container__input--color':!editarperfil}"
-                        type="number" formControlName='celular' [placeholder]="editarperfil ? 'Ingrese su número de celular' : ''" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
-                  </div>
+        <div id="municipio" class="col">
+          <div class="container__box" *ngIf="mostrarPorTipo('sexo')">
+              <span class="container__label">Sexo <span class="asterisk">*</span></span>
+              <div class="input-wrapper">
+                <select class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
+                    formControlName='id_sexo'>
+                    <optgroup label="Escoge tu sexo">
+                        <option *ngFor="let sexo of sexos" [ngValue]="sexo.id" >{{sexo.nombre}}</option>
+                    </optgroup>
+                </select>
               </div>
           </div>
+        </div>
 
-          <div class="col">
-              <div class="container__box" *ngIf="mostrarPorTipo('fecha_nacimiento')">
-                  <span class="container__label">Fecha de nacimiento: </span>
-                  <div class="input-wrapper">
-                      <input class="container__input form-input-text-square" (keyup)="onKeyInput($event)" [ngClass]="{'container__input--color':!editarperfil}"
-                      type="date" formControlName='fecha_nacimiento' [placeholder]="editarperfil ? 'Fecha de nacimiento' : ''">
-                      <!-- <img *ngIf="editarperfil" class="input-icon option" src="assets/icons/lock_open_black_24dp.svg">
-                      <img *ngIf="!editarperfil" class="input-icon option" src="assets/icons/lock_black_24dp.svg"> -->
-                  </div>
-              </div>
+          <div id="municipio" class="col">
+            <div class="container__box left" *ngIf="mostrarPorTipo('etnia')">
+                <span class="container__label">Etnia <span class="asterisk">*</span></span>
+                <div class="input-wrapper">
+                  <select class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
+                      formControlName='id_etnia'>
+                      <optgroup label="Escoge tu etnia">
+                          <option *ngFor="let etnia of etnias" [ngValue]="etnia.id" >{{etnia.nombre}}</option>
+                      </optgroup>
+                  </select>
+                </div>
+            </div>
           </div>
       </div>
+
+      <div class="container-row row align-items-center w-50">
+        <div id="celular" class="col">
+          <div  class="container__box" *ngIf="mostrarPorTipo('celular')">
+              <span class="container__label">Celular <span class="asterisk">*</span></span>
+              <div class="input-wrapper">
+                  <input class="container__input form-input-text-square" (keyup)="onKeyInput($event ,'celular', usuario.celular)" [ngClass]="{'container__input--color':!editarperfil}"
+                    type="number" formControlName='celular' [placeholder]="editarperfil ? 'Ingrese su número de celular' : ''" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+              </div>
+          </div>
+        </div>
+        
+      </div>
+
+      <!-- <div class="col">
+          <div class="container__box" *ngIf="mostrarPorTipo('fecha_nacimiento')">
+              <span class="container__label">Fecha de nacimiento: </span>
+              <div class="input-wrapper">
+                  <input class="container__input form-input-text-square" (keyup)="onKeyInput($event)" [ngClass]="{'container__input--color':!editarperfil}"
+                  type="date" formControlName='fecha_nacimiento' [placeholder]="editarperfil ? 'Fecha de nacimiento' : ''">
+              </div>
+          </div>
+        </div> -->
     </div>
         <div class="container__box__title">
           <span class="container__title">Foto de perfil</span>
@@ -333,7 +362,7 @@
       <span>Cancelar edición</span>
     </div>
   </button>
-  <button class="container__btn3 btn" *ngIf="editarperfil && EditedInputValue" (click)="onSubmit()">
+  <button class="container__btn3 btn" *ngIf="true" (click)="onSubmit()">
     <div class="container__btn3-div">
       <img src="assets/icons/save_as_azul1_24dp.svg">
       <span>Guardar cambios</span>

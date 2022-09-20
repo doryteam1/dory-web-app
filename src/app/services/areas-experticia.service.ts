@@ -10,6 +10,6 @@ export class AreasExperticiaService {
   constructor(private https:HttpsService) { }
 
   getAreasDeExperticia(){
-    return this.https.get(environment.doryApiRestBaseUrl+'/areas-experticias');
+    return this.https.get(environment.doryApiRestBaseUrl+'/areas-experticias/obtener');
   }
 }

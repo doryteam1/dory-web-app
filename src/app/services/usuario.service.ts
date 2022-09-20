@@ -181,4 +181,16 @@ export class UsuarioService {
       null
     );
   }
+
+  getSexos(){
+    return this.httpsService.get(
+      environment.doryApiRestBaseUrl+'/sexos/obtener'
+    );
+  }
+
+  getEtnias(){
+    return this.httpsService.get(
+      environment.doryApiRestBaseUrl+'/etnias/obtener'
+    );
+  }
 }
