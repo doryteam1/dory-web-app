@@ -55,11 +55,8 @@ import { LightboxModule } from 'ng-gallery/lightbox';
 import { ModalMultiFiltersComponent } from './components/filtros/modal-multi-filters/modal-multi-filters.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ModalContactCardComponent } from './components/modal-contact-card/modal-contact-card.component';
-<<<<<<< HEAD
 import { SpinnerComponent } from './components/spinner/spinner.component';
-=======
 /* import { ModalDialogConfirmComponent } from './components/modal-dialog-confirm/modal-dialog-confirm.component'; */
->>>>>>> 4f52b69 (correcion guia tourt)
 
 @NgModule({
   declarations: [
