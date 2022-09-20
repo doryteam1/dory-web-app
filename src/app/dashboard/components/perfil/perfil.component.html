@@ -206,35 +206,6 @@
               </div>
           </div>
       </div>
-          <!--<div class="container__box" *ngIf="mostrarPorTipo('corregimiento')">
-              <span class="container__label">Selecciona un corregimiento</span>
-              <div>
-                  <select class="container__input form-input-text-square" formControlName='id_corregimiento' (ngModelChange)="corregSelected()">
-                      <optgroup label="Escoje un corregimiento">
-                          <option *ngFor="let corregimiento of corregimientos" [ngValue]="corregimiento.id_corregimiento">{{corregimiento.nombre}}</option>
-                      </optgroup>
-                  </select>
-              </div>
-          </div>-->
-
-          <!--<span class="container__label" *ngIf="mostrarPorTipo('vereda')">Selecciona una vereda</span>
-          <div class="container__box" *ngIf="mostrarPorTipo('vereda')">
-              <div>
-                  <select class="container__input form-input-text-square" formControlName='id_vereda' (ngModelChange)='veredaSelected()'>
-                      <optgroup label="Escoje una vereda">
-                          <option *ngFor="let vereda of veredas" [ngValue]="vereda.id_vereda">{{vereda.nombre}}</option>
-                      </optgroup>
-                  </select>
-              </div>
-          </div>-->
-
-          <!-- <div class="container__box" *ngIf="mostrarPorTipo('vereda')">
-              <span class="container__label">Vereda</span>
-              <div>
-                  <input class="container__input form-input-text-square"  type="text" formControlName='nombre_vereda'>
-              </div>
-          </div> -->
-
       <div class="container-row row">
           <div class="col">
               <div class="container__box"  *ngIf="mostrarPorTipo('corregimiento')">

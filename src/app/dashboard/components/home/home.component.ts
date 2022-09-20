@@ -286,7 +286,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     let email = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe((response) => {
       this.authUser = response.data[0];
-      console.log(this.authUser);
       if (!this.authUser.takeTour) {
         if (this.sidebar) {
           this.openOffcanvas();

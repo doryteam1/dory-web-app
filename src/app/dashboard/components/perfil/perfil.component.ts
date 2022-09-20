@@ -66,8 +66,8 @@ export class PerfilComponent implements OnInit {
     celular: new FormControl(''),
     direccion: new FormControl(''),
     informacion_adicional_direccion: new FormControl(''),
-    id_tipo_usuario: new FormControl(''),
     email: new FormControl('', [Validators.required, Validators.email]),
+    id_tipo_usuario: new FormControl(''),
     id_area_experticia: new FormControl(0),
     nombre_negocio: new FormControl(''),
     foto: new FormControl(''),
@@ -224,36 +224,6 @@ export class PerfilComponent implements OnInit {
       sobre_mi: false,
     },
   ];
-  validateInputFormObjectFalse: any[] = [
-    {
-      apellidos: false,
-      cedula: false,
-      celular: false,
-      direccion: false,
-      email: false,
-      fecha_nacimiento: false,
-      fecha_registro: false,
-      foto: false,
-      id: false,
-      id_area_experticia: false,
-      id_corregimiento: false,
-      id_departamento: false,
-      id_municipio: false,
-      id_tipo_usuario: false,
-      id_vereda: false,
-      informacion_adicional_direccion: false,
-      latitud: false,
-      longitud: false,
-      nombre_corregimiento: false,
-      nombre_negocio: false,
-      nombre_vereda: false,
-      nombres: false,
-      otra_area_experticia: false,
-      otra_area_experticia_descripcion: false,
-      sobre_mi: false,
-    },
-  ];
-
   /* center: google.maps.LatLngLiteral = { lat: 9.59079, lng: -75.546899 }; */
   /* zoom = 10; */
   options: google.maps.MapOptions = {
@@ -751,7 +721,7 @@ export class PerfilComponent implements OnInit {
       this.loading = false;
       return;
     }
-    console.log('usuario ', this.form.getRawValue());
+
     /*  console.log('id ', this.form.get('id')?.value); */
     this.us
       .actualizarUsuario(this.form.get('id')?.value, this.form.getRawValue())
@@ -845,19 +815,24 @@ export class PerfilComponent implements OnInit {
         this.validateInputFormObject.forEach((o) => {
           o.id_area_experticia = true;
         });
-        if (
-          JSON.stringify(this.validateInputFormObject) !==
-          JSON.stringify(this.validateInputFormObjectFalse)
-        ) {
-          this.EditedInputValue = true;
-        } else {
-          this.EditedInputValue = false;
-        }
+           let objeto = Object.values(this.validateInputFormObject[0]);
+           console.log(objeto);
+           if (objeto.includes(true)) {
+             this.EditedInputValue = true;
+           } else {
+             this.EditedInputValue = false;
+           }
       } else {
-        this.EditedInputValue = false;
         this.validateInputFormObject.forEach((o) => {
           o.id_area_experticia = false;
         });
+           let objeto = Object.values(this.validateInputFormObject[0]);
+           console.log(objeto);
+           if (objeto.includes(true)) {
+             this.EditedInputValue = true;
+           } else {
+             this.EditedInputValue = false;
+           }
       }
     }
   }
@@ -921,19 +896,23 @@ export class PerfilComponent implements OnInit {
                   o.latitud = true;
                   o.longitud = true;
                 });
-                if (
-                  JSON.stringify(this.validateInputFormObject) !==
-                  JSON.stringify(this.validateInputFormObjectFalse)
-                ) {
-                  this.EditedInputValue = true;
-                } else {
-                  this.EditedInputValue = false;
-                }
+                   let objeto = Object.values(this.validateInputFormObject[0]);
+                   if (objeto.includes(true)) {
+                     this.EditedInputValue = true;
+                   } else {
+                     this.EditedInputValue = false;
+                   }
               } else {
                 this.validateInputFormObject.forEach((o) => {
                   o.latitud = false;
                   o.longitud = false;
                 });
+                   let objeto = Object.values(this.validateInputFormObject[0]);
+                   if (objeto.includes(true)) {
+                     this.EditedInputValue = true;
+                   } else {
+                     this.EditedInputValue = false;
+                   }
                 this.options = {
                   center: {
                     lat: parseFloat(this.latitud?.value),
@@ -953,6 +932,12 @@ export class PerfilComponent implements OnInit {
                 o.latitud = false;
                 o.longitud = false;
               });
+                 let objeto = Object.values(this.validateInputFormObject[0]);
+                 if (objeto.includes(true)) {
+                   this.EditedInputValue = true;
+                 } else {
+                   this.EditedInputValue = false;
+                 }
               this.options = {
                 center: {
                   lat: parseFloat(this.latitud?.value),
@@ -977,7 +962,6 @@ export class PerfilComponent implements OnInit {
     });
   }
   verMap() {
-    console.log("ok")
     if (this.editarperfil) {
       const sucreColombia = {
         north: 10.184454,
@@ -1147,47 +1131,24 @@ this.inputOn = false;
     return index > -1;
   }
   onKeyInput(evento: any, nombreinput?: any, usuarionombreinput?: any) {
-    let valor = evento.key.indexOf(' ');
-    let valor_code = evento.code;
-    let valor_sin_espacios = evento.target.value.replace(/\s+/g, '');
     if (
-      (evento.target.value !== usuarionombreinput &&
-        evento.key !== ' ' &&
-        evento.key !== 'Backspace') ||
-      (evento.target.value !== usuarionombreinput &&
-        evento.key === 'Backspace' &&
-        valor == 0) ||
-      (valor_sin_espacios !== usuarionombreinput &&
-        evento.key === 'Backspace' &&
-        valor == -1)
+      JSON.stringify(this.form.getRawValue()[nombreinput]) !== JSON.stringify(this.usuario[nombreinput])
     ) {
       this.validateInputFormObject.forEach((o) => (o[nombreinput] = true));
-      if (
-        JSON.stringify(this.validateInputFormObject) !==
-        JSON.stringify(this.validateInputFormObjectFalse)
-      ) {
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      if (objeto.includes(true)) {
         this.EditedInputValue = true;
       } else {
         this.EditedInputValue = false;
       }
-    }
-
-    if (
-      evento.target.value === usuarionombreinput ||
-      (valor_sin_espacios === usuarionombreinput &&
-        valor === 0 &&
-        valor_code === 'Space') ||
-      (valor_sin_espacios === usuarionombreinput && valor === -1)
-    ) {
-      this.validateInputFormObject.forEach((o) => (o[nombreinput] = false));
-      if (
-        JSON.stringify(this.validateInputFormObject) !==
-        JSON.stringify(this.validateInputFormObjectFalse)
-      ) {
-        this.EditedInputValue = true;
-      } else {
-        this.EditedInputValue = false;
-      }
+    }else{
+        this.validateInputFormObject.forEach((o) => (o[nombreinput] = false));
+       let objeto= Object.values(this.validateInputFormObject[0])
+        if (objeto.includes(true)) {
+          this.EditedInputValue = true;
+        } else {
+          this.EditedInputValue = false;
+        }
     }
   }
   editarPerfi() {
@@ -1206,10 +1167,8 @@ this.inputOn = false;
     this.otraAreaExpDesc?.enable();
   }
   cancelProfileEditing() {
-    if (
-      JSON.stringify(this.validateInputFormObject) !==
-      JSON.stringify(this.validateInputFormObjectFalse)
-    ) {
+       let objeto = Object.values(this.validateInputFormObject[0]);
+    if (objeto.includes(true)) {
       this.confirmModalMapService
         .confirm(
           '../../../../assets/icons/editar.svg',
