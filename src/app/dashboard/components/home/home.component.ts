@@ -1,13 +1,21 @@
-import { Component, OnInit , OnDestroy, AfterViewInit, NgZone, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
-import { Orientation, OrientationConfiguration,GuidedTour, TourStep, GuidedTourService } from 'ngx-guided-tour';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/internal/operators/filter';
+import { IntrojsService } from 'src/app/services/introjs.service';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
+import { IntroGuidedTour, IntroToursteps } from 'src/models/introJsTourt.model';
 declare var window: any;
 @Component({
   selector: 'app-home',
@@ -15,393 +23,313 @@ declare var window: any;
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('dropdownNotificacion')
+  dropdownNotificacion!: ElementRef<HTMLElement>;
+  stepWelcome: IntroToursteps = {
+    title: 'Bienvenido',
+    intro:
+      'A continuación iniciarás un breve recorrido, al finalizar recuerda llenar todos los datos obligatorios.',
+  };
+  stepMenuPrincipal: IntroToursteps = {
+    title: 'Menú principal',
+    element: '#menuOptions',
+    intro: 'Aquí encontrarás todo lo que puedes realizar con tu cuenta',
+  };
+  stepPerfil: IntroToursteps = {
+    title: 'Perfil',
+    element: '#perfil',
+    intro:
+      'Esta opción te lleva al formulario donde podrás llenar toda tú información, para que así puedan encontrarte.',
+  };
+  stepMisGranjas: IntroToursteps = {
+    title: 'Mis granjas',
+    element: '#misgranjas',
+    intro:
+      ' En esta opción podrás registrar, modificar y eliminar la información de tus granjas piscicolas.',
+  };
+  stepMisProductos: IntroToursteps = {
+    title: 'Mis productos',
+    element: '#misproductos',
+    intro:
+      'En esta opción podrás registrar, modificar y eliminar la información de los productos que vendes.',
+  };
+
+  stepAsociaciones: IntroToursteps = {
+    title: 'Mis asociaciones',
+    element: '#misasociaciones',
+    intro:
+      'En esta opción podrás registrar, modificar y eliminar la información de tus asociaciones.',
+  };
+  stepNombre: IntroToursteps = {
+    title: 'Nombres y apellidos',
+    element: '#nombre',
+    intro: 'En este campo puedes ingresar tus nombres y apellidos.',
+  };
+  stepVehiculos: IntroToursteps = {
+    title: 'Mis vehiculos',
+    element: '#misvehiculos',
+    intro:
+      'En esta opción podrás registrar, modificar y eliminar la información de tus vehículos.',
+  };
+  stepConsumo: IntroToursteps = {
+    title: 'Consumo',
+    element: '#consumo',
+    intro:
+      'Aquí podrás ingresar lo que consumes, así los productores podran tener una idea de lo que necesitan cultivar.',
+  };
+  stepNegocios: IntroToursteps = {
+    title: 'Mis negocios',
+    element: '#misnegocios',
+    intro:
+      'En esta opción podrás registrar, modificar y eliminar la información de tus negocios.',
+  };
+  stepFavorito: IntroToursteps = {
+    title: 'Mis favoritos',
+    element: '#misfavoritos',
+    intro: 'Aquí podrás ver las granjas que has marcado como favoritas.',
+  };
+  stepDatosBasicos: IntroToursteps = {
+    title: 'Datos básicos',
+    element: '#basicos',
+    intro:
+      'Aquí encontrarás todos tus datos básicos, recuerda llenar los obligatorios.',
+  };
+  stepFotoPerfil1: IntroToursteps = {
+    title: 'Foto de perfil',
+    element: '#foto1',
+    intro:
+      'Presionando el icono de la cámara, podrás cambiar tu foto de perfil.',
+  };
+  stepFotoPerfil2: IntroToursteps = {
+    title: 'Foto de perfil',
+    element: '#foto2',
+    intro: 'Desde aquí, también podrás cambiar o eliminar tu foto de perfil.',
+  };
+  stepUbicacion: IntroToursteps = {
+    title: 'Ubicación',
+    element: '#ubicacion',
+    intro:
+      'En esta sección podrás ingresar la información referente a tu ubicación.',
+  };
+  stepPhoneNull: IntroToursteps = {
+    title: 'Numero de celular',
+    element: '#celular',
+    intro:
+      'No olvides llenar tu número de celular. Servirá para contactarte facilmente',
+  };
+  stepMunicNull: IntroToursteps = {
+    title: 'Municipio',
+    element: '#municipio',
+    intro: 'Escoge el municipio donde vives ',
+  };
+  stepDirecNull: IntroToursteps = {
+    title: 'Dirección',
+    element: '#direccion',
+    intro: 'Ingresa tu dirección ',
+  };
+  piscicultorGuidedTour: IntroGuidedTour[] = [
+    this.stepWelcome,
+    this.stepMenuPrincipal,
+    this.stepPerfil,
+    this.stepMisGranjas,
+    this.stepFavorito,
+    this.stepAsociaciones,
+    this.stepDatosBasicos,
+    this.stepFotoPerfil1,
+    this.stepFotoPerfil2,
+    this.stepUbicacion,
+  ];
+  pescadorGuidedTour: IntroGuidedTour[] = [
+    this.stepWelcome,
+    this.stepMenuPrincipal,
+    this.stepPerfil,
+    this.stepFavorito,
+    this.stepAsociaciones,
+    this.stepDatosBasicos,
+    this.stepFotoPerfil1,
+    this.stepFotoPerfil2,
+    this.stepUbicacion,
+  ];
+  proveedorGuidedTour: IntroGuidedTour[] = [
+    this.stepWelcome,
+    this.stepMenuPrincipal,
+    this.stepPerfil,
+    this.stepMisProductos,
+    this.stepFavorito,
+    this.stepDatosBasicos,
+    this.stepFotoPerfil1,
+    this.stepFotoPerfil2,
+    this.stepUbicacion,
+    this.stepPhoneNull,
+  ];
+  transportadorGuidedTour: IntroGuidedTour[] = [
+    this.stepWelcome,
+    this.stepMenuPrincipal,
+    this.stepPerfil,
+    this.stepVehiculos,
+    this.stepFavorito,
+    this.stepDatosBasicos,
+    this.stepFotoPerfil1,
+    this.stepFotoPerfil2,
+    this.stepUbicacion,
+  ];
+  consumidorGuidedTour: IntroGuidedTour[] = [
+    this.stepWelcome,
+    this.stepMenuPrincipal,
+    this.stepPerfil,
+    this.stepConsumo,
+    this.stepFavorito,
+    this.stepDatosBasicos,
+    this.stepFotoPerfil1,
+    this.stepFotoPerfil2,
+    this.stepUbicacion,
+  ];
+  investigadorGuidedTour: IntroGuidedTour[] = [
+    this.stepWelcome,
+    this.stepMenuPrincipal,
+    this.stepPerfil,
+    this.stepFavorito,
+    this.stepDatosBasicos,
+    this.stepFotoPerfil1,
+    this.stepFotoPerfil2,
+    this.stepUbicacion,
+  ];
+  comercianteGuidedTour: IntroGuidedTour[] = [
+    this.stepWelcome,
+    this.stepMenuPrincipal,
+    this.stepPerfil,
+    this.stepFavorito,
+    this.stepNegocios,
+    this.stepDatosBasicos,
+    this.stepFotoPerfil1,
+    this.stepFotoPerfil2,
+    this.stepUbicacion,
+  ];
+  miniGuidedCelularTour: IntroGuidedTour[] = [this.stepPhoneNull];
+  miniGuidedDirecTour: IntroGuidedTour[] = [this.stepDirecNull];
+  miniGuidedMunicipioTour: IntroGuidedTour[] = [this.stepMunicNull];
+  // miniGuidedCelularTour: GuidedTour = {
+  //   tourId: 'miniTourCelular',
+  //   useOrb: false,
+  //   steps: [this.stepPhoneNull],
+  //   skipCallback: () => {
+  //     /* setTimeout(()=>{
+  //       console.log("celular tour skiped!", this.authUser)
+  //       if(!(this.authUser.id_municipio)){
+  //         this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
+  //       }else if(!this.authUser.direccion){
+  //         console.log("start tour direccion!", this.miniGuidedDirecTour)
+  //         this.guidedTourService.startTour(this.miniGuidedDirecTour)
+  //       }
+  //     },1000) */
+  //   },
+  //   completeCallback: () => {
+  //     /*  setTimeout(()=>{
+  //       console.log("celular tour complete!", this.authUser)
+  //       if(!(this.authUser.id_municipio)){
+  //         console.log("start tour municipio!")
+  //         this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
+  //       }else if(!this.authUser.direccion){
+  //         console.log("start tour direccion!", this.miniGuidedDirecTour)
+  //         this.guidedTourService.startTour(this.miniGuidedDirecTour)
+  //       }
+  //     },1000) */
+  //   },
+  // };
+
+  // miniGuidedMunicipioTour: GuidedTour = {
+  //   tourId: 'miniTourMunic',
+  //   useOrb: false,
+  //   steps: [this.stepMunicNull],
+  //   skipCallback: () => {
+  //     /*  setTimeout(()=>{
+  //       if(!(this.authUser.direccion)){
+  //         this.guidedTourService.startTour(this.miniGuidedDirecTour)
+  //       }
+  //     },1000) */
+  //   },
+  //   completeCallback: () => {
+  //     /*   setTimeout(()=>{
+  //       if(!(this.authUser.direccion)){
+  //         this.guidedTourService.startTour(this.miniGuidedDirecTour)
+  //       }
+  //     },1000) */
+  //   },
+  // };
+  authUser: any;
   tipoUsuario: string = '';
   error: string = '';
   offcanvas: any;
   rutaGranjasdetalle: boolean = false;
   rutaAsociacionesdetalle: boolean = false;
-  @ViewChild('dropdownNotificacion')
-  dropdownNotificacion!: ElementRef<HTMLElement>;
-
-  stepMenuPrincipal: TourStep = {
-    selector: '#menuOptions',
-    title: 'Menú principal',
-    content:
-      '<p> Aqui encontrarás todo lo que puedes realizar con tu cuenta. </p>',
-    orientation: Orientation.Right,
-  };
-
-  stepPerfil: TourStep = {
-    selector: '#perfil',
-    title: 'Perfil',
-    content:
-      '<p> Esta opción te lleva al formulario donde podras llenar toda tu información para que puedan entontrarte. </p>',
-    orientation: Orientation.Right,
-  };
-
-  stepMisGranjas: TourStep = {
-    selector: '#misgranjas',
-    title: 'Mis granjas',
-    content:
-      '<p> En esta opción podras registrar, modificar y eliminar la información de tus granjas piscicolas. </p>',
-    orientation: Orientation.Right,
-  };
-
-  stepMisProductos: TourStep = {
-    selector: '#misproductos',
-    title: 'Mis productos',
-    content:
-      '<p> En esta opción podras registrar, modificar y eliminar la información de los productos que vendes.</p>',
-    orientation: Orientation.Right,
-  };
-
-  stepAsociaciones: TourStep = {
-    selector: '#misasociaciones',
-    title: 'Mis asociaciones',
-    content:
-      '<p> En esta opción podras registrar, modificar y eliminar la información de tus asociaciones. </p>',
-    orientation: Orientation.Right,
-  };
-
-  stepNombre: TourStep = {
-    selector: '#nombre',
-    title: 'Nombres y apellidos',
-    content: '<p> En este campo puedes ingresar tus nombres y apellidos. </p>',
-    orientation: Orientation.Right,
-    scrollAdjustment: 1000,
-  };
-
-  stepVehiculos: TourStep = {
-    selector: '#misvehiculos',
-    title: 'Mis vehiculos',
-    content:
-      '<p> En esta opción podras registrar, modificar y eliminar la información de tus vehiculos.</p>',
-    orientation: Orientation.Right,
-  };
-
-  stepConsumo: TourStep = {
-    selector: '#consumo',
-    title: 'Consumo',
-    content:
-      '<p> Aqui puedes ingresar que consumes para que los productores puedan tener una idea de lo que necesitan cultivar.</p>',
-    orientation: Orientation.Right,
-  };
-
-  stepNegocios: TourStep = {
-    selector: '#misnegocios',
-    title: 'Mis negocios',
-    content:
-      '<p> En esta opción podras registrar, modificar y eliminar la información de tus negocios. </p>',
-    orientation: Orientation.Right,
-  };
-
-  stepFavorito: TourStep = {
-    selector: '#misfavoritos',
-    title: 'Mis favoritos',
-    content:
-      '<p> Aqui podras ver las granjas que has marcado como favoritas. </p>',
-    orientation: Orientation.Right,
-  };
-
-  stepDatosBasicos: TourStep = {
-    selector: '#basicos',
-    title: 'Datos básicos',
-    content:
-      '<p> Por favor llena los datos básicos que falten por llenar. </p>',
-    action: () => {
-      if (this.sidebar) {
-
-        this.closeOffcanvas()
-      }
-    },
-    orientation: Orientation.Top,
-  };
-
-  stepFotoPerfil1: TourStep = {
-    selector: '#foto1',
-    title: 'Foto de perfil',
-    content:
-      '<p> Presiona el icono de la camara para cambiar tu foto de perfil. </p>',
-    orientation: Orientation.Bottom,
-  };
-
-  stepFotoPerfil2: TourStep = {
-    selector: '#foto2',
-    title: 'Foto de perfil',
-    content:
-      '<p> También puedes cambiarla o eliminarla si ya tienes una presionando este botón. </p>',
-    orientation: Orientation.Bottom,
-  };
-
-  stepUbicacion: TourStep = {
-    selector: '#ubicacion',
-    title: 'Ubicación',
-    content:
-      '<p> En esta sección puedes cambiar los datos que están relacionados con tu ubicación como municipio, dirección entre otros. </p>',
-    orientation: Orientation.Top,
-  };
-
-  stepPhoneNull: TourStep = {
-    selector: '#celular',
-    title: 'Numero de celular',
-    content:
-      '<p> No olvides llenar tu numero de celular. Servira para que te contacen por tus servicios. </p>',
-    orientation: Orientation.Bottom,
-  };
-
-  stepMunicNull: TourStep = {
-    selector: '#municipio',
-    title: 'Municipio',
-    content: '<p> Aún no nos has informado donde vives. </p>',
-    orientation: Orientation.Bottom,
-  };
-
-  stepDirecNull: TourStep = {
-    selector: '#direccion',
-    title: 'Dirección',
-    content: '<p> Cuentanos en donde estas ubicado </p>',
-    orientation: Orientation.Bottom,
-  };
-
-  piscicultorGuidedTour: GuidedTour = {
-    tourId: 'tourPiscicultor',
-    useOrb: false,
-    steps: [
-      this.stepMenuPrincipal,
-      this.stepPerfil,
-      this.stepMisGranjas,
-      this.stepFavorito,
-      this.stepAsociaciones,
-      this.stepDatosBasicos,
-      this.stepFotoPerfil1,
-      this.stepFotoPerfil2,
-      this.stepUbicacion,
-    ],
-    completeCallback: () => {
-      this.onFinishTour();
-    },
-    skipCallback: () => {
-      this.onFinishTour();
-    },
-  };
-
-  pescadorGuidedTour: GuidedTour = {
-    tourId: 'tourPescador',
-    useOrb: false,
-    steps: [
-      this.stepMenuPrincipal,
-      this.stepPerfil,
-      this.stepFavorito,
-      this.stepAsociaciones,
-      this.stepDatosBasicos,
-      this.stepFotoPerfil1,
-      this.stepFotoPerfil2,
-      this.stepUbicacion,
-    ],
-    completeCallback: () => {
-      this.onFinishTour();
-    },
-    skipCallback: () => {
-      this.onFinishTour();
-    },
-  };
-
-  proveedorGuidedTour: GuidedTour = {
-    tourId: 'tourProveedor',
-    useOrb: false,
-    steps: [
-      this.stepMenuPrincipal,
-      this.stepPerfil,
-      this.stepMisProductos,
-      this.stepFavorito,
-      this.stepDatosBasicos,
-      this.stepFotoPerfil1,
-      this.stepFotoPerfil2,
-      this.stepUbicacion,
-      this.stepPhoneNull,
-    ],
-    completeCallback: () => {
-      this.onFinishTour();
-    },
-    skipCallback: () => {
-      this.onFinishTour();
-    },
-  };
-
-  transportadorGuidedTour: GuidedTour = {
-    tourId: 'tourProveedor',
-    useOrb: false,
-    steps: [
-      this.stepMenuPrincipal,
-      this.stepPerfil,
-      this.stepVehiculos,
-      this.stepFavorito,
-      this.stepDatosBasicos,
-      this.stepFotoPerfil1,
-      this.stepFotoPerfil2,
-      this.stepUbicacion,
-    ],
-    completeCallback: () => {
-      this.onFinishTour();
-    },
-    skipCallback: () => {
-      this.onFinishTour();
-    },
-  };
-
-  consumidorGuidedTour: GuidedTour = {
-    tourId: 'tourConsumidor',
-    useOrb: false,
-    steps: [
-      this.stepMenuPrincipal,
-      this.stepPerfil,
-      this.stepConsumo,
-      this.stepFavorito,
-      this.stepDatosBasicos,
-      this.stepFotoPerfil1,
-      this.stepFotoPerfil2,
-      this.stepUbicacion,
-    ],
-    completeCallback: () => {
-      this.onFinishTour();
-    },
-    skipCallback: () => {
-      this.onFinishTour();
-    },
-  };
-
-  investigadorGuidedTour: GuidedTour = {
-    tourId: 'tourInvestigador',
-    useOrb: false,
-    steps: [
-      this.stepMenuPrincipal,
-      this.stepPerfil,
-      this.stepFavorito,
-      this.stepDatosBasicos,
-      this.stepFotoPerfil1,
-      this.stepFotoPerfil2,
-      this.stepUbicacion,
-    ],
-    completeCallback: () => {
-      this.onFinishTour();
-    },
-    skipCallback: () => {
-      this.onFinishTour();
-    },
-  };
-
-  comercianteGuidedTour: GuidedTour = {
-    tourId: 'tourComerciante',
-    useOrb: false,
-    steps: [
-      this.stepMenuPrincipal,
-      this.stepPerfil,
-      this.stepFavorito,
-      this.stepNegocios,
-      this.stepDatosBasicos,
-      this.stepFotoPerfil1,
-      this.stepFotoPerfil2,
-      this.stepUbicacion,
-    ],
-    completeCallback: () => {
-      this.onFinishTour();
-    },
-    skipCallback: () => {
-      this.onFinishTour();
-    },
-  };
-
-  miniGuidedCelularTour: GuidedTour = {
-    tourId: 'miniTourCelular',
-    useOrb: false,
-    steps: [this.stepPhoneNull],
-    skipCallback: () => {
-      /* setTimeout(()=>{
-        console.log("celular tour skiped!", this.authUser)
-        if(!(this.authUser.id_municipio)){
-          this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
-        }else if(!this.authUser.direccion){
-          console.log("start tour direccion!", this.miniGuidedDirecTour)
-          this.guidedTourService.startTour(this.miniGuidedDirecTour)
-        }
-      },1000) */
-    },
-    completeCallback: () => {
-      /*  setTimeout(()=>{
-        console.log("celular tour complete!", this.authUser)
-        if(!(this.authUser.id_municipio)){
-          console.log("start tour municipio!")
-          this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
-        }else if(!this.authUser.direccion){
-          console.log("start tour direccion!", this.miniGuidedDirecTour)
-          this.guidedTourService.startTour(this.miniGuidedDirecTour)
-        }
-      },1000) */
-    },
-  };
-
-  miniGuidedMunicipioTour: GuidedTour = {
-    tourId: 'miniTourMunic',
-    useOrb: false,
-    steps: [this.stepMunicNull],
-    skipCallback: () => {
-      /*  setTimeout(()=>{
-        if(!(this.authUser.direccion)){
-          this.guidedTourService.startTour(this.miniGuidedDirecTour)
-        }
-      },1000) */
-    },
-    completeCallback: () => {
-      /*   setTimeout(()=>{
-        if(!(this.authUser.direccion)){
-          this.guidedTourService.startTour(this.miniGuidedDirecTour)
-        }
-      },1000) */
-    },
-  };
-
-  miniGuidedDirecTour: GuidedTour = {
-    tourId: 'miniTourDirec',
-    useOrb: false,
-    steps: [this.stepDirecNull],
-  };
-  authUser: any;
   rutaProductosdetalle: boolean = false;
   rutaVehiculosdetalle: boolean = false;
   rutaNegociosdetalle: boolean = false;
   sidebar: boolean = false;
+  closeOffCamba: boolean = false;
+  disableTags: boolean = false;
+  rutaUrlactiva: any;
   constructor(
     private socialService: SocialAuthService,
     private userService: UsuarioService,
     private _router: Router,
-    private guidedTourService: GuidedTourService,
     private storage: StorageService,
     private us: UsuarioService,
-    public mediaQueryService: MediaQueryService
+    public mediaQueryService: MediaQueryService,
+    private introService: IntrojsService
   ) {}
+  subscriber!: Subscription;
   MediaQuery!: Subscription;
-  public subscriber!: Subscription;
+  elementoActivoTour!: Subscription;
+  onCompleteTourt!: Subscription;
   ngAfterViewInit(): void {
     let email = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe((response) => {
       this.authUser = response.data[0];
+      console.log(this.authUser);
       if (!this.authUser.takeTour) {
-        console.log('No take tour');
         if (this.sidebar) {
           this.openOffcanvas();
+          this.starTour();
+       /*    setTimeout(() => {
+          }, 500); */
+        } else {
+          this.starTour();
         }
-        this.starTour();
       } else if (!this.authUser.celular) {
-        this.guidedTourService.startTour(this.miniGuidedCelularTour);
+        /* this.disableTags = true; */
+        this.introService.miniTour(this.miniGuidedCelularTour);
       } else if (!this.authUser.id_municipio) {
-        this.guidedTourService.startTour(this.miniGuidedMunicipioTour);
+        /* this.disableTags = true; */
+        this.introService.miniTour(this.miniGuidedMunicipioTour);
       } else if (!this.authUser.direccion) {
-        this.guidedTourService.startTour(this.miniGuidedDirecTour);
-      }
+        /* this.disableTags = true; */
+        this.introService.miniTour(this.miniGuidedDirecTour);
+      } /* else if (
+        this.authUser.celular &&
+        this.authUser.id_municipio &&
+        this.authUser.direccion
+      ) {
+        this.disableTags = false;
+      } */
     });
   }
-
   ngOnInit(): void {
+    this.elementoActivoTour = this.introService.onElementoActivoTour.subscribe(
+      (elemento: any) => {
+        if (this.sidebar && elemento.id == 'basicos' && !this.closeOffCamba) {
+          this.closeOffcanvas();
+        }
+      }
+    );
+    this.onCompleteTourt = this.introService.onCompleteTourt.subscribe(
+      (elemento: any) => {
+        if (elemento) {
+          console.log('Tourt completo');
+          this.onFinishTour();
+        }
+      }
+    );
     this.offcanvas = new window.bootstrap.Offcanvas(
       document.getElementById('offcanvasScrolling'),
       {
@@ -413,10 +341,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((matches) => {
         if (matches) {
           this.sidebar = true;
-          console.log(this.sidebar);
+          this.introService.closeIntroJs();
         } else {
+          this.closeOffcanvas();
+          this.introService.closeIntroJs();
           this.sidebar = false;
-          console.log(this.sidebar);
         }
       });
     let token = localStorage.getItem('token');
@@ -505,37 +434,38 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.subscriber?.unsubscribe();
     this.MediaQuery.unsubscribe();
+    this.onCompleteTourt.unsubscribe();
+    this.elementoActivoTour.unsubscribe();
   }
   openOffcanvas() {
     this.offcanvas.show();
+    this.closeOffCamba = false;
   }
   closeOffcanvas() {
     this.offcanvas.hide();
+    this.closeOffCamba = true;
   }
   starTour() {
     if (this.tipoUsuario) {
       if (this.tipoUsuario == 'Piscicultor') {
-        this.guidedTourService.startTour(this.piscicultorGuidedTour);
+        this.introService.tourPrincipal(this.piscicultorGuidedTour);
       } else if (this.tipoUsuario == 'Pescador') {
-        this.guidedTourService.startTour(this.pescadorGuidedTour);
+        this.introService.tourPrincipal(this.pescadorGuidedTour);
       } else if (this.tipoUsuario == 'Proveedor') {
-        this.guidedTourService.startTour(this.proveedorGuidedTour);
+        this.introService.tourPrincipal(this.proveedorGuidedTour);
       } else if (this.tipoUsuario == 'Transportador') {
-        this.guidedTourService.startTour(this.transportadorGuidedTour);
+        this.introService.tourPrincipal(this.transportadorGuidedTour);
       } else if (this.tipoUsuario == 'Investigador Experto') {
-        this.guidedTourService.startTour(this.investigadorGuidedTour);
+        this.introService.tourPrincipal(this.investigadorGuidedTour);
       } else if (this.tipoUsuario == 'Consumidor') {
-        this.guidedTourService.startTour(this.consumidorGuidedTour);
+        this.introService.tourPrincipal(this.consumidorGuidedTour);
       } else if (this.tipoUsuario == 'Comerciante') {
-        this.guidedTourService.startTour(this.comercianteGuidedTour);
+        this.introService.tourPrincipal(this.comercianteGuidedTour);
       }
     }
   }
 
   onFinishTour() {
-    if (this.sidebar) {
-      this.closeOffcanvas();
-    }
     this.userService
       .actualizarUsuario(this.authUser.id, { takeTour: 1 })
       .subscribe(
@@ -544,15 +474,23 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       );
     setTimeout(() => {
       if (!this.authUser.celular) {
-        this.guidedTourService.startTour(this.miniGuidedCelularTour);
+        /* this.disableTags = true; */
+        this.introService.miniTour(this.miniGuidedCelularTour);
       } else if (!this.authUser.id_municipio) {
-        this.guidedTourService.startTour(this.miniGuidedMunicipioTour);
+        /* this.disableTags = true; */
+        this.introService.miniTour(this.miniGuidedMunicipioTour);
       } else if (!this.authUser.direccion) {
-        this.guidedTourService.startTour(this.miniGuidedDirecTour);
-      }
+       /*  this.disableTags = true; */
+        this.introService.miniTour(this.miniGuidedDirecTour);
+      }/*  else if (
+        this.authUser.celular &&
+        this.authUser.id_municipio &&
+        this.authUser.direccion
+      ) {
+        this.disableTags = false;
+      } */
     }, 1000);
   }
-
   takedTour() {
     return this.storage.get('takeTour');
   }

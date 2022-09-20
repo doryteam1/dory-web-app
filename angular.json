@@ -37,12 +37,14 @@
               "node_modules/ngx-sharebuttons/themes/circles.scss",
               "node_modules/ngx-sharebuttons/themes/modern.scss",
               "src/styles.scss",
-              "node_modules/animate.css/animate.min.css"
+              "node_modules/animate.css/animate.min.css",
+              "node_modules/intro.js/introjs.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.slim.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "node_modules/intro.js/intro.js"
             ]
           },
           "configurations": {

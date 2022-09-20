@@ -269,7 +269,6 @@ export class PerfilComponent implements OnInit {
   constructor(
     private us: UsuarioService,
     private aes: AreasExperticiaService,
-    private router: Router,
     private places: PlacesService,
     private storageService: StorageService,
     httpClient: HttpClient,
@@ -746,13 +745,7 @@ export class PerfilComponent implements OnInit {
           this.appModalService
             .modalAlertActualizadoComponent('Perfil actualizado correctamente')
             .then((result) => {
-              if (
-                !this.celular?.value ||
-                !this.idMunic?.value ||
-                !this.direccion?.value
-              ) {
                 window.location.reload();
-              }
             })
             .catch((result) => {});
         },

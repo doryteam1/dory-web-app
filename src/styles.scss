@@ -267,7 +267,9 @@
 .modal-photo .modal-dialog {
   max-width: 80vw;
 }
-
+.modal{
+  z-index: 999999999 !important;
+}
 .card__icon-favorite{
   grid-area: favorite;
   width: 24px;
@@ -425,6 +427,66 @@ textarea:focus, input:focus{
   border: 0 !important;
 
 }
+/* Estilo introJs */
+.introjs-fixedTooltip, .introjs-helperLayer{
+  box-shadow: var(--azul1) 0px 0px 1px 2px,
+  rgb(33 33 33 / 50%) 0px 0px 0px 5000px !important;
+}
+
+/* CSS */
+.buttonClassIntroJs {
+  appearance: none;
+  background-color: var(--azul1);
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.buttonClassIntroJs:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.buttonClassIntroJs:focus {
+  box-shadow: none;
+  outline: none;
+}
+.buttonClassIntroJs:hover {
+color: white;
+}
+
+.buttonClassIntroJs:disabled {
+  background-color: rgb(186, 241, 241);
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.buttonClassIntroJs:active {
+  background-color: var(--azul1);
+  color: white;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+
+
+.customTooltip .introjs-tooltip-title {
+  color: var(--azul1);
+}
+/* fin */
 @media (max-width: 575px) {
   .modal-dialog-centered {
     margin: 30px !important;
@@ -433,7 +495,7 @@ textarea:focus, input:focus{
 }
 .modalDialogClassContactCard {
   width: 100vw;
-  max-width: 280px;
+  max-width: 500px;
   margin: 1.75rem auto !important;
 }
 
