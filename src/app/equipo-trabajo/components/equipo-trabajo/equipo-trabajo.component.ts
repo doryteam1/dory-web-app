@@ -67,7 +67,7 @@ export class EquipoTrabajoComponent implements OnInit {
       profession: 'Ingeniera de Sistemas – Magíster en Ingeniería Informática',
       activities:
         'Coordinar cada una de las actividades para el desarrollo de la plataforma',
-      data: '\n Ingeniera de sistemas de la Fundación Universitaria San Martín con maestría en ingeniería en Informática de la Universidad Oberta de Cataluña. \n Con 3 años de experiencia en Compufácil, empresa dedicada a ofrecer servicios informáticos a grandes empresas del estado. Adicional con 2 años de experiencia como docente universitario en la CORPOSUCRE. \n Actualmente coordina las actividades de desarrollo del proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
+      data: '\n Ingeniera de Sistemas de la Fundación Universitaria San Martín con Maestría en Ingeniería en Informática de la Universidad Oberta de Cataluña. \n Con 3 años de experiencia en Compufácil, empresa dedicada a ofrecer servicios informáticos a grandes empresas del estado. Adicional con 2 años de experiencia como docente universitario en la CORPOSUCRE. \nActualmente, coordina las actividades de desarrollo del proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
       cvlac:
         'https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001724355',
       linkedIn:
@@ -79,7 +79,7 @@ export class EquipoTrabajoComponent implements OnInit {
       position: 'Desarrollador 1',
       location: 'Sincelejo, Sucre, Colombia 1985',
       profession: 'Ingeniero de Sistemas',
-      data: '\n Ingeniero de sistemas de la Escuela Colombiana de Ingeniería Julio Garavito. \n Con 4 años de experiencia participando en el desarrollo de aplicaciones móviles y web. \n Actualmente está a cargo de desarrollar el frontend de la plataforma en el proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
+      data: '\n Ingeniero de Sistemas de la Escuela Colombiana de Ingeniería Julio Garavito.\n Con 4 años de experiencia participando en el desarrollo de aplicaciones móviles y web. \n Actualmente, está a cargo de desarrollar el frontend de la plataforma en el proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
       activities:
         'Desarrollar el Frontend de la aplicación web de la plataforma',
       cvlac:
@@ -92,7 +92,7 @@ export class EquipoTrabajoComponent implements OnInit {
       position: 'Desarrollador 2',
       location: 'Sincelejo, Sucre, Colombia 1986',
       profession: 'Ingeniero de Sistemas',
-      data: ' \n Ingeniero de sistemas de la Universidad Francisco de Paula Santander con diplomado en docencia universitaria con énfasis en evaluación por competencias de la Universidad Incca de Colombia en convenio con Fundación Educolombia. \n Con 1 año de experiencia en Mafp Ingeniería y diseño, empresa dedicada a ofrecer servicios informáticos a grandes empresas del estado, así mismo 2 años de experiencia en Verduras del Norte, empresa dedicada a la distribución de productos de hortalizas, de igual forma con 1 año de experiencia en la Fundación manos Unidas de Colombia, y también 6 meses de experiencia en Antonio Mendoza y Asociados, empresa dedicada a la distribución de juegos de loterías, de igual modo 4 meses de experiencia  en Sumisalud de la Costa. Adicional con 4 meses de experiencia como docente en el INSTITUTO CERS y 2 meses más en Fundescolombia, institución técnico laboral regional sucre. \n Actualmente ejerce las actividades de desarrollo del backend del proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
+      data: ' \n Ingeniero de Sistemas de la Universidad Francisco de Paula Santander con diplomado en docencia universitaria con énfasis en evaluación por competencias de la Universidad Incca de Colombia en convenio con Fundación Educolombia. \n Con 1 año de experiencia en Mafp Ingeniería y diseño, empresa dedicada a ofrecer servicios informáticos a grandes empresas del estado, así mismo 2 años de experiencia en Verduras del Norte, empresa dedicada a la distribución de productos de hortalizas, de igual forma con 1 año de experiencia en la Fundación manos Unidas de Colombia, y también 6 meses de experiencia en Antonio Mendoza y Asociados, empresa dedicada a la distribución de juegos de loterías, de igual modo 4 meses de experiencia en Sumisalud de la Costa. Adicional con 4 meses de experiencia como docente en el INSTITUTO CERS y 2 meses más en Fundescolombia, institución técnico laboral regional sucre. \n Actualmente, ejerce las actividades de desarrollo del backend del proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
       activities: 'Desarrollar el Backend de la plataforma',
       linkedIn:
         'https://www.linkedin.com/in/luis-alberto-pont%C3%B3n-mercado-43171820/',
@@ -105,7 +105,7 @@ export class EquipoTrabajoComponent implements OnInit {
       position: 'Auxiliar de Investigación 1',
       location: 'Galeras, Sucre, Colombia 1998',
       profession: 'Tecnólogo Electrónico Industrial',
-      data: '\n Tecnólogo en electrónica industrial de la Universidad de sucre. \n Actualmente ejerce como auxiliar de investigación en el proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
+      data: '\n Tecnólogo en electrónica industrial de la Universidad de sucre. \n Con 1 año de experiencia como auxiliar investigativo. \n Actualmente ejerce como auxiliar de investigación en el proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
       activities:
         'Contribuir en la transferencia tecnológica en el desarrollo del Backend',
       linkedIn:
@@ -119,7 +119,7 @@ export class EquipoTrabajoComponent implements OnInit {
       position: 'Auxiliar de Investigación 2 ',
       location: 'Sincelejo, Sucre, Colombia 1994',
       profession: 'Tecnólogo en Electrónica Industrial e Ingeniero Electrónico',
-      data: '\n Ingeniero electrónico de la Universidad de Pamplona y Tecnólogo en electrónica industrial de la Universidad de Sucre con diplomado en Ingeniería biomédica de la Universidad de Pamplona. \n Actualmente ejerce actividades como auxiliar de investigación del proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
+      data: '\n Ingeniero Electrónico de la Universidad de Pamplona y Tecnólogo en Electrónica Industrial de la Universidad de Sucre con diplomado en Ingeniería Biomédica de la Universidad de Pamplona. \n Con 1 año de experiencia como auxiliar investigativo. \nActualmente, ejerce actividades como auxiliar de investigación del proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
       activities:
         'Contribuir en transferencia tecnológica en el desarrollo del Frontend',
       linkedIn: 'https://www.linkedin.com/in/ricardo-montes94',
@@ -132,7 +132,7 @@ export class EquipoTrabajoComponent implements OnInit {
       position: 'Auxiliar de Investigación 3',
       location: 'Corozal, Sucre, Colombia 1992',
       profession: 'Ingeniera Agroindustrial',
-      data: '\n Ingeniera Agroindustrial de la Universidad de Sucre.\n Con experienia en 6 meses en desarrollo de una herramienta computacional que permita hacer seguimiento detallado a las metas del PAFI en la Facultad de Ingenieria de la U de S y 1 año como uxiliar investigativo. \n Actualmente, ejerce actividades como auxiliar de investigación del proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
+      data: '\n Ingeniera Agroindustrial de la Universidad de Sucre. \n Con experiencia en 6 meses en desarrollo de una herramienta computacional que permita hacer seguimiento detallado a las metas del PAFI en la Facultad de Ingeniería de la U de S y 1 año como auxiliar investigativo. \n Actualmente, ejerce actividades como auxiliar de investigación del proyecto “Desarrollo de una plataforma de transferencia tecnológica enmarcada en los efectos negativos de la productividad y competitividad de la cadena piscícola, derivadas de la emergencia sanitaria causada por el COVID-19 en el departamento de Sucre”. Con código BPIN 2020000100761.',
       activities:
         'Contribuir en las actividades de transferencia de conocimiento.',
       linkedIn: 'https://www.linkedin.com/in/ang%C3%A9lica-p%C3%A9rezfunez/',
