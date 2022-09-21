@@ -293,6 +293,8 @@ export class PerfilComponent implements OnInit {
     this.latitud?.disable();
     this.longitud?.disable();
     this.email?.disable();
+    this.sexo?.disable();
+    this.etnia?.disable();
     registerLocaleData(es);
     let email: string | null = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe(
@@ -396,6 +398,8 @@ export class PerfilComponent implements OnInit {
     this.sobre_mi?.disable();
     this.otraAreaExp?.disable();
     this.otraAreaExpDesc?.disable();
+    this.sexo?.disable();
+     this.etnia?.disable();
     this.form.get('id')?.setValue(this.usuario.id);
     this.form.get('cedula')?.setValue(this.usuario.cedula);
     this.form.get('nombres')?.setValue(this.usuario.nombres);
@@ -644,7 +648,6 @@ export class PerfilComponent implements OnInit {
       this.faltadireccion = false;
     }
   }
-
   changeMunic() {
     this.municipiocambiado = true;
     this.idCorreg?.setValue(0);
@@ -692,7 +695,6 @@ export class PerfilComponent implements OnInit {
         }
       );
   }
-
   loadCorregVeredas() {
     this.places.getCorregimientosMunicipio(this.idMunic?.value).subscribe(
       (response) => {
@@ -721,8 +723,6 @@ export class PerfilComponent implements OnInit {
       this.loading = false;
       return;
     }
-
-    /*  console.log('id ', this.form.get('id')?.value); */
     this.us
       .actualizarUsuario(this.form.get('id')?.value, this.form.getRawValue())
       .subscribe(
@@ -731,7 +731,6 @@ export class PerfilComponent implements OnInit {
           this.loading = false;
           this.latitud?.disable();
           this.longitud?.disable();
-
           this.nombres?.disable();
           this.cedula?.disable();
           this.apellidos?.disable();
@@ -743,6 +742,8 @@ export class PerfilComponent implements OnInit {
           this.sobre_mi?.disable();
           this.otraAreaExp?.disable();
           this.otraAreaExpDesc?.disable();
+          this.sexo?.disable();
+          this.etnia?.disable();
           this.mensajedirecion = '';
           this.EditedInputValue = false;
           this.validateInputFormObject.forEach((o) => {
@@ -779,6 +780,8 @@ export class PerfilComponent implements OnInit {
           this.sobre_mi?.disable();
           this.otraAreaExp?.disable();
           this.otraAreaExpDesc?.disable();
+          this.sexo?.disable();
+          this.etnia?.disable();
           this.mensajedirecion = '';
           this.EditedInputValue = false;
           this.validateInputFormObject.forEach((o) => {
@@ -979,8 +982,6 @@ export class PerfilComponent implements OnInit {
           this.isOpenMap = false;
           this.municipiocambiado = false;
           if (!this.form.get('direccion')?.value && this.usuario.direccion) {
-            console.log(this.usuario.direccion);
-            console.log(this.form.get('direccion')?.value);
             this.form.get('direccion')?.setValue(this.tempDir);
             this.form.get('id_municipio')?.setValue(this.tempMunicId);
             this.form.get('latitud')?.setValue(this.latitud?.value);
@@ -1121,9 +1122,7 @@ this.inputOn = false;
 }
   mostrarPorTipo(campo: string) {
     let index = -1;
-
     let tipoUsuario = this.usuario?.tipo_usuario;
-
     if (tipoUsuario == 'Investigador Experto') {
       tipoUsuario = 'investigadorexperto';
     }
@@ -1165,6 +1164,8 @@ this.inputOn = false;
     this.sobre_mi?.enable();
     this.otraAreaExp?.enable();
     this.otraAreaExpDesc?.enable();
+    this.sexo?.enable();
+    this.etnia?.enable();
   }
   cancelProfileEditing() {
        let objeto = Object.values(this.validateInputFormObject[0]);

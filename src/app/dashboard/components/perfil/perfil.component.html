@@ -128,18 +128,8 @@
               </div>
           </div>
         </div>
-        
-      </div>
 
-      <!-- <div class="col">
-          <div class="container__box" *ngIf="mostrarPorTipo('fecha_nacimiento')">
-              <span class="container__label">Fecha de nacimiento: </span>
-              <div class="input-wrapper">
-                  <input class="container__input form-input-text-square" (keyup)="onKeyInput($event)" [ngClass]="{'container__input--color':!editarperfil}"
-                  type="date" formControlName='fecha_nacimiento' [placeholder]="editarperfil ? 'Fecha de nacimiento' : ''">
-              </div>
-          </div>
-        </div> -->
+      </div>
     </div>
         <div class="container__box__title">
           <span class="container__title">Foto de perfil</span>
@@ -260,12 +250,6 @@
     </div>
 
     <div class="container-row row">
-        <!-- <div class="container__box" *ngIf="mostrarPorTipo('nombre_negocio')">
-            <span class="container__label">Nombre del negocio: </span>
-            <div>
-                <input class="container__input form-input-text-square"  type="text" formControlName='nombre_negocio' placeholder="Nombres">
-            </div>
-        </div> -->
         <div class="col">
             <div class="d-flex flex-column">
                 <span class="container__label" *ngIf="mostrarPorTipo('area_experticia')">Área de experticia</span>
@@ -333,7 +317,7 @@
       <span>Cancelar edición</span>
     </div>
   </button>
-  <button class="container__btn3 btn" *ngIf="true" (click)="onSubmit()">
+  <button class="container__btn3 btn"  *ngIf="editarperfil" (click)="onSubmit()">
     <div class="container__btn3-div">
       <img src="assets/icons/save_as_azul1_24dp.svg">
       <span>Guardar cambios</span>
