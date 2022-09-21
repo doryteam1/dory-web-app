@@ -1,11 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -26,7 +20,6 @@ import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import imageCompression from 'browser-image-compression';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
-
 
 @Component({
   selector: 'app-perfil',
@@ -66,8 +59,8 @@ export class PerfilComponent implements OnInit {
     celular: new FormControl(''),
     direccion: new FormControl(''),
     informacion_adicional_direccion: new FormControl(''),
-    id_tipo_usuario: new FormControl(''),
     email: new FormControl('', [Validators.required, Validators.email]),
+    id_tipo_usuario: new FormControl(''),
     id_area_experticia: new FormControl(0),
     nombre_negocio: new FormControl(''),
     foto: new FormControl(''),
@@ -101,7 +94,7 @@ export class PerfilComponent implements OnInit {
       'email',
       'coordenadas',
       'sexo',
-      'etnia'
+      'etnia',
     ],
     investigadorexperto: [
       'cedula',
@@ -118,7 +111,7 @@ export class PerfilComponent implements OnInit {
       'sobre_mi',
       'email',
       'sexo',
-      'etnia'
+      'etnia',
     ],
     transportador: [
       'cedula',
@@ -132,7 +125,7 @@ export class PerfilComponent implements OnInit {
       'email',
       'coordenadas',
       'sexo',
-      'etnia'
+      'etnia',
     ],
     piscicultor: [
       'cedula',
@@ -146,7 +139,7 @@ export class PerfilComponent implements OnInit {
       'email',
       'coordenadas',
       'sexo',
-      'etnia'
+      'etnia',
     ],
     consumidor: [
       'cedula',
@@ -159,7 +152,7 @@ export class PerfilComponent implements OnInit {
       'direccion',
       'email',
       'sexo',
-      'etnia'
+      'etnia',
     ],
     comerciante: [
       'cedula',
@@ -174,7 +167,7 @@ export class PerfilComponent implements OnInit {
       'email',
       'coordenadas',
       'sexo',
-      'etnia'
+      'etnia',
     ],
     asociacion: [],
     pescador: [
@@ -190,7 +183,7 @@ export class PerfilComponent implements OnInit {
       'coordenadas',
       'email',
       'sexo',
-      'etnia'
+      'etnia',
     ],
   };
 
@@ -222,38 +215,10 @@ export class PerfilComponent implements OnInit {
       otra_area_experticia: false,
       otra_area_experticia_descripcion: false,
       sobre_mi: false,
+      id_etnia:false,
+      id_sexo:false
     },
   ];
-  validateInputFormObjectFalse: any[] = [
-    {
-      apellidos: false,
-      cedula: false,
-      celular: false,
-      direccion: false,
-      email: false,
-      fecha_nacimiento: false,
-      fecha_registro: false,
-      foto: false,
-      id: false,
-      id_area_experticia: false,
-      id_corregimiento: false,
-      id_departamento: false,
-      id_municipio: false,
-      id_tipo_usuario: false,
-      id_vereda: false,
-      informacion_adicional_direccion: false,
-      latitud: false,
-      longitud: false,
-      nombre_corregimiento: false,
-      nombre_negocio: false,
-      nombre_vereda: false,
-      nombres: false,
-      otra_area_experticia: false,
-      otra_area_experticia_descripcion: false,
-      sobre_mi: false,
-    },
-  ];
-
   /* center: google.maps.LatLngLiteral = { lat: 9.59079, lng: -75.546899 }; */
   /* zoom = 10; */
   options: google.maps.MapOptions = {
@@ -282,8 +247,8 @@ export class PerfilComponent implements OnInit {
   canceladoedir: boolean = false;
   photoDelate: boolean = false;
   photoUpdate: boolean = false;
-  sexos: any[]=[];
-  etnias:any[]=[];
+  sexos: any[] = [];
+  etnias: any[] = [];
   constructor(
     private us: UsuarioService,
     private aes: AreasExperticiaService,
@@ -323,11 +288,12 @@ export class PerfilComponent implements OnInit {
     this.latitud?.disable();
     this.longitud?.disable();
     this.email?.disable();
+    this.sexo?.disable();
+    this.etnia?.disable();
     registerLocaleData(es);
     let email: string | null = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe(
       (response) => {
-        /* console.log('usuario por email ', response); */
         this.usuario = response.data[0];
         this.form.get('id')?.setValue(this.usuario.id);
         this.form.get('cedula')?.setValue(this.usuario.cedula);
@@ -426,6 +392,8 @@ export class PerfilComponent implements OnInit {
     this.sobre_mi?.disable();
     this.otraAreaExp?.disable();
     this.otraAreaExpDesc?.disable();
+    this.sexo?.disable();
+    this.etnia?.disable();
     this.form.get('id')?.setValue(this.usuario.id);
     this.form.get('cedula')?.setValue(this.usuario.cedula);
     this.form.get('nombres')?.setValue(this.usuario.nombres);
@@ -462,6 +430,8 @@ export class PerfilComponent implements OnInit {
     this.otraAreaExpDesc?.setValue(
       this.usuario.otra_area_experticia_descripcion
     );
+  this.sexo?.setValue(this.usuario?.id_sexo);
+  this.etnia?.setValue(this.usuario?.id_etnia);
   }
 
   openAddFileDialog() {
@@ -628,26 +598,24 @@ export class PerfilComponent implements OnInit {
       );
   }
 
-  loadSexos(){
+  loadSexos() {
     this.us.getSexos().subscribe(
-      (response)=>{
+      (response) => {
         this.sexos = response.data;
-        console.log(this.sexos)
-      },err=>{
-
-      }
-    )
+        console.log(this.sexos);
+      },
+      (err) => {}
+    );
   }
 
-  loadEtnias(){
+  loadEtnias() {
     this.us.getEtnias().subscribe(
-      (response)=>{
+      (response) => {
         this.etnias = response.data;
-        console.log(this.etnias)
-      },err=>{
-
-      }
-    )
+        console.log(this.etnias);
+      },
+      (err) => {}
+    );
   }
 
   changeDpto() {
@@ -674,7 +642,6 @@ export class PerfilComponent implements OnInit {
       this.faltadireccion = false;
     }
   }
-
   changeMunic() {
     this.municipiocambiado = true;
     this.idCorreg?.setValue(0);
@@ -722,7 +689,6 @@ export class PerfilComponent implements OnInit {
         }
       );
   }
-
   loadCorregVeredas() {
     this.places.getCorregimientosMunicipio(this.idMunic?.value).subscribe(
       (response) => {
@@ -751,8 +717,6 @@ export class PerfilComponent implements OnInit {
       this.loading = false;
       return;
     }
-    console.log('usuario ', this.form.getRawValue());
-    /*  console.log('id ', this.form.get('id')?.value); */
     this.us
       .actualizarUsuario(this.form.get('id')?.value, this.form.getRawValue())
       .subscribe(
@@ -761,7 +725,6 @@ export class PerfilComponent implements OnInit {
           this.loading = false;
           this.latitud?.disable();
           this.longitud?.disable();
-
           this.nombres?.disable();
           this.cedula?.disable();
           this.apellidos?.disable();
@@ -773,6 +736,8 @@ export class PerfilComponent implements OnInit {
           this.sobre_mi?.disable();
           this.otraAreaExp?.disable();
           this.otraAreaExpDesc?.disable();
+          this.sexo?.disable();
+          this.etnia?.disable();
           this.mensajedirecion = '';
           this.EditedInputValue = false;
           this.validateInputFormObject.forEach((o) => {
@@ -789,7 +754,7 @@ export class PerfilComponent implements OnInit {
           this.appModalService
             .modalAlertActualizadoComponent('Perfil actualizado correctamente')
             .then((result) => {
-                window.location.reload();
+              window.location.reload();
             })
             .catch((result) => {});
         },
@@ -809,6 +774,8 @@ export class PerfilComponent implements OnInit {
           this.sobre_mi?.disable();
           this.otraAreaExp?.disable();
           this.otraAreaExpDesc?.disable();
+          this.sexo?.disable();
+          this.etnia?.disable();
           this.mensajedirecion = '';
           this.EditedInputValue = false;
           this.validateInputFormObject.forEach((o) => {
@@ -837,27 +804,81 @@ export class PerfilComponent implements OnInit {
   }
 
   onAreaExpChange() {
-    console.log('area experticia change');
-    if (this.idAreaExpert?.value !== -1) {
-      this.otraAreaExp?.setValue('');
-      this.otraAreaExpDesc?.setValue('');
-      if (this.usuario.id_area_experticia !== this.idAreaExpert?.value) {
-        this.validateInputFormObject.forEach((o) => {
-          o.id_area_experticia = true;
-        });
-        if (
-          JSON.stringify(this.validateInputFormObject) !==
-          JSON.stringify(this.validateInputFormObjectFalse)
-        ) {
-          this.EditedInputValue = true;
-        } else {
-          this.EditedInputValue = false;
-        }
+    this.otraAreaExp?.setValue('');
+    this.otraAreaExpDesc?.setValue('');
+    if (this.usuario.id_area_experticia !== this.idAreaExpert?.value) {
+      this.validateInputFormObject.forEach((o) => {
+        o.id_area_experticia = true;
+      });
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      console.log(objeto);
+      if (objeto.includes(true)) {
+        this.EditedInputValue = true;
       } else {
         this.EditedInputValue = false;
-        this.validateInputFormObject.forEach((o) => {
-          o.id_area_experticia = false;
-        });
+      }
+    } else {
+      this.validateInputFormObject.forEach((o) => {
+        o.id_area_experticia = false;
+      });
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      console.log(objeto);
+      if (objeto.includes(true)) {
+        this.EditedInputValue = true;
+      } else {
+        this.EditedInputValue = false;
+      }
+    }
+  }
+  onEtniaChange() {
+    if (this.usuario.id_etnia !== this.etnia?.value) {
+      this.validateInputFormObject.forEach((o) => {
+        o.id_area_experticia = true;
+      });
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      console.log(objeto);
+      if (objeto.includes(true)) {
+        this.EditedInputValue = true;
+      } else {
+        this.EditedInputValue = false;
+      }
+    } else {
+      this.validateInputFormObject.forEach((o) => {
+        o.id_area_experticia = false;
+      });
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      console.log(objeto);
+      if (objeto.includes(true)) {
+        this.EditedInputValue = true;
+      } else {
+        this.EditedInputValue = false;
+      }
+    }
+  }
+  onSexoChange() {
+    this.otraAreaExp?.setValue('');
+    this.otraAreaExpDesc?.setValue('');
+    if (this.usuario.id_sexo !== this.sexo?.value) {
+      this.validateInputFormObject.forEach((o) => {
+        o.id_area_experticia = true;
+      });
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      console.log(objeto);
+      if (objeto.includes(true)) {
+        this.EditedInputValue = true;
+      } else {
+        this.EditedInputValue = false;
+      }
+    } else {
+      this.validateInputFormObject.forEach((o) => {
+        o.id_area_experticia = false;
+      });
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      console.log(objeto);
+      if (objeto.includes(true)) {
+        this.EditedInputValue = true;
+      } else {
+        this.EditedInputValue = false;
       }
     }
   }
@@ -921,10 +942,8 @@ export class PerfilComponent implements OnInit {
                   o.latitud = true;
                   o.longitud = true;
                 });
-                if (
-                  JSON.stringify(this.validateInputFormObject) !==
-                  JSON.stringify(this.validateInputFormObjectFalse)
-                ) {
+                let objeto = Object.values(this.validateInputFormObject[0]);
+                if (objeto.includes(true)) {
                   this.EditedInputValue = true;
                 } else {
                   this.EditedInputValue = false;
@@ -934,6 +953,12 @@ export class PerfilComponent implements OnInit {
                   o.latitud = false;
                   o.longitud = false;
                 });
+                let objeto = Object.values(this.validateInputFormObject[0]);
+                if (objeto.includes(true)) {
+                  this.EditedInputValue = true;
+                } else {
+                  this.EditedInputValue = false;
+                }
                 this.options = {
                   center: {
                     lat: parseFloat(this.latitud?.value),
@@ -953,6 +978,12 @@ export class PerfilComponent implements OnInit {
                 o.latitud = false;
                 o.longitud = false;
               });
+              let objeto = Object.values(this.validateInputFormObject[0]);
+              if (objeto.includes(true)) {
+                this.EditedInputValue = true;
+              } else {
+                this.EditedInputValue = false;
+              }
               this.options = {
                 center: {
                   lat: parseFloat(this.latitud?.value),
@@ -977,7 +1008,6 @@ export class PerfilComponent implements OnInit {
     });
   }
   verMap() {
-    console.log("ok")
     if (this.editarperfil) {
       const sucreColombia = {
         north: 10.184454,
@@ -995,8 +1025,6 @@ export class PerfilComponent implements OnInit {
           this.isOpenMap = false;
           this.municipiocambiado = false;
           if (!this.form.get('direccion')?.value && this.usuario.direccion) {
-            console.log(this.usuario.direccion);
-            console.log(this.form.get('direccion')?.value);
             this.form.get('direccion')?.setValue(this.tempDir);
             this.form.get('id_municipio')?.setValue(this.tempMunicId);
             this.form.get('latitud')?.setValue(this.latitud?.value);
@@ -1132,58 +1160,36 @@ export class PerfilComponent implements OnInit {
       this.borrarseart = false;
     }
   }
-inputEnable(){
-this.inputOn = false;
-}
+  inputEnable() {
+    this.inputOn = false;
+  }
   mostrarPorTipo(campo: string) {
     let index = -1;
-
     let tipoUsuario = this.usuario?.tipo_usuario;
-
     if (tipoUsuario == 'Investigador Experto') {
       tipoUsuario = 'investigadorexperto';
     }
     index = this.campos[tipoUsuario?.toLowerCase()]?.indexOf(campo);
     return index > -1;
   }
-  onKeyInput(evento: any, nombreinput?: any, usuarionombreinput?: any) {
-    let valor = evento.key.indexOf(' ');
-    let valor_code = evento.code;
-    let valor_sin_espacios = evento.target.value.replace(/\s+/g, '');
+  onKeyInput(nombreinput?: any) {
+    console.log(this.form.getRawValue()[nombreinput].trim().length );
     if (
-      (evento.target.value !== usuarionombreinput &&
-        evento.key !== ' ' &&
-        evento.key !== 'Backspace') ||
-      (evento.target.value !== usuarionombreinput &&
-        evento.key === 'Backspace' &&
-        valor == 0) ||
-      (valor_sin_espacios !== usuarionombreinput &&
-        evento.key === 'Backspace' &&
-        valor == -1)
+      this.form.getRawValue()[nombreinput].trim().length !== 0 &&
+      this.form.getRawValue()[nombreinput] !==
+        JSON.stringify(this.usuario[nombreinput])
     ) {
       this.validateInputFormObject.forEach((o) => (o[nombreinput] = true));
-      if (
-        JSON.stringify(this.validateInputFormObject) !==
-        JSON.stringify(this.validateInputFormObjectFalse)
-      ) {
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      if (objeto.includes(true)) {
         this.EditedInputValue = true;
       } else {
         this.EditedInputValue = false;
       }
-    }
-
-    if (
-      evento.target.value === usuarionombreinput ||
-      (valor_sin_espacios === usuarionombreinput &&
-        valor === 0 &&
-        valor_code === 'Space') ||
-      (valor_sin_espacios === usuarionombreinput && valor === -1)
-    ) {
+    } else {
       this.validateInputFormObject.forEach((o) => (o[nombreinput] = false));
-      if (
-        JSON.stringify(this.validateInputFormObject) !==
-        JSON.stringify(this.validateInputFormObjectFalse)
-      ) {
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      if (objeto.includes(true)) {
         this.EditedInputValue = true;
       } else {
         this.EditedInputValue = false;
@@ -1204,12 +1210,12 @@ this.inputOn = false;
     this.sobre_mi?.enable();
     this.otraAreaExp?.enable();
     this.otraAreaExpDesc?.enable();
+    this.sexo?.enable();
+    this.etnia?.enable();
   }
   cancelProfileEditing() {
-    if (
-      JSON.stringify(this.validateInputFormObject) !==
-      JSON.stringify(this.validateInputFormObjectFalse)
-    ) {
+    let objeto = Object.values(this.validateInputFormObject[0]);
+    if (objeto.includes(true)) {
       this.confirmModalMapService
         .confirm(
           '../../../../assets/icons/editar.svg',
@@ -1258,6 +1264,8 @@ this.inputOn = false;
       this.sobre_mi?.disable();
       this.otraAreaExp?.disable();
       this.otraAreaExpDesc?.disable();
+      this.sexo?.disable();
+      this.etnia?.disable();
     }
   }
   get id() {
@@ -1361,11 +1369,11 @@ this.inputOn = false;
     return this.form.get('otra_area_experticia_descripcion');
   }
 
-  get sexo(){
+  get sexo() {
     return this.form.get('id_sexo');
   }
 
-  get etnia(){
+  get etnia() {
     return this.form.get('id_etnia');
   }
 }

@@ -51,13 +51,6 @@ export class IntrojsService {
   miniTour(steps: IntroGuidedTour[]) {
     this.introJS = introJs();
     this.introJS
-      .onbeforechange(async (element: any) => {
-        try {
-          console.log(element);
-        } catch (err) {}
-      })
-      .start();
-    this.introJS
       .setOptions({
         exitOnEsc: false,
         nextLabel: 'Siguiente',
