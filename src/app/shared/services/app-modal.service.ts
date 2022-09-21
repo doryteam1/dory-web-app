@@ -9,7 +9,6 @@ import { ModalGallerySliderVerYElimanarFotosComponent } from '../components/moda
 import { ModalGoogleGeneralComponent } from '../components/modal-google-general/modal-google-general.component';
 import { SafeUrl } from '@angular/platform-browser';
 import { ModalContactCardComponent } from '../components/modal-contact-card/modal-contact-card.component';
-/* import { ModalDialogConfirmComponent } from '../components/modal-dialog-confirm/modal-dialog-confirm.component'; */
 interface atributos {
   nameButton: string;
   nombrecampoDB: string | null;
@@ -123,7 +122,9 @@ export class AppModalService {
   public closeModalContactCardComponent(): void {
     this.modalService.dismissAll();
   }
-  public modalContactCardComponent(datos: any): Promise<boolean> {
+  public modalContactCardComponent(datos: any,
+    modalDetalle:boolean=true
+    ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalContactCardComponent, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'sm',
@@ -133,35 +134,10 @@ export class AppModalService {
       backdropClass: 'backdropClassContactCard',
     });
     modalRef.componentInstance.datos = datos;
+    modalRef.componentInstance.modalDetalle = modalDetalle;
 
     return modalRef.dismissed.toPromise();
   }
-  /* modalDialogConfirmComponentt  */
-  public closeModalDialogConfirmComponent(): void {
-    this.modalService.dismissAll();
-  }
-  // public modalDialogConfirmComponentt(
-  //   /*  title: string, */
-  //   message: string,
-  //   message2: string,
-  //   btnOkText: string = 'Aceptar',
-  //   btnCancelText: string = 'Cancelar'
-  // ): Promise<boolean> {
-  //   const modalRef = this.modalService.open(ModalDialogConfirmComponent, {
-  //     ariaLabelledBy: 'modal-basic-title',
-  //     size: 'sm',
-  //     backdrop: false,
-  //     keyboard: false,
-  //     centered: true,
-  //     modalDialogClass: 'modalDialogClassContactCard',
-  //   });
-  //   /* modalRef.componentInstance.title = title; */
-  //   modalRef.componentInstance.message = message;
-  //   modalRef.componentInstance.btnOkText = btnOkText;
-  //   modalRef.componentInstance.btnCancelText = btnCancelText;
-  //   return modalRef.result;
-  // }
-
   /* modal gallery slider ver y adicionar y eleimar fotos */
   public CloseModalGalleryVerAdiconarEliminarFotos(): void {
     this.modalService.dismissAll();

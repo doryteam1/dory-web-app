@@ -1,11 +1,9 @@
 <nav class="navbar sticky-top navbar-expand-xxl navbar-light bg-light">
   <div class="container-fluid">
-    <img *ngIf="!electronjs" class="logo1" src="assets/images/logo-no-name.svg" routerLink="/home" placement="bottom"
-      ngbTooltip="Inicio">
+    <img *ngIf="!electronjs" class="logo1" src="assets/images/logo-no-name.svg" routerLink="/home">
     <div class="container-fluid-miestilo__1">
       <div class="logoAndSearch">
-        <img *ngIf="!electronjs" class="logo2 heightAndWidth" src="assets/images/logo-no-name.svg" routerLink="/home"
-          placement="bottom" ngbTooltip="Inicio">
+        <img *ngIf="!electronjs" class="logo2 heightAndWidth" src="assets/images/logo-no-name.svg" routerLink="/home">
         <div class="buscador--container-icon heightAndWidth">
           <img src="/assets/icons/search.svg">
         </div>
@@ -34,8 +32,6 @@
               <!-- Boton notificacion se muestra cuando es  menor 960px -->
               <div
                 class="notify__box position-relative notify-modal-icon "
-                placement="bottom"
-                ngbTooltip="Notificaciones"
                 data-bs-toggle="modal"
                 data-bs-target="#ModalNotificacion"
                 data-bs-auto-close="outside"
@@ -136,8 +132,7 @@
 
             <!-- Dropdown, usuarios registrados  menos a 1400px-->
             <div class="dropdown" *ngIf="authenticated()">
-              <div id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false" placement="bottom"
-                ngbTooltip="cuenta">
+              <div id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="container__img container__img--button heightAndWidth"
                   [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'">
               </div>

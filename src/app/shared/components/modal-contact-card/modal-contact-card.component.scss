@@ -1,4 +1,3 @@
-
 .card {
   position: relative;
   width: 100%;
@@ -10,17 +9,20 @@
   border: 0;
   transition: .5s;
 }
+
 .btn-close-modal {
   z-index: 1;
   position: absolute;
   right: 10px;
   top: 10px;
 }
+
 .card .head {
   height: 125px;
   width: 100%;
   position: relative;
 }
+
 .card .head .circle {
   position: absolute;
   width: 300px;
@@ -29,6 +31,7 @@
   background: var(--azul1);
   bottom: 0;
 }
+
 .card .head .img {
   width: 150px;
   height: 150px;
@@ -40,33 +43,40 @@
   left: 50%;
   transform: translate(-50%);
 }
+
 .card .head .img img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
 }
+
 .card .description {
   padding: 40px 20px 20px 20px;
   border-bottom: solid 1px rgba(6, 74, 76, .18);
   text-align: center;
 }
+
 .card .description h3 {
   color: #8a9090;
   ;
 }
+
 .card .description h4 {
   color: #8a9090;
   ;
 }
+
 .card .description h5 {
   color: #8a9090;
   ;
 }
+
 .card .description p {
   margin-top: 20px;
   font-size: 15px;
 }
+
 .card .contact {
   width: 100%;
   height: 50px;
@@ -74,6 +84,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .card .contact a {
   text-decoration: none;
   color: #fff;
@@ -83,6 +94,7 @@
   transition: .3s;
   cursor: pointer;
 }
+
 .nav-estilo {
   width: 100%;
 
@@ -123,6 +135,14 @@
         }
       }
     }
+   .icon__before{
+    color: white;
+   }
+    .icon__before::before {
+      width: 40px;
+      height: 40px;
+      padding: 5px;
+    }
 
     .content {
       width: 80%;
@@ -149,6 +169,7 @@
     }
   }
 }
+
 button:focus {
   border-color: none !important;
   box-shadow: none !important;

@@ -602,7 +602,6 @@ export class PerfilComponent implements OnInit {
     this.us.getSexos().subscribe(
       (response) => {
         this.sexos = response.data;
-        console.log(this.sexos);
       },
       (err) => {}
     );
@@ -833,10 +832,9 @@ export class PerfilComponent implements OnInit {
   onEtniaChange() {
     if (this.usuario.id_etnia !== this.etnia?.value) {
       this.validateInputFormObject.forEach((o) => {
-        o.id_area_experticia = true;
+        o.id_etnia = true;
       });
       let objeto = Object.values(this.validateInputFormObject[0]);
-      console.log(objeto);
       if (objeto.includes(true)) {
         this.EditedInputValue = true;
       } else {
@@ -844,10 +842,9 @@ export class PerfilComponent implements OnInit {
       }
     } else {
       this.validateInputFormObject.forEach((o) => {
-        o.id_area_experticia = false;
+        o.id_etnia = false;
       });
       let objeto = Object.values(this.validateInputFormObject[0]);
-      console.log(objeto);
       if (objeto.includes(true)) {
         this.EditedInputValue = true;
       } else {
@@ -856,14 +853,11 @@ export class PerfilComponent implements OnInit {
     }
   }
   onSexoChange() {
-    this.otraAreaExp?.setValue('');
-    this.otraAreaExpDesc?.setValue('');
     if (this.usuario.id_sexo !== this.sexo?.value) {
       this.validateInputFormObject.forEach((o) => {
-        o.id_area_experticia = true;
+        o.id_sexo = true;
       });
       let objeto = Object.values(this.validateInputFormObject[0]);
-      console.log(objeto);
       if (objeto.includes(true)) {
         this.EditedInputValue = true;
       } else {
@@ -871,10 +865,9 @@ export class PerfilComponent implements OnInit {
       }
     } else {
       this.validateInputFormObject.forEach((o) => {
-        o.id_area_experticia = false;
+        o.id_sexo = false;
       });
       let objeto = Object.values(this.validateInputFormObject[0]);
-      console.log(objeto);
       if (objeto.includes(true)) {
         this.EditedInputValue = true;
       } else {
@@ -1173,7 +1166,6 @@ export class PerfilComponent implements OnInit {
     return index > -1;
   }
   onKeyInput(nombreinput?: any) {
-    console.log(this.form.getRawValue()[nombreinput].trim().length );
     if (
       this.form.getRawValue()[nombreinput].trim().length !== 0 &&
       this.form.getRawValue()[nombreinput] !==
@@ -1223,7 +1215,7 @@ export class PerfilComponent implements OnInit {
           'Cancelar edicion ',
           'Estás apunto de cancelar la edición',
           'Si',
-          'No estoy seguro',
+          'No',
           ``
         )
         .then((result) => {
@@ -1239,7 +1231,6 @@ export class PerfilComponent implements OnInit {
                 o[clave] = false;
               }
             });
-            console.log(this.validateInputFormObject);
             this.myNgOnInit();
           } else {
             this.EditedInputValue = true;
