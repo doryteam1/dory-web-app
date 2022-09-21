@@ -50,6 +50,20 @@
         <span *ngIf="!piscicultor?.direccion" class="detail-container__value">Dirección indefinida</span>
       </div>
     </div>
+    <div class="detail-container mt-4">
+      <img class="detail-container__image" src="assets/icons/venus-mars-solid.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Sexo</h4>
+        <span class="detail-container__value">{{piscicultor?.sexo ? piscicultor?.sexo : 'No especificado'}}</span>
+      </div>
+    </div>
+    <div class="detail-container mt-4">
+      <img class="detail-container__image" src="assets/icons/handshake-solid.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Etnia</h4>
+        <span class="detail-container__value">{{piscicultor?.etnia ? piscicultor?.etnia : 'No especificado'}}</span>
+      </div>
+    </div>
         <div class="detail-container mt-4" *ngIf="piscicultor?.informacion_adicional_direccion">
           <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
           <div class="detail-container__data">

@@ -32,6 +32,8 @@ export class AsociacionDetalleComponent implements OnInit {
   pescadorasociaciones: any;
   datapiscicultorasociaciones: boolean = false;
   tipoUsuario: any;
+  numeroMujeres:number = 0;
+  numeroHombres:number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -138,6 +140,7 @@ export class AsociacionDetalleComponent implements OnInit {
         this.errorMessage = 'Error inesperado';
       }
     }
+    this.calcNumberoHombresMujeres();
   }
 
   activeTabVerifi() {
@@ -257,4 +260,27 @@ export class AsociacionDetalleComponent implements OnInit {
     }
   }
 
+  calcNumberoHombresMujeres(){
+    this.numeroHombres = 0;
+    this.numeroMujeres = 0;
+
+    console.log("pescadores: ",this.pescadorasociaciones)
+    console.log("piscicultores: ",this.piscicultorasociaciones)
+    this.pescadorasociaciones.forEach((pescador:any) => {
+      if(pescador.sexo == 'Femenino'){
+        this.numeroMujeres++;
+      }else if(pescador.sexo == 'Masculino'){
+        this.numeroHombres++;
+      }
+    });
+
+    this.piscicultorasociaciones.forEach((piscicultor:any) => {
+      if(piscicultor.sexo == 'Femenino'){
+        this.numeroMujeres++;
+      }else if(piscicultor.sexo == 'Masculino'){
+        this.numeroHombres++;
+      }
+    });
+  }
+  
 }

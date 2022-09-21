@@ -130,7 +130,26 @@
         <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con piscicultores asociados</span>
       </div>
     </div>
+
+    <div class="detail-container mt-4">
+      <img class="detail-container__image"src="assets/icons/venus-solid.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Mujeres en la asociación</h4>
+        <span *ngIf="asociacion?.direccion" class="detail-container__value">
+          {{numeroMujeres}}</span>
+      </div>
+    </div>
+
+    <div class="detail-container mt-4">
+      <img class="detail-container__image"src="assets/icons/mars-solid.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Hombres en la asociación</h4>
+        <span *ngIf="asociacion?.direccion" class="detail-container__value">
+          {{numeroHombres}}</span>
+      </div>
+    </div>
   </div>
+
   <!-- granjas y asociaciones -->
   <div class="mynavtabs"  *ngIf="piscicultorasociaciones?.length>0 || pescadorasociaciones?.length>0">
     <ul class="nav nav-tabs">
