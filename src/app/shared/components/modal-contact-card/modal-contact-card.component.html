@@ -1,6 +1,6 @@
 
 <!-- modal 1 contacto -->
-      <div *ngIf="modalDetalle" class="modal-body card">
+      <div *ngIf="modalDetalle" class="modal-body card" (click)="navigateDetalle() ">
         <button type="button" class="btn-close btn-close-modal" aria-label="Close" (click)="dismiss()"></button>
         <div class="head">
          <!--  <div class="circle"></div> -->
@@ -58,11 +58,11 @@
           <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, eligendi!</p> -->
         </div>
         <div class="contact">
-          <a (click)="navigateDetalle() ">Detalles</a>
+          <a>Ver detalle</a>
         </div>
       </div>
 <!-- modal 2 informacion granja -->
-  <div *ngIf="!modalDetalle" class="modal-body card">
+  <div *ngIf="!modalDetalle" class="modal-body card"  (click)="navigateDetalle()">
     <button type="button" class="btn-close btn-close-modal" aria-label="Close" (click)="dismiss()"></button>
     <div class="head">
       <div class="img">
@@ -119,6 +119,6 @@
       <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, eligendi!</p> -->
     </div>
     <div class="contact">
-      <a (click)="navigateDetalle() ">Detalles</a>
+      <a >Ver detalle</a>
     </div>
   </div>

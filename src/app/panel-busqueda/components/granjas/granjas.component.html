@@ -4,7 +4,6 @@
     </app-search>
     <app-modal-multi-filters [radioFilter1]="orderFilters" [chipFilter1]="starsFilter" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
 </div>
-<app-not-found *ngIf="showNotFound" objectName="granjas"></app-not-found>
 <div class="chip mb-4">
     <app-chip-con-boton-close class="chip__element"
     *ngIf="selectedOrderFilter"
@@ -31,14 +30,8 @@
         >
     </app-chip-con-boton-close>
 </div>
-<!-- <div *ngIf="showNotFound"
-    class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
-    <img src="assets/icons/searchanimado.svg">
-    <div>
-    No se encontraron resultados
-    </div>
-</div> -->
-<div class="list overflow-auto d-flex flex-column">
+<app-not-found *ngIf="showNotFound" objectName="granjas"></app-not-found>
+<div class="list overflow-auto d-flex flex-column" *ngIf="!showNotFound" >
 <div class="card" *ngFor="let granja of granjasFiltered">
     <div class="card__row" >
         <div class="card__item">
