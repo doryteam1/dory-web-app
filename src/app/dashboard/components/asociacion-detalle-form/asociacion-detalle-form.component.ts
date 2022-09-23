@@ -8,7 +8,6 @@ import { formatDate, Location } from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
-import { TipoAsocValidator } from '../../validators/tipo-asociacion.validator';
 
 @Component({
   selector: 'app-asociacion-detalle-form',
@@ -35,11 +34,13 @@ export class AsociacionDetalleFormComponent implements OnInit {
     id_municipio: new FormControl('', [Validators.required]),
     corregimiento_vereda: new FormControl(''),
     foto_camarac: new FormControl('',[Validators.required]),
+    url_rut: new FormControl(''),
     id_tipo_asociacion_fk:new FormControl('',[Validators.required])
   });
   tiposAsociaciones: any;
   departamentos: any;
   municipios: any;
+  fileRut: any = null;
   constructor(
     private asociacionesService:AsociacionesService,
     private storage: FirebaseStorageService,
@@ -50,19 +51,35 @@ export class AsociacionDetalleFormComponent implements OnInit {
   ngOnInit(): void {
     registerLocaleData( es );
     console.log("params ",this.ar.snapshot.params)
-    this.asociacion = this.ar.snapshot.params;
+    this.asociacion = { ...this.ar.snapshot.params };
+    console.log(this.asociacion)
     let action = this.ar.snapshot.paramMap.get('action');
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
-    this.prepareForm(action!,this.asociacion)
-    this.loadDptos();
-    this.loadTiposAsociaciones();
-    this.onChangeLegalConst();
+   
+    if(action=='create'){
+      this.prepareForm(action!,this.asociacion)
+      this.loadDptos();
+      this.loadTiposAsociaciones();
+      this.onChangeLegalConst();
+    }else{
+      this.asociacionesService.getAsociacionDetalle(this.asociacion.nit).subscribe(
+        (response)=>{
+          let tempAsoc = response.data[0];
+          this.asociacion.url_rut = tempAsoc.url_rut;
+          this.asociacion.foto_camarac = tempAsoc.foto_camarac;
+          this.prepareForm(action!,this.asociacion)
+          this.loadDptos();
+          this.loadTiposAsociaciones();
+          this.onChangeLegalConst();
+        }
+      )
+    }
     this.idTipoAsoc?.valueChanges.subscribe((value)=>{
-
     })
+    
   }
 
-  updateAsociacion() {
+  async updateAsociacion() {
     console.log("Actualizando!!")
     this.loading1 = true;
 
@@ -80,54 +97,32 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
     this.fotoCamc?.setValidators([Validators.required])
     this.fotoCamc?.updateValueAndValidity();
-    if(this.fotoCamc?.invalid || this.isLegalConstituida?.value == '0'){
+    if(this.fotoCamc?.invalid || this.isLegalConstituida?.value == '0'){//No cargó un nuevo archivo de camara de comercio
       let updatedAsociacion = { ...this.form.getRawValue() }
       updatedAsociacion.foto_camarac = this.asociacion.foto_camarac;
-      this.asociacionesService
-              .update(
-                this.asociacion.nit,
-                updatedAsociacion
-              )
-              .subscribe(
-                (response) => {
-                  this.loading1 = false;
-                  this.location.back()
-                },
-                (err) => {
-                  console.log(err);
-                  this.loading1 = false;
-                }
-              );
+      this.sendAsociacionUpdated(updatedAsociacion,this.asociacion.nit)
     }else{
       let ext = this.file.name.split('.')[1];
-      let basePath = '/asociaciones/camaracomecio/todas/';
-      let fileName = 'asociacion-'+this.form.getRawValue().nit+'.'+ext;
+      let basePath = '/asociaciones/camaracomercio/todas/';
+      let fileName = 'camc-asociacion-'+this.form.getRawValue().nit+'.'+ext;
       let filePath = basePath + fileName;
-      console.log("file ",this.file)
+      try{
+        await this.storage.deleteByUrl(this.asociacion?.foto_camarac).toPromise();
+      }catch(err){
+        try{
+          await this.storage.deleteByUrl(this.asociacion?.foto_camarac).toPromise();
+        }catch(err){
+        }
+      }
       this.storage.cloudStorageTask(filePath,this.file).percentageChanges().subscribe(
         (response)=>{
           console.log(response)
           if(response == 100){
             this.storage.cloudStorageRef(filePath).getDownloadURL().subscribe(
               (downloadUrl)=>{
-                console.log("download url ",downloadUrl)
                 let updatedAsociacion = { ...this.form.getRawValue() }
                 updatedAsociacion.foto_camarac = downloadUrl;
-                this.asociacionesService
-                .update(
-                  this.asociacion.nit,
-                  updatedAsociacion
-                )
-                .subscribe(
-                  (response) => {
-                    this.loading1 = false;
-                    this.location.back()
-                  },
-                  (err) => {
-                    console.log(err);
-                    this.loading1 = false;
-                  }
-                );
+                this.sendAsociacionUpdated(updatedAsociacion,this.asociacion.nit)
               },err=>{
                 this.loading1 = false;
                 console.log(err);
@@ -139,6 +134,57 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
   }
 
+  async sendAsociacionUpdated(updatedAsociacion:any,nit:number){
+    if(this.fileRut == null){//No hay archivo rut para subir
+      this.asociacionesService.updateParcial(nit,updatedAsociacion).subscribe(
+        (response) => {
+          this.loading1 = false;
+          this.location.back()
+        },
+        (err) => {
+          console.log(err);
+          this.loading1 = false;
+        });  
+    }else{
+      
+      let ext = this.fileRut.name.split('.')[1];
+      let basePath = '/asociaciones/rut/todos/';
+      let fileName = 'rut-asociacion-'+this.form.getRawValue().nit+'.'+ext;
+      let filePath = basePath + fileName;
+      try{
+        await this.storage.deleteByUrl(this.asociacion?.url_rut).toPromise();
+      }catch(err){
+        try{
+          await this.storage.deleteByUrl(this.asociacion?.url_rut).toPromise();
+        }catch(err){
+        }
+      }
+      
+      this.storage.cloudStorageTask(filePath,this.fileRut).percentageChanges().subscribe(
+        (response)=>{
+          if(response == 100){
+            this.storage.cloudStorageRef(filePath).getDownloadURL().subscribe(
+              (downloadUrl)=>{
+                updatedAsociacion.url_rut = downloadUrl;
+                this.asociacionesService.update(nit,updatedAsociacion).subscribe(
+                  (response) => {
+                    this.loading1 = false;
+                    this.location.back()
+                  },
+                  (err) => {
+                    console.log(err);
+                    this.loading1 = false;
+                  });
+              },err=>{
+                this.loading1 = false;
+                console.log(err);
+              }
+            )
+          }
+        }
+      );
+    }
+  }
   addAsociaciones() {
     console.log('addAsociaciones');
     console.log("form asociaciones ",this.form.getRawValue());
@@ -220,10 +266,13 @@ export class AsociacionDetalleFormComponent implements OnInit {
   }
 
   fileChange(event: any) {
-    console.log('change', event);
     this.file = event.target.files[0];
   }
 
+  fileRutChange(event: any) {
+    console.log('change', event);
+    this.fileRut = event.target.files[0];
+  }
   loadTiposAsociaciones(){
     this.asociacionesService.tiposAsociacion().subscribe(
       (response)=>{
@@ -365,6 +414,10 @@ export class AsociacionDetalleFormComponent implements OnInit {
 
   get fotoCamc(){
     return this.form.get('foto_camarac');
+  }
+
+  get urlRut(){
+    return this.form.get('url_rut');
   }
 
   get idTipoAsoc(){

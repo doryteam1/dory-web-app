@@ -162,4 +162,8 @@ export class GranjasService {
       environment.doryApiRestBaseUrl+'/resenas/' + idResena
     );
   }
+
+  getGranjasByNitAsociacion(nit:number){
+    return this.https.get(environment.doryApiRestBaseUrl+'/asociaciones/granjas/asociadas/'+nit)
+  }
 }

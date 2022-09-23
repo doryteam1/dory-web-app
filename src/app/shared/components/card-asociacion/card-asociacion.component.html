@@ -41,8 +41,23 @@
           </div>
           <div class="card__description-container-infor-1-div" *ngIf="!asociacion?.foto_camarac">
                 <span class="card_description--span">
-                  No se han cargado documentos
+                  No se han cargado la camara de comercio
                 </span>
+          </div>
+        </div>
+        <div class="d-flex flex-row mt-1">
+          <img class="margin" src="assets/icons/picture_as_pdf_black_24dp.svg">
+          <div>
+            <span *ngIf="asociacion?.url_rut">
+              <a  [href]="asociacion?.url_rut" target="_blank">Descargar RUT
+                 <img src="assets/icons/download_for_offline_blue1_24dp.svg">
+              </a>
+            </span>
+            <span *ngIf="!asociacion?.url_rut">
+              <a  >
+                No se ha cargado el RUT
+              </a>
+            </span>
           </div>
         </div>
         <div *ngIf="showRepLegal">

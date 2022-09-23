@@ -175,13 +175,33 @@
             </span>
         </div>
 
-        <div class="mb-5" *ngIf="formState!='disable'">
+        <div class="mb-2" *ngIf="formState!='disable'">
           <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.foto_camarac ? 'Actualizar cámara de comercio ' : 'Subir cámara de comercio' }}</label>
           <div class="input-group">
             <input id="productName" type="file" class="form-control" placeholder="Seleccionar documento" formControlName="foto_camarac" (change)='fileChange($event)'>
           </div>
           <div *ngIf="invalid('foto_camarac')" class="container__alert-msg danger-message">
             <div *ngIf="fotoCamc?.errors?.['required']">
+                Campo requerido
+            </div>
+          </div>
+        </div>
+
+        <div class="download-cam" *ngIf="modalMode=='update'">
+          <span *ngIf="asociacion?.url_rut && asociacion?.url_rut!='null'">
+            <a [href]="asociacion?.url_rut" target="_blank">Descargar RUT
+               <img src="assets/icons/download_for_offline_blue1_24dp.svg">
+            </a>
+          </span>
+      </div>
+
+        <div class="mb-5" *ngIf="formState!='disable'">
+          <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.url_rut ? 'Actualizar RUT ' : 'Subir RUT' }}</label>
+          <div class="input-group">
+            <input id="productName" type="file" class="form-control" placeholder="Seleccionar documento" formControlName="url_rut" (change)='fileRutChange($event)'>
+          </div>
+          <div *ngIf="invalid('url_rut')" class="container__alert-msg danger-message">
+            <div *ngIf="urlRut?.errors?.['required']">
                 Campo requerido
             </div>
           </div>

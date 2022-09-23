@@ -30,6 +30,14 @@ export class FirebaseStorageService {
     return this.storage.ref(fileName).delete();
   }
 
+  public deleteByFileName(fileName: string) {
+    return this.storage.ref(fileName).delete();
+  }
+
+  public deleteByUrl(url:string){
+    return this.storage.refFromURL(url).delete();
+  }
+
   public refFromUrl(path: string) {
     console.log(this.storage.refFromURL(path));
     return this.storage.refFromURL(path);

@@ -89,22 +89,22 @@
         <h6 class="detail-container__value">No se han cargado documentos</h6>
       </div>
     </div>
-        <div class="detail-container mt-4">
-          <img class="detail-container__image"src="assets/icons/location_on_black_24dp.svg">
-          <div class="detail-container__data">
-            <h4 class="detail-container__title">Dirección</h4>
-            <span *ngIf="asociacion?.direccion" class="detail-container__value">
-              {{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion}}</span>
-          </div>
-        </div>
-        <div class="detail-container mt-4" *ngIf="asociacion?.informacion_adicional_direccion" >
-          <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
-          <div class="detail-container__data">
-            <h4 class="detail-container__title">Información adicional de la dirección</h4>
-            <span class="detail-container__value">
-              {{asociacion?.informacion_adicional_direccion}}</span>
-          </div>
-        </div>
+    <div class="detail-container mt-4">
+      <img class="detail-container__image"src="assets/icons/location_on_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Dirección</h4>
+        <span *ngIf="asociacion?.direccion" class="detail-container__value">
+          {{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion}}</span>
+      </div>
+    </div>
+    <div class="detail-container mt-4" *ngIf="asociacion?.informacion_adicional_direccion" >
+      <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Información adicional de la dirección</h4>
+        <span class="detail-container__value">
+          {{asociacion?.informacion_adicional_direccion}}</span>
+      </div>
+    </div>
     <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/pescador.svg">
       <div class="detail-container__data">
@@ -132,11 +132,19 @@
     </div>
 
     <div class="detail-container mt-4">
+      <img class="detail-container__image" src="assets/icons/set_meal_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Granjas que pertenecen a la asociación </h4>
+        <span class="detail-container__value">{{granjasAsociacion!.length > 0 ? granjasAsociacion?.length + ' granjas en total' : 'No cuenta con granjas asociadas'}}</span>
+      </div>
+    </div>
+
+    <div class="detail-container mt-4">
       <img class="detail-container__image"src="assets/icons/venus-solid.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Mujeres en la asociación</h4>
         <span *ngIf="asociacion?.direccion" class="detail-container__value">
-          {{numeroMujeres}}</span>
+          {{numeroMujeres > 0 ? numeroMujeres : 'No hay mujeres asociadas' }}</span>
       </div>
     </div>
 
@@ -145,7 +153,7 @@
       <div class="detail-container__data">
         <h4 class="detail-container__title">Hombres en la asociación</h4>
         <span *ngIf="asociacion?.direccion" class="detail-container__value">
-          {{numeroHombres}}</span>
+          {{numeroHombres > 0 ? numeroHombres : 'No hay hombres asociados'}}</span>
       </div>
     </div>
   </div>
@@ -165,6 +173,12 @@
           <span>
             <img class="detail-container__image" src="assets/icons/pescador.svg">
           </span> Pescadores</a>
+      </li>
+      <li class="nav-item" (click)="activeTabClick(3)" *ngIf="true">
+        <a class="nav-link nav-link--color" [ngClass]="{'active mynav-link': activatelistgranjas}">
+          <span>
+            <img class="detail-container__image" src="assets/icons/set_meal_black_24dp.svg">
+          </span> Granjas</a>
       </li>
     </ul>
   </div>
@@ -195,6 +209,21 @@
             [pescador]="pescador"
               (onDetalle)="gopescadorDetail($event)">
            </app-card-pescador>
+      </div>
+    </div>
+    <div class="mytarget" *ngIf="activatelistgranjas">
+      <div class="row row-cols-1 row-cols-sm-1 row-cols-xl-2 g-4  row--mi-estilo"
+        [ngClass]="{'mychangeitemheight':granjaChangeItem,'search-container--flex':granjaShowNotFound, 'container--flex-center':granjasAsociacion?.length==1 }">
+        <div *ngIf="granjaChangeItem" class="mychangeitem">
+          <div>
+            <img src="assets/icons/changeiconanimado.svg">
+          </div>
+        </div>
+           <app-card-granjas
+             *ngFor="let granja of granjasAsociacion"
+             [granja]="granja"
+             (onDetalle)="goDetailFarm($event)">
+          </app-card-granjas>
       </div>
     </div>
   </div>

@@ -68,6 +68,13 @@ export class AsociacionesService {
     );
   }
 
+  updateParcial(nit:number, newDataAsociacion: any){
+    return this.https.put(
+      environment.doryApiRestBaseUrl+'/asociaciones/parcial/' + nit,
+      newDataAsociacion
+    );
+  }
+
   detail(nit: number) {
     return this.https.get(
       environment.doryApiRestBaseUrl+'/asociaciones/' + nit

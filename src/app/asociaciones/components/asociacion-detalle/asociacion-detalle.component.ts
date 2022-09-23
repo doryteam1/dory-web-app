@@ -7,6 +7,7 @@ import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { AsociacionesService } from '../../services/asociaciones.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
+import { GranjasService } from 'src/app/granjas/services/granjas.service';
 
 @Component({
   selector: 'app-asociacion-detalle',
@@ -34,7 +35,11 @@ export class AsociacionDetalleComponent implements OnInit {
   tipoUsuario: any;
   numeroMujeres:number = 0;
   numeroHombres:number = 0;
-
+  activatelistgranjas: boolean = false;
+  granjasAsociacion:any[]=[];
+  granjaShowError: boolean = false;
+  granjaShowNotFound: boolean = false;
+  granjaChangeItem: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private asociacionesService: AsociacionesService,
@@ -43,7 +48,8 @@ export class AsociacionDetalleComponent implements OnInit {
     private pescadoresService: PescadoresService,
     private asociacionService: AsociacionesService,
     private appModalService:AppModalService,
-    public userService:UsuarioService
+    public userService:UsuarioService,
+    private granjasService:GranjasService
   ) {}
 
   ngOnInit(): void {
@@ -61,6 +67,7 @@ export class AsociacionDetalleComponent implements OnInit {
         (response) => {
           console.log(response.data[0])
           this.asociacion = response.data[0];
+          console.log("asociacion ",this.asociacion)
           if (response.data.length > 0) {
             this.asociacionesshowError = false;
             this.asociacionesshowNotFound = false;
@@ -70,6 +77,7 @@ export class AsociacionDetalleComponent implements OnInit {
           }
         },
         (err) => {
+          console.log(err)
           this.asociacionesshowNotFound = false;
           this.asociacionesshowError = false;
           if (err.status == 404) {
@@ -81,6 +89,34 @@ export class AsociacionDetalleComponent implements OnInit {
         }
       );
     this.pescadoresPorAsociacions();
+    this.granjasPorAsociacion();
+  }
+
+  granjasPorAsociacion(){
+    this.granjasService.getGranjasByNitAsociacion(this.selectedAsociacionnit).subscribe(
+      (response)=>{
+        this.granjasAsociacion = response.data;
+        if (response.data.length > 0) {
+          this.granjaShowError = false;
+          this.granjaShowNotFound = false;
+          this.granjaChangeItem = false;
+        } else {
+          this.granjaShowNotFound = true;
+          this.granjaShowError = false;
+          this.granjaChangeItem = false;
+        }
+      },err=>{
+        this.granjaShowNotFound = false;
+        this.granjaShowError = false;
+        this.granjaChangeItem = false;
+        if (err.status == 404) {
+          this.granjaShowNotFound = true;
+        } else {
+          this.granjaShowError = true;
+          this.errorMessage = 'Error inesperado';
+        }
+      }
+    )
   }
   async pescadoresPorAsociacions() {
     try {
@@ -170,9 +206,15 @@ export class AsociacionDetalleComponent implements OnInit {
     if (i == 1) {
       this.activatelistpiscicultores = true;
       this.activatelistpescadores = false;
+      this.activatelistgranjas = false;
     } else if (i == 2) {
       this.activatelistpescadores = true;
       this.activatelistpiscicultores = false;
+      this.activatelistgranjas = false;
+    } else if(i == 3){
+      this.activatelistpescadores = false;
+      this.activatelistpiscicultores = false;
+      this.activatelistgranjas = true;
     }
   }
   gopiscicultorDetail(piscicultor: any) {
@@ -283,4 +325,7 @@ export class AsociacionDetalleComponent implements OnInit {
     });
   }
   
+  goDetailFarm(granja: any) {
+    this.router.navigateByUrl('/granjas/municipio/detalle/' + granja.id_granja);
+  }
 }
