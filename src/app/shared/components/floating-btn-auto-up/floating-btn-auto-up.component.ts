@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject, HostListener, Input, ElementRef, HostBinding } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, OnInit,HostListener, Input, ElementRef, HostBinding } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -13,7 +12,6 @@ export class FloatingBtnAutoUpComponent implements OnInit {
   @Input() parentContainer: ElementRef | undefined;
   windowScrolled: boolean | undefined;
   constructor(
-    @Inject(DOCUMENT) private document: Document,
     private router: Router
   ) {}
   @HostListener('window:scroll', [])
@@ -69,7 +67,6 @@ export class FloatingBtnAutoUpComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route: string = event.url;
-        console.log(route)
         if (
           route.includes('asociaciones') ||
           route.includes('novedades/') ||
@@ -95,7 +92,7 @@ export class FloatingBtnAutoUpComponent implements OnInit {
             route.includes('panel-busqueda/pescadores') ||
             route.includes('panel-busqueda/piscicultores') ||
             route.includes('panel-busqueda/granjas') ||
-            route.includes('/welcome') 
+            route.includes('/welcome')
           ) {
 
             this.isHidden = true;

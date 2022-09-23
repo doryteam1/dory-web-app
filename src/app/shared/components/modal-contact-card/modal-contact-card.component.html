@@ -1,5 +1,6 @@
 
-      <div #modalcontenido class="modal-body card">
+<!-- modal 1 contacto -->
+      <div *ngIf="modalDetalle" class="modal-body card" (click)="navigateDetalle() ">
         <button type="button" class="btn-close btn-close-modal" aria-label="Close" (click)="dismiss()"></button>
         <div class="head">
          <!--  <div class="circle"></div> -->
@@ -57,8 +58,67 @@
           <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, eligendi!</p> -->
         </div>
         <div class="contact">
-          <a (click)="navigateDetalle() ">Detalles</a>
+          <a>Ver detalle</a>
         </div>
       </div>
-
-<!-- modal -->
+<!-- modal 2 informacion granja -->
+  <div *ngIf="!modalDetalle" class="modal-body card"  (click)="navigateDetalle()">
+    <button type="button" class="btn-close btn-close-modal" aria-label="Close" (click)="dismiss()"></button>
+    <div class="head">
+      <div class="img">
+        <img [src]="datos?.foto ? datos?.foto : 'assets/images/avatar-person.svg'">
+      </div>
+    </div>
+    <div class="description">
+      <h4> {{datos?.nombreGranja ? datos?.nombreGranja : 'Sin definir'}}</h4>
+      <nav class="nav-estilo">
+        <a class="datos">
+          <div class="icon">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="none">
+                <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="white"/>
+              </svg>
+            </div>
+          </div>
+          <div class="content">
+            <h1>Calificación</h1>
+            <app-stars size="mini" [selectedStar]="datos?.puntuacion"></app-stars>
+          </div>
+        </a>
+        <a class="datos">
+          <div class="icon">
+            <div>
+            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"
+              fill="none">
+                <path
+                  d="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z M13.57,11.57L12,15l-1.57-3.43L7,10l3.43-1.57 L12,5l1.57,3.43L17,10L13.57,11.57z" />
+            </svg>
+            </div>
+          </div>
+          <div class="content">
+            <h1>Reseñas</h1>
+            <span>{{datos?.count_resenas ? datos?.count_resenas : 'Sin reseñas'}}</span>
+          </div>
+        </a>
+        <a class="datos">
+          <div class="icon">
+            <div>
+        <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"
+          fill="none">
+          <rect fill="none" height="24" width="24" />
+          <path d="M3,13v7h18v-1.5l-9-7L8,17L3,13z M3,7l4,3l5-7l5,4h4v8.97l-9.4-7.31l-3.98,5.48L3,10.44V7z" />
+        </svg>
+            </div>
+          </div>
+          <div class="content">
+            <h1>Área</h1>
+            <span>{{datos?.area}}m²</span>
+          </div>
+        </a>
+      </nav>
+      <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, eligendi!</p> -->
+    </div>
+    <div class="contact">
+      <a >Ver detalle</a>
+    </div>
+  </div>

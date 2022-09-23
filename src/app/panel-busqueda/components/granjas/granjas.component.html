@@ -3,8 +3,7 @@
     (textSearch)="onBuscarPalabra($event)">
     </app-search>
     <app-modal-multi-filters [radioFilter1]="orderFilters" [chipFilter1]="starsFilter" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
-</div>   
-<app-not-found *ngIf="showNotFound" objectName="granjas"></app-not-found>
+</div>
 <div class="chip mb-4">
     <app-chip-con-boton-close class="chip__element"
     *ngIf="selectedOrderFilter"
@@ -31,42 +30,16 @@
         >
     </app-chip-con-boton-close>
 </div>
-<!-- <div *ngIf="showNotFound"
-    class="alert alert-primary d-flex align-items-center alert-mi-estilo" role="alert">
-    <img src="assets/icons/searchanimado.svg">
-    <div>
-    No se encontraron resultados
-    </div>
-</div> -->
-<div class="list overflow-auto d-flex flex-column">
+<app-not-found *ngIf="showNotFound" objectName="granjas"></app-not-found>
+<div class="list overflow-auto d-flex flex-column" *ngIf="!showNotFound" >
 <div class="card" *ngFor="let granja of granjasFiltered">
-
-    <div class="card__row" (click)="goDetail(granja)">
+    <div class="card__row" >
         <div class="card__item">
             <img class="card__image" src="{{granja.imagen ? granja.imagen : '/assets/images/avatar-person.svg'}}">
-            <span class="card__title">{{granja.nombre}}</span>
-            <div class="card__label">
-                <app-stars size="mini" [selectedStar]="granja.puntuacion"></app-stars>
-                <span>Reseñas({{granja?.count_resenas}})</span>
-            </div>
+                  <div class="container-nombre">
+                    <span class="card__title" (click)="datosContactoUser(granja)">{{granja.nombre | shorter:shorterNumber}}</span>
+                    <small (click)="goDetail(granja)">Detalles</small>
+                  </div>
         </div>
-        
-        <span class="card__title">{{granja.area}}m²</span>
-        <!-- <div *ngIf="authRol == 'Piscicultor' || authRol == 'Pescador'">
-            <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(granja)"
-            *ngIf="!granja?.estado_solicitud">Unirme</button>
-            <button class="card__button btn-square btn--grey mt-3" (click)="invitarAnular(granja)"
-            *ngIf="granja?.estado_solicitud == 'Enviada'">Anular</button>
-            <div class="btn-group mt-3" *ngIf="granja?.estado_solicitud == 'Aceptada'">
-                <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
-                    data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li (click)="invitarAnular(granja)"><a class="dropdown-item"><i class="bi bi-box-arrow-left"></i> No
-                        soy
-                        miembro</a>
-                    </li>
-                </ul>
-            </div>
-        </div> -->
     </div>
 </div>

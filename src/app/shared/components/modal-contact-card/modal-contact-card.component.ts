@@ -8,15 +8,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./modal-contact-card.component.scss'],
 })
 export class ModalContactCardComponent implements OnInit {
-  @ViewChild('modalcontenido')
-  modalcontenido!: ElementRef;
   @Input() datos: any;
-  constructor(
-    private _modalService: NgbActiveModal,
-    private router: Router,
-  ) {
-
-  }
+  modalDetalle: boolean = true;
+  constructor(private _modalService: NgbActiveModal, private router: Router) {}
   ngOnInit(): void {
     console.log(this.datos);
   }
