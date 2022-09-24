@@ -33,26 +33,9 @@
 .container__icon3 {
   cursor: pointer;
 }
-
 .container__icon4 {
   cursor: pointer;
   color: var(--morado)
-}
-
-.search-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 10px;
-}
-
-.search-container__box {
-  text-align: center;
-}
-
-.search-container__image {
-width: 80vw;
-max-height: 350px;
 }
 .modal__image {
   width: 100px;

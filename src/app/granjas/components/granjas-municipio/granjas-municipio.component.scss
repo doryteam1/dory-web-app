@@ -141,11 +141,6 @@ div.container-map-car>div>div:nth-child(1) {
   margin-top: 12px;
   cursor: pointer;
 }
-
-/* .mYstiledivmap {
-  display: none;
-} */
-
 .card__rating-container {
   display: flex;
   flex-direction: row;
@@ -204,31 +199,15 @@ div.container-map-car>div>div:nth-child(1) {
   margin-top: 80px;
 }
 
-.search-container {
+.container__app-not-found {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-right: 20px;
   margin-left: 20px;
   margin-bottom: 20px;
 }
-
-.search-container__box {
-  text-align: center;
-  width: 100%;
-}
-
-.search-container__image {
-  width: 400px;
-  height: 270px;
-  margin-top: 17px;
-}
-
-.search-container__image--modify {
-  margin-top: 60px;
-  width: 100%;
-}
-
 .granjas-container__map {
   align-self: start;
   width: 100%;
@@ -236,7 +215,6 @@ div.container-map-car>div>div:nth-child(1) {
 }
 
 .mapgoogle {
-  /* border: 2px solid #6c6c6c; */
   border-radius: 10px;
   overflow: hidden;
   height: 300px;

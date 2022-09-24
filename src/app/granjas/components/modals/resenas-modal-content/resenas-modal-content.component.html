@@ -3,8 +3,8 @@
     <div type="button" class="btn-close" aria-describedby="modal-title" (click)="dismiss()"></div>
 </div>
 <div class="modal-body">
-    <div class="card__rating-container">
-        <app-stars [selectedStar]="puntuacion"  size="medium"></app-stars>
+    <div class="card__rating-container" *ngIf="!showNotFound && !showErrorFound">
+        <app-stars [selectedStar]="puntuacion"  size="medium" ></app-stars>
     </div>
     <div class="container overflow-auto" *ngIf="!showNotFound && !showErrorFound">
         <div class="card" *ngFor="let resena of resenas">
@@ -19,23 +19,8 @@
             <p class="card__paragh">{{resena.descripcion}}</p>
         </div>
     </div>
-
-    <div class="search-container" *ngIf="showNotFound">
-        <div class="search-container__box">
-            <img class="search-container__image search-container__image--modify " src="assets/images/searching.svg">
-            <h3>No se han encontrado resultados</h3>
-            <p>Aún no sean han registrado reseñas</p>
-        </div>
-    </div>
-
-    <div class="search-container" *ngIf="showErrorFound">
-        <div class="search-container__box">
-            <img class="search-container__image" src="assets/images/robot-broken.svg">
-            <h3>Error inesperado</h3>
-            <p>Se ha presentado un error. Intenta nuevamente.</p>
-        </div>
-    </div>
-
+    <app-not-found *ngIf="showNotFound" message="Aún no sean han registrado reseñas"></app-not-found>
+    <app-not-found *ngIf="showErrorFound" [errorData]="true" message="Se ha presentado un error. Intenta nuevamente" messageError="Error inesperado"></app-not-found>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary btn-button-close" (click)="decline()">{{btnCancelText}}</button>

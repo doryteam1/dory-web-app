@@ -73,31 +73,15 @@
   margin-right: 5px;
 }
 
-.search-container {
+.container__app-not-found {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-right: 20px;
   margin-left: 20px;
   margin-bottom: 20px;
 }
-
-.search-container__image {
-  width: 400px;
-  height: 270px;
-  margin-top: 17px;
-}
-
-.search-container__image--modify {
-  margin-top: 60px;
-  width: 100%;
-}
-
-.search-container__box {
-  text-align: center;
-  width: 100%;
-}
-
 /* mi estilo targeta nuevo map */
 .container-map-car {
   display: flex;

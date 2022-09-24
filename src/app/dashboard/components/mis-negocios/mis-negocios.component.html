@@ -1,11 +1,5 @@
 <div class="container">
-      <div class="search-container" *ngIf="showNotFound">
-        <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/searching.svg">
-          <h3>No se han encontrado resultados</h3>
-          <p>Aun no has registrado tus negocios</p>
-        </div>
-      </div>
+      <app-not-found *ngIf="showNotFound" message="Aun no has registrado tus negocios"></app-not-found>
     <div class="container__table" *ngIf="!showNotFound">
         <table class="table mt-40">
             <thead class="table-light">
@@ -27,8 +21,6 @@
                 <td>{{negocio?.direccion}}</td>
                 <td>
                     <div class="container-row">
-                        <!-- <i class="container__icon bi bi-pencil text-success me-3" (click)="openModal(content,'update',i)"></i> -->
-                        <!--<span class="container__link link" (click)="openModal(content,'update',i)">Ver detalle</span>-->
                         <i class="container__icon1 bi bi-pencil text-success me-2"  (click)="editarNegocio(negocio)" ngbTooltip="Crear y actualizar"></i>
                         <i class="container__icon2 bi bi-trash text-danger me-2" (click)="deleteNegocio(negocio)" ngbTooltip="Eliminar"></i>
                         <i class="container__icon3 bi bi-geo-alt-fill text-danger me-2" (click)="verMap(negocio.id_negocio)"  ngbTooltip="Mi ubicación"></i>

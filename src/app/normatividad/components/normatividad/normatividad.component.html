@@ -4,7 +4,7 @@
     <button class="btn-outline-black ms-3" routerLink="/normatividad/decretos">Decretos</button>
     <button class="btn-outline-black ms-3" routerLink="/normatividad/resoluciones">Resoluciones</button>
 </div>
-<div class="container-normatividades">
+<div class="container-normatividades" *ngIf="normatividadesFiltered.length > 0">
     <div class="card container" *ngFor="let normatividad of normatividadesFiltered">
       <h3 class="card-title">{{normatividad.nombre}}</h3>
       <p>{{normatividad.contenido | shorter:164}}</p>
@@ -12,11 +12,5 @@
            [href]="normatividad.url_descarga">Leer más...</a>
     </div>
 </div>
-<div class="search-container" *ngIf="normatividadesFiltered.length < 1">
-    <div class="search-container__box">
-        <img class="search-container__image" src="assets/images/searching.svg">
-        <h3>No se han encontrado resultados</h3>
-        <p>No encontramos normatividades relacionadas con la busqueda.</p>
-    </div>
-</div>
+<app-not-found *ngIf="normatividadesFiltered.length < 1" objectName="normatividades relacionadas"></app-not-found>
 <app-footer></app-footer>

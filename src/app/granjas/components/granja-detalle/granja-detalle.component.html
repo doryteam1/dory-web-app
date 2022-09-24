@@ -202,25 +202,11 @@ class="galleryslider"
           <p class="card__paragh" *ngIf="i < 3">{{resena?.descripcion}}</p>
           <a class="link" *ngIf="i == 2" (click)="showResenas(granja)">Ver todas las reseñas</a>
       </div>
-      <!-- <button class="resenas__button btn-rounded-blue" (click)="openQualifyModal(qualifyModal)">Calificar</button> -->
     </div>
 </div>
+<app-not-found *ngIf="showNotFound" message="No encontramos la granja solicitada"></app-not-found>
+<app-not-found *ngIf="showError" [errorData]="true"  message="No pudimos recuperar la granja solicitada :(" messageError="{{errorMessage}}"></app-not-found>
 
-<div class="search-container" *ngIf="showNotFound">
-  <div class="search-container__box">
-      <img class="search-container__image" src="assets/images/searching.svg">
-      <h3>No se han encontrado resultados</h3>
-      <p>No encontramos la granja solicitada</p>
-  </div>
-</div>
-
-<div class="search-container" *ngIf="showError">
-    <div class="search-container__box">
-        <img class="search-container__image2" src="assets/images/problem_solving.svg">
-        <h3>{{errorMessage}}</h3>
-        <p>No pudimos recuperar la granja solicitada :(</p>
-    </div>
-</div>
 <ng-template #qualifyModal let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" *ngIf="!success">Calificar esta granja</h4>
