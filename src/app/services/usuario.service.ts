@@ -26,6 +26,8 @@ export class UsuarioService {
       latitud: usuario.latitud || 0,
       longitud: usuario.longitud || 0,
       creadoCon: usuario.creadoCon || '',
+      id_sexo:null,
+      id_etnia:null
     };
     return this.httpsService.post(
       environment.doryApiRestBaseUrl+'/usuario/create',

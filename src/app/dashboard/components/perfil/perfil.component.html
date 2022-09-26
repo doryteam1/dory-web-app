@@ -186,13 +186,13 @@
       <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="openAddFileDialog('cedula')">
         <div class="container__btn3-div">
           <img src="assets/icons/update-icon-photo-perfil.svg">
-          <span>Actualizar cedula</span>
+          <span>Actualizar cédula</span>
         </div>
       </button>
       <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="deleteDocument('url_imagen_cedula')">
         <div class="container__btn3-div">
           <img src="assets/icons/delete_black_24dp.svg">
-          <span>Eliminar cedula</span>
+          <span>Eliminar cédula</span>
         </div>
       </button>
 
@@ -217,7 +217,7 @@
     </div>
 
     <div class="d-flex justify-content-center flex-row mt-3">
-      <a class="link rigth" [href]="usuario.url_imagen_cedula" target="_blank" *ngIf="usuario.url_imagen_cedula">Descargar cedula</a>
+      <a class="link rigth" [href]="usuario.url_imagen_cedula" target="_blank" *ngIf="usuario.url_imagen_cedula">Descargar cédula</a>
       <a class="link rigth" [href]="usuario.url_sisben" target="_blank" *ngIf="usuario.url_sisben">Descargar sisben</a>
     </div>
     <div id="ubicacion">
