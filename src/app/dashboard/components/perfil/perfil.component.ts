@@ -240,6 +240,7 @@ export class PerfilComponent implements OnInit {
   vertices = vertices;
   apiLoaded: Observable<boolean>;
   percentUploaded: number | undefined = 0;
+  percentUploaded2: number | undefined = 0;
   municipiocambiado: boolean = false;
   editarperfil: boolean = false;
   mensajedirecion!: string;
@@ -249,6 +250,9 @@ export class PerfilComponent implements OnInit {
   photoUpdate: boolean = false;
   sexos: any[] = [];
   etnias: any[] = [];
+  updatingDocument: string = '';
+  photoUpdate2: boolean = false;
+  photoDelete2: boolean = false;
   constructor(
     private us: UsuarioService,
     private aes: AreasExperticiaService,
@@ -434,7 +438,8 @@ export class PerfilComponent implements OnInit {
   this.etnia?.setValue(this.usuario?.id_etnia);
   }
 
-  openAddFileDialog() {
+  openAddFileDialog(document:string) {
+    this.updatingDocument = document;
     const element: HTMLElement = this.inputFileDialog.nativeElement;
     element.click();
   }
@@ -482,20 +487,98 @@ export class PerfilComponent implements OnInit {
         }
       });
   }
+
+  async uploadDocumentToServer(file: any, document:string) {
+    let ext = file.name.split('.')[1];
+    let fileName = '';
+    let urlDeleteDocument = '';
+    if(document == 'cedula'){
+      fileName = '/usuarios/cedulas/'+'cedula-' + this.id?.value + '.' + ext;
+      urlDeleteDocument = this.usuario.url_imagen_cedula;
+    }else if(document == 'sisben'){
+      fileName = '/usuarios/sisben/'+'sisben-' + this.id?.value + '.' + ext;
+      urlDeleteDocument = this.usuario.url_sisben;
+    }
+
+    try{
+      await this.storage.deleteByUrl(urlDeleteDocument).toPromise();
+    }catch(err){
+      try{
+        await this.storage.deleteByUrl(urlDeleteDocument).toPromise();
+      }catch(err){
+      }
+    }
+    this.storage
+      .cloudStorageTask(fileName, file)
+      .percentageChanges()
+      .subscribe((response) => {
+        console.log(response);
+        this.percentUploaded2 = response;
+        if (this.percentUploaded2 == 100) {
+          this.storage
+            .cloudStorageRef(fileName)
+            .getDownloadURL()
+            .subscribe(
+              (downloadUrl) => {
+                let body:any;
+                if(document == 'cedula'){
+                  body = {
+                    url_imagen_cedula : downloadUrl
+                  }
+                }else if(document == 'sisben'){
+                  body = {
+                    url_sisben : downloadUrl
+                  }
+                }
+                this.us
+                  .actualizarUsuario(this.id?.value, body)
+                  .subscribe(
+                    async (response) => {
+                       if(document == 'cedula'){
+                        this.usuario.url_imagen_cedula = downloadUrl;
+                      }else if(document == 'sisben'){
+                        this.usuario.url_sisben = downloadUrl;
+                      }
+
+                      this.photoUpdate2 = true;
+                      setTimeout(() => {
+                        this.photoUpdate2 = false;
+                      }, 3000);
+                    },
+                    (err) => {
+                      console.log(err);
+                    }
+                  );
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+        }
+      });
+  }
+
+
   async fileChange(event: any) {
-    this.loadingPhoto = true;
+    if(this.updatingDocument == 'foto'){
+      this.loadingPhoto = true;
+    }
     const imageFile = event.target.files[0];
     console.log(imageFile);
     event.srcElement.value = '';
     try {
-      const compressedFile =
-        await this.compressImageSizeService.handleImageUpload(imageFile);
-      await this.uploadToServer(compressedFile); // write your own logic
+      const compressedFile = await this.compressImageSizeService.handleImageUpload(imageFile);
+      if(this.updatingDocument == 'foto'){
+        await this.uploadToServer(compressedFile);
+      }else{
+        console.log("actualizar ", this.updatingDocument)
+        await this.uploadDocumentToServer(compressedFile,this.updatingDocument)
+      }
     } catch (error) {
       console.log(error);
     }
   }
-  delatePhotoPerfil() {
+  deletePhotoPerfil() {
     this.us.actualizarUsuario(this.id?.value, { foto: '' }).subscribe(
       (response) => {
         this.usuario.foto = '';
@@ -513,6 +596,8 @@ export class PerfilComponent implements OnInit {
         console.log(err);
       }
     );
+
+    
     // let fileName = '/perfil/user_' + this.id?.value;
     // this.storage.deletephotoPerfil(fileName).subscribe(
     //   (result) => {
@@ -538,6 +623,37 @@ export class PerfilComponent implements OnInit {
     //     console.log(err);
     //   }
     // );
+  }
+
+  deleteDocument(keyName:string) {
+    let body:any = {};
+    body[keyName] = null;
+    let urlDeleteDocument = this.usuario[keyName];
+    this.us.actualizarUsuario(this.id?.value, body).subscribe(
+      async (response) => {
+        try{
+          await this.storage.deleteByUrl(urlDeleteDocument).toPromise();
+          this.usuario[keyName] = '';
+        }catch(err){
+          try{
+            await this.storage.deleteByUrl(urlDeleteDocument).toPromise();
+            this.usuario[keyName] = '';
+          }catch(err){
+            this.usuario[keyName] = '';
+          }
+        }
+
+        this.photoDelete2 = true;
+        this.usuario;
+        setTimeout(() => {
+          this.photoDelete2 = false;
+          /*  window.location.reload(); */
+        }, 3000);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   nomCorregVeredasubs() {

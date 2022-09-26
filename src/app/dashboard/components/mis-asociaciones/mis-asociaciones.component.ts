@@ -219,15 +219,18 @@ export class MisAsociacionesComponent
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
     /*Asociaciones en donde se es representante legal*/
+    this.loading1 = true;
     this.asociacionesService.getAsociacionesUsuario(this.authUserId).subscribe(
       (response) => {
         this.asociaciones = response.data;
         if (this.asociaciones.length < 1) {
           this.showNotFound = true;
         }
+        this.loading1 = false;
       },
       (err) => {
         console.log(err);
+        this.loading1 = false;
       }
     );
 

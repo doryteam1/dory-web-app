@@ -126,6 +126,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
               },err=>{
                 this.loading1 = false;
                 console.log(err);
+                //this.error = 'A ocurrido un error al subir la camara de comercio'
               }
             )
           }
@@ -146,7 +147,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
           this.loading1 = false;
         });  
     }else{
-      
       let ext = this.fileRut.name.split('.')[1];
       let basePath = '/asociaciones/rut/todos/';
       let fileName = 'rut-asociacion-'+this.form.getRawValue().nit+'.'+ext;
@@ -178,6 +178,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
               },err=>{
                 this.loading1 = false;
                 console.log(err);
+                //this.error = 'A ocurrido un error al subir el documento RUT';
               }
             )
           }
@@ -186,9 +187,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
   }
   addAsociaciones() {
-    console.log('addAsociaciones');
-    console.log("form asociaciones ",this.form.getRawValue());
-    console.log(this.form.controls);
     this.loading1 = true;
     if(this.isLegalConstituida?.value == '0'){
       this.fotoCamc?.clearValidators();
@@ -205,9 +203,40 @@ export class AsociacionDetalleFormComponent implements OnInit {
 
     if(this.isLegalConstituida?.value == '0'){
       let asociacion = { ...this.form.getRawValue() }
+      this.sendAsociacionToAdd(asociacion);
+    }
+    else{
+      let ext = this.file.name.split('.')[1];
+      let token = localStorage.getItem('token');
+      let payload = Utilities.parseJwt(token!);
+      let basePath = '/asociaciones/camaracomercio/todas/';
+      let fileName = 'camc-asociacion-'+this.form.getRawValue().nit+'.'+ext;
+      let filePath = basePath + fileName;
+      this.storage.cloudStorageTask(filePath,this.file).percentageChanges().subscribe(
+        (response)=>{
+          console.log(response)
+          if(response == 100){//porcentaje de carga de la camara de comercio
+            this.storage.cloudStorageRef(filePath).getDownloadURL().subscribe(
+              (downloadUrl)=>{
+                let asociacion = { ...this.form.getRawValue() }
+                asociacion.foto_camarac = downloadUrl;
+                this.sendAsociacionToAdd(asociacion);
+              },err=>{
+                this.loading1 = false;
+                //this.error = 'A ocurrido un error al subir la camara de comercio'
+                console.log(err);
+              }
+            )
+          }
+        }
+      );
+    }
+  }
+
+  async sendAsociacionToAdd(asociacion:any){
+    if(this.fileRut == null){//No hay archivo rut para subir
       this.asociacionesService.add(asociacion).subscribe(
         (response) => {
-          console.log(response)
           this.location.back();
           this.loading1 = false;
         },
@@ -220,27 +249,20 @@ export class AsociacionDetalleFormComponent implements OnInit {
             this.error = 'A ocurrido un error'
           }
         });
-    }
-    else{
-      let ext = this.file.name.split('.')[1];
-      let token = localStorage.getItem('token');
-      let payload = Utilities.parseJwt(token!);
-      let basePath = '/asociaciones/camaracomecio/todas/';
-      let fileName = 'asociacion-'+this.form.getRawValue().nit+'.'+ext;
+    }else{
+      let ext = this.fileRut.name.split('.')[1];
+      let basePath = '/asociaciones/rut/todos/';
+      let fileName = 'rut-asociacion-'+this.form.getRawValue().nit+'.'+ext;
       let filePath = basePath + fileName;
-      console.log("file ",this.file)
-      this.storage.cloudStorageTask(filePath,this.file).percentageChanges().subscribe(
+      
+      this.storage.cloudStorageTask(filePath,this.fileRut).percentageChanges().subscribe(
         (response)=>{
-          console.log(response)
-          if(response == 100){//porcentaje de carga de la camara de comercio
+          if(response == 100){
             this.storage.cloudStorageRef(filePath).getDownloadURL().subscribe(
               (downloadUrl)=>{
-                console.log("download url ",downloadUrl)
-                let asociacion = { ...this.form.getRawValue() }
-                asociacion.foto_camarac = downloadUrl;
+                asociacion.url_rut = downloadUrl;
                 this.asociacionesService.add(asociacion).subscribe(
                   (response) => {
-                    console.log(response)
                     this.location.back();
                     this.loading1 = false;
                   },
@@ -248,22 +270,22 @@ export class AsociacionDetalleFormComponent implements OnInit {
                     this.loading1 = false;
                     console.log(err);
                     if(err.status == 400){
-                      this.error = 'Ya existe una asociación con el Nit '+ asociacion.nit
+                      this.error = err.error.message;
                     }else{
                       this.error = 'A ocurrido un error'
                     }
-                  }
-                );
+                  });
               },err=>{
                 this.loading1 = false;
                 console.log(err);
+                //this.error = 'A ocurrido un error al subir el documento RUT';
               }
             )
           }
-        }
-      );
+        });
     }
   }
+
 
   fileChange(event: any) {
     this.file = event.target.files[0];

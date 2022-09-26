@@ -32,6 +32,7 @@
       <div class="not-found" *ngIf="showNotFound">
         <app-not-found message="Aún no has registrado tus asociaciones"></app-not-found>
       </div>
+      <app-spinner [showText]=false *ngIf="loading1"></app-spinner>
     </div>
     <!-- Profile-tab-pane -->
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
