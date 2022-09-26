@@ -38,28 +38,6 @@
   cursor: pointer;
   color: var(--morado)
 }
-
-.search-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.search-container__box {
-  text-align: center;
-}
-
-.search-container__image {
-  width: 400px;
-  height: 270px;
-  margin-top: 100px;
-}
-
-.search-container__image2 {
-  width: 396px;
-  height: 370px;
-}
-
 .modal__image {
   width: 100px;
   height: 100px;

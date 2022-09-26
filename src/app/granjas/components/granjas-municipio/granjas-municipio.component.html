@@ -46,13 +46,9 @@
         </app-chip-con-boton-close>
       </div>
   </div>
-  <div class="search-container" *ngIf="showNotFound">
-    <div class="search-container__box">
-      <img class="search-container__image" [ngClass]="{'search-container__image--modify':granjas.length<1}" src="assets/images/searching.svg">
-      <h3>No se han encontrado resultados</h3>
-      <p>No encontramos resultados para esta busqueda </p>
-      <button class="btn-rounded btn--blue" (click)="goBack()">Volver al mapa</button>
-    </div>
+  <div class="container__app-not-found" *ngIf="showNotFound">
+    <app-not-found  message="No encontramos resultados para esta busqueda"></app-not-found>
+    <button class="btn-rounded btn--blue" (click)="goBack()">Volver al mapa</button>
   </div>
   <div>
     <div class="container-map-car">

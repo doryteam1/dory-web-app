@@ -21,18 +21,6 @@
   cursor: pointer;
   color: var(--azul1)
 }
-.search-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-.search-container__box {
-  text-align: center;
-}
-.search-container__image {
-  width: 80vw;
-  max-height: 350px;
-}
 .container__spinner {
   width: 20px;
   height: 20px;

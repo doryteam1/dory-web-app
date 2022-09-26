@@ -68,28 +68,14 @@ gap: 10px;
     height: 22px;
     margin-right: 5px;
 }
-.search-container{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-right: 20px;
-    margin-left: 20px;
-    margin-bottom: 20px;
-}
-.search-container__image {
-  width: 400px;
-  height: 270px;
-  margin-top: 17px;
-}
-
-.search-container__image--modify{
-  margin-top: 60px;
-  width: 100%;
-}
-
-.search-container__box{
-    text-align: center;
-    width: 100%;
+.container__app-not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 /* mi estilo targeta nuevo map */
 .container-map-car {

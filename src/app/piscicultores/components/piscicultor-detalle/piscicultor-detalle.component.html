@@ -141,17 +141,6 @@
            <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-     <!--    <div class="search-container" *ngIf="piscicultorDetalleAsociacioneshowNotFound ">
-          <div class="search-container__box">
-            <img class="search-container__image" src="assets/images/layer1sinfavoritos (1).svg" />
-            <h3>
-              Parece que este piscicultor no cuenta con asociaciones registradas
-              <span>
-                <img src="assets/icons/corazonanimado.svg">
-              </span>
-            </h3>
-          </div>
-        </div> -->
           <app-card-asociacion *ngFor="let asociacion of piscicultorasociaciones" [asociacion]="asociacion"
             [delatecard]="false"
              (onDetalle)="goAssociationDetail($event)"

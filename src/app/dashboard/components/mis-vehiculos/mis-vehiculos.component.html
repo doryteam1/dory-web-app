@@ -1,11 +1,5 @@
 <div class="container">
-  <div class="search-container" *ngIf="showNotFound">
-    <div class="search-container__box">
-      <img class="search-container__image" src="assets/images/searching.svg">
-      <h3>No se han encontrado resultados</h3>
-      <p>Aun no has registrado tus vehículos.</p>
-    </div>
-  </div>
+    <app-not-found *ngIf="showNotFound" message="Aun no has registrado tus vehículos"></app-not-found>
   <div class="container-table-pagination" *ngIf="!showNotFound">
     <table class="table mt-40">
         <thead class="table-light">
