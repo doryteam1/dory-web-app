@@ -49,6 +49,7 @@ export class FiltrosComponent implements OnInit {
         titulomodal
       )
       .then((result: any) => {
+        console.log(result)
         if (result.length !== 0) {
           this.arrayCheckboxSelec = result;
         } else {
@@ -57,8 +58,9 @@ export class FiltrosComponent implements OnInit {
         this.onArrayCheckboxSelec.emit(this.arrayCheckboxSelec);
       })
       .catch((result) => {
+       /*  console.log(result)
         this.arrayCheckboxSelec = [];
-        this.onArrayCheckboxSelec.emit(this.arrayCheckboxSelec);
+        this.onArrayCheckboxSelec.emit(this.arrayCheckboxSelec); */
       });
   }
 }

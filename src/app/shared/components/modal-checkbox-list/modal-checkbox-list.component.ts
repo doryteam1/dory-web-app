@@ -48,12 +48,22 @@ export class ModalCheckboxListComponent implements OnInit {
     return checked;
   }
   public decline() {
-    this._modalService.close(false);
-  }
-  public accept() {
-    this._modalService.close(true);
+    if (this.arrayCheckboxSelec.length == 0) {
+      this.checkArray=[]
+      console.log(this.checkArray);
+      this._modalService.close(this.checkArray);
+    }else{
+      console.log(this.arrayCheckboxSelec);
+      if (this.arrayCheckboxSelec.length !== 0 && this.checkArray.length==0) {
+         this.checkArray = [];
+         console.log(this.checkArray);
+         this._modalService.close(this.checkArray);
+      }else{
+        this._modalService.dismiss();
+      }
+    }
   }
   public dismiss(value:string) {
-   this._modalService.dismiss(this.checkArray);
+   this._modalService.close(this.checkArray);
   }
 }

@@ -207,6 +207,6 @@ export class AppModalService {
     modalRef.componentInstance.arrayCheckbox = arrayCheckbox;
     modalRef.componentInstance.arrayCheckboxSelec = arrayCheckboxSelec;
     modalRef.componentInstance.titleModal = titleModal;
-    return modalRef.dismissed.toPromise();
+    return modalRef.result;
   }
 }

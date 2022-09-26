@@ -65,6 +65,7 @@ export class AsociacionesComponent implements OnInit, OnDestroy {
     ],
   };
   shorterNumber: number = 20;
+  resultFiltroPorMunicipio: any[] = [];
   mediaQueryAsocia!: Subscription;
   mediaQueryAsocia2!: Subscription;
   ngOnDestroy(): void {
@@ -82,7 +83,7 @@ export class AsociacionesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');
-    if(token){
+    if (token) {
       let payload = Utilities?.parseJwt(token!);
       this.authUserId = payload.sub;
       this.authRol = payload.rol;
@@ -90,10 +91,9 @@ export class AsociacionesComponent implements OnInit, OnDestroy {
     /*Todas las asociaones que existen*/
     this.asociacionService.getAsociacionesTodas().subscribe((response) => {
       this.asociaciones = response.data;
-      this.asociaciones =
-        this.asociaciones.filter((asociacion) => {
-          return asociacion.id_propietario !== this.authUserId;
-        });
+      this.asociaciones = this.asociaciones.filter((asociacion) => {
+        return asociacion.id_propietario !== this.authUserId;
+      });
       this.asociacionesFiltered = this.asociaciones.slice();
       console.log(this.asociacionesFiltered);
       if (this.asociacionesFiltered.length < 1) {
@@ -124,7 +124,7 @@ export class AsociacionesComponent implements OnInit, OnDestroy {
     this.loadMunic();
   }
   datosContactoAsociacion(user: any) {
-    console.log(user)
+    console.log(user);
     let object: any = {
       nombreUser: user.nombre,
       tipoUser: user.tipo_asociacion,
@@ -236,6 +236,12 @@ export class AsociacionesComponent implements OnInit, OnDestroy {
         this.filtroseleccionadoCheckbox,
         resultados
       );
+        this.resultFiltroPorMunicipio =
+          this.searchBuscadorService.filterEspecial(
+            resultados,
+            this.filtroseleccionadoCheckbox,
+            'municipio'
+          );
     }
     this.asociacionesFiltered = resultados;
     if (this.asociacionesFiltered.length < 1) {
@@ -291,7 +297,12 @@ export class AsociacionesComponent implements OnInit, OnDestroy {
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
-    this.filtroseleccionadoCheckbox = checkboxs;
+      if (checkboxs.length == 0) {
+        this.filtroseleccionadoCheckbox = [];
+        this.resultFiltroPorMunicipio = [];
+      } else {
+        this.filtroseleccionadoCheckbox = checkboxs;
+      }
     this.searchReset();
   }
 

@@ -28,7 +28,7 @@
 
             <div class="card__icon-box2">
                 <img class="card__icon" src="assets/icons/date.svg">
-                <h5 class="card__sub-title" >{{evento.fecha}}</h5>
+                <h5 class="card__sub-title" >{{evento?.fecha?.slice(0, evento?.fecha?.indexOf('T')) | date:'dd/MM/yyyy'}}</h5>
             </div>
         </a>
     </div>

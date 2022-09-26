@@ -17,15 +17,15 @@
     *ngIf="selectedStarFilter"
     [iconoChip]="true"
     [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
-    [contenidoChip]="selectedStarFilter.nombrefiltro"
+    [contenidoChip]="selectedStarFilter.nombrefiltro + ' ('+ granjasFiltered.length +')'"
     (onCloseClip)="deleteStarFilter()"
     >
     </app-chip-con-boton-close>
     <app-chip-con-boton-close class="chip__element"
-    *ngFor="let  nombre of filtroseleccionadoCheckbox; let i =index"
+    *ngFor="let  resultado of resultFiltroPorMunicipio; let i =index"
         [iconoChip]="true"
         [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
-        [contenidoChip]="nombre"
+        [contenidoChip]="resultado.nombre +' '+ resultado.datos.length"
         (onCloseClip)="deleteFilterCheckbox(i)"
         >
     </app-chip-con-boton-close>

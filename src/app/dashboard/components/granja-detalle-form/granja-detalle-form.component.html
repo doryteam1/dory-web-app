@@ -22,7 +22,7 @@
         <label for="dateOfBirth">Descripción</label>
         <div class="input-group">
           <textarea class="form-control" name="textarea" rows="5" cols="50"
-            formControlName="descripcion">Write something here</textarea>
+            formControlName="descripcion" placeholder="Descripción de la granja">Write something here</textarea>
         </div>
         <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
           <div *ngIf="descripcion?.errors?.['required']">
@@ -33,8 +33,8 @@
       <div class="mb-3">
         <label for="dateOfBirth">Área(m2)</label>
         <div class="input-group">
-          <input id="productName" type="number" class="form-control" placeholder="Cual es el área de tu granja"
-            formControlName="area">
+          <input id="productName" type="number" min="0" class="form-control" placeholder="Área de la granja"
+            formControlName="area" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
         </div>
         <div *ngIf="invalid('area')" class="container__alert-msg danger-message">
           <div *ngIf="area?.errors?.['required']">
@@ -46,8 +46,8 @@
       <div class="mb-3">
         <label for="dateOfBirth">Numero de trabajadores</label>
         <div class="input-group">
-          <input id="productName" type="number" class="form-control"
-            placeholder="Cuantos trabajadores trabajan en tu granja" formControlName="numero_trabajadores">
+          <input id="productName" type="number" min="0" class="form-control"
+            placeholder="Personas que trabajan en la granja" formControlName="numero_trabajadores" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
         </div>
         <div *ngIf="invalid('numero_trabajadores')" class="container__alert-msg danger-message">
           <div *ngIf="numeroTrabajadores?.errors?.['required']">
@@ -59,8 +59,8 @@
       <div class="mb-3">
         <label for="dateOfBirth">Produccion estimada (kg/mes)</label>
         <div class="input-group">
-          <input id="productName" type="number" class="form-control" placeholder="Cuanto produce la granja al mes"
-            formControlName="produccion_estimada_mes">
+          <input id="productName" type="number" min="0" class="form-control" placeholder="Cuanto produce la granja al mes"
+            formControlName="produccion_estimada_mes" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
         </div>
         <div *ngIf="invalid('produccion_estimada_mes')" class="container__alert-msg danger-message">
           <div *ngIf="prodEstimadaMes?.errors?.['required']">
