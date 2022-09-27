@@ -27,7 +27,7 @@
   <div class="card" *ngFor="let vehiculo of vehiculosFiltered; let i=index;">
     <div class="card__img-box">
       <app-carrucel-img *ngIf="vehiculo.fotos.length != 0" class="card__img" [imagenes]="vehiculo.fotos" [indicatorsphoto]="true" [idtarge]="i"
-        [rounded]="true" [efect]="true" [scaledown]="true">
+        [rounded]="true" [efect]="true" [scaledown]="false">
       </app-carrucel-img>
       <img class="sin-img"
         src='https://admin.moodyyc.com/img/no-image.png' *ngIf="vehiculo.fotos.length == 0">
