@@ -42,4 +42,8 @@ export class PlacesService {
       });
     });
   }
+
+  getMunicipiosTodos(){
+    return this.https.get(environment.doryApiRestBaseUrl+"/municipios/");
+  }
 }
