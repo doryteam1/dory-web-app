@@ -230,10 +230,14 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.filtroseleccionadoCheckbox,
         resultados
       );
+      let filterBy = 'municipio';
+      if(this.userType == 'proveedores'){
+        filterBy = 'departamento';
+      }
       this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
         resultados,
         this.filtroseleccionadoCheckbox,
-        'municipio'
+        filterBy
       );
     }
     this.usersFiltered = resultados;
