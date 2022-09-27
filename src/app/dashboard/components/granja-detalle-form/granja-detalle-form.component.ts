@@ -350,9 +350,9 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   initForm() {
     this.idmunicipioselec();
     this.nombreGranja?.setValue('');
-    this.area?.setValue(0);
-    this.numeroTrabajadores?.setValue(0);
-    this.prodEstimadaMes?.setValue(0);
+    this.area?.setValue(null);
+    this.numeroTrabajadores?.setValue(null);
+    this.prodEstimadaMes?.setValue(null);
     this.direccion?.setValue('');
     this.informacionAdicionalDireccion?.setValue('');
     this.latitud?.setValue(0);

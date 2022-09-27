@@ -28,6 +28,7 @@ export class NegociosComponent implements OnInit {
   ];
   palabra: string = '';
   municipios: any;
+  resultFiltroPorMunicipio: any[] = [];
   ngOnInit(): void {
     this.loadMunic();
   }
@@ -36,11 +37,11 @@ export class NegociosComponent implements OnInit {
     private negociosService: NegociosService,
     private searchBuscadorService: SearchBuscadorService,
     private places: PlacesService,
-    private router:Router
+    private router: Router
   ) {
     this.negociosService.getNegociosAll().subscribe((response) => {
       this.negocios = response.data;
-      console.log(this.negocios)
+      console.log(this.negocios);
       this.negociosFiltered = this.negocios;
       if (this.negociosFiltered.length < 1) {
         this.showNotFound = true;
@@ -69,7 +70,12 @@ export class NegociosComponent implements OnInit {
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
-    this.filtroseleccionadoCheckbox = checkboxs;
+      if (checkboxs.length == 0) {
+        this.filtroseleccionadoCheckbox = [];
+        this.resultFiltroPorMunicipio = [];
+      } else {
+        this.filtroseleccionadoCheckbox = checkboxs;
+      }
     this.searchReset();
   }
 
@@ -83,6 +89,12 @@ export class NegociosComponent implements OnInit {
         this.filtroseleccionadoCheckbox,
         results
       );
+      this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
+        results,
+        this.filtroseleccionadoCheckbox,
+        'nombre_municipio'
+      );
+      console.log(this.resultFiltroPorMunicipio);
     }
     this.negociosFiltered = results;
     if (this.negociosFiltered.length < 1) {
@@ -114,11 +126,9 @@ export class NegociosComponent implements OnInit {
     );
     return this.municipios;
   }
-  goDetail(id:number){
+  goDetail(id: number) {
     let url = this.router.serializeUrl(
-      this.router.createUrlTree([
-        'comerciantes/negocio/detalle/'+id,
-      ])
+      this.router.createUrlTree(['comerciantes/negocio/detalle/' + id])
     );
     window.open(url, '_blank');
   }

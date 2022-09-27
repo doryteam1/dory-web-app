@@ -1,15 +1,15 @@
 
 <!-- modal 1 contacto -->
-      <div *ngIf="modalDetalle" class="modal-body card" (click)="navigateDetalle() ">
+      <div *ngIf="modalDetalle" class="modal-body card" >
         <button type="button" class="btn-close btn-close-modal" aria-label="Close" (click)="dismiss()"></button>
-        <div class="head">
+        <div class="head" (click)="navigateDetalle()">
          <!--  <div class="circle"></div> -->
           <div class="img">
             <img
               [src]="datos?.foto ? datos?.foto : 'assets/images/avatar-person.svg'">
           </div>
         </div>
-        <div class="description">
+        <div class="description" (click)="navigateDetalle()">
           <h5> {{datos?.tipoUser ? datos?.tipoUser : 'Sin definir'}}</h5>
           <h4> {{datos?.nombreUser ? datos?.nombreUser : 'Sin definir'}}</h4>
           <nav class="nav-estilo">
@@ -57,19 +57,19 @@
           </nav>
           <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, eligendi!</p> -->
         </div>
-        <div class="contact">
+        <div class="contact" (click)="navigateDetalle()">
           <a>Ver detalle</a>
         </div>
       </div>
 <!-- modal 2 informacion granja -->
-  <div *ngIf="!modalDetalle" class="modal-body card"  (click)="navigateDetalle()">
+  <div *ngIf="!modalDetalle" class="modal-body card" >
     <button type="button" class="btn-close btn-close-modal" aria-label="Close" (click)="dismiss()"></button>
-    <div class="head">
+    <div class="head" (click)="navigateDetalle()">
       <div class="img">
         <img [src]="datos?.foto ? datos?.foto : 'assets/images/avatar-person.svg'">
       </div>
     </div>
-    <div class="description">
+    <div class="description" (click)="navigateDetalle()">
       <h4> {{datos?.nombreGranja ? datos?.nombreGranja : 'Sin definir'}}</h4>
       <nav class="nav-estilo">
         <a class="datos">
@@ -118,7 +118,7 @@
       </nav>
       <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, eligendi!</p> -->
     </div>
-    <div class="contact">
+    <div class="contact" (click)="navigateDetalle()">
       <a >Ver detalle</a>
     </div>
   </div>

@@ -130,7 +130,7 @@ export class GranjasComponent implements OnInit, OnDestroy {
     ],
     /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
   };
-
+  resultFiltroPorMunicipio: any[] = [];
   mediaQueryUser!: Subscription;
   constructor(
     private granjasService: GranjasService,
@@ -185,16 +185,16 @@ export class GranjasComponent implements OnInit, OnDestroy {
   }
   datosContactoUser(granja: any) {
     let object: any;
-      object = {
-        nombreGranja: granja.nombre,
-        count_resenas: granja.count_resenas,
-        puntuacion: granja.puntuacion,
-        foto: granja.imagen,
-        area: granja.area,
-        rutaUserDetalle: `/granjas/municipio/detalle/${granja.id_granja}`,
-      };
+    object = {
+      nombreGranja: granja.nombre,
+      count_resenas: granja.count_resenas,
+      puntuacion: granja.puntuacion,
+      foto: granja.imagen,
+      area: granja.area,
+      rutaUserDetalle: `/granjas/municipio/detalle/${granja.id_granja}`,
+    };
     this.appModalService
-      .modalContactCardComponent(object,false)
+      .modalContactCardComponent(object, false)
       .then((result) => {})
       .catch((result) => {});
   }
@@ -220,6 +220,11 @@ export class GranjasComponent implements OnInit, OnDestroy {
       resultados = this.filtradoDataCheckbox(
         this.filtroseleccionadoCheckbox,
         resultados
+      );
+      this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
+        resultados,
+        this.filtroseleccionadoCheckbox,
+        'municipio'
       );
     }
     this.granjasFiltered = resultados;
@@ -333,11 +338,17 @@ export class GranjasComponent implements OnInit, OnDestroy {
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
-    this.filtroseleccionadoCheckbox = checkboxs;
+      if (checkboxs.length == 0) {
+        this.filtroseleccionadoCheckbox = [];
+        this.resultFiltroPorMunicipio = [];
+      } else {
+        this.filtroseleccionadoCheckbox = checkboxs;
+      }
     this.searchReset();
   }
 
   onOrderFilterChange(filter: MetaFiltro) {
+    console.log(this.selectedOrderFilter);
     this.selectedOrderFilter = filter;
     this.searchReset();
   }

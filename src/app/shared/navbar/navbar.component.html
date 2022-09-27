@@ -147,7 +147,7 @@
                 </div>
                 <li class="dropdown-item--container" routerLink="/dashboard">
                   <img class="dropdown-item--icon" src="assets/icons/cuenta.svg">
-                  <button class="dropdown-item dropdown-item-miestilo" type="button">Mi cuenta</button>
+                  <button class="dropdown-item dropdown-item-miestilo" type="button">Perfil</button>
                 </li>
                 <li class="dropdown-item--container" routerLink="/dashboard/mis-favoritos">
                   <img class="dropdown-item--icon" src="assets/icons/favoritos-targe.svg">
@@ -342,8 +342,7 @@
               {{authUserNomApell()}}
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <li><button class="dropdown-item" type="button" (click)="closeMenu()" routerLink="/dashboard">Mi
-                  cuenta</button></li>
+              <li><button class="dropdown-item" type="button" (click)="closeMenu()" routerLink="/dashboard">Perfil</button></li>
               <li><button class="dropdown-item" type="button" (click)="closeMenu()"
                   routerLink="/dashboard/mis-favoritos">Mis favoritos</button></li>
               <li><button class="dropdown-item" type="button" (click)="updatePassword()"

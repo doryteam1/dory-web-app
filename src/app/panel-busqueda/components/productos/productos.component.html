@@ -18,16 +18,16 @@
   *ngIf="selectedPriceFilter"
   [iconoChip]="true"
   [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
-  [contenidoChip]="selectedPriceFilter.nombrefiltro"
+  [contenidoChip]="selectedPriceFilter.nombrefiltro + ' ('+ productosFiltered.length +')'"
   (onCloseClip)="deletePriceFilter()"
   >
   </app-chip-con-boton-close>
   <app-chip-con-boton-close class="chip-container__element"
-  *ngFor="let nombre of filtroseleccionadoCheckbox; let i =index"
-      [iconoChip]="true"
-      [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
-      [contenidoChip]="nombre"
-      (onCloseClip)="delateFilterCheckbox(i)"
+  *ngFor="let  resultado of resultFiltroPorMunicipio; let i =index"
+        [iconoChip]="true"
+        [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+        [contenidoChip]="resultado.nombre +' '+ resultado.datos.length"
+        (onCloseClip)="delateFilterCheckbox(i)"
       >
   </app-chip-con-boton-close>
 </div>

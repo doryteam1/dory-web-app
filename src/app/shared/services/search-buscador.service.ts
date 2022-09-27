@@ -9,8 +9,7 @@ import { BuscarPor } from '../../../models/buscarPor.model';
   providedIn: 'root',
 })
 export class SearchBuscadorService {
-
-  buscarData(arraydata: any[], query: string, buscarpor: BuscarPor []) {
+  buscarData(arraydata: any[], query: string, buscarpor: BuscarPor[]) {
     let arraydatanew = arraydata.slice();
     query = query.toLowerCase();
     let newArray = arraydatanew.filter((dataarray) => {
@@ -90,9 +89,12 @@ export class SearchBuscadorService {
         }
       });
       return filterarraydata;
-    }else if (filtroSelecOptionData.modoFiltro == MODO_FILTRO_ORDER_ASC) {
+    } else if (filtroSelecOptionData.modoFiltro == MODO_FILTRO_ORDER_ASC) {
       let filterarraydata = arraydatanew.sort((a, b) => {
-          return Number(a[filtroSelecOptionData.datoafiltrar!])  - Number(b[filtroSelecOptionData.datoafiltrar!])
+        return (
+          Number(a[filtroSelecOptionData.datoafiltrar!]) -
+          Number(b[filtroSelecOptionData.datoafiltrar!])
+        );
       });
 
       return filterarraydata;
@@ -100,7 +102,7 @@ export class SearchBuscadorService {
       if (
         filtroSelecOptionData.nombrecampoDB == null ||
         filtroSelecOptionData.datoafiltrar == null ||
-        filtroSelecOptionData ==null
+        filtroSelecOptionData == null
       ) {
         return arraydatanew;
       } else {
@@ -119,7 +121,6 @@ export class SearchBuscadorService {
     arrayCheckboxSelec: any[],
     filtroSelecOptionData: Checkbox[]
   ): any {
-    console.log(arrayCheckboxSelec);
     if (filtroSelecOptionData[0].modoFiltro == MODO_FILTRO_DATOS_VARIOS) {
       let arraydataabuscarnew = arraydataabuscar.slice();
       let _arraydatafilter: any[] = [];
@@ -135,5 +136,21 @@ export class SearchBuscadorService {
       }
       return _arraydatafilter;
     }
+  }
+  filterEspecial(arrayAfiltrar: any[], filtroSelec: any[], nombrecampoDB:string) {
+    let respuestaFinal = [];
+    for (let index = 0; index < filtroSelec.length; index++) {
+      const element = filtroSelec[index];
+      let newArray = arrayAfiltrar.filter((dataarray) => {
+        let dataanalisis = dataarray[nombrecampoDB]
+        return dataanalisis?.includes(element);
+      });
+      let valores: any = {
+        nombre: element,
+        datos: newArray,
+      };
+      respuestaFinal.push(valores);
+    }
+    return respuestaFinal
   }
 }

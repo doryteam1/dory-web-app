@@ -92,7 +92,7 @@ export class ProductosComponent implements OnInit {
       },
     ],
   };
-
+  resultFiltroPorMunicipio: any[] = [];
   constructor(
     private proveedorService: ProveedorService,
     private router: Router,
@@ -141,6 +141,12 @@ export class ProductosComponent implements OnInit {
       resultados = this.filtradoDataCheckbox(
         this.filtroseleccionadoCheckbox,
         resultados
+      );
+      console.log(resultados)
+      this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
+        resultados,
+        this.filtroseleccionadoCheckbox,
+        'municipio_proveedor'
       );
     }
     this.productosFiltered = resultados;
@@ -204,7 +210,12 @@ export class ProductosComponent implements OnInit {
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
-    this.filtroseleccionadoCheckbox = checkboxs;
+    if (checkboxs.length == 0) {
+      this.filtroseleccionadoCheckbox = [];
+      this.resultFiltroPorMunicipio = [];
+    } else {
+      this.filtroseleccionadoCheckbox = checkboxs;
+    }
     this.searchReset();
   }
 

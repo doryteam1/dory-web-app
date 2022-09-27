@@ -34,10 +34,9 @@ export class HomeComponent implements OnInit {
       .subscribe((matches) => {
         if (matches) {
           this.sidebar = true;
-          console.log(this.sidebar);
         } else {
+          this.closeOffcanvas();
           this.sidebar = false;
-          console.log(this.sidebar);
         }
       });
     let token = localStorage.getItem('token');

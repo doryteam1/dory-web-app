@@ -143,6 +143,8 @@ export class MisAsociacionesComponent
   filtroseleccionado!: MetaFiltro | any;
   filtroseleccionadoCheckbox: string[] = [];
   shorterNumber: number=20;
+  resultFiltroPorMunicipio:any[]=[]
+  resultFiltroSeleccionado:any[]=[]
   constructor(
     private asociacionesService: AsociacionesService,
     private appModalService: AppModalService,
@@ -251,7 +253,6 @@ export class MisAsociacionesComponent
           return asociacion.id_propietario !== this.authUserId;
         });
       this.asociacionesexistentes = this.asociasionesexistentesarray.slice();
-      console.log(this.asociacionesexistentes);
       if (this.asociacionesexistentes.length < 1) {
         this.showNotFoundAsocexistente = true;
       } else {
@@ -461,7 +462,12 @@ export class MisAsociacionesComponent
     return filtroresult;
   }
   onFiltroChangeCheckbox(checkboxs: string[]) {
-    this.filtroseleccionadoCheckbox = checkboxs;
+    if (checkboxs.length ==0){
+      this.filtroseleccionadoCheckbox=[]
+      this.resultFiltroPorMunicipio = [];
+    }else{
+     this.filtroseleccionadoCheckbox = checkboxs;
+    }
     this.reseteoDeBusqueda();
   }
   delateFilterCheckbox(index: number) {
@@ -482,6 +488,29 @@ export class MisAsociacionesComponent
         this.filtroseleccionadoCheckbox,
         resultados
       );
+      this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
+        resultados,
+        this.filtroseleccionadoCheckbox,
+        'municipio'
+      );
+
+/*          for (
+           let index = 0;
+           index < this.filtroseleccionadoCheckbox.length;
+           index++
+         ) {
+           const element = this.filtroseleccionadoCheckbox[index];
+           let newArray = resultados.filter((dataarray) => {
+             let dataanalisis = dataarray?.municipio;
+             return dataanalisis?.includes(element);
+            });
+            let valores:any ={
+              nombre:element,
+              datos:newArray
+            }
+           this.resultPorMunicipio.push(valores)
+           console.log(this.resultPorMunicipio);
+         } */
     }
     this.asociacionesexistentes = resultados;
   }

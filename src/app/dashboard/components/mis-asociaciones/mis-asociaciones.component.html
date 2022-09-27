@@ -66,18 +66,17 @@
           *ngIf="filtroseleccionado"
            [iconoChip]="true"
            [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
-           [contenidoChip]="filtroseleccionado.nombrefiltro"
+           [contenidoChip]="filtroseleccionado.nombrefiltro +' '+ asociacionesexistentes.length"
            (onCloseClip)="delateFilter()"
            >
           </app-chip-con-boton-close>
-          <div class="chip__checkbox" *ngIf="filtroseleccionadoCheckbox">
+          <div class="chip__checkbox" *ngIf="filtroseleccionadoCheckbox && resultFiltroPorMunicipio">
             <app-chip-con-boton-close
-            *ngFor="let  nombre of filtroseleccionadoCheckbox; let i =index"
+            *ngFor="let  resultado of resultFiltroPorMunicipio; let i =index"
              [iconoChip]="true"
              [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
-             [contenidoChip]="nombre"
-             (onCloseClip)="delateFilterCheckbox(i)"
-             >
+             [contenidoChip]="resultado.nombre +' '+ resultado.datos.length"
+             (onCloseClip)="delateFilterCheckbox(i)">
             </app-chip-con-boton-close>
           </div>
         </div>

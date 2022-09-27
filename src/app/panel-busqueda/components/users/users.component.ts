@@ -43,6 +43,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   ];
   userType: string = '';
   shorterNumber: number = 20;
+  resultFiltroPorMunicipio: any[] = [];
   mediaQueryUser!: Subscription;
   ngOnDestroy(): void {
     this.mediaQueryUser.unsubscribe();
@@ -229,6 +230,11 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.filtroseleccionadoCheckbox,
         resultados
       );
+      this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
+        resultados,
+        this.filtroseleccionadoCheckbox,
+        'municipio'
+      );
     }
     this.usersFiltered = resultados;
     if (this.usersFiltered.length < 1) {
@@ -284,7 +290,12 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
-    this.filtroseleccionadoCheckbox = checkboxs;
+      if (checkboxs.length == 0) {
+        this.filtroseleccionadoCheckbox = [];
+        this.resultFiltroPorMunicipio = [];
+      } else {
+        this.filtroseleccionadoCheckbox = checkboxs;
+      }
     this.searchReset();
   }
 
