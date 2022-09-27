@@ -26,7 +26,8 @@ export class NotificationBarComponent implements OnInit {
           || route.includes('pescadores')
           || route.includes('granjas')
           || route.includes('piscicultores')
-          || route.includes('panel-busqueda')){
+          || route.includes('panel-busqueda')
+          || route.includes('proveedores/producto/detalle')){
             this.isHidden = true;
           }else{
             this.isHidden = false;
