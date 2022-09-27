@@ -278,6 +278,7 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
         atributos,
         modalheadergooglemap,
         iconMarkerGoogleMap,
+        false,
         shared
       )
       .then((result) => {

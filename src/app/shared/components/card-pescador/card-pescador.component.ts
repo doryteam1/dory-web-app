@@ -78,7 +78,9 @@ export class CardPescadorComponent implements OnInit, OnDestroy {
       .GoogleMapModalGeneral(
         atributos,
         modalheadergooglemap,
-        iconMarkerGoogleMap
+        iconMarkerGoogleMap,
+        false,
+        ''
       )
       .then((result) => {
         this.modalGogleMapOpen = false;

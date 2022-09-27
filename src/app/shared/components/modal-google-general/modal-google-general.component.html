@@ -1,32 +1,118 @@
-<div class="modal-header" *ngIf="modalheader">
-  <h4 class="modal-title textocolormodal" id="modal-title">ok</h4>
-  <div type="button" class="btn-close" aria-describedby="modal-title" (click)="dismiss()"></div>
-</div>
-<div *ngIf="!modalheader" type="button" class="btn-close my-btn-close my-btn-close-color-fondo"
-  aria-describedby="modal-title" (click)="dismiss()"></div>
-<div class="modal-body map" *ngIf="apiLoaded | async">
-  <div >
-    <google-map #miGogleMap width="1200px" height="450px" [options]="options" (tilesloaded)="mapainiciado()"
-      class="modal-dialog-centered myestilomodalmap">
-      <map-marker
-       #marker="mapMarker"
-      [position]="markerPosition"
-       [options]="markerOptions"
-        [icon]=" iconMarkerGoogleMap"
-        (mapClick)="share() ">
-      </map-marker>
-      <map-info-window [position]="markerPosition">
-        <div class="myestilo-map-info-window">
-          <div class="details_info_windo">
-            <div class="detais-name-info-Windo " *ngFor="let item of atributos.mapInfoWindowData">
-              <div> <img [src]="item.icon"></div>
-              <div *ngIf="item.dataNombre">{{item.dataNombre }}</div>
-              <div *ngIf="!item.dataNombre">{{item.sinDataNombre }}</div>
+<!-- Modal 2 Mapa sin buscador -->
+<div *ngIf="!mapaSeach">
+  <div class="modal-header" *ngIf="modalheader">
+    <h4 class="modal-title textocolormodal" id="modal-title">ok</h4>
+    <div type="button" class="btn-close" aria-describedby="modal-title" (click)="dismiss()"></div>
+  </div>
+  <div *ngIf="!modalheader" type="button" class="btn-close my-btn-close my-btn-close-color-fondo"
+    aria-describedby="modal-title" (click)="dismiss()"></div>
+  <div class="modal-body map" *ngIf="apiLoaded | async">
+    <div >
+      <google-map #miGogleMap width="1200px" height="450px" [options]="options" (tilesloaded)="mapainiciado()"
+        class="modal-dialog-centered myestilomodalmap">
+        <map-marker
+         #marker="mapMarker"
+        [position]="markerPosition"
+         [options]="markerOptions"
+          [icon]=" iconMarkerGoogleMap"
+          (mapClick)="share() ">
+        </map-marker>
+        <map-info-window [position]="markerPosition">
+          <div class="myestilo-map-info-window">
+            <div class="details_info_windo">
+              <div class="detais-name-info-Windo " *ngFor="let item of atributos.mapInfoWindowData">
+                <div> <img [src]="item.icon"></div>
+                <div *ngIf="item.dataNombre">{{item.dataNombre }}</div>
+                <div *ngIf="!item.dataNombre">{{item.sinDataNombre }}</div>
+              </div>
             </div>
           </div>
-        </div>
-      </map-info-window>
-    </google-map>
+        </map-info-window>
+      </google-map>
+    </div>
   </div>
 </div>
 
+    <!-- Modal 2 Mapa con buscador -->
+    <div *ngIf="mapaSeach">
+        <div class="modal-header footerheadermodal">
+          <!-- header modal -->
+          <div class="search">
+            <input class="container__input2" placeholder="Buscar..." (keyup)="onKey($event)" (keyup.enter)="buscar()"
+              [(ngModel)]="buscarx">
+            <img src="assets/icons/loadingseart.svg" *ngIf="loadingseart">
+            <i class="bi bi-search img-search" (click)="buscar()" placement="bottom" ngbTooltip="Búsqueda"
+              *ngIf="!loadingseart"></i>
+            <div class="d-flex" style="height: 34px;color: rgb(158, 158, 167);">
+              <div class="vr">
+              </div>
+            </div>
+            <i class="bi bi-x img-x" (click)="borrarBusqueda()" placement="bottom" ngbTooltip="Borrar búsqueda"
+              *ngIf="borrarseart"></i>
+          </div>
+          <!-- button close- modal -->
+          <button type="button" class="btn-close button_close" aria-label="Close" (click)="closeMap()" placement="bottom"
+            ngbTooltip="Salir"></button>
+        </div>
+        <div class="modal-body  map" *ngIf="apiLoaded | async">
+          <!-- fuera de sucre -click fuera-->
+          <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf=" fueraDirecion" role="alert">
+            <div class="p-2 bd-highlight">
+              <img src="assets/icons/alertanimada.svg">
+            </div>
+            <div class="p-2 bd-highlight" *ngIf="limiteMapa.id_departamento !== 'Todos'">
+              Ubicación fuera del departamento de Sucre
+            </div>
+            <div class="p-2 bd-highlight" *ngIf="limiteMapa.id_departamento == 'Todos'">
+              Ubicación fuera de Colombia
+            </div>
+            <div class="ms-auto p-2 bd-highlight">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+          </div>
+          <!-- no ha guardado la ubicacion alerta -->
+          <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf="guarlatlog" role="alert">
+            <div class="p-2 bd-highlight">
+              <img src="assets/icons/alertanimada.svg">
+            </div>
+            <div class="p-2 bd-highlight">
+              No se ha podido guardar su ubicación, por intente nuevamente
+            </div>
+            <div class="ms-auto p-2 bd-highlight">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          </div>
+          <!-- no se encontraron datos -->
+          <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf="noexistendatos" role="alert">
+            <div class="p-2 bd-highlight">
+              <img src="assets/icons/alertanimada.svg">
+            </div>
+            <div class="p-2 bd-highlight">
+              Google Maps no puede encontrar <strong>{{valorbuscarx}}</strong>
+              Asegúrese de que su búsqueda esté escrita correctamente
+            </div>
+            <div class="ms-auto p-2 bd-highlight">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          </div>
+          <!-- escoger mi ubicación -->
+          <div class="alert alert-danger d-flex bd-highlight  alertclass" *ngIf="escogerdireccion" role="alert">
+            <div class="p-2 bd-highlight">
+              <img src="assets/icons/alertanimada.svg">
+            </div>
+            <div class="p-2 bd-highlight">
+              Por favor escoge tu <strong> dirección</strong>
+            </div>
+            <div class="ms-auto p-2 bd-highlight">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          </div>
+          <google-map width="1200px" height="550px" class="modal-dialog-centered myestilomodalmap" [options]="options"
+            (mapClick)="addMarker($event)">
+            <map-marker [position]="markerPosition" [options]="markerOptions" title="Title"></map-marker>
+            <map-polyline [path]="vertices" [options]="optionPoli" *ngIf="limiteMapa.id_departamento !== 'Todos'">
+            </map-polyline>
+          </google-map>
+        </div>
+    </div>

@@ -46,7 +46,6 @@ export class FloatingBtnAutoUpComponent implements OnInit {
   }
 
   scrollToBottomContainer(): void {
-    console.log(this.parentContainer);
     this.parentContainer!.nativeElement!.scroll({
       top: 0,
       left: 0,

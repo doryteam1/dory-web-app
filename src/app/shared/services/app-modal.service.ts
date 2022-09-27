@@ -9,6 +9,7 @@ import { ModalGallerySliderVerYElimanarFotosComponent } from '../components/moda
 import { ModalGoogleGeneralComponent } from '../components/modal-google-general/modal-google-general.component';
 import { SafeUrl } from '@angular/platform-browser';
 import { ModalContactCardComponent } from '../components/modal-contact-card/modal-contact-card.component';
+
 interface atributos {
   nameButton: string;
   nombrecampoDB: string | null;
@@ -91,6 +92,8 @@ export class AppModalService {
     atributos: any = {},
     modalheader: boolean,
     iconMarkerGoogleMap: string,
+    mapaSeach:boolean,
+    limiteMapa:any,
     shared?: boolean
   ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalGoogleGeneralComponent, {
@@ -101,6 +104,8 @@ export class AppModalService {
     modalRef.componentInstance.atributos = atributos;
     modalRef.componentInstance.modalheader = modalheader;
     modalRef.componentInstance.iconMarkerGoogleMap = iconMarkerGoogleMap;
+    modalRef.componentInstance.mapaSeach = mapaSeach;
+    modalRef.componentInstance.limiteMapa = limiteMapa;
     modalRef.componentInstance.shared = shared;
     return modalRef.dismissed.toPromise();
   }

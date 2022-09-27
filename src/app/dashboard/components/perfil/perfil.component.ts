@@ -1,44 +1,34 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
 import { AreasExperticiaService } from 'src/app/services/areas-experticia.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
-import { environment } from 'src/environments/environment';
-import { MapGeocoder } from '@angular/google-maps';
 import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { AppModalService } from '../../../shared/services/app-modal.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { vertices } from '../../../global/constants';
-import { registerLocaleData } from '@angular/common';
+import { PlatformLocation, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
-import imageCompression from 'browser-image-compression';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
-
+import { ComunicacionEntreComponentesService } from 'src/app/shared/services/comunicacion-entre-componentes.service';
+import { Subscription } from 'rxjs';
+import { limiteMapa } from 'src/models/limiteMapaGoogle.model';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.scss'],
 })
-export class PerfilComponent implements OnInit {
-  @ViewChild('map') map: any;
+export class PerfilComponent implements OnInit, OnDestroy {
   usuario: any;
   @ViewChild('fileInput') inputFileDialog!: ElementRef;
   inputOn: boolean = true;
-  buscarx: string = '';
   fueraDirecion: boolean = false;
   loading: boolean = false;
   loadingPhoto: boolean = false;
   loadingseart: boolean = false;
   noexistendatos: boolean = false;
-  borrarseart: boolean = false;
-  valorbuscarx: string = '';
   areas: Array<any> = [];
   departamentos: Array<any> = [];
   municipios: Array<any> = [];
@@ -215,30 +205,10 @@ export class PerfilComponent implements OnInit {
       otra_area_experticia: false,
       otra_area_experticia_descripcion: false,
       sobre_mi: false,
-      id_etnia:false,
-      id_sexo:false
+      id_etnia: false,
+      id_sexo: false,
     },
   ];
-  /* center: google.maps.LatLngLiteral = { lat: 9.59079, lng: -75.546899 }; */
-  /* zoom = 10; */
-  options: google.maps.MapOptions = {
-    scrollwheel: true,
-    center: { lat: 9.59079, lng: -75.546899 },
-    zoom: 10,
-  };
-  markerPosition: google.maps.LatLngLiteral = {
-    lat: 9.214145,
-    lng: -75.188469,
-  };
-  markerOptions: google.maps.MarkerOptions = { draggable: false };
-  optionPoli: google.maps.PolylineOptions = {
-    strokeColor: '#494949',
-    strokeOpacity: 0.8,
-    strokeWeight: 3,
-    visible: true,
-  };
-  vertices = vertices;
-  apiLoaded: Observable<boolean>;
   percentUploaded: number | undefined = 0;
   percentUploaded2: number | undefined = 0;
   municipiocambiado: boolean = false;
@@ -253,31 +223,44 @@ export class PerfilComponent implements OnInit {
   updatingDocument: string = '';
   photoUpdate2: boolean = false;
   photoDelete2: boolean = false;
+  public modaGoogleMapa!: Subscription;
   constructor(
     private us: UsuarioService,
     private aes: AreasExperticiaService,
     private places: PlacesService,
     private storageService: StorageService,
-    httpClient: HttpClient,
     private storage: FirebaseStorageService,
-    private geocoder: MapGeocoder,
     private confirmModalMapService: ConfirmModalMapService,
     private appModalService: AppModalService,
-    private modalService: NgbModal,
-    private compressImageSizeService: CompressImageSizeService
-  ) {
-    this.apiLoaded = httpClient
-      .jsonp(
-        'https://maps.googleapis.com/maps/api/js?key=' + environment.mapsApiKey,
-        'callback'
-      )
-      .pipe(
-        map(() => true),
-        catchError(() => of(false))
-      );
+    private compressImageSizeService: CompressImageSizeService,
+    public platformLocation: PlatformLocation,
+    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService
+  ) {}
+  ngOnDestroy(): void {
+    this.modaGoogleMapa?.unsubscribe();
   }
-
   ngOnInit(): void {
+    this.modaGoogleMapa =
+      this.comunicacionEntreComponentesService.changeArray.subscribe(
+        (array) => {
+          console.log(array);
+          this.latitud?.setValue(array[0].latitud);
+          this.longitud?.setValue(array[0].longitud);
+          this.direccion?.setValue(array[0].direccion);
+          this.idMunic?.setValue(array[0].id_municipio);
+          this.validateInputFormObject.forEach((o) => {
+            o.latitud = true;
+            o.longitud = true;
+          });
+          let objeto = Object.values(this.validateInputFormObject[0]);
+          if (objeto.includes(true)) {
+            this.EditedInputValue = true;
+          } else {
+            this.EditedInputValue = false;
+          }
+          this.closeMap();
+        }
+      );
     this.nombres?.disable();
     this.cedula?.disable();
     this.apellidos?.disable();
@@ -369,13 +352,7 @@ export class PerfilComponent implements OnInit {
           'nomApell',
           this.getNomApell(this.usuario.nombres, this.usuario.apellidos)
         );
-
         this.us.setAuthUserPhoto(this.usuario.foto);
-        this.markerPosition = {
-          lat: parseFloat(this.latitud?.value),
-          lng: parseFloat(this.longitud?.value),
-        };
-
         this.tempDir = this.form.get('direccion')?.value;
         this.tempMunicId = this.form.get('id_municipio')?.value;
       },
@@ -436,11 +413,10 @@ export class PerfilComponent implements OnInit {
     this.otraAreaExpDesc?.setValue(
       this.usuario.otra_area_experticia_descripcion
     );
-  this.sexo?.setValue(this.usuario?.id_sexo);
-  this.etnia?.setValue(this.usuario?.id_etnia);
+    this.sexo?.setValue(this.usuario?.id_sexo);
+    this.etnia?.setValue(this.usuario?.id_etnia);
   }
-
-  openAddFileDialog(document:string) {
+  openAddFileDialog(document: string) {
     this.updatingDocument = document;
     const element: HTMLElement = this.inputFileDialog.nativeElement;
     element.click();
@@ -490,25 +466,24 @@ export class PerfilComponent implements OnInit {
       });
   }
 
-  async uploadDocumentToServer(file: any, document:string) {
+  async uploadDocumentToServer(file: any, document: string) {
     let ext = file.name.split('.')[1];
     let fileName = '';
     let urlDeleteDocument = '';
-    if(document == 'cedula'){
-      fileName = '/usuarios/cedulas/'+'cedula-' + this.id?.value + '.' + ext;
+    if (document == 'cedula') {
+      fileName = '/usuarios/cedulas/' + 'cedula-' + this.id?.value + '.' + ext;
       urlDeleteDocument = this.usuario.url_imagen_cedula;
-    }else if(document == 'sisben'){
-      fileName = '/usuarios/sisben/'+'sisben-' + this.id?.value + '.' + ext;
+    } else if (document == 'sisben') {
+      fileName = '/usuarios/sisben/' + 'sisben-' + this.id?.value + '.' + ext;
       urlDeleteDocument = this.usuario.url_sisben;
     }
 
-    try{
+    try {
       await this.storage.deleteByUrl(urlDeleteDocument).toPromise();
-    }catch(err){
-      try{
+    } catch (err) {
+      try {
         await this.storage.deleteByUrl(urlDeleteDocument).toPromise();
-      }catch(err){
-      }
+      } catch (err) {}
     }
     this.storage
       .cloudStorageTask(fileName, file)
@@ -522,35 +497,33 @@ export class PerfilComponent implements OnInit {
             .getDownloadURL()
             .subscribe(
               (downloadUrl) => {
-                let body:any;
-                if(document == 'cedula'){
+                let body: any;
+                if (document == 'cedula') {
                   body = {
-                    url_imagen_cedula : downloadUrl
-                  }
-                }else if(document == 'sisben'){
+                    url_imagen_cedula: downloadUrl,
+                  };
+                } else if (document == 'sisben') {
                   body = {
-                    url_sisben : downloadUrl
-                  }
+                    url_sisben: downloadUrl,
+                  };
                 }
-                this.us
-                  .actualizarUsuario(this.id?.value, body)
-                  .subscribe(
-                    async (response) => {
-                       if(document == 'cedula'){
-                        this.usuario.url_imagen_cedula = downloadUrl;
-                      }else if(document == 'sisben'){
-                        this.usuario.url_sisben = downloadUrl;
-                      }
-
-                      this.photoUpdate2 = true;
-                      setTimeout(() => {
-                        this.photoUpdate2 = false;
-                      }, 3000);
-                    },
-                    (err) => {
-                      console.log(err);
+                this.us.actualizarUsuario(this.id?.value, body).subscribe(
+                  async (response) => {
+                    if (document == 'cedula') {
+                      this.usuario.url_imagen_cedula = downloadUrl;
+                    } else if (document == 'sisben') {
+                      this.usuario.url_sisben = downloadUrl;
                     }
-                  );
+
+                    this.photoUpdate2 = true;
+                    setTimeout(() => {
+                      this.photoUpdate2 = false;
+                    }, 3000);
+                  },
+                  (err) => {
+                    console.log(err);
+                  }
+                );
               },
               (err) => {
                 console.log(err);
@@ -560,21 +533,24 @@ export class PerfilComponent implements OnInit {
       });
   }
 
-
   async fileChange(event: any) {
-    if(this.updatingDocument == 'foto'){
+    if (this.updatingDocument == 'foto') {
       this.loadingPhoto = true;
     }
     const imageFile = event.target.files[0];
     console.log(imageFile);
     event.srcElement.value = '';
     try {
-      const compressedFile = await this.compressImageSizeService.handleImageUpload(imageFile);
-      if(this.updatingDocument == 'foto'){
+      const compressedFile =
+        await this.compressImageSizeService.handleImageUpload(imageFile);
+      if (this.updatingDocument == 'foto') {
         await this.uploadToServer(compressedFile);
-      }else{
-        console.log("actualizar ", this.updatingDocument)
-        await this.uploadDocumentToServer(compressedFile,this.updatingDocument)
+      } else {
+        console.log('actualizar ', this.updatingDocument);
+        await this.uploadDocumentToServer(
+          compressedFile,
+          this.updatingDocument
+        );
       }
     } catch (error) {
       console.log(error);
@@ -599,7 +575,6 @@ export class PerfilComponent implements OnInit {
       }
     );
 
-    
     // let fileName = '/perfil/user_' + this.id?.value;
     // this.storage.deletephotoPerfil(fileName).subscribe(
     //   (result) => {
@@ -627,20 +602,20 @@ export class PerfilComponent implements OnInit {
     // );
   }
 
-  deleteDocument(keyName:string) {
-    let body:any = {};
+  deleteDocument(keyName: string) {
+    let body: any = {};
     body[keyName] = null;
     let urlDeleteDocument = this.usuario[keyName];
     this.us.actualizarUsuario(this.id?.value, body).subscribe(
       async (response) => {
-        try{
+        try {
           await this.storage.deleteByUrl(urlDeleteDocument).toPromise();
           this.usuario[keyName] = '';
-        }catch(err){
-          try{
+        } catch (err) {
+          try {
             await this.storage.deleteByUrl(urlDeleteDocument).toPromise();
             this.usuario[keyName] = '';
-          }catch(err){
+          } catch (err) {
             this.usuario[keyName] = '';
           }
         }
@@ -729,7 +704,6 @@ export class PerfilComponent implements OnInit {
     this.us.getEtnias().subscribe(
       (response) => {
         this.etnias = response.data;
-        console.log(this.etnias);
       },
       (err) => {}
     );
@@ -794,10 +768,6 @@ export class PerfilComponent implements OnInit {
               if (!this.canceladoedir) {
                 this.direccion?.setValue('');
               }
-              this.escogerdireccion = true;
-              setTimeout(() => {
-                this.escogerdireccion = false;
-              }, 30000);
             }
           }
         },
@@ -928,7 +898,6 @@ export class PerfilComponent implements OnInit {
         o.id_area_experticia = true;
       });
       let objeto = Object.values(this.validateInputFormObject[0]);
-      console.log(objeto);
       if (objeto.includes(true)) {
         this.EditedInputValue = true;
       } else {
@@ -939,7 +908,6 @@ export class PerfilComponent implements OnInit {
         o.id_area_experticia = false;
       });
       let objeto = Object.values(this.validateInputFormObject[0]);
-      console.log(objeto);
       if (objeto.includes(true)) {
         this.EditedInputValue = true;
       } else {
@@ -993,146 +961,47 @@ export class PerfilComponent implements OnInit {
       }
     }
   }
-
-  // Metodo para adicionar una marca en el mapa
-  addMarker(event: google.maps.MapMouseEvent) {
-    this.escogerdireccion = false;
-    const point: google.maps.LatLngLiteral = {
-      lat: event.latLng?.toJSON().lat!,
-      lng: event.latLng?.toJSON().lng!,
-    };
-
-    this.places.geocodeLatLng(point).then((response) => {
-      if (response.status == 'OK') {
-        let result = response.results[0].address_components;
-        let index = result.findIndex((element) =>
-          element.types.includes('administrative_area_level_1')
-        );
-        let dpto = result[index].short_name;
-        index = result.findIndex((element) =>
-          element.types.includes('administrative_area_level_2')
-        );
-        let municipio = result[index].short_name;
-
-        index = this.departamentos.findIndex(
-          (element) => element.nombre_departamento == dpto
-        );
-        let idDpto = this.departamentos[index]?.id_departamento;
-        index = this.municipios.findIndex(
-          (element) => element.nombre == municipio
-        );
-        let idMunic = this.municipios[index]?.id_municipio;
-
-        if (dpto == 'Sucre') {
-          this.markerPosition = point;
-          this.fueraDirecion = false;
-          this.confirmModalMapService
-            .confirm(
-              '../../../../assets/icons/editar.svg',
-              '../../../../assets/icons/save.svg',
-              'Actualizar ubicación',
-              'Estás a punto de cambiar tu ubicación por: ',
-              'Si',
-              'No estoy seguro',
-              `${response.results[0].formatted_address}`
-            )
-            .then((result) => {
-              if (result == true) {
-                this.idDpto?.setValue(idDpto);
-                this.idMunic?.setValue(idMunic);
-                this.direccion?.setValue(response.results[0].formatted_address);
-                this.tempDir = this.direccion?.value;
-                this.tempMunicId = this.idMunic?.value;
-                this.foto?.setValue('');
-                if (event.latLng) {
-                  this.markerPosition = event.latLng.toJSON();
-                  this.latitud?.setValue(event.latLng.toJSON().lat);
-                  this.longitud?.setValue(event.latLng.toJSON().lng);
-                }
-                this.validateInputFormObject.forEach((o) => {
-                  o.latitud = true;
-                  o.longitud = true;
-                });
-                let objeto = Object.values(this.validateInputFormObject[0]);
-                if (objeto.includes(true)) {
-                  this.EditedInputValue = true;
-                } else {
-                  this.EditedInputValue = false;
-                }
-              } else {
-                this.validateInputFormObject.forEach((o) => {
-                  o.latitud = false;
-                  o.longitud = false;
-                });
-                let objeto = Object.values(this.validateInputFormObject[0]);
-                if (objeto.includes(true)) {
-                  this.EditedInputValue = true;
-                } else {
-                  this.EditedInputValue = false;
-                }
-                this.options = {
-                  center: {
-                    lat: parseFloat(this.latitud?.value),
-                    lng: parseFloat(this.longitud?.value),
-                  },
-                  zoom: 12,
-                  scrollwheel: true,
-                };
-                this.markerPosition = {
-                  lat: parseFloat(this.latitud?.value),
-                  lng: parseFloat(this.longitud?.value),
-                };
-              }
-            })
-            .catch((result) => {
-              this.validateInputFormObject.forEach((o) => {
-                o.latitud = false;
-                o.longitud = false;
-              });
-              let objeto = Object.values(this.validateInputFormObject[0]);
-              if (objeto.includes(true)) {
-                this.EditedInputValue = true;
-              } else {
-                this.EditedInputValue = false;
-              }
-              this.options = {
-                center: {
-                  lat: parseFloat(this.latitud?.value),
-                  lng: parseFloat(this.longitud?.value),
-                },
-                zoom: 12,
-                scrollwheel: true,
-              };
-              this.markerPosition = {
-                lat: parseFloat(this.latitud?.value),
-                lng: parseFloat(this.longitud?.value),
-              };
-            });
-        } else {
-          this.fueraDirecion = true;
-          this.noexistendatos = false;
-          setTimeout(() => {
-            this.fueraDirecion = false;
-          }, 5000);
-        }
-      }
-    });
+  closeMap() {
+    this.appModalService.CloseGoogleMapGeneralModal();
   }
   verMap() {
     if (this.editarperfil) {
-      const sucreColombia = {
-        north: 10.184454,
-        south: 8.136442,
-        west: -75.842392,
-        east: -74.324908,
+      let atributos: any;
+      let modalheadergooglemap = false;
+      let mapaSeach = true;
+      let limiteMapa:limiteMapa = {
+        limite: 'Sucre',
+        nivDivAdm: 'Departamento',
+        id_departamento: 70,
       };
-      this.modalService
-        .open(this.map, {
-          size: 'xl',
-          centered: true,
-          windowClass: 'dark-modal',
-        })
-        .result.then((result) => {
+      this.isOpenMap = true;
+      if (this.municipiocambiado) {
+        atributos = {
+          longAndLat: {
+            lat: this.mylatitudidmunicipio,
+            lng: this.mylongitudidmunicipio,
+          },
+        };
+      } else {
+        atributos = {
+          longAndLat: {
+            lat: parseFloat(this.latitud?.value),
+            lng: parseFloat(this.longitud?.value),
+          },
+        };
+      }
+      this.platformLocation.onPopState(() => {
+        this.appModalService.CloseGoogleMapGeneralModal();
+      });
+      this.appModalService
+        .GoogleMapModalGeneral(
+          atributos,
+          modalheadergooglemap,
+          '',
+          mapaSeach,
+          limiteMapa
+        )
+        .then((result) => {
           this.isOpenMap = false;
           this.municipiocambiado = false;
           if (!this.form.get('direccion')?.value && this.usuario.direccion) {
@@ -1140,137 +1009,42 @@ export class PerfilComponent implements OnInit {
             this.form.get('id_municipio')?.setValue(this.tempMunicId);
             this.form.get('latitud')?.setValue(this.latitud?.value);
             this.form.get('longitud')?.setValue(this.longitud?.value);
+            return;
+          }
+          if (
+            this.form.getRawValue().direccion == '' ||
+            this.form.getRawValue().direccion == null
+          ) {
+            this.latitud?.setValue(this.usuario.latitud);
+            this.longitud?.setValue(this.usuario.longitud);
+            this.idMunic?.setValue(this.usuario.id_municipio);
+            return;
           }
         })
         .catch((err) => {
           this.isOpenMap = false;
           this.municipiocambiado = false;
           if (!this.form.get('direccion')?.value && this.usuario.direccion) {
-            console.log(this.usuario.direccion);
-            console.log(this.form.get('direccion')?.value);
             this.form.get('direccion')?.setValue(this.tempDir);
             this.form.get('id_municipio')?.setValue(this.tempMunicId);
             this.form.get('latitud')?.setValue(this.latitud?.value);
             this.form.get('longitud')?.setValue(this.longitud?.value);
+            return;
+          }
+          if (
+            this.form.getRawValue().direccion == '' ||
+            this.form.getRawValue().direccion == null
+          ) {
+            this.latitud?.setValue(this.usuario.latitud);
+            this.longitud?.setValue(this.usuario.longitud);
+            this.idMunic?.setValue(this.usuario.id_municipio);
+            return;
           }
           console.log(err);
         });
-      this.isOpenMap = true;
-      if (this.municipiocambiado) {
-        this.options = {
-          center: {
-            lat: this.mylatitudidmunicipio,
-            lng: this.mylongitudidmunicipio,
-          },
-          restriction: {
-            latLngBounds: sucreColombia,
-            strictBounds: false,
-          },
-          zoom: 14,
-          scrollwheel: true,
-        };
-      } else {
-        this.options = {
-          center: {
-            lat: parseFloat(this.latitud?.value),
-            lng: parseFloat(this.longitud?.value),
-          },
-          restriction: {
-            latLngBounds: sucreColombia,
-            strictBounds: false,
-          },
-          zoom: 12,
-          scrollwheel: true,
-        };
-        this.markerPosition = {
-          lat: parseFloat(this.latitud?.value),
-          lng: parseFloat(this.longitud?.value),
-        };
-      }
     }
   }
 
-  buscar() {
-    this.loadingseart = true;
-    const valor = this.buscarx;
-    console.log(valor);
-    this.valorbuscarx = this.buscarx;
-    if (valor.trim().length == 0) {
-      this.loadingseart = false;
-      return;
-    }
-    this.geocoder
-      .geocode({
-        address: `${valor}`,
-      })
-      .subscribe(({ results }) => {
-        if (results.length === 0) {
-          this.loadingseart = false;
-          this.noexistendatos = true;
-          this.fueraDirecion = false;
-          setTimeout(() => {
-            this.noexistendatos = false;
-          }, 10000);
-        } else {
-          this.loadingseart = false;
-          this.fueraDirecion = false;
-          const point: google.maps.LatLngLiteral = {
-            lat: results[0].geometry.location.toJSON().lat!,
-            lng: results[0].geometry.location.toJSON().lng!,
-          };
-          this.places.geocodeLatLng(point).then((response) => {
-            if (response.status == 'OK') {
-              let result = response.results[0].address_components;
-              let index = result.findIndex((element) =>
-                element.types.includes('administrative_area_level_1')
-              );
-              let dpto = result[index].short_name;
-              index = result.findIndex((element) =>
-                element.types.includes('administrative_area_level_2')
-              );
-              index = this.departamentos.findIndex(
-                (element) => element.nombre_departamento == dpto
-              );
-              if (dpto == 'Sucre') {
-                if (
-                  results[0].geometry.location.toJSON().lat! &&
-                  results[0].geometry.location.toJSON().lng!
-                ) {
-                  this.options = {
-                    center: {
-                      lat: results[0].geometry.location.toJSON().lat!,
-                      lng: results[0].geometry.location.toJSON().lng!,
-                    },
-                    zoom: 13,
-                  };
-                }
-              } else {
-                this.loadingseart = false;
-                this.fueraDirecion = true;
-                this.noexistendatos = false;
-                setTimeout(() => {
-                  this.fueraDirecion = false;
-                }, 5000);
-              }
-            }
-          });
-        }
-      });
-  }
-
-  borrarBusqueda() {
-    this.buscarx = '';
-    this.borrarseart = false;
-    this.fueraDirecion = false;
-    this.noexistendatos = false;
-  }
-  onKey(event: any) {
-    if (event.target.value !== '') {
-      this.borrarseart = true;
-    } else if (event.target.value == '') {
-      this.borrarseart = false;
-    }
-  }
   inputEnable() {
     this.inputOn = false;
   }
@@ -1284,19 +1058,7 @@ export class PerfilComponent implements OnInit {
     return index > -1;
   }
   onKeyInput(nombreinput?: any) {
-    if (
-      this.form.getRawValue()[nombreinput].trim().length !== 0 &&
-      this.form.getRawValue()[nombreinput] !==
-        JSON.stringify(this.usuario[nombreinput])
-    ) {
-      this.validateInputFormObject.forEach((o) => (o[nombreinput] = true));
-      let objeto = Object.values(this.validateInputFormObject[0]);
-      if (objeto.includes(true)) {
-        this.EditedInputValue = true;
-      } else {
-        this.EditedInputValue = false;
-      }
-    } else {
+    if (this.form.getRawValue()[nombreinput] == this.usuario[nombreinput]) {
       this.validateInputFormObject.forEach((o) => (o[nombreinput] = false));
       let objeto = Object.values(this.validateInputFormObject[0]);
       if (objeto.includes(true)) {
@@ -1304,6 +1066,27 @@ export class PerfilComponent implements OnInit {
       } else {
         this.EditedInputValue = false;
       }
+      return
+    }
+    if (this.form.getRawValue()[nombreinput] == '' || null  && this.usuario[nombreinput] == null || '') {
+      this.validateInputFormObject.forEach((o) => (o[nombreinput] = false));
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      if (objeto.includes(true)) {
+        this.EditedInputValue = true;
+      } else {
+        this.EditedInputValue = false;
+      }
+      return
+    }
+    if (this.form.getRawValue()[nombreinput] !== this.usuario[nombreinput]) {
+      this.validateInputFormObject.forEach((o) => (o[nombreinput] = true));
+      let objeto = Object.values(this.validateInputFormObject[0]);
+      if (objeto.includes(true)) {
+        this.EditedInputValue = true;
+      } else {
+        this.EditedInputValue = false;
+      }
+      return
     }
   }
   editarPerfi() {
