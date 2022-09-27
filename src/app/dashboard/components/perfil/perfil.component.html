@@ -217,8 +217,8 @@
     </div>
 
     <div class="d-flex justify-content-center flex-row mt-3">
-      <a class="link rigth" [href]="usuario.url_imagen_cedula" target="_blank" *ngIf="usuario.url_imagen_cedula">Descargar cédula</a>
-      <a class="link rigth" [href]="usuario.url_sisben" target="_blank" *ngIf="usuario.url_sisben">Descargar sisben</a>
+      <a class="link rigth" [href]="usuario?.url_imagen_cedula" target="_blank" *ngIf="usuario?.url_imagen_cedula">Descargar cédula</a>
+      <a class="link rigth" [href]="usuario?.url_sisben" target="_blank" *ngIf="usuario?.url_sisben">Descargar sisben</a>
     </div>
     <div id="ubicacion">
       <div class="container__box__title">

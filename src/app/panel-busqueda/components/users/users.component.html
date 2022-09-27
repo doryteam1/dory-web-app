@@ -2,7 +2,7 @@
     <app-search [placeholderbuscador]="'Buscar...'"
     (textSearch)="onBuscarPalabra($event)">
     </app-search>
-    <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="municipios"
+    <app-filtro [checkbox]="checkbox" [checkboxfiltro]="true" [checkboxArray]="locations"
     (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
     </app-filtro>
 </div>

@@ -353,7 +353,9 @@ export class PerfilComponent implements OnInit {
             ?.setValue(this.usuario.id_departamento);
         }
         this.form.get('id_municipio')?.setValue(this.usuario.id_municipio);
-        this.idDpto?.disable();
+        if(this.usuario.tipo_usuario != 'Proveedor'){
+          this.idDpto?.disable();
+        }
         this.loadAreasExp();
         this.loadDptos();
         this.loadMunic();

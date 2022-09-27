@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   filtroseleccionado!: MetaFiltro | any;
   palabra: string = '';
   users!: any[];
-  municipios: Array<any> = [];
+  locations: Array<any> = [];
   showNotFound: boolean = false;
   authUserId: number = -1;
   authRol: string = '';
@@ -93,7 +93,20 @@ export class UsersComponent implements OnInit, OnDestroy {
         }
       });
     /* municipios sucre */
-    this.loadMunic();
+    if(this.userType == 'proveedores'){
+     this.checkbox = [
+        {
+          nameButton: 'Departamentos',
+          nombrecampoDB: 'departamento',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+          titulomodal: 'Departamentos de Colombia',
+        },
+        /* modoFiltro: 'number_ordenarmayoramenor', */
+      ];
+      this.loadDptos();
+    }else{
+      this.loadMunic();
+    }
   }
   datosContactoUser(user: any) {
     let object: any;
@@ -283,12 +296,30 @@ export class UsersComponent implements OnInit, OnDestroy {
   loadMunic(): any[] {
     this.places.getMunicipiosDepartamentos(70).subscribe(
       (response) => {
-        this.municipios = response.data;
+        this.locations = response.data;
       },
       (err) => {
         console.log(err);
       }
     );
-    return this.municipios;
+    return this.locations;
+  }
+
+  loadDptos(){
+    this.places.getDepartamentos().subscribe(
+      (response) => {
+        this.locations = response.data;
+        this.locations = this.locations.map((location)=>{
+          return {
+            id:location.id_departamento,
+            nombre:location.nombre_departamento
+          }
+        })
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    return this.locations;
   }
 }
