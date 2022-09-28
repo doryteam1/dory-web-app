@@ -54,7 +54,7 @@ export class CardPiscicultorComponent implements OnInit, OnDestroy {
   detalle(piscicultor: any) {
     return this.onDetalle.emit(piscicultor);
   }
- 
+
   seeFarmsMaptwo() {
     this.modalGogleMapOpen = true;
     let modalheadergooglemap = false;
@@ -84,7 +84,9 @@ export class CardPiscicultorComponent implements OnInit, OnDestroy {
       .GoogleMapModalGeneral(
         atributos,
         modalheadergooglemap,
-        iconMarkerGoogleMap
+        iconMarkerGoogleMap,
+        false,
+        ''
       )
       .then((result) => {
         this.modalGogleMapOpen = false;

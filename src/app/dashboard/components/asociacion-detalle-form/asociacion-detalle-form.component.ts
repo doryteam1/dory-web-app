@@ -55,7 +55,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
     console.log(this.asociacion)
     let action = this.ar.snapshot.paramMap.get('action');
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
-   
+
     if(action=='create'){
       this.prepareForm(action!,this.asociacion)
       this.loadDptos();
@@ -76,7 +76,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
     this.idTipoAsoc?.valueChanges.subscribe((value)=>{
     })
-    
+
   }
 
   async updateAsociacion() {
@@ -145,7 +145,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
         (err) => {
           console.log(err);
           this.loading1 = false;
-        });  
+        });
     }else{
       let ext = this.fileRut.name.split('.')[1];
       let basePath = '/asociaciones/rut/todos/';
@@ -159,7 +159,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
         }catch(err){
         }
       }
-      
+
       this.storage.cloudStorageTask(filePath,this.fileRut).percentageChanges().subscribe(
         (response)=>{
           if(response == 100){
@@ -254,7 +254,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
       let basePath = '/asociaciones/rut/todos/';
       let fileName = 'rut-asociacion-'+this.form.getRawValue().nit+'.'+ext;
       let filePath = basePath + fileName;
-      
+
       this.storage.cloudStorageTask(filePath,this.fileRut).percentageChanges().subscribe(
         (response)=>{
           if(response == 100){
@@ -386,7 +386,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
         this.form.disable();
       }
     }
-    console.log("asociacion cargada en form ", this.form.getRawValue())
   }
 
   goBack(){
