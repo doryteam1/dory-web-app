@@ -23,14 +23,12 @@
             <img src="assets/icons/picture_as_pdf_black_24dp.svg">
             <div>
               <span *ngIf="asociacion?.foto_camarac">
-                <a  [href]="asociacion?.foto_camarac" target="_blank">Cámara de comercio
+                <a class="enlace" [href]="asociacion?.foto_camarac" target="_blank">Cámara de comercio
                    <img src="assets/icons/download_for_offline_blue1_24dp.svg">
                 </a>
               </span>
               <span *ngIf="!asociacion?.foto_camarac">
-                <a  >
                   Cámara de comercio
-                </a>
               </span>
             </div>
           </div>
@@ -48,15 +46,13 @@
         <div class="d-flex flex-row mt-1">
           <img class="margin" src="assets/icons/picture_as_pdf_black_24dp.svg">
           <div>
-            <span *ngIf="asociacion?.url_rut">
-              <a  [href]="asociacion?.url_rut" target="_blank">Descargar RUT
+            <span class="enlace" *ngIf="asociacion?.url_rut">
+              <a [href]="asociacion?.url_rut" target="_blank">Descargar RUT
                  <img src="assets/icons/download_for_offline_blue1_24dp.svg">
               </a>
             </span>
             <span *ngIf="!asociacion?.url_rut">
-              <a  >
                 No se ha cargado el RUT
-              </a>
             </span>
           </div>
         </div>
@@ -64,9 +60,9 @@
           <img class="icon margin" src="assets/icons/file-zipper-regular.svg">
           <div>
             <span>
-              <span class="link" (click)="download()">Descargar documentos miembros
+              <a class="enlace" (click)="download()">Descargar documentos miembros
                  <img src="assets/icons/download_for_offline_blue1_24dp.svg">
-              </span>
+              </a>
             </span>
             <!-- <span *ngIf="!loadedUrls">
               <a>
