@@ -116,6 +116,10 @@ export class AsociacionesService {
     return this.https.get(environment.doryApiRestBaseUrl+'/asociaciones/miembros/'+id);
   }
 
+  getMiembrosPrivado(nit:string){
+    return this.https.get(environment.doryApiRestBaseUrl+'/asociaciones/miembros/privado/nit/'+nit)
+  }
+
 }
 
 

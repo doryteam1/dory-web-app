@@ -60,6 +60,21 @@
             </span>
           </div>
         </div>
+        <div class="d-flex flex-row mt-1">
+          <img class="icon margin" src="assets/icons/file-zipper-regular.svg">
+          <div>
+            <span>
+              <span class="link" (click)="download()">Descargar documentos miembros
+                 <img src="assets/icons/download_for_offline_blue1_24dp.svg">
+              </span>
+            </span>
+            <!-- <span *ngIf="!loadedUrls">
+              <a>
+                Ningun miembro ha subido sus documentos
+              </a>
+            </span> -->
+          </div>
+        </div>
         <div *ngIf="showRepLegal">
           <h2>Representante legal</h2>
           <div class="card__description-container-infor-2" (click)="goDetalleRepresentante(asociacion)">

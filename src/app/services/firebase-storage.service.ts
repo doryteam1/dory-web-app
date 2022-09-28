@@ -39,7 +39,6 @@ export class FirebaseStorageService {
   }
 
   public refFromUrl(path: string) {
-    console.log(this.storage.refFromURL(path));
     return this.storage.refFromURL(path);
   }
 }

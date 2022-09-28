@@ -566,15 +566,17 @@ export class PerfilComponent implements OnInit {
       this.loadingPhoto = true;
     }
     const imageFile = event.target.files[0];
-    console.log(imageFile);
     event.srcElement.value = '';
     try {
       const compressedFile = await this.compressImageSizeService.handleImageUpload(imageFile);
       if(this.updatingDocument == 'foto'){
         await this.uploadToServer(compressedFile);
       }else{
-        console.log("actualizar ", this.updatingDocument)
-        await this.uploadDocumentToServer(compressedFile,this.updatingDocument)
+        if(imageFile.name.split('.')[1] == 'pdf'){
+          await this.uploadDocumentToServer(imageFile,this.updatingDocument)
+        }else{
+          await this.uploadDocumentToServer(compressedFile,this.updatingDocument)
+        }
       }
     } catch (error) {
       console.log(error);
