@@ -55,6 +55,14 @@
                 Mis asociaciones
               </a>
             </li>
+            <li id="mispublicaciones" class="nav-item" *ngIf="tipoUsuario == 'Piscicultor' || tipoUsuario == 'Pescador'">
+              <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-publicaciones']"
+                 [ngClass]="{'miclase': rutaAsociacionesdetalle,'disabled':disableTags }"
+                 routerLinkActive="active">
+                <span data-feather="home"></span>
+                Mis publicaciones
+              </a>
+            </li>
           </ul>
         </div>
       </nav>
@@ -134,6 +142,14 @@ aria-labelledby="offcanvasScrollingLabel">
                 [ngClass]="{'miclase': rutaAsociacionesdetalle,'disabled':disableTags }" routerLinkActive="active">
                 <span data-feather="home"></span>
                 Mis asociaciones
+              </a>
+            </li>
+            <li id="mispublicaciones" class="nav-item" *ngIf="tipoUsuario == 'Piscicultor' || tipoUsuario == 'Pescador'"
+            (click)="closeOffcanvas()">
+              <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-publicaciones']"
+                [ngClass]="{'miclase': rutaAsociacionesdetalle,'disabled':disableTags }" routerLinkActive="active">
+                <span data-feather="home"></span>
+                Mis publicaciones
               </a>
             </li>
           </ul>

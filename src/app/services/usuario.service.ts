@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SocialAuthService } from 'angularx-social-login';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Utilities } from '../utilities/utilities';
 import { HttpsService } from './https.service';
 import { StorageService } from './storage.service';
 
@@ -194,5 +195,14 @@ export class UsuarioService {
     return this.httpsService.get(
       environment.doryApiRestBaseUrl+'/etnias/obtener'
     );
+  }
+
+  getAuthUser(){
+    let token = localStorage.getItem('token');
+    let payload = null;
+    if(token){
+      payload = Utilities.parseJwt(token!);
+    }
+    return payload;
   }
 }

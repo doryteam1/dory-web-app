@@ -26,6 +26,7 @@ import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
 import { ProductoDetalleFormComponent } from './components/producto-detalle-form/producto-detalle-form.component';
 import { VehiculoDetalleFormComponent } from './components/vehiculo-detalle-form/vehiculo-detalle-form.component';
 import { NegocioDtalleFormComponent } from './components/negocio-dtalle-form/negocio-dtalle-form.component';
+import { MisPublicacionesComponent } from './components/mis-publicaciones/mis-publicaciones.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { NegocioDtalleFormComponent } from './components/negocio-dtalle-form/neg
     ProductoDetalleFormComponent,
     VehiculoDetalleFormComponent,
     NegocioDtalleFormComponent,
+    MisPublicacionesComponent,
   ],
   imports: [
     CommonModule,
