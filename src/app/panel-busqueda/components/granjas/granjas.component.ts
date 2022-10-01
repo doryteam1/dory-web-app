@@ -1,11 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES } from 'src/app/global/constants';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
-import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
-import { MediaQueryService } from 'src/app/services/media-query.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
@@ -19,7 +15,7 @@ import { Filtro, MetaFiltro } from 'src/models/filtro.model';
   templateUrl: './granjas.component.html',
   styleUrls: ['./granjas.component.scss'],
 })
-export class GranjasComponent implements OnInit, OnDestroy {
+export class GranjasComponent implements OnInit {
   granjasFiltered!: any[];
   filtroseleccionadoCheckbox: string[] = [];
   selectedOrderFilter!: MetaFiltro | any;
@@ -131,19 +127,13 @@ export class GranjasComponent implements OnInit, OnDestroy {
     /*  modoFiltro: ['number_ordenarmayoramenor', 'string_filtrodatosvarios'], */
   };
   resultFiltroPorMunicipio: any[] = [];
-  mediaQueryUser!: Subscription;
   constructor(
     private granjasService: GranjasService,
     private appModalService: AppModalService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
     private places: PlacesService,
-    public mediaQueryService: MediaQueryService
   ) {}
-  shorterNumber: number = 20;
-  ngOnDestroy(): void {
-    this.mediaQueryUser.unsubscribe();
-  }
   ngOnInit(): void {
     let token = localStorage.getItem('token');
     if (token) {
@@ -162,15 +152,6 @@ export class GranjasComponent implements OnInit, OnDestroy {
         this.showNotFound = false;
       }
     });
-    this.mediaQueryUser = this.mediaQueryService
-      .mediaQuery('max-width: 300px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 15;
-        } else {
-          this.shorterNumber = 20;
-        }
-      });
     /* municipios sucre */
     this.loadMunic();
   }

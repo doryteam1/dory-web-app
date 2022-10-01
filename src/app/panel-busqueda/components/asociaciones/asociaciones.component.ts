@@ -1,7 +1,6 @@
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { MediaQueryService } from 'src/app/services/media-query.service';
@@ -18,7 +17,7 @@ import { Filtro, MetaFiltro } from 'src/models/filtro.model';
   templateUrl: './asociaciones.component.html',
   styleUrls: ['./asociaciones.component.scss'],
 })
-export class AsociacionesComponent implements OnInit, OnDestroy {
+export class AsociacionesComponent implements OnInit {
   asociacionesFiltered!: any[];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
@@ -64,14 +63,7 @@ export class AsociacionesComponent implements OnInit, OnDestroy {
       },
     ],
   };
-  shorterNumber: number = 20;
   resultFiltroPorMunicipio: any[] = [];
-  mediaQueryAsocia!: Subscription;
-  mediaQueryAsocia2!: Subscription;
-  ngOnDestroy(): void {
-    this.mediaQueryAsocia.unsubscribe();
-    this.mediaQueryAsocia2.unsubscribe();
-  }
   constructor(
     private asociacionService: AsociacionesService,
     private appModalService: AppModalService,
@@ -102,25 +94,7 @@ export class AsociacionesComponent implements OnInit, OnDestroy {
         this.showNotFound = false;
       }
     });
-    /* municipios sucre */
-    this.mediaQueryAsocia = this.mediaQueryService
-      .mediaQuery('max-width: 450px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 10;
-        } else {
-          this.shorterNumber = 20;
-        }
-      });
-    this.mediaQueryAsocia2 = this.mediaQueryService
-      .mediaQuery('max-width: 340px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 6;
-        } else {
-          this.shorterNumber = 10;
-        }
-      });
+
     this.loadMunic();
   }
   datosContactoAsociacion(user: any) {

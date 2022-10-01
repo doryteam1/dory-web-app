@@ -29,21 +29,7 @@
 
 .container-mision {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 0px;
-  margin-top: 40px;
-
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-right: 250px;
-  }
-}
-
-.container-vision {
-  flex-direction: row-reverse;
-  display: flex;
+  justify-content: space-evenly;
   align-items: center;
   margin-bottom: 0px;
   margin-top: 40px;
@@ -51,13 +37,29 @@
   div {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding-left: 200px;
+    align-items: center;
+    width: 50%;
+  }
+}
+
+.container-vision {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 40px;
+  margin-top: 80px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
   }
 }
 
 .container__title {
-  margin: 0 16px;
+  margin: 16px 16px;
   font-size: 40px;
   color: var(--azul1);
 }
@@ -69,14 +71,15 @@
 }
 
 .container__image {
-  width: 50vw;
-  max-width: 300px;
-  margin: 0px 16px 16px 0px;
+  width: 50%;
+  max-width: 200px;
+  margin: 16px 16px 16px 16px;
 }
+
 .container__image-2 {
-  width: 50vw;
-  max-width: 400px;
-  margin: 0px 0px 16px 16px;
+  width: 50%;
+  max-width: 200px;
+  margin: 10% 16px 16px 16px;
 }
 
 .container__image-ginelect {
@@ -94,13 +97,17 @@
   .container-vision {
     align-items: center;
     flex-direction: column;
-
+    margin-top: 40px;
     div {
       align-items: center;
       padding-left: 0;
       padding-right: 0;
+      width: 100%;
     }
   }
+    .container__image-2 {
+      margin: 16px 16px 16px 16px;
+    }
 }
 
 @media screen and (max-width: 340px) {

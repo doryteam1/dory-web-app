@@ -3,8 +3,8 @@
       <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='enable'">{{modalMode == 'create' ? 'Nueva Asociación' : 'Actualizar Asociación'}}</h4>
       <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='disable'">Detalle Asociación</h4>
       <div class="d-flex flex-row  d-flex-button">
-        <button class="btn-show btn-square btn--blue btn-mi-estilo" (click)="verMiembros()" *ngIf="formState == 'enable' && modalMode == 'update'">Ver miembros</button>
-        <button class="btn-square btn--blue btn-mi-estilo" (click)="agregarMiembro()"  *ngIf="formState == 'enable' && modalMode == 'update'"><i class="icon-add bi bi-person-plus"></i>Agregar miembros</button>
+        <button [disabled]="!nit?.value" class="btn-show btn-square btn--blue btn-mi-estilo" (click)="verMiembros()" *ngIf="formState == 'enable' && modalMode == 'update'">Ver miembros</button>
+        <button   [disabled]="!nit?.value" class="btn-square btn--blue btn-mi-estilo" (click)="agregarMiembro()"  *ngIf="formState == 'enable' && modalMode == 'update'"><i class="icon-add bi bi-person-plus"></i>Agregar miembros</button>
       </div>
     </div>
 
@@ -56,8 +56,6 @@
             </div>
           </div>
         </div>
-
-
         <div class="mb-3">
           <label for="dateOfBirth">Nit</label>
           <div class="input-group">

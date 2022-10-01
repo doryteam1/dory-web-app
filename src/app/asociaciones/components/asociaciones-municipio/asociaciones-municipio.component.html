@@ -64,7 +64,7 @@
     <app-not-found objectName="asociaciones"></app-not-found>
     <button class="btn-rounded btn--blue" (click)="goBack()">Volver al mapa</button>
   </div>
-  <div class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 g-4" *ngIf="asociaciones.length > 0 && !showNotFound">
+  <div class="row row-cols-sm-1 row-cols-lg-2 g-4" *ngIf="asociaciones.length > 0 && !showNotFound">
       <app-card-asociacion  *ngFor="let asociacion of  asociaciones" [asociacion]="asociacion" [delatecard]="false"
         (onDetalle)="goAsociacionDetail($event)" (onDetalleRepresentante)="goDetalleRepresentante($event)">
       </app-card-asociacion>

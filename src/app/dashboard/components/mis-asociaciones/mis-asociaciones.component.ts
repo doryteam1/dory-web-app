@@ -1,13 +1,9 @@
 import { Component, OnInit ,  ElementRef,
   ViewChild,
-  AfterViewInit,
-  OnDestroy, } from '@angular/core';
+  AfterViewInit } from '@angular/core';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, Subscription } from 'rxjs';
-import { catchError, map,finalize } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { MODO_FILTRO_DATOS_VARIOS, vertices } from '../../../global/constants';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { registerLocaleData } from '@angular/common';
@@ -19,7 +15,6 @@ import { Filtro, MetaFiltro } from '../../../../models/filtro.model';
 import { Checkbox } from 'src/models/checkbox.model';
 import { BuscarPor } from '../../../../models/buscarPor.model';
 import { StorageService } from 'src/app/services/storage.service';
-import { MediaQueryService } from 'src/app/services/media-query.service';
 const _ = require('lodash');
 
 
@@ -29,10 +24,9 @@ const _ = require('lodash');
   styleUrls: ['./mis-asociaciones.component.scss'],
 })
 export class MisAsociacionesComponent
-  implements OnInit, AfterViewInit, OnDestroy
+  implements OnInit, AfterViewInit
 {
   @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
-  @ViewChild('map') map: any;
   @ViewChild('tabSoyRep') tabSoyRep!: ElementRef;
   @ViewChild('tabSoyMiemb') tabSoyMiemb!: ElementRef;
   @ViewChild('tabUnir') tabUnir!: ElementRef;
@@ -60,26 +54,9 @@ export class MisAsociacionesComponent
   loading1: boolean = false;
   loading2: boolean = false;
   loading3: boolean = false;
-  apiLoaded: Observable<boolean>;
   infraestructurasData: Array<any> = [];
   especiesData: Array<any> = [];
   authUserId: number = -1;
-  vertices = vertices;
-  options: google.maps.MapOptions = {
-    scrollwheel: true,
-    center: { lat: 0, lng: 0 },
-  };
-  markerPosition: google.maps.LatLngLiteral = {
-    lat: 0,
-    lng: 0,
-  };
-  markerOptions: google.maps.MarkerOptions = { draggable: false };
-  optionPoli: google.maps.PolylineOptions = {
-    strokeColor: '#494949',
-    strokeOpacity: 0.8,
-    strokeWeight: 3,
-    visible: true,
-  };
   photosNegocioArray: Array<string> = [];
   photosNegocioArrayCopy: Array<string> = [];
   photosNegocioUrlToDel: Array<string> = [];
@@ -142,9 +119,9 @@ export class MisAsociacionesComponent
   palabra: string = '';
   filtroseleccionado!: MetaFiltro | any;
   filtroseleccionadoCheckbox: string[] = [];
-  shorterNumber: number=20;
-  resultFiltroPorMunicipio:any[]=[]
-  resultFiltroSeleccionado:any[]=[]
+  shorterNumber: number = 20;
+  resultFiltroPorMunicipio: any[] = [];
+  resultFiltroSeleccionado: any[] = [];
   constructor(
     private asociacionesService: AsociacionesService,
     private appModalService: AppModalService,
@@ -154,27 +131,8 @@ export class MisAsociacionesComponent
     private searchBuscadorService: SearchBuscadorService,
     private asociacionService: AsociacionesService,
     private storageService: StorageService,
-    public mediaQueryService: MediaQueryService
   ) {
-    this.apiLoaded = httpClient
-      .jsonp(
-        'https://maps.googleapis.com/maps/api/js?key=' + environment.mapsApiKey,
-        'callback'
-      )
-      .pipe(
-        map(() => true),
-        catchError(() => of(false))
-      );
   }
-  mediaQuery1Asocia!: Subscription;
-  mediaQuery2Asocia!: Subscription;
-  mediaQuery3Asocia!: Subscription;
-  ngOnDestroy(): void {
-    this.mediaQuery1Asocia.unsubscribe();
-    this.mediaQuery2Asocia!.unsubscribe();
-    this.mediaQuery3Asocia!.unsubscribe();
-  }
-
   ngAfterViewInit(): void {
     /*Se abre el tab que estuvo seleccionado antes de ir a ver el detalle de una asociación*/
     let selectedTab = this.storageService.get('misAsocSelecTab');
@@ -189,33 +147,6 @@ export class MisAsociacionesComponent
   }
 
   ngOnInit(): void {
-    this.mediaQuery1Asocia = this.mediaQueryService
-      .mediaQuery('max-width: 415px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 15;
-        } else {
-          this.shorterNumber =20;
-        }
-      });
-    this.mediaQuery2Asocia = this.mediaQueryService
-      .mediaQuery('max-width: 375px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 10;
-        } else {
-          this.shorterNumber =15;
-        }
-      });
-    this.mediaQuery3Asocia = this.mediaQueryService
-      .mediaQuery('max-width: 337px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 7;
-        } else {
-          this.shorterNumber =10;
-        }
-      });
     registerLocaleData(es);
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
@@ -462,11 +393,11 @@ export class MisAsociacionesComponent
     return filtroresult;
   }
   onFiltroChangeCheckbox(checkboxs: string[]) {
-    if (checkboxs.length ==0){
-      this.filtroseleccionadoCheckbox=[]
+    if (checkboxs.length == 0) {
+      this.filtroseleccionadoCheckbox = [];
       this.resultFiltroPorMunicipio = [];
-    }else{
-     this.filtroseleccionadoCheckbox = checkboxs;
+    } else {
+      this.filtroseleccionadoCheckbox = checkboxs;
     }
     this.reseteoDeBusqueda();
   }
@@ -494,7 +425,7 @@ export class MisAsociacionesComponent
         'municipio'
       );
 
-/*          for (
+      /*          for (
            let index = 0;
            index < this.filtroseleccionadoCheckbox.length;
            index++

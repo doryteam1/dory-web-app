@@ -33,10 +33,19 @@
 .btn-mi-estilo{
   width: 174.13px;
 }
-@media screen and (max-width: 600px) {
+.modal-footer{
+  justify-content:flex-end ;
+}
+.input-wrapper{
+  width: 100%;
+}
+@media screen and (max-width: 640px) {
 .justify-content-between {
     flex-direction: column !important;
     gap: 10px;
+  }
+  .modal-footer{
+    justify-content: center !important;
   }
 }
 @media screen and (max-width: 500px) {
@@ -45,8 +54,6 @@
   gap: 10px;
 }
 .modal-footer{
-  display: flex;
-  justify-content: center;
   align-items: center;
 }
 }

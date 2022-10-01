@@ -76,10 +76,10 @@
             </app-carrucel-img>
             <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="producto.fotos.length == 0">
           </div>
-          <div class="card-body">
+          <div class="card-body shorterTextOverflowHidden">
             <h5 class="card__title card-title">${{producto.precio | number}}</h5>
-            <h5 class="card__sub-title card-title">{{producto.nombreProducto}}</h5>
-            <p class="card__descripction card-text">{{producto.descripcion | shorter:20 }} </p>
+            <h5 class="card__sub-title card-title shorterTextAuto">{{producto.nombreProducto}}</h5>
+            <p class="card__descripction card-text shorterTextAuto">{{producto.descripcion}} </p>
             <div>
               <span class="link" (click)="goDetail(producto)">Ver detalle</span>
             </div>

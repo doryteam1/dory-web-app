@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -17,13 +17,20 @@ export class MiembrosAsociacionModalContentComponent
   implements OnInit, OnDestroy
 {
   @Input() title = 'Agregar miembros';
-  @Input() nit = -1;
+  @Input() datos: any;
   piscicultores: Array<any> = [];
   pescadores: Array<any> = [];
-  selectedTab: string = 'piscicultores';
   piscicultoresFiltered: any[] = [];
   pescadoresFiltered: any[] = [];
   shorterNumber: number = 20;
+  activeclass1: boolean = false;
+  activeclass2: boolean = false;
+  showNotFound1: boolean = false;
+  showError1: boolean = false;
+  showNotFound2: boolean = false;
+  showError2: boolean = false;
+  errorMessage1 = '';
+  errorMessage2 = '';
   constructor(
     public activeModal: NgbActiveModal,
     private pescadoresService: PescadoresService,
@@ -37,21 +44,65 @@ export class MiembrosAsociacionModalContentComponent
   ngOnDestroy(): void {
     this.mediaQuery1Mienbr.unsubscribe();
   }
+
   ngOnInit(): void {
-    this.pescadoresService
-      .getPescadoresAsociacion(this.nit)
-      .subscribe((response: any) => {
+    this.activeTabClick(this.datos.tipo_asociacion);
+    this.pescadoresService.getPescadoresAsociacion(this.datos.nit).subscribe(
+      (response: any) => {
         console.log('pescadores ', response);
-        this.pescadores = response.data;
-        this.pescadoresFiltered = this.pescadores;
-      });
+        if (response.data.length > 0) {
+          this.pescadores = response.data;
+          this.pescadoresFiltered = this.pescadores;
+          this.showError1 = false;
+          this.showNotFound1 = false;
+        } else {
+          console.log(this.showNotFound1);
+          console.log(this.showError1);
+          this.showNotFound1 = true;
+          this.showError1 = false;
+        }
+      },
+      (err) => {
+         console.log(err);
+        this.showNotFound1 = false;
+        this.showError1 = false;
+        if (err.status == 404) {
+          this.showNotFound1 = true;
+        } else {
+          this.showError1 = true;
+          this.errorMessage1 = 'Error inesperado';
+        }
+      }
+    );
     this.piscicultoresService
-      .getPiscicultoresAsociacion(this.nit)
-      .subscribe((response) => {
-        console.log('piscicultores', response);
-        this.piscicultores = response.data;
-        this.piscicultoresFiltered = this.piscicultores;
-      });
+      .getPiscicultoresAsociacion(this.datos.nit)
+      .subscribe(
+        (response) => {
+          console.log('piscicultores', response);
+          if (response.data.length > 0) {
+            this.piscicultores = response.data;
+            this.piscicultoresFiltered = this.piscicultores;
+            this.showError2 = false;
+            this.showNotFound2 = false;
+          } else {
+            console.log("sindata pisci")
+                     console.log(this.showError1);
+            this.showNotFound2 = true;
+            this.showError2 = false;
+          }
+        },
+        (err) => {
+          console.log(err)
+          this.showNotFound2 = false;
+          this.showError2 = false;
+          if (err.status == 404) {
+            this.showNotFound2 = true;
+          } else {
+            this.showError2 = true;
+            this.errorMessage2 = 'Error inesperado';
+          }
+        }
+      );
     this.mediaQuery1Mienbr = this.mediaQueryService
       .mediaQuery('max-width: 300px')
       .subscribe((matches) => {
@@ -103,73 +154,77 @@ export class MiembrosAsociacionModalContentComponent
       .catch((result) => {});
   }
   datosContactoPescador(pescador: any) {
-    let object:any ={
-      nombreUser:pescador.nombre,
-      tipoUser:'Pescador',
-      foto:pescador.foto,
-      correoUser:pescador.email,
-      telefonoUser:pescador.telefono,
-      rutaUserDetalle:`/pescadores/detalle/${pescador.id}`
-
-    }
-      this.appModalService
-        .modalContactCardComponent(object)
-        .then((result) => {})
-        .catch((result) => {});
+    let object: any = {
+      nombreUser: pescador.nombre,
+      tipoUser: 'Pescador',
+      foto: pescador.foto,
+      correoUser: pescador.email,
+      telefonoUser: pescador.telefono,
+      rutaUserDetalle: `/pescadores/detalle/${pescador.id}`,
+    };
+    this.appModalService
+      .modalContactCardComponent(object)
+      .then((result) => {})
+      .catch((result) => {});
   }
   datosContactoPiscicultor(piscicultor: any) {
-      let object: any = {
-        nombreUser: piscicultor.nombre,
-        tipoUser: 'Piscicultor',
-        foto:piscicultor.foto,
-        correoUser: piscicultor.email,
-        telefonoUser: piscicultor.telefono,
-        rutaUserDetalle: `/piscicultores/detalle/${piscicultor.id}`,
-      };
-      this.appModalService
-        .modalContactCardComponent(object)
-        .then((result) => {})
-        .catch((result) => {});
+    let object: any = {
+      nombreUser: piscicultor.nombre,
+      tipoUser: 'Piscicultor',
+      foto: piscicultor.foto,
+      correoUser: piscicultor.email,
+      telefonoUser: piscicultor.telefono,
+      rutaUserDetalle: `/piscicultores/detalle/${piscicultor.id}`,
+    };
+    this.appModalService
+      .modalContactCardComponent(object)
+      .then((result) => {})
+      .catch((result) => {});
   }
   onSearch(text: string) {
-    if (this.selectedTab == 'piscicultores') {
-      console.log('piscicultores ', text);
-      if (text == '') {
-        this.piscicultoresFiltered = this.piscicultores;
-      } else {
-        this.piscicultoresFiltered = this.piscicultores.filter((element) => {
-          return element.nombres
-            .toLocaleLowerCase()
-            .includes(text.toLocaleLowerCase());
-        });
-      }
+    if (text == '') {
+      this.piscicultoresFiltered = this.piscicultores;
     } else {
-      console.log('pescadores ', text);
-      if (text == '') {
-        this.pescadoresFiltered = this.piscicultores;
-      } else {
-        this.pescadoresFiltered = this.pescadores.filter((element) => {
-          return element.nombres
-            .toLowerCase()
-            .includes(text.toLocaleLowerCase());
-        });
-      }
+      this.piscicultoresFiltered = this.piscicultores.filter((element) => {
+        let nombre = element.nombre?.toLocaleLowerCase();
+        return nombre?.includes(text.toLocaleLowerCase());
+      });
+    }
+
+    if (text == '') {
+      this.pescadoresFiltered = this.pescadores;
+    } else {
+      this.pescadoresFiltered = this.pescadores.filter((element) => {
+        let nombre = element.nombre?.toLocaleLowerCase();
+        return nombre?.includes(text.toLocaleLowerCase());
+      });
     }
   }
 
   navigateDetalle(user: any) {
     let url = '';
-    if (this.selectedTab == 'piscicultores') {
-      // Converts the route into a string that can be used
-      // with the window.open() function
+    if (this.datos.tipo_asociacion == 'Piscicultores') {
       url = this.router.serializeUrl(
         this.router.createUrlTree([`/piscicultores/detalle/${user.id}`])
       );
-    } else {
+      window.open(url, '_blank');
+    } else if (this.datos.tipo_asociacion == 'Pescadores') {
       url = this.router.serializeUrl(
         this.router.createUrlTree([`/pescadores/detalle/${user.id}`])
       );
+      window.open(url, '_blank');
     }
-    window.open(url, '_blank');
+  }
+  activeTabClick(selectedTab?: string) {
+    if (selectedTab == 'Piscicultores') {
+      this.activeclass1 = true;
+      this.activeclass2 = false;
+    } else if (selectedTab == 'Pescadores') {
+      this.activeclass1 = false;
+      this.activeclass2 = true;
+    } else if (selectedTab == 'Mixta') {
+      this.activeclass1 = true;
+      this.activeclass2 = false;
+    }
   }
 }

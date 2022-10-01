@@ -14,8 +14,9 @@
     padding-left:30px;
     background-origin: padding-box;
     border-radius: 133px;
-    width: 512px;
-    height: 50px;
+    width: 100vw;
+    max-width: 512px;
+    height: 45px;
     border:0.5px solid var(--gris4);
     border-left: 30px solid var(--white);
     -webkit-box-shadow: -1px 3px 8px 3px rgba(0,0,0,0.14);
@@ -55,8 +56,9 @@
         padding-left: 30px;
         background-origin: padding-box;
         border-radius: 133px;
-        width: 512px;
-        height: 64px;
+        width: 100vw;
+        max-width: 512px;
+        height: 45px;
         border: 0.5px solid var(--gris4);
         border-left: 30px solid var(--white);
         -webkit-box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);

@@ -92,10 +92,10 @@
         <div class="card" *ngFor="let asociacion of  asociacionesexistentes">
           <div class="card__user-info d-flex flex-row" (click)="goAssociationDetail(asociacion)">
               <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
-              <div class="asociacion-nombre">
-                <span class="card__title">{{asociacion.nombre | shorter:shorterNumber}}
+              <div class="asociacion-nombre shorterTextOverflowHidden">
+                <span class="card__title shorterTextAuto">{{asociacion.nombre}}
                 </span>
-                  <small>Detalles</small>
+                  <small class="shorterTextAuto">{{asociacion?.municipio? asociacion?.municipio: 'Sin municipio'}}</small>
               </div>
           </div>
           <button class="card__button btn-square btn--azul1 " (click)="invitarAnular(asociacion)"

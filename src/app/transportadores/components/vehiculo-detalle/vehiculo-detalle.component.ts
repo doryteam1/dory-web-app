@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProveedorService } from 'src/app/services/proveedor.service';
 import { VehiculosService } from 'src/app/services/vehiculos.service';
 
 @Component({
@@ -16,7 +15,6 @@ export class VehiculoDetalleComponent implements OnInit {
     private vehiculoService: VehiculosService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private proveedorService: ProveedorService
   ) {}
   ngOnInit(): void {
     this.selectedId = Number(this.activatedRoute.snapshot.paramMap.get('id')!);

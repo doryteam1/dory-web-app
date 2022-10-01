@@ -41,6 +41,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     intro:
       'Esta opción te lleva al formulario donde podrás llenar toda tú información, para que así puedan encontrarte.',
   };
+  stepContrasena: IntroToursteps = {
+    title: 'Cambiar contraseña',
+    element: '#contrasena',
+    intro: 'Desde aquí podrás cambiar la contraseña de la cuenta',
+  };
   stepMisGranjas: IntroToursteps = {
     title: 'Mis granjas',
     element: '#misgranjas',
@@ -131,6 +136,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepWelcome,
     this.stepMenuPrincipal,
     this.stepPerfil,
+    this.stepContrasena,
     this.stepMisGranjas,
     this.stepFavorito,
     this.stepAsociaciones,
@@ -143,6 +149,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepWelcome,
     this.stepMenuPrincipal,
     this.stepPerfil,
+    this.stepContrasena,
     this.stepFavorito,
     this.stepAsociaciones,
     this.stepDatosBasicos,
@@ -154,6 +161,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepWelcome,
     this.stepMenuPrincipal,
     this.stepPerfil,
+    this.stepContrasena,
     this.stepMisProductos,
     this.stepFavorito,
     this.stepDatosBasicos,
@@ -166,6 +174,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepWelcome,
     this.stepMenuPrincipal,
     this.stepPerfil,
+    this.stepContrasena,
     this.stepVehiculos,
     this.stepFavorito,
     this.stepDatosBasicos,
@@ -177,6 +186,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepWelcome,
     this.stepMenuPrincipal,
     this.stepPerfil,
+    this.stepContrasena,
     this.stepConsumo,
     this.stepFavorito,
     this.stepDatosBasicos,
@@ -188,6 +198,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepWelcome,
     this.stepMenuPrincipal,
     this.stepPerfil,
+    this.stepContrasena,
     this.stepFavorito,
     this.stepDatosBasicos,
     this.stepFotoPerfil1,
@@ -198,6 +209,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepWelcome,
     this.stepMenuPrincipal,
     this.stepPerfil,
+    this.stepContrasena,
     this.stepFavorito,
     this.stepNegocios,
     this.stepDatosBasicos,
@@ -290,8 +302,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.sidebar) {
           this.openOffcanvas();
           this.starTour();
-       /*    setTimeout(() => {
-          }, 500); */
         } else {
           this.starTour();
         }
@@ -479,9 +489,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         /* this.disableTags = true; */
         this.introService.miniTour(this.miniGuidedMunicipioTour);
       } else if (!this.authUser.direccion) {
-       /*  this.disableTags = true; */
+        /*  this.disableTags = true; */
         this.introService.miniTour(this.miniGuidedDirecTour);
-      }/*  else if (
+      } /*  else if (
         this.authUser.celular &&
         this.authUser.id_municipio &&
         this.authUser.direccion
@@ -492,5 +502,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   takedTour() {
     return this.storage.get('takeTour');
+  }
+  updatePassword() {
+    this._router.navigateByUrl('update-password');
   }
 }

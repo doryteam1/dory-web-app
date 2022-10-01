@@ -1,84 +1,101 @@
-// .map {
-//   padding: 0px;
-//   border-radius: 0.3rem;
-//   overflow: hidden;
-// }
+.map {
+  width: 100%;
+  padding: 0px;
+  border-radius: 0.3rem;
+  overflow: hidden;
+  height: 450px !important;
+}
 
-// .map>div {
-//   display: flex;
-// }
+.myestilomodalmap2 {
+  position: relative;
+  z-index: 1 !important;
+}
 
-// .myestilo-map-info-window {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// }
+.myestilomodalmap {
+  width: 100%;
+  position: relative;
+  z-index: -1;
+}
 
-// .my-btn-close {
-//   position: absolute;
-//   width: 28px;
-//   height: 28px;
-//   right: -17.5px;
-//   top: -17.5px;
-//   text-align: center;
-//   z-index: 1;
-//   border-radius: 80%;
-//   opacity: 1;
-//   background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
-// }
+.cargandomapa {
+  /* https: //www.w3schools.com/css/css3_backgrounds.asp */
+  /* https: //loading.io/animation/text/ */
+  /* https: //developer.mozilla.org/en-US/docs/Web/CSS/CSS_Backgrounds_and_Borders/Using_multiple_backgrounds */
+  /*  background-color: white;
+  background-image: url("../../../../assets/icons/tierraload.svg"),
+                                   url("../../../../assets/icons/cargando-texto.svg");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  height: 450px !important */
+  background-color: white;
+  background-image: url("../../../../assets/icons/tierraload.svg"),
+    url("../../../../assets/icons/cargando-texto.svg");
+  background-repeat: no-repeat;
+  background-position: center, center 70%;
+}
 
-// .my-btn-close-color-fondo {
-//   background-color: black;
-// }
+.cargandomapaerror {
+  background-color: white;
+  background-image: url("../../../../assets/icons/cargando-texto.svg") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
 
-// .my-btn-close-color-fondo:hover {
-//   opacity: 1;
-// }
+.map-container {
+  display: flex;
+}
 
-// .myestilomodalmap {
-//   width: 100%;
-// }
+.myestilo-map-info-window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-// .details_info_windo {
-//   padding: 0;
-//   top: 0;
-//   list-style: none;
-//   bottom: 0;
-//   margin: auto;
-//   transition: left 0.2s;
-//   color: black;
-//   padding: 10px;
-//   width: 100%;
-//   font-size: 0.9rem;
-//   cursor: pointer;
-// }
+.my-btn-close {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  right: -17.5px;
+  top: -17.5px;
+  text-align: center;
+  z-index: 10;
+  border-radius: 80%;
+  opacity: 1;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+}
 
-// .detais-name-info-Windo {
-//   display: flex;
-//   justify-content: flex-start;
-//   align-items: center;
-//   grid-gap: 5px;
-//   gap: 5px;
-//   margin-bottom: 10px;
-// }
+.my-btn-close-color-fondo {
+  background-color: black;
+}
 
-// div.my_estilo_cols {
-//   gap: 5px;
-//   margin-top: 20px;
-// }
+.my-btn-close-color-fondo:hover {
+  opacity: 1;
+}
 
+.details_info_windo {
+  padding: 0;
+  top: 0;
+  list-style: none;
+  bottom: 0;
+  margin: auto;
+  transition: left 0.2s;
+  color: black;
+  padding: 10px;
+  width: 100%;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
 
-// .cargandomapa {
-//   width: 100%;
-//   height: 550px;
-//   background-color: #a2a2a2;
-// }
-// @media (max-width: 575px) {
-//   .myestilomodalmap {
-//     margin: 0px !important;
-//     /* ajusta el boton de pantalla completa del mapa */
-//   }
-// }
+.detais-name-info-Windo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  grid-gap: 5px;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
 /* Estilos mapa search */
 .modal-header {
   justify-content: center;
@@ -100,50 +117,61 @@
   -webkit-box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
   box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
 }
-
-.container__input2 {
-  background-size: 20px;
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: var(--white);
-  background-origin: padding-box;
-  margin-left: 10px;
+  padding: 0.5rem 0.5rem 0.5rem 15px;
   border-radius: 133px;
-  width: 89%;
-  height: 45px;
-  border-left: 25px solid var(--white);
-  border-right: 1px solid var(--white);
-  border-bottom: 0px solid var(--white);
-  border-top: 0px solid var(--white);
-  outline: none;
+  color: white;
+  box-shadow: 0 2px 12px var(--shadow-2);
+  width: 100%;
 }
 
-.img-search {
-  font-size: 2em;
-  padding-left: 5px;
-  padding-right: 5px;
+.bi-search {
   color: rgb(158, 158, 167);
-  cursor: pointer
+}
+
+input {
+  margin: 0 0.5rem 0 0.5rem;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: var(--white);
+  color: #5a5656;
+  ;
 }
 
 .img-x {
-  font-size: 2em;
-  margin-right: 12px;
-  color: rgb(158, 158, 167);
-  padding-left: 5px;
-  cursor: pointer
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  opacity: 0.4;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='9e9ea7;'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 0.8rem;
 }
 
+::placeholder {
+  color: #5a5656;
+  ;
+}
 .button_close {
   margin-left: 10px;
   margin-right: 10px;
 }
 
+.button_close:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+}
+
 .modal-body {
   width: 100%;
   height: 100%;
-}
-
-.map {
-  padding: 0px;
 }
 
 .alertclass {

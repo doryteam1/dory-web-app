@@ -12,7 +12,6 @@ import { registerLocaleData } from '@angular/common';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import {  Subscription } from 'rxjs';
-import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
 import { SafeUrl } from '@angular/platform-browser';
 import { ComunicacionEntreComponentesService } from '../../../shared/services/comunicacion-entre-componentes.service';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
@@ -63,10 +62,10 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     id_vereda: new FormControl(0),
     id_corregimiento: new FormControl(0),
     corregimiento_vereda: new FormControl(''),
-    arrayTiposInfraestructuras: new FormArray([]),
-    arrayEspecies: new FormArray([]),
+    arrayTiposInfraestructuras: new FormArray([], [Validators.required]),
+    arrayEspecies: new FormArray([], [Validators.required]),
   });
-  onMapa: boolean=false;
+  onMapa: boolean = false;
   constructor(
     private granjaService: GranjasService,
     private places: PlacesService,
@@ -76,9 +75,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
     private compressImageSizeService: CompressImageSizeService,
     private storage: FirebaseStorageService
-  ) {
-
-  }
+  ) {}
   /* agregar esto para camcelar el subscribe de  comunicacionEntreComponentesService*/
   public changeArray!: Subscription;
   public ArrayDelate!: Subscription;
@@ -86,7 +83,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     registerLocaleData(es);
     this.granja = this.ar.snapshot.params;
-    /*  console.log(this.granja); */
     let action = this.ar.snapshot.paramMap.get('action');
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
     this.authUserId = Number(this.ar.snapshot.paramMap.get('authUserId')!);
@@ -133,13 +129,11 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
                   const element = array[2][index];
                   this.filesfinalCreate.splice(element, 1);
                 }
-                console.log(this.photosGranjaArray);
-                console.log(this.filesfinalCreate);
               } else if (action == 'update') {
                 this.loadPhotos(array);
               }
             }
-          }else{
+          } else {
             console.log(array);
             this.latitud?.setValue(array[0].latitud);
             this.longitud?.setValue(array[0].longitud);
@@ -434,20 +428,72 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         );
     }
   }
-  closeMap(){
-     this.appModalService.CloseGoogleMapGeneralModal();
+  closeMap() {
+    this.appModalService.CloseGoogleMapGeneralModal();
   }
   verMapaDireccion() {
-    this.onMapa=true
+    this.onMapa = true;
     this.faltadireccion = false;
     if (this.modalMode == 'update') {
+      let modalheadergooglemap = false;
+      let mapaSeach = true;
+      let limiteMapa: limiteMapa = {
+        limite: 'Sucre',
+        nivDivAdm: 'Departamento',
+        id_departamento: 70,
+      };
+      let atributos = {
+        longAndLat: {
+          lat: this.form.getRawValue().latitud,
+          lng: this.form.getRawValue().longitud,
+        },
+      };
+      this.platformLocation.onPopState(() => {
+        this.appModalService.CloseGoogleMapGeneralModal();
+      });
+      this.appModalService
+        .GoogleMapModalGeneral(
+          atributos,
+          modalheadergooglemap,
+          '',
+          mapaSeach,
+          limiteMapa
+        )
+        .then((result) => {
+          this.onMapa = false;
+          if (this.form.getRawValue().direccion == '') {
+            this.faltadireccion = true;
+            this.latitud?.setValue(0);
+            this.longitud?.setValue(0);
+            this.idMunic?.setValue(null);
+          } else {
+            this.faltadireccion = false;
+          }
+        })
+        .catch((result) => {
+          this.onMapa = false;
+          if (this.form.getRawValue().direccion == '') {
+            this.faltadireccion = true;
+            this.latitud?.setValue(0);
+            this.longitud?.setValue(0);
+            this.idMunic?.setValue(null);
+          } else {
+            this.faltadireccion = false;
+          }
+        });
+    } else if (this.modalMode == 'create') {
+      if (
+        this.form.getRawValue().latitud !== 0 &&
+        this.form.getRawValue().longitud !== 0
+      ) {
+        this.faltanargumentos = false;
         let modalheadergooglemap = false;
         let mapaSeach = true;
-              let limiteMapa:limiteMapa = {
-                limite: 'Sucre',
-                nivDivAdm: 'Departamento',
-                id_departamento: 70,
-              };
+        let limiteMapa: limiteMapa = {
+          limite: 'Sucre',
+          nivDivAdm: 'Departamento',
+          id_departamento: 70,
+        };
         let atributos = {
           longAndLat: {
             lat: this.form.getRawValue().latitud,
@@ -458,7 +504,13 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
           this.appModalService.CloseGoogleMapGeneralModal();
         });
         this.appModalService
-          .GoogleMapModalGeneral(atributos, modalheadergooglemap, '', mapaSeach,limiteMapa)
+          .GoogleMapModalGeneral(
+            atributos,
+            modalheadergooglemap,
+            '',
+            mapaSeach,
+            limiteMapa
+          )
           .then((result) => {
             this.onMapa = false;
             if (this.form.getRawValue().direccion == '') {
@@ -481,60 +533,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
               this.faltadireccion = false;
             }
           });
-    } else if (this.modalMode == 'create') {
-      if (
-        this.form.getRawValue().latitud !== 0 &&
-        this.form.getRawValue().longitud !== 0
-      ) {
-        this.faltanargumentos = false;
-          let modalheadergooglemap = false;
-          let mapaSeach = true;
-          let limiteMapa: limiteMapa = {
-            limite: 'Sucre',
-            nivDivAdm: 'Departamento',
-            id_departamento: 70,
-          };
-          let atributos = {
-            longAndLat: {
-              lat: this.form.getRawValue().latitud,
-              lng: this.form.getRawValue().longitud,
-            },
-          };
-          this.platformLocation.onPopState(() => {
-            this.appModalService.CloseGoogleMapGeneralModal();
-          });
-          this.appModalService
-            .GoogleMapModalGeneral(
-              atributos,
-              modalheadergooglemap,
-              '',
-              mapaSeach,
-              limiteMapa
-            )
-            .then((result) => {
-              this.onMapa = false;
-              if (this.form.getRawValue().direccion == '') {
-                this.faltadireccion = true;
-                this.latitud?.setValue(0);
-                this.longitud?.setValue(0);
-                this.idMunic?.setValue(null);
-              } else {
-                this.faltadireccion = false;
-              }
-            })
-            .catch((result) => {
-              this.onMapa = false;
-              if (this.form.getRawValue().direccion == '') {
-                this.faltadireccion = true;
-                this.latitud?.setValue(0);
-                this.longitud?.setValue(0);
-                this.idMunic?.setValue(null);
-              } else {
-                this.faltadireccion = false;
-              }
-            });
-        }
-
+      }
     }
   }
 

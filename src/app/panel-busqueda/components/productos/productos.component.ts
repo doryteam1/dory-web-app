@@ -102,7 +102,6 @@ export class ProductosComponent implements OnInit {
   ngOnInit(): void {
     registerLocaleData(es);
     this.proveedorService.getProductosAll().subscribe((response) => {
-      console.log(response);
       this.productos = response.data;
       this.productosFiltered = this.productos;
       if (this.productosFiltered.length < 1) {

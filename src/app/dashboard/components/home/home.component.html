@@ -10,6 +10,12 @@
                 Perfil
               </a>
             </li>
+            <li id="contrasena" class="nav-item" style="cursor: pointer;">
+              <a class="nav-link " aria-current="page" (click)="updatePassword()" routerLinkActive="active" >
+                <span data-feather="home"></span>
+                Cambiar contraseña
+              </a>
+            </li>
             <li id="misgranjas" class="nav-item" *ngIf="tipoUsuario == 'Piscicultor'">
               <a class="nav-link" [ngClass]="{'miclase':rutaGranjasdetalle,'disabled':disableTags}" [routerLink]="['/dashboard/granjas']"
                     routerLinkActive="active" >
@@ -97,6 +103,12 @@ aria-labelledby="offcanvasScrollingLabel">
               <a class="nav-link " aria-current="page" [routerLink]="['/dashboard/perfil']" routerLinkActive="active">
                 <span data-feather="home"></span>
                 Perfil
+              </a>
+            </li>
+            <li  id="contrasena" class="nav-item" style="cursor: pointer;" (click)="closeOffcanvas()">
+              <a class="nav-link " aria-current="page"  (click)="updatePassword()"routerLinkActive="active">
+                <span data-feather="home"></span>
+                Cambiar contraseña
               </a>
             </li>
             <li id="misgranjas" class="nav-item" *ngIf="tipoUsuario == 'Piscicultor'"  (click)="closeOffcanvas()">

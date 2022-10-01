@@ -7,29 +7,39 @@
       <app-search class="app-search" (textSearch)="onSearch($event)"></app-search>
     </div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active"
-        id="home-tab" data-bs-toggle="tab"
-        data-bs-target="#home-tab-pane"
-         type="button" role="tab"
+      <!-- Home tab piscicultores -->
+      <li class="nav-item" role="presentation" *ngIf="datos.tipo_asociacion == 'Piscicultores' || datos.tipo_asociacion =='Mixta'">
+        <button class="nav-link nav-link--color"
+        [ngClass]="{'active nav-link--mytabstilo':activeclass1}"
+          id="home-tab"
+          data-bs-toggle="tab"
+         data-bs-target="#home-tab-pane"
+         type="button"
+         role="tab"
          aria-controls="home-tab-pane"
          aria-selected="true"
-         (click)="selectedTab = 'piscicultores'">Piscicultores</button>
+         (click)="activeTabClick( 'Piscicultores')"
+        >Piscicultores</button>
       </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link"
+      <!-- Home tab pescadores -->
+      <li class="nav-item" role="presentation" *ngIf="datos.tipo_asociacion == 'Pescadores'  || datos.tipo_asociacion == 'Mixta'">
+        <button class="nav-link nav-link--color"
+        [ngClass]="{'active nav-link--mytabstilo':activeclass2 }"
         id="profile-tab"
         data-bs-toggle="tab"
         data-bs-target="#profile-tab-pane"
-        type="button" role="tab"
+        type="button"
+        role="tab"
         aria-controls="profile-tab-pane"
          aria-selected="false"
-          (click)="selectedTab = 'pescadores'">Pescadores</button>
+         (click)="activeTabClick('Pescadores')"
+        >Pescadores</button>
       </li>
     </ul>
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-          <div class="list overflow-auto d-flex flex-column">
+    <div class="tab-content list " id="myTabContent">
+      <div class="tab-pane fade" [ngClass]="{'show active':datos.tipo_asociacion == 'Piscicultores' || datos.tipo_asociacion =='Mixta'}"
+           id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+          <div class="d-flex flex-column">
               <div class="card" *ngFor="let piscicultor of piscicultoresFiltered">
                   <div class="card__user-info d-flex flex-row">
                       <img (click)="navigateDetalle(piscicultor)" class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person.svg'}}">
@@ -52,8 +62,8 @@
               </div>
           </div>
       </div>
-      <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-          <div class="list overflow-auto d-flex flex-column">
+      <div class="tab-pane fade"  [ngClass]="{'show active':datos.tipo_asociacion == 'Pescadores' }" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+          <div class="d-flex flex-column">
               <div class="card" *ngFor="let pescador of pescadoresFiltered">
                   <div class="card__user-info d-flex flex-row" >
                       <img (click)="navigateDetalle(pescador)"class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person.svg'}}">

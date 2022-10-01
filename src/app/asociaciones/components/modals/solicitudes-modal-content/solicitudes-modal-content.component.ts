@@ -15,13 +15,14 @@ import { AppModalService } from 'src/app/shared/services/app-modal.service';
 })
 export class SolicitudesModalContentComponent implements OnInit, OnDestroy {
   @Input() title = 'Agregar miembros';
-  @Input() nit = -1;
+  @Input() datos: any;
   piscicultores: Array<any> = [];
   pescadores: Array<any> = [];
-  selectedTab: string = 'piscicultores';
   piscicultoresFiltered: any[] = [];
   pescadoresFiltered: any[] = [];
   shorterNumber: number = 20;
+  activeclass1: boolean = false;
+  activeclass2: boolean = false;
   constructor(
     public activeModal: NgbActiveModal,
     private pescadoresService: PescadoresService,
@@ -40,15 +41,16 @@ export class SolicitudesModalContentComponent implements OnInit, OnDestroy {
     this.mediaQuery3Solicit.unsubscribe();
   }
   ngOnInit(): void {
+    this.activeTabClick(this.datos.tipo_asociacion);
     this.pescadoresService
-      .getPescadoresEstadoSolicitud(this.nit)
+      .getPescadoresEstadoSolicitud(this.datos.nit)
       .subscribe((response: any) => {
         console.log(response);
         this.pescadores = response.data;
         this.pescadoresFiltered = this.pescadores;
       });
     this.piscicultoresService
-      .getPiscicultoresEstadoSolicitud(this.nit)
+      .getPiscicultoresEstadoSolicitud(this.datos.nit)
       .subscribe((response) => {
         console.log(response);
         this.piscicultores = response.data;
@@ -135,18 +137,20 @@ export class SolicitudesModalContentComponent implements OnInit, OnDestroy {
       };
       usuario.estado_solicitud = 'Enviada';
       usuario.solicitud_enviada_por = 'asociacion';
-      this.asociacionService.invitarUsuarioAsociacion(data, this.nit).subscribe(
-        (response) => {
-          console.log(response);
-          usuario.id_solicitud = response.body.insertId;
-          console.log('usuario.id_solicitud ', usuario.id_solicitud);
-        },
-        (err) => {
-          usuario.estado_solicitud = null;
-          usuario.solicitud_enviada_por = null;
-          console.log(err);
-        }
-      );
+      this.asociacionService
+        .invitarUsuarioAsociacion(data, this.datos.nit)
+        .subscribe(
+          (response) => {
+            console.log(response);
+            usuario.id_solicitud = response.body.insertId;
+            console.log('usuario.id_solicitud ', usuario.id_solicitud);
+          },
+          (err) => {
+            usuario.estado_solicitud = null;
+            usuario.solicitud_enviada_por = null;
+            console.log(err);
+          }
+        );
     }
   }
   datosContactoPescador(pescador: any) {
@@ -182,9 +186,8 @@ export class SolicitudesModalContentComponent implements OnInit, OnDestroy {
       this.piscicultoresFiltered = this.piscicultores;
     } else {
       this.piscicultoresFiltered = this.piscicultores.filter((element) => {
-        return element.nombres
-          .toLocaleLowerCase()
-          .includes(text.toLocaleLowerCase());
+        let nombre = element.nombres?.toLocaleLowerCase();
+        return nombre?.includes(text.toLocaleLowerCase());
       });
     }
 
@@ -192,24 +195,36 @@ export class SolicitudesModalContentComponent implements OnInit, OnDestroy {
       this.pescadoresFiltered = this.pescadores;
     } else {
       this.pescadoresFiltered = this.pescadores.filter((element) => {
-        return element.nombres.toLowerCase().includes(text.toLocaleLowerCase());
+        let nombre = element.nombres?.toLocaleLowerCase();
+        return nombre?.includes(text.toLocaleLowerCase());
       });
     }
   }
 
   navigateDetalle(user: any) {
     let url = '';
-    if (this.selectedTab == 'piscicultores') {
-      // Converts the route into a string that can be used
-      // with the window.open() function
+    if (this.datos.tipo_asociacion == 'Piscicultores') {
       url = this.router.serializeUrl(
         this.router.createUrlTree([`/piscicultores/detalle/${user.id}`])
       );
-    } else {
+      window.open(url, '_blank');
+    } else if (this.datos.tipo_asociacion == 'Pescadores') {
       url = this.router.serializeUrl(
         this.router.createUrlTree([`/pescadores/detalle/${user.id}`])
       );
+      window.open(url, '_blank');
     }
-    window.open(url, '_blank');
+  }
+  activeTabClick(selectedTab?: string) {
+    if (selectedTab == 'Piscicultores') {
+      this.activeclass1 = true;
+      this.activeclass2 = false;
+    } else if (selectedTab == 'Pescadores') {
+      this.activeclass1 = false;
+      this.activeclass2 = true;
+    } else if (selectedTab == 'Mixta') {
+      this.activeclass1 = true;
+      this.activeclass2 = false;
+    }
   }
 }

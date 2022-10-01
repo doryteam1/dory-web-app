@@ -179,6 +179,7 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
         modalheadergooglemap,
         iconMarkerGoogleMap,
         false,
+        '',
         shared
       )
       .then((result) => {

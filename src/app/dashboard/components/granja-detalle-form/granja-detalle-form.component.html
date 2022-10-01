@@ -147,6 +147,11 @@
             {{data.nombre}}
           </label>
         </div>
+        <div *ngIf="invalid('arrayTiposInfraestructuras')" class="container__alert-msg danger-message">
+          <div *ngIf=" infraestructuras?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
       </div>
 
       <div class="mb-3" >
@@ -160,6 +165,11 @@
             </label>
           </div>
         </div>
+          <div *ngIf="invalid('arrayEspecies')" class="container__alert-msg danger-message">
+            <div *ngIf="especies?.errors?.['required']">
+              Campo requerido
+            </div>
+          </div>
       </div>
               <!-- Fotos mini -->
               <div class="clasfotoMiniy" *ngIf="photosGranjaArray.length > 0">
