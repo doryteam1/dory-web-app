@@ -1,7 +1,7 @@
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, Input,OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GoogleMap, MapGeocoder, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { AppModalService } from '../../../shared/services/app-modal.service';
@@ -12,8 +12,6 @@ import { ConfirmModalMapService } from '../../services/confirm-modal-map.service
 import { vertices } from '../../../global/constants';
 import { ComunicacionEntreComponentesService } from '../../services/comunicacion-entre-componentes.service';
 import { limiteMapa } from 'src/models/limiteMapaGoogle.model';
-
-
 @Component({
   selector: 'app-modal-google-general',
   templateUrl: './modal-google-general.component.html',
@@ -36,7 +34,7 @@ export class ModalGoogleGeneralComponent implements OnInit {
   map!: GoogleMap;
   markerPositions: google.maps.LatLngLiteral[] = [];
   markersInfo: any[] = [];
-  mapaOn: boolean = false;
+  loadDataMapa: boolean = false;
   options: google.maps.MapOptions = {
     center: { lat: 9.214145, lng: -75.188469 },
     zoom: 10,
@@ -69,12 +67,12 @@ export class ModalGoogleGeneralComponent implements OnInit {
     visible: true,
   };
   vertices = vertices;
+  mapaOpen:boolean=false
   constructor(
     httpClient: HttpClient,
     private _modalService: NgbActiveModal,
     private appModalService: AppModalService,
     public location: PlatformLocation,
-    /* nuevas varibles */
     private places: PlacesService,
     private geocoder: MapGeocoder,
     private confirmModalMapService: ConfirmModalMapService,
@@ -91,6 +89,10 @@ export class ModalGoogleGeneralComponent implements OnInit {
       );
   }
   ngOnInit(): void {
+      this.apiLoaded.subscribe((loadMapa) => {
+      this.mapaOpen = loadMapa;
+      console.log(loadMapa);
+    });
     if (this.mapaSeach) {
       this.iniciarMapaSearch();
       this.loadDptos();
@@ -128,8 +130,11 @@ export class ModalGoogleGeneralComponent implements OnInit {
   }
   mapainiciado() {
     /* https://www.freakyjolly.com/angular-google-maps-integration-with-markers-info-windows-tutorial/ */
-    this.openInfoWindow(this.marker);
-    this.mapaOn = true;
+    console.log('mapa iniciado');
+    this.loadDataMapa = true;
+    if (!this.mapaSeach) {
+      this.openInfoWindow(this.marker);
+    }
   }
   public decline() {
     this._modalService.close(false);
@@ -252,11 +257,9 @@ export class ModalGoogleGeneralComponent implements OnInit {
       };
     }
   }
-
   closeMap() {
     this._modalService.dismiss();
   }
-
   buscar() {
     this.loadingseart = true;
     const valor = this.buscarx;

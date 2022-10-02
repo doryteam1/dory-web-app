@@ -86,17 +86,17 @@ export class AsociacionesService {
     );
   }
 
-  public showSolicitudesModal(nit: number, title?: string): Promise<boolean> {
+  public showSolicitudesModal(datos:any, title?: string): Promise<boolean> {
     const modalRef = this.modalService.open(SolicitudesModalContentComponent);
     modalRef.componentInstance.title = title;
-    modalRef.componentInstance.nit = nit;
+    modalRef.componentInstance.datos = datos;
     return modalRef.result;
   }
 
-  public showAscociacionMiembrosModal(nit: number, title?: string): Promise<boolean> {
+  public showAscociacionMiembrosModal(datos:any, title?: string): Promise<boolean> {
     const modalRef = this.modalService.open(MiembrosAsociacionModalContentComponent);
     modalRef.componentInstance.title = title;
-    modalRef.componentInstance.nit = nit;
+    modalRef.componentInstance.datos = datos;
     return modalRef.result;
   }
 

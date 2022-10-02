@@ -41,6 +41,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
   departamentos: any;
   municipios: any;
   fileRut: any = null;
+  datosAsociacion:any
   constructor(
     private asociacionesService:AsociacionesService,
     private storage: FirebaseStorageService,
@@ -50,12 +51,13 @@ export class AsociacionDetalleFormComponent implements OnInit {
 
   ngOnInit(): void {
     registerLocaleData( es );
-    console.log("params ",this.ar.snapshot.params)
     this.asociacion = { ...this.ar.snapshot.params };
-    console.log(this.asociacion)
+          this.datosAsociacion = {
+            nit: this.asociacion?.nit,
+            tipo_asociacion: this.asociacion.tipo_asociacion,
+          };
     let action = this.ar.snapshot.paramMap.get('action');
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
-
     if(action=='create'){
       this.prepareForm(action!,this.asociacion)
       this.loadDptos();
@@ -343,12 +345,11 @@ export class AsociacionDetalleFormComponent implements OnInit {
   }
 
   verMiembros(){
-    this.asociacionesService.showAscociacionMiembrosModal(this.nit?.value, 'Miembros')
+    this.asociacionesService.showAscociacionMiembrosModal(this.datosAsociacion, 'Miembros')
   }
   agregarMiembro(){
-    this.asociacionesService.showSolicitudesModal(this.nit?.value, 'Agregar miembro');
+    this.asociacionesService.showSolicitudesModal(this.datosAsociacion, 'Agregar miembro');
   }
-
   invalid(controlFormName: string) {
     return (
       this.form.get(controlFormName)?.invalid &&
@@ -356,7 +357,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
         this.form.get(controlFormName)?.touched)
     );
   }
-
   prepareForm(action: string, asociacion?: any){
     this.modalMode = action;
     this.form.reset();
@@ -387,11 +387,9 @@ export class AsociacionDetalleFormComponent implements OnInit {
       }
     }
   }
-
   goBack(){
     this.location.back();
   }
-
   onChangeLegalConst(){
     console.log(this.isLegalConstituida?.value)
     if(this.isLegalConstituida?.value == '1'){
@@ -400,27 +398,21 @@ export class AsociacionDetalleFormComponent implements OnInit {
       this.fotoCamc?.disable();
     }
   }
-
   get idDpto() {
     return this.form.get('id_departamento');
   }
-
   get idMunic() {
     return this.form.get('id_municipio');
   }
-
   get nit() {
     return this.form.get('nit');
   }
-
   get direccion() {
     return this.form.get('direccion');
   }
-
   get infoAdicionalDir(){
     return this.form.get('informacion_adicional_direccion');
   }
-
   get nombre(){
     return this.form.get('nombre');
   }

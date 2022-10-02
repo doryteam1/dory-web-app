@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
 import { InvestigadorService } from 'src/app/services/investigador.service';
-import { MediaQueryService } from 'src/app/services/media-query.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { ProveedorService } from 'src/app/services/proveedor.service';
 import { NegociosService } from 'src/app/services/negocios.service';
@@ -22,7 +21,7 @@ import { MetaFiltro } from 'src/models/filtro.model';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
 })
-export class UsersComponent implements OnInit, OnDestroy {
+export class UsersComponent implements OnInit {
   usersFiltered!: any[];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
@@ -42,12 +41,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     /* modoFiltro: 'number_ordenarmayoramenor', */
   ];
   userType: string = '';
-  shorterNumber: number = 20;
   resultFiltroPorMunicipio: any[] = [];
-  mediaQueryUser!: Subscription;
-  ngOnDestroy(): void {
-    this.mediaQueryUser.unsubscribe();
-  }
   constructor(
     private pescadoresService: PescadoresService,
     private piscicultoresService: PiscicultoresService,
@@ -59,7 +53,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     private searchBuscadorService: SearchBuscadorService,
     private places: PlacesService,
     private ar: ActivatedRoute,
-    public mediaQueryService: MediaQueryService,
     private appModalService: AppModalService
   ) {}
 
@@ -84,15 +77,6 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.showNotFound = false;
       }
     });
-    this.mediaQueryUser = this.mediaQueryService
-      .mediaQuery('max-width: 300px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 15;
-        } else {
-          this.shorterNumber = 20;
-        }
-      });
     /* municipios sucre */
     if(this.userType == 'proveedores'){
      this.checkbox = [
@@ -109,6 +93,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.loadMunic();
     }
   }
+
   datosContactoUser(user: any) {
     let object: any;
     if (user.tipo_usuario == 'Pescador') {

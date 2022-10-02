@@ -374,6 +374,7 @@ export class GranjaDetalleComponent implements OnInit,OnDestroy  {
         modalheadergooglemap,
         iconMarkerGoogleMap,
         false,
+        '',
         shared
       )
       .then((result) => {

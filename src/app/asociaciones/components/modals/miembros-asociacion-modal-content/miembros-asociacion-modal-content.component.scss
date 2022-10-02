@@ -25,12 +25,13 @@
 }
 
 .list{
-    height:350px;
+  height: 100vh;
+    max-height: 300px;
+    overflow-y: auto;
     padding-right: 10px;
 }
 
 .modal-body{
-    /* padding-top: 0; */
     padding-top: 10px;
 }
 

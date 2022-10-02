@@ -36,9 +36,9 @@
     <div class="card__row" >
         <div class="card__item">
             <img class="card__image" src="{{granja.imagen ? granja.imagen : '/assets/images/avatar-person.svg'}}">
-                  <div class="container-nombre">
-                    <span class="card__title" (click)="datosContactoUser(granja)">{{granja.nombre | shorter:shorterNumber}}</span>
-                    <small (click)="goDetail(granja)">Detalles</small>
+                  <div class="container-nombre shorterTextOverflowHidden">
+                    <span class="card__title shorterTextAuto" (click)="datosContactoUser(granja)">{{granja.nombre}}</span>
+                    <small (click)="goDetail(granja)">{{granja?.municipio? granja?.municipio: 'Sin municipio'}}</small>
                   </div>
         </div>
     </div>

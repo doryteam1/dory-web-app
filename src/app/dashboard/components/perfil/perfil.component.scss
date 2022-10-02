@@ -1,24 +1,24 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: 0;
-    margin-right: 0;
-    /* padding-left: 35px; */
-    width: 100%;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 0;
+  margin-right: 0;
+  /* padding-left: 35px; */
+  width: 100%;
 }
 
 
-.container__box{
-    display: flex;
-    flex-direction: column;
+.container__box {
+  display: flex;
+  flex-direction: column;
 }
 
-.container__box__title{
-  border:1px var(--azul1) solid;
+.container__box__title {
+  border: 1px var(--azul1) solid;
   border-radius: 5px;
   /* width: 80vw; */
   text-align: center;
@@ -26,139 +26,138 @@
   margin-top: 30px;
 }
 
-.container__box-row{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.container__box-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.container__box-image{
+
+.container__box-image {
   width: 200px;
   height: 200px;
   position: relative;
   border-radius: 50%;
 }
 
-.container__title{
+.container__title {
   color: var(--azul1);
   font-size: calc(1rem + 1vw);
 }
 
-.container__image{
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    position: relative;
-    object-fit: cover;
+.container__image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  object-fit: cover;
 }
 
-.container__image2{
-    width: 30px;
-    height: 30px;
-    position:absolute;
-    right: 3px;
-    bottom: 7px;
-    object-fit: cover;
-    cursor: pointer;
+.container__image2 {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 3px;
+  bottom: 7px;
+  object-fit: cover;
+  cursor: pointer;
 }
 
-.container__info{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.container__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.container-detail{
-    display: flex;
-    margin-top: 50px;
-    margin-left: 50px;
+.container-detail {
+  display: flex;
+  margin-top: 50px;
+  margin-left: 50px;
 }
 
-.container-detail__box{
-    display: flex;
-    flex-direction: column;
-    margin-right: 50px;
+.container-detail__box {
+  display: flex;
+  flex-direction: column;
+  margin-right: 50px;
 }
 
-.container-detail__image{
-    width: 20px;
-    height: 20px;
+.container-detail__image {
+  width: 20px;
+  height: 20px;
 }
 
-.container__label{
-    font-weight: 500;
-    display: block;
-    color:var(--gris7);
-}
-
-.container__label2{
-  text-align: center;
-   font-size: calc(1rem + 1vw);
+.container__label {
   font-weight: 500;
   display: block;
-  color:var(--gris7);
+  color: var(--gris7);
+}
+
+.container__label2 {
+  text-align: center;
+  font-size: calc(1rem + 1vw);
+  font-weight: 500;
+  display: block;
+  color: var(--gris7);
   /* font-size: 30px; */
 }
 
-.container__title{
+.container__title {}
 
+.form__box {
+  display: flex;
+  flex-direction: column;
 }
 
-.form__box{
-    display: flex;
-    flex-direction: column;
+.container__input {
+  margin-bottom: 15px;
+  margin-right: 5px;
+  border-radius: 4px;
+  padding-right: 25px;
+  width: 100%;
 }
 
-.container__input{
-    margin-bottom: 15px;
-    margin-right: 5px;
-    border-radius: 4px;
-    padding-right: 25px;
-    width: 100%;
+.container_link {
+  font-weight: 300;
+  cursor: pointer;
+  color: var(--azul1);
 }
 
-.container_link{
-    font-weight: 300;
-    cursor:pointer;
-    color:var(--azul1);
+.container__btn {
+  border-radius: 5px;
+  height: 40px;
+  width: 360px;
+  background-color: white;
+  border: 0.5px solid var(--black);
+  margin-top: 20px;
 }
 
-.container__btn{
-    border-radius: 5px;
-    height: 40px;
-    width: 360px;
-    background-color: white;
-    border:0.5px solid var(--black);
-    margin-top: 20px;
-}
-
-.container__btn2{
+.container__btn2 {
   border-radius: 5px;
   height: 40px;
   width: 360px;
   background-color: var(--azul1);
-  color:white;
-  border:none;
+  color: white;
+  border: none;
   margin-top: 20px;
   align-self: center;
 }
 
-.container__btn3{
-  width: max-content;
+.container__btn3 {
+  width: 181px;
   border-radius: 5px;
   box-shadow: -1px 4px 7px -1px rgb(0 0 0 / 18%);
   background-color: #F0F0F0;
 }
 
-.container__icon{
+.container__icon {
   margin-right: 15px;
 }
 
-.container__spinner{
-    width: 20px;
-    height: 20px;
+.container__spinner {
+  width: 20px;
+  height: 20px;
 }
 
-.container__spinner-photo{
+.container__spinner-photo {
   width: 30px;
   height: 30px;
   position: absolute;
@@ -166,13 +165,14 @@
   bottom: 85px;
 }
 
-.row{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: start;
-    width: fit-content;
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: start;
+  width: fit-content;
 }
+
 /* mi  estilo */
 
 .button_close {
@@ -289,38 +289,41 @@
 }
 
 /* fin mi estilo */
-.container__info{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 10px;
+.container__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
 }
 
-.progress{
-  width: 360px;;
+.progress {
+  width: 360px;
+  ;
 }
 
-.container-row{
+.container-row {
   width: 100%;
   margin: 0;
 }
 
-.col{
+.col {
   padding: 0;
 }
 
-.left{
+.left {
   margin-left: 10px;
 }
 
-.rigth{
+.rigth {
   margin-right: 10px;
 }
+
 /* estilo input direccion */
 .input-wrapper {
   position: relative;
   width: 100%;
 }
+
 .input-icon {
   color: #191919;
   position: absolute;
@@ -336,6 +339,7 @@
   left: unset;
   right: 3px;
 }
+
 .input-icon.option-select-optgroup {
   left: unset;
   right: 1px;
@@ -345,6 +349,7 @@
   background-color: #f6f8f9;
   color: #7a7a7a;
 }
+
 .container__input--direccion {
   background-color: white;
   cursor: pointer;
@@ -354,76 +359,96 @@
   background-color: #e4f4ff;
 }
 
-.dropdown-menu--li{
+.dropdown-menu--li {
   display: flex;
   gap: 5px;
-   padding-left: 5px;
+  padding-left: 5px;
 }
-.dropdown-item-myestilo{
-padding-left: 0;
+
+.dropdown-item-myestilo {
+  padding-left: 0;
 }
-.container__btn3-div{
+
+.container__btn3-div {
+  justify-content: center;
   display: flex;
   align-items: center;
   gap: 5px;
 }
-.container__btn3-div>img{
+
+.container__btn3-div>img {
   width: 30px;
 }
 
-.asterisk{
-  color:red;
+.asterisk {
+  color: red;
 }
-.d-flex-miestilo{
+
+.d-flex-miestilo {
   width: 100%;
 }
-.formControl{
+
+.formControl {
   width: 100%;
 }
-.dropdown-menu-photo{
+
+.dropdown-menu-photo {
   inset: 17px auto auto 0px !important;
 }
+
 .button_close:focus {
-      border-color: none !important;
-      box-shadow: none !important;
-      outline: 0 none !important;
-    }
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+}
+
+.d-flex-delate-add-otros {
+  flex-wrap: wrap;
+}
+
+.d-flex-delate-add-photo {
+flex-wrap: wrap;
+}
+
 @media screen and (max-width: 1000px) {
-.container-row {
-  flex-direction: column;
-};
-.left{
-  margin-left: 0;
+  .container-row {
+    flex-direction: column;
+  }
+  .left {
+    margin-left: 0;
+  }
+
+  .container__box-image {
+    width: 130px;
+    height: 130px;
+  }
+
+  .container__spinner-photo {
+    right: 50px;
+    bottom: 50px;
+  }
+
+  .w-50 {
+    width: 100% !important;
+  }
 }
-.container__box-image{
-width: 130px;
-height: 130px;
-}
-.container__spinner-photo{
-  right: 50px;
-  bottom: 50px;
-}
-.w-50{
-width: 100% !important;
-}
-}
+
 @media (max-width: 575px) {
   .myestilomodalmap {
     margin: 0px !important;
     /* ajusta el boton de pantalla completa del mapa */
   }
 }
+
 @media (max-width: 540px) {
-.d-flex-delate-add-photo{
-flex-direction: column !important;
+  .d-flex-edit-cancel-perfil {
+    flex-direction: column !important;
+  }
 }
-.d-flex-edit-cancel-perfil{
-flex-direction: column !important;
-}
-}
+
 @media (max-width: 430px) {
 
-  .dropdown-menu-photo{
+  .dropdown-menu-photo {
     left: -115px !important;
     transform: none !important;
   }

@@ -1,15 +1,15 @@
-.card{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content:space-between;
-    border:0;
-    margin-top: 15px;
+.card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  border: 0;
+  margin-top: 15px;
 }
 
 .card__image {
   width: 38px;
-    height: 38px;
+  height: 38px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 8px;
@@ -21,47 +21,55 @@
 
 }
 
-.list{
-    height:350px;
-    padding-right: 10px;
+.list {
+  height: 100vh;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
-.modal-body{
-    /* padding-top: 0; */
-    padding-top: 10px;
+.modal-body {
+  padding-top: 10px;
 }
 
-.card__user-info{
-    cursor: pointer;
+.card__user-info {
+  cursor: pointer;
 }
-.nav-link{
-  color: var(--gris-oscuro);
+
+button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
 }
-.nav-tabs .nav-link.active,
-.nav-tabs .nav-item.show .nav-link {
-  color: var(--azul1) ;
-  background-color: var(--gris4);
-}
-        button:focus {
-          border-color: none !important;
-          box-shadow: none !important;
-          outline: 0 none !important;
-        }
+
 small {
   color: var(--azul1);
 }
+
 .container-nombre {
   display: flex;
   flex-direction: column;
 }
+
 .nav-tabs {
   margin-top: 10px;
 }
-.app-search{
+
+.app-search {
   width: 100%;
 }
- .buscador-container {
-   display: flex;
-   justify-content: center;
-   align-items: center;
- }
+
+.buscador-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-link--mytabstilo {
+  background-color: var(--gris4) !important;
+  color: var(--azul1) !important;
+}
+
+.nav-link--color {
+  color: var(--gris-oscuro);
+}

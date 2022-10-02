@@ -965,14 +965,23 @@ export class PerfilComponent implements OnInit, OnDestroy {
   }
   verMap() {
     if (this.editarperfil) {
+      let limiteMapa: limiteMapa;
       let atributos: any;
       let modalheadergooglemap = false;
       let mapaSeach = true;
-      let limiteMapa:limiteMapa = {
-        limite: 'Sucre',
-        nivDivAdm: 'Departamento',
-        id_departamento: 70,
-      };
+      if (this.usuario?.tipo_usuario !=='Proveedor' ) {
+          limiteMapa = {
+            limite: 'Sucre',
+            nivDivAdm: 'Departamento',
+            id_departamento: 70,
+          };
+      }else{
+        limiteMapa= {
+          limite: 'Colombia',
+          nivDivAdm: 'Pais',
+          id_departamento: 'Todos',
+        };
+      }
       this.isOpenMap = true;
       if (this.municipiocambiado) {
         atributos = {

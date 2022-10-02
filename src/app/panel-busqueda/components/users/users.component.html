@@ -27,15 +27,14 @@
 
 <app-not-found *ngIf="showNotFound" [objectName]="userType"></app-not-found>
 <div   *ngIf="!showNotFound"class="list overflow-auto d-flex flex-column">
-<div class="card" *ngFor="let user of usersFiltered">
+<div  class="card" *ngFor="let user of usersFiltered">
     <div class="card__user-info d-flex flex-row">
-        <img class="card__image" src="{{user.foto ? user.foto : '/assets/images/avatar-person.svg'}}">
-        <div class="container-nombre">
-          <span class="card__title" (click)="datosContactoUser(user)">{{user.nombre || user.nombre_completo |
-            shorter:shorterNumber}}
+        <img class="card__image" src="{{user?.foto ? user?.foto : '/assets/images/avatar-person.svg'}}">
+        <div class="container-nombre shorterTextOverflowHidden">
+          <span class="card__title shorterTextAuto" (click)="datosContactoUser(user)">{{user?.nombre || user?.nombre_completo}}
           </span>
-          <small (click)="goDetail(user)">Detalles</small>
+          <small (click)="goDetail(user)">{{user?.municipio? user?.municipio: 'Sin municipio'}}</small>
         </div>
-        </div>
+    </div>
     </div>
 </div>

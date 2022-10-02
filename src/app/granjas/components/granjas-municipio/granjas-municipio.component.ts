@@ -128,7 +128,6 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
         (response) => {
           this.granjas = response.data;
           this.granjasFiltered = response.data;
-          console.log(this.granjasFiltered);
           this.extractLatLong();
         },
         (err) => {
@@ -279,6 +278,7 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
         modalheadergooglemap,
         iconMarkerGoogleMap,
         false,
+        '',
         shared
       )
       .then((result) => {

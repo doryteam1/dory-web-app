@@ -32,8 +32,8 @@
       <img class="sin-img"
         src='https://admin.moodyyc.com/img/no-image.png' *ngIf="vehiculo.fotos.length == 0">
     </div>
-    <div class="card-body">
-      <span class="card__title">{{vehiculo?.modelo | shorter:28}}</span>
+    <div class="card-body shorterTextOverflowHidden">
+      <span class="card__title shorterTextAuto">{{vehiculo?.modelo}}</span>
       <span class="card__sub-title">{{vehiculo?.capacidad}} TON</span>
       <span class="card__description">Transporta alimentos : {{vehiculo?.transporte_alimento ? 'Si' : 'No'}}</span>
       <div>

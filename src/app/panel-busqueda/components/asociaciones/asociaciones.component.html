@@ -27,19 +27,18 @@
 <div class="card" *ngFor="let asociacion of  asociacionesFiltered">
     <div class="card__user-info d-flex flex-row" >
         <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
-          <div class="container-nombre">
-            <span class="card__title" (click)="datosContactoAsociacion(asociacion)">{{asociacion.nombre |
-              shorter:shorterNumber}}
+          <div class="container-nombre  shorterTextOverflowHidden">
+            <span class="card__title shorterTextAuto" (click)="datosContactoAsociacion(asociacion)">{{asociacion?.nombre}}
             </span>
-            <small (click)="goAssociationDetail(asociacion)">Detalles</small>
+            <small class="shorterTextAuto" (click)="goAssociationDetail(asociacion)">{{asociacion?.municipio? asociacion?.municipio: 'Sin municipio'}}</small>
           </div>
         </div>
         <div *ngIf="authRol == 'Piscicultor' || authRol == 'Pescador'">
-            <button class="card__button btn-square btn--azul1 mt-3" (click)="invitarAnular(asociacion)"
+            <button class="card__button btn-square btn--azul1" (click)="invitarAnular(asociacion)"
             *ngIf="!asociacion?.estado_solicitud">Unirme</button>
-            <button class="card__button btn-square btn--grey mt-3" (click)="invitarAnular(asociacion)"
+            <button class="card__button btn-square btn--grey" (click)="invitarAnular(asociacion)"
             *ngIf="asociacion?.estado_solicitud == 'Enviada'">Anular</button>
-            <div class="btn-group mt-3" *ngIf="asociacion?.estado_solicitud == 'Aceptada'">
+            <div class="btn-group" *ngIf="asociacion?.estado_solicitud == 'Aceptada'">
             <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
                 data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">

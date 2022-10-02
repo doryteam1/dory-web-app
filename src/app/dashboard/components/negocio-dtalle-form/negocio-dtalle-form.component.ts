@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  ViewChild,
   HostListener,
   OnDestroy,
 } from '@angular/core';
@@ -17,26 +16,18 @@ import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { PlacesService } from 'src/app/services/places.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, Subscription } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { MapGeocoder } from '@angular/google-maps';
-import { ConfirmModalMapService } from '../../../shared/services/confirm-modal-map.service';
-import { vertices } from '../../../global/constants';
+import { Subscription } from 'rxjs';
 import { NegociosService } from 'src/app/services/negocios.service';
 import { PlatformLocation } from '@angular/common';
 import { ComunicacionEntreComponentesService } from '../../../shared/services/comunicacion-entre-componentes.service';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
-
+import { limiteMapa } from '../../../../models/limiteMapaGoogle.model';
 @Component({
   selector: 'app-negocio-dtalle-form',
   templateUrl: './negocio-dtalle-form.component.html',
   styleUrls: ['./negocio-dtalle-form.component.scss'],
 })
 export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
-  @ViewChild('map') map: any;
   modalMode: string = 'update';
   negocio: any;
   photosNegocioArray: Array<string | SafeUrl> = [];
@@ -48,40 +39,13 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
   cargandodata: boolean = false;
   authUserId: number = -1;
   /* Mapa variables */
-  apiLoaded: Observable<boolean>;
-  mylatitudidmunicipio!: number;
-  mylongitudidmunicipio!: number;
-  modal!: NgbModalRef;
-  guarlatlog: boolean = false;
-  fueraDirecion: boolean = false;
-  loadingseart: boolean = false;
-  borrarseart: boolean = false;
   noexistendatos: boolean = false;
-  escogerdireccion: boolean = false;
   faltanargumentos: boolean = false;
   faltadireccion: boolean = false;
-  buscarx: string = '';
-  valorbuscarx: string = '';
-  vertices = vertices;
-  options: google.maps.MapOptions = {
-    scrollwheel: true,
-    center: { lat: 0, lng: 0 },
-  };
-  markerPosition: google.maps.LatLngLiteral = {
-    lat: 0,
-    lng: 0,
-  };
-  markerOptions: google.maps.MarkerOptions = { draggable: false };
-  optionPoli: google.maps.PolylineOptions = {
-    strokeColor: '#494949',
-    strokeOpacity: 0.8,
-    strokeWeight: 3,
-    visible: true,
-  };
   inputOn: boolean = true;
   /* form declaraciones*/
   form: FormGroup = new FormGroup({
-    nombre_negocio: new FormControl('',[Validators.required]),
+    nombre_negocio: new FormControl('', [Validators.required]),
     direccion: new FormControl('', [Validators.required]),
     informacion_adicional_direccion: new FormControl(''),
     latitud: new FormControl(0, [Validators.required]),
@@ -92,37 +56,23 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
     corregimiento_vereda: new FormControl(''),
   });
   id_negocio!: number;
+   onMapa: boolean=false;
   constructor(
     private negociosService: NegociosService,
-    private modalService: NgbModal,
-    httpClient: HttpClient,
-    private geocoder: MapGeocoder,
-    private confirmModalMapService: ConfirmModalMapService,
-    private storage: FirebaseStorageService,
     private places: PlacesService,
     private ar: ActivatedRoute,
     public platformLocation: PlatformLocation,
     private appModalService: AppModalService,
     private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
-    private compressImageSizeService: CompressImageSizeService
-  ) {
-    this.apiLoaded = httpClient
-      .jsonp(
-        'https://maps.googleapis.com/maps/api/js?key=' + environment.mapsApiKey,
-        'callback'
-      )
-      .pipe(
-        map(() => true),
-        catchError(() => of(false))
-      );
-  }
+    private compressImageSizeService: CompressImageSizeService,
+    private storage: FirebaseStorageService,
+  ) {}
   /* agregar esto para camcelar el subscribe de  comunicacionEntreComponentesService*/
   public changeArray!: Subscription;
   public ArrayDelate!: Subscription;
   ngOnInit(): void {
     registerLocaleData(es);
     this.negocio = this.ar.snapshot.params;
-    console.log(this.negocio);
     this.modalMode = this.ar.snapshot.paramMap.get('action')!;
     this.authUserId = Number(this.ar.snapshot.paramMap.get('authUserId')!);
     this.prepareForm();
@@ -130,34 +80,38 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
     /* escucha el componente que carga los files desde la modal */
     this.changeArray =
       this.comunicacionEntreComponentesService.changeArray.subscribe(
-        (arrayFiles) => {
-          if (arrayFiles.length > 0) {
-            if (this.modalMode == 'create') {
-              if (arrayFiles[0].length > 0) {
-                for (let index = 0; index < arrayFiles[0].length; index++) {
-                  const element = arrayFiles[0][index];
-                  this.photosNegocioArray = arrayFiles[0];
-                  console.log(this.photosNegocioArray);
-                }
-              } else {
-                this.photosNegocioArray = [];
-              }
-              for (let index = 0; index < arrayFiles[1].length; index++) {
-                const element = arrayFiles[1][index];
-                this.filesfinalCreate.push(element);
-              }
-              for (let index = 0; index < arrayFiles[2].length; index++) {
-                const element = arrayFiles[2][index];
-                this.filesfinalCreate.splice(element, 1);
-              }
-              console.log(this.photosNegocioArray);
-              console.log(this.filesfinalCreate);
-            } else if (this.modalMode == 'update') {
-              console.log('files ngOnlnit update');
-              console.log(arrayFiles);
-              this.loadPhotos(arrayFiles);
-            }
+        (array) => {
+  if (!this.onMapa) {
+    if (array.length > 0) {
+      if (this.modalMode == 'create') {
+        if (array[0].length > 0) {
+          for (let index = 0; index < array[0].length; index++) {
+            const element = array[0][index];
+            this.photosNegocioArray = array[0];
           }
+        } else {
+          this.photosNegocioArray = [];
+        }
+        for (let index = 0; index < array[1].length; index++) {
+          const element = array[1][index];
+          this.filesfinalCreate.push(element);
+        }
+        for (let index = 0; index < array[2].length; index++) {
+          const element = array[2][index];
+          this.filesfinalCreate.splice(element, 1);
+        }
+      } else if (this.modalMode == 'update') {
+        this.loadPhotos(array);
+      }
+    }
+  } else {
+    console.log(array);
+    this.latitud?.setValue(array[0].latitud);
+    this.longitud?.setValue(array[0].longitud);
+    this.direccion?.setValue(array[0].direccion);
+    this.idMunic?.setValue(array[0].id_municipio);
+    this.closeMap();
+  }
         }
       );
     this.ArrayDelate =
@@ -347,20 +301,12 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
                 this.longitud?.setValue(response.data[0].longitud);
                 this.direccion?.setValue('');
                 this.verMapaDireccion();
-                this.escogerdireccion = true;
-                setTimeout(() => {
-                  this.escogerdireccion = false;
-                }, 30000);
                 this.faltadireccion = true;
               } else {
                 this.latitud?.setValue(response.data[0].latitud);
                 this.longitud?.setValue(response.data[0].longitud);
                 this.direccion?.setValue('');
                 this.verMapaDireccion();
-                this.escogerdireccion = true;
-                setTimeout(() => {
-                  this.escogerdireccion = false;
-                }, 30000);
                 this.faltadireccion = true;
               }
             }
@@ -381,12 +327,6 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
               this.direccion?.setValue('');
               this.verMapaDireccion();
               this.faltadireccion = true;
-              this.escogerdireccion = true;
-              setTimeout(() => {
-                this.escogerdireccion = false;
-              }, 30000);
-              this.mylatitudidmunicipio = response.data[0].latitud;
-              this.mylongitudidmunicipio = response.data[0].longitud;
             }
           },
           (err) => {
@@ -395,76 +335,91 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
         );
     }
   }
+  closeMap() {
+    this.appModalService.CloseGoogleMapGeneralModal();
+  }
   verMapaDireccion() {
+    this.onMapa = true;
     this.faltadireccion = false;
-    const sucreColombia = {
-      north: 10.184454,
-      south: 8.136442,
-      west: -75.842392,
-      east: -74.324908,
-    };
     if (this.modalMode == 'update') {
-      if (
-        this.form.getRawValue().latitud !== 0 &&
-        this.form.getRawValue().longitud !== 0
-      ) {
-        this.modal = this.modalService.open(this.map, {
-          size: 'xl',
-          centered: true,
-          windowClass: 'dark-modal',
+      let modalheadergooglemap = false;
+      let mapaSeach = true;
+      let limiteMapa: limiteMapa = {
+        limite: 'Sucre',
+        nivDivAdm: 'Departamento',
+        id_departamento: 70,
+      };
+      let atributos = {
+        longAndLat: {
+          lat: this.form.getRawValue().latitud,
+          lng: this.form.getRawValue().longitud,
+        },
+      };
+      this.platformLocation.onPopState(() => {
+        this.appModalService.CloseGoogleMapGeneralModal();
+      });
+      this.appModalService
+        .GoogleMapModalGeneral(
+          atributos,
+          modalheadergooglemap,
+          '',
+          mapaSeach,
+          limiteMapa
+        )
+        .then((result) => {
+          this.onMapa = false;
+          if (this.form.getRawValue().direccion == '') {
+            this.faltadireccion = true;
+            this.latitud?.setValue(0);
+            this.longitud?.setValue(0);
+            this.idMunic?.setValue(null);
+          } else {
+            this.faltadireccion = false;
+          }
+        })
+        .catch((result) => {
+          this.onMapa = false;
+          if (this.form.getRawValue().direccion == '') {
+            this.faltadireccion = true;
+            this.latitud?.setValue(0);
+            this.longitud?.setValue(0);
+            this.idMunic?.setValue(null);
+          } else {
+            this.faltadireccion = false;
+          }
         });
-        this.modal.result
-          .then((result) => {
-            if (this.form.getRawValue().direccion == '') {
-              this.faltadireccion = true;
-              this.latitud?.setValue(0);
-              this.longitud?.setValue(0);
-              this.idMunic?.setValue(null);
-            } else {
-              this.faltadireccion = false;
-            }
-          })
-          .catch((err) => {
-            if (this.form.getRawValue().direccion == '') {
-              this.faltadireccion = true;
-              this.latitud?.setValue(0);
-              this.longitud?.setValue(0);
-              this.idMunic?.setValue(null);
-            } else {
-              this.faltadireccion = false;
-            }
-          });
-        this.markerPosition = {
-          lat: Number(this.form.get('latitud')?.value),
-          lng: Number(this.form.get('longitud')?.value),
-        };
-
-        this.options = {
-          center: {
-            lat: Number(this.form.get('latitud')?.value),
-            lng: Number(this.form.get('longitud')?.value),
-          },
-          restriction: {
-            latLngBounds: sucreColombia,
-            strictBounds: false,
-          },
-          zoom: 14,
-          scrollwheel: true,
-        };
-      }
     } else if (this.modalMode == 'create') {
       if (
         this.form.getRawValue().latitud !== 0 &&
         this.form.getRawValue().longitud !== 0
       ) {
         this.faltanargumentos = false;
-        this.modal = this.modalService.open(this.map, {
-          size: 'xl',
-          centered: true,
-          windowClass: 'dark-modal',
+        let modalheadergooglemap = false;
+        let mapaSeach = true;
+        let limiteMapa: limiteMapa = {
+          limite: 'Sucre',
+          nivDivAdm: 'Departamento',
+          id_departamento: 70,
+        };
+        let atributos = {
+          longAndLat: {
+            lat: this.form.getRawValue().latitud,
+            lng: this.form.getRawValue().longitud,
+          },
+        };
+        this.platformLocation.onPopState(() => {
+          this.appModalService.CloseGoogleMapGeneralModal();
         });
-        this.modal.result
+        this.appModalService
+          .GoogleMapModalGeneral(
+            atributos,
+            modalheadergooglemap,
+            '',
+            mapaSeach,
+            limiteMapa
+          )
           .then((result) => {
+            this.onMapa = false;
             if (this.form.getRawValue().direccion == '') {
               this.faltadireccion = true;
               this.latitud?.setValue(0);
@@ -474,7 +429,8 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
               this.faltadireccion = false;
             }
           })
-          .catch((err) => {
+          .catch((result) => {
+            this.onMapa = false;
             if (this.form.getRawValue().direccion == '') {
               this.faltadireccion = true;
               this.latitud?.setValue(0);
@@ -484,287 +440,8 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
               this.faltadireccion = false;
             }
           });
-        if (
-          this.form.get('latitud')?.value == this.mylatitudidmunicipio &&
-          this.form.get('longitud')?.value == this.mylongitudidmunicipio
-        ) {
-          this.markerPosition = {
-            lat: Number(this.mylatitudidmunicipio),
-            lng: Number(this.mylongitudidmunicipio),
-          };
-
-          this.options = {
-            center: {
-              lat: Number(this.mylatitudidmunicipio),
-              lng: Number(this.mylongitudidmunicipio),
-            },
-            restriction: {
-              latLngBounds: sucreColombia,
-              strictBounds: false,
-            },
-            zoom: 14,
-            scrollwheel: true,
-          };
-        } else {
-          this.markerPosition = {
-            lat: Number(this.form.get('latitud')?.value),
-            lng: Number(this.form.get('longitud')?.value),
-          };
-
-          this.options = {
-            center: {
-              lat: Number(this.form.get('latitud')?.value),
-              lng: Number(this.form.get('longitud')?.value),
-            },
-            restriction: {
-              latLngBounds: sucreColombia,
-              strictBounds: false,
-            },
-            zoom: 14,
-            scrollwheel: true,
-          };
-        }
-      } else {
-        this.faltanargumentos = true;
       }
     }
-    this.buscarx = '';
-  }
-  buscar() {
-    this.loadingseart = true;
-    const valor = this.buscarx;
-    this.valorbuscarx = this.buscarx;
-    if (valor.trim().length == 0) {
-      this.loadingseart = false;
-      return;
-    }
-
-    this.geocoder
-      .geocode({
-        address: `${valor}`,
-      })
-      .subscribe(({ results }) => {
-        console.log(results);
-        if (results.length === 0) {
-          this.loadingseart = false;
-          this.noexistendatos = true;
-          this.fueraDirecion = false;
-          setTimeout(() => {
-            this.noexistendatos = false;
-          }, 10000);
-        } else {
-          this.loadingseart = false;
-          this.fueraDirecion = false;
-          const point: google.maps.LatLngLiteral = {
-            lat: results[0].geometry.location.toJSON().lat!,
-            lng: results[0].geometry.location.toJSON().lng!,
-          };
-
-          this.places.geocodeLatLng(point).then((response) => {
-            if (response.status == 'OK') {
-              let result = response.results[0].address_components;
-              let index = result.findIndex((element) =>
-                element.types.includes('administrative_area_level_1')
-              );
-              let dpto = result[index].short_name;
-              index = result.findIndex((element) =>
-                element.types.includes('administrative_area_level_2')
-              );
-              index = this.departamentos.findIndex(
-                (element) => element.nombre_departamento == dpto
-              );
-              if (dpto == 'Sucre') {
-                if (
-                  results[0].geometry.location.toJSON().lat! &&
-                  results[0].geometry.location.toJSON().lng!
-                ) {
-                  this.markerPosition = {
-                    lat: results[0].geometry.location.toJSON().lat!,
-                    lng: results[0].geometry.location.toJSON().lng!,
-                  };
-                  this.options = {
-                    center: {
-                      lat: results[0].geometry.location.toJSON().lat!,
-                      lng: results[0].geometry.location.toJSON().lng!,
-                    },
-                    zoom: 13,
-                  };
-                }
-              } else {
-                this.loadingseart = false;
-                this.fueraDirecion = true;
-                this.noexistendatos = false;
-                setTimeout(() => {
-                  this.fueraDirecion = false;
-                }, 5000);
-              }
-            }
-          });
-        }
-      });
-  }
-  borrarBusqueda() {
-    this.buscarx = '';
-    this.borrarseart = false;
-    this.fueraDirecion = false;
-    this.noexistendatos = false;
-  }
-  onKey(event: any) {
-    if (event.target.value !== '') {
-      this.borrarseart = true;
-    } else if (event.target.value == '') {
-      this.borrarseart = false;
-    }
-  }
-  closeMap() {
-    this.modal.close();
-  }
-  // Metodo para adicionar una marca en el mapa
-  addMarker(event: google.maps.MapMouseEvent) {
-    this.escogerdireccion = false;
-    this.guarlatlog = false;
-    const point: google.maps.LatLngLiteral = {
-      lat: event.latLng?.toJSON().lat!,
-      lng: event.latLng?.toJSON().lng!,
-    };
-    this.places.geocodeLatLng(point).then((response) => {
-      if (response.status == 'OK') {
-        let result = response.results[0].address_components;
-        let index = result.findIndex((element) =>
-          element.types.includes('administrative_area_level_1')
-        );
-        let dpto = result[index].short_name;
-        index = result.findIndex((element) =>
-          element.types.includes('administrative_area_level_2')
-        );
-        let municipio = result[index].short_name;
-        index = this.municipios.findIndex(
-          (element) => element.nombre == municipio
-        );
-        let idMunipio = this.municipios[index]?.id_municipio;
-        if (dpto == 'Sucre') {
-          this.fueraDirecion = false;
-          this.markerPosition = {
-            lat: event.latLng!.toJSON().lat,
-            lng: event.latLng!.toJSON().lng,
-          };
-          if (this.modalMode == 'update') {
-            this.confirmModalMapService
-              .confirm(
-                '../../../../assets/icons/editar.svg',
-                '../../../../assets/icons/save.svg',
-                'Actualizar  mi ubicación',
-                'Estás a punto de cambiar tu ubicación por: ',
-                'Si',
-                'No estoy seguro',
-                `${response.results[0].formatted_address}`
-              )
-              .then((result) => {
-                if (result == true) {
-                  if (this.form.get('id_municipio')?.value == idMunipio) {
-                    this.latitud?.setValue(event.latLng!.toJSON().lat);
-                    this.longitud?.setValue(event.latLng!.toJSON().lng);
-                    console.log(this.latitud);
-                    console.log(this.longitud);
-                    this.direccion?.setValue(
-                      response.results[0].formatted_address
-                    );
-                    this.faltadireccion = false;
-                    this.closeMap();
-                  } else {
-                    this.latitud?.setValue(event.latLng!.toJSON().lat);
-                    this.longitud?.setValue(event.latLng!.toJSON().lng);
-                    console.log(this.latitud);
-                    console.log(this.longitud);
-                    this.direccion?.setValue(
-                      response.results[0].formatted_address
-                    );
-                    this.idMunic?.setValue(idMunipio);
-                    this.closeMap();
-                  }
-                } else {
-                  if (
-                    this.form.get('latitud')?.value ==
-                      this.mylatitudidmunicipio &&
-                    this.form.get('longitud')?.value ==
-                      this.mylongitudidmunicipio
-                  ) {
-                    this.markerPosition = {
-                      lat: Number(this.mylatitudidmunicipio),
-                      lng: Number(this.mylongitudidmunicipio),
-                    };
-                  } else {
-                    this.markerPosition = {
-                      lat: Number(this.form.get('latitud')?.value),
-                      lng: Number(this.form.get('longitud')?.value),
-                    };
-                  }
-                }
-              })
-              .catch((result) => {});
-          } else if (this.modalMode == 'create') {
-            this.confirmModalMapService
-              .confirm(
-                '../../../../assets/icons/iconoubicacion.svg',
-                '../../../../assets/icons/save.svg',
-                'Escoger ubicación',
-                `Estás a punto de escoger la siguiente ubicación:`,
-                'Si',
-                'No estoy seguro',
-                `${response.results[0].formatted_address}`
-              )
-              .then((result) => {
-                if (result == true) {
-                  if (this.form.get('id_municipio')?.value == idMunipio) {
-                    this.latitud?.setValue(event.latLng!.toJSON().lat);
-                    this.longitud?.setValue(event.latLng!.toJSON().lng);
-                    console.log(this.latitud);
-                    console.log(this.longitud);
-                    this.direccion?.setValue(
-                      response.results[0].formatted_address
-                    );
-                    this.closeMap();
-                  } else {
-                    this.latitud?.setValue(event.latLng!.toJSON().lat);
-                    this.longitud?.setValue(event.latLng!.toJSON().lng);
-                    this.direccion?.setValue(
-                      response.results[0].formatted_address
-                    );
-                    console.log(this.latitud);
-                    console.log(this.longitud);
-                    this.idMunic?.setValue(idMunipio);
-                    this.closeMap();
-                  }
-                } else {
-                  if (
-                    this.form.get('latitud')?.value ==
-                      this.mylatitudidmunicipio &&
-                    this.form.get('longitud')?.value ==
-                      this.mylongitudidmunicipio
-                  ) {
-                    this.markerPosition = {
-                      lat: Number(this.mylatitudidmunicipio),
-                      lng: Number(this.mylongitudidmunicipio),
-                    };
-                  } else {
-                    this.markerPosition = {
-                      lat: Number(this.form.get('latitud')?.value),
-                      lng: Number(this.form.get('longitud')?.value),
-                    };
-                  }
-                }
-              })
-              .catch((result) => {});
-          }
-        } else {
-          this.noexistendatos = false;
-          this.fueraDirecion = true;
-          setTimeout(() => {
-            this.fueraDirecion = false;
-          }, 5000);
-        }
-      }
-    });
   }
   /* funciones necesarias para cargar y adicionar fotos */
   @HostListener('loadPhotos')
