@@ -21,7 +21,7 @@ export class UtilitiesService {
 
     zip.generateAsync({type:"blob"}).then(function(content) {
       // see FileSaver.js
-      FileSaver.saveAs(content, "example.zip");
+      FileSaver.saveAs(content, "documentos.zip");
     });
   }
 

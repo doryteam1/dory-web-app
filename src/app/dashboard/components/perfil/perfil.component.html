@@ -87,7 +87,7 @@
       </div>
 
       <div class="container-row row align-items-center">
-        <div id="municipio" class="col">
+        <div id="sexo" class="col">
           <div class="container__box" *ngIf="mostrarPorTipo('sexo')">
               <span class="container__label">Sexo <span class="asterisk">*</span></span>
               <div class="input-wrapper">
@@ -101,9 +101,9 @@
           </div>
         </div>
 
-          <div id="municipio" class="col">
+          <div id="etnia" class="col">
             <div class="container__box left" *ngIf="mostrarPorTipo('etnia')">
-                <span class="container__label">Etnia <span class="asterisk">*</span></span>
+                <span class="container__label">Población diferencial <span class="asterisk">*</span></span>
                 <div class="input-wrapper">
                   <select class="container__input form-input-text-square" (change)="onEtniaChange()"  [ngClass]="{'container__input--color':!editarperfil}"
                       formControlName='id_etnia'>

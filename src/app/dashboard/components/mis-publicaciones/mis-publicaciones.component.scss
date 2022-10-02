@@ -3,3 +3,10 @@
     flex-direction: row;
     margin-top: 30px;
 }
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh
+}
