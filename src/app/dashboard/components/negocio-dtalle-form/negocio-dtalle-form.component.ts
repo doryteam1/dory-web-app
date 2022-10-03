@@ -546,13 +546,13 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
         );
     }
   }
-  photosDelete(arraydelate: any[]) {
+  photosDelete(arraydelate:any) {
     console.log('nuevas fotos a actualizar despues de un delate');
     this.negociosService
-      .updatePhotos(Number(this.id_negocio), arraydelate)
+      .updatePhotos(Number(this.id_negocio), arraydelate.arrayFotosActualizadas)
       .subscribe(
         (response) => {
-          this.photosNegocioArray = arraydelate;
+          this.photosNegocioArray = arraydelate.arrayFotosActualizadas;
           console.log(response);
           console.log(this.photosNegocioArray);
         },

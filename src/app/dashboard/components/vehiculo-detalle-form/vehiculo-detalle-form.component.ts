@@ -316,14 +316,14 @@ export class VehiculoDetalleFormComponent implements OnInit {
         );
     }
   }
-  photosDelete(arraydelate: any[]) {
+  photosDelete(arraydelate: any) {
     this.vehiculosService
       .updatePhotosVehiculos(this.codigoVehiculo, {
-        arrayFotos: arraydelate,
+        arrayFotos: arraydelate.arrayFotosActualizadas,
       })
       .subscribe(
         (response) => {
-          this.photosVehicuArray = arraydelate;
+          this.photosVehicuArray = arraydelate.arrayFotosActualizadas;
           this.loading = false;
           console.log('Fotos guardadas: ');
         },

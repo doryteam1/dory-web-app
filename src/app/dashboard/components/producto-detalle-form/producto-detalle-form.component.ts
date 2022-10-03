@@ -312,14 +312,14 @@ export class ProductoDetalleFormComponent implements OnInit {
     }
   }
 
-  photosDelete(arraydelate: any[]) {
+  photosDelete(arraydelate: any) {
     this.proveedorService
       .updatePhotosProducto(this.codigoProducto, {
-        arrayFotos: arraydelate,
+        arrayFotos: arraydelate.arrayFotosActualizadas,
       })
       .subscribe(
         (response) => {
-          this.photosProducArray = arraydelate;
+          this.photosProducArray = arraydelate.arrayFotosActualizadas;
           this.loading = false;
           console.log('fotos guardadas: ');
         },

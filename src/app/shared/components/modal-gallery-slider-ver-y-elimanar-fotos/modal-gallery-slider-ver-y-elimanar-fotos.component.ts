@@ -271,19 +271,25 @@ export class ModalGallerySliderVerYElimanarFotosComponent
         this.showNotFoundPhotos = false;
       }
     } else if (this.action == 'update') {
+      let newArrayFotos:any={
+           arrayFotosBorradas:[],
+           arrayFotosActualizadas:[]
+      }
       this.loading3 = true;
       this.cancelarseleccionphoto = true;
       this.photosAppArrayCopy = this.ArrayFotos.slice(0);
       this.photosArrayUrlToDel.forEach((photo) => {
+        newArrayFotos.arrayFotosBorradas.push(photo)
         let index = this.photosAppArrayCopy.indexOf(photo);
         if (index > -1) {
           this.photosAppArrayCopy.splice(index, 1);
         }
         this.ArrayFotos = this.photosAppArrayCopy;
+        newArrayFotos.arrayFotosActualizadas = this.photosAppArrayCopy;
         this.loading3 = false;
         this.photosArrayUrlToDel = [];
       });
-      this.comunicacionEntreComponentesService.arrayDelate(this.ArrayFotos);
+      this.comunicacionEntreComponentesService.arrayDelate(newArrayFotos);
       if (this.ArrayFotos.length == 0) {
       this.showNotFoundPhotos = true;
       this.cancelarseleccionphoto = false;

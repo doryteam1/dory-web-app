@@ -92,9 +92,9 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
         );
       }
     )
-    
-   
-    
+
+
+
     /* escucha el componente que carga los files desde la modal */
     this.changeArray =
       this.comunicacionEntreComponentesService.changeArray.subscribe(
@@ -223,7 +223,7 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       this.idEspecie?.setValue(Number(publicacion.id_especie_fk));
       this.cantidad?.setValue(publicacion.cantidad);
       this.precio?.setValue(publicacion.preciokilogramo);
-      
+
       if (this.formState == 'disable') {
         this.form.disable();
       }
@@ -232,7 +232,7 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
   goBack() {
     this.platformLocation.back();
   }
-  
+
   /* funciones necesarias para cargar y adicionar fotos */
   @HostListener('loadPhotos')
   async loadPhotos(filesPhotos: any[]) {
@@ -279,7 +279,7 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
           '/publicaciones/User' +
           this.authUserId +
           '/publicacion' +
-         this.publicacion.id_publicacion + 
+         this.publicacion.id_publicacion +
           '/foto';
         let files: Array<any> = compressedFiles;
         let arrayFotos: Array<string> = [];
@@ -298,7 +298,7 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
         console.log("update..arrayFotos antes de concat typeof ", typeof arrayFotos)
         console.log("arrayFotos ",  arrayFotos)
         this.photosPublicacionArray = this.photosPublicacionArray.concat(arrayFotos);
-        
+
         /* entrega las ultimas fotos que se cargaron, las manda al componente
         que las necesite */
         this.comunicacionEntreComponentesService.changeMyArray2(arrayFotos);
@@ -342,14 +342,14 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
         );
     }
   }
-  photosDelete(newPhotos: any[]) {
+  photosDelete(newPhotos: any) {
     this.publicacionesService
       .updatePhotos(this.publicacion.id_publicacion, {
-        arrayFotos: newPhotos,
+        arrayFotos: newPhotos.arrayFotosActualizadas,
       })
       .subscribe(
         (response) => {
-          this.photosPublicacionArray = newPhotos;
+          this.photosPublicacionArray = newPhotos.arrayFotosActualizadas;
         },
         (err) => {
           console.log(err);
