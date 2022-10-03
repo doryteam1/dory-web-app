@@ -44,4 +44,11 @@ export class MisPublicacionesComponent implements OnInit {
     };
     this.router.navigate(['/dashboard/publicacion/detalle', object]);
   }
+
+  navigate(event: any, state: string) {
+    let object: any = { ...event };
+    object.action = 'update'
+    object.formState = state;   
+    this.router.navigate(['/dashboard/publicacion/detalle', object]);
+  }
 }

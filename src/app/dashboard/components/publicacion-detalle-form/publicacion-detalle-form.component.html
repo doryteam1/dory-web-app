@@ -1,1 +1,121 @@
-<p>publicacion-detalle-form works!</p>
+<div>
+    <div class="d-flex flex-row justify-content-between">
+      <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='enable'">{{modalMode == 'create' ? 'Nueva publicacion'
+        : 'Actualizar publicación'}}</h4>
+    </div>
+  
+    <div class="modal-body">
+      <form [formGroup]="form">
+        <div class="mb-3">
+            <span class="container__title">Especie</span>
+            <div>
+              <select class="form-control" formControlName='id_especie'>
+                <optgroup label="Escoje una especie">
+                  <option *ngFor="let especie of especies" [ngValue]="especie.id_especie">{{especie.nombre}}
+                  </option>
+                </optgroup>
+              </select>
+            </div>
+            <div *ngIf="invalid('id_especie')" class="container__alert-msg danger-message">
+              <div *ngIf="idEspecie?.errors?.['required']">
+                Campo requerido
+              </div>
+            </div>
+          </div>
+  
+        <div class="mb-3">
+          <label for="dateOfBirth">Cantidad(Kg)</label>
+          <div class="input-group">
+            <input id="productName" type="number" min="0" class="form-control" placeholder="Cantidad disponible"
+              formControlName="cantidad" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+          </div>
+          <div *ngIf="invalid('cantidad')" class="container__alert-msg danger-message">
+            <div *ngIf="cantidad?.errors?.['required']">
+              Campo requerido
+            </div>
+          </div>
+        </div>
+  
+        <div class="mb-3">
+            <label for="dateOfBirth">Precio(Kg)</label>
+            <div class="input-group">
+              <input id="productName" type="number" min="0" class="form-control" placeholder="Precio por kilogramo"
+                formControlName="preciokilogramo" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+            </div>
+            <div *ngIf="invalid('preciokilogramo')" class="container__alert-msg danger-message">
+              <div *ngIf="precio?.errors?.['required']">
+                Campo requerido
+              </div>
+            </div>
+          </div>
+  
+        <!-- Fotos mini -->
+        <div class="clasfotoMiniy" *ngIf="photosPublicacionArray && photosPublicacionArray.length > 0">
+            <div class="Photos-mini-container">
+            <div class="Photos-mini-data">
+                <div class="Photos-mini--div" *ngFor="let foto of photosPublicacionArray | slice:0:3; let i =index">
+                <img class="Photos-mini__img" [src]="foto" (click)="openPhotosModal()">
+                </div>
+                <div class="masimagenescontador" *ngIf="photosPublicacionArray.length >3" (click)="openPhotosModal()">
+                <img class="Photos-mini__img" *ngFor="let fotogranja of photosPublicacionArray | slice:3:4; let i =index"
+                    [src]="fotogranja">
+                <div *ngIf="photosPublicacionArray.length > 4">
+                    <p>+ {{photosPublicacionArray.length-4}} </p>
+                </div>
+                </div>
+            </div>
+            <div type="button" class="btn btn-primary container__btn--azul1"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                (click)="openPhotosModal()">
+                <div>
+                <img *ngIf="photosPublicacionArray.length > 0 " src="assets/icons/pngegg.svg">
+                <span *ngIf="photosPublicacionArray.length == 1 ">
+                    Ver Foto
+                </span>
+                <span *ngIf="photosPublicacionArray.length >=2">
+                    Ver Fotos
+                </span>
+                </div>
+            </div>
+            </div>
+            <div *ngIf="loadingphoto && modalMode != 'update'" class="container__alert-msg danger-message">
+            <div>
+                Por favor; espere miestras se cargan las fotos
+            </div>
+            </div>
+        </div>
+        <div class="clasfotoMiniyBoton" *ngIf="photosPublicacionArray.length <= 0">
+            <div type="button" class="btn btn-primary container__btn--azul1"
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+            (click)="openPhotosModal()" *ngIf="photosPublicacionArray.length == 0 ">
+            <div>
+                <img src="assets/icons/file_upload_black_24dp.svg">
+                <span>
+                Subir Fotos
+                </span>
+            </div>
+            </div>
+        </div>
+    </form>
+    </div>
+    <div class="modal-footer">
+      <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
+        <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn container__btn--azul"
+         (click)="addPublicacion()" *ngIf="modalMode=='create'">
+          <span *ngIf="!loading1">Guardar</span>
+          <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
+          </div>
+        </button>
+        <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn container__btn--azul"
+          (click)="updatePublicacion()" *ngIf="modalMode=='update'">
+          <span *ngIf="!loading1">Actualizar</span>
+          <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
+          </div>
+        </button>
+        <button type="button" class="btn-rounded btn--blue container__btn" (click)="goBack()">
+          <span>Atrás</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  

@@ -1,5 +1,5 @@
 <div class="container" *ngIf="!loading">
-    <app-card-publicacion [publicacion]="publicacion" [index]="i" *ngFor="let publicacion of publicaciones; let i = index">
+    <app-card-publicacion [publicacion]="publicacion" [index]="i" (onDetail)="navigate($event,'enable')" *ngFor="let publicacion of publicaciones; let i = index">
     </app-card-publicacion>
 </div>
 <app-spinner [showText]="false" *ngIf="loading"></app-spinner>

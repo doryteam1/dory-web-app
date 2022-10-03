@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
@@ -11,6 +11,7 @@ import es from '@angular/common/locales/es';
 export class CardPublicacionComponent implements OnInit {
   @Input() publicacion:any;
   @Input() index!:number;
+  @Output() onDetail:EventEmitter<any> = new EventEmitter();
   constructor(private router:Router) { }
 
   ngOnInit(): void {
@@ -18,11 +19,6 @@ export class CardPublicacionComponent implements OnInit {
   }
 
   goDetail(publicacion: any) {
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree([
-        `/proveedores/producto/detalle/${publicacion.id_publicacion}`,
-      ])
-    );
-    window.open(url, '_blank');
+    this.onDetail.emit(publicacion);
   }
 }
