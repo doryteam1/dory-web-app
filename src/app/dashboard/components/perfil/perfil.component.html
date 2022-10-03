@@ -91,7 +91,7 @@
           <div class="container__box" *ngIf="mostrarPorTipo('sexo')">
               <span class="container__label">Sexo <span class="asterisk">*</span></span>
               <div class="input-wrapper">
-                <select class="container__input form-input-text-square"  (change)="onSexoChange()" [ngClass]="{'container__input--color':!editarperfil}"
+                <select class="container__input form-input-text-square" [ngClass]="{'container__input--color':!editarperfil}"
                     formControlName='id_sexo'>
                     <optgroup label="Escoge tu sexo">
                         <option *ngFor="let sexo of sexos" [ngValue]="sexo.id" >{{sexo.nombre}}</option>
@@ -105,7 +105,7 @@
             <div class="container__box left" *ngIf="mostrarPorTipo('etnia')">
                 <span class="container__label">Población diferencial <span class="asterisk">*</span></span>
                 <div class="input-wrapper">
-                  <select class="container__input form-input-text-square" (change)="onEtniaChange()"  [ngClass]="{'container__input--color':!editarperfil}"
+                  <select class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
                       formControlName='id_etnia'>
                       <optgroup label="Escoge tu etnia">
                           <option *ngFor="let etnia of etnias" [ngValue]="etnia.id" >{{etnia.nombre}}</option>
@@ -167,59 +167,61 @@
     <div class="container__box__title">
       <span class="container__title">Otros documentos</span>
     </div>
-    <div class="d-flex flex-column justify-content-center align-items-center">
-      <div class="progress" *ngIf="percentUploaded2 && percentUploaded2 > 1 && percentUploaded2 < 100">
-        <div class="progress-bar" [style.width]="percentUploaded2+'%'" role="progressbar"
-          [attr.aria-valuenow]="percentUploaded2" aria-valuemin="0" aria-valuemax="100">{{percentUploaded | number:'':'es'}}%
+    <div id="otrosDocumentos">
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="progress" *ngIf="percentUploaded2 && percentUploaded2 > 1 && percentUploaded2 < 100">
+          <div class="progress-bar" [style.width]="percentUploaded2+'%'" role="progressbar"
+            [attr.aria-valuenow]="percentUploaded2" aria-valuemin="0" aria-valuemax="100">{{percentUploaded | number:'':'es'}}%
+          </div>
         </div>
+        <span class="text-danger" *ngIf="photoUpdate2">Documento cargado correctamente</span>
+        <span class="text-danger" *ngIf="photoDelete2">Docuemento eliminado</span>
       </div>
-      <span class="text-danger" *ngIf="photoUpdate2">Documento cargado correctamente</span>
-      <span class="text-danger" *ngIf="photoDelete2">Docuemento eliminado</span>
-    </div>
-    <div id="foto3" class="d-flex flex-row justify-content-center align-items-center gap-2 d-flex-delate-add-otros">
-      <button class="container__btn3 btn" *ngIf="!usuario?.url_imagen_cedula" (click)="openAddFileDialog('cedula')">
-        <div class="container__btn3-div">
-          <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
-          <span>Agregar cedula</span>
-        </div>
-      </button>
-      <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="openAddFileDialog('cedula')">
-        <div class="container__btn3-div">
-          <img src="assets/icons/update-icon-photo-perfil.svg">
-          <span>Actualizar cédula</span>
-        </div>
-      </button>
-      <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="deleteDocument('url_imagen_cedula')">
-        <div class="container__btn3-div">
-          <img src="assets/icons/delete_black_24dp.svg">
-          <span>Eliminar cédula</span>
-        </div>
-      </button>
+      <div  class="d-flex flex-row justify-content-center align-items-center gap-2 d-flex-delate-add-otros">
+        <button class="container__btn3 btn" *ngIf="!usuario?.url_imagen_cedula" (click)="openAddFileDialog('cedula')">
+          <div class="container__btn3-div">
+            <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
+            <span>Agregar cedula</span>
+          </div>
+        </button>
+        <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="openAddFileDialog('cedula')">
+          <div class="container__btn3-div">
+            <img src="assets/icons/update-icon-photo-perfil.svg">
+            <span>Actualizar cédula</span>
+          </div>
+        </button>
+        <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="deleteDocument('url_imagen_cedula')">
+          <div class="container__btn3-div">
+            <img src="assets/icons/delete_black_24dp.svg">
+            <span>Eliminar cédula</span>
+          </div>
+        </button>
 
-      <button class="container__btn3 btn" *ngIf="!usuario?.url_sisben" (click)="openAddFileDialog('sisben')">
-        <div class="container__btn3-div">
-          <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
-          <span>Agregar sisben</span>
-        </div>
-      </button>
-      <button class="container__btn3 btn" *ngIf="usuario?.url_sisben" (click)="openAddFileDialog('sisben')">
-        <div class="container__btn3-div">
-          <img src="assets/icons/update-icon-photo-perfil.svg">
-          <span>Actualizar sisben</span>
-        </div>
-      </button>
-      <button class="container__btn3 btn" *ngIf="usuario?.url_sisben" (click)="deleteDocument('url_sisben')">
-        <div class="container__btn3-div">
-          <img src="assets/icons/delete_black_24dp.svg">
-          <span>Eliminar sisben</span>
-        </div>
-      </button>
+        <button class="container__btn3 btn" *ngIf="!usuario?.url_sisben" (click)="openAddFileDialog('sisben')">
+          <div class="container__btn3-div">
+            <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
+            <span>Agregar sisben</span>
+          </div>
+        </button>
+        <button class="container__btn3 btn" *ngIf="usuario?.url_sisben" (click)="openAddFileDialog('sisben')">
+          <div class="container__btn3-div">
+            <img src="assets/icons/update-icon-photo-perfil.svg">
+            <span>Actualizar sisben</span>
+          </div>
+        </button>
+        <button class="container__btn3 btn" *ngIf="usuario?.url_sisben" (click)="deleteDocument('url_sisben')">
+          <div class="container__btn3-div">
+            <img src="assets/icons/delete_black_24dp.svg">
+            <span>Eliminar sisben</span>
+          </div>
+        </button>
+      </div>
+      <div class="d-flex justify-content-center flex-row mt-3">
+        <a class="link rigth" [href]="usuario?.url_imagen_cedula" target="_blank" *ngIf="usuario?.url_imagen_cedula">Descargar cédula</a>
+        <a class="link rigth" [href]="usuario?.url_sisben" target="_blank" *ngIf="usuario?.url_sisben">Descargar sisben</a>
+      </div>
     </div>
 
-    <div class="d-flex justify-content-center flex-row mt-3">
-      <a class="link rigth" [href]="usuario?.url_imagen_cedula" target="_blank" *ngIf="usuario?.url_imagen_cedula">Descargar cédula</a>
-      <a class="link rigth" [href]="usuario?.url_sisben" target="_blank" *ngIf="usuario?.url_sisben">Descargar sisben</a>
-    </div>
     <div id="ubicacion">
       <div class="container__box__title">
           <span class="container__title">Datos de ubicación</span>
@@ -267,8 +269,8 @@
               <div class="container__box left" *ngIf="mostrarPorTipo('direccion')"  >
                   <span class="container__label">Dirección: <span class="asterisk">*</span></span>
                   <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}" (click)="verMap()">
-                    <input readonly class="container__input form-input-text-square"
-                    [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil}"
+                    <input [readonly]="readonly" class="container__input form-input-text-square"
+                    [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil && usuario?.tipo_usuario !== 'Proveedor'}"
                     type="text" formControlName='direccion' [placeholder]="editarperfil ? 'Selecciona aquí tu dirección' : ''"
                     >
                     <img *ngIf="editarperfil" class="input-icon option" src ="assets/icons/ojoanimado.svg">
@@ -302,14 +304,14 @@
     <div class="container__box__title" *ngIf="mostrarPorTipo('area_experticia') || mostrarPorTipo('otra_area_experticia') || mostrarPorTipo('otra_area_experticia_descripcion') || mostrarPorTipo('sobre_mi')">
         <span class="container__title">Otros datos</span>
     </div>
-
+<!-- readonly  -->
     <div class="container-row row">
         <div class="col">
             <div class="d-flex flex-column">
                 <span class="container__label" *ngIf="mostrarPorTipo('area_experticia')">Área de experticia</span>
                 <div class="container__box-row" *ngIf="mostrarPorTipo('area_experticia')">
                     <select class="container__input form-input-text-square"
-                          formControlName='id_area_experticia' (change)="onAreaExpChange()" [ngClass]="{'container__input--color':!editarperfil}">
+                          formControlName='id_area_experticia' [ngClass]="{'container__input--color':!editarperfil}">
                         <optgroup label="Escoje un área">
                             <option *ngFor="let area of areas"(keyup)="onKeyInput('sobre_mi')"[ngValue]="area.id_area">{{area.nombre}} </option>
                             <option [ngValue]='-1'>Otra...</option>
@@ -365,16 +367,16 @@
       <span>Editar perfil</span>
     </div>
   </button>
-  <button class="container__btn3  btn" *ngIf="editarperfil" (click)="cancelProfileEditing()">
-    <div class="container__btn3-div">
-      <img src="assets/icons/clear_azul1_24dp.svg">
-      <span>Cancelar edición</span>
-    </div>
-  </button>
-  <button class="container__btn3 btn"   *ngIf="editarperfil && EditedInputValue" (click)="onSubmit()">
+    <button class="container__btn3  btn" *ngIf="editarperfil" (click)="cancelProfileEditing()">
+      <div class="container__btn3-div">
+        <img src="assets/icons/clear_azul1_24dp.svg">
+        <span>Cancelar edición</span>
+      </div>
+    </button>
+  <button class="container__btn3 btn"   *ngIf="editarperfil" (click)="onSubmit()">
     <div class="container__btn3-div">
       <img src="assets/icons/save_as_azul1_24dp.svg">
-      <span>Guardar cambios</span>
+      <span>Guardar</span>
     </div>
   </button>
 </div>

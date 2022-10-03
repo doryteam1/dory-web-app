@@ -293,7 +293,19 @@
   .card__description-container {
     margin-top: 20px;
   }
+.margin {
+  margin-right: 5px;
+}
 
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.enlace {
+  cursor: pointer;
+  text-decoration: none;
+}
   @media (min-width: 640px) {
     flex-direction: row;
     max-width: 600px;
@@ -330,16 +342,3 @@
 
 }
 
-.margin {
-  margin-right: 5px;
-}
-
-.icon{
-  width: 24px;
-  height: 24px;
-}
-
-.enlace{
-  cursor: pointer;
-  text-decoration: none;
-}

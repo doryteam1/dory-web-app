@@ -7,78 +7,102 @@ import { PlacesService } from 'src/app/services/places.service';
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  styleUrls: ['./welcome.component.scss'],
 })
 export class WelcomeComponent implements OnInit {
-  isFillUserType:boolean = false;
-  isFillName:boolean = false;
-  tipos:Array<any> = [];
-  idTipo:number = 0;
-  idMunic:number = 0;
-  nombres:string | null= '';
-  apellidos:string | null = '';
-  error:string = '';
-  id:string | null = '';
-  municipios:any[] = [];
+  isFillUserType: boolean = false;
+  isFillName: boolean = false;
+  tipos: Array<any> = [];
+  idTipo: number = 0;
+  idMunic: number = 0;
+  idDepartamento: number = 0;
+  nombres: string | null = '';
+  apellidos: string | null = '';
+  error: string = '';
+  id: string | null = '';
+  municipios: any[] = [];
+  departamentos: any[] = [];
+  tipoUsuario:any;
 
-  constructor(private ar:ActivatedRoute, private us:UsuarioService, private router:Router, private places:PlacesService) {
+  constructor(
+    private ar: ActivatedRoute,
+    private us: UsuarioService,
+    private router: Router,
+    private places: PlacesService
+  ) {
     this.us.getTiposUsuario().subscribe(
-      (response)=>{
+      (response) => {
         this.tipos = response.data;
-      },err=>{
+      },
+      (err) => {
         //this.error="Error al cargar los tipos de usuarios";
       }
     );
 
-    this.places.getMunicipiosDepartamentos(70).subscribe(
-      (response)=>{
-        this.municipios = response.data;
-      },err=>{
-        //this.error="Error al cargar los municipios";
-      }
-    );
   }
 
   ngOnInit(): void {
-    console.log("Welcome user objet ",this.ar.snapshot.paramMap);
-    let tipoUsuario = this.ar.snapshot.paramMap.get('tipo_usuario')
+    this.tipoUsuario = this.ar.snapshot.paramMap.get('tipo_usuario');
     this.nombres = this.ar.snapshot.paramMap.get('nombres');
     this.apellidos = this.ar.snapshot.paramMap.get('apellidos');
     this.id = this.ar.snapshot.paramMap.get('id');
 
-
-    if(tipoUsuario){
-      console.log("Tiene tipo de usuario ",tipoUsuario);
-    }
-
-    if(this.ar.snapshot.paramMap.get('nombres')=='null' 
-      || this.ar.snapshot.paramMap.get('apellidos') == 'null'
-      || this.ar.snapshot.paramMap.get('nombres')==''
-      || this.ar.snapshot.paramMap.get('apellidos')=='' ){
+    if (
+      this.ar.snapshot.paramMap.get('nombres') == 'null' ||
+      this.ar.snapshot.paramMap.get('apellidos') == 'null' ||
+      this.ar.snapshot.paramMap.get('nombres') == '' ||
+      this.ar.snapshot.paramMap.get('apellidos') == ''
+    ) {
       this.isFillName = true;
-      console.log("Este usuario debe llenar su nombre ");
-    }else if(this.ar.snapshot.paramMap.get('tipo_usuario')=='null'){
-      console.log("Este usuario debe llenar el tipo de usuario");
+      console.log('Este usuario debe llenar su nombre ');
+    } else if (this.ar.snapshot.paramMap.get('tipo_usuario') == 'null') {
+      console.log('Este usuario debe llenar el tipo de usuario');
       this.isFillUserType = true;
+    } else {
+      console.log('No entro a ninguna');
+    }
+    if (this.tipoUsuario == 'Proveedor') {
+      this.loadDptos();
     }else{
-      console.log("No entro a ninguna");
+      this.changeDpto(70);
     }
   }
+  loadDptos() {
+    this.places.getDepartamentos().subscribe(
+      (response) => {
+        this.departamentos = response.data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 
-  next(){
-    console.log("actualizando usuario...");
-    let usuario:any = {
-      id_municipio : this.idMunic
-    }
-
-    if(this.isFillUserType){
-      if(this.idTipo<1){
-        this.error = 'Ayudanos a con esta información'
+  changeDpto(idDepart:number) {
+    this.idMunic=0
+       this.places.getMunicipiosDepartamentos(idDepart).subscribe(
+         (response) => {
+           this.municipios = response.data;
+         },
+         (err) => {
+           console.log(err);
+         }
+       );
+  }
+  next() {
+    console.log('actualizando usuario...');
+    let usuario: any = {
+      id_departamento:this.idDepartamento,
+      id_municipio: this.idMunic,
+    };
+    if (this.isFillUserType) {
+      if (this.idTipo < 1) {
+        this.error = 'Ayudanos a con esta información';
         return;
       }
       usuario.id_tipo_usuario = this.idTipo;
-    }else if(this.isFillName){
-      if(!this.isOkNomApell()){
+    } else if (this.isFillName) {
+      if (!this.isOkNomApell()) {
         this.error = 'Mmm al parecer falta tu nombre o apellido...';
         return;
       }
@@ -86,27 +110,34 @@ export class WelcomeComponent implements OnInit {
       usuario.apellidos = this.apellidos;
     }
 
-    if(this.idMunic == 0){
-      this.error = 'Olvidastes seleccionar el municipio donde vives';
+    if (this.idMunic == 0) {
+      this.error = 'Olvidaste seleccionar el municipio donde vives';
       return;
     }
-    this.us.actualizarUsuario(parseInt(this.id as string),usuario).subscribe(
-      (response)=>{
-        console.log("Usuario actualizado... ",response);
+    if (this.idDepartamento == 0 && this.tipoUsuario == 'Proveedor') {
+      this.error = 'Olvidaste seleccionar tú departamento';
+      return;
+    }
+    this.us.actualizarUsuario(parseInt(this.id as string), usuario).subscribe(
+      (response) => {
+        console.log('Usuario actualizado... ', response);
         this.router.navigateByUrl('/dashboard');
-      },err=>{
+      },
+      (err) => {
         console.log(err);
       }
     );
-    console.log("actualizando usuario ",usuario);
+    console.log('actualizando usuario ', usuario);
   }
 
-  isOkNomApell(){
-    return RegExpUtils.twoStringSpace().test(this.nombres as string) && RegExpUtils.twoStringSpace().test(this.apellidos as string)
+  isOkNomApell() {
+    return (
+      RegExpUtils.twoStringSpace().test(this.nombres as string) &&
+      RegExpUtils.twoStringSpace().test(this.apellidos as string)
+    );
   }
 
-  resetErrors()
-  {
+  resetErrors() {
     this.error = '';
   }
 }

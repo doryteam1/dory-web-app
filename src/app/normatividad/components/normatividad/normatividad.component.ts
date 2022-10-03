@@ -180,6 +180,7 @@ export class NormatividadComponent implements OnInit {
     }
     this.nService.getNormatividadesByString(event).subscribe(
       (response)=>{
+        console.log(response)
         this.normatividadesFiltered = response.data;
         this.spinner.hide();
       },err=>{

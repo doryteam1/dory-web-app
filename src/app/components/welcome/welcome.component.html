@@ -1,15 +1,16 @@
     <div class="container">
-        <h4>Hola {{nombres}} {{apellidos}}, ¡Bienvenido a Dory!</h4>
+        <h4 style="padding: 10px;
+    text-align: center;">Hola {{nombres}} {{apellidos}}, ¡Bienvenido a Dory!</h4>
         <img class="container__image" src="assets/images/party.svg">
         <div class="container__box">
             <div class="container__box-data" *ngIf="isFillName">
-                <span class="container__title">Antes de seguir cuéntanos cual es tu nombre?</span>
+                <span class="container__title">Antes de seguir cuéntanos, ¿cuál es tu nombre?</span>
                 <input class="container__input form-input-text-square" type="text" [(ngModel)]="nombres" (ngModelChange)="resetErrors()">
-                <span class="container__title">Y tus apellidos?</span>
+                <span class="container__title">¿Cuales son tus apellidos?</span>
                 <input class="container__input form-input-text-square" type="text" [(ngModel)]="apellidos" (ngModelChange)="resetErrors()">
             </div>
 
-            <span class="container__title" *ngIf="isFillUserType">Antes de seguir cuéntanos a que te dedicas?</span>
+            <span class="container__title" *ngIf="isFillUserType">Antes de seguir cuéntanos, ¿a qué te dedicas?</span>
             <div *ngIf="isFillUserType">
                 <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idTipo" (ngModelChange)="resetErrors()">
                     <optgroup label="Eres un">
@@ -18,16 +19,27 @@
                     </optgroup>
                 </select>
             </div>
+            <span *ngIf="tipoUsuario == 'Proveedor'" class="container__title">Selecciona tu departamento</span>
+            <div *ngIf="tipoUsuario == 'Proveedor'">
+                <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idDepartamento"
+                (ngModelChange)='changeDpto(idDepartamento)'>
+                    <optgroup label="Escoje un departamento">
+                        <option hidden="hidden" selected="selected">Escoge un departamento</option>
+                        <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
+                    </optgroup>
+                </select>
+            </div>
 
             <span class="container__title">Por último selecciona el municipio donde vives</span>
             <div>
                 <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idMunic" (ngModelChange)="resetErrors()">
-                    <optgroup label="Eres un">
-                        <option hidden="hidden" selected="selected">Escoje uno</option>
+                    <optgroup  label="Escoge un municipio">
+                        <option hidden="hidden" selected="selected">Escoge un municipio</option>
                         <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}</option>
                     </optgroup>
                 </select>
             </div>
+
 
             <div *ngIf="error" class="container__alert-msg danger-message">
                     {{error}}

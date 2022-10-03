@@ -146,6 +146,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     this.ArrayDelate =
       this.comunicacionEntreComponentesService.ArrayDelate.subscribe(
         (arrayFotoDelate) => {
+       
           this.photosDelete(arrayFotoDelate);
         }
       );
@@ -645,6 +646,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   }
   photosDelete(arraydelate: any[]) {
     console.log('nuevas fotos a actualizar despues de un delate');
+    console.log(arraydelate);
     this.granjaService
       .updatePhotos(this.granja.id_granja, {
         arrayFotos: arraydelate,
