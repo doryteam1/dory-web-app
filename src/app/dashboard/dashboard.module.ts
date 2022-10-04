@@ -28,6 +28,7 @@ import { VehiculoDetalleFormComponent } from './components/vehiculo-detalle-form
 import { NegocioDtalleFormComponent } from './components/negocio-dtalle-form/negocio-dtalle-form.component';
 import { MisPublicacionesComponent } from './components/mis-publicaciones/mis-publicaciones.component';
 import { PublicacionDetalleFormComponent } from './components/publicacion-detalle-form/publicacion-detalle-form.component';
+import { PublicacionesComponent } from './components/publicaciones/publicaciones.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { PublicacionDetalleFormComponent } from './components/publicacion-detall
     VehiculoDetalleFormComponent,
     NegocioDtalleFormComponent,
     MisPublicacionesComponent,
-    PublicacionDetalleFormComponent
+    PublicacionDetalleFormComponent,
+    PublicacionesComponent
   ],
   imports: [
     CommonModule,

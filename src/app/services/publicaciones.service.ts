@@ -15,6 +15,12 @@ export class PublicacionesService {
     );
   }
 
+  getPublicacionesTodas(){
+    return this.https.get(
+      environment.doryApiRestBaseUrl + '/publicaciones/'
+    );
+  }
+
   updatePhotos(id:number,newPhotos:any){
     return this.https.put(
       environment.doryApiRestBaseUrl + '/publicaciones/update/photos/' + id,newPhotos

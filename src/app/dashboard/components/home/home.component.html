@@ -66,6 +66,13 @@
               Mis publicaciones
             </a>
           </li>
+          <li id="publicaciones" class="nav-item" *ngIf="tipoUsuario == 'Comerciante'">
+            <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/publicaciones']"
+              [ngClass]="{'miclase': rutaAsociacionesdetalle,'disabled':disableTags }" routerLinkActive="active">
+              <span data-feather="home"></span>
+              Publicaciones
+            </a>
+          </li>
           <li id="contrasena" class="nav-item" style="cursor: pointer;">
             <a class="nav-link " aria-current="page" (click)="updatePassword()" routerLinkActive="active">
               <span data-feather="home"></span>
@@ -161,6 +168,14 @@
               [ngClass]="{'miclase': rutaAsociacionesdetalle,'disabled':disableTags }" routerLinkActive="active">
               <span data-feather="home"></span>
               Mis publicaciones
+            </a>
+          </li>
+          <li id="publicaciones" class="nav-item" *ngIf="tipoUsuario == 'Comerciante'"
+            (click)="closeOffcanvas()">
+            <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/publicaciones']"
+              [ngClass]="{'miclase': rutaAsociacionesdetalle,'disabled':disableTags }" routerLinkActive="active">
+              <span data-feather="home"></span>
+              Publicaciones
             </a>
           </li>
           <li id="contrasena" class="nav-item" style="cursor: pointer;" (click)="closeOffcanvas()">

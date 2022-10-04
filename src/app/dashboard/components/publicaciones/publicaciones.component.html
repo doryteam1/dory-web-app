@@ -1,0 +1,11 @@
+<div class="container" *ngIf="!loading">
+    <app-card-publicacion [publicacion]="publicacion" [index]="i" (onDetail)="navigate($event,'enable')" *ngFor="let publicacion of publicaciones; let i = index">
+    </app-card-publicacion>
+</div>
+<app-spinner [showText]="false" *ngIf="loading"></app-spinner>
+<div class="center" *ngIf="showNotFound">
+    <app-not-found objectName="publicaciones"></app-not-found>
+</div>
+<div class="center" *ngIf="showError">
+    <app-not-found [genericError]="showError"></app-not-found>
+</div>

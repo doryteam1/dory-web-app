@@ -16,6 +16,7 @@ import { ProductoDetalleFormComponent } from './components/producto-detalle-form
 import { NegocioDtalleFormComponent } from './components/negocio-dtalle-form/negocio-dtalle-form.component';
 import { MisPublicacionesComponent } from './components/mis-publicaciones/mis-publicaciones.component';
 import { PublicacionDetalleFormComponent } from './components/publicacion-detalle-form/publicacion-detalle-form.component';
+import { PublicacionesComponent } from './components/publicaciones/publicaciones.component';
 const routes: Routes = [
   {
     path: '',
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'granja/detalle', component: GranjaDetalleFormComponent },
       { path: 'mis-publicaciones', component: MisPublicacionesComponent },
       { path: 'publicacion/detalle', component: PublicacionDetalleFormComponent },
+      { path: 'publicaciones', component: PublicacionesComponent },
     ],
   },
 ];

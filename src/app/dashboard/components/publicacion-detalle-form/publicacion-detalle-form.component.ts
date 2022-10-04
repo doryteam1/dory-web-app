@@ -197,6 +197,8 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       this.loading1 = false;
       return;
     }
+
+    console.log( this.form.getRawValue())
     this.publicacionesService
       .updatePublicacion(this.publicacion.id_publicacion, this.form.getRawValue())
       .subscribe(
@@ -235,6 +237,8 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       this.idEspecie?.setValue(Number(publicacion.id_especie_fk));
       this.cantidad?.setValue(publicacion.cantidad);
       this.precio?.setValue(publicacion.preciokilogramo);
+      this.municipio?.setValue(publicacion.id_municipio_fk);
+      this.usuario?.setValue(publicacion.usuarios_id);
 
       if (this.formState == 'disable') {
         this.form.disable();
