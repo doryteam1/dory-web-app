@@ -74,24 +74,38 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     let action = this.ar.snapshot.paramMap.get('action');
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
     this.getAuthUserDetail()
-    this.publicacionesService.getPublicacionDetail(this.publicacion.id_publicacion).subscribe(
-      (response)=>{
-        let publicacionTemp = this.publicacion;
-        console.log("Publicacion temp ",publicacionTemp)
-        this.publicacion = response.data[0];
-        this.publicacion.formState = publicacionTemp.formState;
-        this.publicacion.action = publicacionTemp.action;
-        this.prepareForm(action!, this.publicacion);
-        this.granjasServices.getEspecies().subscribe(
-          (response) => {
-            this.especies = response.data;
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-      }
-    )
+
+    if(action == 'update'){
+      this.publicacionesService.getPublicacionDetail(this.publicacion.id_publicacion).subscribe(
+        (response)=>{
+          let publicacionTemp = this.publicacion;
+          console.log("Publicacion temp ",publicacionTemp)
+          this.publicacion = response.data[0];
+          this.publicacion.formState = publicacionTemp.formState;
+          this.publicacion.action = publicacionTemp.action;
+          this.prepareForm(action!, this.publicacion);
+          this.granjasServices.getEspecies().subscribe(
+            (response) => {
+              this.especies = response.data;
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
+        }
+      )
+    }else if(action == 'create'){
+      this.prepareForm(action!, this.publicacion);
+      this.granjasServices.getEspecies().subscribe(
+        (response) => {
+          this.especies = response.data;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
+    
 
 
 
