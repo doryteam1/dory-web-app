@@ -129,8 +129,8 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       );
     this.ArrayDelete =
       this.comunicacionEntreComponentesService.ArrayDelate.subscribe(
-        (arrayFotoDelete) => {
-          this.photosDelete(arrayFotoDelete);
+        (response:any) => {
+          this.photosDelete(response);
         }
       );
   }
@@ -218,8 +218,6 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     this.initForm();
     if (action == 'update') {
       this.photosPublicacionArray = publicacion.fotos;
-      console.log("publicacion en prepareForm ",publicacion)
-      console.log("photosPublicacionArray prepareForm ", this.photosPublicacionArray)
       this.idEspecie?.setValue(Number(publicacion.id_especie_fk));
       this.cantidad?.setValue(publicacion.cantidad);
       this.precio?.setValue(publicacion.preciokilogramo);
@@ -236,9 +234,7 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
   /* funciones necesarias para cargar y adicionar fotos */
   @HostListener('loadPhotos')
   async loadPhotos(filesPhotos: any[]) {
-    console.log("cargando fotos...")
     if (this.publicacion.action == 'create') {
-      console.log("entro por create")
       /* Se ejecuta cuando se esta creando una publicacion */
       try {
         const compressedFiles =
@@ -270,7 +266,6 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     } else if (this.publicacion.action == 'update') {
-      console.log("entro por update")
       /* Se ejecuta cuando se esta editando una publicacion */
       try {
         const compressedFiles =
@@ -295,8 +290,6 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
             .toPromise();
           arrayFotos.push(downloadUrl);
         }
-        console.log("update..arrayFotos antes de concat typeof ", typeof arrayFotos)
-        console.log("arrayFotos ",  arrayFotos)
         this.photosPublicacionArray = this.photosPublicacionArray.concat(arrayFotos);
 
         /* entrega las ultimas fotos que se cargaron, las manda al componente
@@ -307,12 +300,10 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     }
-    console.log("no se cargaron fotos...")
   }
 
   photosUpdate() {
     if (this.publicacion.action == 'update') {
-      console.log("photos a subir ",typeof this.photosPublicacionArray)
       this.publicacionesService
         .updatePhotos(this.publicacion.id_publicacion, {
           arrayFotos: this.photosPublicacionArray,
@@ -350,6 +341,7 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       .subscribe(
         (response) => {
           this.photosPublicacionArray = newPhotos.arrayFotosActualizadas;
+          this.storage.deleteMultipleByUrls(newPhotos.arrayFotosBorradas);
         },
         (err) => {
           console.log(err);

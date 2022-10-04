@@ -38,6 +38,14 @@ export class FirebaseStorageService {
     return this.storage.refFromURL(url).delete();
   }
 
+  public deleteMultipleByUrls(urls:string[]){
+    urls.forEach(
+      (url)=>{
+        this.deleteByUrl(url).toPromise();
+      }
+    )
+  }
+
   public refFromUrl(path: string) {
     return this.storage.refFromURL(path);
   }
