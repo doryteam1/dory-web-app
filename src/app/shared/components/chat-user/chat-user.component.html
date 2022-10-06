@@ -1,0 +1,90 @@
+  <div class="container-list-chat" *ngIf="chatOpen">
+    <!-- Lista de usurios -->
+    <div *ngIf="Onlist" class="container__list">
+      <div class="container__list-search">
+        <div class="input-wrapper">
+          <div class="bi bi-search"></div>
+          <input type="text" placeholder="Buscar un chat." />
+          <i class="img-x" *ngIf="false"></i>
+          <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" *ngIf="false">
+        </div>
+        <button type="button" class="btn-close button_close" (click)="closeChat()"></button>
+      </div>
+      <div class="user-list-card">
+        <div class="user-card"
+          *ngFor="let user of userList; index as i" (click)="selectUserHandler(user?.phone,i)">
+          <div class="user--imagen">
+            <img [src]="user?.image" [alt]="user?.name" class="avatar" />
+            <div [ngClass]="{'user--off': !user.estatus,'user--activo':user.estatus}"></div>
+          </div>
+          <p class="username">{{user?.name}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Chat de usurio -->
+    <div *ngIf="!Onlist" class="container__chats">
+      <div class="chat-container">
+        <ng-container *ngIf="selectedUser">
+          <div class="chat-header">
+            <div class="chat-header-name-avatar">
+              <div class="arrow-left" (click)="back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
+                  class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
+                </svg>
+              </div>
+              <img [src]="selectedUser?.image" [alt]="selectedUser?.name" class="avatar" />
+              <p class="username">{{selectedUser?.name}}</p>
+            </div>
+            <button type="button" class="btn-close button_close" (click)="closeChat()"></button>
+          </div>
+          <div class="chat-body">
+            <div class="chat-body-container" *ngFor="let item of messageArray"
+              [ngClass]="{ 'same-user':item?.user === currentUser?.name}">
+              <span class="_1kh65" *ngIf="item?.user === currentUser?.name">
+                <svg viewBox="0 0 8 13" width="8" height="13" class="">
+                  <path opacity=".13" d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z"></path>
+                  <path fill="currentColor" d="M5.188 0H0v11.193l6.467-8.625C7.526 1.156 6.958 0 5.188 0z"></path>
+                </svg>
+              </span>
+              <span class="_1kh654" *ngIf="item?.user !== currentUser?.name">
+                <svg viewBox="0 0 8 13" width="8" height="13" class="">
+                  <path opacity=".13" fill="#0000000" d="M1.533 3.568 8 12.193V1H2.812C1.042 1 .474 2.156 1.533 3.568z">
+                  </path>
+                  <path fill="currentColor" d="M1.533 2.568 8 11.193V0H2.812C1.042 0 .474 1.156 1.533 2.568z"></path>
+                </svg></span>
+              <p class="message-container" [ngClass]="{ 'border-left':item?.user !== currentUser?.name}">
+                {{item?.message}}</p>
+            </div>
+          </div>
+          <div class="chat-footer">
+            <div class="chat-footer-container">
+              <div>
+                <div class="form-group mb-0">
+                  <input type="text" placeholder="Escribe un mensaje aquí" class="form-control"
+                    [(ngModel)]="messageText" (keyup)="$event.keyCode === 13 && sendMessage()" />
+                </div>
+              </div>
+              <div class="text-center align-self-center">
+                <button style="background-color:#26a5b8; color:white" class="btn btn-sm px-3"
+                  (click)="sendMessage()">Enviar
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+  <a class="floating-btn scroll-to-top" (click)="openChat()" *ngIf="!chatOpen">
+    <div class=" flecha">
+      <svg class="svgpath" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#26a5b8"
+        class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+        <path
+          d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+      </svg>
+    </div>
+  </a>
+

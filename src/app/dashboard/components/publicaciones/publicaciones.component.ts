@@ -49,7 +49,8 @@ export class PublicacionesComponent implements OnInit {
   navigate(event: any, state: string) {
     let object: any = { ...event };
     object.action = 'update'
-    object.formState = state;   
+    object.formState = state;
+    console.log(object)
     this.router.navigate(['/dashboard/publicacion/detalle', object]);
   }
 }

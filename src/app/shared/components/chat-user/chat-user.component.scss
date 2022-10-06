@@ -1,0 +1,313 @@
+.container-list-chat {
+  position: fixed;
+  right: 0px;
+  bottom: 20px;
+  width: 100vw;
+  height: 100vh;
+  max-width: 350px;
+  max-height: 500px;
+  padding: 10px;
+  padding-top: 30px;
+z-index: 10;
+  .container__chats {
+    width: 100%;
+    height: 100%;
+  }
+
+  .container__list {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    border-radius: 10px;
+    background-color: #EDEDED;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    margin-bottom: 10px;
+
+    .container__list-search {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+
+      .input-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--white);
+        padding: 0.5rem 0.5rem 0.5rem 15px;
+        border-radius: 133px;
+        color: white;
+        box-shadow: 0 2px 12px var(--shadow-2);
+        width: 100%;
+
+      }
+
+      .bi-search {
+        color: rgb(158, 158, 167);
+      }
+
+      input {
+        margin: 0 0.5rem 0 0.5rem;
+        width: 100%;
+        border: none;
+        outline: none;
+        background-color: var(--white);
+        color: #5a5656;
+      }
+
+      .img-x {
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        opacity: 0.4;
+        background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='9e9ea7;'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+        cursor: pointer;
+        margin-right: 10px;
+        font-size: 0.8rem;
+      }
+
+      ::placeholder {
+        color: #5a5656;
+        ;
+      }
+    }
+  }
+}
+
+.user-list-card {
+  .user-card {
+    display: flex;
+    padding: 10px;
+    cursor: pointer;
+
+    &.active {
+      background-color: #EDEDED;
+    }
+
+    .user--imagen {
+      .avatar {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 15px 0 0;
+      }
+
+      .user--activo {
+        position: relative;
+        left: 22px;
+        bottom: 10px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #a4f203;
+      }
+
+      .user--off {
+        position: relative;
+        left: 22px;
+        bottom: 10px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #f25703;
+      }
+    }
+
+    .username {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .user-card:not(:last-child) {
+    border-bottom: 1px solid #bbbbbb;
+  }
+}
+
+.chat-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .chat-header {
+    height: 70px;
+    background-color: #EDEDED;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+
+    .chat-header-name-avatar {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .arrow-left {
+        width: 30px;
+        height: 30px;
+        margin: 0 5px;
+        cursor: pointer;
+      }
+
+      .avatar {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 5px;
+      }
+
+      .username {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  .chat-body {
+    background-image: url(../../../../assets/images/bg-image.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 100%;
+    padding: 30px;
+    overflow-y: auto;
+
+    .chat-body-container {
+      position: relative;
+
+      .message-container {
+        background-color: white;
+        overflow-wrap: break-word;
+        padding: 7px;
+        border-radius: 5px;
+        width: fit-content;
+        max-width: 90%;
+        margin-bottom: 15px;
+      }
+
+      .border-left {
+        border-top-left-radius: 0;
+      }
+
+      ._1kh654 {
+        color: white;
+        left: -8px;
+        position: absolute;
+        top: -8px;
+        z-index: 100;
+        display: block;
+        width: 8px;
+        height: 13px;
+      }
+    }
+
+    .same-user {
+      display: flex;
+      justify-content: flex-end;
+      position: relative;
+
+      .message-container {
+        border-top-right-radius: 0;
+        background-color: #26a5b8;
+      }
+
+      ._1kh65 {
+        color: #26a5b8;
+        right: -8px;
+        position: absolute;
+        top: -8px;
+        z-index: 100;
+        display: block;
+        width: 8px;
+        height: 13px;
+      }
+    }
+  }
+
+  .chat-footer {
+    background-color: #EDEDED;
+    padding: 10px 20px;
+
+    .chat-footer-container {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+
+      .form-control {
+        background-color: white;
+        border: 1px solid #D8DDEC;
+        box-sizing: border-box;
+        border-radius: 20px;
+        font-size: 1rem;
+        color: black;
+      }
+
+      button:focus {
+        border-color: none !important;
+        box-shadow: none !important;
+        outline: 0 none !important;
+      }
+    }
+  }
+
+
+}
+
+/* btn boton abrir */
+.floating-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border-radius: 100%;
+  z-index: 1000;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #26a5b8;
+}
+
+.floating-btn .flecha {
+  fill: #26a5b8;
+}
+
+.flecha {
+  display: inline-block;
+  position: relative;
+}
+
+.svgpath {
+  position: absolute;
+  right: 1px;
+  left: 1.43px;
+  width: 15.27px;
+  height: 18px;
+}
+
+.show-scrollTop {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
