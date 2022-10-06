@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
   templateUrl: './mis-productos.component.html',
   styleUrls: ['./mis-productos.component.scss'],
 })
-export class MisProductosComponent implements OnInit{
-  @ViewChild('paginatio') paginatio!: ElementRef;
+export class MisProductosComponent implements OnInit {
   productos: Array<any> = [];
   showNotFound: boolean = false;
-  p!: number;
   authUserId: number = -1;
+  loading: boolean = false;
+  showError: boolean = false;
   constructor(
     private proveedorService: ProveedorService,
     private appModalService: AppModalService,
@@ -23,23 +23,25 @@ export class MisProductosComponent implements OnInit{
     private router: Router
   ) {}
   ngOnInit(): void {
+    this.loading = true;
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
     this.proveedorService.getProductosById(this.authUserId).subscribe(
       (respose) => {
-        this.showNotFound = false;
+         this.loading = false;
         this.productos = respose.data;
-        console.log(this.productos);
         if (this.productos.length < 1 || this.productos.length == 0) {
           this.showNotFound = true;
+        } else {
+          this.showNotFound = false;
         }
       },
       (err) => {
-        if (err.status == 404) {
-          this.showNotFound = true;
-        }
         console.log(err);
+        this.showNotFound = false;
+        this.showError = true;
+        this.loading = false;
       }
     );
   }

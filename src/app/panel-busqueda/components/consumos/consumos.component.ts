@@ -18,9 +18,10 @@ export class ConsumosComponent implements OnInit {
   constructor(private consumidorService:ConsumidorService,private spinner: NgxSpinnerService) {}
   ngOnInit(): void {
     this.loading = true;
-    this.consumidorService.getConsumosMunicipios().subscribe(
+    this.consumidorService.getConsumosDepartamento(70).subscribe(
       (response)=>{
         this.consumosMunic = response.data;
+        console.log(this.consumosMunic);
         this.poblateDoughnutChartDatasetArray();
         this.loading = false;
       },err=>{

@@ -12,12 +12,16 @@
         </app-carrucel-img>
         <img class="sin-img" src='assets/images/no-image.jpg' *ngIf="publicacion.fotos.length == 0">
     </div>
-    <div class="card-body">
-        <h5 class="card__title card-title">${{publicacion.preciokilogramo | number:'':'es'}}/Kg</h5>
-        <h5 class="card__sub-title card-title">{{publicacion.especie}}</h5>
-        <p class="card__descripction card-text">Cantidad disponible: {{publicacion.cantidad}} Kg</p>
-        <div>
-            <span class="link" (click)="goDetail(publicacion)">Ver detalle</span>
+    <div class="card-body shorterTextOverflowHidden">
+      <h5 class="card__title card-title">${{publicacion.preciokilogramo | number:'':'es'}}/Kg</h5>
+      <h5 class="card__sub-title card-title shorterTextAuto">{{publicacion.especie}}</h5>
+      <p class="card__descripction card-text shorterTextAuto">Cantidad disponible: {{publicacion.cantidad}} Kg</p>
+      <div>
+        <div *ngIf="editaAndEliminar">
+          <i class="container__icon bi bi-pencil text-success me-3 mitextcolorpencil" (click)="updatePublicacion()"></i>
+          <i class="container__icon bi bi-trash text-danger mitextcolorpencil" (click)="deletePublicacion()"></i>
         </div>
+        <span class="link" (click)="goDetail()" *ngIf="!editaAndEliminar">Ver detalle</span>
+      </div>
     </div>
 </div>

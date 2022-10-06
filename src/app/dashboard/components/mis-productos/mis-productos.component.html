@@ -1,38 +1,22 @@
 <div class="container">
-  <app-not-found *ngIf="showNotFound" message="Aun no has registrado los productos que vendes"></app-not-found>
-  <div class="container-table-pagination" *ngIf="!showNotFound">
-    <table class="table mt-40">
-        <thead class="table-light micolortablelight">
-          <tr>
-            <th>Nombre de producto</th>
-            <th>Descripción</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let producto of productos |  paginate: { itemsPerPage: 3, currentPage: p }; let i=index">
-            <td class="colortextoproducto">{{producto.nombreProducto | shorter:25}}</td>
-            <td class="colortextoproducto">{{producto.descripcion | shorter:20}}</td>
-            <td class="colortextoproducto">{{producto.precio}}</td>
-            <td>
-                <div class="container-row">
-                    <i class="container__icon bi bi-pencil text-success me-3 mitextcolorpencil" (click)="updateProducto(producto)"></i>
-                    <i class="container__icon bi bi-trash text-danger mitextcolortrash" (click)="deleteProducto(producto.codigo)"></i>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- https://www.npmjs.com/package/ngx-pagination -->
-      <pagination-controls
-                         *ngIf="!showNotFound"
-                          class="my-paginationn"
-                         (pageChange)="p = $event"
-                          previousLabel="Anterior"
-                          nextLabel="Siguiente"
-      ></pagination-controls>
-  </div>
-  <button class="btn-outline-blue button" (click)="addProducto() ">Agregar nuevo producto</button>
+  <div class="container-card" *ngIf="!showNotFound">
+    <app-card-producto
+    [producto]="producto"
+    [indiceProducto]="i"
+    [editaAndEliminar]="true"
+    (onUpdateProducto)="updateProducto(producto)"
+    (onDeleteProducto)="deleteProducto(producto.codigo)"
+    *ngFor="let producto of productos; let i=index">
+  </app-card-producto>
+</div>
+<app-spinner [showText]="false" *ngIf="loading"></app-spinner>
+<div class="center" *ngIf="showNotFound">
+  <app-not-found message="Aun no has registrado los productos que vendes"></app-not-found>
+</div>
+<div class="center" *ngIf="showError">
+  <app-not-found [genericError]="showError"></app-not-found>
+</div>
+<app-basic-floating-btn [tooltip]="'Crear producto'" [agregar]="true" (click)="addProducto()">
+  </app-basic-floating-btn>
 </div>
 

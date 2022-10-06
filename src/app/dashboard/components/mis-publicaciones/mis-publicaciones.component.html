@@ -1,5 +1,11 @@
-<div class="container" *ngIf="!loading">
-    <app-card-publicacion [publicacion]="publicacion" [index]="i" (onDetail)="navigate($event,'enable')" *ngFor="let publicacion of publicaciones; let i = index">
+<div class="container-card" *ngIf="!loading">
+    <app-card-publicacion
+    [editaAndEliminar]="true"
+     [publicacion]="publicacion"
+     [index]="i"
+     (onUpdatePublicacion)="navigate(publicacion,'enable')"
+     (onDeletePublicacion)="deletePublicacion()"
+     *ngFor="let publicacion of publicaciones; let i = index">
     </app-card-publicacion>
 </div>
 <app-spinner [showText]="false" *ngIf="loading"></app-spinner>
@@ -9,5 +15,5 @@
 <div class="center" *ngIf="showError">
     <app-not-found [genericError]="showError"></app-not-found>
 </div>
-<app-basic-floating-btn [agregar]="true" (click)="create()">
+<app-basic-floating-btn  [tooltip]="'Crear publicación'" [agregar]="true" (click)="create()">
 </app-basic-floating-btn>

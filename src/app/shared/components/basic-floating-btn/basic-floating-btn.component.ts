@@ -9,7 +9,8 @@ export class BasicFloatingBtnComponent implements OnInit {
   @Input() agregar: boolean = false;
   @Input() editar: boolean = false;
   @Input() actualizar: boolean = false;
-  @Input() cancelar:boolean=false
+  @Input() cancelar: boolean = false;
+  @Input() tooltip:string = '';
 
   constructor() {}
 

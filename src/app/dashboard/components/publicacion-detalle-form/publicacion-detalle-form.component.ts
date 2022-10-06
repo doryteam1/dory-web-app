@@ -14,7 +14,6 @@ import {  Subscription } from 'rxjs';
 import { SafeUrl } from '@angular/platform-browser';
 import { ComunicacionEntreComponentesService } from '../../../shared/services/comunicacion-entre-componentes.service';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
-import { limiteMapa } from '../../../../models/limiteMapaGoogle.model';
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -105,9 +104,6 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
         }
       );
     }
-    
-
-
 
     /* escucha el componente que carga los files desde la modal */
     this.changeArray =

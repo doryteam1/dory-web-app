@@ -226,7 +226,7 @@
               [src]="invitacion?.foto_representante_legal ? invitacion?.foto_representante_legal : 'assets/images/avatar-person.svg'">
               <div class="d-flex flex-column ">
                 <span class="notify__description notify__description-miestilo"><span class="notify__label">{{invitacion?.representante_legal}}</span>
-                  te han invitado a indicar que eres miembro de <span
+                  te ha invitado a ser miembro de<span
                     class="notify__label">{{invitacion.asociacion}}</span></span>
                 <span class="notify__sub-description">
                   {{timeToNow(invitacion?.fecha_solicitud)}} · ¿Te gustaria ser miembro?
@@ -335,9 +335,7 @@
             </div>
 
             <div class="notification-list_detail">
-              <p><b>{{invitacion?.representante_legal}} </b>te han
-                invitado a indicar que
-                eres miembro de <b>{{invitacion.asociacion}}</b></p>
+              <p><b>{{invitacion?.representante_legal}} </b>te ha invitado a ser miembro de<b>{{invitacion.asociacion}}</b></p>
               <p class="notify__sub-description">
                 <small>{{timeToNow(invitacion?.fecha_solicitud)}} · ¿Te gustaria ser
                   miembro?

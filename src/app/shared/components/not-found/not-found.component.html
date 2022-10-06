@@ -1,23 +1,23 @@
 <div class="search-container" *ngIf="!errorData && !genericError">
     <div class="search-container__box">
       <img class="search-container__image" src="assets/images/searching.svg">
-      <h5>No se han encontrado resultados</h5>
-      <p *ngIf="!message">No se encontraron {{objectName}} con esta busqueda</p>
-      <p *ngIf="message">{{message}}</p>
+      <h5 style="color:var(--gris-oscuro);">No se han encontrado resultados</h5>
+      <p *ngIf="!message" style="color:var(--gris-oscuro);">No se encontraron {{objectName}} con esta busqueda</p>
+      <p *ngIf="message" style="color:var(--gris-oscuro);">{{message}}</p>
     </div>
 </div>
 <div class="search-container" *ngIf="errorData && !genericError">
     <div class="search-container__box">
       <img class="search-container__image" src="assets/images/searching.svg">
-      <h5>{{messageError}}</h5>
-      <p *ngIf="message">{{message}}</p>
+      <h5 style="color:var(--gris-oscuro);">{{messageError}}</h5>
+      <p *ngIf="message" style="color:var(--gris-oscuro);">{{message}}</p>
     </div>
 </div>
 <div class="search-container" *ngIf="genericError">
   <div class="search-container__box">
     <img class="search-container__image" src="assets/images/robot-broken.svg">
-    <h5>Ha ocurrido un error</h5>
-    <p *ngIf="!message">Por favor vuelve a intentarlo</p>
-      <p *ngIf="message">{{message}}</p>
+    <h5 style="color:var(--gris-oscuro);">Ha ocurrido un error</h5>
+    <p *ngIf="!message" style="color:var(--gris-oscuro);">Por favor vuelve a intentarlo</p>
+      <p *ngIf="message" style="color:var(--gris-oscuro);">{{message}}</p>
   </div>
 </div>

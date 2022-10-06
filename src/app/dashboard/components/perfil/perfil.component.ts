@@ -456,13 +456,14 @@ export class PerfilComponent implements OnInit, OnDestroy {
     }
   }
   deletePhotoPerfil() {
+    let fotoUrle=this.usuario.foto
     this.us.actualizarUsuario(this.id?.value, { foto: '' }).subscribe(
       (response) => {
         this.usuario.foto = '';
         this.us.setAuthUserPhoto(this.usuario.foto);
         this.storageService.add('photoUser', '');
         this.photoDelate = true;
-        this.usuario;
+         this.storage.deleteByUrl(fotoUrle);
         setTimeout(() => {
           this.photoDelate = false;
           /*  window.location.reload(); */
@@ -473,32 +474,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     );
-
-    // let fileName = '/perfil/user_' + this.id?.value;
-    // this.storage.deletephotoPerfil(fileName).subscribe(
-    //   (result) => {
-    //     this.us.actualizarUsuario(this.id?.value, { foto: '' }).subscribe(
-    //       (response) => {
-    //         this.usuario.foto = '';
-    //         this.us.setAuthUserPhoto(this.usuario.foto);
-    //         this.storageService.add('photoUser', '');
-    //         this.photoDelate = true;
-    //         this.usuario;
-    //         setTimeout(() => {
-    //           this.photoDelate = false;
-    //           /*  window.location.reload(); */
-    //         }, 3000);
-    //       },
-    //       (err) => {
-    //         this.photoDelate = false;
-    //         console.log(err);
-    //       }
-    //     );
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //   }
-    // );
   }
 
   deleteDocument(keyName: string) {

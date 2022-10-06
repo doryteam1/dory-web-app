@@ -222,13 +222,13 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn container__btn--azul"
+      <button [disabled]="loading1" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
        (click)="addGranja()" *ngIf="modalMode=='create'">
         <span *ngIf="!loading1">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
         </div>
       </button>
-      <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn container__btn--azul"
+      <button [disabled]="loading1" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
         (click)="updateGranja()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading1">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading1">

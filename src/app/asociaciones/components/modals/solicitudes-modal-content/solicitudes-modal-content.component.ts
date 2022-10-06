@@ -1,11 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
-import { MediaQueryService } from 'src/app/services/media-query.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 
 @Component({
@@ -13,14 +11,13 @@ import { AppModalService } from 'src/app/shared/services/app-modal.service';
   templateUrl: './solicitudes-modal-content.component.html',
   styleUrls: ['./solicitudes-modal-content.component.scss'],
 })
-export class SolicitudesModalContentComponent implements OnInit, OnDestroy {
+export class SolicitudesModalContentComponent implements OnInit {
   @Input() title = 'Agregar miembros';
   @Input() datos: any;
   piscicultores: Array<any> = [];
   pescadores: Array<any> = [];
   piscicultoresFiltered: any[] = [];
   pescadoresFiltered: any[] = [];
-  shorterNumber: number = 20;
   activeclass1: boolean = false;
   activeclass2: boolean = false;
   constructor(
@@ -29,17 +26,9 @@ export class SolicitudesModalContentComponent implements OnInit, OnDestroy {
     private piscicultoresService: PiscicultoresService,
     private asociacionService: AsociacionesService,
     private appModalService: AppModalService,
-    private router: Router,
-    public mediaQueryService: MediaQueryService
+    private router: Router
   ) {}
-  mediaQuery1Solicit!: Subscription;
-  mediaQuery2Solicit!: Subscription;
-  mediaQuery3Solicit!: Subscription;
-  ngOnDestroy(): void {
-    this.mediaQuery1Solicit.unsubscribe();
-    this.mediaQuery2Solicit.unsubscribe();
-    this.mediaQuery3Solicit.unsubscribe();
-  }
+
   ngOnInit(): void {
     this.activeTabClick(this.datos.tipo_asociacion);
     this.pescadoresService
@@ -56,41 +45,14 @@ export class SolicitudesModalContentComponent implements OnInit, OnDestroy {
         this.piscicultores = response.data;
         this.piscicultoresFiltered = this.piscicultores;
       });
-    this.mediaQuery1Solicit = this.mediaQueryService
-      .mediaQuery('max-width: 400px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 15;
-        } else {
-          this.shorterNumber = 20;
-        }
-      });
-    this.mediaQuery2Solicit = this.mediaQueryService
-      .mediaQuery('max-width: 370px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 10;
-        } else {
-          this.shorterNumber = 15;
-        }
-      });
-    this.mediaQuery3Solicit = this.mediaQueryService
-      .mediaQuery('max-width: 337px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 7;
-        } else {
-          this.shorterNumber = 10;
-        }
-      });
   }
 
   invitarAnular(usuario: any) {
     if (usuario.estado_solicitud == 'Aceptada') {
       this.appModalService
         .confirm(
-          'Eliminar de miembro',
-          'Esta seguro que desea eliminar este miembro de esta asociación',
+          'Eliminar miembro',
+          'Está seguro que desea eliminar este miembro de la asociación',
           'Eliminar',
           'Cancelar'
         )

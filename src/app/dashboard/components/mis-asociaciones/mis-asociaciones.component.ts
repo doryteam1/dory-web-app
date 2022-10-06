@@ -156,12 +156,13 @@ export class MisAsociacionesComponent
     this.asociacionesService.getAsociacionesUsuario(this.authUserId).subscribe(
       (response) => {
         this.asociaciones = response.data;
-        if (this.asociaciones.length < 1) {
+        if (this.asociaciones.length <= 0) {
           this.showNotFound = true;
         }
         this.loading1 = false;
       },
       (err) => {
+         this.showNotFound = true;
         console.log(err);
         this.loading1 = false;
       }
@@ -198,9 +199,9 @@ export class MisAsociacionesComponent
       this.appModalService
         .confirm(
           'Salir de la asociación',
-          'Usted ya no es miembro de esta asociación',
-          'No soy miembro',
-          'No estoy seguro'
+          'Está seguro',
+          'Aceptar',
+          'Cancelar'
         )
         .then((result) => {
           if (result == true) {

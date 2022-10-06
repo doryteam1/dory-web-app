@@ -119,8 +119,8 @@ export class AsociacionesComponent implements OnInit {
         .confirm(
           'Salir de la asociación',
           'Usted ya no es miembro de esta asociación',
-          'No soy miembro',
-          'No estoy seguro'
+          'Aceptar',
+          'Cancelar'
         )
         .then((result) => {
           if (result == true) {

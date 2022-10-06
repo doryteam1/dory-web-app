@@ -43,13 +43,12 @@
               <div class="card" *ngFor="let piscicultor of piscicultoresFiltered">
                   <div class="card__user-info d-flex flex-row">
                       <img (click)="navigateDetalle(piscicultor)" class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person.svg'}}">
-                          <div class="container-nombre">
-                            <span class="card__title" (click)="datosContactoPiscicultor(piscicultor)">{{piscicultor.nombres | shorter:shorterNumber}}
+                          <div class="container-nombre shorterTextOverflowHidden">
+                            <span class="card__title shorterTextAuto" (click)="datosContactoPiscicultor(piscicultor)">{{piscicultor?.nombres}}
                             </span>
-                            <small (click)="navigateDetalle(piscicultor)">Detalles</small>
+                            <small class="shorterTextAuto" (click)="navigateDetalle(piscicultor)">{{piscicultor?.municipio? piscicultor?.municipio: 'Sin municipio'}}</small>
                           </div>
                   </div>
-
                   <button class="card__button btn-square btn--grey" (click)="invitarAnular(piscicultor)" *ngIf="piscicultor.estado_solicitud == 'Enviada' && piscicultor.solicitud_enviada_por == 'asociacion'">Anular</button>
                   <button class="card__button btn-square btn--blue" (click)="invitarAnular(piscicultor)" *ngIf="piscicultor.estado_solicitud == 'Enviada' && piscicultor.solicitud_enviada_por == 'usuario'">Confirmar</button>
                   <button class="card__button btn-square  btn--blue" (click)="invitarAnular(piscicultor)" *ngIf="!piscicultor.estado_solicitud">Invitar</button>
@@ -67,10 +66,11 @@
               <div class="card" *ngFor="let pescador of pescadoresFiltered">
                   <div class="card__user-info d-flex flex-row" >
                       <img (click)="navigateDetalle(pescador)"class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person.svg'}}">
-                          <div class="container-nombre">
-                            <span class="card__title" (click)="datosContactoPescador(pescador)">{{pescador.nombres | shorter:shorterNumber}}
+                          <div class="container-nombre shorterTextOverflowHidden">
+                            <span class="card__title shorterTextAuto" (click)="datosContactoPescador(pescador)">{{pescador?.nombres}}
                             </span>
-                            <small (click)="navigateDetalle(pescador)">Detalles</small>
+                            <small class="shorterTextAuto" (click)="navigateDetalle(pescador)">{{pescador?.municipio? pescador?.municipio:
+                              'Sin municipio'}}</small>
                           </div>
                   </div>
                   <button class="card__button btn-square btn--grey" (click)="invitarAnular(pescador)" *ngIf="pescador.estado_solicitud == 'Enviada' && pescador.solicitud_enviada_por == 'asociacion'">Anular</button>

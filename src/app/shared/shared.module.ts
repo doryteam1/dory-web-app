@@ -58,6 +58,7 @@ import { ModalContactCardComponent } from './components/modal-contact-card/modal
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { CardComponent } from './components/card/card.component';
 import { CardPublicacionComponent } from './components/card-publicacion/card-publicacion.component';
+import { CardProductoComponent } from './components/card-producto/card-producto.component';
 
 
 @NgModule({
@@ -101,6 +102,7 @@ import { CardPublicacionComponent } from './components/card-publicacion/card-pub
     SpinnerComponent,
     CardComponent,
     CardPublicacionComponent,
+    CardProductoComponent,
   ],
   imports: [
     CommonModule,
@@ -153,8 +155,8 @@ import { CardPublicacionComponent } from './components/card-publicacion/card-pub
     NotFoundComponent,
     ModalContactCardComponent,
     SpinnerComponent,
-    CardPublicacionComponent
-    /*  CardphotoGoogleMapComponent, */
+    CardPublicacionComponent,
+    CardProductoComponent,
   ],
 
   providers: [

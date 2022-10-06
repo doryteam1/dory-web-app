@@ -81,13 +81,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     intro: 'En este campo puedes ingresar tus nombres y apellidos.',
   };
   stepVehiculos: IntroToursteps = {
-    title: 'Mis vehiculos',
+    title: 'Mis vehículos',
     element: '#misvehiculos',
     intro:
       'En esta opción podrás registrar, modificar y eliminar la información de tus vehículos.',
   };
   stepConsumo: IntroToursteps = {
-    title: 'Consumo',
+    title: 'Mis consumos',
     element: '#consumo',
     intro:
       'Aquí podrás ingresar lo que consumes, así los productores podran tener una idea de lo que necesitan cultivar.',
@@ -97,6 +97,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     element: '#misnegocios',
     intro:
       'En esta opción podrás registrar, modificar y eliminar la información de tus negocios.',
+  };
+  stepSalir: IntroToursteps = {
+    title: 'Salir',
+    element: '#salir',
+    intro: 'Desde aquí podras cerrar la sesión.',
   };
   stepFavorito: IntroToursteps = {
     title: 'Mis favoritos',
@@ -151,6 +156,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepAsociaciones,
     this.stepMispublicaciones,
     this.stepContrasena,
+    this.stepSalir,
     this.stepDatosBasicos,
     this.stepFotoPerfil1,
     this.stepFotoPerfil2,
@@ -165,6 +171,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepAsociaciones,
     this.stepMispublicaciones,
     this.stepContrasena,
+    this.stepSalir,
     this.stepDatosBasicos,
     this.stepFotoPerfil1,
     this.stepFotoPerfil2,
@@ -178,6 +185,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepMisProductos,
     this.stepFavorito,
     this.stepContrasena,
+    this.stepSalir,
     this.stepDatosBasicos,
     this.stepFotoPerfil1,
     this.stepFotoPerfil2,
@@ -191,6 +199,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepVehiculos,
     this.stepFavorito,
     this.stepContrasena,
+    this.stepSalir,
     this.stepDatosBasicos,
     this.stepFotoPerfil1,
     this.stepFotoPerfil2,
@@ -204,6 +213,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepConsumo,
     this.stepFavorito,
     this.stepContrasena,
+    this.stepSalir,
     this.stepDatosBasicos,
     this.stepFotoPerfil1,
     this.stepFotoPerfil2,
@@ -216,6 +226,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepPerfil,
     this.stepFavorito,
     this.stepContrasena,
+    this.stepSalir,
     this.stepDatosBasicos,
     this.stepFotoPerfil1,
     this.stepFotoPerfil2,
@@ -229,6 +240,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepFavorito,
     this.stepNegocios,
     this.stepContrasena,
+    this.stepSalir,
     this.stepDatosBasicos,
     this.stepFotoPerfil1,
     this.stepFotoPerfil2,
@@ -299,6 +311,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   closeOffCamba: boolean = false;
   disableTags: boolean = false;
   rutaUrlactiva: any;
+  rutaPublicaciondetalle: boolean=false;
   constructor(
     private socialService: SocialAuthService,
     private userService: UsuarioService,
@@ -316,7 +329,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     let email = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe((response) => {
       this.authUser = response.data[0];
-      if (!this.authUser.takeTour) {
+      if (this.authUser.takeTour) {
         if (this.sidebar) {
           this.openOffcanvas();
           this.starTour();
@@ -409,6 +422,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.rutaVehiculosdetalle = true;
     } else if (urlactiva.includes('/dashboard/negocio/detalle')) {
       this.rutaNegociosdetalle = true;
+    } else if (urlactiva.includes('/dashboard/publicacion/detalle')) {
+      this.rutaPublicaciondetalle = true;
     }
     this.subscriber = this._router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -418,6 +433,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.rutaProductosdetalle = false;
         this.rutaVehiculosdetalle = false;
         this.rutaNegociosdetalle = false;
+          this.rutaPublicaciondetalle = false
         let urlactiva = event.url;
         if (urlactiva.includes('/dashboard/granja/detalle')) {
           this.rutaGranjasdetalle = true;
@@ -425,36 +441,49 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.rutaProductosdetalle = false;
           this.rutaVehiculosdetalle = false;
           this.rutaNegociosdetalle = false;
+          this.rutaPublicaciondetalle = false;
         } else if (urlactiva.includes('/dashboard/asociacion/detalle')) {
           this.rutaAsociacionesdetalle = true;
           this.rutaGranjasdetalle = false;
           this.rutaProductosdetalle = false;
           this.rutaVehiculosdetalle = false;
           this.rutaNegociosdetalle = false;
+          this.rutaPublicaciondetalle = false;
         } else if (urlactiva.includes('/dashboard/producto/detalle')) {
           this.rutaProductosdetalle = true;
           this.rutaVehiculosdetalle = false;
           this.rutaAsociacionesdetalle = false;
           this.rutaGranjasdetalle = false;
           this.rutaNegociosdetalle = false;
+          this.rutaPublicaciondetalle = false;
         } else if (urlactiva.includes('/dashboard/vehiculo/detalle')) {
           this.rutaVehiculosdetalle = true;
           this.rutaProductosdetalle = false;
           this.rutaAsociacionesdetalle = false;
           this.rutaGranjasdetalle = false;
           this.rutaNegociosdetalle = false;
+          this.rutaPublicaciondetalle = false;
         } else if (urlactiva.includes('/dashboard/negocio/detalle')) {
           this.rutaVehiculosdetalle = false;
           this.rutaProductosdetalle = false;
           this.rutaAsociacionesdetalle = false;
           this.rutaGranjasdetalle = false;
           this.rutaNegociosdetalle = true;
+          this.rutaPublicaciondetalle = false;
+        } else if (urlactiva.includes('/dashboard/publicacion/detalle')) {
+          this.rutaVehiculosdetalle = false;
+          this.rutaProductosdetalle = false;
+          this.rutaAsociacionesdetalle = false;
+          this.rutaGranjasdetalle = false;
+          this.rutaNegociosdetalle = false;
+          this.rutaPublicaciondetalle = true;
         } else {
           this.rutaAsociacionesdetalle = false;
           this.rutaGranjasdetalle = false;
           this.rutaProductosdetalle = false;
           this.rutaVehiculosdetalle = false;
           this.rutaNegociosdetalle = false;
+          this.rutaPublicaciondetalle = false;
         }
       });
   }
@@ -523,5 +552,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   updatePassword() {
     this._router.navigateByUrl('update-password');
+  }
+  logout() {
+    this.userService.logout();
+    this._router.navigateByUrl('/home');
   }
 }

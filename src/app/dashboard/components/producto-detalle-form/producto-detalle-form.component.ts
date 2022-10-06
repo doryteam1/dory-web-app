@@ -320,8 +320,8 @@ export class ProductoDetalleFormComponent implements OnInit {
       .subscribe(
         (response) => {
           this.photosProducArray = arraydelate.arrayFotosActualizadas;
+           this.storage.deleteMultipleByUrls(arraydelate.arrayFotosBorradas);
           this.loading = false;
-          console.log('fotos guardadas: ');
         },
         (err) => {
           console.log(err);

@@ -3,7 +3,7 @@
       <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='enable'">{{modalMode == 'create' ? 'Nueva publicacion'
         : 'Actualizar publicación'}}</h4>
     </div>
-  
+
     <div class="modal-body">
       <form [formGroup]="form">
         <div class="mb-3">
@@ -22,7 +22,7 @@
               </div>
             </div>
           </div>
-  
+
         <div class="mb-3">
           <label for="dateOfBirth">Cantidad(Kg)</label>
           <div class="input-group">
@@ -35,7 +35,7 @@
             </div>
           </div>
         </div>
-  
+
         <div class="mb-3">
             <label for="dateOfBirth">Precio(COP)</label>
             <div class="input-group">
@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-  
+
         <!-- Fotos mini -->
         <div class="clasfotoMiniy" *ngIf="photosPublicacionArray && photosPublicacionArray.length > 0">
             <div class="Photos-mini-container">
@@ -100,13 +100,13 @@
     </div>
     <div class="modal-footer">
       <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-        <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn container__btn--azul"
+        <button [disabled]="loading1" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
          (click)="addPublicacion()" *ngIf="modalMode=='create'">
           <span *ngIf="!loading1">Guardar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>
         </button>
-        <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn container__btn--azul"
+        <button [disabled]="loading1" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
           (click)="updatePublicacion()" *ngIf="modalMode=='update'">
           <span *ngIf="!loading1">Actualizar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
@@ -118,4 +118,3 @@
       </div>
     </div>
   </div>
-  

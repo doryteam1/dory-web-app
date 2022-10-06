@@ -324,8 +324,8 @@ export class VehiculoDetalleFormComponent implements OnInit {
       .subscribe(
         (response) => {
           this.photosVehicuArray = arraydelate.arrayFotosActualizadas;
+           this.storage.deleteMultipleByUrls(arraydelate.arrayFotosBorradas);
           this.loading = false;
-          console.log('Fotos guardadas: ');
         },
         (err) => {
           console.log(err);

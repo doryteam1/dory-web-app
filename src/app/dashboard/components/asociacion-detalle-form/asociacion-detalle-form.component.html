@@ -14,7 +14,6 @@
           <label for="dateOfBirth">Nombre</label>
           <div class="input-group">
             <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre">
-            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
           </div>
           <div *ngIf="invalid('nombre')" class="container__alert-msg danger-message">
             <div *ngIf="nombre?.errors?.['required']">
@@ -212,12 +211,12 @@
     </div>
     <div class="modal-footer">
       <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-        <button type="button" class="btn-rounded btn--blue container__btn container__btn--azul" (click)="addAsociaciones()" *ngIf="modalMode=='create' && formState == 'enable'">
+        <button type="button" class="btn-rounded btn--grey container__btn container__btn--azul" (click)="addAsociaciones()" *ngIf="modalMode=='create' && formState == 'enable'">
           <span *ngIf="!loading1">Guardar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>
         </button>
-        <button type="button" class="btn-rounded btn--blue container__btn container__btn--azul" (click)="updateAsociacion()"  *ngIf="modalMode=='update' && formState == 'enable'">
+        <button type="button" class="btn-rounded btn--blue  btn--grey container__btn container__btn--azul" (click)="updateAsociacion()"  *ngIf="modalMode=='update' && formState == 'enable'">
           <span *ngIf="!loading1">Actualizar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>

@@ -1,11 +1,9 @@
-import { Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
-import { MediaQueryService } from 'src/app/services/media-query.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 
 @Component({
@@ -13,16 +11,13 @@ import { AppModalService } from 'src/app/shared/services/app-modal.service';
   templateUrl: './miembros-asociacion-modal-content.component.html',
   styleUrls: ['./miembros-asociacion-modal-content.component.scss'],
 })
-export class MiembrosAsociacionModalContentComponent
-  implements OnInit, OnDestroy
-{
+export class MiembrosAsociacionModalContentComponent implements OnInit {
   @Input() title = 'Agregar miembros';
   @Input() datos: any;
   piscicultores: Array<any> = [];
   pescadores: Array<any> = [];
   piscicultoresFiltered: any[] = [];
   pescadoresFiltered: any[] = [];
-  shorterNumber: number = 20;
   activeclass1: boolean = false;
   activeclass2: boolean = false;
   showNotFound1: boolean = false;
@@ -37,19 +32,13 @@ export class MiembrosAsociacionModalContentComponent
     private piscicultoresService: PiscicultoresService,
     private asociacionService: AsociacionesService,
     private appModalService: AppModalService,
-    private router: Router,
-    public mediaQueryService: MediaQueryService
+    private router: Router
   ) {}
-  mediaQuery1Mienbr!: Subscription;
-  ngOnDestroy(): void {
-    this.mediaQuery1Mienbr.unsubscribe();
-  }
 
   ngOnInit(): void {
     this.activeTabClick(this.datos.tipo_asociacion);
     this.pescadoresService.getPescadoresAsociacion(this.datos.nit).subscribe(
       (response: any) => {
-        console.log('pescadores ', response);
         if (response.data.length > 0) {
           this.pescadores = response.data;
           this.pescadoresFiltered = this.pescadores;
@@ -63,7 +52,7 @@ export class MiembrosAsociacionModalContentComponent
         }
       },
       (err) => {
-         console.log(err);
+        console.log(err);
         this.showNotFound1 = false;
         this.showError1 = false;
         if (err.status == 404) {
@@ -78,21 +67,20 @@ export class MiembrosAsociacionModalContentComponent
       .getPiscicultoresAsociacion(this.datos.nit)
       .subscribe(
         (response) => {
-          console.log('piscicultores', response);
           if (response.data.length > 0) {
             this.piscicultores = response.data;
             this.piscicultoresFiltered = this.piscicultores;
             this.showError2 = false;
             this.showNotFound2 = false;
           } else {
-            console.log("sindata pisci")
-                     console.log(this.showError1);
+            console.log('sindata pisci');
+            console.log(this.showError1);
             this.showNotFound2 = true;
             this.showError2 = false;
           }
         },
         (err) => {
-          console.log(err)
+          console.log(err);
           this.showNotFound2 = false;
           this.showError2 = false;
           if (err.status == 404) {
@@ -103,15 +91,6 @@ export class MiembrosAsociacionModalContentComponent
           }
         }
       );
-    this.mediaQuery1Mienbr = this.mediaQueryService
-      .mediaQuery('max-width: 300px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 15;
-        } else {
-          this.shorterNumber = 20;
-        }
-      });
   }
 
   anularInvitacion(usuario: any) {

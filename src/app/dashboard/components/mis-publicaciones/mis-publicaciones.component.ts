@@ -46,9 +46,13 @@ export class MisPublicacionesComponent implements OnInit {
   }
 
   navigate(event: any, state: string) {
+    console.log(event)
     let object: any = { ...event };
     object.action = 'update'
-    object.formState = state;   
+    object.formState = state;
     this.router.navigate(['/dashboard/publicacion/detalle', object]);
+  }
+  deletePublicacion(){
+    
   }
 }
