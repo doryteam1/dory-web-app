@@ -34,23 +34,18 @@ export class PublicacionesComponent implements OnInit {
         this.showNotFound = false;
         this.showError = true;
         this.loading = false;
+
       }
     )
   }
-
-  create() {
-    let object = {
-      action: 'create',
-      formState: 'enable',
-    };
-    this.router.navigate(['/dashboard/publicacion/detalle', object]);
-  }
-
   navigate(event: any, state: string) {
     let object: any = { ...event };
     object.action = 'update'
+    object.actionDos = 'soloVer'
     object.formState = state;
-    console.log(object)
-    this.router.navigate(['/dashboard/publicacion/detalle', object]);
+       let url = this.router.serializeUrl(
+         this.router.createUrlTree(['/dashboard/publicacion/detalle', object])
+       );
+       window.open(url, '_blank');
   }
 }

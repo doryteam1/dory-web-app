@@ -125,7 +125,6 @@ export class MisAsociacionesComponent
   constructor(
     private asociacionesService: AsociacionesService,
     private appModalService: AppModalService,
-    httpClient: HttpClient,
     private router: Router,
     private places: PlacesService,
     private searchBuscadorService: SearchBuscadorService,

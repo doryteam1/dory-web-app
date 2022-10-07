@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
+import { ModalMultiFiltrosComponent } from './modal-multi-filtros.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('ModalMultiFiltrosComponent', () => {
+  let component: ModalMultiFiltrosComponent;
+  let fixture: ComponentFixture<ModalMultiFiltrosComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
+      declarations: [ ModalMultiFiltrosComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(ModalMultiFiltrosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

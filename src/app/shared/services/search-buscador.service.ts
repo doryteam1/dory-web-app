@@ -71,7 +71,6 @@ export class SearchBuscadorService {
   ): any {
     /* Ordena arrayas de mayor a menor , pasandole una referencia un valor numerico */
     let arraydatanew = arraydataabuscar.slice();
-    console.log(filtroSelecOptionData);
     if (filtroSelecOptionData.modoFiltro == MODO_FILTRO_ORDER_DES) {
       let filterarraydata = arraydatanew.sort((a, b) => {
         if (

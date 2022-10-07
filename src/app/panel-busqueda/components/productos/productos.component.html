@@ -1,7 +1,14 @@
 <div class="mt-5">
   <div class="search">
     <app-search class="app-search" (textSearch)="onSearch($event)"></app-search>
-    <app-modal-multi-filters [radioFilter1]="filtro" [chipFilter1]="orderFilter" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
+    <app-modal-multi-filters
+    [radioFilter1]="filtro"
+    [chipFilter1]="orderFilter"
+    [checkboxOptions]="municipios"
+      [checkArray]="filtroseleccionadoCheckbox"
+     [deleteChipFilter1]="selectedPriceFilter"
+     [deleteRadioFilter1]="filtroseleccionado"
+    (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
   </div>
 </div>
 <app-not-found class="app-not-found" *ngIf="showNotFound" objectName="productos"></app-not-found>

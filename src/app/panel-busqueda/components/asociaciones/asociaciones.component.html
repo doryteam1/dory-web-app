@@ -2,7 +2,12 @@
     <app-search [placeholderbuscador]="'Buscar asociacion..'"
     (textSearch)="onBuscarPalabra($event)">
     </app-search>
-    <app-modal-multi-filters [radioFilter1]="filtro" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
+    <app-modal-multi-filters
+     [radioFilter1]="filtro"
+     [checkboxOptions]="municipios"
+      [checkArray]="filtroseleccionadoCheckbox"
+     [deleteRadioFilter1]="filtroseleccionado"
+     (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
 </div>
 <app-not-found *ngIf="showNotFound" objectName="asociaciones"></app-not-found>
 <div class="chip mb-4">

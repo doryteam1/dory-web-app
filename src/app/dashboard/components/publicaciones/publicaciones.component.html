@@ -1,8 +1,8 @@
-<div class="container-card" *ngIf="!loading">
+<!-- <div class="container-card" *ngIf="!loading">
     <app-card-publicacion
     [publicacion]="publicacion"
     [index]="i"
-     (onDetalle)="navigate(publicacion,'enable')"
+     (onDetalle)="navigate(publicacion,'disable')"
      *ngFor="let publicacion of publicaciones; let i = index">
     </app-card-publicacion>
     <app-chat-user></app-chat-user>
@@ -13,4 +13,5 @@
 </div>
 <div class="center" *ngIf="showError">
     <app-not-found [genericError]="showError"></app-not-found>
-</div>
+</div> -->
+<app-publicacion (onDetallePublicacion)="navigate($event,'disable')" [otraRuta]="true"></app-publicacion>

@@ -204,9 +204,6 @@ export class UsersComponent implements OnInit {
 
   searchReset() {
     let resultados: any[] = this.buscarData(this.palabra);
-    /* if (this.filtroseleccionado) {
-      resultados = this.filtradoData(this.filtroseleccionado, resultados);
-    } */
     if (
       this.filtroseleccionadoCheckbox &&
       this.filtroseleccionadoCheckbox.length > 0

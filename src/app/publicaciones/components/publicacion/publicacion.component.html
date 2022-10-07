@@ -1,0 +1,56 @@
+<div class="mt-5">
+  <div class="search">
+    <app-search class="app-search" (textSearch)="onSearch($event)"></app-search>
+    <app-modal-multi-filters
+     [radioFilter1]="filtro"
+     [chipFilter1]="orderFilter"
+     [checkboxOptions]="municipios"
+     [checkboxOptions_dos]="especies"
+     [checkArray]="filtroseleccionadoCheckbox"
+     [checkArray_dos]="filtroseleccionadoCheckbox_dos"
+     [deleteChipFilter1]="selectedPriceFilter"
+     [deleteRadioFilter1]="filtroseleccionado"
+     (filtersAplied)="onFiltersAplied($event)">
+    </app-modal-multi-filters>
+  </div>
+</div>
+<app-not-found class="app-not-found" *ngIf="showNotFound" objectName="publicaciones"></app-not-found>
+<div class="chip-container">
+  <app-chip-con-boton-close class="chip-container__element" *ngIf="filtroseleccionado" [iconoChip]="true"
+    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'" [contenidoChip]="filtroseleccionado.nombrefiltro"
+    (onCloseClip)="delateFilter()">
+  </app-chip-con-boton-close>
+  <app-chip-con-boton-close class="chip-container__element" *ngIf="selectedPriceFilter" [iconoChip]="true"
+    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+    [contenidoChip]="selectedPriceFilter.nombrefiltro + ' ('+ publicacionesFiltered.length +')'"
+    (onCloseClip)="deletePriceFilter()">
+  </app-chip-con-boton-close>
+  <app-chip-con-boton-close class="chip-container__element"
+    *ngFor="let  resultado of resultFiltroPorMunicipio; let i =index" [iconoChip]="true"
+    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+    [contenidoChip]="resultado.nombre +' '+ resultado.datos.length" (onCloseClip)="delateFilterCheckbox(i)">
+  </app-chip-con-boton-close>
+  <app-chip-con-boton-close class="chip-container__element"
+    *ngFor="let  resultado of resultFiltroPorEspecie; let i =index" [iconoChip]="true"
+    [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+    [contenidoChip]="resultado.nombre +' '+ resultado.datos.length"
+    (onCloseClip)="delateFilterCheckbox_dos(i)">
+  </app-chip-con-boton-close>
+</div>
+<div class="container-card" *ngIf="!loading">
+  <app-card-publicacion
+  [publicacion]="publicacion"
+  [index]="i"
+  (onDetalle)="navigate(publicacion.id_publicacion,publicacion)"
+    *ngFor="let publicacion of publicacionesFiltered; let i = index">
+  </app-card-publicacion>
+  <!-- <app-chat-user></app-chat-user> -->
+</div>
+<app-spinner [showText]="false" *ngIf="loading"></app-spinner>
+<!-- <div class="center" *ngIf="showNotFound">
+  <app-not-found objectName="publicaciones"></app-not-found>
+</div>
+<div class="center" *ngIf="showError">
+  <app-not-found [genericError]="showError"></app-not-found>
+</div> -->
+<!--  -->

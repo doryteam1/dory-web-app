@@ -35,20 +35,33 @@
             </div>
           </div>
         </div>
-
         <div class="mb-3">
-            <label for="dateOfBirth">Precio(COP)</label>
-            <div class="input-group">
-              <input id="productName" type="number" min="0" class="form-control" placeholder="Precio por kilogramo"
-                formControlName="preciokilogramo" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
-            </div>
-            <div *ngIf="invalid('preciokilogramo')" class="container__alert-msg danger-message">
-              <div *ngIf="precio?.errors?.['required']">
-                Campo requerido
-              </div>
+          <label for="dateOfBirth">Precio(COP)</label>
+          <div class="input-group">
+            <input id="productName" type="number" min="0" class="form-control" placeholder="Precio por kilogramo"
+              formControlName="preciokilogramo"
+              onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+          </div>
+          <div *ngIf="invalid('preciokilogramo')" class="container__alert-msg danger-message">
+            <div *ngIf="precio?.errors?.['required']">
+              Campo requerido
             </div>
           </div>
-
+        </div>
+        <div *ngIf="action_dos =='soloVer' && formState=='disable'">
+          <div class="mb-3">
+            <label for="dateOfBirth">Remitente</label>
+            <div class="input-group">
+              <input [disabled]="true"  type="text" class="form-control" [value]="remitente">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="dateOfBirth">Municipio del remitente</label>
+            <div class="input-group">
+              <input [disabled]="true"  type="text" class="form-control" [value]="municipioRemitente ">
+            </div>
+          </div>
+        </div>
         <!-- Fotos mini -->
         <div class="clasfotoMiniy" *ngIf="photosPublicacionArray && photosPublicacionArray.length > 0">
             <div class="Photos-mini-container">
@@ -78,13 +91,13 @@
                 </div>
             </div>
             </div>
-            <div *ngIf="loadingphoto && modalMode != 'update'" class="container__alert-msg danger-message">
+            <div *ngIf="loadingphoto && modalMode != 'update' && formState=='enable'" class="container__alert-msg danger-message">
             <div>
                 Por favor; espere miestras se cargan las fotos
             </div>
             </div>
         </div>
-        <div class="clasfotoMiniyBoton" *ngIf="photosPublicacionArray.length <= 0">
+        <div class="clasfotoMiniyBoton" *ngIf="photosPublicacionArray.length <= 0 && formState=='enable'">
             <div type="button" class="btn btn-primary container__btn--azul1"
             style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
             (click)="openPhotosModal()" *ngIf="photosPublicacionArray.length == 0 ">
@@ -101,13 +114,13 @@
     <div class="modal-footer">
       <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
         <button [disabled]="loading1" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
-         (click)="addPublicacion()" *ngIf="modalMode=='create'">
+         (click)="addPublicacion()" *ngIf="modalMode=='create' && formState=='enable'">
           <span *ngIf="!loading1">Guardar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>
         </button>
         <button [disabled]="loading1" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
-          (click)="updatePublicacion()" *ngIf="modalMode=='update'">
+          (click)="updatePublicacion()" *ngIf="modalMode=='update' && formState=='enable'">
           <span *ngIf="!loading1">Actualizar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>

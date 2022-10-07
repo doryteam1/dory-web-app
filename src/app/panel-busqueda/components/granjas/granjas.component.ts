@@ -145,7 +145,6 @@ export class GranjasComponent implements OnInit {
     this.granjasService.getGranjas().subscribe((response: any) => {
       this.granjas = response.data;
       this.granjasFiltered = this.granjas.slice();
-      console.log(this.granjasFiltered);
       if (this.granjasFiltered.length < 1) {
         this.showNotFound = true;
       } else {

@@ -2,7 +2,14 @@
     <app-search [placeholderbuscador]="'Buscar granja...'"
     (textSearch)="onBuscarPalabra($event)">
     </app-search>
-    <app-modal-multi-filters [radioFilter1]="orderFilters" [chipFilter1]="starsFilter" [checkboxOptions]="municipios" (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
+    <app-modal-multi-filters
+    [radioFilter1]="orderFilters"
+    [chipFilter1]="starsFilter"
+     [checkboxOptions]="municipios"
+    [checkArray]="filtroseleccionadoCheckbox"
+     [deleteChipFilter1]="selectedOrderFilter"
+     [deleteRadioFilter1]="selectedStarFilter "
+     (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
 </div>
 <div class="chip mb-4">
     <app-chip-con-boton-close class="chip__element"

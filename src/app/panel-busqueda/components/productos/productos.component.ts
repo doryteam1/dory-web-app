@@ -20,15 +20,13 @@ import { PlacesService } from 'src/app/services/places.service';
 })
 export class ProductosComponent implements OnInit {
   productos: Array<any> = [];
+  showNotFound: boolean = false;;
+  palabra: string = '';
   productosFiltered: Array<any> = [];
+  municipios: Array<any> = [];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
   selectedPriceFilter!: MetaFiltro | any;
-  palabra: string = '';
-  municipios: Array<any> = [];
-  showNotFound: boolean = false;
-  authUserId: number = -1;
-  authRol: string = '';
   checkbox: Checkbox[] = [
     {
       nameButton: 'Municipio de proveedor',
@@ -110,7 +108,6 @@ export class ProductosComponent implements OnInit {
         this.showNotFound = false;
       }
     });
-
     /* municipios sucre */
     this.loadMunic();
   }
@@ -268,6 +265,7 @@ export class ProductosComponent implements OnInit {
   }
 
   onFiltersAplied(result: any) {
+    console.log(result)
     this.selectedPriceFilter = result.chipFilter1;
     this.filtroseleccionado = result.radioFilter1;
     this.filtroseleccionadoCheckbox = result.selectedCheckboxs;

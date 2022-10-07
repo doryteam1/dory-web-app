@@ -9,112 +9,168 @@ import { VerifyAccountComponent } from './verify-account/verify-account.componen
 
 const routes: Routes = [
   {
-    path:'', redirectTo:'/home', pathMatch:'full'
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
   },
   {
-    path:'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
   {
-    path:'nosotros',
-    loadChildren: () => import('./nosotros/nosotros.module').then(m => m.NosotrosModule)
+    path: 'nosotros',
+    loadChildren: () =>
+      import('./nosotros/nosotros.module').then((m) => m.NosotrosModule),
   },
   {
-    path:'granjas',
-    loadChildren: () => import('./granjas/granjas.module').then(m => m.GranjasModule)
+    path: 'granjas',
+    loadChildren: () =>
+      import('./granjas/granjas.module').then((m) => m.GranjasModule),
   },
   {
-    path:'novedades',
-    loadChildren: () => import('./novedades/novedades.module').then(m  => m.NovedadesModule)
+    path: 'novedades',
+    loadChildren: () =>
+      import('./novedades/novedades.module').then((m) => m.NovedadesModule),
   },
   {
-    path:'eventos',
-    loadChildren: () => import('./eventos/eventos.module').then(m => m.EventosModule)
+    path: 'eventos',
+    loadChildren: () =>
+      import('./eventos/eventos.module').then((m) => m.EventosModule),
   },
   {
-    path:'normatividad',
-    loadChildren: () => import('./normatividad/normatividad.module').then(m => m.NormatividadModule)
+    path: 'normatividad',
+    loadChildren: () =>
+      import('./normatividad/normatividad.module').then(
+        (m) => m.NormatividadModule
+      ),
   },
   {
-    path:'registro',
-    loadChildren: () => import('./registro/registro.module').then(m => m.RegistroModule)
+    path: 'registro',
+    loadChildren: () =>
+      import('./registro/registro.module').then((m) => m.RegistroModule),
   },
   {
-    path:'piscicultores',
-    loadChildren: () => import('./piscicultores/piscicultores.module').then(m => m.PiscicultoresModule)
+    path: 'piscicultores',
+    loadChildren: () =>
+      import('./piscicultores/piscicultores.module').then(
+        (m) => m.PiscicultoresModule
+      ),
   },
   {
-    path:'pescadores',
-    loadChildren: () => import('./pescadores/pescadores.module').then(m => m.PescadoresModule)
+    path: 'pescadores',
+    loadChildren: () =>
+      import('./pescadores/pescadores.module').then((m) => m.PescadoresModule),
   },
   {
-    path:'proveedores',
-    loadChildren: () => import('./proveedores/proveedores.module').then(m => m.ProveedoresModule)
+    path: 'proveedores',
+    loadChildren: () =>
+      import('./proveedores/proveedores.module').then(
+        (m) => m.ProveedoresModule
+      ),
   },
   {
-    path:'transportadores',
-    loadChildren: () => import('./transportadores/transportadores.module').then(m => m.TransportadoresModule)
+    path: 'transportadores',
+    loadChildren: () =>
+      import('./transportadores/transportadores.module').then(
+        (m) => m.TransportadoresModule
+      ),
   },
   {
-    path:'asociaciones',
-    loadChildren: () => import('./asociaciones/asociaciones.module').then(m => m.AsociacionesModule)
+    path: 'asociaciones',
+    loadChildren: () =>
+      import('./asociaciones/asociaciones.module').then(
+        (m) => m.AsociacionesModule
+      ),
   },
   {
-    path:'dashboard',
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
-    path:'panel-busqueda',
-    loadChildren: () => import('./panel-busqueda/panel-busqueda.module').then(m => m.PanelBusquedaModule)
+    path: 'panel-busqueda',
+    loadChildren: () =>
+      import('./panel-busqueda/panel-busqueda.module').then(
+        (m) => m.PanelBusquedaModule
+      ),
   },
   {
-    path:'equipo',
-    loadChildren: () => import('./equipo-trabajo/equipo-trabajo.module').then(m => m.EquipoTrabajoModule)
+    path: 'equipo',
+    loadChildren: () =>
+      import('./equipo-trabajo/equipo-trabajo.module').then(
+        (m) => m.EquipoTrabajoModule
+      ),
   },
   {
-    path:'contacto',
-    loadChildren: () => import('./contacto/contacto.module').then(m => m.ContactoModule)
+    path: 'contacto',
+    loadChildren: () =>
+      import('./contacto/contacto.module').then((m) => m.ContactoModule),
   },
   {
-    path:'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+    path: 'login',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
   },
   {
-    path:'reset-password',
-    loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule)
+    path: 'reset-password',
+    loadChildren: () =>
+      import('./reset-password/reset-password.module').then(
+        (m) => m.ResetPasswordModule
+      ),
   },
   {
-    path:'update-password',
-    loadChildren: () => import('./update-password/update-password.module').then(m => m.UpdatePasswordModule)
+    path: 'update-password',
+    loadChildren: () =>
+      import('./update-password/update-password.module').then(
+        (m) => m.UpdatePasswordModule
+      ),
   },
   {
-    path:'test',
-    loadChildren: () => import('./tests/tests.module').then(m => m.TestsModule)
+    path: 'test',
+    loadChildren: () =>
+      import('./tests/tests.module').then((m) => m.TestsModule),
   },
   {
-    path:'investigadores',
-    loadChildren: () => import('./investigadores/investigadores.module').then(m => m.InvestigadoresModule)
+    path: 'investigadores',
+    loadChildren: () =>
+      import('./investigadores/investigadores.module').then(
+        (m) => m.InvestigadoresModule
+      ),
   },
   {
-    path:'comerciantes',
-    loadChildren: () => import('./comerciantes/comerciantes.module').then(m => m.ComerciantesModule)
+    path: 'comerciantes',
+    loadChildren: () =>
+      import('./comerciantes/comerciantes.module').then(
+        (m) => m.ComerciantesModule
+      ),
   },
   {
-    path:'verify-account',
-    component:VerifyAccountComponent
+    path: 'publicaciones',
+    loadChildren: () =>
+      import('./publicaciones/publicaciones.module').then(
+        (m) => m.PublicacionesModule
+      ),
   },
   {
-    path:'politica', component:PoliticaComponent
+    path: 'verify-account',
+    component: VerifyAccountComponent,
   },
   {
-    path:'condiciones', component:CondicionesComponent
+    path: 'politica',
+    component: PoliticaComponent,
   },
   {
-    path: 'welcome', component:WelcomeComponent
+    path: 'condiciones',
+    component: CondicionesComponent,
   },
   {
-    path:'basic-message', component:BasicMessageComponent
-  }
+    path: 'welcome',
+    component: WelcomeComponent,
+  },
+  {
+    path: 'basic-message',
+    component: BasicMessageComponent,
+  },
 ];
 
 @NgModule({

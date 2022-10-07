@@ -18,7 +18,6 @@ export class ModalCheckboxListComponent implements OnInit {
   ngOnInit(): void {
     if (this.arrayCheckboxSelec.length !==0) {
       this.checkArray = this.checkArray.concat(this.arrayCheckboxSelec);
-      console.log(this.checkArray)
     }
   }
   onCheckboxChange(e: any) {

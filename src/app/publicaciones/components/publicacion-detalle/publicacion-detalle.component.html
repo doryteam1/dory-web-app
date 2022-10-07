@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="card__data">
+    <span class="card__title">{{publicacion?.especie}}</span>
+    <span class="card__info mb-4">${{publicacion?.preciokilogramo | number:'':'es'}}/Kg</span>
+    <div class="d-flex flex-row d-flex-ajuste">
+      <div class="card__image-container">
+        <app-ng-gallery-slider
+        *ngIf="publicacion?.fotos.length > 0"
+         [fullScreen]="false"
+         [contador]="false"
+         [imagenes]="images"
+          class="card__image"
+          [id]="'vehiculodetallesFotos'">
+        </app-ng-gallery-slider>
+        <div *ngIf="publicacion?.fotos.length <= 0" class="container-no-img">
+          <img src="assets/images/no-image-photography.svg" alt="Sin fotos">
+        </div>
+      </div>
+      <div class="card__container">
+        <span class="card__title2">Especie</span>
+        <span class="card__description-title">{{publicacion?.especie}}</span>
+        <span class="card__title2">Precio(COP)</span>
+        <span class="card__description-title">${{publicacion?.preciokilogramo | number:'':'es'}}/Kg</span>
+        <span class="card__title2">Cantidad(Kg)</span>
+        <span class="card__description-title">{{publicacion?.cantidad}}</span>
+        <span class="card__title2"> Detalles del Vendedor</span>
+        <span class="card__title2"> Nombre</span>
+        <span class="card__description-title">{{publicacion?.usuario}}</span>
+        <span class="card__title2">Municipio</span>
+        <span class="card__description-title">{{publicacion?.municipio}}</span>
+        <span class="card__title2">Teléfono</span>
+        <span class="card__description-title">{{publicacion?.celular}}</span>
+        <span class="card__title2">Correo</span>
+        <span class="card__description-title">{{publicacion?.email}}</span>
+        <!-- <span class="link" (click)="goDetail(vehiculo.usuarios_id)">Ver detalle propietario</span> -->
+      </div>
+    </div>
+  </div>
+
+</div>
+

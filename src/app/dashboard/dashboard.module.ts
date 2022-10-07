@@ -21,7 +21,6 @@ import { MisAsociacionesComponent } from './components/mis-asociaciones/mis-asoc
 import { RouterModule } from '@angular/router';
 import { AsociacionDetalleFormComponent } from './components/asociacion-detalle-form/asociacion-detalle-form.component';
 import { GranjaDetalleFormComponent } from './components/granja-detalle-form/granja-detalle-form.component';
-import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
 import { ProductoDetalleFormComponent } from './components/producto-detalle-form/producto-detalle-form.component';
 import { VehiculoDetalleFormComponent } from './components/vehiculo-detalle-form/vehiculo-detalle-form.component';
@@ -29,6 +28,7 @@ import { NegocioDtalleFormComponent } from './components/negocio-dtalle-form/neg
 import { MisPublicacionesComponent } from './components/mis-publicaciones/mis-publicaciones.component';
 import { PublicacionDetalleFormComponent } from './components/publicacion-detalle-form/publicacion-detalle-form.component';
 import { PublicacionesComponent } from './components/publicaciones/publicaciones.component';
+import { PublicacionesModule } from '../publicaciones/publicaciones.module';
 
 
 @NgModule({
@@ -49,7 +49,7 @@ import { PublicacionesComponent } from './components/publicaciones/publicaciones
     NegocioDtalleFormComponent,
     MisPublicacionesComponent,
     PublicacionDetalleFormComponent,
-    PublicacionesComponent
+    PublicacionesComponent,
   ],
   imports: [
     CommonModule,
@@ -65,10 +65,9 @@ import { PublicacionesComponent } from './components/publicaciones/publicaciones
     NgxLongPress2Module,
     NgxPaginationModule,
     RouterModule,
-    GuidedTourModule
+    GuidedTourModule,
+    PublicacionesModule,
   ],
-  providers:[
-    GuidedTourService
-  ]
+  providers: [GuidedTourService],
 })
 export class DashboardModule {}

@@ -51,6 +51,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     element: '#mispublicaciones',
     intro: 'Desde aquí podrás publicar todo',
   };
+  stepPublicaciones: IntroToursteps = {
+    title: 'Publicaciones',
+    element: '#publicaciones_user',
+    intro: 'Desde aquí podrás ver todas las publicaciones, hechas por un pescador o piscicultor',
+  };
   stepOtrosDocumentos: IntroToursteps = {
     title: 'Documentos adicionales',
     element: '#otrosDocumentos',
@@ -239,6 +244,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepPerfil,
     this.stepFavorito,
     this.stepNegocios,
+    this.stepPublicaciones,
     this.stepContrasena,
     this.stepSalir,
     this.stepDatosBasicos,
@@ -329,7 +335,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     let email = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe((response) => {
       this.authUser = response.data[0];
-      if (this.authUser.takeTour) {
+      if (!this.authUser.takeTour) {
         if (this.sidebar) {
           this.openOffcanvas();
           this.starTour();

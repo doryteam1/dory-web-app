@@ -1,0 +1,52 @@
+.container-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh
+}
+.search {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.search__filter {
+  margin-right: 10px;
+}
+
+.chip-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+app-not-found {
+  display: block;
+  margin-top: 50px;
+}
+
+@media screen and (max-width: 730px) {
+  .app-search {
+    width: 100%;
+  }
+
+  .search {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

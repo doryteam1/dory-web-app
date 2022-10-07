@@ -360,8 +360,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
   prepareForm(action: string, asociacion?: any){
     this.modalMode = action;
     this.form.reset();
-    console.log("action ",action)
-    console.log("formState ",this.formState)
     if (action == 'update') {
       this.idDpto?.setValue(asociacion.id_departamento);
       this.idMunic?.setValue(asociacion.id_municipio);

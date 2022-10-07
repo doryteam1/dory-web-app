@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
       ruta: '/panel-busqueda/productos',
     },
     {
-      img: 'http://estaticos.ipmedios.com/media/1/8/8e47fbd346c71905bb4df7c6ec2ebe15-original.jpg',
+      img: 'https://www.boyaca.gov.co/wp-content/uploads/2016/09/images_Noticias2016_Septiembre2_pescado74748.jpg',
       title: 'Vehículos',
       ruta: '/panel-busqueda/vehiculos',
     },
@@ -119,6 +119,7 @@ export class HomeComponent implements OnInit {
     this.lightboxRef.prev();
   }
   navigate(ruta: any) {
+    console.log(ruta)
     let url = '';
     url = this.router.serializeUrl(this.router.createUrlTree([ruta]));
     window.open(url, '_blank');

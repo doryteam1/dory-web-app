@@ -1,6 +1,12 @@
 <div class="search mt-5">
   <app-search (textSearch)="onSearch($event)"></app-search>
-  <app-modal-multi-filters [radioFilter1]="orderFilters" [chipFilter1]="filters" [checkboxOptions]="municipios"
+  <app-modal-multi-filters
+  [radioFilter1]="orderFilters"
+   [chipFilter1]="filters"
+   [checkboxOptions]="municipios"
+      [checkArray]="filtroseleccionadoCheckbox"
+     [deleteChipFilter1]="selectedOrderFilter"
+     [deleteRadioFilter1]="selectedFilter"
     (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
 </div>
 <app-not-found *ngIf="showNotFound" objectName="vehiculos"></app-not-found>

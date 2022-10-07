@@ -1,9 +1,8 @@
 import { Component, OnInit,
   HostListener,
   OnDestroy} from '@angular/core';
-  import { FormControl, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
+  import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
-import { PlacesService } from 'src/app/services/places.service';
 import { PlatformLocation } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import es from '@angular/common/locales/es';
@@ -52,6 +51,9 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     usuarios_id: new FormControl(null)
   });
   onMapa: boolean = false;
+  action_dos:any='ver_editar'
+  remitente:any
+  municipioRemitente:any
   constructor(
     private publicacionesService: PublicacionesService,
     private granjasServices:GranjasService,
@@ -71,14 +73,21 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     registerLocaleData(es);
     this.publicacion = this.ar.snapshot.params;
     let action = this.ar.snapshot.paramMap.get('action');
+    this.action_dos = this.ar.snapshot.paramMap.get('actionDos');
+    this.remitente = this.ar.snapshot.paramMap.get('publicado_por');
+    this.municipioRemitente = this.ar.snapshot.paramMap.get('municipio');
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
+      if (this.formState == 'disable') {
+        this.form.disable();
+      }else if (this.formState == 'enable') {
+        this.form.enable()
+      }
     this.getAuthUserDetail()
-
     if(action == 'update'){
-      this.publicacionesService.getPublicacionDetail(this.publicacion.id_publicacion).subscribe(
+      this.publicacionesService.getPublicacionDetail(Number(this.publicacion.id_publicacion)).subscribe(
         (response)=>{
           let publicacionTemp = this.publicacion;
-          console.log("Publicacion temp ",publicacionTemp)
+          console.log(this.publicacion);
           this.publicacion = response.data[0];
           this.publicacion.formState = publicacionTemp.formState;
           this.publicacion.action = publicacionTemp.action;
@@ -104,7 +113,6 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
         }
       );
     }
-
     /* escucha el componente que carga los files desde la modal */
     this.changeArray =
       this.comunicacionEntreComponentesService.changeArray.subscribe(
@@ -193,8 +201,6 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       this.loading1 = false;
       return;
     }
-
-    console.log( this.form.getRawValue())
     this.publicacionesService
       .updatePublicacion(this.publicacion.id_publicacion, this.form.getRawValue())
       .subscribe(
@@ -235,7 +241,6 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       this.precio?.setValue(publicacion.preciokilogramo);
       this.municipio?.setValue(publicacion.id_municipio_fk);
       this.usuario?.setValue(publicacion.usuarios_id);
-
       if (this.formState == 'disable') {
         this.form.disable();
       }
@@ -375,6 +380,9 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       filesCreate = this.filesfinalCreate;
     } else if (this.modalMode == 'update') {
       filesCreate = -1;
+      if (this.formState == 'disable') {
+        veryadicionar = false;
+      }
     }
     this.appModalService
       .modalGalleryVerAdiconarEliminarFoto(
