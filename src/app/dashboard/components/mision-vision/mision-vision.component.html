@@ -1,0 +1,141 @@
+<input #fileInputCreate type="file" name="resume" accept="image/*" (change)='fileChangeCreate($event)' hidden>
+<div>
+  <div class="d-flex flex-row justify-content-between mt-3">
+    <h4 class="modal-title" id="modal-basic-title">Misión y visión
+    </h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label for="dateOfBirth">Entidad</label>
+        <div class="input-group">
+          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Entidad"
+            formControlName="entidad">Write something here</textarea>
+        </div>
+        <div *ngIf="invalid('entidad')" class="container__alert-msg danger-message">
+          <div *ngIf="entidad?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="photoAnduploadPhoto">
+        <label for="dateOfBirth">Foto entidad</label>
+        <div class="photoAnduploadPhoto-container">
+          <div class="mb-3 imagen">
+            <div class="imagen-container">
+              <img [src]="fotoEntidad ? fotoEntidad : 'assets/images/no-image-photography.svg'" alt="">
+            </div>
+          </div>
+          <div class="input-imagen">
+            <div >
+              <button [disabled]="modalMode == 'visualize'" type="button" class="btn btn-primary container__btn--azul1"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                (click)="openAddFileDialogCreate('entidad')">
+                <div>
+                  <img src="assets/icons/file_upload_black_24dp.svg">
+                  <span>
+                    Subir Fotos
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- foto entidad -->
+      <div class="mb-3">
+        <label for="dateOfBirth">Misión</label>
+        <div class="input-group">
+          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Misión"
+            formControlName="mision">Write something here</textarea>
+        </div>
+        <div *ngIf="invalid('mision')" class="container__alert-msg danger-message">
+          <div *ngIf="mision?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="photoAnduploadPhoto">
+        <label for="dateOfBirth">Foto misión</label>
+        <div class="photoAnduploadPhoto-container">
+          <div class="mb-3 imagen">
+            <div class="imagen-container">
+              <img [src]="fotoMision ? fotoMision : 'assets/images/no-image-photography.svg'" alt="">
+            </div>
+          </div>
+          <div class="input-imagen">
+            <div >
+              <button [disabled]="modalMode == 'visualize'" type="button" class="btn btn-primary container__btn--azul1"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                (click)="openAddFileDialogCreate('mision')">
+                <div>
+                  <img src="assets/icons/file_upload_black_24dp.svg">
+                  <span>
+                    Subir Fotos
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- foto mision -->
+      <div class="mb-3">
+        <label for="dateOfBirth">Visión</label>
+        <div class="input-group">
+          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Visión"
+            formControlName="vision">Write something here</textarea>
+        </div>
+        <div *ngIf="invalid('vision')" class="container__alert-msg danger-message">
+          <div *ngIf="vision?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="photoAnduploadPhoto">
+        <label for="dateOfBirth">Foto visión</label>
+        <div class="photoAnduploadPhoto-container">
+          <div class="mb-3 imagen">
+            <div class="imagen-container">
+              <img [src]="fotoVision ? fotoVision : 'assets/images/no-image-photography.svg'" alt="">
+            </div>
+          </div>
+          <div class="input-imagen">
+            <div >
+              <button [disabled]="modalMode == 'visualize'" type="button" class="btn btn-primary container__btn--azul1"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                (click)="openAddFileDialogCreate('vision')">
+                <div>
+                  <img src="assets/icons/file_upload_black_24dp.svg">
+                  <span>
+                    Subir Fotos
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        *ngIf="modalMode=='visualize'" (click)="editarData()">
+        <span *ngIf="!loading">Editar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="updateData()" *ngIf="modalMode=='update'">
+        <span *ngIf="!loading">Actualizar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
+        *ngIf="modalMode=='update'" (click)="cancelarEditarData()">
+        <span>Cancelar</span>
+      </button>
+    </div>
+  </div>
+</div>

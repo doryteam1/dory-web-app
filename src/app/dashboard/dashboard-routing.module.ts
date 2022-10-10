@@ -17,6 +17,11 @@ import { NegocioDtalleFormComponent } from './components/negocio-dtalle-form/neg
 import { MisPublicacionesComponent } from './components/mis-publicaciones/mis-publicaciones.component';
 import { PublicacionDetalleFormComponent } from './components/publicacion-detalle-form/publicacion-detalle-form.component';
 import { PublicacionesComponent } from './components/publicaciones/publicaciones.component';
+import { MisionVisionComponent } from './components/mision-vision/mision-vision.component';
+import { NormatividadComponent } from './components/normatividad/normatividad.component';
+import { EventosComponent } from './components/eventos/eventos.component';
+import { EquipoTrabajoComponent } from './components/equipo-trabajo/equipo-trabajo.component';
+import { NovedadesActualidadesComponent } from './components/novedades-actualidades/novedades-actualidades.component';
 const routes: Routes = [
   {
     path: '',
@@ -37,8 +42,19 @@ const routes: Routes = [
       { path: 'asociacion/detalle', component: AsociacionDetalleFormComponent },
       { path: 'granja/detalle', component: GranjaDetalleFormComponent },
       { path: 'mis-publicaciones', component: MisPublicacionesComponent },
-      { path: 'publicacion/detalle', component: PublicacionDetalleFormComponent },
+      {
+        path: 'publicacion/detalle',
+        component: PublicacionDetalleFormComponent,
+      },
       { path: 'publicaciones', component: PublicacionesComponent },
+      { path: 'mision-vision-admi', component: MisionVisionComponent },
+      { path: 'normatividad-admi', component: NormatividadComponent },
+      { path: 'eventos-admi', component: EventosComponent },
+      { path: 'equipo-trabajo-admi', component: EquipoTrabajoComponent },
+      {
+        path: 'novedad-actualidad-admi',
+        component: NovedadesActualidadesComponent,
+      },
     ],
   },
 ];

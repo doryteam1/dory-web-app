@@ -97,22 +97,6 @@ export class AsociacionesComponent implements OnInit {
 
     this.loadMunic();
   }
-  datosContactoAsociacion(user: any) {
-    console.log(user);
-    let object: any = {
-      nombreUser: user.nombre,
-      tipoUser: user.tipo_asociacion,
-      foto: user.foto,
-      correoUser: user.email_propietario,
-      telefonoUser: user.telefono,
-      rutaUserDetalle: `/asociaciones/municipio/detalle/${user.nit}`,
-    };
-
-    this.appModalService
-      .modalContactCardComponent(object)
-      .then((result) => {})
-      .catch((result) => {});
-  }
   invitarAnular(asociacion: any) {
     if (asociacion.estado_solicictud == 'Aceptada') {
       this.appModalService

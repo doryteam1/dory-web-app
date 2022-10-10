@@ -155,7 +155,7 @@
         <div class="mb-3">
           <label for="dateOfBirth">Fecha renovación cámara de comercio</label>
           <div class="input-group">
-            <input id="productName" class="form-control" type="date" placeholder="Fecha renovación" formControlName="fecha_renovacion_camarac">
+            <input id="productName" class="form-control" type="date" [max]="fechaActual"  placeholder="Fecha renovación" formControlName="fecha_renovacion_camarac">
           </div>
           <div *ngIf="invalid('fecha_renovacion_camarac')" class="container__alert-msg danger-message">
             <div *ngIf="fechRenvCamc?.errors?.['required']">

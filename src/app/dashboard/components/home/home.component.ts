@@ -504,8 +504,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.closeOffCamba = false;
   }
   closeOffcanvas() {
-    this.offcanvas.hide();
-    this.closeOffCamba = true;
+    if (this.sidebar) {
+      this.offcanvas.hide();
+      this.closeOffCamba = true;
+    }
   }
   starTour() {
     if (this.tipoUsuario) {

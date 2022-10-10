@@ -1,0 +1,159 @@
+<div class="container-card"  *ngIf="modalMode == 'visualize'">
+  <div *ngIf="modalMode == 'visualize' && equipoTrabajo.length > 0 ">
+    <app-card-general-tres-d
+    [editaAndEliminar]="true"
+    [dato]="{
+      titulo:miembro?.nombres +' '+ miembro?.apellidos,
+      subTitle1:miembro?.cargo,
+      descripcion:miembro?.descripcion,
+      imagen:miembro?.imagen,
+      arrayEnlaces:miembro.arrayEnlaces
+    }"
+    (onUpdateCard)="editarData(miembro)"
+    (onDeleteCard)="deleteMiembro(miembro.id,miembro?.nombres,i )"
+    *ngFor="let miembro of equipoTrabajo; let i=index">
+    </app-card-general-tres-d>
+  </div>
+  <app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay miembros asignados'"></app-not-found>
+</div>
+<app-basic-floating-btn [tooltip]="'Crear miembro'" [agregar]="true" (click)="openFormCrear()"
+  *ngIf="modalMode == 'visualize'">
+</app-basic-floating-btn>
+<input #fileInputCreate type="file" name="resume" accept="image/*" (change)='fileChangeCreate($event)' hidden>
+<div *ngIf="modalMode == 'update' || modalMode == 'create'">
+  <div class="d-flex flex-row justify-content-between mt-3">
+      <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo miembro'
+        : 'Actualizar miembro'}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label for="dateOfBirth">Nombres</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Nombres del miembro" formControlName="nombres">
+        </div>
+          <div *ngIf="invalid('nombres')" class="container__alert-msg danger-message">
+            <div *ngIf="nombres?.errors?.['required']">
+              Campo requerido
+            </div>
+          </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="dateOfBirth">Apellidos</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Apellidos del miembro" formControlName="apellidos">
+        </div>
+          <div *ngIf="invalid('apellidos')" class="container__alert-msg danger-message">
+            <div *ngIf="apellidos?.errors?.['required']">
+              Campo requerido
+            </div>
+          </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Fecha de nacimiento</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" type="date" [max]="fechaActual"  placeholder="Fecha de nacimiento"
+            formControlName="fecha_nacimiento">
+        </div>
+        <div *ngIf="invalid('fecha_nacimiento')" class="container__alert-msg danger-message">
+          <div *ngIf="fecha_nacimiento?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Cargo</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Cargo del miembro" formControlName="cargo">
+        </div>
+          <div *ngIf="invalid('cargo')" class="container__alert-msg danger-message">
+            <div *ngIf="cargo?.errors?.['required']">
+              Campo requerido
+            </div>
+          </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="dateOfBirth">Descripción</label>
+        <div class="input-group">
+          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
+            placeholder="Descripción del miembro" formControlName="descripcion"></textarea>
+        </div>
+        <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
+          <div *ngIf="descripcion?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">CvLAC</label>
+        <div class="input-group">
+          <input  id="productName" class="form-control" placeholder="Ingrese url CvLAC"
+            formControlName="enlaceCvLAC">
+        </div>
+        <div *ngIf="invalid('enlaceCvLAC')" class="container__alert-msg danger-message">
+          <div *ngIf="enlaceCvLAC?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Linkedin</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Ingrese url Linkedin"
+            formControlName="enlaceLinkedin">
+        </div>
+        <div *ngIf="invalid('enlaceLinkedin')" class="container__alert-msg danger-message">
+          <div *ngIf="enlaceLinkedin?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="photoAnduploadPhoto">
+        <label for="dateOfBirth">Foto del miembro</label>
+        <div class="photoAnduploadPhoto-container" (click)="openAddFileDialogCreate()">
+          <div class="mb-3 imagen">
+            <div class="imagen-container">
+              <img [src]="fotoMiembro  ? fotoMiembro : 'assets/images/no-image-photography.svg'" alt="">
+            </div>
+          </div>
+          <div class="input-imagen">
+            <div>
+              <button type="button" class="btn btn-primary container__btn--azul1"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                (click)="openAddFileDialogCreate()">
+                <div>
+                  <img src="assets/icons/file_upload_black_24dp.svg">
+                  <span>
+                    Subir Fotos
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="updateData()" *ngIf="modalMode=='update'">
+        <span *ngIf="!loading">Actualizar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="addMiembro()" *ngIf="modalMode=='create'">
+        <span *ngIf="!loading">Guardar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button type="button" class="btn-rounded btn--blue container__btn"
+        *ngIf="modalMode=='update' || modalMode=='create'" (click)="goBack()">
+        <span>Atrás</span>
+      </button>
+    </div>
+  </div>
+</div>
