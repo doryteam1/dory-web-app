@@ -158,13 +158,8 @@ import { CardGeneralTresDComponent } from './components/card-general-tres-d/card
     ModalContactCardComponent,
     SpinnerComponent,
     CardPublicacionComponent,
-<<<<<<< HEAD
-    CardProductoComponent
-=======
     CardProductoComponent,
-    ChatUserComponent,
     CardGeneralTresDComponent,
->>>>>>> 64778a1 (inicio perfil admi ,mision,vision,equipo trabajo)
   ],
 
   providers: [
