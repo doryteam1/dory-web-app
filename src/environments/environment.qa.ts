@@ -13,5 +13,6 @@ export const environment = {
     mapsApiKey:process.env.MAPS_API_KEY,
     production: false,
     doryApiRestBaseUrl:process.env.DORY_API_REST,
-    oAuthClientId:process.env.OAUTH_CLIENT_ID
+    oAuthClientId:process.env.OAUTH_CLIENT_ID,
+    doryServerUrl:process.env.DORY_SERVER_URL
   };

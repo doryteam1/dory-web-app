@@ -152,6 +152,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'testchat',
+    loadChildren: () =>
+      import('./chat/chat.module').then(
+        (m) => m.ChatModule
+      ),
+  },
+  {
     path: 'verify-account',
     component: VerifyAccountComponent,
   },

@@ -59,7 +59,6 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { CardComponent } from './components/card/card.component';
 import { CardPublicacionComponent } from './components/card-publicacion/card-publicacion.component';
 import { CardProductoComponent } from './components/card-producto/card-producto.component';
-import { ChatUserComponent } from './components/chat-user/chat-user.component';
 
 
 @NgModule({
@@ -103,8 +102,7 @@ import { ChatUserComponent } from './components/chat-user/chat-user.component';
     SpinnerComponent,
     CardComponent,
     CardPublicacionComponent,
-    CardProductoComponent,
-    ChatUserComponent,
+    CardProductoComponent
   ],
   imports: [
     CommonModule,
@@ -158,8 +156,7 @@ import { ChatUserComponent } from './components/chat-user/chat-user.component';
     ModalContactCardComponent,
     SpinnerComponent,
     CardPublicacionComponent,
-    CardProductoComponent,
-    ChatUserComponent,
+    CardProductoComponent
   ],
 
   providers: [

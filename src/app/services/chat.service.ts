@@ -1,17 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
+import { environment } from 'src/environments/environment';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
   private socket: Socket;
-  private url = 'http://localhost:3000'; // your server local path
+  private url = environment.doryServerUrl;
 
-  constructor() {
+  constructor(private userService:UsuarioService) {
+    /* this.socket = io(this.url, {
+      transports: ['websocket', 'polling', 'flashsocket'],
+      extraHeaders:{
+        xtoken: this.userService.getAuthUserToken()!
+      }
+    }); */
+
     this.socket = io(this.url, {
       transports: ['websocket', 'polling', 'flashsocket'],
+      auth: {
+        token: "Bearer " + this.userService.getAuthUserToken()!
+      }
     });
   }
 

@@ -205,4 +205,9 @@ export class UsuarioService {
     }
     return payload;
   }
+
+  getAuthUserToken(){
+    let token = localStorage.getItem('token');
+    return token;
+  }
 }

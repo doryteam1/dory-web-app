@@ -32,6 +32,8 @@
         <span class="card__title2 mt-2">Descripción</span>
         <span class="card__description">{{producto?.descripcion}}</span>
         <span class="link" (click)="goDetail(producto.usuarios_id)">Ver detalle del proveedor</span>
+        <span class="card__label-small link" (click)="goDetail(producto.usuarios_id)">({{producto?.nombre_proveedor}})</span>
+
       </div>
     </div>
   </div>

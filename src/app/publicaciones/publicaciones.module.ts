@@ -5,6 +5,7 @@ import { PublicacionComponent } from './components/publicacion/publicacion.compo
 import { SharedModule } from '../shared/shared.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { PublicacionDetalleComponent } from './components/publicacion-detalle/publicacion-detalle.component';
+import { ChatModule } from '../chat/chat.module';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { PublicacionDetalleComponent } from './components/publicacion-detalle/pu
     PublicacionesRoutingModule,
     SharedModule,
     NgxSpinnerModule,
+    ChatModule
   ],
 })
 export class PublicacionesModule {}
