@@ -48,6 +48,17 @@ export class ChatService {
     });
   }
 
+  getConectedUsers(): Observable<any> {
+    return new Observable<any>((observer) => {
+      this.socket.on('usuarios-activos', (data) => {
+        observer.next(data);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+  }
   getStorage() {
     const storage = localStorage.getItem('chats');
     return storage ? JSON.parse(storage) : [];

@@ -22,6 +22,7 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { ShareButtonsConfig } from 'ngx-sharebuttons';
+import { ChatModule } from './chat/chat.module';
 
 const customConfig: ShareButtonsConfig = {
   include: ['whatsapp', 'email', 'copy'],
@@ -63,7 +64,8 @@ const customConfig: ShareButtonsConfig = {
     ShareButtonsModule.withConfig(customConfig),
     ShareIconsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    ChatModule
   ],
   providers: [
     HttpsService,

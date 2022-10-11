@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChatService } from 'src/app/services/chat.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 @Component({
   selector: 'app-chat-user',
   templateUrl: './chat-user.component.html',
@@ -16,61 +16,15 @@ export class ChatUserComponent implements OnInit {
   selectedUser: any;
   Onlist: boolean = true;
 
-  public userList = [
-    {
-      id: 1,
-      name: 'Andrés davila',
-      phone: '12345',
-      image: 'assets/user/user-1.png',
-      estatus: true,
-      roomId: {
-        2: 'room-1',
-        3: 'room-2',
-        4: 'room-3',
-      },
-    },
-    {
-      id: 2,
-      name: 'Mari Davila',
-      phone: '123456',
-      image: 'assets/user/user-2.png',
-      estatus: true,
-      roomId: {
-        1: 'room-1',
-        3: 'room-4',
-        4: 'room-5',
-      },
-    },
-    {
-      id: 3,
-      name: 'Albert Flores',
-      phone: '9988776655',
-      image: 'assets/user/user-3.png',
-      estatus: false,
-      roomId: {
-        1: 'room-2',
-        2: 'room-4',
-        4: 'room-6',
-      },
-    },
-    {
-      id: 4,
-      name: 'Dianne Russell',
-      phone: '9876556789',
-      image: 'assets/user/user-4.png',
-      estatus: true,
-      roomId: {
-        1: 'room-3',
-        2: 'room-5',
-        3: 'room-6',
-      },
-    },
+  public userList:any[] = [
   ];
   currentUser: any;
   chatOpen: boolean = false;
 
   constructor(
-    private chatService: ChatService
+    private chatService: ChatService,
+    private userService: UsuarioService
+    
   ) {}
 
   ngOnInit(): void {
@@ -88,6 +42,30 @@ export class ChatUserComponent implements OnInit {
           }, 500);
         }
       });
+
+      this.chatService
+      .getConectedUsers()
+      .subscribe((data:any[]) => {
+          this.userList = data.map(
+            (element:any)=>{
+              return {
+                id:element.id,
+                name: element.nombre_completo,
+                phone: element.celular,
+                image: element.foto,
+                estatus: true,
+              }
+            }
+          )
+          this.userList = this.userList.filter(
+            (element:any)=>{
+              return element.id !== this.userService.getAuthUser().sub
+            }
+          )
+          console.log(this.userList)
+      });
+
+
   }
   selectUserHandler(phone: any, i: any): void {
     this.Onlist = false;
