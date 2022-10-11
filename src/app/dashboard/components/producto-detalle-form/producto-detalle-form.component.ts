@@ -41,7 +41,6 @@ export class ProductoDetalleFormComponent implements OnInit {
   public changeArray!: Subscription;
   public ArrayDelate!: Subscription;
   ngOnInit(): void {
-    console.log('params ', this.ar.snapshot.params);
     this.producto = this.ar.snapshot.params;
     this.modalMode = this.ar.snapshot.paramMap.get('action')!;
     this.authUserId = Number(this.ar.snapshot.paramMap.get('authUserId')!);

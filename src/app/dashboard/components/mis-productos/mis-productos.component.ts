@@ -45,17 +45,14 @@ export class MisProductosComponent implements OnInit {
       }
     );
   }
-  deleteProducto(codigo: number) {
-    let i = this.productos.findIndex((producto: any) => {
-      return producto.codigo == codigo;
-    });
+  deleteProducto(codigo: number,nombre:any) {
     this.appModalService
       .confirm(
         'Eliminar producto',
         'Esta seguro que desea eliminar el producto',
         'Si',
         'No',
-        this.productos[i].nombreProducto
+        nombre
       )
       .then((result) => {
         if (result == true) {

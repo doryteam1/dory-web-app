@@ -15,6 +15,7 @@
   </div>
 </div>
 <app-not-found class="app-not-found" *ngIf="showNotFound" objectName="publicaciones"></app-not-found>
+<app-not-found [genericError]="showError"></app-not-found>
 <div class="chip-container">
   <app-chip-con-boton-close class="chip-container__element" *ngIf="filtroseleccionado" [iconoChip]="true"
     [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'" [contenidoChip]="filtroseleccionado.nombrefiltro"
@@ -46,10 +47,4 @@
   </app-card-publicacion>
 </div>
 <app-spinner [showText]="false" *ngIf="loading"></app-spinner>
-<!-- <div class="center" *ngIf="showNotFound">
-  <app-not-found objectName="publicaciones"></app-not-found>
-</div>
-<div class="center" *ngIf="showError">
-  <app-not-found [genericError]="showError"></app-not-found>
-</div> -->
-<!--  -->
+

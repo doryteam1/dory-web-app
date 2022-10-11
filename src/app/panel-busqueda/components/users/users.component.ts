@@ -53,7 +53,6 @@ export class UsersComponent implements OnInit {
     private searchBuscadorService: SearchBuscadorService,
     private places: PlacesService,
     private ar: ActivatedRoute,
-    private appModalService: AppModalService
   ) {}
 
   ngOnInit(): void {
@@ -92,69 +91,6 @@ export class UsersComponent implements OnInit {
     }else{
       this.loadMunic();
     }
-  }
-
-  datosContactoUser(user: any) {
-    let object: any;
-    if (user.tipo_usuario == 'Pescador') {
-      object = {
-        nombreUser: user.nombre,
-        tipoUser: user.tipo_usuario,
-        foto: user.foto,
-        correoUser: user.email,
-        telefonoUser: user.celular,
-        rutaUserDetalle: `/pescadores/detalle/${user.id}`,
-      };
-    } else if (user.tipo_usuario == 'Piscicultor') {
-      object = {
-        nombreUser: user.nombre,
-        tipoUser: user.tipo_usuario,
-        foto: user.foto,
-        correoUser: user.email,
-        telefonoUser: user.celular,
-        rutaUserDetalle: `/piscicultores/municipio/detalle/${user.id}`,
-      };
-    } else if (user.tipo_usuario == 'Proveedor') {
-      object = {
-        nombreUser: user.nombre,
-        tipoUser: user.tipo_usuario,
-        foto: user.foto,
-        correoUser: user.email,
-        telefonoUser: user.celular,
-        rutaUserDetalle: `/proveedores/detalle/${user.id}`,
-      };
-    } else if (user.tipo_usuario == 'Investigador Experto') {
-      object = {
-        nombreUser: user.nombre,
-        tipoUser: user.tipo_usuario,
-        foto: user.foto,
-        correoUser: user.email,
-        telefonoUser: user.celular,
-        rutaUserDetalle: `/investigadores/detalle/${user.id}`,
-      };
-    } else if (user.tipo_usuario == 'Transportador') {
-      object = {
-        nombreUser: user.nombre,
-        tipoUser: user.tipo_usuario,
-        foto: user.foto,
-        correoUser: user.email,
-        telefonoUser: user.celular,
-        rutaUserDetalle: `/transportadores/detalle/${user.id}`,
-      };
-    } else if (user.tipo_usuario == 'Comerciante') {
-      object = {
-        nombreUser: user.nombre_completo,
-        tipoUser: user.tipo_usuario,
-        foto: user.foto,
-        correoUser: user.email,
-        telefonoUser: user.celular,
-        rutaUserDetalle: `/comerciantes/detalle/${user.id}`,
-      };
-    }
-    this.appModalService
-      .modalContactCardComponent(object)
-      .then((result) => {})
-      .catch((result) => {});
   }
   getUsers(): Observable<any> | null {
     if (this.userType == 'pescadores') {

@@ -1,6 +1,32 @@
 
 <div class="container-f">
   <div class="container-f-div">
+    <div class="container-quienes" *ngIf="!loading">
+      <div>
+        <h4 class="container__title" >¿Quiénes somos?</h4>
+        <p class="container__description presaltoLinea">{{misionVision.entidad}}</p>
+      </div>
+      <img class="container__image-ginelect animate__bounceIn" [src]="fotoEntidad ? fotoEntidad : 'assets/images/no-image-photography.svg'" alt="">
+    </div>
+    <div class="container-mision" *ngIf="!loading">
+        <div>
+          <h3 class="container__title">Misión</h3>
+          <p class="container__description presaltoLinea">{{misionVision.mision}}</p>
+        </div>
+        <img class="container__image animate__bounceIn" [src]="fotoMision ? fotoMision  : 'assets/images/no-image-photography.svg'" alt="">
+    </div>
+    <div class="container-vision" *ngIf="!loading">
+        <div>
+          <h3 class="container__title">Visión</h3>
+          <p class="container__description presaltoLinea">{{misionVision.vision}}</p>
+        </div>
+        <img class="container__image-2 animate__bounceIn" [src]="fotoVision ? fotoVision : 'assets/images/no-image-photography.svg'" alt="">
+    </div>
+    <app-spinner [showText]="false" *ngIf="loading"></app-spinner>
+  </div>
+</div>
+<!-- <div class="container-f">
+  <div class="container-f-div">
     <div class="container-quienes">
       <div>
         <h4 class="container__title">¿Quiénes somos?</h4>
@@ -42,5 +68,5 @@
         <img class="container__image-2" src="assets/images/mision-Dory.svg">
     </div>
   </div>
-</div>
+</div> -->
 <app-footer></app-footer>

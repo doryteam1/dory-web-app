@@ -29,6 +29,11 @@ import { MisPublicacionesComponent } from './components/mis-publicaciones/mis-pu
 import { PublicacionDetalleFormComponent } from './components/publicacion-detalle-form/publicacion-detalle-form.component';
 import { PublicacionesComponent } from './components/publicaciones/publicaciones.component';
 import { PublicacionesModule } from '../publicaciones/publicaciones.module';
+import { MisionVisionComponent } from './components/mision-vision/mision-vision.component';
+import { EquipoTrabajoComponent } from './components/equipo-trabajo/equipo-trabajo.component';
+import { NovedadesActualidadesComponent } from './components/novedades-actualidades/novedades-actualidades.component';
+import { EventosComponent } from './components/eventos/eventos.component';
+import { NormatividadComponent } from './components/normatividad/normatividad.component';
 
 
 @NgModule({
@@ -50,6 +55,11 @@ import { PublicacionesModule } from '../publicaciones/publicaciones.module';
     MisPublicacionesComponent,
     PublicacionDetalleFormComponent,
     PublicacionesComponent,
+    MisionVisionComponent,
+    EquipoTrabajoComponent,
+    NovedadesActualidadesComponent,
+    EventosComponent,
+    NormatividadComponent,
   ],
   imports: [
     CommonModule,

@@ -59,6 +59,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { CardComponent } from './components/card/card.component';
 import { CardPublicacionComponent } from './components/card-publicacion/card-publicacion.component';
 import { CardProductoComponent } from './components/card-producto/card-producto.component';
+import { CardGeneralTresDComponent } from './components/card-general-tres-d/card-general-tres-d.component';
 
 
 @NgModule({
@@ -102,7 +103,8 @@ import { CardProductoComponent } from './components/card-producto/card-producto.
     SpinnerComponent,
     CardComponent,
     CardPublicacionComponent,
-    CardProductoComponent
+    CardProductoComponent,
+    CardGeneralTresDComponent,
   ],
   imports: [
     CommonModule,
@@ -156,7 +158,8 @@ import { CardProductoComponent } from './components/card-producto/card-producto.
     ModalContactCardComponent,
     SpinnerComponent,
     CardPublicacionComponent,
-    CardProductoComponent
+    CardProductoComponent,
+    CardGeneralTresDComponent,
   ],
 
   providers: [

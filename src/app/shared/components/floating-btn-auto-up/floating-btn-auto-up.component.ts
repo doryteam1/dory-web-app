@@ -82,6 +82,7 @@ export class FloatingBtnAutoUpComponent implements OnInit {
           route.includes('panel-busqueda/vehiculos') ||
           route.includes('panel-busqueda/negocios') ||
           route.includes('dashboard/granja/detalle')
+
         ) {
           this.isHidden = false;
           if (
@@ -91,9 +92,9 @@ export class FloatingBtnAutoUpComponent implements OnInit {
             route.includes('panel-busqueda/pescadores') ||
             route.includes('panel-busqueda/piscicultores') ||
             route.includes('panel-busqueda/granjas') ||
-            route.includes('/welcome')
+            route.includes('/welcome') ||
+            route.includes('/dashboard/equipo-trabajo-admi')
           ) {
-
             this.isHidden = true;
           }
         } else {

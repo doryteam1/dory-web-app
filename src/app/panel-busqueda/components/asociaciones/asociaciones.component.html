@@ -30,12 +30,12 @@
 </div>
 <div *ngIf="!showNotFound" class="list overflow-auto d-flex flex-column">
 <div class="card" *ngFor="let asociacion of  asociacionesFiltered">
-    <div class="card__user-info d-flex flex-row" >
+    <div class="card__user-info d-flex flex-row" (click)="goAssociationDetail(asociacion)">
         <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
           <div class="container-nombre  shorterTextOverflowHidden">
-            <span class="card__title shorterTextAuto" (click)="datosContactoAsociacion(asociacion)">{{asociacion?.nombre}}
+            <span class="card__title shorterTextAuto">{{asociacion?.nombre}}
             </span>
-            <small class="shorterTextAuto" (click)="goAssociationDetail(asociacion)">{{asociacion?.municipio? asociacion?.municipio: 'Sin municipio'}}</small>
+            <small class="shorterTextAuto" >{{asociacion?.municipio? asociacion?.municipio: 'Sin municipio'}}</small>
           </div>
         </div>
         <div *ngIf="authRol == 'Piscicultor' || authRol == 'Pescador'">
