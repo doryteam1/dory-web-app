@@ -30,9 +30,10 @@ export class ChatUserComponent implements OnInit {
   ngOnInit(): void {
     this.chatService
       .getMessage()
-      .subscribe((data: { user: string; room: string; message: string }) => {
+      .subscribe((data: { usuario: any;  mensaje: string }) => {
+        console.log(data)
         // this.messageArray.push(data);
-        if (this.roomId) {
+        /* if (this.roomId) {
           setTimeout(() => {
             this.storageArray = this.chatService.getStorage();
             const storeIndex = this.storageArray.findIndex(
@@ -40,7 +41,7 @@ export class ChatUserComponent implements OnInit {
             );
             this.messageArray = this.storageArray[storeIndex].chats;
           }, 500);
-        }
+        } */
       });
 
       this.chatService
@@ -64,16 +65,14 @@ export class ChatUserComponent implements OnInit {
           )
           console.log(this.userList)
       });
-
-
   }
-  selectUserHandler(phone: any, i: any): void {
+  selectUserHandler(id: any, i: any): void {
     this.Onlist = false;
     /* Verificamos si el usurio selecionado esta en la lista y retornamos sus datos */
-    this.selectedUser = this.userList.find((user) => user.phone === phone);
-    this.roomId = this.selectedUser.roomId[this.currentUser.id];
+    this.selectedUser = this.userList.find((user) => user.id === id);
+    //this.roomId = this.selectedUser.roomId[this.currentUser.id];
     /*  this.roomId = `room-${this.selectedUser.id}`; */
-    console.log(this.roomId);
+    console.log(this.selectedUser);
     this.messageArray = [];
 
     this.storageArray = this.chatService.getStorage();
@@ -85,7 +84,7 @@ export class ChatUserComponent implements OnInit {
       this.messageArray = this.storageArray[storeIndex].chats;
     }
 
-    this.join(this.currentUser.name, this.roomId);
+    //this.join(this.currentUser.name, this.roomId);
   }
 
   join(username: string, roomId: string): void {
@@ -93,13 +92,19 @@ export class ChatUserComponent implements OnInit {
   }
 
   sendMessage(): void {
+    console.log("send message!")
+    console.log("mensaje a enviar: ",this.messageText)
+    if(!this.messageText){
+      return;
+    }
+    console.log("send message to")
+    console.log(this.selectedUser)
     this.chatService.sendMessage({
-      user: this.currentUser.name,
-      room: this.roomId,
-      message: this.messageText,
+      uid: this.selectedUser.id,
+      mensaje: this.messageText,
     });
 
-    this.storageArray = this.chatService.getStorage();
+    /* this.storageArray = this.chatService.getStorage();
     const storeIndex = this.storageArray.findIndex(
       (storage: any) => storage.roomId === this.roomId
     );
@@ -124,7 +129,7 @@ export class ChatUserComponent implements OnInit {
     }
 
     this.chatService.setStorage(this.storageArray);
-    this.messageText = '';
+    this.messageText = ''; */
   }
   back() {
     this.Onlist = true;

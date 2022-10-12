@@ -19,7 +19,7 @@ export class ChatService {
       }
     }); */
 
-    this.socket = io("https://dory-api-rest-pruebas.herokuapp.com/", {
+    this.socket = io(this.url, {
       transports: ['websocket', 'polling', 'flashsocket'],
       auth: {
         token: "Bearer " + this.userService.getAuthUserToken()!
@@ -31,13 +31,13 @@ export class ChatService {
     this.socket.emit('join', data);
   }
 
-  sendMessage(data: any): void {
-    this.socket.emit('message', data);
+  sendMessage(data: {uid:string, mensaje:string}): void {
+    this.socket.emit('new-message', data);
   }
 
   getMessage(): Observable<any> {
-    return new Observable<{ user: string; message: string }>((observer) => {
-      this.socket.on('new message', (data) => {
+    return new Observable<{ user: any; message: string }>((observer) => {
+      this.socket.on('new-message', (data) => {
         console.log(data);
         observer.next(data);
       });

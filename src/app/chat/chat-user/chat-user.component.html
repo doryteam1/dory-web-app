@@ -12,7 +12,7 @@
       </div>
       <div class="user-list-card">
         <div class="user-card"
-          *ngFor="let user of userList; index as i" (click)="selectUserHandler(user?.phone,i)">
+          *ngFor="let user of userList; index as i" (click)="selectUserHandler(user?.id,i)">
           <div class="user--imagen">
             <img [src]="user?.image" [alt]="user?.name" class="avatar" />
             <div [ngClass]="{'user--off': !user.estatus,'user--activo':user.estatus}"></div>
@@ -34,7 +34,7 @@
                     d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
                 </svg>
               </div>
-              <img [src]="selectedUser?.image" [alt]="selectedUser?.name" class="avatar" />
+              <img [src]="selectedUser?.image ? selectedUser?.image : 'assets/images/no-image.jpg'" [alt]="selectedUser?.name" class="avatar" />
               <p class="username">{{selectedUser?.name}}</p>
             </div>
             <button type="button" class="btn-close button_close" (click)="closeChat()"></button>
