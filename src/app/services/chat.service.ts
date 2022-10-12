@@ -19,7 +19,7 @@ export class ChatService {
       }
     }); */
 
-    this.socket = io(this.url, {
+    this.socket = io("https://dory-api-rest-pruebas.herokuapp.com/", {
       transports: ['websocket', 'polling', 'flashsocket'],
       auth: {
         token: "Bearer " + this.userService.getAuthUserToken()!
