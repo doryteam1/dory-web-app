@@ -56,7 +56,7 @@
             </span>
           </div>
         </div>
-        <div class="d-flex flex-row mt-1">
+        <div class="d-flex flex-row mt-1" *ngIf="asociacion?.id_propietario==idEmailUser || asociacion?.usuarios_id == idEmailUser ">
           <img class="icon margin" src="assets/icons/file-zipper-regular.svg">
           <div>
             <span>

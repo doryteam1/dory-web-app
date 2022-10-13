@@ -1,0 +1,79 @@
+/* Estilos mapa search */
+.modal-header {
+  justify-content: center;
+}
+
+.footerheadermodal {
+  padding: 10px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  background-origin: padding-box;
+  border-radius: 133px;
+  width: 100%;
+  height: 45px;
+  border: 0.5px solid var(--gris4);
+  -webkit-box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
+  box-shadow: -1px 3px 8px 3px rgba(0, 0, 0, 0.14);
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--white);
+  padding: 0.5rem 0.5rem 0.5rem 15px;
+  border-radius: 133px;
+  color: white;
+  box-shadow: 0 2px 12px var(--shadow-2);
+  width: 100%;
+}
+
+.bi-search {
+  color: rgb(158, 158, 167);
+}
+
+input {
+  margin: 0 0.5rem 0 0.5rem;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: var(--white);
+  color: #5a5656;
+  ;
+}
+
+.img-x {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  opacity: 0.4;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='9e9ea7;'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 0.8rem;
+}
+
+::placeholder {
+  color: #5a5656;
+  ;
+}
+
+.button_close {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.button_close:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+}
+
+.modal-body {
+  width: 100%;
+  height: 100%;
+}

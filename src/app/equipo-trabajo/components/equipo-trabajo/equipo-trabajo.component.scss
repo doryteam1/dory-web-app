@@ -178,7 +178,9 @@ button:focus {
   letter-spacing: .02em;
   line-height: 1.1;
 }
-
+.presaltoLinea {
+  white-space: pre-wrap;
+}
 @media screen and (max-width: 750px) {
   .container-data-user {
     flex-direction: column;

@@ -10,7 +10,7 @@
         <label for="dateOfBirth">Entidad</label>
         <div class="input-group">
           <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Entidad"
-            formControlName="entidad">Write something here</textarea>
+            formControlName="entidad"></textarea>
         </div>
         <div *ngIf="invalid('entidad')" class="container__alert-msg danger-message">
           <div *ngIf="entidad?.errors?.['required']">
@@ -21,7 +21,7 @@
       <div class="photoAnduploadPhoto">
         <label for="dateOfBirth">Foto entidad</label>
         <div class="photoAnduploadPhoto-container">
-          <div class="mb-3 imagen">
+          <div class="mb-3 imagen" *ngIf="fotoEntidad">
             <div class="imagen-container">
               <img [src]="fotoEntidad ? fotoEntidad : 'assets/images/no-image-photography.svg'" alt="">
             </div>
@@ -47,7 +47,7 @@
         <label for="dateOfBirth">Misión</label>
         <div class="input-group">
           <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Misión"
-            formControlName="mision">Write something here</textarea>
+            formControlName="mision"></textarea>
         </div>
         <div *ngIf="invalid('mision')" class="container__alert-msg danger-message">
           <div *ngIf="mision?.errors?.['required']">
@@ -58,7 +58,7 @@
       <div class="photoAnduploadPhoto">
         <label for="dateOfBirth">Foto misión</label>
         <div class="photoAnduploadPhoto-container">
-          <div class="mb-3 imagen">
+          <div class="mb-3 imagen" *ngIf="fotoMision">
             <div class="imagen-container">
               <img [src]="fotoMision ? fotoMision : 'assets/images/no-image-photography.svg'" alt="">
             </div>
@@ -84,7 +84,7 @@
         <label for="dateOfBirth">Visión</label>
         <div class="input-group">
           <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Visión"
-            formControlName="vision">Write something here</textarea>
+            formControlName="vision"></textarea>
         </div>
         <div *ngIf="invalid('vision')" class="container__alert-msg danger-message">
           <div *ngIf="vision?.errors?.['required']">
@@ -95,7 +95,7 @@
       <div class="photoAnduploadPhoto">
         <label for="dateOfBirth">Foto visión</label>
         <div class="photoAnduploadPhoto-container">
-          <div class="mb-3 imagen">
+          <div class="mb-3 imagen" *ngIf="fotoVision">
             <div class="imagen-container">
               <img [src]="fotoVision ? fotoVision : 'assets/images/no-image-photography.svg'" alt="">
             </div>

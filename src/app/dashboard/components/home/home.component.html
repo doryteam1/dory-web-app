@@ -43,21 +43,24 @@
             </a>
           </li>
           <li id="misgranjas" class="nav-item" *ngIf="tipoUsuario == 'Piscicultor'" (click)="closeOffcanvas()">
-            <a class="nav-link" [ngClass]="{'miclase':rutaGranjasdetalle,'disabled':disableTags }"
+            <a class="nav-link"
+              [ngClass]="{'miclase':_router.url.includes('/dashboard/granja/detalle'),'disabled':disableTags }"
               [routerLink]="['/dashboard/granjas']" routerLinkActive="active">
               <span data-feather="file"></span>
               Mis granjas
             </a>
           </li>
           <li id="misproductos" class="nav-item" *ngIf="tipoUsuario == 'Proveedor'" (click)="closeOffcanvas()">
-            <a class="nav-link" [ngClass]="{'miclase':rutaProductosdetalle,'disabled':disableTags }"
+            <a class="nav-link"
+              [ngClass]="{'miclase':_router.url.includes('/dashboard/producto/detalle'),'disabled':disableTags }"
               [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
               <span data-feather="file"></span>
               Mis productos
             </a>
           </li>
           <li id="misvehiculos" class="nav-item" *ngIf="tipoUsuario == 'Transportador'" (click)="closeOffcanvas()">
-            <a class="nav-link" [ngClass]="{'miclase':rutaVehiculosdetalle,'disabled':disableTags }"
+            <a class="nav-link"
+              [ngClass]="{'miclase':_router.url.includes('/dashboard/vehiculo/detalle'),'disabled':disableTags }"
               [routerLink]="['/dashboard/mis-vehiculos']" routerLinkActive="active">
               <span data-feather="file"></span>
               Mis vehículos
@@ -77,7 +80,9 @@
             </a>
           </li>
           <li id="misnegocios" class="nav-item" *ngIf="tipoUsuario == 'Comerciante'" (click)="closeOffcanvas()">
-            <a class="nav-link" [ngClass]="{'miclase':rutaNegociosdetalle,'disabled':disableTags }" aria-current="page"
+            <a class="nav-link"
+              [ngClass]="{'miclase':_router.url.includes('/dashboard/negocio/detalle'),'disabled':disableTags }"
+               aria-current="page"
               [routerLink]="['/dashboard/mis-negocios']" routerLinkActive="active">
               <span data-feather="home"></span>
               Mis negocios
@@ -86,7 +91,7 @@
           <li id="misasociaciones" class="nav-item" *ngIf="tipoUsuario == 'Piscicultor' || tipoUsuario == 'Pescador'"
             (click)="closeOffcanvas()">
             <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-asociaciones']"
-              [ngClass]="{'miclase': rutaAsociacionesdetalle,'disabled':disableTags }" routerLinkActive="active">
+              [ngClass]="{'miclase':_router.url.includes('/dashboard/asociacion/detalle'),'disabled':disableTags }" routerLinkActive="active">
               <span data-feather="home"></span>
               Mis asociaciones
             </a>
@@ -94,14 +99,16 @@
           <li id="mispublicaciones" class="nav-item" *ngIf="tipoUsuario == 'Piscicultor' || tipoUsuario == 'Pescador'"
             (click)="closeOffcanvas()">
             <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-publicaciones']"
-              [ngClass]="{'miclase':rutaPublicaciondetalle,'disabled':disableTags }" routerLinkActive="active">
+            [ngClass]="{'miclase':_router.url.includes( '/dashboard/publicacion/detalle'),'disabled':disableTags }"
+               routerLinkActive="active">
               <span data-feather="home"></span>
               Mis publicaciones
             </a>
           </li>
           <li id="publicaciones_user" class="nav-item" *ngIf="tipoUsuario == 'Comerciante'" (click)="closeOffcanvas()">
             <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/publicaciones']"
-              [ngClass]="{'miclase':rutaPublicaciondetalle,'disabled':disableTags }" routerLinkActive="active">
+              [ngClass]="{'miclase':_router.url.includes( '/dashboard/publicacion/detalle'),'disabled':disableTags }"
+              routerLinkActive="active">
               <span data-feather="home"></span>
               Publicaciones
             </a>
@@ -114,20 +121,26 @@
             </a>
           </li>
           <li id="equipo-trabajo" class="nav-item" *ngIf="tipoUsuario == 'Administrador'" (click)="closeOffcanvas()">
-            <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/equipo-trabajo-admi']" routerLinkActive="active">
+            <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/equipo-trabajo-admi']"
+            [ngClass]="{'miclase':_router.url.includes('/dashboard/equipo-trabajo-admi/detalle'),'disabled':disableTags }"
+            routerLinkActive="active">
               <span data-feather="home"></span>
               Equipo de trabajo
             </a>
           </li>
           <li id="novedad-actualidad" class="nav-item" *ngIf="tipoUsuario == 'Administrador'" (click)="closeOffcanvas()">
-            <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/novedad-actualidad-admi']"
+            <a class="nav-link" aria-current="page"
+              [ngClass]="{'miclase':_router.url.includes('/dashboard/novedad-actualidad-admi/detalle'),'disabled':disableTags }"
+              [routerLink]="['/dashboard/novedad-actualidad-admi']"
               routerLinkActive="active">
               <span data-feather="home"></span>
               Novedades
             </a>
           </li>
           <li id="eventos" class="nav-item" *ngIf="tipoUsuario == 'Administrador'" (click)="closeOffcanvas()">
-            <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/eventos-admi']" routerLinkActive="active">
+            <a class="nav-link" aria-current="page"
+              [ngClass]="{'miclase':_router.url.includes('/dashboard/evento-admi/detalle'),'disabled':disableTags }"
+             [routerLink]="['/dashboard/eventos-admi']" routerLinkActive="active">
               <span data-feather="home"></span>
               Eventos
             </a>

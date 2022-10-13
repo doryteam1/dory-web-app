@@ -205,7 +205,7 @@ class="galleryslider"
     </div>
 </div>
 <app-not-found *ngIf="showNotFound" message="No encontramos la granja solicitada"></app-not-found>
-<app-not-found *ngIf="showError" [errorData]="true"  message="No pudimos recuperar la granja solicitada :(" messageError="{{errorMessage}}"></app-not-found>
+<app-not-found *ngIf="showError" [errorData]="true"  message="No pudimos recuperar la granja solicitada :(" ></app-not-found>
 
 <ng-template #qualifyModal let-c="close" let-d="dismiss">
   <div class="modal-header">

@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   HostBinding,
   HostListener,
   NgZone,

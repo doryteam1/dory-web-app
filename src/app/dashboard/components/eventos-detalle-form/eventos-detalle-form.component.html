@@ -1,0 +1,181 @@
+<div>
+  <div class="d-flex flex-row justify-content-between mt-3">
+    <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nueva novedad'
+      : 'Actualizar novedad'}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <span class="container__title">Tipo de eventos</span>
+        <div>
+          <select class="form-control" formControlName='id_tipo_evento_fk'>
+            <optgroup label="Escoje el tipo de evento">
+              <option *ngFor="let evento of tipoEventos" [value]="evento.id">
+                {{evento.nombre }}</option>
+            </optgroup>
+          </select>
+        </div>
+        <div *ngIf="invalid('id_tipo_evento_fk')" class="container__alert-msg danger-message">
+          <div *ngIf="id_tipo_evento_fk?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="container__title">Modalidad</span>
+        <div>
+          <select class="form-control" formControlName='id_modalidad_fk'>
+            <optgroup label="Modalidad">
+              <option *ngFor="let modalidad of tipoModalidad" [value]="modalidad.id">
+                {{modalidad.nombre }}</option>
+            </optgroup>
+          </select>
+        </div>
+        <div *ngIf="invalid('id_modalidad_fk')" class="container__alert-msg danger-message">
+          <div *ngIf="id_modalidad_fk?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Título</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Ingrese el título " formControlName="nombre">
+        </div>
+        <div *ngIf="invalid('nombre')" class="container__alert-msg danger-message">
+          <div *ngIf="nombre?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Descripción</label>
+        <div class="input-group">
+          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
+            placeholder="Ingrese la descripción" formControlName="resumen"></textarea>
+        </div>
+        <div *ngIf="invalid('resumen')" class="container__alert-msg danger-message">
+          <div *ngIf="resumen?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Organizador (es)</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Organizador"
+            formControlName="organizador">
+        </div>
+        <div *ngIf="invalid('organizador')" class="container__alert-msg danger-message">
+          <div *ngIf="organizador?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Dirigido a</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="¿ A quién va dirigido el evento ?"
+            formControlName="dirigidoa">
+        </div>
+        <div *ngIf="invalid('dirigidoa')" class="container__alert-msg danger-message">
+          <div *ngIf="dirigidoa?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Url</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Ingrese la url del evento"
+            formControlName="url">
+        </div>
+        <div *ngIf="invalid('url')" class="container__alert-msg danger-message">
+          <div *ngIf="url?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Valor</label>
+        <div class="input-group">
+          <input  type="number" id="productName" class="form-control" placeholder="Ej:15000"
+            formControlName="costo">
+        </div>
+        <div *ngIf="invalid('costo')" class="container__alert-msg danger-message">
+          <div *ngIf="costo?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+            <div class="mb-3">
+              <label for="dateOfBirth">Fecha del evento</label>
+              <div class="input-group">
+                <input id="productName" class="form-control" type="date"  placeholder="Fecha del evento"
+                  formControlName="fecha">
+              </div>
+              <div *ngIf="invalid('fecha')" class="container__alert-msg danger-message">
+                <div *ngIf="fecha?.errors?.['required']">
+                  Campo requerido
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="dateOfBirth">Hora del evento</label>
+              <div class="input-group">
+                <input id="productName" class="form-control" type="time"  placeholder="Hora del evento"
+                  formControlName="hora">
+              </div>
+              <div *ngIf="invalid('hora')" class="container__alert-msg danger-message">
+                <div *ngIf="hora?.errors?.['required']">
+                  Campo requerido
+                </div>
+              </div>
+            </div>
+      <div class="photoAnduploadPhoto">
+        <label for="dateOfBirth">Foto principal</label>
+        <div class="photoAnduploadPhoto-container" (click)="openAddFileDialogCreate()">
+          <div class="mb-3 imagen" *ngIf="fotoEvento">
+            <div class="imagen-container">
+              <img [src]="fotoEvento  ? fotoEvento : 'assets/images/no-image-photography.svg'" alt="">
+            </div>
+          </div>
+          <div class="input-imagen">
+            <div>
+              <button type="button" class="btn btn-primary container__btn--azul1"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                <div>
+                  <img src="assets/icons/file_upload_black_24dp.svg">
+                  <span>
+                    Subir Fotos
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="updateData()" *ngIf="modalMode=='update'">
+        <span *ngIf="!loading">Actualizar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="addData()" *ngIf="modalMode=='create'">
+        <span *ngIf="!loading">Guardar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button type="button" class="btn-rounded btn--blue container__btn" (click)="goBack()">
+        <span>Atrás</span>
+      </button>
+    </div>
+  </div>
+</div>
+<input #fileInputCreate type="file" name="resume" accept="image/*" (change)='fileChangeCreate($event)' hidden>
+

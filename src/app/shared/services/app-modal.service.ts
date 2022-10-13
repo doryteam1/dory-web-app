@@ -9,6 +9,7 @@ import { ModalGallerySliderVerYElimanarFotosComponent } from '../components/moda
 import { ModalGoogleGeneralComponent } from '../components/modal-google-general/modal-google-general.component';
 import { SafeUrl } from '@angular/platform-browser';
 import { ModalContactCardComponent } from '../components/modal-contact-card/modal-contact-card.component';
+import { ModalSearchComponent } from '../components/modal-search/modal-search.component';
 
 interface atributos {
   nameButton: string;
@@ -92,8 +93,8 @@ export class AppModalService {
     atributos: any = {},
     modalheader: boolean,
     iconMarkerGoogleMap: string,
-    mapaSeach:boolean,
-    limiteMapa:any,
+    mapaSeach: boolean,
+    limiteMapa: any,
     shared?: boolean
   ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalGoogleGeneralComponent, {
@@ -107,6 +108,18 @@ export class AppModalService {
     modalRef.componentInstance.mapaSeach = mapaSeach;
     modalRef.componentInstance.limiteMapa = limiteMapa;
     modalRef.componentInstance.shared = shared;
+    return modalRef.dismissed.toPromise();
+  }
+  /* modal search*/
+  public CloseModalSearchComponentl(): void {
+    this.modalService.dismissAll();
+  }
+  public modalSearchComponentl(): Promise<boolean> {
+    const modalRef = this.modalService.open(ModalSearchComponent, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+      centered: true,
+    });
     return modalRef.dismissed.toPromise();
   }
   /* alerta modal perfil actualizado */
@@ -127,9 +140,10 @@ export class AppModalService {
   public closeModalContactCardComponent(): void {
     this.modalService.dismissAll();
   }
-  public modalContactCardComponent(datos: any,
-    modalDetalle:boolean=true
-    ): Promise<boolean> {
+  public modalContactCardComponent(
+    datos: any,
+    modalDetalle: boolean = true
+  ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalContactCardComponent, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'sm',

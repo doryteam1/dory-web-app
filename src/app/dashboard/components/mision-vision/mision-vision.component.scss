@@ -45,6 +45,7 @@
   .photoAnduploadPhoto-container {
     border: 1px solid #dcdbdb;
     border-radius: 5px;
+
     .imagen {
       width: 100%;
       height: 100vh;
@@ -71,11 +72,13 @@
     }
   }
 }
- button:focus {
-   border-color: none !important;
-   box-shadow: none !important;
-   outline: 0 none !important;
- }
+
+button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+}
+
 @media screen and (max-width: 600px) {
   .justify-content-between {
     flex-direction: column !important;

@@ -48,7 +48,6 @@
       justify-content: center;
       align-items: center;
       gap: 20px;
-
       .buscador-containe__search-input {
         background: url("/assets/icons/search.svg") no-repeat left center;
         background-size: 20px;
@@ -66,6 +65,13 @@
         outline: none;
       }
     }
-
   }
+    .Myclase {
+      height: 100% !important;
+      .buscador-containe__search-input {
+        width: 15vw !important;
+        max-width: 512px !important;
+        height: 33px !important;
+      }
 
+    }

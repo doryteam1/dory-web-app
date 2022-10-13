@@ -23,6 +23,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { ShareButtonsConfig } from 'ngx-sharebuttons';
 import { ChatModule } from './chat/chat.module';
+import { DatePipe, DecimalPipe, TitleCasePipe } from '@angular/common';
 
 const customConfig: ShareButtonsConfig = {
   include: ['whatsapp', 'email', 'copy'],
@@ -68,6 +69,9 @@ const customConfig: ShareButtonsConfig = {
     ChatModule
   ],
   providers: [
+    TitleCasePipe,
+    DatePipe,
+    DecimalPipe,
     HttpsService,
     {
       provide: 'SocialAuthServiceConfig',

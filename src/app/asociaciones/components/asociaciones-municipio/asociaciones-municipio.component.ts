@@ -10,7 +10,8 @@ import { BuscarPor } from '../../../../models/buscarPor.model';
 import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { PlacesService } from 'src/app/services/places.service';
-import { Location } from '@angular/common';
+import { Location, registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
 @Component({
   selector: 'app-asociaciones-municipio',
   templateUrl: './asociaciones-municipio.component.html',
@@ -63,6 +64,7 @@ export class AsociacionesMunicipioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    registerLocaleData(es);
     let id = this.activatedRoute.snapshot.params.id;
     this.placesService.getMunicipioById(id).subscribe(
       /* preguntarle a renso */

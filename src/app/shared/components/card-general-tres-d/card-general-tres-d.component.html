@@ -17,14 +17,16 @@
           <img class="img1" [src]="dato.imagen ? dato.imagen: 'assets/images/no-image-photography.svg'" alt="Foto">
         </div>
         <div class="info info-front" (click)="openDetalle()">
-          <h5>{{dato.titulo}}</h5>
-          <p>{{dato.subTitle1}}</p>
-          <p>{{dato.subTitle2}}</p>
+          <h5 *ngIf="dato.titulo">{{dato.titulo | titlecase}}</h5>
+          <div *ngFor="let item of dato.subTitle" >
+            <p  *ngIf="item?.titulo && item?.detail">{{item?.titulo | titlecase}} <span>{{item?.detail}}</span></p>
+          </div>
+          <p *ngIf="dato.subTitleNormal">{{dato.subTitleNormal | titlecase}}</p>
         </div>
       </div>
       <div class="side back">
         <div class="info">
-          <p (click)="openDetalle()">
+          <p class="presaltoLinea" (click)="openDetalle()">
            {{dato.descripcion}}
           </p>
           <div class="btn">
@@ -45,6 +47,9 @@
             </a>
             <a class="mc-footer-icon" [href]="urlcvlac" target="_blank" *ngIf="urlcvlac">
               <img class="card__icon" src="assets/images/cvlac-logo.png">
+            </a>
+            <a class="mc-footer-icon" [href]="urlDefecto" target="_blank" *ngIf="urlDefecto">
+              <img class="card__icon" src="assets/icons/url.svg">
             </a>
           </div>
         </div>

@@ -3,43 +3,49 @@ import { HttpsService } from './https.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PublicacionesService {
+  constructor(private https: HttpsService) {}
 
-  constructor(private https:HttpsService) { }
-
-  getPublicacionesByUser(id:number){
+  getPublicacionesByUser(id: number) {
     return this.https.get(
       environment.doryApiRestBaseUrl + '/publicaciones/usuario/' + id
     );
   }
 
-  getPublicacionesTodas(){
-    return this.https.get(
-      environment.doryApiRestBaseUrl + '/publicaciones/'
+  getPublicacionesTodas() {
+    return this.https.get(environment.doryApiRestBaseUrl + '/publicaciones/');
+  }
+
+  updatePhotos(id: number, newPhotos: any) {
+    return this.https.put(
+      environment.doryApiRestBaseUrl + '/publicaciones/update/photos/' + id,
+      newPhotos
     );
   }
 
-  updatePhotos(id:number,newPhotos:any){
+  updatePublicacion(id: number, updatedPublicacion: any) {
     return this.https.put(
-      environment.doryApiRestBaseUrl + '/publicaciones/update/photos/' + id,newPhotos
+      environment.doryApiRestBaseUrl + '/publicaciones/update/' + id,
+      updatedPublicacion
     );
   }
 
-  updatePublicacion(id:number, updatedPublicacion:any){
-    return this.https.put(
-      environment.doryApiRestBaseUrl + '/publicaciones/update/' + id,updatedPublicacion
-    )
-  }
-
-  addPublicacion(newPublicacion:any){
+  addPublicacion(newPublicacion: any) {
     return this.https.post(
-      environment.doryApiRestBaseUrl + '/publicaciones/',newPublicacion
-    )
+      environment.doryApiRestBaseUrl + '/publicaciones/',
+      newPublicacion
+    );
   }
-
-  getPublicacionDetail(id:number){
+  deletePublicacion(idPublicacion: number) {
+    return this.https.delete(
+      environment.doryApiRestBaseUrl +
+        '/publicaciones/eliminar/' +
+        idPublicacion
+    );
+  }
+  getPublicacionDetail(id: number) {
     return this.https.get(
       environment.doryApiRestBaseUrl + '/publicaciones/detailed/' + id
     );

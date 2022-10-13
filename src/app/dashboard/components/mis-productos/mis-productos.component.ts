@@ -4,6 +4,7 @@ import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { PlatformLocation } from '@angular/common';
 import { Router } from '@angular/router';
+import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 
 @Component({
   selector: 'app-mis-productos',
@@ -20,7 +21,8 @@ export class MisProductosComponent implements OnInit {
     private proveedorService: ProveedorService,
     private appModalService: AppModalService,
     public platformLocation: PlatformLocation,
-    private router: Router
+    private router: Router,
+    private storage: FirebaseStorageService
   ) {}
   ngOnInit(): void {
     this.loading = true;
@@ -29,8 +31,9 @@ export class MisProductosComponent implements OnInit {
     this.authUserId = payload.sub;
     this.proveedorService.getProductosById(this.authUserId).subscribe(
       (respose) => {
-         this.loading = false;
+        this.loading = false;
         this.productos = respose.data;
+        console.log(this.productos);
         if (this.productos.length < 1 || this.productos.length == 0) {
           this.showNotFound = true;
         } else {
@@ -39,13 +42,19 @@ export class MisProductosComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.showNotFound = false;
-        this.showError = true;
-        this.loading = false;
+        if (err.status == 404) {
+          this.showNotFound = true;
+          this.loading = false;
+        } else {
+          this.showError = true;
+          this.showNotFound = false;
+          this.loading = false;
+        }
       }
     );
   }
-  deleteProducto(codigo: number,nombre:any) {
+  deleteProducto(codigo: number, nombre: any, index: any) {
+    let arrayFotos = this.productos[index].fotos;
     this.appModalService
       .confirm(
         'Eliminar producto',
@@ -58,10 +67,8 @@ export class MisProductosComponent implements OnInit {
         if (result == true) {
           this.proveedorService.deleteProducto(codigo).subscribe(
             (response) => {
-              let index = this.productos.findIndex((producto: any) => {
-                return producto.codigo == codigo;
-              });
               this.productos.splice(index, 1);
+              this.storage.deleteMultipleByUrls(arrayFotos);
               if (this.productos.length <= 0) {
                 this.showNotFound = true;
               }

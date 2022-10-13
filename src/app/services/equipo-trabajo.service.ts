@@ -12,10 +12,28 @@ export class EquipoTrabajoService {
       environment.doryApiRestBaseUrl + '/integrantes/obtener/'
     );
   }
+  getConocenos() {
+    return this.https.get(
+      environment.doryApiRestBaseUrl + '/conocenos/obtener/'
+    );
+  }
+  updateConocenos(id: number, dato: any) {
+    return this.https.put(
+      environment.doryApiRestBaseUrl + '/conocenos/actualizar/' + id,
+      dato
+    );
+  }
   updateMiembroEquipo(id: number, miembro: any) {
     return this.https.put(
       environment.doryApiRestBaseUrl + '/integrantes/actualizar/' + id,
       miembro
+    );
+  }
+
+  updateMiembroEquipoEnlaces(id: number, enlances: any) {
+    return this.https.put(
+      environment.doryApiRestBaseUrl + '/integrantes/actualizar/enlaces/' + id,
+      enlances
     );
   }
   addMiembroEquipo(miembro: any) {

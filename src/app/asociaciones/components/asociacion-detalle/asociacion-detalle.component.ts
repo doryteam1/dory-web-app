@@ -8,6 +8,8 @@ import { AsociacionesService } from '../../services/asociaciones.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 
 @Component({
   selector: 'app-asociacion-detalle',
@@ -33,13 +35,15 @@ export class AsociacionDetalleComponent implements OnInit {
   pescadorasociaciones: any;
   datapiscicultorasociaciones: boolean = false;
   tipoUsuario: any;
-  numeroMujeres:number = 0;
-  numeroHombres:number = 0;
+  numeroMujeres: number = 0;
+  numeroHombres: number = 0;
   activatelistgranjas: boolean = false;
-  granjasAsociacion:any[]=[];
+  granjasAsociacion: any[] = [];
   granjaShowError: boolean = false;
   granjaShowNotFound: boolean = false;
   granjaChangeItem: boolean = false;
+  urls: any[] = [];
+  idEmailUser!:number;
   constructor(
     private activatedRoute: ActivatedRoute,
     private asociacionesService: AsociacionesService,
@@ -47,17 +51,24 @@ export class AsociacionDetalleComponent implements OnInit {
     private piscicultoresService: PiscicultoresService,
     private pescadoresService: PescadoresService,
     private asociacionService: AsociacionesService,
-    private appModalService:AppModalService,
-    public userService:UsuarioService,
-    private granjasService:GranjasService
+    private appModalService: AppModalService,
+    public userService: UsuarioService,
+    private granjasService: GranjasService,
+    private utilitiesService: UtilitiesService,
+    private firebaseStorageService: FirebaseStorageService
   ) {}
 
   ngOnInit(): void {
     let token = localStorage.getItem('token');
-    if(token && token!='undefined'){
+    if (token && token != 'undefined') {
       this.tipoUsuario = Utilities.parseJwt(token!).rol;
     }
-
+      let email = localStorage.getItem('email');
+       console.log(this.asociacion)
+       this.userService.getUsuarioByEmail(email).subscribe((response) => {
+         console.log(response)
+        this.idEmailUser = response.data[0].id;
+       });
     this.selectedAsociacionnit = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
@@ -65,9 +76,9 @@ export class AsociacionDetalleComponent implements OnInit {
       .getAsociacionDetalle(this.selectedAsociacionnit)
       .subscribe(
         (response) => {
-          console.log(response.data[0])
+          console.log(response.data[0]);
           this.asociacion = response.data[0];
-          console.log("asociacion ",this.asociacion)
+          console.log('asociacion ', this.asociacion);
           if (response.data.length > 0) {
             this.asociacionesshowError = false;
             this.asociacionesshowNotFound = false;
@@ -77,7 +88,7 @@ export class AsociacionDetalleComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err)
+          console.log(err);
           this.asociacionesshowNotFound = false;
           this.asociacionesshowError = false;
           if (err.status == 404) {
@@ -92,31 +103,34 @@ export class AsociacionDetalleComponent implements OnInit {
     this.granjasPorAsociacion();
   }
 
-  granjasPorAsociacion(){
-    this.granjasService.getGranjasByNitAsociacion(this.selectedAsociacionnit).subscribe(
-      (response)=>{
-        this.granjasAsociacion = response.data;
-        if (response.data.length > 0) {
-          this.granjaShowError = false;
+  granjasPorAsociacion() {
+    this.granjasService
+      .getGranjasByNitAsociacion(this.selectedAsociacionnit)
+      .subscribe(
+        (response) => {
+          this.granjasAsociacion = response.data;
+          if (response.data.length > 0) {
+            this.granjaShowError = false;
+            this.granjaShowNotFound = false;
+            this.granjaChangeItem = false;
+          } else {
+            this.granjaShowNotFound = true;
+            this.granjaShowError = false;
+            this.granjaChangeItem = false;
+          }
+        },
+        (err) => {
           this.granjaShowNotFound = false;
-          this.granjaChangeItem = false;
-        } else {
-          this.granjaShowNotFound = true;
           this.granjaShowError = false;
           this.granjaChangeItem = false;
+          if (err.status == 404) {
+            this.granjaShowNotFound = true;
+          } else {
+            this.granjaShowError = true;
+            this.errorMessage = 'Error inesperado';
+          }
         }
-      },err=>{
-        this.granjaShowNotFound = false;
-        this.granjaShowError = false;
-        this.granjaChangeItem = false;
-        if (err.status == 404) {
-          this.granjaShowNotFound = true;
-        } else {
-          this.granjaShowError = true;
-          this.errorMessage = 'Error inesperado';
-        }
-      }
-    )
+      );
   }
   async pescadoresPorAsociacions() {
     try {
@@ -124,7 +138,7 @@ export class AsociacionDetalleComponent implements OnInit {
         .getPescadoresPorAsociacion(this.selectedAsociacionnit)
         .toPromise();
       this.pescadorasociaciones = response.data;
-      console.log(this.pescadorasociaciones)
+      console.log(this.pescadorasociaciones);
       await this.piscicultorPorAsociacion();
       this.activeTabVerifi();
       if (response.data.length > 0) {
@@ -136,7 +150,6 @@ export class AsociacionDetalleComponent implements OnInit {
         this.pescadorshowError = false;
         this.pescadorchangeItem = false;
       }
-
     } catch (err: any) {
       this.pescadorshowNotFound = false;
       this.pescadorshowError = false;
@@ -194,7 +207,7 @@ export class AsociacionDetalleComponent implements OnInit {
       this.activatelistpescadores = false;
     } else if (
       this.piscicultorasociaciones.length <= 0 &&
-      this.pescadorasociaciones.length  > 0
+      this.pescadorasociaciones.length > 0
     ) {
       console.log('hello3');
       this.activatelistpiscicultores = false;
@@ -211,7 +224,7 @@ export class AsociacionDetalleComponent implements OnInit {
       this.activatelistpescadores = true;
       this.activatelistpiscicultores = false;
       this.activatelistgranjas = false;
-    } else if(i == 3){
+    } else if (i == 3) {
       this.activatelistpescadores = false;
       this.activatelistpiscicultores = false;
       this.activatelistgranjas = true;
@@ -242,89 +255,190 @@ export class AsociacionDetalleComponent implements OnInit {
     }
   }
 
-  invitarAnular(asociacion:any){
-    if(asociacion.estado_solicitud == 'Aceptada'){
+  invitarAnular(asociacion: any) {
+    if (asociacion.estado_solicitud == 'Aceptada') {
       this.appModalService
-      .confirm(
-        'Salir de la asociación',
-        'Usted ya no es miembro de esta asociación',
-        'No soy miembro',
-        'Cancelar'
-      )
-      .then((result) => {
-        if (result == true) {
-          let estado = asociacion.estado_solicitud;
-          let enviadaPor = asociacion.solicitud_enviada_por;
-          asociacion.estado_solicitud = null;
-          asociacion.solicitud_enviada_por = null;
-          this.asociacionService.eliminarSolicitud(asociacion.id_solicitud).subscribe(
-            (response)=>{
-              console.log(response)
-            },err=>{
-          asociacion.estado_solicitud = estado;
-          asociacion.solicitud_enviada_por = enviadaPor;
-          console.log(err)
-          }
+        .confirm(
+          'Salir de la asociación',
+          'Usted ya no es miembro de esta asociación',
+          'No soy miembro',
+          'Cancelar'
         )
-        }
-      }).catch((result) => {});
-    }
-    else if(asociacion.estado_solicitud == 'Enviada'){
+        .then((result) => {
+          if (result == true) {
+            let estado = asociacion.estado_solicitud;
+            let enviadaPor = asociacion.solicitud_enviada_por;
+            asociacion.estado_solicitud = null;
+            asociacion.solicitud_enviada_por = null;
+            this.asociacionService
+              .eliminarSolicitud(asociacion.id_solicitud)
+              .subscribe(
+                (response) => {
+                  console.log(response);
+                },
+                (err) => {
+                  asociacion.estado_solicitud = estado;
+                  asociacion.solicitud_enviada_por = enviadaPor;
+                  console.log(err);
+                }
+              );
+          }
+        })
+        .catch((result) => {});
+    } else if (asociacion.estado_solicitud == 'Enviada') {
       let estado = asociacion.estado_solicitud;
       let enviadaPor = asociacion.solicitud_enviada_por;
       asociacion.estado_solicitud = null;
       asociacion.solicitud_enviada_por = null;
-      this.asociacionService.eliminarSolicitud(asociacion.id_solicitud).subscribe(
-        (response)=>{
-          console.log(response)
-        },err=>{
-          asociacion.estado_solicitud = estado;
-          asociacion.solicitud_enviada_por = enviadaPor;
-          console.log(err)
-        }
-      )
-    }else{
+      this.asociacionService
+        .eliminarSolicitud(asociacion.id_solicitud)
+        .subscribe(
+          (response) => {
+            console.log(response);
+          },
+          (err) => {
+            asociacion.estado_solicitud = estado;
+            asociacion.solicitud_enviada_por = enviadaPor;
+            console.log(err);
+          }
+        );
+    } else {
       let data = {
-        quienEnvia : 'usuario'
-      }
+        quienEnvia: 'usuario',
+      };
       asociacion.estado_solicitud = 'Enviada';
-      asociacion.solicitud_enviada_por = 'usuario'
-      this.asociacionService.invitarUsuarioAsociacion(data,asociacion.nit).subscribe(
-        (response)=>{
-          console.log(response)
-          asociacion.id_solicitud = response.body.insertId;
-        },err=>{
-          asociacion.estado_solicitud = null;
-          asociacion.solicitud_enviada_por = null
-          console.log(err)
-        }
-      )
+      asociacion.solicitud_enviada_por = 'usuario';
+      this.asociacionService
+        .invitarUsuarioAsociacion(data, asociacion.nit)
+        .subscribe(
+          (response) => {
+            console.log(response);
+            asociacion.id_solicitud = response.body.insertId;
+          },
+          (err) => {
+            asociacion.estado_solicitud = null;
+            asociacion.solicitud_enviada_por = null;
+            console.log(err);
+          }
+        );
     }
   }
 
-  calcNumberoHombresMujeres(){
+  calcNumberoHombresMujeres() {
     this.numeroHombres = 0;
     this.numeroMujeres = 0;
 
-    console.log("pescadores: ",this.pescadorasociaciones)
-    console.log("piscicultores: ",this.piscicultorasociaciones)
-    this.pescadorasociaciones.forEach((pescador:any) => {
-      if(pescador.sexo == 'Femenino'){
+    console.log('pescadores: ', this.pescadorasociaciones);
+    console.log('piscicultores: ', this.piscicultorasociaciones);
+    this.pescadorasociaciones.forEach((pescador: any) => {
+      if (pescador.sexo == 'Femenino') {
         this.numeroMujeres++;
-      }else if(pescador.sexo == 'Masculino'){
+      } else if (pescador.sexo == 'Masculino') {
         this.numeroHombres++;
       }
     });
 
-    this.piscicultorasociaciones.forEach((piscicultor:any) => {
-      if(piscicultor.sexo == 'Femenino'){
+    this.piscicultorasociaciones.forEach((piscicultor: any) => {
+      if (piscicultor.sexo == 'Femenino') {
         this.numeroMujeres++;
-      }else if(piscicultor.sexo == 'Masculino'){
+      } else if (piscicultor.sexo == 'Masculino') {
         this.numeroHombres++;
       }
     });
   }
-  
+  download() {
+    try {
+      this.asociacionesService
+        .getMiembrosPrivado(this.asociacion.nit)
+        .subscribe(async (response) => {
+          let representante = response.data.representante;
+          let miembros = response.data.miembros;
+          if (representante) {
+            if (representante.url_imagen_cedula) {
+              let cedulaBase64 = await this.utilitiesService.urlToBase64(
+                representante.url_imagen_cedula
+              );
+              let metaCedula = await this.firebaseStorageService
+                .refFromUrl(representante.url_imagen_cedula)
+                .getMetadata()
+                .toPromise();
+              this.urls.push({
+                data:
+                  'cedulas/cedula-rep-' +
+                  representante.nombres.replace(/\s+/g, '') +
+                  '.' +
+                  metaCedula.name.split('.')[1],
+                url: representante.url_imagen_cedula,
+                image: cedulaBase64,
+              });
+            }
+
+            if (representante.url_sisben) {
+              let sisbenBase64 = await this.utilitiesService.urlToBase64(
+                representante.url_sisben
+              );
+              let metaSisben = await this.firebaseStorageService
+                .refFromUrl(representante.url_sisben)
+                .getMetadata()
+                .toPromise();
+              this.urls.push({
+                data:
+                  'sisben/sisben-rep-' +
+                  representante.nombres.replace(/\s+/g, '') +
+                  '.' +
+                  metaSisben.name.split('.')[1],
+                url: representante.url_sisben,
+                image: sisbenBase64,
+              });
+            }
+          }
+          if (miembros) {
+            for (let i = 0; i < miembros.length; i++) {
+              if (miembros[i].url_imagen_cedula) {
+                let cedulaBase64 = await this.utilitiesService.urlToBase64(
+                  miembros[i].url_imagen_cedula
+                );
+                let metaCedula = await this.firebaseStorageService
+                  .refFromUrl(miembros[i].url_imagen_cedula)
+                  .getMetadata()
+                  .toPromise();
+                this.urls.push({
+                  data:
+                    'cedulas/cedula-' +
+                    miembros[i].nombres.replace(/\s+/g, '') +
+                    '.' +
+                    metaCedula.name.split('.')[1],
+                  url: miembros[i].url_imagen_cedula,
+                  image: cedulaBase64,
+                });
+              }
+              if (miembros[i].url_sisben) {
+                let sisbenBase64 = await this.utilitiesService.urlToBase64(
+                  miembros[i].url_sisben
+                );
+                let metaSisben = await this.firebaseStorageService
+                  .refFromUrl(miembros[i].url_sisben)
+                  .getMetadata()
+                  .toPromise();
+                this.urls.push({
+                  data:
+                    'sisben/sisben-' +
+                    miembros[i].nombres.replace(/\s+/g, '') +
+                    '.' +
+                    metaSisben.name.split('.')[1],
+                  url: miembros[i].url_sisben,
+                  image: sisbenBase64,
+                });
+              }
+            }
+          }
+          this.utilitiesService.compressFileToZip(this.urls);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   goDetailFarm(granja: any) {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + granja.id_granja);
   }
