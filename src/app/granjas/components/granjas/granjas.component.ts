@@ -54,7 +54,7 @@ export class GranjasComponent implements OnInit {
   ngOnInit(): void {
     registerLocaleData( es );
 
-    this.granjasService.getInformeGranjasPorDepartamento().subscribe(
+    this.granjasService.getInformeGranjasPorDepartamento(70).subscribe(
       (response)=>{
         this.resumenDepartamento = response.data;
         this.totalizer();

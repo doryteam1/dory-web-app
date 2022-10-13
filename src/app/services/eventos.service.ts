@@ -14,14 +14,14 @@ export class EventosService {
   }
 
   getCongresosByString(text:string){
-    return this.https.get(environment.doryApiRestBaseUrl+'/buscar/evento/congreso/'+text)
+    return this.https.get(environment.doryApiRestBaseUrl+'/eventos/congresos/buscar'+text)
   }
 
   getCapacitacionesByString(text:string){
-    return this.https.get(environment.doryApiRestBaseUrl+'/buscar/evento/capacitacion/'+text)
+    return this.https.get(environment.doryApiRestBaseUrl+'/eventos/capacitaciones/buscar/'+text)
   }
 
   getEventoByTipo(text:string){
-    return this.https.get(environment.doryApiRestBaseUrl+'/buscar/evento/tipo/'+text)
+    return this.https.get(environment.doryApiRestBaseUrl+'/eventos/tipos/buscar/'+text)
   }
 }

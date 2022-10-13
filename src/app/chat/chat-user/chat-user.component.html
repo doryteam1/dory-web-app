@@ -34,27 +34,28 @@
                     d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
                 </svg>
               </div>
-              <img [src]="selectedUser?.image ? selectedUser?.image : 'assets/images/no-image.jpg'" [alt]="selectedUser?.name" class="avatar" />
+              <img [src]="selectedUser?.image ? selectedUser?.image : 'assets/images/avatar-person.svg'" [alt]="selectedUser?.name" class="avatar" />
               <p class="username">{{selectedUser?.name}}</p>
             </div>
             <button type="button" class="btn-close button_close" (click)="closeChat()"></button>
           </div>
           <div class="chat-body">
             <div class="chat-body-container" *ngFor="let item of messageArray"
-              [ngClass]="{ 'same-user':item?.user === currentUser?.name}">
-              <span class="_1kh65" *ngIf="item?.user === currentUser?.name">
+              [ngClass]="{ 'same-user':item?.fromUserId === currentUser?.sub}">
+              <span class="_1kh65" *ngIf="item?.fromUserId === currentUser?.sub">
                 <svg viewBox="0 0 8 13" width="8" height="13" class="">
                   <path opacity=".13" d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z"></path>
                   <path fill="currentColor" d="M5.188 0H0v11.193l6.467-8.625C7.526 1.156 6.958 0 5.188 0z"></path>
                 </svg>
               </span>
-              <span class="_1kh654" *ngIf="item?.user !== currentUser?.name">
+              <span class="_1kh654" *ngIf="item?.fromUserId !== currentUser?.sub">
                 <svg viewBox="0 0 8 13" width="8" height="13" class="">
                   <path opacity=".13" fill="#0000000" d="M1.533 3.568 8 12.193V1H2.812C1.042 1 .474 2.156 1.533 3.568z">
                   </path>
                   <path fill="currentColor" d="M1.533 2.568 8 11.193V0H2.812C1.042 0 .474 1.156 1.533 2.568z"></path>
-                </svg></span>
-              <p class="message-container" [ngClass]="{ 'border-left':item?.user !== currentUser?.name}">
+                </svg>
+              </span>
+              <p class="message-container" [ngClass]="{ 'border-left':item?.fromUserId !== currentUser?.sub}">
                 {{item?.message}}</p>
             </div>
           </div>

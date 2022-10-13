@@ -34,9 +34,9 @@ export class GranjasService {
     );
   }
 
-  getInformeGranjasPorDepartamento() {
+  getInformeGranjasPorDepartamento(idDepto:number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/granjas/departamento'
+      environment.doryApiRestBaseUrl+'/granjas/departamento/'+idDepto
     );
   }
 

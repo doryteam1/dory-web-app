@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 @Component({
@@ -7,10 +7,15 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   styleUrls: ['./chat-user.component.scss'],
 })
 export class ChatUserComponent implements OnInit {
-  roomId!: string;
   messageText!: string;
-  messageArray: { user: string; message: string }[] = [];
-  private storageArray: any = [];
+  messageArray: { fromUserId:number, message: string }[] = [];
+  private roomsArray: {
+      roomId: number,
+      chats: {
+        fromUserId: number,
+        message: string,
+      }[]
+  }[] = [];
   showScreen = false;
   phone!: string;
   selectedUser: any;
@@ -18,30 +23,46 @@ export class ChatUserComponent implements OnInit {
 
   public userList:any[] = [
   ];
-  currentUser: any;
+  currentUser: any; 
   chatOpen: boolean = false;
 
   constructor(
     private chatService: ChatService,
-    private userService: UsuarioService
-    
+    private userService: UsuarioService,
+    private ref:ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    this.currentUser = this.userService.getAuthUser();
     this.chatService
       .getMessage()
-      .subscribe((data: { usuario: any;  mensaje: string }) => {
+      .subscribe((data: { de: number;  mensaje: string }) => {
         console.log(data)
-        // this.messageArray.push(data);
-        /* if (this.roomId) {
-          setTimeout(() => {
-            this.storageArray = this.chatService.getStorage();
-            const storeIndex = this.storageArray.findIndex(
-              (storage: any) => storage.roomId === this.roomId
-            );
-            this.messageArray = this.storageArray[storeIndex].chats;
-          }, 500);
-        } */
+        this.roomsArray = this.chatService.getStorage();
+        const roomIndex = this.roomsArray.findIndex(
+          (storage: any) => storage.roomId === data.de
+        );
+        this.messageArray = [];
+        if(roomIndex > -1){
+          this.roomsArray[roomIndex].chats.push({
+            fromUserId: data.de,
+            message: data.mensaje
+          });
+        }else{
+          const updateStorage = {
+            roomId: data.de,
+            chats: [
+              {
+                fromUserId: data.de,
+                message: data.mensaje,
+              },
+            ],
+          };
+          this.roomsArray.push(updateStorage);
+        }
+        /*Carga los mensajes del la sala del usuario seleccionado*/
+        this.loadRoomMessages();
+        console.log(this.messageArray)
       });
 
       this.chatService
@@ -66,24 +87,31 @@ export class ChatUserComponent implements OnInit {
           console.log(this.userList)
       });
   }
+
+  loadRoomMessages(){
+    if(this.selectedUser){
+      const roomIndex = this.roomsArray.findIndex(
+        (storage: any) => storage.roomId === this.selectedUser.id
+      );
+      if(roomIndex > -1){
+          this.messageArray = [];
+          this.messageArray = this.roomsArray[roomIndex].chats;
+      }
+    }
+  }
   selectUserHandler(id: any, i: any): void {
     this.Onlist = false;
     /* Verificamos si el usurio selecionado esta en la lista y retornamos sus datos */
     this.selectedUser = this.userList.find((user) => user.id === id);
-    //this.roomId = this.selectedUser.roomId[this.currentUser.id];
-    /*  this.roomId = `room-${this.selectedUser.id}`; */
-    console.log(this.selectedUser);
     this.messageArray = [];
-
-    this.storageArray = this.chatService.getStorage();
-    const storeIndex = this.storageArray.findIndex(
-      (storage: any) => storage.roomId === this.roomId
+    this.roomsArray = this.chatService.getStorage();
+    const roomIndex = this.roomsArray.findIndex(
+      (storage: any) => storage.roomId === this.selectedUser.id
     );
 
-    if (storeIndex > -1) {
-      this.messageArray = this.storageArray[storeIndex].chats;
+    if (roomIndex > -1) {
+      this.messageArray = this.roomsArray[roomIndex].chats;
     }
-
     //this.join(this.currentUser.name, this.roomId);
   }
 
@@ -104,32 +132,36 @@ export class ChatUserComponent implements OnInit {
       mensaje: this.messageText,
     });
 
-    /* this.storageArray = this.chatService.getStorage();
-    const storeIndex = this.storageArray.findIndex(
-      (storage: any) => storage.roomId === this.roomId
+    this.roomsArray = this.chatService.getStorage();
+    const roomIndex = this.roomsArray.findIndex(
+      (storage: any) => storage.roomId === this.selectedUser.id
     );
 
-    if (storeIndex > -1) {
-      this.storageArray[storeIndex].chats.push({
-        user: this.currentUser.name,
+    this.messageArray = [];
+
+    if (roomIndex > -1) {
+      this.roomsArray[roomIndex].chats.push({
+        fromUserId: this.currentUser.sub,
         message: this.messageText,
       });
+      this.messageArray = this.roomsArray[roomIndex].chats;
     } else {
       const updateStorage = {
-        roomId: this.roomId,
+        roomId: this.selectedUser.id,
         chats: [
           {
-            user: this.currentUser.name,
+            fromUserId: this.currentUser.sub,
             message: this.messageText,
           },
         ],
       };
-
-      this.storageArray.push(updateStorage);
+      this.roomsArray.push(updateStorage);
+      this.messageArray = this.roomsArray[length - 1].chats;
     }
 
-    this.chatService.setStorage(this.storageArray);
-    this.messageText = ''; */
+    this.chatService.setStorage(this.roomsArray);
+    this.messageText = ''; 
+    //this.ref.detectChanges();
   }
   back() {
     this.Onlist = true;

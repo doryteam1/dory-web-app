@@ -12,13 +12,6 @@ export class ChatService {
   private url = environment.doryServerUrl;
 
   constructor(private userService:UsuarioService) {
-    /* this.socket = io(this.url, {
-      transports: ['websocket', 'polling', 'flashsocket'],
-      extraHeaders:{
-        xtoken: this.userService.getAuthUserToken()!
-      }
-    }); */
-    console.log("ChatService socker server url ", this.url)
     this.socket = io(this.url, {
       transports: ['websocket', 'polling', 'flashsocket'],
       auth: {
