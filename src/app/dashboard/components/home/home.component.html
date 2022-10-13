@@ -146,7 +146,9 @@
             </a>
           </li>
           <li id="normatividades" class="nav-item" *ngIf="tipoUsuario == 'Administrador'" (click)="closeOffcanvas()">
-            <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/normatividad-admi']" routerLinkActive="active">
+            <a class="nav-link" aria-current="page"
+            [ngClass]="{'miclase':_router.url.includes('/dashboard/normatividad-admi/detalle'),'disabled':disableTags }"
+            [routerLink]="['/dashboard/normatividad-admi']" routerLinkActive="active">
               <span data-feather="home"></span>
               Normativas
             </a>

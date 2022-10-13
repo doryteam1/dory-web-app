@@ -1,1 +1,17 @@
-<p>normatividad works!</p>
+<div class="container-card" *ngIf="normatividades.length > 0 ">
+  <app-card-normatividad
+  [editaAndEliminar]="true"
+   [data]="{
+                  tipo:norma?.tipo,
+                  nombre: norma?.nombre,
+                  contenido:norma?.contenido,
+                   url_descarga:norma.url_descarga
+                    }"
+                   *ngFor="let norma of normatividades; let i=index"
+                   (onUpdateCard)="editarData(norma.id_normatividad)"
+    (onDeleteCard)="deleteNorma(norma.id_normatividad,norma?.nombre,i )">
+  </app-card-normatividad>
+  <app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay normas asignados'"></app-not-found>
+</div>
+<app-basic-floating-btn [tooltip]="'Crear norma'" [agregar]="true" (click)="openFormCrear()">
+</app-basic-floating-btn>

@@ -410,13 +410,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (!this.authUser.direccion) {
         /*  this.disableTags = true; */
         this.introService.miniTour(this.miniGuidedDirecTour);
-      } /*  else if (
-        this.authUser.celular &&
-        this.authUser.id_municipio &&
-        this.authUser.direccion
-      ) {
-        this.disableTags = false;
-      } */
+      }
     }, 1000);
   }
   takedTour() {

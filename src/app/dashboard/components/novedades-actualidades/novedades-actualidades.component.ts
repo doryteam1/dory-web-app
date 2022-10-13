@@ -37,7 +37,6 @@ export class NovedadesActualidadesComponent implements OnInit {
       (response) => {
         if (response.data.length > 0) {
           this.novedades = response.data;
-          console.log(this.novedades);
           this.showError = false;
           this.showNotFound = false;
         } else {

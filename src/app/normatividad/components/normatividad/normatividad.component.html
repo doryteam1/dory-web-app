@@ -1,16 +1,24 @@
-<app-search [buscadorpersonalizado]="false" (textSearch)="onSearch($event)"></app-search>
+<app-search class="buscador-container__search" [buscadorpersonalizado]="true"
+  [placeholderbuscador]="'Buscar asociacion..'" (keyEnterPressData)=" onBuscarPalabra($event)">
+</app-search>
 <div class="filters-container">
-    <button class="btn-outline-black" routerLink="/normatividad/leyes">Leyes</button>
-    <button class="btn-outline-black ms-3" routerLink="/normatividad/decretos">Decretos</button>
-    <button class="btn-outline-black ms-3" routerLink="/normatividad/resoluciones">Resoluciones</button>
+  <button [ngClass]="{'urlActiva':_router.url.includes('/normatividad/leyes')}" class="btn-outline-black"
+    [routerLink]="['/normatividad/leyes']">Leyes</button>
+  <button class="btn-outline-black ms-3" [ngClass]="{'urlActiva':_router.url.includes('/normatividad/decretos')}"
+    [routerLink]="['/normatividad/decretos']">Decretos</button>
+  <button class="btn-outline-black ms-3" [ngClass]="{'urlActiva':_router.url.includes('/normatividad/resoluciones')}"
+    [routerLink]="['/normatividad/resoluciones']">Resoluciones</button>
 </div>
-<div class="container-normatividades" *ngIf="normatividadesFiltered.length > 0">
-    <div class="card container" *ngFor="let normatividad of normatividadesFiltered">
-      <h3 class="card-title">{{normatividad.nombre}}</h3>
-      <p>{{normatividad.contenido | shorter:164}}</p>
-      <a  target="_blank"
-           [href]="normatividad.url_descarga">Leer más...</a>
-    </div>
+<div class="container-normatividades" *ngIf="normatividadesArray.length > 0">
+  <div class="container-card">
+    <app-card-normatividad [editaAndEliminar]="false" [data]="{
+                    tipo:norma?.tipo,
+                    nombre: norma?.nombre,
+                    contenido:norma?.contenido,
+                     url_descarga:norma.url_descarga
+                      }" *ngFor="let norma of normatividadesArray; let i=index">
+    </app-card-normatividad>
+  </div>
 </div>
-<app-not-found *ngIf="normatividadesFiltered.length < 1" objectName="normatividades relacionadas"></app-not-found>
-<app-footer></app-footer>
+<app-not-found class="app-not-found" *ngIf="normatividadesArray.length <=0 || showNotFound"
+  [message]="'No hay normas asignados'"></app-not-found>

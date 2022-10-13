@@ -100,10 +100,6 @@ export class AsociacionesMunicipioComponent implements OnInit {
     );
   }
   goDetalleRepresentante(asociacion: any) {
-    console.log('representante legal');
-    console.log(asociacion.id_propietario);
-    console.log(asociacion);
-    console.log(asociacion.tipo_propietario);
     if (asociacion.tipo_propietario == 'Pescador') {
       this.router.navigateByUrl(
         '/pescadores/municipio/detalle/' + asociacion.id_propietario

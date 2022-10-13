@@ -37,6 +37,7 @@ import { NormatividadComponent } from './components/normatividad/normatividad.co
 import { EquipoTrabajoDetalleFormComponent } from './components/equipo-trabajo-detalle-form/equipo-trabajo-detalle-form.component';
 import { NovedadActualidadDetalleFormComponent } from './components/novedad-actualidad-detalle-form/novedad-actualidad-detalle-form.component';
 import { EventosDetalleFormComponent } from './components/eventos-detalle-form/eventos-detalle-form.component';
+import { NormatividadDetalleFormComponent } from './components/normatividad-detalle-form/normatividad-detalle-form.component';
 
 
 
@@ -67,6 +68,7 @@ import { EventosDetalleFormComponent } from './components/eventos-detalle-form/e
     EquipoTrabajoDetalleFormComponent,
     NovedadActualidadDetalleFormComponent,
     EventosDetalleFormComponent,
+    NormatividadDetalleFormComponent,
 
   ],
   imports: [
