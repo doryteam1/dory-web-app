@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
 import { ComunicacionEntreComponentesService } from 'src/app/shared/services/comunicacion-entre-componentes.service';
 import { limiteMapa } from 'src/models/limiteMapaGoogle.model';
+import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 const _ = require('lodash');
 @Component({
   selector: 'app-mis-granjas',
@@ -29,7 +30,8 @@ export class MisGranjasComponent implements OnInit, OnDestroy {
     private appModalService: AppModalService,
     private router: Router,
     public location: PlatformLocation,
-    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService
+    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
+    private storage: FirebaseStorageService
   ) {}
   public datosGoogleMap!: Subscription;
   ngOnInit(): void {
@@ -80,6 +82,7 @@ export class MisGranjasComponent implements OnInit, OnDestroy {
     let index = this.granjas.findIndex((granja: any) => {
       return granja.id_granja == idGranja;
     });
+    let arrayFotos=this.granjas[index].fotos
     this.appModalService
       .confirm(
         'Eliminar granja',
@@ -92,6 +95,7 @@ export class MisGranjasComponent implements OnInit, OnDestroy {
         if (result == true) {
           this.granjaService.deleteGranja(idGranja).subscribe(
             (response: any) => {
+              this.storage.deleteMultipleByUrls(arrayFotos);
               this.granjas.splice(index, 1);
               if (this.granjas.length <= 0) {
                 this.showNotFound = true;
@@ -127,7 +131,13 @@ export class MisGranjasComponent implements OnInit, OnDestroy {
       this.appModalService.CloseGoogleMapGeneralModal();
     });
     this.appModalService
-      .GoogleMapModalGeneral(atributos, modalheadergooglemap, '', mapaSeach,limiteMapa)
+      .GoogleMapModalGeneral(
+        atributos,
+        modalheadergooglemap,
+        '',
+        mapaSeach,
+        limiteMapa
+      )
       .then((result) => {})
       .catch((result) => {});
   }

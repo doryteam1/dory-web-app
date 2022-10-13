@@ -105,7 +105,7 @@ export class MisionVisionComponent implements OnInit {
         if (foto.length != 0) {
           const compressedFile =
             await this.compressImageSizeService.handleImageUpload(foto[0]);
-          let fileNameBase = '/nosotros';
+          let fileNameBase = 'misionVision/nosotros';
           let file: any = compressedFile;
           let nowTimestamp = new Date().getTime().toString();
           await this.storage
@@ -124,13 +124,19 @@ export class MisionVisionComponent implements OnInit {
     }
   }
   VerifyPhoto(data: string, urlFoto: string) {
+   let urlfotoVision = this.fotoVisionFinal;;
+   let urlfotoMision = this.fotoMisionFinal;
+   let urlfotoEntidad = this.fotoEntidadFinal;
     if (data == 'entidad') {
+       this.storage.deleteByUrl(urlfotoEntidad);
       this.fotoEntidadFinal = urlFoto;
     }
     if (data == 'mision') {
+       this.storage.deleteByUrl(urlfotoMision);
       this.fotoMisionFinal = urlFoto;
     }
     if (data == 'vision') {
+      this.storage.deleteByUrl(urlfotoVision);
       this.fotoVisionFinal = urlFoto;
     }
   }

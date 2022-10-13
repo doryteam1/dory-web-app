@@ -22,6 +22,10 @@ import { NormatividadComponent } from './components/normatividad/normatividad.co
 import { EventosComponent } from './components/eventos/eventos.component';
 import { EquipoTrabajoComponent } from './components/equipo-trabajo/equipo-trabajo.component';
 import { NovedadesActualidadesComponent } from './components/novedades-actualidades/novedades-actualidades.component';
+import { EquipoTrabajoDetalleFormComponent } from './components/equipo-trabajo-detalle-form/equipo-trabajo-detalle-form.component';
+import { NovedadActualidadDetalleFormComponent } from './components/novedad-actualidad-detalle-form/novedad-actualidad-detalle-form.component';
+import { EventosDetalleFormComponent } from './components/eventos-detalle-form/eventos-detalle-form.component';
+import { NormatividadDetalleFormComponent } from './components/normatividad-detalle-form/normatividad-detalle-form.component';
 const routes: Routes = [
   {
     path: '',
@@ -40,6 +44,28 @@ const routes: Routes = [
       { path: 'negocio/detalle', component: NegocioDtalleFormComponent },
       { path: 'mis-asociaciones', component: MisAsociacionesComponent },
       { path: 'asociacion/detalle', component: AsociacionDetalleFormComponent },
+      { path: 'equipo-trabajo-admi', component: EquipoTrabajoComponent },
+      {
+        path: 'equipo-trabajo-admi/detalle',
+        component: EquipoTrabajoDetalleFormComponent,
+      },
+      {
+        path: 'novedad-actualidad-admi',
+        component: NovedadesActualidadesComponent,
+      },
+      {
+        path: 'novedad-actualidad-admi/detalle',
+        component: NovedadActualidadDetalleFormComponent,
+      },
+      {
+        path: 'normatividad-admi/detalle',
+        component: NormatividadDetalleFormComponent,
+      },
+      { path: 'eventos-admi', component: EventosComponent },
+      {
+        path: 'evento-admi/detalle',
+        component: EventosDetalleFormComponent,
+      },
       { path: 'granja/detalle', component: GranjaDetalleFormComponent },
       { path: 'mis-publicaciones', component: MisPublicacionesComponent },
       {
@@ -49,12 +75,6 @@ const routes: Routes = [
       { path: 'publicaciones', component: PublicacionesComponent },
       { path: 'mision-vision-admi', component: MisionVisionComponent },
       { path: 'normatividad-admi', component: NormatividadComponent },
-      { path: 'eventos-admi', component: EventosComponent },
-      { path: 'equipo-trabajo-admi', component: EquipoTrabajoComponent },
-      {
-        path: 'novedad-actualidad-admi',
-        component: NovedadesActualidadesComponent,
-      },
     ],
   },
 ];

@@ -1,0 +1,80 @@
+<div>
+  <div class="d-flex flex-row justify-content-between mt-3">
+    <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nueva novedad'
+      : 'Actualizar novedad'}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <span class="container__title">Tipo de normatividad</span>
+        <div>
+          <select class="form-control" formControlName='id_tipo'>
+            <optgroup label="Seleccione el tipo de normatividad">
+              <option *ngFor="let tipo of tipoNormatividad" [value]="tipo.id">
+                {{tipo.nombre }}</option>
+            </optgroup>
+          </select>
+        </div>
+        <div *ngIf="invalid('id_tipo')" class="container__alert-msg danger-message">
+          <div *ngIf="id_tipo?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Título</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Ingrese el título " formControlName="nombre">
+        </div>
+        <div *ngIf="invalid('nombre')" class="container__alert-msg danger-message">
+          <div *ngIf="nombre?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Resumen</label>
+        <div class="input-group">
+          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
+            placeholder="Ingrese el resumen de la norma" formControlName="contenido"></textarea>
+        </div>
+        <div *ngIf="invalid('contenido')" class="container__alert-msg danger-message">
+          <div *ngIf="contenido?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Url</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Ingrese la url de la norma"
+            formControlName="url_descarga">
+        </div>
+        <div *ngIf="invalid('url_descarga')" class="container__alert-msg danger-message">
+          <div *ngIf="url_descarga?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="updateData()" *ngIf="modalMode=='update'">
+        <span *ngIf="!loading">Actualizar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="addData()" *ngIf="modalMode=='create'">
+        <span *ngIf="!loading">Guardar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button type="button" class="btn-rounded btn--blue container__btn" (click)="goBack()">
+        <span>Atrás</span>
+      </button>
+    </div>
+  </div>
+</div>

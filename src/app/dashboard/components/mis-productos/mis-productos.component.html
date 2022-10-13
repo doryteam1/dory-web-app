@@ -5,7 +5,7 @@
     [indiceProducto]="i"
     [editaAndEliminar]="true"
     (onUpdateProducto)="updateProducto(producto)"
-    (onDeleteProducto)="deleteProducto(producto.codigo,producto.nombreProducto)"
+    (onDeleteProducto)="deleteProducto(producto.codigo,producto.nombreProducto,i)"
     *ngFor="let producto of productos; let i=index">
   </app-card-producto>
 </div>

@@ -81,7 +81,7 @@ export class UsuarioService {
     localStorage.removeItem('photoUser');
     localStorage.removeItem('nomApell');
     console.log('logout google');
-    this.socialAuthService.signOut();
+    this.socialAuthService?.signOut();
   }
 
   logoutElectron() {
@@ -89,7 +89,7 @@ export class UsuarioService {
     localStorage.removeItem('token');
     localStorage.removeItem('photoUser');
     localStorage.removeItem('nomApell');
-    this.socialAuthService.signOut();
+    this.socialAuthService?.signOut();
   }
   recoveryPassword(email: string) {
     return this.httpsService.post(

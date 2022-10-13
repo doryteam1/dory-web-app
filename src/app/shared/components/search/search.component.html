@@ -4,7 +4,7 @@
 </div>
 <div *ngIf="buscadorpersonalizado" class="buscador-container">
   <div class="buscador-containe__div-search">
-    <div class="buscador-containe__search">
+    <div class="buscador-containe__search" [ngClass]="{Myclase: activeClase}">
       <!-- buscador -->
       <input class="buscador-containe__search-input" placeholder={{placeholderbuscador}} (keyup)="search()" #txtBuscar>
     </div>

@@ -10,25 +10,29 @@
             <h4 class="asociacion-container__title">{{asociacion?.nombre}}</h4>
           </span>
         </div>
-       <div class="asociacion-container__detalle">
-        <span>
-          <h4 class="detail-container__title">Municipio: </h4>
-        </span>
-        <span>
-          <h4 class="asociacion-container__title">{{asociacion?.municipio}}, {{asociacion?.departamento}}</h4>
-        </span>
+        <div class="asociacion-container__detalle">
+          <span>
+            <h4 class="detail-container__title">Municipio: </h4>
+          </span>
+          <span>
+            <h4 class="asociacion-container__title">{{asociacion?.municipio}}, {{asociacion?.departamento}}</h4>
+          </span>
         </div>
       </div>
       <img class="asociacion-container__image"
         src="{{asociacion?.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
     </div>
     <div *ngIf="userService.isAuthenticated() && (tipoUsuario == 'Pescador' || tipoUsuario == 'Piscicultor')">
-      <button class="btn-square btn--blue mt-3" (click)="invitarAnular(asociacion)" *ngIf="!asociacion?.estado_solicitud">Indicar que soy miembro</button>
-      <button class="btn-square btn--grey mt-3" (click)="invitarAnular(asociacion)" *ngIf="asociacion?.estado_solicitud == 'Enviada'">Cancelar solicitud</button>
+      <button class="btn-square btn--blue mt-3" (click)="invitarAnular(asociacion)"
+        *ngIf="!asociacion?.estado_solicitud">Indicar que soy miembro</button>
+      <button class="btn-square btn--grey mt-3" (click)="invitarAnular(asociacion)"
+        *ngIf="asociacion?.estado_solicitud == 'Enviada'">Cancelar solicitud</button>
       <div class="btn-group mt-3" *ngIf="asociacion?.estado_solicitud == 'Aceptada'">
-        <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
+        <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
+          data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <li (click)="invitarAnular(asociacion)"><a class="dropdown-item"><i class="bi bi-box-arrow-left"></i> No soy miembro</a></li>
+          <li (click)="invitarAnular(asociacion)"><a class="dropdown-item"><i class="bi bi-box-arrow-left"></i> No soy
+              miembro</a></li>
         </ul>
       </div>
     </div>
@@ -41,7 +45,7 @@
         </span>
       </div>
     </div>
-    <div class="detail-container mt-4" >
+    <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/person_pin_black_24dp.svg">
       <div class="detail-container__data detail-container__data--legal" (click)="goDetalleRepresentante()">
         <h4 class="detail-container__title detail-container__title--legal">Representante legal</h4>
@@ -59,22 +63,23 @@
       </div>
     </div>
     <div class="detail-container mt-4" *ngIf="asociacion?.foto_camarac">
-      <img class="detail-container__image" src="assets/icons/article_black_24dp.svg">
+      <img class="detail-container__image" src="assets/icons/picture_as_pdf_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Documento cámara de comercio</h4>
         <div class="detail-container__meta">
           <img class="detail-container__meta-img" src="assets/images/pdf_camara_comercio.svg">
           <div class="detail-container__meta-details">
-          <div class="detail-container__meta-info">
-          <a [href]="asociacion?.foto_camarac" target="_blank"><img class="detail-container__meta-info-img"
-            src="assets/icons/download-pdf-10136 1.svg"></a>
-         </div>
-      </div>
-        </div >
+            <div class="detail-container__meta-info">
+              <a [href]="asociacion?.foto_camarac" target="_blank"><img class="detail-container__meta-info-img"
+                  src="assets/icons/download-pdf-10136 1.svg"></a>
+            </div>
+          </div>
+        </div>
         <h6 class="detail-container__title detail-container__title--font">Fecha de renovación</h6>
-        <div class="detail-container__value" >
-          {{asociacion?.fecha_renovacion_camarac.slice(0, asociacion?.fecha_renovacion_camarac.indexOf('T')) | date:'dd/MM/yyyy'}}
-         </div>
+        <div class="detail-container__value">
+          {{asociacion?.fecha_renovacion_camarac.slice(0, asociacion?.fecha_renovacion_camarac.indexOf('T')) |
+          date:'dd/MM/yyyy'}}
+        </div>
       </div>
     </div>
     <div class="detail-container mt-4" *ngIf="!asociacion?.foto_camarac">
@@ -84,15 +89,48 @@
         <h6 class="detail-container__value">No se han cargado documentos</h6>
       </div>
     </div>
+    <div class="detail-container mt-4" *ngIf="asociacion?.url_rut">
+      <img class="detail-container__image" src="assets/icons/picture_as_pdf_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Documento RUT</h4>
+        <div class="detail-container__meta" style="text-align: center;">
+          <img style="width: 85%;" class="detail-container__meta-img " src="assets/images/RUT.jpg">
+          <div class="detail-container__meta-details w-100">
+            <div class="detail-container__meta-info w-100">
+              <a [href]="asociacion?.url_rut" target="_blank"><img class="detail-container__meta-info-img"
+                  src="assets/icons/download-pdf-10136 1.svg"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-container mt-4" *ngIf="!asociacion?.url_rut">
+      <img class="detail-container__image" src="assets/icons/picture_as_pdf_black_24dp.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Documento RUT</h4>
+        <h6 class="detail-container__value">No se ha cargado documento</h6>
+      </div>
+    </div>
+    <div class="detail-container mt-4" *ngIf="asociacion?.id_propietario==idEmailUser">
+      <img class="detail-container__image" src="assets/icons/file-zipper-regular.svg">
+      <div class="detail-container__data">
+        <h4 class="detail-container__title">Documentos miembros</h4>
+        <a class="enlace detail-container__value" (click)="download()">Documentos de los miembros de la asociación
+          <img src="assets/icons/download_for_offline_blue1_24dp.svg">
+        </a>
+      </div>
+
+      <!--  -->
+    </div>
     <div class="detail-container mt-4">
-      <img class="detail-container__image"src="assets/icons/location_on_black_24dp.svg">
+      <img class="detail-container__image" src="assets/icons/location_on_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Dirección</h4>
         <span *ngIf="asociacion?.direccion" class="detail-container__value">
           {{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion}}</span>
       </div>
     </div>
-    <div class="detail-container mt-4" *ngIf="asociacion?.informacion_adicional_direccion" >
+    <div class="detail-container mt-4" *ngIf="asociacion?.informacion_adicional_direccion">
       <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Información adicional de la dirección</h4>
@@ -104,13 +142,14 @@
       <img class="detail-container__image" src="assets/icons/pescador.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Pescadores que pertenecen a la asociación </h4>
-        <span class="detail-container__value"
-          *ngIf="pescadorasociaciones?.length>1">{{pescadorasociaciones?.length}} pescadores en
+        <span class="detail-container__value" *ngIf="pescadorasociaciones?.length>1">{{pescadorasociaciones?.length}}
+          pescadores en
           total</span>
-        <span class="detail-container__value"
-          *ngIf="pescadorasociaciones?.length==1">{{pescadorasociaciones?.length}} pescador en
+        <span class="detail-container__value" *ngIf="pescadorasociaciones?.length==1">{{pescadorasociaciones?.length}}
+          pescador en
           total</span>
-        <span class="detail-container__value" *ngIf="pescadorasociaciones?.length<=0">No cuenta con pescadores asociados</span>
+        <span class="detail-container__value" *ngIf="pescadorasociaciones?.length<=0">No cuenta con pescadores
+          asociados</span>
       </div>
     </div>
 
@@ -118,11 +157,14 @@
       <img class="detail-container__image" src="assets/icons/piscicultor.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Piscicultores que pertenecen a la asociación </h4>
-        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}}
+        <span class="detail-container__value"
+          *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}}
           piscicultores en total</span>
-        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length==1">{{piscicultorasociaciones?.length}}
+        <span class="detail-container__value"
+          *ngIf="piscicultorasociaciones?.length==1">{{piscicultorasociaciones?.length}}
           piscicultores en total</span>
-        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con piscicultores asociados</span>
+        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con piscicultores
+          asociados</span>
       </div>
     </div>
 
@@ -130,12 +172,13 @@
       <img class="detail-container__image" src="assets/icons/set_meal_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Granjas que pertenecen a la asociación </h4>
-        <span class="detail-container__value">{{granjasAsociacion!.length > 0 ? granjasAsociacion?.length + ' granjas en total' : 'No cuenta con granjas asociadas'}}</span>
+        <span class="detail-container__value">{{granjasAsociacion!.length > 0 ? granjasAsociacion?.length + ' granjas en
+          total' : 'No cuenta con granjas asociadas'}}</span>
       </div>
     </div>
 
     <div class="detail-container mt-4">
-      <img class="detail-container__image"src="assets/icons/venus-solid.svg">
+      <img class="detail-container__image" src="assets/icons/venus-solid.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Mujeres en la asociación</h4>
         <span *ngIf="asociacion?.direccion" class="detail-container__value">
@@ -144,7 +187,7 @@
     </div>
 
     <div class="detail-container mt-4">
-      <img class="detail-container__image"src="assets/icons/mars-solid.svg">
+      <img class="detail-container__image" src="assets/icons/mars-solid.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Hombres en la asociación</h4>
         <span *ngIf="asociacion?.direccion" class="detail-container__value">
@@ -154,10 +197,11 @@
   </div>
 
   <!-- granjas y asociaciones -->
-  <div class="mynavtabs"  *ngIf="piscicultorasociaciones?.length>0 || pescadorasociaciones?.length>0">
+  <div class="mynavtabs" *ngIf="piscicultorasociaciones?.length>0 || pescadorasociaciones?.length>0">
     <ul class="nav nav-tabs">
       <li class="nav-item" (click)="activeTabClick(1)" *ngIf="piscicultorasociaciones?.length>0">
-        <a class="nav-link nav-link--color" [ngClass]="{'active mynav-link': activatelistpiscicultores}" aria-current="page">
+        <a class="nav-link nav-link--color" [ngClass]="{'active mynav-link': activatelistpiscicultores}"
+          aria-current="page">
           <span>
             <img class="detail-container__image" src="assets/icons/piscicultor.svg">
           </span> Piscicultores
@@ -186,10 +230,9 @@
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-                  <app-card-piscicultor *ngFor="let piscicultor of piscicultorasociaciones; let i =index "
-                  [piscicultor]="piscicultor "
-                   (onDetalle)="gopiscicultorDetail($event)">
-                  </app-card-piscicultor>
+        <app-card-piscicultor *ngFor="let piscicultor of piscicultorasociaciones; let i =index "
+          [piscicultor]="piscicultor " (onDetalle)="gopiscicultorDetail($event)">
+        </app-card-piscicultor>
       </div>
     </div>
     <div class="mytarget" *ngIf="activatelistpescadores">
@@ -200,10 +243,9 @@
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-          <app-card-pescador *ngFor="let pescador of pescadorasociaciones; let i =index "
-            [pescador]="pescador"
-              (onDetalle)="gopescadorDetail($event)">
-           </app-card-pescador>
+        <app-card-pescador *ngFor="let pescador of pescadorasociaciones; let i =index " [pescador]="pescador"
+          (onDetalle)="gopescadorDetail($event)">
+        </app-card-pescador>
       </div>
     </div>
     <div class="mytarget" *ngIf="activatelistgranjas">
@@ -214,13 +256,9 @@
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-           <app-card-granjas
-             *ngFor="let granja of granjasAsociacion"
-             [granja]="granja"
-             (onDetalle)="goDetailFarm($event)">
-          </app-card-granjas>
+        <app-card-granjas *ngFor="let granja of granjasAsociacion" [granja]="granja" (onDetalle)="goDetailFarm($event)">
+        </app-card-granjas>
       </div>
     </div>
   </div>
 </div>
-

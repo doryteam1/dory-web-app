@@ -13,15 +13,14 @@ export class SearchComponent implements OnInit {
   @ViewChild('txtBuscar') txtBuscar!: ElementRef<HTMLInputElement>;
   @Input() buscadorpersonalizado: boolean = false;
   @Input() placeholderbuscador!: string;
-  valorpulsado: string = '';
+  @Input() activeClase: boolean = false;
   sinresultados: boolean = false;
+
   @Output() textSearch: EventEmitter<string> = new EventEmitter();
   @Output() keyEnterPress: EventEmitter<string> = new EventEmitter();
   @Output() keyEnterPressData: EventEmitter<string> = new EventEmitter();
   text: string = '';
-  constructor(
-
-  ) {}
+  constructor() {}
   ngOnInit(): void {}
   onChange() {
     this.textSearch.emit(this.text);
@@ -33,7 +32,6 @@ export class SearchComponent implements OnInit {
   /* andres codigo */
   search() {
     const valor = this.txtBuscar.nativeElement.value;
-   this.keyEnterPressData.emit(valor.toLowerCase());
+    this.keyEnterPressData.emit(valor.toLowerCase());
   }
-
 }

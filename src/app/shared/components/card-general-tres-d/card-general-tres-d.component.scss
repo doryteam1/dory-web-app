@@ -135,8 +135,12 @@ ul {
   }
 
   p {
+    color:black;
     height:auto !important;
     overflow-wrap: break-word;
+    span{
+      color:#555
+    }
   }
 }
 
@@ -151,7 +155,7 @@ ul {
 
   div {
     display: flex;
-    background-color: white;
+  background-color: #e4e1e1;
     width: 40px;
     height: 40px;
     border-radius: 100%;
@@ -181,7 +185,6 @@ ul {
 }
 
 .front .img {
-  background-color: #dadce2;
   background-position: center;
   background-size: cover;
   border-radius: 5px 5px 0 0;
@@ -193,7 +196,7 @@ ul {
 .front .img1 {
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: scale-down;
 }
 
 
@@ -265,4 +268,7 @@ ul {
 .back .btn h4 {
   transform: translateX(12px);
   transition: transform 0.3s ease-out;
+}
+.presaltoLinea {
+  white-space: pre-wrap;
 }

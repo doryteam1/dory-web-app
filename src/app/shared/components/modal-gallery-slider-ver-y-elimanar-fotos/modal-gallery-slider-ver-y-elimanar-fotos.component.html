@@ -27,7 +27,7 @@
             <div class="spinner spinner-border text-info" role="status" *ngIf="loading2 && ArrayFotos.length==0 || loading1">
               <span class="sr-only"></span>
             </div>
-              <app-not-found [errorData]="true" *ngIf="showNotFoundPhotos && ArrayFotos.length==0 && !loading2 && !loading1" messageError="No hay fotos para mostrar"></app-not-found>
+              <app-not-found  *ngIf="showNotFoundPhotos && ArrayFotos.length==0 && !loading2 && !loading1" message="No hay fotos para mostrar"></app-not-found>
           </div>
     <div class="image-box"  *ngFor="let photo of ArrayFotos; let i=index" #myItemLists >
       <img

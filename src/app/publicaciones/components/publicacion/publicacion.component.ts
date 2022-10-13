@@ -119,13 +119,15 @@ export class PublicacionComponent implements OnInit {
     this.publicacionService.getPublicacionesTodas().subscribe(
       (response) => {
         this.loading = false;
-        this.publicaciones = response.data;
-        this.publicacionesFiltered = this.publicaciones;
-        if (this.publicacionesFiltered.length < 1) {
-          this.showNotFound = true;
-        } else {
-          this.showNotFound = false;
-        }
+        if (response.data.length > 0) {
+              this.publicaciones = response.data;
+              this.publicacionesFiltered = this.publicaciones;
+              this.showError = false;
+              this.showNotFound = false;
+            } else {
+              this.showNotFound = true;
+              this.showError = false;
+            }
       },
       (err) => {
         console.log(err);

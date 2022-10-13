@@ -1,0 +1,71 @@
+.card {
+  overflow: hidden;
+  margin: 10px;
+  width: 90vw;
+  max-width: 400px;
+  height: 100vh;
+  max-height: 200px;
+  padding: 1rem;
+  border-radius: max(0px, min(8px, -999900% - 39996px + 999900vw))/8px;
+  box-shadow: 0 2px 12px var(--shadow-2);
+  gap: 10px;
+
+  .front-botones {
+    display: flex;
+    right: 10px;
+    top: 10px;
+    grid-gap: 10px;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+
+    div {
+      display: flex;
+      background-color: #e4e1e1;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      i {
+        color: var(--azul1) !important;
+        font-size: 20px;
+      }
+    }
+  }
+
+  .container-data {
+    overflow-y: auto;
+
+    .sudtitle {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1.2;
+
+      small {
+        font-weight: 400;
+      }
+    }
+  }
+
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  font-size: 1.1rem;
+}
+
+p,
+a {
+  font-size: 0.8rem;
+}
+
+a {
+  color: var(--azul1);
+  text-decoration: none;
+}

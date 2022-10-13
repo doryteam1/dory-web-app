@@ -122,16 +122,13 @@ export class ProductoDetalleFormComponent implements OnInit {
   }
   addProducto() {
     this.loading = true;
-    if (!this.form.valid /* || this.filesfinalCreate.length == 0 */) {
+    if (!this.form.valid) {
       this.form.markAllAsTouched();
-      /*     if (this.filesfinalCreate.length == 0) {
-        this.showErrorNotImageSelected = true;
-      } */
+
       console.log('Faltan datos');
       this.loading = false;
       return;
     }
-    /* this.showErrorNotImageSelected = false; */
     this.form.disable();
     let newProducto = {
       nombreProducto: this.nombreProducto?.value,
@@ -220,7 +217,12 @@ export class ProductoDetalleFormComponent implements OnInit {
       try {
         const compressedFiles =
           await this.compressImageSizeService.handleImageArrayUpload(event);
-        let fileNameBase = '/productos/' + 'prod-' + this.authUserId + '-';
+        let fileNameBase =
+             '/productos/User' +
+             this.authUserId +
+             '/producto' +
+             this.codigoProducto +
+             '/prod-';
         let files: Array<any> = compressedFiles;
         let arrayFotos: Array<any> = [];
         for (let i = 0; i < files.length; i++) {

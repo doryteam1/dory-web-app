@@ -256,72 +256,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   miniGuidedCelularTour: IntroGuidedTour[] = [this.stepPhoneNull];
   miniGuidedDirecTour: IntroGuidedTour[] = [this.stepDirecNull];
   miniGuidedMunicipioTour: IntroGuidedTour[] = [this.stepMunicNull];
-  // miniGuidedCelularTour: GuidedTour = {
-  //   tourId: 'miniTourCelular',
-  //   useOrb: false,
-  //   steps: [this.stepPhoneNull],
-  //   skipCallback: () => {
-  //     /* setTimeout(()=>{
-  //       console.log("celular tour skiped!", this.authUser)
-  //       if(!(this.authUser.id_municipio)){
-  //         this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
-  //       }else if(!this.authUser.direccion){
-  //         console.log("start tour direccion!", this.miniGuidedDirecTour)
-  //         this.guidedTourService.startTour(this.miniGuidedDirecTour)
-  //       }
-  //     },1000) */
-  //   },
-  //   completeCallback: () => {
-  //     /*  setTimeout(()=>{
-  //       console.log("celular tour complete!", this.authUser)
-  //       if(!(this.authUser.id_municipio)){
-  //         console.log("start tour municipio!")
-  //         this.guidedTourService.startTour(this.miniGuidedMunicipioTour)
-  //       }else if(!this.authUser.direccion){
-  //         console.log("start tour direccion!", this.miniGuidedDirecTour)
-  //         this.guidedTourService.startTour(this.miniGuidedDirecTour)
-  //       }
-  //     },1000) */
-  //   },
-  // };
-
-  // miniGuidedMunicipioTour: GuidedTour = {
-  //   tourId: 'miniTourMunic',
-  //   useOrb: false,
-  //   steps: [this.stepMunicNull],
-  //   skipCallback: () => {
-  //     /*  setTimeout(()=>{
-  //       if(!(this.authUser.direccion)){
-  //         this.guidedTourService.startTour(this.miniGuidedDirecTour)
-  //       }
-  //     },1000) */
-  //   },
-  //   completeCallback: () => {
-  //     /*   setTimeout(()=>{
-  //       if(!(this.authUser.direccion)){
-  //         this.guidedTourService.startTour(this.miniGuidedDirecTour)
-  //       }
-  //     },1000) */
-  //   },
-  // };
   authUser: any;
   tipoUsuario: string = '';
   error: string = '';
   offcanvas: any;
-  rutaGranjasdetalle: boolean = false;
-  rutaAsociacionesdetalle: boolean = false;
-  rutaProductosdetalle: boolean = false;
-  rutaVehiculosdetalle: boolean = false;
-  rutaNegociosdetalle: boolean = false;
   sidebar: boolean = false;
   closeOffCamba: boolean = false;
   disableTags: boolean = false;
-  rutaUrlactiva: any;
-  rutaPublicaciondetalle: boolean=false;
   constructor(
     private socialService: SocialAuthService,
     private userService: UsuarioService,
-    private _router: Router,
+    public _router: Router,
     private storage: StorageService,
     private us: UsuarioService,
     public mediaQueryService: MediaQueryService,
@@ -351,13 +296,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (!this.authUser.direccion) {
         /* this.disableTags = true; */
         this.introService.miniTour(this.miniGuidedDirecTour);
-      } /* else if (
-        this.authUser.celular &&
-        this.authUser.id_municipio &&
-        this.authUser.direccion
-      ) {
-        this.disableTags = false;
-      } */
+      }
     });
   }
   ngOnInit(): void {
@@ -417,81 +356,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
     }
-    let urlactiva = this._router.url;
-    if (urlactiva.includes('/dashboard/granja/detalle')) {
-      this.rutaGranjasdetalle = true;
-    } else if (urlactiva.includes('/dashboard/asociacion/detalle')) {
-      this.rutaAsociacionesdetalle = true;
-    } else if (urlactiva.includes('/dashboard/producto/detalle')) {
-      this.rutaProductosdetalle = true;
-    } else if (urlactiva.includes('/dashboard/vehiculo/detalle')) {
-      this.rutaVehiculosdetalle = true;
-    } else if (urlactiva.includes('/dashboard/negocio/detalle')) {
-      this.rutaNegociosdetalle = true;
-    } else if (urlactiva.includes('/dashboard/publicacion/detalle')) {
-      this.rutaPublicaciondetalle = true;
-    }
-    this.subscriber = this._router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        this.rutaGranjasdetalle = false;
-        this.rutaAsociacionesdetalle = false;
-        this.rutaProductosdetalle = false;
-        this.rutaVehiculosdetalle = false;
-        this.rutaNegociosdetalle = false;
-          this.rutaPublicaciondetalle = false
-        let urlactiva = event.url;
-        if (urlactiva.includes('/dashboard/granja/detalle')) {
-          this.rutaGranjasdetalle = true;
-          this.rutaAsociacionesdetalle = false;
-          this.rutaProductosdetalle = false;
-          this.rutaVehiculosdetalle = false;
-          this.rutaNegociosdetalle = false;
-          this.rutaPublicaciondetalle = false;
-        } else if (urlactiva.includes('/dashboard/asociacion/detalle')) {
-          this.rutaAsociacionesdetalle = true;
-          this.rutaGranjasdetalle = false;
-          this.rutaProductosdetalle = false;
-          this.rutaVehiculosdetalle = false;
-          this.rutaNegociosdetalle = false;
-          this.rutaPublicaciondetalle = false;
-        } else if (urlactiva.includes('/dashboard/producto/detalle')) {
-          this.rutaProductosdetalle = true;
-          this.rutaVehiculosdetalle = false;
-          this.rutaAsociacionesdetalle = false;
-          this.rutaGranjasdetalle = false;
-          this.rutaNegociosdetalle = false;
-          this.rutaPublicaciondetalle = false;
-        } else if (urlactiva.includes('/dashboard/vehiculo/detalle')) {
-          this.rutaVehiculosdetalle = true;
-          this.rutaProductosdetalle = false;
-          this.rutaAsociacionesdetalle = false;
-          this.rutaGranjasdetalle = false;
-          this.rutaNegociosdetalle = false;
-          this.rutaPublicaciondetalle = false;
-        } else if (urlactiva.includes('/dashboard/negocio/detalle')) {
-          this.rutaVehiculosdetalle = false;
-          this.rutaProductosdetalle = false;
-          this.rutaAsociacionesdetalle = false;
-          this.rutaGranjasdetalle = false;
-          this.rutaNegociosdetalle = true;
-          this.rutaPublicaciondetalle = false;
-        } else if (urlactiva.includes('/dashboard/publicacion/detalle')) {
-          this.rutaVehiculosdetalle = false;
-          this.rutaProductosdetalle = false;
-          this.rutaAsociacionesdetalle = false;
-          this.rutaGranjasdetalle = false;
-          this.rutaNegociosdetalle = false;
-          this.rutaPublicaciondetalle = true;
-        } else {
-          this.rutaAsociacionesdetalle = false;
-          this.rutaGranjasdetalle = false;
-          this.rutaProductosdetalle = false;
-          this.rutaVehiculosdetalle = false;
-          this.rutaNegociosdetalle = false;
-          this.rutaPublicaciondetalle = false;
-        }
-      });
   }
   ngOnDestroy() {
     this.subscriber?.unsubscribe();
@@ -546,13 +410,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (!this.authUser.direccion) {
         /*  this.disableTags = true; */
         this.introService.miniTour(this.miniGuidedDirecTour);
-      } /*  else if (
-        this.authUser.celular &&
-        this.authUser.id_municipio &&
-        this.authUser.direccion
-      ) {
-        this.disableTags = false;
-      } */
+      }
     }, 1000);
   }
   takedTour() {

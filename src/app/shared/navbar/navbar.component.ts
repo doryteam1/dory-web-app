@@ -9,6 +9,7 @@ dayjs.extend(relativeTime);
 require('dayjs/locale/es')
 dayjs.locale('es')
 import { ResizeObserver } from '@juggle/resize-observer';
+import { AppModalService } from '../services/app-modal.service';
 
 @Component({
   selector: 'app-navbar',
@@ -56,7 +57,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private userService: UsuarioService,
     private storageService: StorageService,
     private _electronService: ElectronjsService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private appModalService: AppModalService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -77,7 +79,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.photoUser = response.photoUser;
       this.nomCom = response.nomApell;
     });
-
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route: string = event.url;
@@ -86,10 +87,9 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           this.isHidden = false;
         }
-
-        if(route.includes('dashboard')){
-          if(this.userService.isAuthenticated()){
-            this.updateAsocRequest()
+        if (route.includes('dashboard')) {
+          if (this.userService.isAuthenticated()) {
+            this.updateAsocRequest();
           }
         }
       }
@@ -112,7 +112,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  updateAsocRequest(){
+  updateAsocRequest() {
     this.userService.solicitudesDeAsociaciones().subscribe((response) => {
       this.invitaciones = response.data;
     });
@@ -121,7 +121,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
       .solicitudesParaAsociacionesRepresentante()
       .subscribe((response) => {
         this.invitacionesFromUsers = response.data;
-    });
+      });
   }
 
   onResize() {
@@ -138,13 +138,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngAfterViewInit() {
     console.log('ngAftterViewInit!');
-    /*  console.log(this.notifies)
-     const observer = new ResizeObserver((entries)=>{
-      console.log(entries)
-    })
-
-    observer.observe(this.notifies) */
-    //console.log(this.elRef.nativeElement.querySelector('.notify__menu'))
     const notifies = document.querySelector('.notify__menu')!;
     const ro = new ResizeObserver((entries, observer) => {
       if (this.notifiesHeigth < 356) {
@@ -196,13 +189,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   logout() {
     this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
-    this.userService.logout();
-    this.router.navigateByUrl('/home').then(
-      ()=>{
-        window.location.reload();
-      }
-    )
-    
+    this.userService?.logout();
+    this.router.navigateByUrl('/home');
   }
 
   updatePassword() {
@@ -236,5 +224,14 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   timeToNow(date: string) {
     dayjs.extend(relativeTime);
     return dayjs().toNow(true);
+  }
+  serch() {
+    this.appModalService
+      .modalSearchComponentl(
+      )
+      .then((result) => {
+
+      })
+      .catch((result) => {});
   }
 }

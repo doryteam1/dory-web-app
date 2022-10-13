@@ -34,6 +34,11 @@ import { EquipoTrabajoComponent } from './components/equipo-trabajo/equipo-traba
 import { NovedadesActualidadesComponent } from './components/novedades-actualidades/novedades-actualidades.component';
 import { EventosComponent } from './components/eventos/eventos.component';
 import { NormatividadComponent } from './components/normatividad/normatividad.component';
+import { EquipoTrabajoDetalleFormComponent } from './components/equipo-trabajo-detalle-form/equipo-trabajo-detalle-form.component';
+import { NovedadActualidadDetalleFormComponent } from './components/novedad-actualidad-detalle-form/novedad-actualidad-detalle-form.component';
+import { EventosDetalleFormComponent } from './components/eventos-detalle-form/eventos-detalle-form.component';
+import { NormatividadDetalleFormComponent } from './components/normatividad-detalle-form/normatividad-detalle-form.component';
+
 
 
 @NgModule({
@@ -60,6 +65,11 @@ import { NormatividadComponent } from './components/normatividad/normatividad.co
     NovedadesActualidadesComponent,
     EventosComponent,
     NormatividadComponent,
+    EquipoTrabajoDetalleFormComponent,
+    NovedadActualidadDetalleFormComponent,
+    EventosDetalleFormComponent,
+    NormatividadDetalleFormComponent,
+
   ],
   imports: [
     CommonModule,

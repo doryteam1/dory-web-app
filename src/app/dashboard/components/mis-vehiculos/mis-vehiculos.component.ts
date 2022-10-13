@@ -5,6 +5,7 @@ import { VehiculosService } from 'src/app/services/vehiculos.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { Router } from '@angular/router';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
+import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 @Component({
   selector: 'app-mis-vehiculos',
   templateUrl: './mis-vehiculos.component.html',
@@ -18,7 +19,8 @@ export class MisVehiculosComponent implements OnInit {
   constructor(
     private vehiculosService: VehiculosService,
     private router: Router,
-    private appModalService: AppModalService
+    private appModalService: AppModalService,
+    private storage: FirebaseStorageService
   ) {}
   ngOnInit(): void {
     let token = localStorage.getItem('token');
@@ -44,6 +46,8 @@ export class MisVehiculosComponent implements OnInit {
     let i = this.vehiculos.findIndex((vehiculo: any) => {
       return vehiculo.id_vehiculo == id;
     });
+    let arrayFotos = this.vehiculos[i].fotos;
+    console.log(arrayFotos)
     this.appModalService
       .confirm(
         'Eliminar vehículo',
@@ -60,6 +64,7 @@ export class MisVehiculosComponent implements OnInit {
                 return vehiculo.id_vehiculo == id;
               });
               this.vehiculos.splice(index, 1);
+              this.storage.deleteMultipleByUrls(arrayFotos);
               if (this.vehiculos.length <= 0) {
                 this.showNotFound = true;
               }

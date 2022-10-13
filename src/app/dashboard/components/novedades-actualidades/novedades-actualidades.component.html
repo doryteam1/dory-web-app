@@ -1,1 +1,22 @@
-<p>novedades-actualidades works!</p>
+<div class="container-card" *ngIf="novedades.length > 0 ">
+  <app-card-general-tres-d [editaAndEliminar]="true"
+  [dato]="{
+        titulo:novedad?.titulo,
+        subTitle:[
+        {titulo:'Tipo: ',detail:novedad?.tipo},
+        {titulo:'Autor: ',detail:novedad?.autor}
+        ],
+        descripcion:novedad?.resumen,
+        imagen:novedad?.url_foto_novedad,
+        arrayEnlaces:[novedad.url_novedad]
+      }"
+    (onUpdateCard)="editarData(novedad.id_novedad)"
+    (onDeleteCard)="deleteNovedad(novedad.id_novedad,novedad?.titulo,novedad.url_foto_novedad,i )"
+    *ngFor="let novedad of novedades; let i=index">
+  </app-card-general-tres-d>
+  <app-not-found  class="app-not-found" *ngIf="showNotFound" [message]="'No hay novedades asignados'"></app-not-found>
+</div>
+<app-basic-floating-btn [tooltip]="'Crear novedad'" [agregar]="true" (click)="openFormCrear()">
+</app-basic-floating-btn>
+
+

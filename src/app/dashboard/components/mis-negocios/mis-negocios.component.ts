@@ -1,7 +1,6 @@
 import { Component, OnInit ,  ElementRef,
   OnDestroy,
  } from '@angular/core';
-import { PlacesService } from 'src/app/services/places.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import {  Subscription} from 'rxjs';
@@ -11,12 +10,13 @@ import { Router } from '@angular/router';
 import { ComunicacionEntreComponentesService } from 'src/app/shared/services/comunicacion-entre-componentes.service';
 const _ = require('lodash');
 import { limiteMapa } from 'src/models/limiteMapaGoogle.model';
+import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 @Component({
   selector: 'app-mis-negocios',
   templateUrl: './mis-negocios.component.html',
   styleUrls: ['./mis-negocios.component.scss'],
 })
-export class MisNegociosComponent implements OnInit,OnDestroy {
+export class MisNegociosComponent implements OnInit, OnDestroy {
   negocios: Array<any> = [];
   showNotFound: boolean = false;
   indicenegocio!: number;
@@ -26,36 +26,37 @@ export class MisNegociosComponent implements OnInit,OnDestroy {
   negocio: any;
   constructor(
     private negociosService: NegociosService,
-    private places: PlacesService,
     private appModalService: AppModalService,
     public platformLocation: PlatformLocation,
     private router: Router,
-    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService
-  ) {
-
-  }
-    public datosGoogleMap!: Subscription;
+    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
+    private storage: FirebaseStorageService
+  ) {}
+  public datosGoogleMap!: Subscription;
   ngOnInit(): void {
-             this.datosGoogleMap =
-               this.comunicacionEntreComponentesService.changeArray.subscribe(
-                 (datos) => {
-                    this.negociosService
-                      .updateParcialNegocio(this.negocios[this.indicenegocio!].id_negocio, {
-                         latitud: datos[0].latitud,
-                         longitud: datos[0].longitud,
-                         id_municipio: datos[0].id_municipio,
-                         direccion: datos[0].direccion,
-                       })
-                     .subscribe(
-                       (response) => {
-                        this.AutoNgOnInit()
-                       },
-                       (err) => {
-                         console.log(err);
-                       }
-                     );
-                 }
-               );
+    this.datosGoogleMap =
+      this.comunicacionEntreComponentesService.changeArray.subscribe(
+        (datos) => {
+          this.negociosService
+            .updateParcialNegocio(
+              this.negocios[this.indicenegocio!].id_negocio,
+              {
+                latitud: datos[0].latitud,
+                longitud: datos[0].longitud,
+                id_municipio: datos[0].id_municipio,
+                direccion: datos[0].direccion,
+              }
+            )
+            .subscribe(
+              (response) => {
+                this.AutoNgOnInit();
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+        }
+      );
     this.AutoNgOnInit();
   }
   ngOnDestroy(): void {
@@ -82,6 +83,7 @@ export class MisNegociosComponent implements OnInit,OnDestroy {
   }
 
   deleteNegocio(negocio: any) {
+    let arrayFotos = negocio.fotos;
     this.appModalService
       .confirm(
         'Eliminar negocio',
@@ -98,6 +100,7 @@ export class MisNegociosComponent implements OnInit,OnDestroy {
                 (element) => element.id_negocio == negocio.id_negocio
               );
               this.negocios.splice(index, 1);
+              this.storage.deleteMultipleByUrls(arrayFotos);
               if (this.negocios.length <= 0) {
                 this.showNotFound = true;
               }
@@ -116,32 +119,32 @@ export class MisNegociosComponent implements OnInit,OnDestroy {
     );
     this.indicenegocio = index;
 
-   let modalheadergooglemap = false;
-   let mapaSeach = true;
-   let limiteMapa: limiteMapa = {
-     limite: 'Sucre',
-     nivDivAdm: 'Departamento',
-     id_departamento: 70,
-   };
-   let atributos = {
-     longAndLat: {
-       lat: parseFloat(this.negocios[index!].latitud),
-       lng: parseFloat(this.negocios[index!].longitud),
-     },
-   };
-   this.platformLocation.onPopState(() => {
-     this.appModalService.CloseGoogleMapGeneralModal();
-   });
-   this.appModalService
-     .GoogleMapModalGeneral(
-       atributos,
-       modalheadergooglemap,
-       '',
-       mapaSeach,
-       limiteMapa
-     )
-     .then((result) => {})
-     .catch((result) => {});
+    let modalheadergooglemap = false;
+    let mapaSeach = true;
+    let limiteMapa: limiteMapa = {
+      limite: 'Sucre',
+      nivDivAdm: 'Departamento',
+      id_departamento: 70,
+    };
+    let atributos = {
+      longAndLat: {
+        lat: parseFloat(this.negocios[index!].latitud),
+        lng: parseFloat(this.negocios[index!].longitud),
+      },
+    };
+    this.platformLocation.onPopState(() => {
+      this.appModalService.CloseGoogleMapGeneralModal();
+    });
+    this.appModalService
+      .GoogleMapModalGeneral(
+        atributos,
+        modalheadergooglemap,
+        '',
+        mapaSeach,
+        limiteMapa
+      )
+      .then((result) => {})
+      .catch((result) => {});
   }
   createNewNegocio() {
     let object = {

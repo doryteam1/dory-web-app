@@ -1,17 +1,18 @@
 <div class="container">
-    <h3 class="title">Conoce nuestro equipo</h3>
-    <span class="paragraph">Somos un equipo de trabajo, conformado por 10 personas altamente integrados y capacitados, en la que se encuentran incorporados PhD, Magíster y Profesionales. Todos comprometidos con un mismo objetivo, el de lograr y desarrollar a plenitud una plataforma web de transferencia tecnológica, la cual permita la interacción de conocimientos e información.
-        Con nuestros conocimientos y habilidades trabajamos en equipo para encontrar de manera eficiente mejoras al servicio, promoviendo la productividad y competitividad para el sector piscícola en el departamento de Sucre, contribuyendo de manera eficaz al bienestar, desarrollo y sostenibilidad.</span>
-    <div class="container__box">
-        <div class="card" *ngFor="let member of team">
-          <div class="container-card__imagen" >
-            <img (click)="openModal(content,member)" class="card__image animate__bounceIn" [src]="member.photo" [alt]="member.name">
-          </div>
-          <div class="container-button-detalle">
-            <h4 class="card__title1" (click)="openModal(content,member)">{{member?.name}}</h4>
-          </div>
-        </div>
+  <h3 class="title">{{datosConocenos?.titulo}}</h3>
+  <span class="paragraph presaltoLinea">{{datosConocenos?.descripcion}}</span>
+  <div class="container__box">
+    <app-spinner [showText]="false" *ngIf="loading"></app-spinner>
+    <div class="card" *ngFor="let member of equipoTrabajo">
+      <div class="container-card__imagen">
+        <img (click)="openModal(content,member)" class="card__image animate__bounceIn" [src]="member.imagen"
+          [alt]="member.nombres">
+      </div>
+      <div class="container-button-detalle">
+        <h4 class="card__title1" (click)="openModal(content,member)">{{member?.nombres +' '+ member?.apellidos | titlecase}}</h4>
+      </div>
     </div>
+  </div>
 </div>
 <app-footer></app-footer>
 <ng-template #content let-modal>
@@ -20,21 +21,25 @@
     </button>
     <div class="container-data-user">
       <figure class="container__figure">
-      <img class="container__figure-img animate__bounceIn" [src]="member.photo" [alt]="member.name">
+        <img class="container__figure-img animate__bounceIn" [src]="member?.imagen" [alt]="member?.nombres">
       </figure>
       <div class="container__data-info">
-        <h4 class="container__data-info-t1">{{member?.name}}</h4>
-        <h5 class="container__data-info-t2">{{member?.location}}</h5>
-        <h5 class="container__data-info-t2">{{member?.position}}</h5>
+        <h4 class="container__data-info-t1">{{member?.nombres +' '+ member?.apellidos | titlecase}}</h4>
+        <h5 class="container__data-info-t2">{{locationData(member)}}
+        </h5>
+        <h5 class="container__data-info-t2">{{member?.cargo}}</h5>
         <div class="container__data-paragraph">
-          <p class="container__data-paragraph-p" [innerHTML]="member.data"></p>
+          <p class="container__data-paragraph-p presaltoLinea">{{member?.descripcion}}</p>
           <h4 class="container__data-info-t1">Enlaces de interés</h4>
           <div>
-            <a style="margin-right: 5px;" [href]="member.cvlac" target="_blank">
-              <img class="card__icon" src="assets/images/cvlac-logo.png" *ngIf="member.cvlac">
+            <a style="margin-right: 5px;" [href]="urlcvlac" target="_blank" *ngIf="urlcvlac">
+              <img class="card__icon" src="assets/images/cvlac-logo.png">
             </a>
-            <a [href]="member.linkedIn" target="_blank">
-              <img class="card__icon" src="assets/icons/linkedin.svg" *ngIf="member.linkedIn">
+            <a [href]="urlLinkedin" target="_blank" *ngIf="urlLinkedin">
+              <img class="card__icon" src="assets/icons/linkedin.svg">
+            </a>
+            <a  [href]="urlDefecto" target="_blank" *ngIf="urlDefecto">
+              <img class="card__icon" src="assets/icons/url.svg">
             </a>
           </div>
         </div>
@@ -42,3 +47,6 @@
     </div>
   </div>
 </ng-template>
+<app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay equipo de trabajo asignado'"></app-not-found>
+<app-not-found [genericError]="showError" *ngIf="showError"></app-not-found>
+

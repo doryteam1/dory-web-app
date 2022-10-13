@@ -1,0 +1,171 @@
+<div>
+  <div class="d-flex flex-row justify-content-between mt-3">
+    <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo miembro'
+      : 'Actualizar miembro'}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label for="dateOfBirth">Nombres</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Nombres del miembro" formControlName="nombres">
+        </div>
+        <div *ngIf="invalid('nombres')" class="container__alert-msg danger-message">
+          <div *ngIf="nombres?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="dateOfBirth">Apellidos</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Apellidos del miembro" formControlName="apellidos">
+        </div>
+        <div *ngIf="invalid('apellidos')" class="container__alert-msg danger-message">
+          <div *ngIf="apellidos?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Fecha de nacimiento</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" type="date" [max]="fechaActual"  placeholder="Fecha de nacimiento"
+            formControlName="fecha_nacimiento">
+        </div>
+        <div *ngIf="invalid('fecha_nacimiento')" class="container__alert-msg danger-message">
+          <div *ngIf="fecha_nacimiento?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">País</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" type="text"  placeholder="País de nacimiento"
+            formControlName="pais">
+        </div>
+        <div *ngIf="invalid('pais')" class="container__alert-msg danger-message">
+          <div *ngIf="pais?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Departamento</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" type="text"  placeholder="Departamento de nacimiento"
+            formControlName="departamento">
+        </div>
+        <div *ngIf="invalid('departamento')" class="container__alert-msg danger-message">
+          <div *ngIf="departamento?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Municipio</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" type="text"  placeholder="Municipio de nacimiento"
+            formControlName="municipio">
+        </div>
+        <div *ngIf="invalid('municipio')" class="container__alert-msg danger-message">
+          <div *ngIf="municipio?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Cargo</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Cargo del miembro" formControlName="cargo">
+        </div>
+        <div *ngIf="invalid('cargo')" class="container__alert-msg danger-message">
+          <div *ngIf="cargo?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="dateOfBirth">Descripción</label>
+        <div class="input-group">
+          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
+            placeholder="Descripción del miembro" formControlName="descripcion"></textarea>
+        </div>
+        <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
+          <div *ngIf="descripcion?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">CvLAC</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Ingrese url CvLAC" formControlName="enlaceCvLAC">
+        </div>
+        <div *ngIf="invalid('enlaceCvLAC')" class="container__alert-msg danger-message">
+          <div *ngIf="enlaceCvLAC?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Linkedin</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Ingrese url Linkedin"
+            formControlName="enlaceLinkedin">
+        </div>
+        <div *ngIf="invalid('enlaceLinkedin')" class="container__alert-msg danger-message">
+          <div *ngIf="enlaceLinkedin?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="photoAnduploadPhoto">
+        <label for="dateOfBirth">Foto del miembro</label>
+        <div  style="cursor: pointer;" class="photoAnduploadPhoto-container" (click)="openAddFileDialogCreate()">
+          <div class="mb-3 imagen" *ngIf="fotoMiembro">
+            <div class="imagen-container" >
+              <img [src]="fotoMiembro" alt="">
+            </div>
+          </div>
+          <div class="input-imagen">
+            <div>
+              <button type="button" class="btn btn-primary container__btn--azul1"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                <div>
+                  <img src="assets/icons/file_upload_black_24dp.svg">
+                  <span>
+                    Subir Fotos
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="updateData()" *ngIf="modalMode=='update'">
+        <span *ngIf="!loading">Actualizar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="addMiembro()" *ngIf="modalMode=='create'">
+        <span *ngIf="!loading">Guardar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button type="button" class="btn-rounded btn--blue container__btn" (click)="goBack()">
+        <span>Atrás</span>
+      </button>
+    </div>
+  </div>
+</div>
+<input #fileInputCreate type="file" name="resume" accept="image/*" (change)='fileChangeCreate($event)' hidden>

@@ -1,0 +1,16 @@
+<div class="card container">
+  <div class="front-botones">
+    <div (click)="editCard()" *ngIf="editaAndEliminar">
+      <i class="container__icon bi bi-pencil"></i>
+    </div>
+    <div (click)="deleteCard()" *ngIf="editaAndEliminar">
+      <i class="container__icon bi bi-trash"></i>
+    </div>
+  </div>
+  <div class="container-data">
+    <h3 class="card-title">{{data.nombre | titlecase}}</h3>
+    <p class="presaltoLinea">{{data.contenido }}</p>
+    <p class="sudtitle">Tipo: <small>{{data.tipo}}</small></p>
+    <a class="sudtitle"target="_blank" [href]="data.url_descarga">Leer más...</a>
+  </div>
+</div>
