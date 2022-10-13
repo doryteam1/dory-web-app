@@ -18,8 +18,8 @@ export class ChatService {
         xtoken: this.userService.getAuthUserToken()!
       }
     }); */
-
-    this.socket = io("https://dory-api-rest-pruebas.herokuapp.com/", {
+    console.log("ChatService socker server url ", this.url)
+    this.socket = io(this.url, {
       transports: ['websocket', 'polling', 'flashsocket'],
       auth: {
         token: "Bearer " + this.userService.getAuthUserToken()!
