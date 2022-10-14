@@ -14,8 +14,8 @@
     (onDeleteCard)="deleteNovedad(novedad.id_novedad,novedad?.titulo,novedad.url_foto_novedad,i )"
     *ngFor="let novedad of novedades; let i=index">
   </app-card-general-tres-d>
-  <app-not-found  class="app-not-found" *ngIf="showNotFound" [message]="'No hay novedades asignados'"></app-not-found>
 </div>
+<app-not-found  class="app-not-found" *ngIf="showNotFound" [message]="'No hay novedades asignados'"></app-not-found>
 <app-basic-floating-btn [tooltip]="'Crear novedad'" [agregar]="true" (click)="openFormCrear()">
 </app-basic-floating-btn>
 

@@ -1,0 +1,65 @@
+<div class="container-todo" style="margin-top: 20px;">
+  <div class="basic-container">
+    <div *ngIf="items.length > 0 && imagenes.length > 0">
+      <gallery  *ngIf="modalMode == 'visualice'" class="gallery--class" [counter]="false" [attr.fluid]="false" [loadingStrategy]="'lazy'"
+        [imageSize]="'cover'" id="homegallery" [thumbHeight]="70" [thumbWidth]="80" [thumbMode]="'free'" [dots]="true"
+        [autoPlay]="tiempoSlide > 0" [playerInterval]="tiempoSlide" [thumb]="false" [nav]="true" [items]="items "
+        (itemClick)="clisFotoSlide($event)">
+      </gallery>
+      <div>
+        <div class="d-flex flex-row justify-content-between mt-3 myAjusteModal">
+          <div class="modal-body">
+            <form [formGroup]="form" *ngIf="modalMode == 'update'">
+              <div class="mb-3">
+                <label for="dateOfBirth">Tiempo entre fotos</label>
+                <div class="input-group">
+                  <input id="productName" type="number" class="form-control"
+                    placeholder=" Ingrese el tiempo en ms. Ej:3000ms"
+                    formControlName="time"
+                    onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+                </div>
+                <div *ngIf="invalid('time')" class="container__alert-msg danger-message">
+                  <div *ngIf="time?.errors?.['required']">
+                    Campo requerido
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="paragraph" *ngIf="modalMode == 'visualice'">
+              <h3 class="title">{{tiempoSlide}} ms</h3>
+              <button type="button" class="btn-rounded btn--blue container__btn" (click)="EditionTime()">
+                <span>Editar</span>
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer" *ngIf="modalMode == 'update'">
+            <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
+              <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+                (click)="updateData()" *ngIf="modalMode=='update'">
+                <span *ngIf="!loading">Actualizar</span>
+                <div class="container__spinner spinner-border" role="status" *ngIf="loading"></div>
+              </button>
+              <button type="button" class="btn-rounded btn--blue container__btn" (click)="cancelingEdition()">
+                <span>Cancelar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-card" *ngIf="sliders.length > 0 ">
+      <app-card-slider-enlaces-directos-inicio [editaAndEliminar]="true" [dato]="{
+          titulo:slide?.titulo,
+          imagen:slide?.url_imagen,
+          urlEnlace:slide?.url_enlace
+        }" (onUpdateCard)="editarData(slide.id_slid)"
+        (onDeleteCard)="deleteNovedad(slide.id_slid,slide?.titulo,slide.url_imagen,i )"
+        *ngFor="let slide of sliders; let i=index">
+      </app-card-slider-enlaces-directos-inicio>
+    </div>
+    <app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay sliders asignados'">
+    </app-not-found>
+  </div>
+
+  <app-basic-floating-btn [tooltip]="'Crear un slide'" [agregar]="true" (click)="openFormCrear()">
+  </app-basic-floating-btn>

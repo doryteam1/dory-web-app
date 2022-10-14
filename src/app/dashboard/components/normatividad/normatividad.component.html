@@ -11,7 +11,7 @@
                    (onUpdateCard)="editarData(norma.id_normatividad)"
     (onDeleteCard)="deleteNorma(norma.id_normatividad,norma?.nombre,i )">
   </app-card-normatividad>
-  <app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay normas asignados'"></app-not-found>
 </div>
-<app-basic-floating-btn [tooltip]="'Crear norma'" [agregar]="true" (click)="openFormCrear()">
+<app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay normas asignados'"></app-not-found>
+<app-basic-floating-btn [tooltip]="'Crear una norma'" [agregar]="true" (click)="openFormCrear()">
 </app-basic-floating-btn>

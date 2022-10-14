@@ -131,6 +131,8 @@ export class EventosDetalleFormComponent implements OnInit {
       this.id_modalidad_fk?.setValue(this.evento?.id_modalidad_fk);
       this.id_tipo_evento_fk?.setValue(this.evento?.id_tipo_evento_fk);
       this.fotoEvento = this.evento?.imagen;
+      console.log(this.hora)
+      console.log(this.fecha)
     }
   }
   invalid(controlFormName: string) {

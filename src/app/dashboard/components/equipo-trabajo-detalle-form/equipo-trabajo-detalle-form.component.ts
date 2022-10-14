@@ -1,4 +1,5 @@
 import {
+  DatePipe,
   formatDate,
   PlatformLocation,
   registerLocaleData,
@@ -60,7 +61,8 @@ export class EquipoTrabajoDetalleFormComponent implements OnInit {
     public platformLocation: PlatformLocation,
     private compressImageSizeService: CompressImageSizeService,
     private sanitizer: DomSanitizer,
-    private ar: ActivatedRoute
+    private ar: ActivatedRoute,
+    private datePipe: DatePipe
   ) {}
   ngOnInit(): void {
     registerLocaleData(es);
@@ -286,9 +288,9 @@ export class EquipoTrabajoDetalleFormComponent implements OnInit {
   }
   get fechaActual() {
     var today = new Date();
-    var now = today.toLocaleDateString('es');
-    now = formatDate(now, 'yyyy-MM-dd', 'es');
-    return now;
+    /*     var now = today.toLocaleDateString('es');
+    now = formatDate(now, 'yyyy-MM-dd', 'es'); */
+    return this.datePipe.transform(today, 'yyyy-MM-dd');;
   }
   get nombres() {
     return this.form.get('nombres');

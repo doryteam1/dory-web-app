@@ -4,8 +4,8 @@ import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { Utilities } from 'src/app/utilities/utilities';
-import { formatDate, Location } from '@angular/common'
-import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe, formatDate, Location } from '@angular/common'
+import { ActivatedRoute } from '@angular/router';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 
@@ -47,7 +47,8 @@ export class AsociacionDetalleFormComponent implements OnInit {
     private storage: FirebaseStorageService,
     private places: PlacesService,
     private ar: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -493,8 +494,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
   }
   get fechaActual() {
     var today = new Date();
-    var now = today.toLocaleDateString('es');
-    now = formatDate(now, 'yyyy-MM-dd', 'es');
-    return now;
+    return this.datePipe.transform(today, 'yyyy-MM-dd');
   }
 }

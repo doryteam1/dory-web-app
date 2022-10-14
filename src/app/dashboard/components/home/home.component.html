@@ -153,6 +153,22 @@
               Normativas
             </a>
           </li>
+          <li id="slider-inicio" class="nav-item" *ngIf="tipoUsuario == 'Administrador'" (click)="closeOffcanvas()">
+            <a class="nav-link" aria-current="page"
+            [ngClass]="{'miclase':_router.url.includes('/dashboard/slider-inicio-admi/detalle'),'disabled':disableTags }"
+            [routerLink]="['/dashboard/slider-inicio-admi']" routerLinkActive="active">
+              <span data-feather="home"></span>
+              Slider inicio
+            </a>
+          </li>
+          <li id="enlaces-directos-inicio" class="nav-item" *ngIf="tipoUsuario == 'Administrador'" (click)="closeOffcanvas()">
+            <a class="nav-link" aria-current="page"
+            [ngClass]="{'miclase':_router.url.includes('/dashboard/enlaces-directos-inicio-admi/detalle'),'disabled':disableTags }"
+            [routerLink]="['/dashboard/enlaces-directos-inicio-admi']" routerLinkActive="active">
+              <span data-feather="home"></span>
+              Enlaces directos inicio
+            </a>
+          </li>
           <!--  -->
           <li id="contrasena" class="nav-item" style="cursor: pointer;" (click)="closeOffcanvas()">
             <a class="nav-link " aria-current="page" (click)="updatePassword()" routerLinkActive="active">

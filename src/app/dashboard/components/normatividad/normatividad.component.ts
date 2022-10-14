@@ -54,7 +54,7 @@ export class NormatividadComponent implements OnInit {
     this.appModalService
       .confirm(
         'Eliminar norma',
-        'Esta seguro que desea eliminar esta norma',
+        'Está seguro que desea eliminar esta norma',
         'Si',
         'No',
         nombre
