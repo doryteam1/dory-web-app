@@ -80,6 +80,7 @@ export class UsuarioService {
     localStorage.removeItem('token');
     localStorage.removeItem('photoUser');
     localStorage.removeItem('nomApell');
+    localStorage.removeItem('chats');
     console.log('logout google');
     this.socialAuthService?.signOut();
   }
@@ -89,6 +90,7 @@ export class UsuarioService {
     localStorage.removeItem('token');
     localStorage.removeItem('photoUser');
     localStorage.removeItem('nomApell');
+    localStorage.removeItem('chats');
     this.socialAuthService?.signOut();
   }
   recoveryPassword(email: string) {

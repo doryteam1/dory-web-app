@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnIn
 import { FloatingBtnAutoUpComponent } from './shared/components/floating-btn-auto-up/floating-btn-auto-up.component';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
 import { environment } from 'src/environments/environment';
+import { UsuarioService } from './services/usuario.service';
 declare const process: any;
 
 @Component({
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit{
   floatingBtn!: FloatingBtnAutoUpComponent;
   @ViewChild('main') divMain!: ElementRef;
   constructor(
-    private _electronService: ElectronjsService
+    private _electronService: ElectronjsService,
+    public userService:UsuarioService
   ) {
   }
   ngOnInit(): void {

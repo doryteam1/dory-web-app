@@ -44,11 +44,14 @@ export class ChatUserComponent implements OnInit {
         );
         this.messageArray = [];
         if(roomIndex > -1){
+          console.log("existe la sala")
+          console.log(this.roomsArray[roomIndex])
           this.roomsArray[roomIndex].chats.push({
             fromUserId: data.de,
             message: data.mensaje
           });
         }else{
+          console.log("nueva sala")
           const updateStorage = {
             roomId: data.de,
             chats: [
@@ -60,9 +63,9 @@ export class ChatUserComponent implements OnInit {
           };
           this.roomsArray.push(updateStorage);
         }
+        this.chatService.setStorage(this.roomsArray);
         /*Carga los mensajes del la sala del usuario seleccionado*/
         this.loadRoomMessages();
-        console.log(this.messageArray)
       });
 
       this.chatService
