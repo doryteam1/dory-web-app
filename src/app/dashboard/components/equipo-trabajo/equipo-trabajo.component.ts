@@ -106,7 +106,7 @@ export class EquipoTrabajoComponent implements OnInit {
     this.appModalService
       .confirm(
         'Eliminar miembro',
-        'Esta seguro que desea eliminar este miembro',
+        'Está seguro que desea eliminar este miembro',
         'Si',
         'No',
         nombre

@@ -38,6 +38,11 @@ import { EquipoTrabajoDetalleFormComponent } from './components/equipo-trabajo-d
 import { NovedadActualidadDetalleFormComponent } from './components/novedad-actualidad-detalle-form/novedad-actualidad-detalle-form.component';
 import { EventosDetalleFormComponent } from './components/eventos-detalle-form/eventos-detalle-form.component';
 import { NormatividadDetalleFormComponent } from './components/normatividad-detalle-form/normatividad-detalle-form.component';
+import { SliderInicioComponent } from './components/slider-inicio/slider-inicio.component';
+import { SliderInicioDetalleFormComponent } from './components/slider-inicio-detalle-form/slider-inicio-detalle-form.component';
+import { EnlacesDirectosInicioComponent } from './components/enlaces-directos-inicio/enlaces-directos-inicio.component';
+import { EnlacesDirectosInicioDetalleFormComponent } from './components/enlaces-directos-inicio-detalle-form/enlaces-directos-inicio-detalle-form.component';
+import { GalleryModule } from 'ng-gallery';
 
 
 
@@ -69,7 +74,10 @@ import { NormatividadDetalleFormComponent } from './components/normatividad-deta
     NovedadActualidadDetalleFormComponent,
     EventosDetalleFormComponent,
     NormatividadDetalleFormComponent,
-
+    SliderInicioComponent,
+    SliderInicioDetalleFormComponent,
+    EnlacesDirectosInicioComponent,
+    EnlacesDirectosInicioDetalleFormComponent,
   ],
   imports: [
     CommonModule,
@@ -87,6 +95,7 @@ import { NormatividadDetalleFormComponent } from './components/normatividad-deta
     RouterModule,
     GuidedTourModule,
     PublicacionesModule,
+    GalleryModule,
   ],
   providers: [GuidedTourService],
 })

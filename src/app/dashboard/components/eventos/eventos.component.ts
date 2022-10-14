@@ -73,7 +73,7 @@ export class EventosComponent implements OnInit {
     this.appModalService
       .confirm(
         'Eliminar novedad',
-        'Esta seguro que desea eliminar esta novedad',
+        'Está seguro que desea eliminar esta novedad',
         'Si',
         'No',
         nombre

@@ -1,0 +1,82 @@
+<div>
+  <div class="d-flex flex-row justify-content-between mt-3">
+    <h4 class="modal-title" id="modal-basic-title">{{modalMode == 'create' ? 'Nuevo slide'
+      : 'Actualizar slide'}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label for="dateOfBirth">Título</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Ingrese el título " formControlName="titulo">
+        </div>
+        <div *ngIf="invalid('titulo')" class="container__alert-msg danger-message">
+          <div *ngIf="titulo?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Url</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Ingrese la url de redireccionamiento"
+            formControlName="url_enlace">
+        </div>
+        <div *ngIf="invalid('url_enlace')" class="container__alert-msg danger-message">
+          <div *ngIf="url_enlace?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <div class="photoAnduploadPhoto">
+        <label for="dateOfBirth">Foto slide</label>
+        <div class="photoAnduploadPhoto-container" (click)="openAddFileDialogCreate()">
+          <div class="mb-3 imagen" *ngIf="fotoSlide ">
+            <div class="imagen-container">
+              <img [src]="fotoSlide  ? fotoSlide : 'assets/images/no-image-photography.svg'" alt="">
+            </div>
+          </div>
+          <div class="input-imagen">
+            <div>
+              <button type="button" class="btn btn-primary container__btn--azul1"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                <div>
+                  <img src="assets/icons/file_upload_black_24dp.svg">
+                  <span>
+                    Subir Fotos
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="sinFoto" class="container__alert-msg danger-message">
+          <div >
+            Se requiere la foto, por favor súbala
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="updateData()" *ngIf="modalMode=='update'">
+        <span *ngIf="!loading">Actualizar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        (click)="addData()" *ngIf="modalMode=='create'">
+        <span *ngIf="!loading">Guardar</span>
+        <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+      <button type="button" class="btn-rounded btn--blue container__btn" (click)="goBack()">
+        <span>Atrás</span>
+      </button>
+    </div>
+  </div>
+</div>
+<input #fileInputCreate type="file" name="resume" accept="image/*" (change)='fileChangeCreate($event)' hidden>
+

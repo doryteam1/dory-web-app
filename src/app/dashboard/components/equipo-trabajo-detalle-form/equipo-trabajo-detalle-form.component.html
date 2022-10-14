@@ -31,7 +31,7 @@
       <div class="mb-3">
         <label for="dateOfBirth">Fecha de nacimiento</label>
         <div class="input-group">
-          <input id="productName" class="form-control" type="date" [max]="fechaActual"  placeholder="Fecha de nacimiento"
+          <input id="productName" class="form-control" type="date" [max]="fechaActual "  placeholder="Fecha de nacimiento"
             formControlName="fecha_nacimiento">
         </div>
         <div *ngIf="invalid('fecha_nacimiento')" class="container__alert-msg danger-message">

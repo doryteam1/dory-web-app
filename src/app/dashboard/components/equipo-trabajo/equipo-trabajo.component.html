@@ -67,10 +67,10 @@
       (onDeleteCard)="deleteMiembro(miembro.id,miembro?.nombres,miembro.imagen,i )"
       *ngFor="let miembro of equipoTrabajo; let i=index">
       </app-card-general-tres-d>
+    </div>
     <app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay miembros asignados'"></app-not-found>
-  </div>
 
-<app-basic-floating-btn [tooltip]="'Crear miembro'" [agregar]="true" (click)="openFormCrear()">
+<app-basic-floating-btn [tooltip]="'Crear un miembro'" [agregar]="true" (click)="openFormCrear()">
 </app-basic-floating-btn>
 
 

@@ -26,6 +26,10 @@ import { EquipoTrabajoDetalleFormComponent } from './components/equipo-trabajo-d
 import { NovedadActualidadDetalleFormComponent } from './components/novedad-actualidad-detalle-form/novedad-actualidad-detalle-form.component';
 import { EventosDetalleFormComponent } from './components/eventos-detalle-form/eventos-detalle-form.component';
 import { NormatividadDetalleFormComponent } from './components/normatividad-detalle-form/normatividad-detalle-form.component';
+import { SliderInicioComponent } from './components/slider-inicio/slider-inicio.component';
+import { SliderInicioDetalleFormComponent } from './components/slider-inicio-detalle-form/slider-inicio-detalle-form.component';
+import { EnlacesDirectosInicioComponent } from './components/enlaces-directos-inicio/enlaces-directos-inicio.component';
+import { EnlacesDirectosInicioDetalleFormComponent } from './components/enlaces-directos-inicio-detalle-form/enlaces-directos-inicio-detalle-form.component';
 const routes: Routes = [
   {
     path: '',
@@ -60,6 +64,22 @@ const routes: Routes = [
       {
         path: 'normatividad-admi/detalle',
         component: NormatividadDetalleFormComponent,
+      },
+      {
+        path: 'slider-inicio-admi',
+        component: SliderInicioComponent,
+      },
+      {
+        path: 'slider-inicio-admi/detalle',
+        component: SliderInicioDetalleFormComponent,
+      },
+      {
+        path: 'enlaces-directos-inicio-admi',
+        component: EnlacesDirectosInicioComponent,
+      },
+      {
+        path: 'enlaces-directos-inicio-admi/detalle',
+        component: EnlacesDirectosInicioDetalleFormComponent,
       },
       { path: 'eventos-admi', component: EventosComponent },
       {
