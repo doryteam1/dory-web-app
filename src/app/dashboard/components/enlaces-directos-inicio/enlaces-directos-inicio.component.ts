@@ -3,9 +3,9 @@ import es from '@angular/common/locales/es';
 import { Component,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EnlacesDirectosInicioService } from 'src/app/services/enlaces-directos-inicio.service';
-import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
+
  interface enlace_rapido {
    id_enlace_rapido?: number;
    url_imagen: string;
@@ -24,7 +24,6 @@ export class EnlacesDirectosInicioComponent implements OnInit {
   authUserId: number = -1;
   constructor(
     private enlacesDirectosInicioService: EnlacesDirectosInicioService,
-    private storage: FirebaseStorageService,
     public platformLocation: PlatformLocation,
     private appModalService: AppModalService,
     private router: Router
@@ -55,7 +54,12 @@ export class EnlacesDirectosInicioComponent implements OnInit {
       }
     );
   }
-  deleteNovedad(id: any, nombre: any, imagen: any, idx: any) {
+ /*  deleteData(data: any,i:number) {
+    let id = data.id_enlace_rapido;
+    let nombre = data.nombre;
+    let imagen = data.imagen;
+    let idx = i;
+
     this.appModalService
       .confirm(
         'Eliminar enlace rapido',
@@ -81,8 +85,9 @@ export class EnlacesDirectosInicioComponent implements OnInit {
         }
       })
       .catch((result) => {});
-  }
-  editarData(id: any) {
+  } */
+  editarData(data: any) {
+    let id = data.id_enlace_rapido;
     let object: any = {
       id: id,
       action: 'update',
@@ -102,5 +107,9 @@ export class EnlacesDirectosInicioComponent implements OnInit {
       '/dashboard/enlaces-directos-inicio-admi/detalle',
       object,
     ]);
+  }
+  navigate(ruta: any) {
+    let url = ruta;
+    window.open(url, '_blank');
   }
 }

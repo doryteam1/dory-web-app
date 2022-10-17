@@ -63,6 +63,8 @@ import { CardGeneralTresDComponent } from './components/card-general-tres-d/card
 import { ModalSearchComponent } from './components/modal-search/modal-search.component';
 import { CardNormatividadComponent } from './components/card-normatividad/card-normatividad.component';
 import { CardSliderEnlacesDirectosInicioComponent } from './components/card-slider-enlaces-directos-inicio/card-slider-enlaces-directos-inicio.component';
+import { CardVehiculoComponent } from './components/card-vehiculo/card-vehiculo.component';
+import { CardNegocioComponent } from './components/card-negocio/card-negocio.component';
 
 
 @NgModule({
@@ -111,6 +113,9 @@ import { CardSliderEnlacesDirectosInicioComponent } from './components/card-slid
     ModalSearchComponent,
     CardNormatividadComponent,
     CardSliderEnlacesDirectosInicioComponent,
+    CardVehiculoComponent,
+    CardNegocioComponent,
+
   ],
   imports: [
     CommonModule,
@@ -169,6 +174,9 @@ import { CardSliderEnlacesDirectosInicioComponent } from './components/card-slid
     ModalSearchComponent,
     CardNormatividadComponent,
     CardSliderEnlacesDirectosInicioComponent,
+    CardVehiculoComponent,
+    CardNegocioComponent,
+
   ],
 
   providers: [

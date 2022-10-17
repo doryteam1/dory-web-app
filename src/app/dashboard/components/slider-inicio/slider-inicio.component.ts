@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
-import { Gallery, GalleryItem, GalleryRef, ImageItem } from 'ng-gallery';
+import { Gallery,  GalleryItem, GalleryRef, ImageItem } from 'ng-gallery';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SliderInicioService } from 'src/app/services/slider-inicio.service';
  interface slide {
@@ -27,15 +27,15 @@ export class SliderInicioComponent implements OnInit {
   });
   modalMode: any = 'visualice';
   loading = false;
-  tiempoSlide: number = 0;
+  tiempoSlide: any = 0;
   sliders: slide[] = [];
-  miembro: any;
   showError: boolean = false;
   showNotFound: boolean = false;
   authUserId: number = -1;
   lightboxRef!: GalleryRef;
   items: GalleryItem[] = [];
   imagenes: any[] = [];
+  sliderActive: boolean = false;
   constructor(
     private sliderInicioService: SliderInicioService,
     private storage: FirebaseStorageService,
@@ -50,27 +50,27 @@ export class SliderInicioComponent implements OnInit {
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
     this.cargaService();
-    this.cargaServiceDos();
   }
   cargaService() {
     this.sliderInicioService.getSliders().subscribe(
       (response) => {
-        if (response.data.length > 0) {
-          for (let index = 0; index < response.data.length; index++) {
-            const foto: slide = response.data[index];
-            this.imagenes.push(foto.url_imagen);
+          if (response.data.length > 0) {
+            this.sliders = response.data;
+            for (let index = 0; index < response.data.length; index++) {
+              const foto: slide = response.data[index];
+              this.imagenes.push(foto.url_imagen);
+            }
+            if (this.imagenes.length > 0) {
+            this.cargaServiceDos();
+             this.cargarFuntionSlider(this.imagenes);
+            }
+            this.showError = false;
+            this.showNotFound = false;
+          } else {
+            this.showNotFound = true;
+            this.showError = false;
           }
-          if (this.imagenes.length > 0) {
-            this.cargarFuntionSlider(this.imagenes);
-          }
-          this.sliders = response.data;
-          console.log(this.sliders);
-          this.showError = false;
-          this.showNotFound = false;
-        } else {
-          this.showNotFound = true;
-          this.showError = false;
-        }
+
       },
       (err) => {
         console.log(err);
@@ -80,14 +80,15 @@ export class SliderInicioComponent implements OnInit {
     );
   }
   cargaServiceDos() {
-    this.sliderInicioService.getSliders().subscribe(
-      (response) => {
-        this.tiempoSlide = response.data[0]?.time;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+      this.sliderInicioService.getSliders().subscribe(
+        (response) => {
+          this.tiempoSlide = response.data[0]?.time;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+
   }
   deleteNovedad(id: any, nombre: any, imagen: any, idx: any) {
     this.appModalService
@@ -108,10 +109,13 @@ export class SliderInicioComponent implements OnInit {
                 this.imagenes.splice(idx, 1);
                 this.lightboxRef.remove(idx);
               }
+              if (this.imagenes.length <= 0) {
+                this.sliderActive = false;
+              }
               if (this.sliders.length <= 0) {
                 this.items = [];
+                this.sliderActive = false;
                 this.showNotFound = true;
-                console.log(this.showNotFound);
               }
             },
             (err) => {
@@ -140,6 +144,7 @@ export class SliderInicioComponent implements OnInit {
   /*Funciones slider */
   cargarFuntionSlider(imagenes: any[]) {
     let imageData: any = [];
+    this.sliderActive = true;
     this.lightboxRef = this.gallery.ref('homegallery');
     imagenes.forEach((element: any) => {
       imageData.push({
@@ -171,9 +176,9 @@ export class SliderInicioComponent implements OnInit {
   prevImgGallery() {
     this.lightboxRef.prev();
   }
-  clisFotoSlide(event:any){
-       let url = this.sliders[event].url_enlace;
-       window.open(url, '_blank');
+  clisFotoSlide(event: any) {
+    let url = this.sliders[event].url_enlace;
+    window.open(url, '_blank');
   }
   invalid(controlFormName: string) {
     return (
@@ -197,9 +202,7 @@ export class SliderInicioComponent implements OnInit {
     }
     this.form.disable();
     this.sliderInicioService
-      .updateParcialSlide(8, {
-        time: this.time?.value,
-      })
+      .updateTiempoSlaid(this.time?.value * 1000)
       .subscribe(
         (response) => {
           this.loading = false;
@@ -217,7 +220,7 @@ export class SliderInicioComponent implements OnInit {
   EditionTime() {
     this.modalMode = 'update';
     if (this.modalMode == 'update') {
-      this.time?.setValue(this.tiempoSlide);
+      this.time?.setValue(this.tiempoSlide / 1000);
     }
   }
   get time() {

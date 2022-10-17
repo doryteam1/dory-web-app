@@ -8,18 +8,18 @@ import { HttpsService } from './https.service';
 export class SliderInicioService {
   constructor(private https: HttpsService) {}
   getSliders() {
-    return this.https.get(environment.doryApiRestBaseUrl + '/sliders/obtener/');
+    return this.https.get(environment.doryApiRestBaseUrl + '/slider/obtener/');
   }
   addSlide(slide: any) {
     return this.https.post(
-      environment.doryApiRestBaseUrl + '/sliders/crear/',
+      environment.doryApiRestBaseUrl + '/slider/crear/',
       slide
     );
   }
 
   updateSlide(idslide: number, slide: any) {
     return this.https.put(
-      environment.doryApiRestBaseUrl + '/sliders/actualizar/' + idslide,
+      environment.doryApiRestBaseUrl + '/slider/actualizar/' + idslide,
       slide
     );
 
@@ -28,21 +28,20 @@ export class SliderInicioService {
   updateParcialSlide(idslide: number, parcialslide: any) {
     return this.https.put(
       environment.doryApiRestBaseUrl +
-        '/sliders/update/parcial/slide/' +
+        '/slider/update/parcial/slide/' +
         idslide,
         parcialslide
     );
   }
-/*   updateParcialSlaid(idSlaid: number, parcialSlaid: any) {
+  updateTiempoSlaid(time:number) {
     return this.https.put(
-      environment.doryApiRestBaseUrl + '/sliders/update/time/slider/' + idSlaid,
-      parcialSlaid
+      environment.doryApiRestBaseUrl + '/slider/update/time/slider',{tiempo:time}
     );
-  } */
+  }
   deleteSlide(idslide: number) {
     return this.https.delete(
       environment.doryApiRestBaseUrl +
-        '/sliders/delete/slide/' +
+        '/slider/delete/slide/' +
         idslide
     );
   }

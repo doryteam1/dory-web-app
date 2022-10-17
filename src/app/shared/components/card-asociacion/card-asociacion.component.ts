@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Subscription } from 'rxjs/internal/Subscription';
+import {  Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { MediaQueryService } from 'src/app/services/media-query.service';

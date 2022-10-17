@@ -93,19 +93,19 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn" 
         (click)="addProducto()" *ngIf="modalMode=='create'">
         <span *ngIf="!loading">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
         (click)="updateProducto()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button type="button" class="btn-rounded btn--blue container__btn" (click)="goBack()">
+      <button type="button" class="btn-rounded btn--grey container__btn container__btn--azul" (click)="goBack()">
         <span>Atrás</span>
       </button>
     </div>

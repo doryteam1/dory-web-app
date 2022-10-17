@@ -45,7 +45,7 @@ export class EventosDetalleFormComponent implements OnInit {
     url: new FormControl('', [Validators.required]),
     costo: new FormControl('', ),
     fecha: new FormControl('', ),
-    hora: new FormControl('', ),
+    hora: new FormControl(null, ),
     id_modalidad_fk: new FormControl('', [Validators.required]),
     id_tipo_evento_fk: new FormControl('', [Validators.required]),
   });
@@ -218,16 +218,17 @@ export class EventosDetalleFormComponent implements OnInit {
       id_tipo_evento: Number(this.id_tipo_evento_fk?.value),
       imagen: foto,
     };
+    console.log(newEvento)
     this.eventosService
       .updateEvento(this.evento.id_evento!, newEvento)
       .subscribe(
         (response) => {
-           this.goBack();
+          /*  this.goBack(); */
           this.loading = false;
         },
         (err) => {
           console.log(err);
-           this.goBack();
+           /* this.goBack(); */
           this.loading = false;
         }
       );

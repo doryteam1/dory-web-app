@@ -128,4 +128,8 @@ export class EventosComponent implements OnInit {
       return;
     }
   }
+/*   hora(hora:any){
+ let hor=dayjs().
+return hor
+  } */
 }

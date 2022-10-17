@@ -72,70 +72,7 @@
   display: flex;
   flex-direction: column;
 }
-/* Estilo car vehiculo */
-.container-card {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-top: 30px;
-}
 
-.card {
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  height: fit-content;
-  overflow: hidden;
-  border: 0;
-  margin-right: 20px;
-  margin-bottom: 30px;
-  border-radius: max(0px, min(8px, -999900% - 39996px + 999900vw))/8px;
-  box-shadow: 0 2px 12px var(--shadow-2);
-  cursor: pointer;
-
-  .card__img-box {
-    max-width: 300px;
-    height: 200px;
-    width: 100%;
-
-    .sin-img {
-      object-fit: cover;
-      height: 100%;
-      width: 100%;
-    }
-  }
-
-  .card-body {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
-
-    div {
-      text-align: center;
-      width: 100%;
-      margin-top: 10px;
-    }
-  }
-}
-
-.card__title {
-  font-size: 23px;
-  font-weight: 600;
-  margin-top: 5px;
-}
-
-.card__sub-title {
-  font-size: 17px;
-  font-weight: 500;
-  margin-top: 4px;
-}
-
-.card__description {
-  font-size: 14px;
-  margin-top: 4px;
-}
 
 @media screen and (max-width: 775px) {
   .container-ajuste {
@@ -158,9 +95,4 @@
     padding-top: 0;
   }
 
-}
-@media screen and (max-width: 764px) {
-  .card {
-    margin-right: 0;
-  }
 }

@@ -9,7 +9,6 @@ import { PlacesService } from 'src/app/services/places.service';
 import { ProveedorService } from 'src/app/services/proveedor.service';
 import { NegociosService } from 'src/app/services/negocios.service';
 import { TransportadoresService } from 'src/app/services/transportadores.service';
-import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { BuscarPor } from 'src/models/buscarPor.model';
