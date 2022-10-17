@@ -159,7 +159,7 @@ export class ChatUserComponent implements OnInit {
         ],
       };
       this.roomsArray.push(updateStorage);
-      this.messageArray = this.roomsArray[length - 1].chats;
+      this.messageArray = this.roomsArray[this.roomsArray.length - 1].chats;
     }
 
     this.chatService.setStorage(this.roomsArray);

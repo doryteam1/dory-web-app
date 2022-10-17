@@ -14,7 +14,7 @@
         <div class="user-card"
           *ngFor="let user of userList; index as i" (click)="selectUserHandler(user?.id,i)">
           <div class="user--imagen">
-            <img [src]="user?.image" [alt]="user?.name" class="avatar" />
+            <img [src]="user?.image ? user?.image : 'assets/images/avatar-person.svg'" [alt]="user?.name" class="avatar" />
             <div [ngClass]="{'user--off': !user.estatus,'user--activo':user.estatus}"></div>
           </div>
           <p class="username">{{user?.name}}</p>
