@@ -52,6 +52,31 @@ export class ChatService {
       };
     });
   }
+
+  getLastUserConnected(): Observable<any> {
+    return new Observable<any>((observer) => {
+      this.socket.on('ultimo-conectado', (data) => {
+        observer.next(data);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+  }
+
+  getLastUserDisconnected(): Observable<any> {
+    return new Observable<any>((observer) => {
+      this.socket.on('ultimo-desconectado', (data) => {
+        observer.next(data);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+  }
+
   getStorage() {
     const storage = localStorage.getItem('chats');
     return storage ? JSON.parse(storage) : [];

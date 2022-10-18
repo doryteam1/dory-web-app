@@ -252,13 +252,23 @@ button:focus {
   outline: 0 none !important;
 }
 
-.form-control {
+.input {
   background-color: white;
   border:none;
   box-sizing: border-box;
   border-radius: 20px;
   font-size: 1rem;
   color: black;
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 /* btn boton abrir */
@@ -317,19 +327,19 @@ button:focus {
 .send-btn{
   background-color:var(--azul5); 
   color:white;
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  min-height: 40px;
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  min-height: 35px;
   border-radius: 50%;
   border:none;
 }
 
 .send-btn__img{
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
-  min-height: 22px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 30px;
 }
 
 .text{

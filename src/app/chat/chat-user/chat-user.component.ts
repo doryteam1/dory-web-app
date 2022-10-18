@@ -90,6 +90,8 @@ export class ChatUserComponent implements OnInit {
           )
           console.log(this.userList)
       });
+
+      this.chatService.getLastUserConnected()
   }
 
   loadRoomMessages(){
