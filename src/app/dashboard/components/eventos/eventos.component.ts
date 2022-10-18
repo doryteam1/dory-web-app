@@ -40,7 +40,6 @@ export class EventosComponent implements OnInit {
     public platformLocation: PlatformLocation,
     private appModalService: AppModalService,
     private router: Router,
-    private datePipe: DatePipe,
     private decimalPipe: DecimalPipe
   ) {}
   ngOnInit(): void {
@@ -120,14 +119,15 @@ export class EventosComponent implements OnInit {
     }
   }
   numberPipe(evento: any): any {
-    let number: any = Number(evento.costo);
-    if (evento.costo) {
+    let number: any = Number(evento?.costo);
+    if (evento.costo && number > 0) {
       number = this.decimalPipe?.transform(number, '', 'es');
       return '$' + number;
     } else {
-      return;
+      return 'Gratis'
     }
   }
+
 /*   hora(hora:any){
  let hor=dayjs().
 return hor

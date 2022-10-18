@@ -73,7 +73,7 @@
               Mis consumos
             </a>
           </li>
-          <li id="misfavoritos" class="nav-item" (click)="closeOffcanvas()">
+          <li id="misfavoritos" class="nav-item" (click)="closeOffcanvas()" *ngIf="tipoUsuario != 'Administrador'">
             <a class="nav-link" aria-current="page" [routerLink]="['/dashboard/mis-favoritos']" routerLinkActive="active">
               <span data-feather="home"></span>
               Mis favoritos

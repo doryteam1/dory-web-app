@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NovedadesService } from 'src/app/services/novedades.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
+import { BuscarPor } from 'src/models/buscarPor.model';
 import { Novedad } from 'src/models/novedad.model';
 
 @Component({
@@ -14,11 +16,14 @@ export class NovedadesComponent implements OnInit {
   tipo!: string;
   showNotFound: boolean = false;
   loading: boolean = false;
+  novedadesFilteredArray: any[]=[];
+  palabra: string='';
   constructor(
     private activatedRoute: ActivatedRoute,
     private nService: NovedadesService,
     private userService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private searchBuscadorService: SearchBuscadorService
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +45,8 @@ export class NovedadesComponent implements OnInit {
     this.nService.getNovedadesByTipo(this.tipo).subscribe(
       (response) => {
         this.novedadesFiltered = response.data;
-        console.log(this.novedadesFiltered);
+        this.novedadesFilteredArray = response.data
+        console.log(this.novedadesFilteredArray)
         if (this.novedadesFiltered.length < 1) {
           this.showNotFound = true;
         }
@@ -54,14 +60,14 @@ export class NovedadesComponent implements OnInit {
     );
   }
 
-  textChange(event: string) {
+ /*  textChange(event: string) {
     if (event == '') {
       this.cargarTodos();
       return;
     }
-  }
+  } */
 
-  onSearch(event: string) {
+/*   onSearch(event: string) {
     console.log('event: ', event);
     if (event == '') {
       return;
@@ -83,7 +89,7 @@ export class NovedadesComponent implements OnInit {
         console.log(err);
       }
     );
-  }
+  } */
 
   onView(idNovedad: number, i: number, url_novedad?: any) {
     this.navigateDetalle(url_novedad);
@@ -123,10 +129,44 @@ export class NovedadesComponent implements OnInit {
       console.log('El usuario debe estar autenticado para poder dar like');
     }
   }
-  navigateDetalle(url_novedad:any) {
+  navigateDetalle(url_novedad: any) {
     console.log(url_novedad);
     let url = '';
-    (url = url_novedad)
+    url = url_novedad;
     window.open(url, '_blank');
+  }
+  buscarData(texto: string): any {
+    let normasresult: any[];
+    if (texto.trim().length === 0) {
+      normasresult = this.novedadesFilteredArray;
+    } else {
+      let buscardatospor: BuscarPor[] = [
+        { data1: 'titulo' },
+        { data2: 'autor' },
+        { data3: 'resumen' },
+      ];
+      normasresult = this.searchBuscadorService.buscarData(
+        this.novedadesFiltered,
+        texto,
+        buscardatospor
+      );
+    }
+    return normasresult;
+  }
+  onBuscarPalabra(palabra: string) {
+    this.palabra = palabra;
+    console.log(this.palabra)
+    this.reseteoDeBusqueda();
+  }
+  reseteoDeBusqueda() {
+     this.showNotFound = false;
+    let resultados: any[] = this.buscarData(this.palabra);
+     if (resultados.length < 1) {
+      this.novedadesFiltered = resultados;
+       this.showNotFound = true;
+     } else {
+       this.novedadesFiltered = resultados;
+       this.showNotFound = false;
+     }
   }
 }

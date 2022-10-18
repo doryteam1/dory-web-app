@@ -1,13 +1,11 @@
 <div class="container-todo" style="margin-top: 20px;">
   <div class="basic-container">
     <div *ngIf="sliderActive">
-      {{tiempoSlide}}
       <gallery  *ngIf="modalMode == 'visualice'" class="gallery--class" [counter]="false" [attr.fluid]="false" [loadingStrategy]="'lazy'"
         [imageSize]="'cover'" id="homegallery" [thumbHeight]="70" [thumbWidth]="80" [thumbMode]="'free'" [dots]="true"
         [autoPlay]="tiempoSlide>0" [playerInterval]="tiempoSlide" [thumb]="false" [nav]="true" [items]="items "
         (itemClick)="clisFotoSlide($event)">
       </gallery>
-      {{tiempoSlide}}
       <div>
         <div class="d-flex flex-row justify-content-between mt-3 myAjusteModal">
           <div class="modal-body">
@@ -49,8 +47,8 @@
         </div>
       </div>
     </div>
-    <div class="container-card" *ngIf="sliders.length > 0 ">
-      <app-card-slider-enlaces-directos-inicio [editaAndEliminar]="true" [dato]="{
+    <div class="container-card" *ngIf="sliders.length > 0 " >
+      <app-card-slider-enlaces-directos-inicio [editaAndEliminar]="modalMode == 'visualice'" [dato]="{
           titulo:slide?.titulo,
           imagen:slide?.url_imagen,
           urlEnlace:slide?.url_enlace
@@ -63,5 +61,5 @@
     </app-not-found>
   </div>
 
-  <app-basic-floating-btn [tooltip]="'Crear un slide'" [agregar]="true" (click)="openFormCrear()">
+  <app-basic-floating-btn *ngIf="modalMode == 'visualice'" [tooltip]="'Crear un slide'" [agregar]="true" (click)="openFormCrear()">
   </app-basic-floating-btn>

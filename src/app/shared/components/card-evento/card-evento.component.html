@@ -1,0 +1,49 @@
+<div class="cardContainer inactive">
+  <div #Mycard class="card_info">
+    <div class="side front">
+      <div class="front-botones">
+        <div (click)="editCard()" *ngIf="editaAndEliminar">
+          <i class="container__icon bi bi-pencil"></i>
+        </div>
+        <div (click)="deleteCard()" *ngIf="editaAndEliminar">
+          <i class="container__icon bi bi-trash"></i>
+        </div>
+        <div>
+          <i class="bi bi-box-arrow-right" (click)="openDetalle()"></i>
+        </div>
+      </div>
+      <div class="img" (click)="clisNavegar(urlDefecto)">
+        <img class="img1" [src]="dato.imagen ? dato.imagen: 'assets/images/no-image-photography.svg'" alt="Foto">
+      </div>
+      <div class="info info-front" (click)="clisNavegar(urlDefecto)">
+        <h5 *ngIf="dato.titulo" class="azul1">{{dato.titulo | titlecase}}</h5>
+        <div *ngFor="let item of dato.subTitle">
+          <p *ngIf="item?.titulo && item?.detail">{{item?.titulo | titlecase}} <span>{{item?.detail}}</span></p>
+        </div>
+        <p *ngIf="dato.subTitleNormal">{{dato.subTitleNormal | titlecase}}</p>
+      </div>
+    </div>
+    <div class="side back">
+      <div class="info">
+        <div class="info-data" (click)="openDetalle()">
+          <h4>Resumen</h4>
+          <p class="presaltoLinea" >
+            {{dato.descripcion}}
+          <h4>¿A quién va dirigido?</h4>
+          <p class="presaltoLinea" >
+            {{dato.dirigidoa}}
+          </p>
+          <h4>Organizador (es)</h4>
+          <p class="presaltoLinea" >
+            {{dato.organizador}}
+          </p>
+        </div>
+        <div class="btn">
+          <a class="mc-footer-icon" [href]="urlDefecto" target="_blank" *ngIf="urlDefecto">
+            <img class="card__icon" src="assets/icons/url.svg">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

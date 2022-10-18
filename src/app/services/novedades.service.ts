@@ -16,13 +16,13 @@ export class NovedadesService {
 
   getNovedadesByTipo(tipo: string) {
     return this.https.get(
-      environment.doryApiRestBaseUrl + '/buscar/novedad/tipo/' + tipo
+      environment.doryApiRestBaseUrl + '/novedades/buscar/tipo/' + tipo
     );
   }
 
   getNovedadesByTipoCadena(tipo: string, cadena: string) {
     return this.https.get(
-      environment.doryApiRestBaseUrl + '/buscar/novedad/' + tipo + '/' + cadena
+      environment.doryApiRestBaseUrl + '/novedades/buscar/tipo/' + tipo + '/' + cadena
     );
   }
 

@@ -1,56 +1,6 @@
-<app-search [buscadorpersonalizado]="false" (textSearch)="textChange($event)" (keyEnterPress)="onSearch($event)">
+<app-search class="buscador-container__search" [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar...'"
+  (keyEnterPressData)=" onBuscarPalabra($event)">
 </app-search>
-<!-- <div class="container">
-    <div *ngFor="let novedad of novedadesFiltered; let i=index;">
-        <div class="container-box">
-            <div class="novedad pt-5">
-                <div class="novedad__header">
-                    <div class="row">
-                        <div class="col-2">
-                            <img class="novedad__foto-autor" [src]='novedad.url_foto_autor' *ngIf="novedad.url_foto_autor"/>
-                            <img class="novedad__foto-autor" src='assets/images/avatar-person.svg' *ngIf="!novedad.url_foto_autor"/>
-                        </div>
-                        <div class="novedad__title-box col-10"><h4 class="novedad__nombre-autor">{{novedad.autor}}</h4></div>
-                    </div>
-                </div>
-                <div class="mb-4">
-                </div>
-                <div>
-
-                </div>
-                <div></div>
-                <div class="novedad__foto-container">
-                    <a href={{novedad.url_novedad}} target="_blank" (click)="onView(novedad.id_novedad, i)"><img class="novedad__foto" [src]="novedad.url_foto_novedad"></a>
-                </div>
-                <div class="novedad__titular-container">
-                    <a href={{novedad.url_novedad}} target="_blank" (click)="onView(novedad.id_novedad, i)"><h2 class="novedad__titular">{{ novedad.titulo | shorter:80 }}</h2></a>
-                </div>
-                <div class="novedad__cuerpo-container">
-                    <a href={{novedad.url_novedad}} target="_blank" (click)="onView(novedad.id_novedad, i)"><p class="novedad__cuerpo">{{ novedad.resumen | shorter:264 }}</p></a>
-                </div>
-                <div></div>
-                <div class="novedad__container_stats">
-                    <div>
-                        <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''" src="assets/icons/happy-face.svg" (click)="onLike(novedad, i)" *ngIf="!novedad.me_gusta">
-                        <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''" src="assets/icons/happy-face-white.svg" (click)="onLike(novedad, i)" *ngIf="novedad.me_gusta">
-                        <span class="novedad__like-count">{{novedad.likes}}</span>
-                    </div>
-                    <div>
-                        <span class="novedad__visitas">{{novedad.cant_visitas}}  visitas</span>
-                        <span class="novedad__fecha"></span>
-                    </div>
-                </div>
-            </div>
-            <share-buttons class="pt-2 mb-2" theme="circles-dark"
-                [showIcon]="true"
-                [showText]="true"
-                url={{novedad.url_novedad}}
-                description={{novedad.titulo}}
-                twitterAccount="rodrigokamada">
-            </share-buttons>
-        </div>
-    </div>
-</div> -->
 <div class="container">
   <div class="card" *ngFor="let novedad of novedadesFiltered; let i=index;">
     <div class="card__autor-photo">
@@ -64,7 +14,7 @@
         </div>
       </div>
       <div class="img" (click)="onView(novedad.id_novedad, i,novedad.url_novedad)">
-        <img class="novedad__foto" [src]="novedad.url_foto_novedad">
+        <img class="novedad__foto"  [src]="novedad.url_foto_novedad ? novedad.url_foto_novedad: 'assets/images/no-image-photography.svg'" >
       </div>
     </div>
     <div class="top-text" (click)="onView(novedad.id_novedad, i,novedad.url_novedad)">
