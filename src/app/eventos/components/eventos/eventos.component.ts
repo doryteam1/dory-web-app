@@ -1,4 +1,4 @@
-import {  registerLocaleData } from '@angular/common';
+import {  DecimalPipe, formatDate, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -21,10 +21,11 @@ export class EventosComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private eService: EventosService,
+    private decimalPipe: DecimalPipe
   ) {}
 
   ngOnInit(): void {
-     registerLocaleData(es);
+    registerLocaleData(es);
     let eventType: string = this.activatedRoute.snapshot.url[0].path;
     this.eventType = eventType;
     this.cargarTodos();
@@ -93,5 +94,21 @@ export class EventosComponent implements OnInit {
       }
     );
   }
-
+  FechaPipe(fecha: any): any {
+    if (fecha) {
+      let fech = fecha as unknown as string;
+      fech = fecha.split('T')[0];
+      fech = formatDate(fech, 'yyyy-MM-dd', 'es');
+      return fech;
+    }
+  }
+  numberPipe(costo: any): any {
+    let number: any = Number(costo);
+    if (costo && number > 0) {
+      number = this.decimalPipe?.transform(number, '', 'es');
+      return '$' + number;
+    } else {
+      return 'Gratis';
+    }
+  }
 }
