@@ -233,7 +233,7 @@
                   <div class="input-wrapper">
                       <select class="container__input form-input-text-square"  [ngClass]="{'container__input--color':true}"
                             formControlName='id_departamento' (ngModelChange)='changeDpto()'>
-                          <optgroup label="Escoje un departamento" value="70">
+                          <optgroup label="Escoge un departamento" value="70">
                               <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
                           </optgroup>
                       </select>
@@ -312,7 +312,7 @@
                 <div class="container__box-row" *ngIf="mostrarPorTipo('area_experticia')">
                     <select class="container__input form-input-text-square"
                           formControlName='id_area_experticia' [ngClass]="{'container__input--color':!editarperfil}">
-                        <optgroup label="Escoje un área">
+                        <optgroup label="Escoge un área">
                             <option *ngFor="let area of areas"(keyup)="onKeyInput('sobre_mi')"[ngValue]="area.id_area">{{area.nombre}} </option>
                             <option [ngValue]='-1'>Otra...</option>
                         </optgroup>

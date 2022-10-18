@@ -10,7 +10,7 @@
             <span class="container__title">Especie</span>
             <div>
               <select class="form-control" formControlName='id_especie'>
-                <optgroup label="Escoje una especie">
+                <optgroup label="Escoge una especie">
                   <option *ngFor="let especie of especies" [ngValue]="especie.id_especie">{{especie.nombre}}
                   </option>
                 </optgroup>
@@ -119,7 +119,7 @@
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>
         </button>
-        <button [disabled]="loading1" type="button"  class="btn-rounded btn--blue container__btn" 
+        <button [disabled]="loading1" type="button"  class="btn-rounded btn--blue container__btn"
           (click)="updatePublicacion()" *ngIf="modalMode=='update' && formState=='enable'">
           <span *ngIf="!loading1">Actualizar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">

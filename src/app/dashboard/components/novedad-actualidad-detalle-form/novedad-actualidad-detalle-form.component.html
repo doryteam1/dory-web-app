@@ -9,7 +9,7 @@
         <span class="container__title">Tipo de novedad</span>
         <div>
           <select class="form-control" formControlName='tipo_novedad'>
-            <optgroup label="Escoje el tipo de novedad">
+            <optgroup label="Escoge el tipo de novedad">
               <option *ngFor="let tipoNovedad of tipoNovedad" [value]="tipoNovedad.id">
                 {{tipoNovedad.nombre }}</option>
             </optgroup>
