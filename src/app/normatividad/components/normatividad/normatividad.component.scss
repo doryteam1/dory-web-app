@@ -4,6 +4,31 @@ display: flex;
   flex-wrap: wrap;
   padding: 20px;
   justify-content: space-evenly;
+  .container {
+      max-width: 400px;
+      height: auto;
+      margin-top: 40px;
+    }
+
+    .container__title {
+      text-align: center;
+    }
+
+    .container__description {
+      text-align: start;
+      font-size: 13px;
+      line-height: 22px;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .container__button {
+      margin: 0 auto;
+      display: inline;
+      text-align: center;
+      line-height: 34px;
+      text-decoration: none;
+    }
 }
 
 .filters-container{
@@ -54,3 +79,8 @@ app-not-found {
   };
 }
 }
+
+
+
+
+
