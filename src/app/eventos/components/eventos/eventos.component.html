@@ -1,37 +1,22 @@
 <app-search [buscadorpersonalizado]="false" (textSearch)="textChange($event)" (keyEnterPress)="onSearch($event)"></app-search>
-<div class="container">
-    <div class="card" *ngFor="let evento of eventsFiltered">
-        <a class="card__link" href="{{evento.url}}" target="_blank">
-            <img class="card__image" src={{evento.imagen}}>
-            <h4 class="card__title">{{evento.nombre}}</h4>
-            <h5 class="card__sub-title">Resumen</h5>
-            <p class="card__description">{{evento.resumen}}</p>
-            <h5 class="card__sub-title">A quien va dirigido</h5>
-            <p class="card__description">{{evento.dirigidoa}}</p>
-            <h5 class="card__sub-title">Organizador</h5>
-            <p class="card__description">{{evento.organizador}}</p>
 
-            <div class="card__icon-box">
-                <div>
-                    <img class="card__icon" src="assets/icons/laptop.svg">
-                    <h5 class="card__sub-title">{{evento.modalidad}}</h5>
-                </div>
-                <div>
-                    <img class="card__icon" src="assets/icons/dollar.svg">
-                    <h5 class="card__sub-title">{{evento.costo}}</h5>
-                </div>
-            </div>
-
-            <div class="line">
-
-            </div>
-
-            <div class="card__icon-box2">
-                <img class="card__icon" src="assets/icons/date.svg">
-                <h5 class="card__sub-title" >{{evento?.fecha?.slice(0, evento?.fecha?.indexOf('T')) | date:'dd/MM/yyyy'}}</h5>
-            </div>
-        </a>
-    </div>
+<div *ngIf="eventsFiltered.length > 0 " class="container-card">
+  <app-card-evento [dato]="{
+        titulo:evento?.nombre,
+        subTitle: [
+        {titulo:'Modalidad: ',detail:evento?.modalidad},
+        {titulo:'Fecha: ',detail:FechaPipe(evento)},
+        {titulo:'Hora: ',detail:evento?.hora},
+        {titulo:'Costo: ',detail:numberPipe(evento)}
+        ],
+        descripcion:evento?.resumen,
+        imagen:evento?.imagen,
+        arrayEnlaces:[evento.url],
+        dirigidoa:evento.dirigidoa,
+        organizador:evento.organizador
+      }"
+    *ngFor="let evento of eventsFiltered; let i=index">
+  </app-card-evento>
 </div>
     <app-not-found *ngIf="showNotFound" message="No encontramos eventos relacionadas con la busqueda"></app-not-found>
 <div class="container mt-5">

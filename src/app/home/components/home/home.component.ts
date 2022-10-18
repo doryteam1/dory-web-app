@@ -141,6 +141,10 @@ export class HomeComponent implements OnInit {
     let url = this.sliders[event].url_enlace;
     window.open(url, '_blank');
   }
+  clisEnlaceDirect(event: any) {
+    let url = event.url_enlace;
+    window.open(url, '_blank');
+  }
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     /* console.log(event); */

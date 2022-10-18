@@ -65,6 +65,7 @@ import { CardNormatividadComponent } from './components/card-normatividad/card-n
 import { CardSliderEnlacesDirectosInicioComponent } from './components/card-slider-enlaces-directos-inicio/card-slider-enlaces-directos-inicio.component';
 import { CardVehiculoComponent } from './components/card-vehiculo/card-vehiculo.component';
 import { CardNegocioComponent } from './components/card-negocio/card-negocio.component';
+import { CardEventoComponent } from './components/card-evento/card-evento.component';
 
 
 @NgModule({
@@ -115,7 +116,7 @@ import { CardNegocioComponent } from './components/card-negocio/card-negocio.com
     CardSliderEnlacesDirectosInicioComponent,
     CardVehiculoComponent,
     CardNegocioComponent,
-
+    CardEventoComponent,
   ],
   imports: [
     CommonModule,
@@ -176,7 +177,7 @@ import { CardNegocioComponent } from './components/card-negocio/card-negocio.com
     CardSliderEnlacesDirectosInicioComponent,
     CardVehiculoComponent,
     CardNegocioComponent,
-
+    CardEventoComponent,
   ],
 
   providers: [

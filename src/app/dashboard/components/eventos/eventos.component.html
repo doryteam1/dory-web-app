@@ -1,21 +1,22 @@
 <div *ngIf="eventos.length > 0 " class="container-card">
-  <app-card-general-tres-d [editaAndEliminar]="true" [dato]="{
+  <app-card-evento [editaAndEliminar]="true" [dato]="{
         titulo:evento?.nombre,
         subTitle: [
         {titulo:'Tipo: ',detail:evento?.tipo},
         {titulo:'Modalidad: ',detail:evento?.modalidad},
         {titulo:'Fecha: ',detail:FechaPipe(evento)},
         {titulo:'Hora: ',detail:evento?.hora},
-        {titulo:'Organizador: ',detail:evento?.organizador},
         {titulo:'Costo: ',detail:numberPipe(evento)}
         ],
         descripcion:evento?.resumen,
         imagen:evento?.imagen,
-        arrayEnlaces:[evento.url]
+        arrayEnlaces:[evento.url],
+        dirigidoa:evento.dirigidoa,
+        organizador:evento.organizador
       }" (onUpdateCard)="editarData(evento.id_evento)"
     (onDeleteCard)="deleteEvento(evento.id_evento,evento?.nombre,evento.imagen,i )"
     *ngFor="let evento of eventos; let i=index">
-  </app-card-general-tres-d>
+  </app-card-evento>
 </div>
 <app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay eventos asignados'"></app-not-found>
 <app-basic-floating-btn [tooltip]="'Crear evento'" [agregar]="true" (click)="openFormCrear()">

@@ -8,8 +8,8 @@
     </div>
   </div>
   <div class="container-data">
-    <h3 class="card-title">{{data.nombre | titlecase}}</h3>
-    <p class="presaltoLinea">{{data.contenido }}</p>
+    <h3 class="card-title">{{data.nombre | titlecase | shorter:23}}</h3>
+    <p class="presaltoLinea">{{data.contenido | shorter:50 }}</p>
     <p class="sudtitle">Tipo: <small>{{data.tipo}}</small></p>
     <a class="sudtitle"target="_blank" [href]="data.url_descarga">Leer más...</a>
   </div>

@@ -52,7 +52,7 @@
   <!--  -->
   <div class="container-card" *ngIf="equipoTrabajo.length > 0 ">
       <app-card-general-tres-d
-      [editaAndEliminar]="true"
+      [editaAndEliminar]="modalMode == 'visualice'"
       [dato]="{
         titulo:miembro?.nombres +' '+ miembro?.apellidos,
         subTitle:[
@@ -70,7 +70,7 @@
     </div>
     <app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay miembros asignados'"></app-not-found>
 
-<app-basic-floating-btn [tooltip]="'Crear un miembro'" [agregar]="true" (click)="openFormCrear()">
+<app-basic-floating-btn *ngIf="modalMode == 'visualice'"  [tooltip]="'Crear un miembro'" [agregar]="true" (click)="openFormCrear()">
 </app-basic-floating-btn>
 
 

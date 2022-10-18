@@ -31,9 +31,9 @@
   <div class="container-card ">
     <div class="view-content">
       <div class="views-row view--current item-{{i}}" *ngFor="let item of enlaceRapido; index as i">
-        <div class="container-target-link">
+        <div class="container-target-link" >
         </div>
-        <div class="container-title">
+        <div class="container-title" (click)="clisEnlaceDirect(item)">
           <div class="front-botones">
           </div>
           <h4 class="container-title-h4" >{{item.titulo}}</h4>

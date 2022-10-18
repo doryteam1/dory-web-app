@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { NormatividadService } from 'src/app/services/normatividad.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { BuscarPor } from 'src/models/buscarPor.model';
-import { Filtro, MetaFiltro } from 'src/models/filtro.model';
-import { Normatividad } from 'src/models/normatividad.model';
 
 @Component({
   selector: 'app-normatividad',
@@ -36,7 +32,6 @@ export class NormatividadComponent implements OnInit {
       (response) => {
         if (response.data.length > 0) {
           this.normatividades = response.data;
-          console.log(this.normatividades);
           this.normatividadesArray = this.normatividades.filter((value) => {
             if (this.activatedRoute.snapshot.url[0].path == 'resoluciones') {
               return value.tipo == 'Resolución';
@@ -55,7 +50,6 @@ export class NormatividadComponent implements OnInit {
               )
             );
           });
-          console.log(this.normatividadesArray);
           this.showError = false;
           this.showNotFound = false;
         } else {
