@@ -72,21 +72,7 @@
   </div>
   <h3 *ngIf="!showErrorDataUser && !showNotFoundDataUser" class="mt-5">Vehículos</h3>
   <div *ngIf="!showErrorDataUser && !showNotFoundDataUser"class="container-card">
-    <div class="card" *ngFor="let vehiculo of vehiculosFiltered; let i=index;">
-      <div class="card__img-box">
-        <app-carrucel-img *ngIf="vehiculo.fotos.length != 0" class="card__img" [imagenes]="vehiculo.fotos"
-          [indicatorsphoto]="true" [idtarge]="i" [rounded]="true" [efect]="true" [scaledown]="true">
-        </app-carrucel-img>
-        <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="vehiculo.fotos.length == 0">
-      </div>
-      <div class="card-body shorterTextOverflowHidden">
-        <span class="card__title shorterTextAuto">{{vehiculo?.modelo}}</span>
-        <span class="card__sub-title">{{vehiculo?.capacidad}} TON</span>
-        <span class="card__description">Transporta alimentos : {{vehiculo?.transporte_alimento ? 'Si' : 'No'}}</span>
-        <div>
-          <span class="link" (click)="goDetail(vehiculo.id_vehiculo)">Ver detalle</span>
-        </div>
-      </div>
-    </div>
+    <app-card-vehiculo [datos]="vehiculo" [indiceDatos]="i" *ngFor="let vehiculo of vehiculosFiltered; let i=index;"
+      (onDetalle)="goDetail(vehiculo.id_vehiculo)"></app-card-vehiculo>
   </div>
 </div>

@@ -141,7 +141,7 @@ export class GranjasComponent implements OnInit {
       this.authUserId = payload.sub;
       this.authRol = payload.rol;
     }
-    /*Todas las asociaones que existen*/
+
     this.granjasService.getGranjas().subscribe((response: any) => {
       this.granjas = response.data;
       this.granjasFiltered = this.granjas.slice();

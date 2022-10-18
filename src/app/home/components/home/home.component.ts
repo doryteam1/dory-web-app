@@ -5,91 +5,131 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Gallery, GalleryRef } from 'ng-gallery';
+import { Observable } from 'rxjs';
+import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
+import { GranjasService } from 'src/app/granjas/services/granjas.service';
+import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
+import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
+import { EnlacesDirectosInicioService } from 'src/app/services/enlaces-directos-inicio.service';
+import { SliderInicioService } from 'src/app/services/slider-inicio.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  array = [
+  datosCounter = [
+    { title: 'Granjas', img: 'assets/icons/granja-icon-home.svg', cantidad: 0 },
     {
-      img: 'https://static8.depositphotos.com/1302629/980/i/450/depositphotos_9806860-stock-photo-fish-farm.jpg',
-      title: 'title1',
-    },
-    {
-      img: 'https://static8.depositphotos.com/1302629/980/i/450/depositphotos_9806860-stock-photo-fish-farm.jpg',
-      title: 'title2',
-    },
-    {
-      img: 'https://static8.depositphotos.com/1302629/980/i/450/depositphotos_9806860-stock-photo-fish-farm.jpg',
-      title: 'title3',
-    },
-    {
-      img: 'https://static8.depositphotos.com/1302629/980/i/450/depositphotos_9806860-stock-photo-fish-farm.jpg',
-      title: 'title4',
-    },
-    {
-      img: 'https://static8.depositphotos.com/1302629/980/i/450/depositphotos_9806860-stock-photo-fish-farm.jpg',
-      title: 'title5',
-    },
-    {
-      img: 'https://static8.depositphotos.com/1302629/980/i/450/depositphotos_9806860-stock-photo-fish-farm.jpg',
-      title: 'title6',
-    },
-  ];
-  array2 = [
-    {
-      img: 'https://static8.depositphotos.com/1302629/980/i/450/depositphotos_9806860-stock-photo-fish-farm.jpg',
-      title: 'Granjas',
-      ruta: '/granjas',
-    },
-    {
-      img: 'https://st4.depositphotos.com/1192060/21812/i/600/depositphotos_218124688-stock-photo-hatchery-worker-netting-kokanee-salmon.jpg',
-      title: 'Piscicultores',
-      ruta: '/piscicultores',
-    },
-    {
-      img: 'https://st3.depositphotos.com/1192060/14569/i/600/depositphotos_145692603-stock-photo-man-fixing-the-buoy.jpg',
-      title: 'Pescadores',
-      ruta: '/pescadores',
-    },
-    {
-      img: 'https://tierragrata.org/wp-content/uploads/2020/09/IMG_5486-2-1.jpg',
       title: 'Asociaciones',
-      ruta: '/asociaciones',
+      img: 'assets/icons/asociacio-icon-home.svg',
+      cantidad: 0,
     },
     {
-      img: 'https://img.lalr.co/cms/2015/07/09125916/peces0215-612.jpg?size=sm',
-      title: 'Productos',
-      ruta: '/panel-busqueda/productos',
+      title: 'Pescadores',
+      img: 'assets/icons/pescador-icon-home.svg',
+      cantidad: 0,
     },
     {
-      img: 'https://www.boyaca.gov.co/wp-content/uploads/2016/09/images_Noticias2016_Septiembre2_pescado74748.jpg',
-      title: 'Vehículos',
-      ruta: '/panel-busqueda/vehiculos',
+      title: 'Piscicultores',
+      img: 'assets/icons/piscicul-icon-home.svg',
+      cantidad: 0,
+    },
+    { title: 'Usuarios', img: 'assets/icons/group-circle.svg', cantidad: 0 },
+  ];
+
+  enlaceRapido:any []= [];
+
+  imagenes: any[] = [
+    {
+      url_imagen:
+        'https://img.lalr.co/cms/2015/07/09125916/peces0215-612.jpg?size=sm',
+      titulo: '',
+      url_enlace: '/panel-busqueda/productos',
+    },
+    {
+      url_imagen:
+        'https://www.boyaca.gov.co/wp-content/uploads/2016/09/images_Noticias2016_Septiembre2_pescado74748.jpg',
+      titulo: '',
+      url_enlace: '/panel-busqueda/vehiculos',
     },
   ];
-  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
-  imagenes: any[] = this.array;
-  imageData: any[] = [];
   lightboxRef!: GalleryRef;
   setInterval: any;
   percent: number = 0;
   contador: number = 0;
-  constructor(public gallery: Gallery, private router: Router) {}
+  sliders: any[] = [];
+  constructor(
+    public gallery: Gallery,
+    private pescadoresService: PescadoresService,
+    private piscicultoresService: PiscicultoresService,
+    private granjasService: GranjasService,
+    private asociacionService: AsociacionesService,
+    private usuarioService: UsuarioService,
+    private sliderInicioService: SliderInicioService,
+    private enlacesDirectosInicioService: EnlacesDirectosInicioService
+  ) {}
   ngOnInit() {
-    /* this.timePlayGallery(); */
+    this.servicesDataLength();
+    this.cargaServiceSlaider();
+    this.cargaServiceEnlacesDirc();
+  }
+  servicesDataLength() {
+    this.granjasService.getGranjas().subscribe((response: any) => {
+      this.datosCounter[0].cantidad = response.data.length;
+    });
+    this.asociacionService.getAsociacionesTodas().subscribe((response) => {
+      this.datosCounter[1].cantidad = response.data.length;
+    });
+    this.pescadoresService.getPescadores().subscribe((response: any) => {
+      this.datosCounter[2].cantidad = response.data.length;
+    });
+    this.piscicultoresService.getPiscicultores().subscribe((response: any) => {
+      this.datosCounter[3].cantidad = response.data.length;
+    });
+    this.usuarioService.getTodosUsuarioAll().subscribe((response: any) => {
+      this.datosCounter[4].cantidad = response.data.length;
+    });
+  }
+  cargaServiceSlaider() {
+    this.sliderInicioService.getSliders().subscribe(
+      (response) => {
+        if (response.data.length > 0) {
+          this.sliders = response.data;
+          this.openSlaider(response.data);
+        }else{
+          this.openSlaider(this.imagenes);
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  cargaServiceEnlacesDirc() {
+    this.enlacesDirectosInicioService.getTodos().subscribe(
+      (response) => {
+        if (response.data.length > 0) {
+          this.enlaceRapido = response.data;
+        }
+      },
+      (err) => {}
+    );
+  }
+  /* Funciones slaider */
+  openSlaider(slaid: any) {
+    let imageData: any[] = [];
     this.lightboxRef = this.gallery.ref('homegallery');
-    this.imagenes.forEach((element: any) => {
-      this.imageData.push({
-        srcUrl: element.img,
-        previewUrl: element.img,
-        title: element.title,
+    slaid.forEach((element: any) => {
+      imageData.push({
+        srcUrl: element.url_imagen,
+        previewUrl: element.url_imagen,
+        title: element.titulo,
       });
     });
-
-    for (let index = 0; index < this.imageData.length; index++) {
-      const element = this.imageData[index];
+    for (let index = 0; index < imageData.length; index++) {
+      const element = imageData[index];
       this.lightboxRef.addImage({
         src: element.srcUrl,
         thumb: element.previewUrl,
@@ -97,31 +137,30 @@ export class HomeComponent implements OnInit {
       });
     }
   }
+  clisFotoSlide(event: any) {
+    let url = this.sliders[event].url_enlace;
+    window.open(url, '_blank');
+  }
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     /* console.log(event); */
     if (event.key === 'ArrowRight') {
-      this.lightboxRef.next();
+      this.lightboxRef?.next();
     } else if (event.key === 'ArrowLeft') {
-      this.lightboxRef.prev();
+      this.lightboxRef?.prev();
     }
   }
   stopGalerry() {
-    this.lightboxRef.stop();
+    this.lightboxRef?.stop();
   }
   playGalery() {
-    this.lightboxRef.play();
+    this.lightboxRef?.play();
   }
   nextImgGallery() {
-    this.lightboxRef.next();
+    this.lightboxRef?.next();
   }
   prevImgGallery() {
-    this.lightboxRef.prev();
+    this.lightboxRef?.prev();
   }
-  navigate(ruta: any) {
-    console.log(ruta)
-    let url = '';
-    url = this.router.serializeUrl(this.router.createUrlTree([ruta]));
-    window.open(url, '_blank');
-  }
+
 }

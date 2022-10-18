@@ -10,11 +10,13 @@
   margin-bottom: 30px;
   border-radius: max(0px, min(8px, -999900% - 39996px + 999900vw))/8px;
   box-shadow: 0 2px 12px var(--shadow-2);
+
   .card__img-box {
     width: 80vw;
-max-width: 300px;
-  height: 200px;
-  padding: 15px;
+    max-width: 300px;
+    height: 200px;
+    padding: 15px;
+
     .sin-img {
       object-fit: cover;
       height: 100%;
@@ -46,15 +48,18 @@ max-width: 300px;
   font-size: 12px;
   margin-top: 4px;
 }
+
 .container__icon {
   cursor: pointer;
 }
+
 .mitextcolorpencil {
   color: var(--azul1) !important;
 }
+
 @media screen and (max-width: 764px) {
   .card {
-      margin-right: 0;
-      margin-left: 0;
+    margin-right: 0;
+    margin-left: 0;
   }
 }

@@ -1,5 +1,5 @@
 <div class="cardContainer inactive">
-  <div #Mycard class="card_info">
+  <div #Mycard class="card_info" [ngClass]="{'mi-stilo':dato.titulo==''}">
     <div class="side front">
       <div class="front-botones">
         <div (click)="editCard()" *ngIf="editaAndEliminar">
@@ -12,8 +12,8 @@
       <div class="img" (click)="clisFotoSlide()" >
         <img class="img1" [src]="dato.imagen ? dato.imagen: 'assets/images/no-image-photography.svg'" alt="Foto">
       </div>
-      <div class="info info-front">
-        <h5 *ngIf="dato.titulo">{{dato.titulo | titlecase}}</h5>
+      <div class="info info-front" *ngIf="dato?.titulo">
+        <h5>{{dato.titulo | titlecase}}</h5>
         <div *ngFor="let item of dato.subTitle">
           <p *ngIf="item?.titulo && item?.detail">{{item?.titulo | titlecase}} <span>{{item?.detail}}</span></p>
         </div>

@@ -13,26 +13,10 @@
 </div>
 
 <div class="container">
-  <div class="card" *ngFor="let negocio of negociosFiltered; let i=index;">
-    <div class="card__img-box">
-      <app-carrucel-img
-                 *ngIf="negocio.fotos.length != 0"
-                  [imagenes]="negocio.fotos"
-                  [indicatorsphoto]="true"
-                  [idtarge]="i"
-                  [rounded]="true"
-                  [scaledown]="true"
-                  [efect]="true">
-                </app-carrucel-img>
-      <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="negocio.fotos.length == 0">
-    </div>
-      <div class="card-body shorterTextOverflowHidden">
-        <span class="card__title shorterTextAuto">{{negocio.nombre_negocio}}</span>
-        <span class="card__sub-title">{{negocio.nombre_municipio}}</span>
-        <span class="card__description shorterTextAuto">{{negocio.direccion}}</span>
-          <div>
-            <span class="link" (click)="goDetail(negocio.id_negocio)">Ver detalle</span>
-          </div>
-      </div>
-  </div>
+  <app-card-negocio
+    [datos]="negocio"
+    [indiceDatos]="i"
+   *ngFor="let negocio of negociosFiltered; let i=index;"
+    (onDetalle)="goDetail(negocio.id_negocio)">
+  </app-card-negocio>
 </div>

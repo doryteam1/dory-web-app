@@ -136,6 +136,10 @@
       align-items: center;
       justify-content: space-between;
       gap: 5px;
+      img{
+        width: 30px;
+        height: 30px;
+      }
     }
 
     .card__description-container {

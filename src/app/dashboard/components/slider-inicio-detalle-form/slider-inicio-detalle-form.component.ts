@@ -23,7 +23,7 @@ import { SliderInicioService } from 'src/app/services/slider-inicio.service';
 export class SliderInicioDetalleFormComponent implements OnInit {
   @ViewChild('fileInputCreate') inputFileDialogCreate!: ElementRef;
   form: FormGroup = new FormGroup({
-    titulo: new FormControl('', [Validators.required]),
+    titulo: new FormControl(''),
     url_enlace: new FormControl('', [Validators.required]),
   });
   loading: boolean = false;

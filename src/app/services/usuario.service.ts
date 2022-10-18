@@ -41,6 +41,11 @@ export class UsuarioService {
       environment.doryApiRestBaseUrl+'/tipos-usuarios'
     );
   }
+  getTodosUsuarioAll() {
+    return this.httpsService.get(
+      environment.doryApiRestBaseUrl + '/usuario/all'
+    );
+  }
 
   getUsuarioByEmail(email: string | null) {
     return this.httpsService.get(

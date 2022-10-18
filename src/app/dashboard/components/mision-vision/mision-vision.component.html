@@ -120,19 +120,19 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+      <button [disabled]="loading" type="button"  class="btn-rounded btn--blue container__btn"
         *ngIf="modalMode=='visualize'" (click)="editarData()">
         <span *ngIf="!loading">Editar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
         (click)="updateData()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading" type="button"class="btn-rounded btn--grey container__btn container__btn--azul"
         *ngIf="modalMode=='update'" (click)="cancelarEditarData()">
         <span>Cancelar</span>
       </button>

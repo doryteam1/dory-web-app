@@ -1,17 +1,13 @@
 <div class="container">
+
   <div class="basic-container" (mouseover)="stopGalerry()" (mouseout)=" playGalery()">
     <gallery class="gallery--class" [counter]="false" [attr.fluid]="false" [loadingStrategy]="'lazy'"
       [imageSize]="'cover'" id="homegallery" [itemTemplate]="itemTemplate" [thumbHeight]="70" [thumbWidth]="80"
       [thumbMode]="'free'" [dots]="true" [autoPlay]="true" [playerInterval]="3000
-       " [thumb]="false" [nav]="true">
+       " [thumb]="false" [nav]="true" (itemClick)="clisFotoSlide($event)">
     </gallery>
   </div>
-  <!-- Add custom template to image items -->
-  <ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
-    <span *ngIf="type === 'image' && index === currIndex" class="item-text animate__bounceIn item-title-gallery">
-      {{data?.title}}
-    </span>
-  </ng-template>
+
   <div class="container container-information">
     <div class="row align-items-center row--miestilo">
       <div class="col-6 text-start text-start--miestilo">
@@ -29,47 +25,38 @@
   </div>
   <div class="container-statics">
     <div class="container-statics-div">
-      <div  style="cursor:pointer ;" class="container-statics__card" (click)=" navigate('/publicaciones')">
-        <img class="container-statics__icon" src="assets/icons/publicaciones-icon.svg">
-        <div class="container-statics__data">
-          <h4 class="container-statics__value">10+</h4>
-          <p class="container-statics__value-description">Publicaciones</p>
-        </div>
-      </div>
-      <div class="container-statics__card">
-        <img class="container-statics__icon" src="assets/icons/person-circle.svg">
-        <div class="container-statics__data">
-          <h4 class="container-statics__value">500+</h4>
-          <p class="container-statics__value-description">Productores</p>
-        </div>
-      </div>
-      <div class="container-statics__card">
-        <img class="container-statics__icon" src="assets/icons/chart-circle.svg">
-        <div class="container-statics__data">
-          <h4 class="container-statics__value">30+</h4>
-          <p class="container-statics__value-description">Graficos para análisis</p>
-        </div>
-      </div>
-      <div class="container-statics__card">
-        <img class="container-statics__icon" src="assets/icons/group-circle.svg">
-        <div class="container-statics__data">
-          <h4 class="container-statics__value">10.000+</h4>
-          <p class="container-statics__value-description">Usuarios</p>
-        </div>
-      </div>
+      <ng-container *ngTemplateOutlet="miniCard"></ng-container>
     </div>
   </div>
-  <div class="view-content">
-    <div class="views-row view--current item-{{i}}" *ngFor="let item of array2; index as i">
-      <div class="container-target-link" (click)=" navigate(item.ruta)">
-        <span class="target-link-text">
-          Ver más </span>
+  <div class="container-card ">
+    <div class="view-content">
+      <div class="views-row view--current item-{{i}}" *ngFor="let item of enlaceRapido; index as i">
+        <div class="container-target-link">
+        </div>
+        <div class="container-title">
+          <div class="front-botones">
+          </div>
+          <h4 class="container-title-h4" >{{item.titulo}}</h4>
+        </div>
+        <img [src]="item.url_imagen" width="100%" height="100%" alt="Imagen{i}">
       </div>
-      <div class="container-title">
-        <h4>{{item.title}}</h4>
-      </div>
-        <img  [src]="item.img" width="100%" height="100%" alt="Imagen{i}">
     </div>
   </div>
 </div>
 <app-footer></app-footer>
+
+<ng-template #miniCard>
+  <div class="container-statics__card" *ngFor="let item of datosCounter; index as i">
+    <img class="container-statics__icon" [src]="item.img">
+    <div class="container-statics__data">
+      <h4 class="container-statics__value">{{item.cantidad}}</h4>
+      <p class="container-statics__value-description">{{item.title}}</p>
+    </div>
+  </div>
+</ng-template>
+<!-- Add custom template to image items -->
+<ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
+  <span *ngIf="type === 'image' && index === currIndex && data?.title" class="item-text animate__bounceIn item-title-gallery">
+    {{data?.title}}
+  </span>
+</ng-template>

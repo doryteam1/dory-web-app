@@ -1,20 +1,22 @@
 <div class="container-todo" style="margin-top: 20px;">
   <div class="basic-container">
-    <div *ngIf="items.length > 0 && imagenes.length > 0">
+    <div *ngIf="sliderActive">
+      {{tiempoSlide}}
       <gallery  *ngIf="modalMode == 'visualice'" class="gallery--class" [counter]="false" [attr.fluid]="false" [loadingStrategy]="'lazy'"
         [imageSize]="'cover'" id="homegallery" [thumbHeight]="70" [thumbWidth]="80" [thumbMode]="'free'" [dots]="true"
-        [autoPlay]="tiempoSlide > 0" [playerInterval]="tiempoSlide" [thumb]="false" [nav]="true" [items]="items "
+        [autoPlay]="tiempoSlide>0" [playerInterval]="tiempoSlide" [thumb]="false" [nav]="true" [items]="items "
         (itemClick)="clisFotoSlide($event)">
       </gallery>
+      {{tiempoSlide}}
       <div>
         <div class="d-flex flex-row justify-content-between mt-3 myAjusteModal">
           <div class="modal-body">
             <form [formGroup]="form" *ngIf="modalMode == 'update'">
               <div class="mb-3">
-                <label for="dateOfBirth">Tiempo entre fotos</label>
+                <label for="dateOfBirth">Tiempo (segundos) entre fotos</label>
                 <div class="input-group">
                   <input id="productName" type="number" class="form-control"
-                    placeholder=" Ingrese el tiempo en ms. Ej:3000ms"
+                    placeholder=" Ingrese el tiempo en s. Ej:3s"
                     formControlName="time"
                     onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
                 </div>
@@ -26,7 +28,7 @@
               </div>
             </form>
             <div class="paragraph" *ngIf="modalMode == 'visualice'">
-              <h3 class="title">{{tiempoSlide}} ms</h3>
+              <h3 class="title">{{tiempoSlide/1000}}s</h3>
               <button type="button" class="btn-rounded btn--blue container__btn" (click)="EditionTime()">
                 <span>Editar</span>
               </button>
