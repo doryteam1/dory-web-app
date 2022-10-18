@@ -39,7 +39,7 @@
             </div>
             <button type="button" class="btn-close button_close" (click)="closeChat()"></button>
           </div>
-          <div class="chat-body">
+          <div id="chatBodyContainer" class="chat-body">
             <div class="chat-body-container" *ngFor="let item of messageArray"
               [ngClass]="{ 'same-user':item?.fromUserId === currentUser?.sub}">
               <span class="_1kh65" *ngIf="item?.fromUserId === currentUser?.sub">

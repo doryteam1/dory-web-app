@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 @Component({
@@ -66,6 +66,7 @@ export class ChatUserComponent implements OnInit {
         this.chatService.setStorage(this.roomsArray);
         /*Carga los mensajes del la sala del usuario seleccionado*/
         this.loadRoomMessages();
+        this.scrollToBottom()
       });
 
       this.chatService
@@ -115,6 +116,7 @@ export class ChatUserComponent implements OnInit {
     if (roomIndex > -1) {
       this.messageArray = this.roomsArray[roomIndex].chats;
     }
+    this.scrollToBottom()  
     //this.join(this.currentUser.name, this.roomId);
   }
 
@@ -161,11 +163,19 @@ export class ChatUserComponent implements OnInit {
       this.roomsArray.push(updateStorage);
       this.messageArray = this.roomsArray[this.roomsArray.length - 1].chats;
     }
-
     this.chatService.setStorage(this.roomsArray);
     this.messageText = ''; 
+    this.scrollToBottom()  
     //this.ref.detectChanges();
   }
+
+  scrollToBottom(): void {
+    setTimeout(()=>{
+      let el = document.querySelector('#chatBodyContainer');
+      el!.scrollTop = el?.scrollHeight!; 
+    },50)
+  }
+
   back() {
     this.Onlist = true;
   }
