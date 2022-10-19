@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     { title: 'Usuarios', img: 'assets/icons/group-circle.svg', cantidad: 0 },
   ];
 
-  enlaceRapido:any []= [];
+  enlaceRapido: any[] = [];
 
   imagenes: any[] = [
     {
@@ -68,7 +68,8 @@ export class HomeComponent implements OnInit {
     private asociacionService: AsociacionesService,
     private usuarioService: UsuarioService,
     private sliderInicioService: SliderInicioService,
-    private enlacesDirectosInicioService: EnlacesDirectosInicioService
+    private enlacesDirectosInicioService: EnlacesDirectosInicioService,
+    private router: Router
   ) {}
   ngOnInit() {
     this.servicesDataLength();
@@ -98,7 +99,7 @@ export class HomeComponent implements OnInit {
         if (response.data.length > 0) {
           this.sliders = response.data;
           this.openSlaider(response.data);
-        }else{
+        } else {
           this.openSlaider(this.imagenes);
         }
       },
@@ -145,6 +146,11 @@ export class HomeComponent implements OnInit {
     let url = event.url_enlace;
     window.open(url, '_blank');
   }
+  navigate(ruta: any) {
+    let url = '';
+    url = this.router.serializeUrl(this.router.createUrlTree([ruta]));
+    window.open(url, '_blank');
+  }
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     /* console.log(event); */
@@ -166,5 +172,4 @@ export class HomeComponent implements OnInit {
   prevImgGallery() {
     this.lightboxRef?.prev();
   }
-
 }

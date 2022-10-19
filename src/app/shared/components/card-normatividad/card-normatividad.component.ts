@@ -23,12 +23,15 @@ export class CardNormatividadComponent implements OnInit {
 
   ngOnInit(): void {}
   openDetalle() {
-  /*  this.onDetalle.emit() */
+    /*  this.onDetalle.emit() */
   }
   deleteCard() {
     this.onDeleteCard.emit();
   }
   editCard() {
     this.onUpdateCard.emit();
+  }
+  clisCard(url: any) {
+    window.open(url, '_blank');
   }
 }
