@@ -142,7 +142,7 @@ export class SliderInicioDetalleFormComponent implements OnInit {
     let urlFoto = this.slide?.url_imagen;
     this.form.disable();
     await this.loadPhotos();
-    if (this.fotoAmandar && urlFoto.includes('firebasestorage')) {
+    if (this.fotoAmandar && urlFoto?.includes('firebasestorage')) {
       console.log('Foto eliminada de firebase');
       this.storage.deleteByUrl(urlFoto);
     }

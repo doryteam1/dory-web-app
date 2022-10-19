@@ -6,7 +6,7 @@
             <div class="container__box-data" *ngIf="isFillName">
                 <span class="container__title">Antes de seguir cuéntanos, ¿cuál es tu nombre?</span>
                 <input class="container__input form-input-text-square" type="text" [(ngModel)]="nombres" (ngModelChange)="resetErrors()">
-                <span class="container__title">¿Cuales son tus apellidos?</span>
+                <span class="container__title">¿Cuáles son tus apellidos?</span>
                 <input class="container__input form-input-text-square" type="text" [(ngModel)]="apellidos" (ngModelChange)="resetErrors()">
             </div>
 
@@ -14,7 +14,7 @@
             <div *ngIf="isFillUserType">
                 <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idTipo" (ngModelChange)="resetErrors()">
                     <optgroup label="Eres un">
-                        <option hidden="hidden" selected="selected">Escoje uno</option>
+                        <option hidden="hidden" selected="selected">Escoge uno</option>
                         <option *ngFor="let tipo of tipos" [ngValue]="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>
                     </optgroup>
                 </select>
@@ -23,14 +23,14 @@
             <div *ngIf="tipoUsuario == 'Proveedor'">
                 <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idDepartamento"
                 (ngModelChange)='changeDpto(idDepartamento)'>
-                    <optgroup label="Escoje un departamento">
+                    <optgroup label="Escoge un departamento">
                         <option hidden="hidden" selected="selected">Escoge un departamento</option>
                         <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
                     </optgroup>
                 </select>
             </div>
 
-            <span class="container__title">Por último selecciona el municipio donde vives</span>
+            <span class="container__title">Selecciona el municipio de tu residencia</span>
             <div>
                 <select class="container-form__input form-input-text-square container__input" [(ngModel)]="idMunic" (ngModelChange)="resetErrors()">
                     <optgroup  label="Escoge un municipio">

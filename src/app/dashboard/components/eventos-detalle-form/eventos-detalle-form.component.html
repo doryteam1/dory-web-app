@@ -9,7 +9,7 @@
         <span class="container__title">Tipo de eventos</span>
         <div>
           <select class="form-control" formControlName='id_tipo_evento_fk'>
-            <optgroup label="Escoje el tipo de evento">
+            <optgroup label="Escoge el tipo de evento">
               <option *ngFor="let evento of tipoEventos" [value]="evento.id">
                 {{evento.nombre }}</option>
             </optgroup>

@@ -11,14 +11,13 @@
 </div>
 <div class="container-normatividades" *ngIf="normatividadesArray.length > 0">
   <div class="container-card">
-    <app-card-normatividad [editaAndEliminar]="false" [data]="{
-                    tipo:norma?.tipo,
-                    nombre: norma?.nombre,
-                    contenido:norma?.contenido,
-                     url_descarga:norma.url_descarga
-                      }" *ngFor="let norma of normatividadesArray; let i=index">
-    </app-card-normatividad>
+        <div class="container" *ngFor="let normatividad of normatividadesArray">
+          <h5 class="container__title">{{normatividad.nombre}}</h5>
+          <p class="container__description">{{normatividad.contenido | shorter:150}}<a class="container__button" target="_blank"
+              [href]="normatividad.url_descarga"> Leer más...</a></p>
+        </div>
   </div>
 </div>
 <app-not-found class="app-not-found" *ngIf="normatividadesArray.length <=0 || showNotFound"
   [message]="'No hay normas asignados'"></app-not-found>
+
