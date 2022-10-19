@@ -1,7 +1,6 @@
-<app-search [buscadorpersonalizado]="false" (textSearch)="textChange($event)" (keyEnterPress)="onSearch($event)"></app-search>
-
-<div *ngIf="eventsFiltered.length > 0 " class="container-card">
-  <div class="card" *ngFor="let evento of eventsFiltered">
+<app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)"></app-search>
+<div *ngIf="eventsFiltered.length > 0 && eventos.length > 0 " class="container-card">
+  <div class="card" *ngFor="let evento of eventos">
     <a class="card__link" href="{{evento?.url}}" target="_blank">
       <div class="container-card__imagen">
        <img class="card__image"  [src]="evento?.imagen ? evento?.imagen: 'assets/images/no-image-photography.svg'" >
@@ -32,7 +31,6 @@
       </div>
     </a>
   </div>
-
 </div>
     <app-not-found *ngIf="showNotFound" message="No encontramos eventos relacionadas con la busqueda"></app-not-found>
 <div class="container mt-5">

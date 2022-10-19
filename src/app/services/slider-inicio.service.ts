@@ -35,7 +35,9 @@ export class SliderInicioService {
   }
   updateTiempoSlaid(time:number) {
     return this.https.put(
-      environment.doryApiRestBaseUrl + '/slider/update/time/slider',{tiempo:time}
+      environment.doryApiRestBaseUrl +
+        '/slider/update/time/slider',
+      { tiempo: time }
     );
   }
   deleteSlide(idslide: number) {

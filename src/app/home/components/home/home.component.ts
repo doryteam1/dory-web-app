@@ -5,7 +5,6 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Gallery, GalleryRef } from 'ng-gallery';
-import { Observable } from 'rxjs';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
@@ -56,10 +55,8 @@ export class HomeComponent implements OnInit {
     },
   ];
   lightboxRef!: GalleryRef;
-  setInterval: any;
-  percent: number = 0;
-  contador: number = 0;
   sliders: any[] = [];
+  tiempoSlide: any = 0;
   constructor(
     public gallery: Gallery,
     private pescadoresService: PescadoresService,
@@ -96,9 +93,10 @@ export class HomeComponent implements OnInit {
   cargaServiceSlaider() {
     this.sliderInicioService.getSliders().subscribe(
       (response) => {
-        if (response.data.length > 0) {
-          this.sliders = response.data;
-          this.openSlaider(response.data);
+        if (response.data.slider.length > 0) {
+          this.sliders = response.data.slider;
+           this.tiempoSlide = response.data.tiempo;
+          this.openSlaider(response.data.slider);
         } else {
           this.openSlaider(this.imagenes);
         }
@@ -153,7 +151,6 @@ export class HomeComponent implements OnInit {
   }
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    /* console.log(event); */
     if (event.key === 'ArrowRight') {
       this.lightboxRef?.next();
     } else if (event.key === 'ArrowLeft') {

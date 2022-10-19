@@ -13,7 +13,6 @@ import { SliderInicioService } from 'src/app/services/slider-inicio.service';
    url_imagen: string;
    url_enlace: string;
    titulo: string;
-   time?: any;
  }
 @Component({
   selector: 'app-slider-inicio-detalle-form',
@@ -50,11 +49,11 @@ export class SliderInicioDetalleFormComponent implements OnInit {
     if (this.modalMode == 'update') {
       this.sliderInicioService.getSliders().subscribe(
         (response) => {
-          if (response.data.length > 0) {
-            let index = response.data.findIndex(
+          if (response.data.slider.length > 0) {
+            let index = response.data.slider.findIndex(
               (slide: slide) => slide.id_slid == idslide
             );
-            this.slide = response.data[index];
+            this.slide = response.data.slider[index];
             this.id_slide = this.slide?.id_slid!;
             this.prepareForm();
           }

@@ -52,17 +52,23 @@ export class SliderInicioComponent implements OnInit {
     this.cargaService();
   }
   cargaService() {
+     this.imagenes= [];
+     this.sliders=[],
+     this.items=[]
+     this.loading = false;
+      this.showError = false;
+      this.showNotFound= false;
     this.sliderInicioService.getSliders().subscribe(
       (response) => {
-          if (response.data.length > 0) {
-            this.sliders = response.data;
-            for (let index = 0; index < response.data.length; index++) {
-              const foto: slide = response.data[index];
+          if (response.data.slider.length > 0) {
+            this.tiempoSlide = response.data.tiempo
+            for (let index = 0; index < response.data.slider.length; index++) {
+              const foto: slide = response.data.slider[index];
               this.imagenes.push(foto.url_imagen);
             }
             if (this.imagenes.length > 0) {
-            this.cargaServiceDos();
-             this.cargarFuntionSlider(this.imagenes);
+              this.sliders = response.data.slider;
+              this.cargarFuntionSlider(this.imagenes);
             }
             this.showError = false;
             this.showNotFound = false;
@@ -74,22 +80,17 @@ export class SliderInicioComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.showNotFound = false;
-        this.showError = true;
+        if (err.status == 404) {
+          this.showNotFound = true;
+           this.showError = false;
+        }else{
+         this.showNotFound = false;
+          this.showError = true;
+        }
       }
     );
   }
-  cargaServiceDos() {
-      this.sliderInicioService.getSliders().subscribe(
-        (response) => {
-          this.tiempoSlide = response.data[0]?.time;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
 
-  }
   deleteNovedad(id: any, nombre: any, imagen: any, idx: any) {
     this.appModalService
       .confirm(
@@ -190,7 +191,8 @@ export class SliderInicioComponent implements OnInit {
   cancelingEdition() {
     this.modalMode = 'visualice';
     if ((this.modalMode = 'visualice')) {
-      this.cargaServiceDos();
+      this.lightboxRef.reset()
+      this.cargaService();
     }
   }
   updateData() {

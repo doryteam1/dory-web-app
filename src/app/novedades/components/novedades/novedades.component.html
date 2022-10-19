@@ -1,47 +1,51 @@
-<app-search class="buscador-container__search" [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar...'"
-  (keyEnterPressData)=" onBuscarPalabra($event)">
-</app-search>
-<div class="container">
-  <div class="card" *ngFor="let novedad of novedadesFiltered; let i=index;">
+
+  <app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)"></app-search>
+<div  *ngIf="novedades.length > 0 && novedadesFiltered.length > 0 "class="container">
+  <div class="card" *ngFor="let novedad of novedades; let i=index;">
     <div class="card__autor-photo">
       <div class="card__autor-data">
         <div class="foto-autor-container">
           <img class="foto-autor" [src]='novedad.url_foto_autor' *ngIf="novedad.url_foto_autor" />
           <img class="foto-autor" src='assets/images/avatar-person.svg' *ngIf="!novedad.url_foto_autor" />
         </div>
-        <div class="title-autor-container">
-          <h4 class="nombre-autor">{{novedad.autor | shorter:28}}</h4>
+        <div class="title-autor-container shorterTextOverflowHidden">
+          <h4 class="nombre-autor shorterTextAuto">{{novedad?.autor}}</h4>
         </div>
       </div>
       <div class="img" (click)="onView(novedad.id_novedad, i,novedad.url_novedad)">
         <img class="novedad__foto"  [src]="novedad.url_foto_novedad ? novedad.url_foto_novedad: 'assets/images/no-image-photography.svg'" >
       </div>
     </div>
-    <div class="top-text" (click)="onView(novedad.id_novedad, i,novedad.url_novedad)">
-      <h2 class="novedad__titular">{{ novedad.titulo | shorter:80 }}</h2>
-    </div>
-    <div class="bottom-text">
-      <div class="text" (click)="onView(novedad.id_novedad, i,novedad.url_novedad)">
-        {{ novedad.resumen | shorter:120 }}
-      </div>
-      <div class="novedad__container_stats">
-        <div>
-          <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''"
-            src="assets/icons/happy-face.svg" (click)="onLike(novedad, i)" *ngIf="!novedad.me_gusta">
-          <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''"
-            src="assets/icons/happy-face-white.svg" (click)="onLike(novedad, i)" *ngIf="novedad.me_gusta">
-          <span class="novedad__like-count">{{novedad.likes}}</span>
+    <!--  -->
+    <div class="container-data-like-shared">
+      <div class="data-like-shared">
+        <div class="top-text shorterTextOverflowHidden" (click)="onView(novedad.id_novedad, i,novedad.url_novedad)">
+          <h2 class="novedad__titular shorterTextAuto">{{ novedad?.titulo }}</h2>
+        </div>
+        <div class="bottom-text">
+          <div class="text" (click)="onView(novedad.id_novedad, i,novedad.url_novedad)">
+            {{ novedad?.resumen | shorter:120 }}
+          </div>
+          <div class="novedad__container_stats">
+            <div>
+              <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''"
+                src="assets/icons/happy-face.svg" (click)="onLike(novedad, i)" *ngIf="!novedad.me_gusta">
+              <img class="novedad__like-icon" [ngClass]="novedad.me_gusta ? 'novedad__like-icon--fill' : ''"
+                src="assets/icons/happy-face-white.svg" (click)="onLike(novedad, i)" *ngIf="novedad.me_gusta">
+              <span class="novedad__like-count">{{novedad?.likes}}</span>
+            </div>
+            <div>
+              <span class="novedad__visitas">{{novedad?.cant_visitas}} visitas</span>
+              <span class="novedad__fecha"></span>
+            </div>
+          </div>
         </div>
         <div>
-          <span class="novedad__visitas">{{novedad.cant_visitas}} visitas</span>
-          <span class="novedad__fecha"></span>
+          <share-buttons class="pt-2 mb-2" theme="circles-dark" [showIcon]="true" [showText]="true"
+            url={{novedad.url_novedad}} description={{novedad.titulo}} twitterAccount="rodrigokamada">
+          </share-buttons>
         </div>
       </div>
-    </div>
-    <div>
-      <share-buttons class="pt-2 mb-2" theme="circles-dark" [showIcon]="true" [showText]="true"
-        url={{novedad.url_novedad}} description={{novedad.titulo}} twitterAccount="rodrigokamada">
-      </share-buttons>
     </div>
   </div>
 </div>
