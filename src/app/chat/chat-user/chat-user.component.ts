@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 @Component({
@@ -25,15 +25,41 @@ export class ChatUserComponent implements OnInit {
   ];
   currentUser: any; 
   chatOpen: boolean = false;
-
+  connectedUsersObtained:boolean = false;
+  connectedUsers: { id: any; name: any; phone: any; image: any; status: boolean; }[] = [];
+  syncConnected:boolean = false;
+  usersObtained:boolean = false;
   constructor(
     private chatService: ChatService,
-    private userService: UsuarioService,
-    private ref:ChangeDetectorRef
+    private userService: UsuarioService
   ) {}
 
   ngOnInit(): void {
     this.currentUser = this.userService.getAuthUser();
+    this.userService.getTodosUsuarioAll().subscribe(
+      (response)=>{
+        this.userList = response.data.map(
+          (element:any)=>{
+            return {
+              id:element.id,
+              name: element.nombre_completo,
+              phone: element.celular,
+              image: element.foto,
+              status: false,
+            }
+          }
+        )
+        this.userList = this.userList.filter(
+          (element:any)=>{
+            return element.id !== this.userService.getAuthUser().sub
+          }
+        )
+        this.usersObtained = true;
+        if(!this.syncConnected && this.connectedUsersObtained){//llegaron los usuarios conectados y no estan sincronizados
+          this.syncConnectedUsers();
+        }
+      }
+    )
     this.chatService
       .getMessage()
       .subscribe((data: { de: number;  mensaje: string }) => {
@@ -72,26 +98,74 @@ export class ChatUserComponent implements OnInit {
       this.chatService
       .getConectedUsers()
       .subscribe((data:any[]) => {
-          this.userList = data.map(
+          if(this.connectedUsersObtained){
+            return;
+          }
+          this.connectedUsers = data.map(
             (element:any)=>{
               return {
                 id:element.id,
                 name: element.nombre_completo,
                 phone: element.celular,
                 image: element.foto,
-                estatus: true,
+                status: true,
               }
             }
           )
-          this.userList = this.userList.filter(
+          this.connectedUsers = this.connectedUsers.filter(
             (element:any)=>{
               return element.id !== this.userService.getAuthUser().sub
             }
           )
-          console.log(this.userList)
+          this.connectedUsersObtained = true;
+          if(!this.syncConnected && this.usersObtained){//se tienen los usuarios del sistema y no estan sincronizados
+            this.syncConnectedUsers();
+          }
       });
 
-      this.chatService.getLastUserConnected()
+      this.chatService.getLastUserConnected().subscribe(
+        (userId)=>{
+          let index = this.userList.findIndex(
+            (user)=>{
+              return user.id == userId;
+            }
+          )
+          if(index > -1 && this.syncConnected)
+            this.userList[index].status = true;
+        }
+      )
+
+      this.chatService.getLastUserDisconnected().subscribe(
+        (userId)=>{
+          let index = this.userList.findIndex(
+            (user)=>{
+              return user.id == userId;
+            }
+          )
+          if(index > -1  && this.syncConnected)
+            this.userList[index].status = false;
+        }
+      )
+  }
+
+  syncConnectedUsers(){
+    this.connectedUsers.forEach(
+      (element)=>{
+          let index = this.userList.findIndex(
+            (user)=>{
+               return user.id == element.id; 
+            }
+          );
+          if(index > -1)
+            this.userList[index].status = true;
+    })
+    this.userList = this.userList.filter(
+      (element)=>{
+          return element.status == false;
+      }
+    )
+    this.userList = this.connectedUsers.concat(this.userList);
+    this.syncConnected = true;
   }
 
   loadRoomMessages(){
