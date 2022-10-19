@@ -130,8 +130,17 @@ export class ChatUserComponent implements OnInit {
               return user.id == userId;
             }
           )
-          if(index > -1 && this.syncConnected)
+          if(index > -1 && this.syncConnected){
             this.userList[index].status = true;
+            let user = this.userList[index];
+            this.userList.splice(index,1);
+            let firstOfflineIndex = this.userList.findIndex(
+              (element)=>{
+                return element.status == false;
+              }
+            );
+            this.userList.splice(firstOfflineIndex,0,user)
+          }
         }
       )
 
@@ -144,9 +153,19 @@ export class ChatUserComponent implements OnInit {
           )
           if(index > -1  && this.syncConnected)
             this.userList[index].status = false;
+            let user = this.userList[index];
+            this.userList.splice(index,1);
+            let firstOfflineIndex = this.userList.findIndex(
+              (element)=>{
+                return element.status == false;
+              }
+            );
+            this.userList.splice(firstOfflineIndex,0,user)
         }
       )
   }
+
+
 
   syncConnectedUsers(){
     this.connectedUsers.forEach(
