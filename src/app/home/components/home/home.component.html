@@ -7,22 +7,23 @@
        " [thumb]="false" [nav]="true" (itemClick)="clisFotoSlide($event)">
     </gallery>
   </div>
-
-  <div class="container container-information">
-    <div class="row align-items-center row--miestilo">
-      <div class="col-6 text-start text-start--miestilo">
-        <div>
-          <h3 class="mb-3">Información en tiempo real del sector piscícola en <span>Sucre.</span></h3>
-          <p class="mb-4">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit
-            ...</p>
-          <button class="btn-square-blue" routerLink="/nosotros"> Más Información</button>
-        </div>
+<div class="container container-information">
+  <div class="row align-items-center row--miestilo">
+    <div class="col-12  container-publicacion">
+      <div class="text-publicacion">
+        <h3 class="mb-3">Surtipez</h3>
+        <p class="mb-4">En esta sección podrá ver y adquirir las especies de peces que ofrecen los pescadores y
+          piscicultores para la venta.</p>
       </div>
-      <div class="col-6 text-end">
-        <img class="text-end-img" src="assets/images/fishing1.svg">
+      <div class="imagen-publicacion">
+        <img class="publicacion-img" src="assets/images/wave-efect.svg">
       </div>
     </div>
+    <div class="col-12  container-publicacion-button">
+      <button class="btn-square-blue"  (click)=" navigate('/publicaciones')"> Más Información</button>
+    </div>
   </div>
+</div>
   <div class="container-statics">
     <div class="container-statics-div">
       <ng-container *ngTemplateOutlet="miniCard"></ng-container>
