@@ -149,6 +149,7 @@ export class ChatUserComponent implements OnInit {
               }
             );
             this.userList.splice(firstOfflineIndex,0,user)
+            this.onSearch();
           }
         }
       )
@@ -169,7 +170,8 @@ export class ChatUserComponent implements OnInit {
                 return element.status == false;
               }
             );
-            this.userList.splice(firstOfflineIndex,0,user)
+            this.userList.splice(firstOfflineIndex,0,user);
+            this.onSearch();
         }
       )
   }
@@ -311,7 +313,16 @@ export class ChatUserComponent implements OnInit {
 
   onSearch(){
     this.filteredUserList = this.userList.filter(
-      (element)=>element.name?.toLowerCase().includes(this.textSearch.toLowerCase())
+      (element)=>element?.name?.toLowerCase().includes(this.textSearch.toLowerCase())
+    )
+    this.filteredUserList = this.filteredUserList.sort(
+      (element:any)=>{
+        if(element.status == true){
+          return -1;
+        }else{
+          return 1;
+        }
+      }
     )
   }
 }

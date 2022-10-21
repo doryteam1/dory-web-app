@@ -11,7 +11,6 @@ import { UsuarioService } from './usuario.service';
 export class ChatService {
   private socket: Socket;
   private url = environment.doryServerUrl;
-
   constructor(private userService:UsuarioService, private https: HttpsService) {
     this.socket = io(this.url, {
       transports: ['websocket', 'polling', 'flashsocket'],
@@ -102,5 +101,24 @@ export class ChatService {
 
   getChatMessages(idUser:number){
     return this.https.get(environment.doryApiRestBaseUrl + '/chat/mensajes/privados/'+idUser)
+  }
+
+  disconnect(){
+    this.socket.disconnect()
+  }
+
+  connect(){
+    this.socket.connect();
+  }
+  isUserAuth(){
+    if(!this.userService.isAuthenticated()){
+      this.disconnect();
+      return false;
+    }else{
+      if(this.socket.disconnected){
+        //this.connect();
+      }
+      return true;
+    }
   }
 }
