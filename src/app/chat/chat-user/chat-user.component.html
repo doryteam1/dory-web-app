@@ -16,7 +16,7 @@
           *ngFor="let user of filteredUserList; index as i" (click)="selectUserHandler(user?.id,i)">
           <div class="user--imagen">
             <img [src]="user?.image ? user?.image : 'assets/images/avatar-person.svg'" class="avatar" />
-            <div [ngClass]="{'user--off': !user?.status,'user--activo':user?.status}"></div>
+            <div [ngClass]="{'user--activo':user?.status}"></div>
           </div>
           <p class="username">{{user?.name}}</p>
         </div>
