@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
+import { HttpsService } from './https.service';
 import { UsuarioService } from './usuario.service';
 
 @Injectable({
@@ -11,7 +12,7 @@ export class ChatService {
   private socket: Socket;
   private url = environment.doryServerUrl;
 
-  constructor(private userService:UsuarioService) {
+  constructor(private userService:UsuarioService, private https: HttpsService) {
     this.socket = io(this.url, {
       transports: ['websocket', 'polling', 'flashsocket'],
       auth: {
@@ -29,9 +30,8 @@ export class ChatService {
   }
 
   getMessage(): Observable<any> {
-    return new Observable<{ user: any; message: string }>((observer) => {
+    return new Observable<{ de: number;  mensaje: string, metadata:any }>((observer) => {
       this.socket.on('new-message', (data) => {
-        console.log(data);
         observer.next(data);
       });
 
@@ -40,6 +40,20 @@ export class ChatService {
       };
     });
   }
+
+  getConfirmMessage(): Observable<any> {
+    return new Observable<{ de: number;  mensaje: string, metadata:any }>((observer) => {
+      this.socket.on('confirmation-message', (data) => {
+        observer.next(data);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+  }
+
+  
 
   getConectedUsers(): Observable<any> {
     return new Observable<any>((observer) => {
@@ -84,5 +98,9 @@ export class ChatService {
 
   setStorage(data: any) {
     localStorage.setItem('chats', JSON.stringify(data));
+  }
+
+  getChatMessages(idUser:number){
+    return this.https.get(environment.doryApiRestBaseUrl + '/chat/mensajes/privados/'+idUser)
   }
 }

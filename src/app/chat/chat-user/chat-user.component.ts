@@ -20,7 +20,7 @@ export class ChatUserComponent implements OnInit {
   phone!: string;
   selectedUser: any;
   Onlist: boolean = true;
-
+  
   public userList:any[] = [
   ];
   currentUser: any; 
@@ -29,6 +29,8 @@ export class ChatUserComponent implements OnInit {
   connectedUsers: { id: any; name: any; phone: any; image: any; status: boolean; }[] = [];
   syncConnected:boolean = false;
   usersObtained:boolean = false;
+  filteredUserList: any[] = [];
+  textSearch:string='';
   constructor(
     private chatService: ChatService,
     private userService: UsuarioService
@@ -62,8 +64,9 @@ export class ChatUserComponent implements OnInit {
     )
     this.chatService
       .getMessage()
-      .subscribe((data: { de: number;  mensaje: string }) => {
+      .subscribe((data: { de: number;  mensaje: string, metadata:any }) => {
         console.log(data)
+        //TODO: hacer algo con el mensaje de confirmacion
         this.roomsArray = this.chatService.getStorage();
         const roomIndex = this.roomsArray.findIndex(
           (storage: any) => storage.roomId === data.de
@@ -123,6 +126,12 @@ export class ChatUserComponent implements OnInit {
           }
       });
 
+
+      this.chatService.getConfirmMessage().subscribe(
+        (data)=>{
+          console.log("confirm message ", data)
+        }
+      )
       this.chatService.getLastUserConnected().subscribe(
         (userId)=>{
           let index = this.userList.findIndex(
@@ -184,6 +193,7 @@ export class ChatUserComponent implements OnInit {
       }
     )
     this.userList = this.connectedUsers.concat(this.userList);
+    this.filteredUserList = this.userList.slice();
     this.syncConnected = true;
   }
 
@@ -204,14 +214,31 @@ export class ChatUserComponent implements OnInit {
     this.selectedUser = this.userList.find((user) => user.id === id);
     this.messageArray = [];
     this.roomsArray = this.chatService.getStorage();
-    const roomIndex = this.roomsArray.findIndex(
+    let roomIndex = this.roomsArray.findIndex(
       (storage: any) => storage.roomId === this.selectedUser.id
     );
 
-    if (roomIndex > -1) {
-      this.messageArray = this.roomsArray[roomIndex].chats;
+    if(roomIndex == -1){
+      const updateStorage = {
+        roomId: this.selectedUser.id,
+        chats: [
+        ],
+      };
+      this.roomsArray.push(updateStorage);
+      roomIndex = this.roomsArray.length - 1;
     }
-    this.scrollToBottom()  
+    
+    this.chatService.getChatMessages(this.selectedUser.id).subscribe(
+      (response:{data:any[]})=>{
+        this.roomsArray[roomIndex].chats = response.data?.map(
+          (message)=> { return { fromUserId: message.usuario_emisor_id, message:message.contenido} })
+        this.chatService.setStorage(this.roomsArray);
+        this.messageArray = this.roomsArray[roomIndex].chats;
+        this.scrollToBottom();
+      }
+    )
+    
+   
     //this.join(this.currentUser.name, this.roomId);
   }
 
@@ -233,6 +260,7 @@ export class ChatUserComponent implements OnInit {
     });
 
     this.roomsArray = this.chatService.getStorage();
+    console.log("en send message ", this.roomsArray)
     const roomIndex = this.roomsArray.findIndex(
       (storage: any) => storage.roomId === this.selectedUser.id
     );
@@ -279,5 +307,11 @@ export class ChatUserComponent implements OnInit {
   }
   closeChat() {
     this.chatOpen = false;
+  }
+
+  onSearch(){
+    this.filteredUserList = this.userList.filter(
+      (element)=>element.name?.toLowerCase().includes(this.textSearch.toLowerCase())
+    )
   }
 }

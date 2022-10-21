@@ -3,19 +3,20 @@
     <div *ngIf="Onlist" class="container__list">
       <div class="container__list-search">
         <div class="input-wrapper">
-          <div class="bi bi-search"></div>
-          <input type="text" placeholder="Buscar un chat." />
+          <div class="bi bi-search"></div>"
+          <input type="text" placeholder="Buscar un chat." [(ngModel)]="textSearch" (ngModelChange)="onSearch()"/>
           <i class="img-x" *ngIf="false"></i>
           <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" *ngIf="false">
+          <!-- <app-search (textSearch)="onSearch($event)"></app-search> -->
         </div>
         <button type="button" class="btn-close button_close" (click)="closeChat()"></button>
       </div>
       <div class="user-list-card">
         <div class="user-card"
-          *ngFor="let user of userList; index as i" (click)="selectUserHandler(user?.id,i)">
+          *ngFor="let user of filteredUserList; index as i" (click)="selectUserHandler(user?.id,i)">
           <div class="user--imagen">
             <img [src]="user?.image ? user?.image : 'assets/images/avatar-person.svg'" class="avatar" />
-            <div [ngClass]="{'user--off': !user.status,'user--activo':user.status}"></div>
+            <div [ngClass]="{'user--off': !user?.status,'user--activo':user?.status}"></div>
           </div>
           <p class="username">{{user?.name}}</p>
         </div>
