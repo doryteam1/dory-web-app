@@ -1,12 +1,25 @@
 <div class="container">
 
   <div class="basic-container" (mouseover)="stopGalerry()" (mouseout)=" playGalery()">
-    <gallery class="gallery--class" [counter]="false" [attr.fluid]="false" [loadingStrategy]="'lazy'"
-      [imageSize]="'cover'" id="homegallery" [itemTemplate]="itemTemplate" [thumbHeight]="70" [thumbWidth]="80"
-      [thumbMode]="'free'" [dots]="true" [autoPlay]="true" [playerInterval]="3000
-       " [thumb]="false" [nav]="true" (itemClick)="clisFotoSlide($event)">
+    <gallery class="gallery--class"
+     [counter]="false"
+     [attr.fluid]="false"
+     [loadingStrategy]="'lazy'"
+      [imageSize]="'cover'"
+      id="homegallery"
+      [itemTemplate]="itemTemplate"
+       [thumbHeight]="70"
+      [thumbWidth]="80"
+      [thumbMode]="'free'"
+      [dots]="true"
+       [autoPlay]="tiempoSlide>0"
+      [playerInterval]="tiempoSlide"
+       [thumb]="false"
+       [nav]="true"
+        (itemClick)="clisFotoSlide($event)">
     </gallery>
   </div>
+
 <div class="container container-information">
   <div class="row align-items-center row--miestilo">
     <div class="col-12  container-publicacion">

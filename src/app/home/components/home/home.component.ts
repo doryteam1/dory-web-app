@@ -5,7 +5,6 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Gallery, GalleryRef } from 'ng-gallery';
-import { Observable } from 'rxjs';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
@@ -44,22 +43,26 @@ export class HomeComponent implements OnInit {
   imagenes: any[] = [
     {
       url_imagen:
-        'https://img.lalr.co/cms/2015/07/09125916/peces0215-612.jpg?size=sm',
+        'https://firebasestorage.googleapis.com/v0/b/dory-qa-83409.appspot.com/o/foto-defecto-slaider%2Ffoto1.jpg?alt=media&token=718f0ffd-e756-4c13-9a41-4148f91db140',
       titulo: '',
-      url_enlace: '/panel-busqueda/productos',
+      url_enlace: '',
     },
     {
       url_imagen:
-        'https://www.boyaca.gov.co/wp-content/uploads/2016/09/images_Noticias2016_Septiembre2_pescado74748.jpg',
+        'https://firebasestorage.googleapis.com/v0/b/dory-qa-83409.appspot.com/o/foto-defecto-slaider%2Ffoto4.jpg?alt=media&token=d5b2cefb-bef7-4abc-80f6-31a54c74b19c',
       titulo: '',
-      url_enlace: '/panel-busqueda/vehiculos',
+      url_enlace: '',
+    },
+    {
+      url_imagen:
+        'https://firebasestorage.googleapis.com/v0/b/dory-qa-83409.appspot.com/o/foto-defecto-slaider%2Ffoto3.jpg?alt=media&token=01f61f58-29f6-442e-bd79-eb81867fe747',
+      titulo: '',
+      url_enlace: '',
     },
   ];
   lightboxRef!: GalleryRef;
-  setInterval: any;
-  percent: number = 0;
-  contador: number = 0;
   sliders: any[] = [];
+  tiempoSlide: any = 0;
   constructor(
     public gallery: Gallery,
     private pescadoresService: PescadoresService,
@@ -96,10 +99,12 @@ export class HomeComponent implements OnInit {
   cargaServiceSlaider() {
     this.sliderInicioService.getSliders().subscribe(
       (response) => {
-        if (response.data.length > 0) {
-          this.sliders = response.data;
-          this.openSlaider(response.data);
+        if (response.data.slider.length > 0) {
+          this.sliders = response.data.slider;
+          this.tiempoSlide = response.data.tiempo;
+          this.openSlaider(response.data.slider);
         } else {
+          this.tiempoSlide = 6000;
           this.openSlaider(this.imagenes);
         }
       },
@@ -139,8 +144,10 @@ export class HomeComponent implements OnInit {
     }
   }
   clisFotoSlide(event: any) {
-    let url = this.sliders[event].url_enlace;
-    window.open(url, '_blank');
+    if (this.sliders[event]?.url_enlace) {
+      let url = this.sliders[event]?.url_enlace;
+      window.open(url, '_blank');
+    }
   }
   clisEnlaceDirect(event: any) {
     let url = event.url_enlace;
@@ -153,7 +160,6 @@ export class HomeComponent implements OnInit {
   }
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    /* console.log(event); */
     if (event.key === 'ArrowRight') {
       this.lightboxRef?.next();
     } else if (event.key === 'ArrowLeft') {

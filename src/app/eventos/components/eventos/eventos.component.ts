@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EventosService } from 'src/app/services/eventos.service';
+import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
+import { BuscarPor } from 'src/models/buscarPor.model';
 import { Evento } from 'src/models/evento.model';
 
 
@@ -17,11 +19,14 @@ export class EventosComponent implements OnInit {
   eventsFiltered: Array<Evento> = [];
   showNotFound: boolean = false;
   loading: boolean = false;
+  palabra: string = '';
+  eventos: Evento[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private eService: EventosService,
-    private decimalPipe: DecimalPipe
+    private decimalPipe: DecimalPipe,
+    private searchBuscadorService: SearchBuscadorService
   ) {}
 
   ngOnInit(): void {
@@ -32,16 +37,12 @@ export class EventosComponent implements OnInit {
   }
 
   cargarTodos() {
-    /* this.eventsFiltered = this.eventos.filter((value) => {
-      return this.eventType == "capacitaciones" ? value.tipo == this.eventType.substring(0,this.eventType.length - 2) : value.tipo == this.eventType.substring(0,this.eventType.length - 1)
-    }); */
-    console.log('Cargando todos!');
     this.showNotFound = false;
     this.loading = true;
     this.eService.getEventoByTipo(this.eventType).subscribe(
       (response) => {
         this.eventsFiltered = response.data;
-        console.log(this.eventsFiltered);
+        this.eventos = this.eventsFiltered.slice();
         if (this.eventsFiltered.length < 1) {
           this.showNotFound = true;
         }
@@ -54,45 +55,37 @@ export class EventosComponent implements OnInit {
     );
   }
 
-  textChange(event: string) {
-    if (event == '') {
-      this.cargarTodos();
-      return;
+  onBuscarPalabra(palabra: string) {
+    this.palabra = palabra;
+    this.searchReset();
+  }
+  searchReset() {
+    let resultados: any[] = this.buscarData(this.palabra);
+    this.eventos = resultados;
+    if (this.eventos.length < 1) {
+      this.showNotFound = true;
+    } else {
+      this.showNotFound = false;
     }
   }
-
-  onSearch(event: string) {
-    console.log('event: ', event);
-    if (event == '') {
-      return;
-    }
-    let obser: Observable<any>;
-    this.loading = true;
-    if (this.eventType == 'cursos') {
-      obser = this.eService.getCursosByString(event);
-    } else if (this.eventType == 'congresos') {
-      obser = this.eService.getCongresosByString(event);
-    } else if (this.eventType == 'capacitaciones') {
-      obser = this.eService.getCapacitacionesByString(event);
+  buscarData(texto: string): any {
+    let result: any[];
+    if (texto.trim().length === 0) {
+      result = this.eventsFiltered;
     } else {
-      return;
+      let buscardatospor: BuscarPor[] = [
+        { data1: 'nombre'},
+        { data2: 'resumen'},
+        { data3: 'organizador'},
+        { data4: 'dirigidoa'},
+      ];
+      result = this.searchBuscadorService.buscarData(
+        this.eventsFiltered,
+        texto,
+        buscardatospor
+      );
     }
-
-    this.showNotFound = false;
-    obser.subscribe(
-      (response) => {
-        this.eventsFiltered = response.data;
-        if (this.eventsFiltered.length < 1) {
-          this.showNotFound = true;
-        }
-        this.loading = false;
-      },
-      (err) => {
-        console.log('Error ', err);
-        this.eventsFiltered.length = 0;
-        this.loading = false;
-      }
-    );
+    return result;
   }
   FechaPipe(fecha: any): any {
     if (fecha) {

@@ -16,13 +16,12 @@ export class NovedadesComponent implements OnInit {
   tipo!: string;
   showNotFound: boolean = false;
   loading: boolean = false;
-  novedadesFilteredArray: any[]=[];
+  novedades: any[]=[];
   palabra: string='';
   constructor(
     private activatedRoute: ActivatedRoute,
     private nService: NovedadesService,
     private userService: UsuarioService,
-    private router: Router,
     private searchBuscadorService: SearchBuscadorService
   ) {}
 
@@ -35,7 +34,6 @@ export class NovedadesComponent implements OnInit {
         this.activatedRoute.snapshot.url[0].path.length - 1
       );
     }
-    console.log('cargar novedade de tipo ', this.tipo);
     this.cargarTodos();
   }
 
@@ -45,8 +43,7 @@ export class NovedadesComponent implements OnInit {
     this.nService.getNovedadesByTipo(this.tipo).subscribe(
       (response) => {
         this.novedadesFiltered = response.data;
-        this.novedadesFilteredArray = response.data
-        console.log(this.novedadesFilteredArray)
+        this.novedades = this.novedadesFiltered.slice()
         if (this.novedadesFiltered.length < 1) {
           this.showNotFound = true;
         }
@@ -59,38 +56,6 @@ export class NovedadesComponent implements OnInit {
       }
     );
   }
-
- /*  textChange(event: string) {
-    if (event == '') {
-      this.cargarTodos();
-      return;
-    }
-  } */
-
-/*   onSearch(event: string) {
-    console.log('event: ', event);
-    if (event == '') {
-      return;
-    }
-
-    this.showNotFound = false;
-    this.loading = true;
-    this.nService.getNovedadesByTipoCadena(this.tipo, event).subscribe(
-      (response) => {
-        this.novedadesFiltered = response.data;
-        if (this.novedadesFiltered.length < 1) {
-          this.showNotFound = true;
-        }
-        this.loading = false;
-      },
-      (err) => {
-        this.novedadesFiltered.length = 0;
-        this.loading = false;
-        console.log(err);
-      }
-    );
-  } */
-
   onView(idNovedad: number, i: number, url_novedad?: any) {
     this.navigateDetalle(url_novedad);
     this.novedadesFiltered[i].cant_visitas++;
@@ -138,7 +103,7 @@ export class NovedadesComponent implements OnInit {
   buscarData(texto: string): any {
     let normasresult: any[];
     if (texto.trim().length === 0) {
-      normasresult = this.novedadesFilteredArray;
+      normasresult = this.novedadesFiltered;
     } else {
       let buscardatospor: BuscarPor[] = [
         { data1: 'titulo' },
@@ -155,17 +120,14 @@ export class NovedadesComponent implements OnInit {
   }
   onBuscarPalabra(palabra: string) {
     this.palabra = palabra;
-    console.log(this.palabra)
     this.reseteoDeBusqueda();
   }
   reseteoDeBusqueda() {
-     this.showNotFound = false;
-    let resultados: any[] = this.buscarData(this.palabra);
-     if (resultados.length < 1) {
-      this.novedadesFiltered = resultados;
+     let resultados: any[] = this.buscarData(this.palabra);
+     this.novedades = resultados;
+     if (this.novedades.length < 1) {
        this.showNotFound = true;
      } else {
-       this.novedadesFiltered = resultados;
        this.showNotFound = false;
      }
   }
