@@ -55,7 +55,6 @@ export class MisPublicacionesComponent implements OnInit {
   }
 
   navigate(event: any, state: string) {
-    console.log(event);
     let object: any = { ...event };
     object.action = 'update';
     object.formState = state;

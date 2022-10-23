@@ -85,6 +85,14 @@
     padding: 10px;
   }
 
+
+    .container-card {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 50px;
+    }
   @keyframes n-info-tri {
 
     0%,

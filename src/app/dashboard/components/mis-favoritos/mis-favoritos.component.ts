@@ -17,7 +17,6 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
   showNotFound: boolean = false;
   misfavoritoscargados: boolean = false;
   sinfavoritos: boolean = false;
-  shorterNumber: number = 12;
   modalGogleMapOpen: boolean = false;
   constructor(
     private granjasService: GranjasService,
@@ -42,19 +41,8 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
       },
       (err) => {}
     );
-    this.mediaQuery1 = this.mediaQueryService
-      .mediaQuery('max-width: 300px')
-      .subscribe(
-        (matches) => {
-              if (matches) {
-                this.shorterNumber = 8;
-              } else {
-                this.shorterNumber = 12;
-              }
-        }
-      );
     this.mediaQuery2 = this.mediaQueryService
-      .mediaQuery('min-width: 1201px')
+      .mediaQuery('min-width: 1100px')
       .subscribe(
         (matches) => {
                if (matches && this.modalGogleMapOpen) {
@@ -66,7 +54,6 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
       );
   }
   ngOnDestroy(): void {
-    this.mediaQuery1.unsubscribe();
     this.mediaQuery2.unsubscribe();
   }
   changeFavorite(i: number) {
@@ -103,8 +90,6 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
   }
 
   navigate(i: number) {
-    // Converts the route into a string that can be used
-    // with the window.open() function
     const url = this.router.serializeUrl(
       this.router.createUrlTree([
         `/granjas/municipio/detalle/${this.misGranjaFavoritas[i].id_granja}`,

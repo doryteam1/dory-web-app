@@ -8,6 +8,7 @@ import { DatePipe, formatDate, Location } from '@angular/common'
 import { ActivatedRoute } from '@angular/router';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-asociacion-detalle-form',
@@ -42,13 +43,15 @@ export class AsociacionDetalleFormComponent implements OnInit {
   municipios: any;
   fileRut: any = null;
   datosAsociacion: any;
+  urls: any[] = [];
   constructor(
     private asociacionesService: AsociacionesService,
     private storage: FirebaseStorageService,
     private places: PlacesService,
     private ar: ActivatedRoute,
     private location: Location,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private utilitiesService: UtilitiesService
   ) {}
 
   ngOnInit(): void {
@@ -79,10 +82,17 @@ export class AsociacionDetalleFormComponent implements OnInit {
         });
     }
     this.idTipoAsoc?.valueChanges.subscribe((value) => {});
+     this.asociacionesService
+        .getMiembrosPrivado(this.asociacion.nit)
+        .subscribe( (response) => {
+          let representante = response.data.representante;
+          let miembros = response.data.miembros
+          console.log(miembros)
+          console.log(representante)
+        })
   }
 
   async updateAsociacion() {
-    console.log('Actualizando!!');
     this.loading1 = true;
 
     if (
@@ -128,7 +138,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
         .cloudStorageTask(filePath, this.file)
         .percentageChanges()
         .subscribe((response) => {
-          console.log(response);
           if (response == 100) {
             this.storage
               .cloudStorageRef(filePath)
@@ -244,7 +253,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
         .cloudStorageTask(filePath, this.file)
         .percentageChanges()
         .subscribe((response) => {
-          console.log(response);
           if (response == 100) {
             //porcentaje de carga de la camara de comercio
             this.storage
@@ -335,7 +343,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
   }
 
   fileRutChange(event: any) {
-    console.log('change', event);
     this.fileRut = event.target.files[0];
   }
   loadTiposAsociaciones() {
@@ -439,13 +446,105 @@ export class AsociacionDetalleFormComponent implements OnInit {
     this.location.back();
   }
   onChangeLegalConst() {
-    console.log(this.isLegalConstituida?.value);
     if (this.isLegalConstituida?.value == '1') {
       this.fotoCamc?.enable();
     } else {
       this.fotoCamc?.disable();
     }
   }
+  download() {
+    try {
+      this.asociacionesService
+        .getMiembrosPrivado(this.asociacion.nit)
+        .subscribe(async (response) => {
+          let representante = response.data.representante;
+          let miembros = response.data.miembros;
+          if (representante) {
+            if (representante.url_imagen_cedula) {
+              let cedulaBase64 = await this.utilitiesService.urlToBase64(
+                representante.url_imagen_cedula
+              );
+              let metaCedula = await this.storage
+                .refFromUrl(representante.url_imagen_cedula)
+                .getMetadata()
+                .toPromise();
+              this.urls.push({
+                data:
+                  'cedulas/cedula-rep-' +
+                  representante.nombres.replace(/\s+/g, '') +
+                  '.' +
+                  metaCedula.name.split('.')[1],
+                url: representante.url_imagen_cedula,
+                image: cedulaBase64,
+              });
+            }
+
+            if (representante.url_sisben) {
+              let sisbenBase64 = await this.utilitiesService.urlToBase64(
+                representante.url_sisben
+              );
+              let metaSisben = await this.storage
+                .refFromUrl(representante.url_sisben)
+                .getMetadata()
+                .toPromise();
+              this.urls.push({
+                data:
+                  'sisben/sisben-rep-' +
+                  representante.nombres.replace(/\s+/g, '') +
+                  '.' +
+                  metaSisben.name.split('.')[1],
+                url: representante.url_sisben,
+                image: sisbenBase64,
+              });
+            }
+          }
+          if (miembros) {
+            for (let i = 0; i < miembros.length; i++) {
+              if (miembros[i].url_imagen_cedula) {
+                let cedulaBase64 = await this.utilitiesService.urlToBase64(
+                  miembros[i].url_imagen_cedula
+                );
+                let metaCedula = await this.storage
+                  .refFromUrl(miembros[i].url_imagen_cedula)
+                  .getMetadata()
+                  .toPromise();
+                this.urls.push({
+                  data:
+                    'cedulas/cedula-' +
+                    miembros[i].nombres.replace(/\s+/g, '') +
+                    '.' +
+                    metaCedula.name.split('.')[1],
+                  url: miembros[i].url_imagen_cedula,
+                  image: cedulaBase64,
+                });
+              }
+              if (miembros[i].url_sisben) {
+                let sisbenBase64 = await this.utilitiesService.urlToBase64(
+                  miembros[i].url_sisben
+                );
+                let metaSisben = await this.storage
+                  .refFromUrl(miembros[i].url_sisben)
+                  .getMetadata()
+                  .toPromise();
+                this.urls.push({
+                  data:
+                    'sisben/sisben-' +
+                    miembros[i].nombres.replace(/\s+/g, '') +
+                    '.' +
+                    metaSisben.name.split('.')[1],
+                  url: miembros[i].url_sisben,
+                  image: sisbenBase64,
+                });
+              }
+            }
+          }
+          this.utilitiesService.compressFileToZip(this.urls);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   get idDpto() {
     return this.form.get('id_departamento');
   }

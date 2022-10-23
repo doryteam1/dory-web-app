@@ -66,6 +66,7 @@ import { CardSliderEnlacesDirectosInicioComponent } from './components/card-slid
 import { CardVehiculoComponent } from './components/card-vehiculo/card-vehiculo.component';
 import { CardNegocioComponent } from './components/card-negocio/card-negocio.component';
 import { CardEventoComponent } from './components/card-evento/card-evento.component';
+import { CardProveedorSimpleComponent } from './components/card-producto/card-proveedor-simple/card-proveedor-simple.component';
 
 
 @NgModule({
@@ -117,6 +118,7 @@ import { CardEventoComponent } from './components/card-evento/card-evento.compon
     CardVehiculoComponent,
     CardNegocioComponent,
     CardEventoComponent,
+    CardProveedorSimpleComponent,
   ],
   imports: [
     CommonModule,
@@ -178,6 +180,7 @@ import { CardEventoComponent } from './components/card-evento/card-evento.compon
     CardVehiculoComponent,
     CardNegocioComponent,
     CardEventoComponent,
+    CardProveedorSimpleComponent,
   ],
 
   providers: [

@@ -1,0 +1,10 @@
+
+      <div class="container-card" (click)="goDetail()">
+        <img src="{{dato?.foto ? dato?.foto : '/assets/images/avatar-person.svg'}}" />
+        <div class="details shorterTextOverflowHidden">
+          <span class="name shorterTextAuto">{{dato?.nombre || dato?.nombre_completo}}</span>
+          <span class="title shorterTextAuto">{{dato?.municipio? dato?.municipio: 'Sin municipio'}}</span>
+          <a class="phone">{{dato?.celular? dato?.celular: 'Celular sin definir'}}</a>
+          <a class="email shorterTextAuto">{{dato?.email}}</a></div>
+      </div>
+

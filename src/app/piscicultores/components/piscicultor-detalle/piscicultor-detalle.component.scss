@@ -124,6 +124,14 @@ width: 100%;
   font-weight: 550;
 }
 
+.container-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 50px;
+}
 @media screen and (max-width: 775px) {
   .piscicultor-container{
     justify-content: center;

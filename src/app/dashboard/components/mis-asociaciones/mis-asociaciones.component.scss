@@ -415,7 +415,14 @@ small {
 .not-found {
   margin-top: 150px;
 }
-
+.container-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 50px;
+  gap: 20px;
+}
 @media screen and (max-width: 1150px) {
   .buscador-container {
     flex-direction: column;

@@ -288,16 +288,6 @@
 .modal{
   z-index: 999999999 !important;
 }
-.card__icon-favorite{
-  grid-area: favorite;
-  width: 24px;
-  height: 24px;
-  justify-self: end;
-  align-self: end;
-  margin-right: 4px;
-  cursor: pointer;
-}
-
 textarea:focus, input:focus{
   outline: none;
 }

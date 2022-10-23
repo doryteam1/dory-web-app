@@ -9,11 +9,10 @@
   </div>
   <div class="card__description" >
     <div class="card__description-header" (click)="detalle (pescador)">
-     <!--  <img src="assets/icons/pescador.svg"> -->
       <h1>{{pescador?.nombre | titlecase | shorter:shorterNumber}}</h1>
     </div>
     <p> </p>
-    <div class="card__description-body" (click)="detalle (pescador)">
+    <div  style="cursor: pointer;" class="card__description-body" (click)="detalle (pescador)">
       <div class="card__description-body-informacion">
         <img class="card__icon" src="assets/icons/phone_msg_black_24dp.svg">
         <span class="card__phone">{{pescador?.celular? pescador?.celular : 'Contacto sin definir'}}</span>
@@ -36,7 +35,6 @@
     <div class="card__description-footer">
       <p class="read-more"  >
         <img *ngIf="mapa"class="photo--verMapa" src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
-        <a (click)="detalle(pescador)">Detalles</a>
       </p>
     </div>
   </div>

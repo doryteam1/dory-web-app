@@ -2,88 +2,63 @@
 <div class="card" [ngClass]="{ 'second': !delatecard}">
     <div class="card__description w-100">
       <div class="card__description-header w-100">
-        <div class="d-flex flex-direction-row shorterTextOverflowHidden w-100">
+        <div style="cursor:pointer;" class="d-flex flex-direction-row shorterTextOverflowHidden w-100">
           <img src="assets/icons/icono-asociacio.svg">
           <h1 class="card__title shorterTextAuto" (click)="detalle(asociacion)">{{asociacion?.nombre}}</h1>
         </div>
-        <i class="card__icon bi bi-trash3" (click)="eliminar(asociacion)" *ngIf="delatecard"></i>
+        <i  style="color: var(--azul1);" class="card__icon bi bi-pencil" (click)="detalle(asociacion)" *ngIf="delatecard"></i>
+        <i style="color: var(--red);" class="card__icon bi bi-trash3" (click)="eliminar(asociacion)" *ngIf="delatecard"></i>
       </div>
-      <div class="card__description-container" >
-        <h2>Información de la asociación</h2>
-        <div class="card__description-container-infor-1">
-          <div class="card__description-container-infor-1-div">
-            <img  src="assets/icons/travel_explore_black_24dp.svg">
-            <span >{{asociacion?.municipio}}-{{asociacion?.departamento}}</span>
-          </div>
-          <div class="card__description-container-infor-1-div">
-            <img src="assets/icons/location_on_black_24dp.svg">
-            <span >{{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion | shorter:15}}</span>
-          </div>
-          <div class="card__description-container-infor-1-div" >
-            <img src="assets/icons/picture_as_pdf_black_24dp.svg">
-            <div>
-              <span *ngIf="asociacion?.foto_camarac">
-                <a class="enlace" [href]="asociacion?.foto_camarac" target="_blank">Cámara de comercio
-                   <img src="assets/icons/download_for_offline_blue1_24dp.svg">
-                </a>
-              </span>
-              <span *ngIf="!asociacion?.foto_camarac">
-                  Cámara de comercio
-              </span>
+      <div class="card__description-container">
+        <div style="cursor:pointer; width: 100%;"  (click)="detalle(asociacion)">
+          <h2>Información general</h2>
+          <div class="card__description-container-infor-1  shorterTextOverflowHidden ">
+            <div class="card__description-container-infor-1-div"  *ngIf=" asociacion?.usuarios_id == idEmailUser ">
+              <img  src="assets/icons/travel_explore_black_24dp.svg">
+              <span >{{asociacion?.municipio}}-{{asociacion?.departamento}}</span>
+            </div>
+            <div class="card__description-container-infor-1-div">
+              <span class="direccion shorterTextAuto">{{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion}}</span>
+            </div>
+            <div class="card__description-container-infor-1-div" *ngIf="asociacion?.email">
+              <span class="email shorterTextAuto"> {{asociacion?.email}}</span>
             </div>
           </div>
-          <div class="card__description-container-infor-1-div" *ngIf="asociacion?.foto_camarac ">
-                <span class="card_description--span">
-                  Renovada: {{asociacion?.fecha_renovacion_camarac.slice(0, asociacion?.fecha_renovacion_camarac.indexOf('T')) | date:'dd/MM/yyyy'}}
-                </span>
-          </div>
-          <div class="card__description-container-infor-1-div" *ngIf="!asociacion?.foto_camarac">
-                <span class="card_description--span">
-                  No se han cargado la camara de comercio
-                </span>
+          <h2>Tipo de asociación</h2>
+          <div class="card__description-container-infor-1">
+            <div class="card__description-container-infor-1-div">
+              <span class="tipo-aso">{{asociacion?.tipo_asociacion}}</span>
+            </div>
           </div>
         </div>
-        <div class="d-flex flex-row mt-1">
-          <img class="margin" src="assets/icons/picture_as_pdf_black_24dp.svg">
-          <div>
-            <span class="enlace" *ngIf="asociacion?.url_rut">
-              <a [href]="asociacion?.url_rut" target="_blank">Descargar RUT
-                 <img src="assets/icons/download_for_offline_blue1_24dp.svg">
-              </a>
-            </span>
-            <span *ngIf="!asociacion?.url_rut">
-                No se ha cargado el RUT
-            </span>
-          </div>
-        </div>
-        <div class="d-flex flex-row mt-1" *ngIf="asociacion?.id_propietario==idEmailUser || asociacion?.usuarios_id == idEmailUser ">
-          <img class="icon margin" src="assets/icons/file-zipper-regular.svg">
-          <div>
-            <span>
-              <a class="enlace" (click)="download()">Descargar documentos miembros
-                 <img src="assets/icons/download_for_offline_blue1_24dp.svg">
-              </a>
-            </span>
-            <!-- <span *ngIf="!loadedUrls">
-              <a>
-                Ningun miembro ha subido sus documentos
-              </a>
-            </span> -->
-          </div>
-        </div>
-        <div *ngIf="showRepLegal">
+        <div *ngIf="showRepLegal" class="w-100">
           <h2>Representante legal</h2>
-          <div class="card__description-container-infor-2" (click)="goDetalleRepresentante(asociacion)">
-            <div class="card__description-container-infor-2-div">
-              <img  src="assets/icons/person_pin_black_24dp.svg">
-              <a *ngIf="asociacion?.propietario">{{asociacion?.propietario}}</a>
-              <a  *ngIf="!asociacion?.propietario">Representante legal indefinido</a>
+          <div class="card__description-container-infor-2" >
+            <div class="card__description-container-infor-2-div shorterTextOverflowHidden">
+              <a class="legal-repre shorterTextAuto legal-repre-hover" (click)="goDetalleRepresentante(asociacion)" *ngIf="asociacion?.propietario">{{asociacion?.propietario}}</a>
+              <a  class="legal-repre shorterTextAuto" *ngIf="!asociacion?.propietario">Representante legal indefinido</a>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card__description-footer" (click)="detalle(asociacion)">
-        <p class="read-more"><a>Detalles</a></p>
       </div>
     </div>
 </div>
+<!--  *ngIf="asociacion?.id_propietario==idEmailUser || asociacion?.usuarios_id == idEmailUser " -->
+   <!--  <div class="container-card">
+      <div class="container-user shorterTextOverflowHidden">
+        <h6>Representante</h6>
+        <img src="https://www.dzoom.org.es/wp-content/uploads/2010/09/mirada-ojos-encuadre-primer-plano-sexy-1024x682.jpg" />
+        <div class="container-user-data shorterTextOverflowHidden">
+          <h6 class="shorterTextAuto">{{asociacion?.propietario}}</h6>
+          <p class="shorterTextAuto">{{asociacion?.tipo_propietario}}</p>
+        </div>
+      </div>
+      <div class="details shorterTextOverflowHidden">
+        <span class="name shorterTextAuto">{{asociacion?.nombre}}</span>
+        <span class="name shorterTextAuto">{{asociacion?.tipo_asociacion}}</span>
+        <span class="title shorterTextAuto" *ngIf=" asociacion?.usuarios_id == idEmailUser ">{{asociacion?.municipio}}-{{asociacion?.departamento}}</span>
+        <a class="phone">{{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion | shorter:15}}</a>
+        <a class="phone">{{asociacion?.telefono? asociacion?.telefono: 'Celular sin definir'}}</a>
+        <a class="email shorterTextAuto">{{asociacion?.email}}</a>
+      </div>
+    </div> -->

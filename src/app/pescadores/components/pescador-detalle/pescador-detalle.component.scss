@@ -138,6 +138,15 @@
 .nav-link--color {
   color: var(--gris-oscuro);
 }
+.container-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 50px;
+  gap: 20px;
+
+}
 @media screen and (max-width: 775px) {
   .piscicultor-container {
     justify-content: center;

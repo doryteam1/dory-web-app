@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PiscicultoresService } from '../../services/piscicultores.service';
 import { Router } from '@angular/router';
-
+import { GranjasService } from 'src/app/granjas/services/granjas.service';
+import { PlatformLocation,
+} from '@angular/common';
+import { AppModalService } from 'src/app/shared/services/app-modal.service';
 @Component({
   selector: 'app-piscicultor-detalle',
   templateUrl: './piscicultor-detalle.component.html',
@@ -26,14 +29,16 @@ export class PiscicultorDetalleComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private piscicultoresService: PiscicultoresService,
-    private router: Router
+    private router: Router,
+    private granjasService: GranjasService,
+    public location2: PlatformLocation,
+    private appModalService: AppModalService
   ) {}
 
   ngOnInit(): void {
     this.selectedPiscicultorId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
-    console.log(this.selectedPiscicultorId);
     this.piscicultoresService
       .getPiscicultorDetalle(this.selectedPiscicultorId)
       .subscribe(
@@ -54,15 +59,15 @@ export class PiscicultorDetalleComponent implements OnInit {
           }
         }
       );
-      this.piscicultorDetalleAsociaciones()
-
+    this.piscicultorDetalleAsociaciones();
   }
   async piscicultorDetalleGranjas() {
-try {
+    try {
       let response = await this.piscicultoresService
         .getPiscicultorDetalleGranjas(this.selectedPiscicultorId)
         .toPromise();
-        this.piscicultorgranjas = response.data;
+      this.piscicultorgranjas = response.data;
+      console.log(this.piscicultorgranjas)
       if (response.data.length >= 0) {
         this.piscicultorDetalleGranjasshowError = false;
         this.piscicultorDetalleGranjasshowNotFound = false;
@@ -72,49 +77,46 @@ try {
         this.piscicultorDetalleGranjasshowError = false;
         this.piscicultorDetalleGranjaschangeItem = false;
       }
-
-} catch (err:any) {
-     this.piscicultorDetalleGranjasshowNotFound = false;
-     this.piscicultorDetalleGranjasshowError = false;
-     this.piscicultorDetalleGranjaschangeItem = false;
-     if (err.status == 404) {
-       this.piscicultorDetalleGranjasshowNotFound = true;
-     } else {
-       this.piscicultorDetalleGranjasshowError = true;
-       this.errorMessage = 'Error inesperado';
-     }
-}
-
+    } catch (err: any) {
+      this.piscicultorDetalleGranjasshowNotFound = false;
+      this.piscicultorDetalleGranjasshowError = false;
+      this.piscicultorDetalleGranjaschangeItem = false;
+      if (err.status == 404) {
+        this.piscicultorDetalleGranjasshowNotFound = true;
+      } else {
+        this.piscicultorDetalleGranjasshowError = true;
+        this.errorMessage = 'Error inesperado';
+      }
+    }
   }
   async piscicultorDetalleAsociaciones() {
-try {
+    try {
       let response = await this.piscicultoresService
         .getPiscicultorDetalleAsociaciones(this.selectedPiscicultorId)
         .toPromise();
-            this.piscicultorasociaciones = response.data;
-           await this.piscicultorDetalleGranjas();
-           this.activeTabVerifi();
-          if (response.data.length > 0) {
-            this.piscicultorDetalleAsociacioneshowError = false;
-            this.piscicultorDetalleAsociacioneshowNotFound = false;
-            this.piscicultorDetalleAsociacioneschangeItem = false;
-          } else {
-            this.piscicultorDetalleAsociacioneshowNotFound = true;
-            this.piscicultorDetalleAsociacioneshowError = false;
-            this.piscicultorDetalleAsociacioneschangeItem = false;
-          }
-
-} catch (err:any) {
-          this.piscicultorDetalleAsociacioneshowNotFound = false;
-          this.piscicultorDetalleAsociacioneshowError = false;
-          this.piscicultorDetalleAsociacioneschangeItem = false;
-          if (err.status == 404) {
-            this.piscicultorDetalleAsociacioneshowNotFound = true;
-          } else {
-            this.piscicultorDetalleAsociacioneshowError = true;
-            this.errorMessage = 'Error inesperado';
-          }
-}
+      this.piscicultorasociaciones = response.data;
+      await this.piscicultorDetalleGranjas();
+      this.activeTabVerifi();
+      if (response.data.length > 0) {
+        this.piscicultorDetalleAsociacioneshowError = false;
+        this.piscicultorDetalleAsociacioneshowNotFound = false;
+        this.piscicultorDetalleAsociacioneschangeItem = false;
+      } else {
+        this.piscicultorDetalleAsociacioneshowNotFound = true;
+        this.piscicultorDetalleAsociacioneshowError = false;
+        this.piscicultorDetalleAsociacioneschangeItem = false;
+      }
+    } catch (err: any) {
+      this.piscicultorDetalleAsociacioneshowNotFound = false;
+      this.piscicultorDetalleAsociacioneshowError = false;
+      this.piscicultorDetalleAsociacioneschangeItem = false;
+      if (err.status == 404) {
+        this.piscicultorDetalleAsociacioneshowNotFound = true;
+      } else {
+        this.piscicultorDetalleAsociacioneshowError = true;
+        this.errorMessage = 'Error inesperado';
+      }
+    }
   }
 
   activeTabVerifi() {
@@ -152,8 +154,8 @@ try {
       '/asociaciones/municipio/detalle/' + asociacion.nit
     );
   }
-  goDetailFarm(granja: any) {
-    this.router.navigateByUrl('/granjas/municipio/detalle/' + granja.id_granja);
+  goDetailFarm(idgranja: any) {
+    this.router.navigateByUrl('/granjas/municipio/detalle/' + idgranja);
   }
   goDetalleRepresentante(asociacion: any) {
     if (asociacion.tipo_propietario == 'Pescador') {
@@ -165,5 +167,68 @@ try {
         '/piscicultores/municipio/detalle/' + asociacion.id_propietario
       );
     }
+  }
+  changeFavorite(i: number) {
+    this.piscicultorgranjas[i].esfavorita =
+      this.piscicultorgranjas[i].esfavorita == 1 ? 0 : 1;
+    this.granjasService
+      .esFavorita(this.piscicultorgranjas[i].id_granja)
+      .subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          console.log(err);
+          this.piscicultorgranjas[i].esfavorita =
+            this.piscicultorgranjas[i].esfavorita == 1 ? 0 : 1;
+        }
+      );
+  }
+  showResenas(idGranja: number) {
+    this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
+  }
+  seeFarmsMaptwo(i: number) {
+    let modalheadergooglemap = false;
+    let shared = false;
+    let atributos = {
+      longAndLat: {
+        lat: this.piscicultorgranjas[i].latitud,
+        lng: this.piscicultorgranjas[i].longitud,
+      },
+      mapInfoWindowData: [
+        {
+          icon: 'assets/icons/person_black.svg',
+          dataNombre: this.piscicultorgranjas[i].nombre,
+          sinDataNombre: 'Nombre indefinido',
+        },
+        {
+          icon: 'assets/icons/person_pin_circle_black_24dp.svg',
+          dataNombre: this.piscicultorgranjas[i].direccion,
+          sinDataNombre: 'Dirección indefinida',
+        },
+      ],
+      nombreAtributo: {
+        dato1: 'Compartir ubicación de la granja',
+      },
+    };
+    let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
+    this.location2.onPopState(() => {
+      this.appModalService.CloseGoogleMapGeneralModal();
+    });
+    this.appModalService
+      .GoogleMapModalGeneral(
+        atributos,
+        modalheadergooglemap,
+        iconMarkerGoogleMap,
+        false,
+        '',
+        shared
+      )
+      .then((result) => {
+
+      })
+      .catch((result) => {
+
+      });
   }
 }

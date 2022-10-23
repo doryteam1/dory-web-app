@@ -10,6 +10,7 @@ import { Utilities } from 'src/app/utilities/utilities';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-asociacion-detalle',
@@ -43,7 +44,7 @@ export class AsociacionDetalleComponent implements OnInit {
   granjaShowNotFound: boolean = false;
   granjaChangeItem: boolean = false;
   urls: any[] = [];
-  idEmailUser!:number;
+  idEmailUser!: number;
   constructor(
     private activatedRoute: ActivatedRoute,
     private asociacionesService: AsociacionesService,
@@ -55,7 +56,8 @@ export class AsociacionDetalleComponent implements OnInit {
     public userService: UsuarioService,
     private granjasService: GranjasService,
     private utilitiesService: UtilitiesService,
-    private firebaseStorageService: FirebaseStorageService
+    private firebaseStorageService: FirebaseStorageService,
+    public location2: PlatformLocation
   ) {}
 
   ngOnInit(): void {
@@ -63,12 +65,12 @@ export class AsociacionDetalleComponent implements OnInit {
     if (token && token != 'undefined') {
       this.tipoUsuario = Utilities.parseJwt(token!).rol;
     }
-      let email = localStorage.getItem('email');
-       console.log(this.asociacion)
-       this.userService.getUsuarioByEmail(email).subscribe((response) => {
-         console.log(response)
-        this.idEmailUser = response.data[0].id;
-       });
+    let email = localStorage.getItem('email');
+    console.log(this.asociacion);
+    this.userService.getUsuarioByEmail(email).subscribe((response) => {
+      console.log(response);
+      this.idEmailUser = response.data[0].id;
+    });
     this.selectedAsociacionnit = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
@@ -108,6 +110,7 @@ export class AsociacionDetalleComponent implements OnInit {
       .getGranjasByNitAsociacion(this.selectedAsociacionnit)
       .subscribe(
         (response) => {
+          console.log(response)
           this.granjasAsociacion = response.data;
           if (response.data.length > 0) {
             this.granjaShowError = false;
@@ -327,9 +330,6 @@ export class AsociacionDetalleComponent implements OnInit {
   calcNumberoHombresMujeres() {
     this.numeroHombres = 0;
     this.numeroMujeres = 0;
-
-    console.log('pescadores: ', this.pescadorasociaciones);
-    console.log('piscicultores: ', this.piscicultorasociaciones);
     this.pescadorasociaciones.forEach((pescador: any) => {
       if (pescador.sexo == 'Femenino') {
         this.numeroMujeres++;
@@ -439,7 +439,65 @@ export class AsociacionDetalleComponent implements OnInit {
     }
   }
 
-  goDetailFarm(granja: any) {
-    this.router.navigateByUrl('/granjas/municipio/detalle/' + granja.id_granja);
+  goDetailFarm(idgranja: any) {
+    this.router.navigateByUrl('/granjas/municipio/detalle/' + idgranja);
+  }
+  changeFavorite(i: number) {
+    this.granjasAsociacion[i].favorita =
+      this.granjasAsociacion[i].favorita == 1 ? 0 : 1;
+    this.granjasService
+      .esFavorita(this.granjasAsociacion[i].id_granja)
+      .subscribe(
+        (response) => {
+        },
+        (err) => {
+          console.log(err);
+          this.granjasAsociacion[i].favorita =
+            this.granjasAsociacion[i].favorita == 1 ? 0 : 1;
+        }
+      );
+  }
+  showResenas(idGranja: number) {
+    this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
+  }
+  seeFarmsMaptwo(i: number) {
+    let modalheadergooglemap = false;
+    let shared = false;
+    let atributos = {
+      longAndLat: {
+        lat: this.granjasAsociacion[i].latitud,
+        lng: this.granjasAsociacion[i].longitud,
+      },
+      mapInfoWindowData: [
+        {
+          icon: 'assets/icons/person_black.svg',
+          dataNombre: this.granjasAsociacion[i].nombre,
+          sinDataNombre: 'Nombre indefinido',
+        },
+        {
+          icon: 'assets/icons/person_pin_circle_black_24dp.svg',
+          dataNombre: this.granjasAsociacion[i].direccion,
+          sinDataNombre: 'Dirección indefinida',
+        },
+      ],
+      nombreAtributo: {
+        dato1: 'Compartir ubicación de la granja',
+      },
+    };
+    let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
+    this.location2.onPopState(() => {
+      this.appModalService.CloseGoogleMapGeneralModal();
+    });
+    this.appModalService
+      .GoogleMapModalGeneral(
+        atributos,
+        modalheadergooglemap,
+        iconMarkerGoogleMap,
+        false,
+        '',
+        shared
+      )
+      .then((result) => {})
+      .catch((result) => {});
   }
 }

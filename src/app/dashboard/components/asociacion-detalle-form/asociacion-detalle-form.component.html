@@ -171,6 +171,13 @@
               </a>
             </span>
         </div>
+        <div class="download-cam" *ngIf="modalMode=='update'">
+            <span *ngIf="asociacion?.foto_camarac && asociacion?.foto_camarac!='null'">
+              <a (click)="download()">Descargar ducumentos de los miembros
+                 <img src="assets/icons/download_for_offline_blue1_24dp.svg">
+              </a>
+            </span>
+        </div>
 
         <div class="mb-2" *ngIf="formState!='disable'">
           <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.foto_camarac ? 'Actualizar cámara de comercio ' : 'Subir cámara de comercio' }}</label>
