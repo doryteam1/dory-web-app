@@ -15,7 +15,7 @@
   padding-right: 0px;
   z-index: 0;
   box-shadow: 0 2px 12px var(--shadow-2);
-  width: 70vw;
+  width: 75vw;
 
   a {
     color: inherit;
@@ -51,8 +51,6 @@
     justify-content: space-evenly;
     align-items: stretch;
     z-index: 1;
-    gap: 10px;
-
     h1,
     h2 {
       font-family: Poppins, sans-serif;
@@ -60,7 +58,7 @@
 
     h1 {
       margin: 0;
-      font-size: 1.7rem;
+      font-size: 1.5rem
     }
 
     h2 {
@@ -96,9 +94,9 @@
 
   @media (min-width: 520px) {
     flex-direction: row;
-    width: 60vw;
-  max-width: 500px;
-    height: 230px;
+     width: 58vw;
+    max-width: 500px;
+    height: 200px;
     .meta {
       width: 40%;
       height: 100%;
@@ -158,6 +156,7 @@
 
   .estilo-p-card {
     text-align: justify;
+    margin: 0;
     cursor: pointer;
   }
 
@@ -169,6 +168,8 @@
   .mas_description_info {
     height: 60px;
     padding-right: 30px;
+    overflow: hidden;
+    overflow-y: auto;
     cursor: pointer;
 
   }
@@ -200,7 +201,7 @@
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
-  height: 85px;
+  height: 75px;
 
 }
 
@@ -208,7 +209,6 @@
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  gap: 5px;
 }
 
 .card__rating-container_puntos {

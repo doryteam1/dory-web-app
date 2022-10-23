@@ -1,4 +1,3 @@
-/*  */
 .data-container {
   display: flex;
   margin-top: 50px;
@@ -42,15 +41,15 @@
 }
 
 .container__title--color-morado {
-  color: var(--morado)
+  color: var(--morado);
 }
 
 .container__title--color-blue {
-  color: var(--azul1)
+  color: var(--azul1);
 }
 
 .container__title--color-blue-2 {
-  color: var(--azul2)
+  color: var(--azul2);
 }
 
 .filters-container {
@@ -82,6 +81,7 @@
   margin-left: 20px;
   margin-bottom: 20px;
 }
+
 /* mi estilo targeta nuevo map */
 .container-map-car {
   display: flex;
@@ -98,7 +98,7 @@
   margin-left: 20px;
   margin-right: 20px;
   padding-right: 20px;
-    padding-left: 20px;
+  padding-left: 20px;
   width: 100%;
 }
 
@@ -111,10 +111,6 @@ div.container-map-car>div>div:nth-child(1) {
   padding-bottom: 20px;
 }
 
-/* .mYstiledivmap {
-  display: none;
-} */
-
 .sticky-top {
   z-index: 1;
   height: auto;
@@ -122,15 +118,14 @@ div.container-map-car>div>div:nth-child(1) {
 }
 
 .mapgoogle {
-  /* border: 2px solid #6c6c6c; */
   border-radius: 10px;
   overflow: hidden;
   height: 300px;
-  width: 300px;
+  max-width: 400px;
+  width: 80vw;
   background-color: gainsboro;
   border: 2px solid rgb(0 0 0 / 51%);
   box-shadow: 4px 4px 4px rgb(0 0 0 / 15%);
-
 }
 
 /* estilo infomap */
@@ -146,16 +141,15 @@ div.container-map-car>div>div:nth-child(1) {
   margin-right: 5px;
 }
 
-
 @keyframes pulsate {
 
   0%,
   to {
-    transform: scale(1)
+    transform: scale(1);
   }
 
   50% {
-    transform: scale(.9)
+    transform: scale(0.9);
   }
 }
 
@@ -189,55 +183,77 @@ div.container-map-car>div>div:nth-child(1) {
 }
 
 .buscador-container__search {
-  width: 100%
+  width: 100%;
 }
 
-.container_box {
+app-card-piscicultor {
+  width: fit-content;
+  display: block;
+}
+
+.details_info_windo {
+  padding: 0;
+  top: 0;
+  list-style: none;
+  bottom: 0;
+  margin: auto;
+  transition: left 0.2s;
+  ;
+  color: black;
+  padding: 10px;
+  width: 100%;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.detais {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  margin: 20px;
-}
-
-.mapaMunicipios {
-  width: 300px;
-  height: 600px;
+  grid-gap: 5px;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
 @media screen and (min-width: 1100px) {
   .mYstiledivmap {
-    margin-left: 30px;
-    display: block
+    display: block;
+    width: 50%;
   }
 
   .container-map-car {
-    margin-left: 10px;
-    margin-right: 65px;
-    justify-content: space-around;
+    padding: 30px;
+    justify-content: space-evenly;
     align-items: normal;
     flex-direction: row;
+    width: 100%;
+    gap: 10px;
   }
 
   .photo--verMapa {
     display: none;
   }
 
-  .mapgoogle {
-    margin-right: 10px;
-    margin-bottom: 10px;
-    height: 40vw !important;
-    width: 50vw !important;
-  }
-
   .row-map-cart {
     margin-right: 0;
     padding-right: 0px;
-      padding-left: 0px;
+    padding-left: 0px;
+    width: 50%;
   }
 
   div.container-map-car>div>div:nth-child(1) {
     padding-top: 80px;
     padding-bottom: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .mapgoogle {
+    width: 100%;
+    max-width: 100%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 40vw !important;
   }
 }
 
@@ -247,7 +263,7 @@ div.container-map-car>div>div:nth-child(1) {
   }
 
   .buscador-container__search {
-    width: auto
+    width: auto;
   }
 }
 
@@ -255,7 +271,7 @@ div.container-map-car>div>div:nth-child(1) {
   .data-container__div {
     flex-direction: row;
     width: 100%;
-    gap: 0
+    gap: 0;
   }
 
   .container {
@@ -264,27 +280,27 @@ div.container-map-car>div>div:nth-child(1) {
   }
 
   .container__description {
-    align-self: center
-  }
-}
-
-@media screen and (min-width: 400px) {
-  .mapgoogle {
-    height: 350px;
-    width: 350px;
+    align-self: center;
   }
 }
 
 @media screen and (min-width: 500px) {
   .mapgoogle {
     height: 400px;
-    width: 400px;
+    /* width: 400px; */
+  }
+}
+
+@media screen and (min-width: 400px) {
+  .mapgoogle {
+    height: 350px;
+    /* width: 350px; */
   }
 }
 
 @media screen and (max-width: 350px) {
   .mapgoogle {
     height: 85vw;
-    width: 80vw;
+    /* width: 80vw; */
   }
 }

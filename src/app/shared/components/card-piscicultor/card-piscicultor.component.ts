@@ -1,5 +1,5 @@
 import { PlatformLocation } from '@angular/common';
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { AppModalService } from '../../services/app-modal.service';
@@ -24,10 +24,8 @@ export class CardPiscicultorComponent implements OnInit, OnDestroy {
     public mediaQueryService: MediaQueryService
   ) {}
   cardPiscicuMediaQuery1!: Subscription;
-  cardPiscicuMediaQuery2!: Subscription;
   ngOnDestroy(): void {
     this.cardPiscicuMediaQuery1.unsubscribe();
-    this.cardPiscicuMediaQuery2!.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -36,17 +34,6 @@ export class CardPiscicultorComponent implements OnInit, OnDestroy {
           .subscribe((matches) => {
             if (matches && this.modalGogleMapOpen) {
               this.appModalService.CloseGoogleMapModal();
-            }
-          });
-        this.cardPiscicuMediaQuery2 = this.mediaQueryService
-          .mediaQuery('max-width: 300px')
-          .subscribe((matches) => {
-            if (matches) {
-              this.shorterNumber = 8;
-              this.shorterNumber2 = 12;
-            } else {
-              this.shorterNumber = 12;
-              this.shorterNumber2 = 17;
             }
           });
   }

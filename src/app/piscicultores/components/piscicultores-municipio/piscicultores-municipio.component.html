@@ -38,8 +38,8 @@
 </div>
 <div class="container-map-car">
   <div class="row-map-cart">
-    <div *ngIf="piscicultoresFiltered.length >= 1">
-              <app-card-piscicultor *ngFor="let piscicultor of piscicultoresFiltered; let i =index "
+    <div  style="width: fit-content;" *ngIf="piscicultoresFiltered.length >= 1"  >
+              <app-card-piscicultor style="width: fit-content;  display: block;" *ngFor="let piscicultor of piscicultoresFiltered; let i =index "
                [piscicultor]="piscicultor "
                [mapa]="true"
                 (onDetalle)="navigate($event)" (onMouseOutCard)="eliminInfoWindow()"
@@ -66,27 +66,21 @@
             <map-polyline [path]="vertices" [options]="optionPoli"></map-polyline>
             <map-info-window [position]="markerPosition" *ngIf="mapaOn">
               <div class="myestilo-map-info-window">
-                <div class="details">
-                  <div class="detais-name-piscicultor">
-                    <img class="card__icon_info_windows" src="assets/icons/person_black.svg">
-                    <span>{{selectedPiscicultor.nombre | titlecase }}</span>
+                <div class="details_info_windo">
+                  <div class="detais">
+                    <div><img class="card__icon_info_windows" src="assets/icons/person_black.svg"></div>
+                    <div>{{selectedPiscicultor.nombre | titlecase }}</div>
                   </div>
-                  <div class="container_card__description2">
-                    <img class="card__icon_info_windows" src="assets/icons/person_pin_circle_black_24dp.svg">
-                    <span *ngIf="!selectedPiscicultor.dirrecion">Dirección indefinida</span>
-                    <span *ngIf="selectedPiscicultor.dirrecion"> {{selectedPiscicultor.dirrecion}}</span>
+                  <div class="detais">
+                    <div> <img class="card__icon_info_windows" src="assets/icons/person_pin_circle_black_24dp.svg"></div>
+                    <div *ngIf="!selectedPiscicultor.dirrecion">Dirección indefinida</div>
+                    <div *ngIf="selectedPiscicultor.dirrecion"> {{selectedPiscicultor.dirrecion}}</div>
                   </div>
                 </div>
               </div>
             </map-info-window>
           </google-map>
-          <!-- <div  class="container-loader" *ngIf="!apiLoaded">
-                  <div class="loader-icon">
-                  </div>
-                </div> -->
         </div>
       </div>
   </div>
 </div>
-
-<!-- <app-footer></app-footer>-->

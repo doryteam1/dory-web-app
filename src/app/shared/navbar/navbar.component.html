@@ -359,12 +359,14 @@
   </div>
   <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
     <div class="usuarioFotoYnombre">
-      <img class="container__img container__img--button heightAndWidth "
-        [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'">
-      <span>{{authUserTipo_usuario()}}</span>
-      <button class="container__button btn btn-secondary" type="button" routerLink="/dashboard">
-        {{authUserNomApell()}}
-      </button>
+      <div>
+        <img class="container__img container__img--button heightAndWidth "
+          [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'">
+        <span>{{authUserTipo_usuario()}}</span>
+        <button class="container__button btn btn-secondary" type="button" routerLink="/dashboard">
+          {{authUserNomApell()}}
+        </button>
+      </div>
     </div>
     <li class="dropdown-item--container" routerLink="/dashboard">
       <img class="dropdown-item--icon" src="assets/icons/cuenta.svg">

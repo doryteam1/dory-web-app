@@ -31,8 +31,7 @@ export class PiscicultorDetalleComponent implements OnInit {
     private piscicultoresService: PiscicultoresService,
     private router: Router,
     private granjasService: GranjasService,
-    public location2: PlatformLocation,
-    private appModalService: AppModalService
+    public location2: PlatformLocation
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +66,7 @@ export class PiscicultorDetalleComponent implements OnInit {
         .getPiscicultorDetalleGranjas(this.selectedPiscicultorId)
         .toPromise();
       this.piscicultorgranjas = response.data;
-      console.log(this.piscicultorgranjas)
+      console.log(this.piscicultorgranjas);
       if (response.data.length >= 0) {
         this.piscicultorDetalleGranjasshowError = false;
         this.piscicultorDetalleGranjasshowNotFound = false;
@@ -187,48 +186,5 @@ export class PiscicultorDetalleComponent implements OnInit {
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
-  seeFarmsMaptwo(i: number) {
-    let modalheadergooglemap = false;
-    let shared = false;
-    let atributos = {
-      longAndLat: {
-        lat: this.piscicultorgranjas[i].latitud,
-        lng: this.piscicultorgranjas[i].longitud,
-      },
-      mapInfoWindowData: [
-        {
-          icon: 'assets/icons/person_black.svg',
-          dataNombre: this.piscicultorgranjas[i].nombre,
-          sinDataNombre: 'Nombre indefinido',
-        },
-        {
-          icon: 'assets/icons/person_pin_circle_black_24dp.svg',
-          dataNombre: this.piscicultorgranjas[i].direccion,
-          sinDataNombre: 'Dirección indefinida',
-        },
-      ],
-      nombreAtributo: {
-        dato1: 'Compartir ubicación de la granja',
-      },
-    };
-    let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
-    this.location2.onPopState(() => {
-      this.appModalService.CloseGoogleMapGeneralModal();
-    });
-    this.appModalService
-      .GoogleMapModalGeneral(
-        atributos,
-        modalheadergooglemap,
-        iconMarkerGoogleMap,
-        false,
-        '',
-        shared
-      )
-      .then((result) => {
 
-      })
-      .catch((result) => {
-
-      });
-  }
 }

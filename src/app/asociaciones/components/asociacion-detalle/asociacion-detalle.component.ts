@@ -29,8 +29,6 @@ export class AsociacionDetalleComponent implements OnInit {
   pescadorshowError: boolean = false;
   piscicultorshowError: boolean = false;
   errorMessage = '';
-  activatelistpiscicultores: boolean = false;
-  activatelistpescadores: boolean = false;
   pescadorchangeItem: boolean = true;
   piscicultorchangeItem: boolean = true;
   pescadorasociaciones: any;
@@ -39,6 +37,8 @@ export class AsociacionDetalleComponent implements OnInit {
   numeroMujeres: number = 0;
   numeroHombres: number = 0;
   activatelistgranjas: boolean = false;
+  activatelistpiscicultores: boolean = false;
+  activatelistpescadores: boolean = false;
   granjasAsociacion: any[] = [];
   granjaShowError: boolean = false;
   granjaShowNotFound: boolean = false;
@@ -110,7 +110,7 @@ export class AsociacionDetalleComponent implements OnInit {
       .getGranjasByNitAsociacion(this.selectedAsociacionnit)
       .subscribe(
         (response) => {
-          console.log(response)
+          console.log(response);
           this.granjasAsociacion = response.data;
           if (response.data.length > 0) {
             this.granjaShowError = false;
@@ -448,8 +448,7 @@ export class AsociacionDetalleComponent implements OnInit {
     this.granjasService
       .esFavorita(this.granjasAsociacion[i].id_granja)
       .subscribe(
-        (response) => {
-        },
+        (response) => {},
         (err) => {
           console.log(err);
           this.granjasAsociacion[i].favorita =

@@ -1,4 +1,4 @@
-<div>
+
   <div class="data-container">
     <div class="data-container__div">
       <div class="container">
@@ -53,10 +53,12 @@
   <div>
     <div class="container-map-car">
       <div class="row-map-cart">
-        <div *ngIf="granjasFiltered.length >= 1" class="container-card">
+        <div *ngIf="granjasFiltered.length >= 1" class="container-card" style="width: fit-content;">
           <app-card-granjas
+          style="width: fit-content;  display: block;"
           [granja]="granja"
           [favorita]="granja?.favorita"
+          [resena]="granja?.count_resenas"
            *ngFor="let granja of granjasFiltered ; let i =index"
            (onMouseCard)="onMouseCard(i)"
            (onEliminInfoWindow)="eliminInfoWindow()"
@@ -85,16 +87,20 @@
               <map-info-window [position]="markerPosition" *ngIf="mapaOn">
                 <div class="myestilo-map-info-window">
                   <div class="details_info_windo">
-                    <div class="detais-name-propietario_info_windo ">
+                    <div class="detais">
                       <div> <img src="assets/icons/person_black.svg"></div>
                       <div>{{selectedGranja.propietario.nombre | titlecase }}</div>
                     </div>
-                    <div class="details-area-nombre-granja_info_windo ">
-                      <div><img src="assets/icons/set_meal_black_24dp.svg"></div>
+                    <div class="detais">
+                      <div>
+                        <img src="assets/icons/set_meal_black_24dp.svg">
+                      </div>
                       <div> {{selectedGranja.nombregranja | titlecase}}</div>
                     </div>
-                    <div class="details-area-direccion_info_windo ">
-                      <div><img src="assets/icons/location_on_black_24dp.svg"></div>
+                    <div class="detais ">
+                      <div>
+                        <img src="assets/icons/location_on_black_24dp.svg">
+                      </div>
                       <div *ngIf="!selectedGranja.dirreciongranja">Dirección indefinida</div>
                       <div *ngIf="selectedGranja.dirreciongranja">{{selectedGranja.dirreciongranja}}</div>
                     </div>
@@ -107,4 +113,4 @@
       </div>
     </div>
   </div>
-</div>
+

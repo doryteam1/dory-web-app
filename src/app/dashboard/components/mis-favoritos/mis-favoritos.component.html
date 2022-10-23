@@ -31,6 +31,7 @@
         <app-card-granjas
           [granja]="granja"
           [favorita]="granja?.esfavorita"
+          [resena]="granja?.cantidad_resenas"
          *ngFor="let granja of misGranjaFavoritas; let i = index"
           [index]="i"
           (onDetalle)="navigate(granja.id_granja)"

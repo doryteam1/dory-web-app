@@ -1,35 +1,25 @@
-<div class="card"
-(mouseover)="mouseInsideCard (piscicultor)"
-(mouseout)="mouseOutCard ()">
+<div class="card" (mouseover)="mouseInsideCard (piscicultor)" (mouseout)="mouseOutCard ()">
   <div class="card__meta">
-    <div class="card__meta-photo"   (click)="detalle (piscicultor)">
+    <div class="card__meta-photo" (click)="detalle (piscicultor)">
       <img class=" card__meta-photo-img"
         src="{{piscicultor?.foto ? piscicultor?.foto : '/assets/images/avatar-person-square.svg'}}">
     </div>
   </div>
-  <div class="card__description" >
-    <div class="card__description-header" (click)="detalle (piscicultor)">
-      <h1>{{piscicultor?.nombre | titlecase | shorter:shorterNumber }}</h1>
+  <div class="card__description">
+    <div class="card__description-header shorterTextOverflowHidden w-100" (click)="detalle (piscicultor)">
+      <h1 class="w-100 shorterTextAuto">{{piscicultor?.nombre | titlecase}}</h1>
     </div>
-    <p> </p>
-    <div style="cursor: pointer;"  class="card__description-body" (click)="detalle (piscicultor)">
-      <div class="card__description-body-informacion">
-        <img class="card__icon" src="assets/icons/phone_msg_black_24dp.svg">
-        <span class="card__phone">{{piscicultor?.celular? piscicultor?.celular : 'Contacto sin definir'}}</span>
+    <div style="cursor: pointer;" class="card__description-body" (click)="detalle (piscicultor)">
+      <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
+        <span class="card__phone w-100 shorterTextAuto">{{piscicultor?.celular? piscicultor?.celular : 'Contacto sin definir'}}</span>
       </div>
-      <div class="card__description-body-informacion">
-        <img class="card__icon" src="assets/icons/contact_mail_black_24dp.svg">
-        <span class="card__email">{{piscicultor?.email | shorter:shorterNumber2}}</span>
+      <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
+        <span class="card__email w-100 shorterTextAuto">{{piscicultor?.email}}</span>
       </div>
-      <div class="card__description-body-informacion">
-        <img class="card__icon" src="assets/icons/travel_explore_black_24dp.svg">
-        <span class="card__description2">{{piscicultor?.municipio}}-{{piscicultor?.departamento}}</span>
-      </div>
-      <div class="card__description-body-informacion">
-        <img class="card__icon" src="assets/icons/person_pin_circle_black_24dp.svg">
-        <span *ngIf="piscicultor?.direccion" class="card__description1">{{piscicultor?.direccion ? 'Dir.' : ''}}
-          {{piscicultor?.direccion | shorter:10}}</span>
-        <span *ngIf="!piscicultor?.direccion" class="card__description1">Dirección indefinida</span>
+      <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
+        <span *ngIf="piscicultor?.direccion" class="card__description1 shorterTextAuto">{{piscicultor?.direccion ? 'Dir.' : ''}}
+          {{piscicultor?.direccion}}</span>
+        <span *ngIf="!piscicultor?.direccion" class="card__description1 shorterTextAuto">Dirección indefinida</span>
       </div>
     </div>
     <div class="card__description-footer">
@@ -39,4 +29,3 @@
     </div>
   </div>
 </div>
-

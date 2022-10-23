@@ -9,7 +9,8 @@ export class CardGranjasComponent implements OnInit {
   @Input() granja: any;
   @Input() index: any;
   @Input() favorita: any;
-  @Input() botonMapaFijo:boolean=false;
+  @Input() resena: any;
+  @Input() botonMapaFijo:boolean=true;
 
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   @Output() onEliminInfoWindow: EventEmitter<any> = new EventEmitter();

@@ -24,7 +24,7 @@
         (click)="changeFavorite()">
     </div>
     <div class="mas_description_info" (click)="detalle()">
-      <p class="estilo-p-card" (click)="detalle()"> {{granja?.descripcion | shorter:60}}</p>
+      <p class="estilo-p-card" (click)="detalle()"> {{granja?.descripcion}}</p>
     </div>
     <div class="card__rating-container">
       <div class="card__rating-container_info">
@@ -33,11 +33,11 @@
           <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
         </div>
         <div class="card__rating__detail" (click)="showResenas()">
-          <span class="card__rating">Reseñas:</span> {{granja?.count_resenas || granja?.cantidad_resenas}}
+          <span class="card__rating">Reseñas:</span> {{resena}}
         </div>
       </div>
       <p class="read-more">
-        <img class="photo--verMapa" [ngClass]="{'mapaBoton':botonMapaFijo}" src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
+        <img class="photo--verMapa" *ngIf="botonMapaFijo"  src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
       </p>
     </div>
   </div>

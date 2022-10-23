@@ -16,18 +16,14 @@ export class CardPescadorComponent implements OnInit, OnDestroy {
   @Output() onMouseOutCard: EventEmitter<any> = new EventEmitter();
   @Output() onMouseInsideCard: EventEmitter<any> = new EventEmitter();
   modalGogleMapOpen: boolean = false;
-  shorterNumber: number = 12;
-  shorterNumber2: number = 17;
   constructor(
     private appModalService: AppModalService,
     public location2: PlatformLocation,
     public mediaQueryService: MediaQueryService
   ) {}
   cardPescadmediaQuery1!: Subscription;
-  cardPescadmediaQuery2!: Subscription;
   ngOnDestroy(): void {
     this.cardPescadmediaQuery1.unsubscribe();
-    this.cardPescadmediaQuery2!.unsubscribe();
   }
   ngOnInit(): void {
     this.cardPescadmediaQuery1 = this.mediaQueryService
@@ -35,17 +31,6 @@ export class CardPescadorComponent implements OnInit, OnDestroy {
       .subscribe((matches) => {
         if (matches && this.modalGogleMapOpen) {
           this.appModalService.CloseGoogleMapModal();
-        }
-      });
-    this.cardPescadmediaQuery2 = this.mediaQueryService
-      .mediaQuery('max-width: 382px')
-      .subscribe((matches) => {
-        if (matches) {
-          this.shorterNumber = 8;
-          this.shorterNumber2 = 12;
-        } else {
-          this.shorterNumber = 12;
-          this.shorterNumber2 = 17;
         }
       });
   }
