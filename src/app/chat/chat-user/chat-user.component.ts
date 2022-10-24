@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import * as dayjs from 'dayjs';
+import * as relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 @Component({
   selector: 'app-chat-user',
   templateUrl: './chat-user.component.html',
@@ -14,7 +17,9 @@ export class ChatUserComponent implements OnInit {
       chats: {
         fromUserId: number,
         message: string,
-      }[]
+      }[],
+      ultimo_mensaje:string | null,
+      fecha_ultimo_mensaje:string | null
   }[] = [];
   showScreen = false;
   phone!: string;
@@ -31,6 +36,7 @@ export class ChatUserComponent implements OnInit {
   usersObtained:boolean = false;
   filteredUserList: any[] = [];
   textSearch:string='';
+  recents: any[] = [];
   constructor(
     private chatService: ChatService,
     private userService: UsuarioService
@@ -73,14 +79,14 @@ export class ChatUserComponent implements OnInit {
         );
         this.messageArray = [];
         if(roomIndex > -1){
-          console.log("existe la sala")
-          console.log(this.roomsArray[roomIndex])
           this.roomsArray[roomIndex].chats.push({
             fromUserId: data.de,
             message: data.mensaje
           });
+          console.log("seteando ultimo mensaje")
+          this.roomsArray[roomIndex].ultimo_mensaje = data.mensaje;
+          this.roomsArray[roomIndex].fecha_ultimo_mensaje = data.metadata.message.fecha_creacion;
         }else{
-          console.log("nueva sala")
           const updateStorage = {
             roomId: data.de,
             chats: [
@@ -89,6 +95,8 @@ export class ChatUserComponent implements OnInit {
                 message: data.mensaje,
               },
             ],
+            ultimo_mensaje:data.metadata.message.contenido,
+            fecha_ultimo_mensaje:data.metadata.message.fecha_creacion
           };
           this.roomsArray.push(updateStorage);
         }
@@ -136,19 +144,11 @@ export class ChatUserComponent implements OnInit {
         (userId)=>{
           let index = this.userList.findIndex(
             (user)=>{
-              return user.id == userId;
+              return user?.id == userId;
             }
           )
           if(index > -1 && this.syncConnected){
             this.userList[index].status = true;
-            let user = this.userList[index];
-            this.userList.splice(index,1);
-            let firstOfflineIndex = this.userList.findIndex(
-              (element)=>{
-                return element.status == false;
-              }
-            );
-            this.userList.splice(firstOfflineIndex,0,user)
             this.onSearch();
           }
         }
@@ -158,19 +158,11 @@ export class ChatUserComponent implements OnInit {
         (userId)=>{
           let index = this.userList.findIndex(
             (user)=>{
-              return user.id == userId;
+              return user?.id == userId;
             }
           )
           if(index > -1  && this.syncConnected)
             this.userList[index].status = false;
-            let user = this.userList[index];
-            this.userList.splice(index,1);
-            let firstOfflineIndex = this.userList.findIndex(
-              (element)=>{
-                return element.status == false;
-              }
-            );
-            this.userList.splice(firstOfflineIndex,0,user);
             this.onSearch();
         }
       )
@@ -183,7 +175,7 @@ export class ChatUserComponent implements OnInit {
       (element)=>{
           let index = this.userList.findIndex(
             (user)=>{
-               return user.id == element.id; 
+               return user?.id == element?.id; 
             }
           );
           if(index > -1)
@@ -197,25 +189,36 @@ export class ChatUserComponent implements OnInit {
   orderRecentChats(){
     this.chatService.getUltimosMensajes().subscribe(
       (response)=>{
-        let recents:any[] = response.data;
+        this.recents = response.data;
         let usersOrder:any[] = [];
-        recents.forEach(
+        this.recents?.forEach(
           (recent)=>{
-              let idUser:number;
+              let userId:number;
               if(recent.usuario_emisor_id == this.userService.getAuthUser().sub){
-                idUser = recent.usuario_receptor_id;
+                userId = recent?.usuario_receptor_id;
               }else{
-                idUser = recent.usuario_emisor_id;
+                userId = recent?.usuario_emisor_id;
               }
-              let index = this.userList.findIndex(
+              let index = this.userList?.findIndex(
                 (element)=>{
-                  return element.id == idUser
+                  return element?.id == userId
                 }
               )
              if(index > -1)
              {
               usersOrder.push(this.userList[index]);
               this.userList.splice(index,1);
+             }
+
+             let roomIndex = this.roomsArray.findIndex(
+              (room)=>{
+                return room.roomId == userId
+              }
+             )
+
+             if(roomIndex > -1){
+              this.roomsArray[roomIndex].ultimo_mensaje = recent.contenido;
+              this.roomsArray[roomIndex].fecha_ultimo_mensaje = recent.fecha_creacion;
              }
           }
         )
@@ -254,6 +257,8 @@ export class ChatUserComponent implements OnInit {
         roomId: this.selectedUser.id,
         chats: [
         ],
+        ultimo_mensaje:'',
+        fecha_ultimo_mensaje:''
       };
       this.roomsArray.push(updateStorage);
       roomIndex = this.roomsArray.length - 1;
@@ -313,6 +318,8 @@ export class ChatUserComponent implements OnInit {
             message: this.messageText,
           },
         ],
+        ultimo_mensaje:'',
+        fecha_ultimo_mensaje:''
       };
       this.roomsArray.push(updateStorage);
       this.messageArray = this.roomsArray[this.roomsArray.length - 1].chats;
@@ -344,5 +351,23 @@ export class ChatUserComponent implements OnInit {
     this.filteredUserList = this.userList.filter(
       (element)=>element?.name?.toLowerCase().includes(this.textSearch.toLowerCase())
     )
+  }
+
+  getUltimo(userId:number){
+    let index = this.recents.findIndex(
+      (element)=>{
+        return element.chat_id ==  this.userService.getAuthUser().sub + userId;
+      }
+    )
+
+    if(index > -1){
+      return this.recents[index];
+    }else{
+      return null;
+    }
+  }
+
+  dateFromX(date:string){
+    return dayjs(date).fromNow(true)
   }
 }

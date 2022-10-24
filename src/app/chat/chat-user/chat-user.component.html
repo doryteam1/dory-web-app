@@ -3,7 +3,7 @@
     <div *ngIf="Onlist" class="container__list">
       <div class="container__list-search">
         <div class="input-wrapper">
-          <div class="bi bi-search"></div>"
+          <div class="bi bi-search"></div>
           <input type="text" placeholder="Buscar un chat." [(ngModel)]="textSearch" (ngModelChange)="onSearch()"/>
           <i class="img-x" *ngIf="false"></i>
           <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" *ngIf="false">
@@ -18,7 +18,11 @@
             <img [src]="user?.image ? user?.image : 'assets/images/avatar-person.svg'" class="avatar" />
             <div [ngClass]="{'user--activo':user?.status}"></div>
           </div>
-          <p class="username">{{user?.name}}</p>
+          <div class="d-flex flex-column">
+            <p class="username">{{user?.name}}</p>
+            <span class="user-card__label1">{{getUltimo(user?.id)?.contenido}}</span>
+            <span class="user-card__label2">{{getUltimo(user?.id)?.contenido ? dateFromX(getUltimo(user?.id)?.fecha_creacion) : ''}}</span>
+          </div>
         </div>
       </div>
     </div>
