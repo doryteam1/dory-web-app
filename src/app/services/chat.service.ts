@@ -103,6 +103,10 @@ export class ChatService {
     return this.https.get(environment.doryApiRestBaseUrl + '/chat/mensajes/privados/'+idUser)
   }
 
+  getUltimosMensajes(){
+    return this.https.get(environment.doryApiRestBaseUrl + '/chat/ultimos')
+  }
+
   disconnect(){
     this.socket.disconnect()
   }

@@ -189,14 +189,43 @@ export class ChatUserComponent implements OnInit {
           if(index > -1)
             this.userList[index].status = true;
     })
-    this.userList = this.userList.filter(
-      (element)=>{
-          return element.status == false;
-      }
-    )
-    this.userList = this.connectedUsers.concat(this.userList);
     this.filteredUserList = this.userList.slice();
     this.syncConnected = true;
+    this.orderRecentChats();
+  }
+
+  orderRecentChats(){
+    this.chatService.getUltimosMensajes().subscribe(
+      (response)=>{
+        let recents:any[] = response.data;
+        let usersOrder:any[] = [];
+        recents.forEach(
+          (recent)=>{
+              let idUser:number;
+              if(recent.usuario_emisor_id == this.userService.getAuthUser().sub){
+                idUser = recent.usuario_receptor_id;
+              }else{
+                idUser = recent.usuario_emisor_id;
+              }
+              let index = this.userList.findIndex(
+                (element)=>{
+                  return element.id == idUser
+                }
+              )
+             if(index > -1)
+             {
+              usersOrder.push(this.userList[index]);
+              this.userList.splice(index,1);
+             }
+          }
+        )
+
+        this.userList = usersOrder.concat(this.userList)
+        this.filteredUserList = this.userList.slice();
+      },err=>{
+
+      }
+    )
   }
 
   loadRoomMessages(){
@@ -314,15 +343,6 @@ export class ChatUserComponent implements OnInit {
   onSearch(){
     this.filteredUserList = this.userList.filter(
       (element)=>element?.name?.toLowerCase().includes(this.textSearch.toLowerCase())
-    )
-    this.filteredUserList = this.filteredUserList.sort(
-      (element:any)=>{
-        if(element.status == true){
-          return -1;
-        }else{
-          return 1;
-        }
-      }
     )
   }
 }
