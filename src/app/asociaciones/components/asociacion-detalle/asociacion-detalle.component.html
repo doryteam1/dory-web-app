@@ -197,7 +197,7 @@
   </div>
 
   <!-- granjas y asociaciones -->
-  <div class="mynavtabs" *ngIf="piscicultorasociaciones?.length>0 || pescadorasociaciones?.length>0">
+  <div class="mynavtabs" *ngIf="piscicultorasociaciones?.length>0 || pescadorasociaciones?.length>0 || granjasAsociacion.length > 0">
     <ul class="nav nav-tabs">
       <li class="nav-item" (click)="activeTabClick(1)" *ngIf="piscicultorasociaciones?.length>0">
         <a class="nav-link nav-link--color" [ngClass]="{'active mynav-link': activatelistpiscicultores}"
@@ -213,7 +213,7 @@
             <img class="detail-container__image" src="assets/icons/pescador.svg">
           </span> Pescadores</a>
       </li>
-      <li class="nav-item" (click)="activeTabClick(3)" *ngIf="true">
+      <li class="nav-item" (click)="activeTabClick(3)" *ngIf="granjasAsociacion.length > 0">
         <a class="nav-link nav-link--color" [ngClass]="{'active mynav-link': activatelistgranjas}">
           <span>
             <img class="detail-container__image" src="assets/icons/set_meal_black_24dp.svg">
@@ -221,6 +221,7 @@
       </li>
     </ul>
   </div>
+
   <div class="container_mytarget" *ngIf="piscicultorasociaciones?.length>0 || pescadorasociaciones?.length>0">
     <div class="mytarget" *ngIf="activatelistpiscicultores">
       <div class="row row-cols-1 row-cols-sm-1 row-cols-xl-2 g-4 row--mi-estilo"
@@ -230,9 +231,10 @@
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <app-card-piscicultor *ngFor="let piscicultor of piscicultorasociaciones; let i =index "
+        <app-card-piscicultor style="width: fit-content;display: block;" *ngFor="let piscicultor of piscicultorasociaciones; let i =index "
           [piscicultor]="piscicultor " (onDetalle)="gopiscicultorDetail($event)">
         </app-card-piscicultor>
+
       </div>
     </div>
     <div class="mytarget" *ngIf="activatelistpescadores">
@@ -243,21 +245,25 @@
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <app-card-pescador *ngFor="let pescador of pescadorasociaciones; let i =index " [pescador]="pescador"
+        <app-card-pescador style="width: fit-content;display: block;" *ngFor="let pescador of pescadorasociaciones; let i =index " [pescador]="pescador"
           (onDetalle)="gopescadorDetail($event)">
         </app-card-pescador>
       </div>
     </div>
     <div class="mytarget" *ngIf="activatelistgranjas">
-      <div class="row row-cols-1 row-cols-sm-1 row-cols-xl-2 g-4  row--mi-estilo"
+      <div class="container-card"
         [ngClass]="{'mychangeitemheight':granjaChangeItem,'search-container--flex':granjaShowNotFound, 'container--flex-center':granjasAsociacion?.length==1 }">
         <div *ngIf="granjaChangeItem" class="mychangeitem">
           <div>
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <app-card-granjas *ngFor="let granja of granjasAsociacion" [granja]="granja" (onDetalle)="goDetailFarm($event)">
-        </app-card-granjas>
+            <app-card-granjas [granja]="granja" [favorita]="granja?.favorita"
+            [resena]="granja?.count_resenas"
+              *ngFor="let granja of granjasAsociacion; let i = index" [index]="i" (onDetalle)="goDetailFarm(granja.id_granja)"
+              (onChangeFavorite)="changeFavorite(i)" (onShowResenas)="showResenas(granja?.id_granja)"
+              (onSeeFarmsMaptwo)="seeFarmsMaptwo(i)" [botonMapaFijo]="true">
+            </app-card-granjas>
       </div>
     </div>
   </div>

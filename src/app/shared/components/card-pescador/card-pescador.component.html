@@ -8,35 +8,26 @@
     </div>
   </div>
   <div class="card__description" >
-    <div class="card__description-header" (click)="detalle (pescador)">
-     <!--  <img src="assets/icons/pescador.svg"> -->
-      <h1>{{pescador?.nombre | titlecase | shorter:shorterNumber}}</h1>
+    <div class="card__description-header shorterTextOverflowHidden w-100" (click)="detalle (pescador)">
+      <h1 class="w-100 shorterTextAuto">{{pescador?.nombre | titlecase}}</h1>
     </div>
     <p> </p>
-    <div class="card__description-body" (click)="detalle (pescador)">
-      <div class="card__description-body-informacion">
-        <img class="card__icon" src="assets/icons/phone_msg_black_24dp.svg">
-        <span class="card__phone">{{pescador?.celular? pescador?.celular : 'Contacto sin definir'}}</span>
+    <div  style="cursor: pointer;" class="card__description-body" (click)="detalle (pescador)">
+      <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
+        <span class="card__phone w-100 shorterTextAuto">{{pescador?.celular? pescador?.celular : 'Contacto sin definir'}}</span>
       </div>
-      <div class="card__description-body-informacion">
-        <img class="card__icon" src="assets/icons/contact_mail_black_24dp.svg">
-        <span class="card__email">{{pescador?.email| shorter:shorterNumber2}}</span>
+      <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
+        <span class="card__email w-100 shorterTextAuto">{{pescador?.email}}</span>
       </div>
-      <div class="card__description-body-informacion">
-        <img class="card__icon" src="assets/icons/travel_explore_black_24dp.svg">
-        <span class="card__description2">{{pescador?.municipio}}-{{pescador?.departamento}}</span>
-      </div>
-      <div class="card__description-body-informacion">
-        <img class="card__icon" src="assets/icons/person_pin_circle_black_24dp.svg">
-        <span *ngIf="pescador?.direccion" class="card__description1">{{pescador?.direccion ? 'Dir.' : ''}}
+      <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
+        <span *ngIf="pescador?.direccion" class="card__description1 shorterTextAuto">{{pescador?.direccion ? 'Dir.' : ''}}
           {{pescador?.direccion | shorter:10}}</span>
-        <span *ngIf="!pescador?.direccion" class="card__description1">Dirección indefinida</span>
+        <span *ngIf="!pescador?.direccion" class="card__description1 shorterTextAuto">Dirección indefinida</span>
       </div>
     </div>
     <div class="card__description-footer">
       <p class="read-more"  >
         <img *ngIf="mapa"class="photo--verMapa" src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
-        <a (click)="detalle(pescador)">Detalles</a>
       </p>
     </div>
   </div>

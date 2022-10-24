@@ -9,6 +9,7 @@ import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
+import { DashboardInicioService } from 'src/app/services/dashboard-inicio.service';
 import { EnlacesDirectosInicioService } from 'src/app/services/enlaces-directos-inicio.service';
 import { SliderInicioService } from 'src/app/services/slider-inicio.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -19,7 +20,10 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class HomeComponent implements OnInit {
   datosCounter = [
-    { title: 'Granjas', img: 'assets/icons/granja-icon-home.svg', cantidad: 0 },
+    { title: 'Granjas',
+    img: 'assets/icons/granja-icon-home.svg',
+     cantidad: 0
+     },
     {
       title: 'Asociaciones',
       img: 'assets/icons/asociacio-icon-home.svg',
@@ -65,14 +69,10 @@ export class HomeComponent implements OnInit {
   tiempoSlide: any = 0;
   constructor(
     public gallery: Gallery,
-    private pescadoresService: PescadoresService,
-    private piscicultoresService: PiscicultoresService,
-    private granjasService: GranjasService,
-    private asociacionService: AsociacionesService,
-    private usuarioService: UsuarioService,
     private sliderInicioService: SliderInicioService,
     private enlacesDirectosInicioService: EnlacesDirectosInicioService,
-    private router: Router
+    private router: Router,
+    private dashboardInicioService:DashboardInicioService
   ) {}
   ngOnInit() {
     this.servicesDataLength();
@@ -80,20 +80,12 @@ export class HomeComponent implements OnInit {
     this.cargaServiceEnlacesDirc();
   }
   servicesDataLength() {
-    this.granjasService.getGranjas().subscribe((response: any) => {
-      this.datosCounter[0].cantidad = response.data.length;
-    });
-    this.asociacionService.getAsociacionesTodas().subscribe((response) => {
-      this.datosCounter[1].cantidad = response.data.length;
-    });
-    this.pescadoresService.getPescadores().subscribe((response: any) => {
-      this.datosCounter[2].cantidad = response.data.length;
-    });
-    this.piscicultoresService.getPiscicultores().subscribe((response: any) => {
-      this.datosCounter[3].cantidad = response.data.length;
-    });
-    this.usuarioService.getTodosUsuarioAll().subscribe((response: any) => {
-      this.datosCounter[4].cantidad = response.data.length;
+    this.dashboardInicioService.getDatosLenght().subscribe((response: any) => {
+      let datos = Object.values(response.data);
+      for (let index = 0; index < datos.length; index++) {
+        const element:any = datos[index];
+         this.datosCounter[index].cantidad = element;
+      }
     });
   }
   cargaServiceSlaider() {

@@ -3,14 +3,18 @@
   border-radius: 0.3rem;
   overflow: hidden;
 }
+
 .map>div {
-display: flex;
+  display: flex;
+  padding: 20px 0px;
 }
+
 .myestilo-map-info-window {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .my-btn-close {
   position: absolute;
   width: 28px;
@@ -21,31 +25,35 @@ display: flex;
   z-index: 1;
   border-radius: 80%;
   opacity: 1;
-  background: transparent
-    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e")
-    center/1em auto no-repeat;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
 }
+
 .my-btn-close-color-fondo {
   background-color: black;
 }
+
 .my-btn-close-color-fondo:hover {
   opacity: 1;
 }
-.myestilomodalmapvarios{
-      justify-content: flex-end;
-    width: 100%;
-      margin-right: 10px;
-      margin-left: 10px;
+
+.myestilomodalmapvarios {
+  justify-content: flex-end;
+  width: 100%;
+  margin-right: 10px;
+  margin-left: 10px;
 }
-.myestilomodalmap{
+
+.myestilomodalmap {
   width: 100%;
 }
-.targefavoritainmap{
-width: 500px;
-height: 550px;
-padding: 10px;
-overflow-y: auto;
+
+.targefavoritainmap {
+  width: 500px;
+  height: 500px;
+  padding: 10px;
+  overflow-y: auto;
 }
+
 /* estilos targeta mapa varios elementos */
 .blog-card {
   display: flex;
@@ -56,11 +64,13 @@ overflow-y: auto;
   line-height: 1.4;
   font-family: sans-serif;
   border-radius: 10px;
-  border: 1px solid #e7e7e7;
   overflow: hidden;
   padding-left: 0;
   padding-right: 0px;
   z-index: 0;
+  border: none;
+  box-shadow: 0 2px 12px var(--shadow-2);
+
   a {
     color: inherit;
 
@@ -91,6 +101,7 @@ overflow-y: auto;
     background-position: center;
     transition: transform 0.2s;
   }
+
   .description {
     padding: 1rem;
     background: #fff;
@@ -100,6 +111,7 @@ overflow-y: auto;
     justify-content: space-evenly;
     align-items: stretch;
     z-index: 1;
+    gap: 5px;
 
     h1,
     h2 {
@@ -109,7 +121,8 @@ overflow-y: auto;
     h1 {
       line-height: 1;
       margin: 0;
-      font-size: 16px;;
+      font-size: 16px;
+      ;
     }
 
     h2 {
@@ -119,35 +132,12 @@ overflow-y: auto;
       color: #a2a2a2;
       margin-top: 5px;
     }
-
-    .read-more {
-      text-align: right;
-
-      a {
-        color: var(--azul1);
-        display: inline-block;
-        position: relative;
-        cursor: pointer;
-
-        &:after {
-          content: url('../../../../assets/icons/navigate_next_black_24dp.svg');
-          font-family: FontAwesome;
-          margin-left: -10px;
-          opacity: 0;
-          vertical-align: middle;
-          transition: margin 0.3s, opacity 0.3s;
-        }
-
-        &:hover:after {
-          margin-left: 5px;
-          opacity: 1;
-        }
-      }
-    }
   }
-.description:hover {
-  background-color: #e4f4ff;
-}
+
+  .description:hover {
+    background-color: #e4f4ff;
+  }
+
   p {
     position: relative;
     margin: 1rem 0 0;
@@ -178,14 +168,15 @@ overflow-y: auto;
   @media (min-width: 640px) {
     flex-direction: row;
     max-width: 600px;
+    height: 200px;
 
     .meta {
-      flex-basis: 40%;
+      width: 45%;
       height: auto;
     }
 
     .description {
-      flex-basis: 60%;
+      width: 55%;
     }
 
     &.alt {
@@ -217,6 +208,7 @@ overflow-y: auto;
     text-align: justify;
     cursor: pointer;
   }
+
   .card__image {
     width: 100%;
     height: 100%;
@@ -230,93 +222,74 @@ overflow-y: auto;
     justify-content: space-evenly;
   }
 
-/*   div.card__rating-container>div {
+  .card__rating-container_info {
     display: flex;
-    align-items: end;
+    align-items: flex-start;
     flex-direction: column;
+    gap: 5px;
     cursor: pointer;
   }
 
-  div.card__rating-container>div>div {
+  .card__rating-container_puntos {
     display: flex;
     align-items: center;
     gap: 5px;
-  }
 
-  div.card__rating-container>div>span {
-    font-size: 13px;
-    color: #666;
+    .card__rating {
+      font-size: 20px;
+      font-weight: 700;
+    }
   }
+}
 
-  div.card__rating-container>div>div>img {
-    width: 20px;
-    height: 20px;
-  } */
-.card__rating-container_info {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 5px;
+.details_info_windo {
+  padding: 0;
+  top: 0;
+  list-style: none;
+  bottom: 0;
+  margin: auto;
+  transition: left 0.2s;
+  ;
+  color: black;
+  padding: 10px;
+  width: 100%;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 
-.card__rating-container_puntos {
+.detais-name-propietario,
+.details-area-direccion,
+.details-area-granja,
+.details-area-nombre-granja {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
+  grid-gap: 5px;
   gap: 5px;
-
-  .card__rating {
-    font-size: 20px;
-    font-weight: 700;
-  }
-}
+  margin-bottom: 10px;
 }
 
-  .details_info_windo {
-      padding: 0;
-      top: 0;
-      list-style: none;
-      bottom: 0;
-      margin: auto;
-      transition: left 0.2s;;
-      color:black;
-      padding: 10px;
-      width: 100%;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-    .detais-name-propietario,
-    .details-area-direccion,
-    .details-area-granja,
-    .details-area-nombre-granja {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      grid-gap: 5px;
-      gap: 5px;
-      margin-bottom: 10px;
-    }
 div.my_estilo_cols {
   gap: 5px;
   margin-top: 20px;
 }
 
- @media (max-width: 1201px) {
-   /* cuando el contenido es <1200px */
-   .targefavoritainmap {
-     /* oculta el boton ver mapa */
-     display: none !important;
-   }
- }
+.card__icon-favoritex {
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  cursor: pointer;
+}
+
 @media (max-width: 575px) {
   .myestilomodalmap {
     margin: 0px !important;
     /* ajusta el boton de pantalla completa del mapa */
   }
 }
-.cargandomapa{
+
+.cargandomapa {
   width: 100%;
   height: 550px;
   background-color: #a2a2a2;
 }
-

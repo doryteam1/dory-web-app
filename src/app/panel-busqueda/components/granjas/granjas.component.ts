@@ -132,7 +132,7 @@ export class GranjasComponent implements OnInit {
     private appModalService: AppModalService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private places: PlacesService,
+    private places: PlacesService
   ) {}
   ngOnInit(): void {
     let token = localStorage.getItem('token');
@@ -318,12 +318,12 @@ export class GranjasComponent implements OnInit {
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
-      if (checkboxs.length == 0) {
-        this.filtroseleccionadoCheckbox = [];
-        this.resultFiltroPorMunicipio = [];
-      } else {
-        this.filtroseleccionadoCheckbox = checkboxs;
-      }
+    if (checkboxs.length == 0) {
+      this.filtroseleccionadoCheckbox = [];
+      this.resultFiltroPorMunicipio = [];
+    } else {
+      this.filtroseleccionadoCheckbox = checkboxs;
+    }
     this.searchReset();
   }
 
@@ -355,5 +355,25 @@ export class GranjasComponent implements OnInit {
     this.selectedOrderFilter = result.radioFilter1;
     this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
     this.searchReset();
+  }
+  changeFavorite(i: number) {
+    this.granjasFiltered[i].favorita =
+      this.granjasFiltered[i].favorita == 1 ? 0 : 1;
+    this.granjasService.esFavorita(this.granjasFiltered[i].id_granja).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (err) => {
+        console.log(err);
+        this.granjasFiltered[i].favorita =
+          this.granjasFiltered[i].favorita == 1 ? 0 : 1;
+      }
+    );
+  }
+  showResenas(idGranja: number) {
+    this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
+  }
+  goDetailFarm(idgranja: any) {
+    this.router.navigateByUrl('/granjas/municipio/detalle/' + idgranja);
   }
 }

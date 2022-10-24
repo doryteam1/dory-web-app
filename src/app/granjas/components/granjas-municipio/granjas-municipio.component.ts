@@ -33,11 +33,9 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
   granjaDetailRoute: string = '';
   poblacion: number = 0;
   municipio: string = '';
-  indicatorsphotos: boolean = true;
   activaapiLoader: boolean = true;
   mapaOn: boolean = false;
   apiLoaded!: Observable<boolean>;
-  shorterNumber: number = 12;
   valor: boolean = false;
   vertices = vertices;
   optionPoli: google.maps.PolylineOptions = {
@@ -163,15 +161,6 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
           };
         }
       });
-          this.mediaQuery1 = this.mediaQueryService
-            .mediaQuery('max-width: 300px')
-            .subscribe((matches) => {
-              if (matches) {
-                this.shorterNumber = 8;
-              } else {
-                this.shorterNumber = 12;
-              }
-            });
           this.mediaQuery2 = this.mediaQueryService
             .mediaQuery('min-width: 1100px')
             .subscribe((matches) => {
@@ -181,7 +170,6 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
             });
   }
   ngOnDestroy(): void {
-    this.mediaQuery1.unsubscribe();
     this.mediaQuery2.unsubscribe();
   }
   extractLatLong() {
@@ -292,12 +280,6 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + id);
   }
   changeFavorite(i: number) {
-    let date = new Date();
-    console.log(date.toISOString().split('T')[0]);
-    const horas = new Date();
-
-    console.log(horas.getHours());
-
     this.granjasFiltered[i].favorita =
       this.granjasFiltered[i].favorita == 1 ? 0 : 1;
     this.granjasService.esFavorita(this.granjasFiltered[i].id_granja).subscribe(
@@ -310,7 +292,6 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
           this.granjasFiltered[i].favorita == 1 ? 0 : 1;
       }
     );
-    //this.proveedorService.updateProducto(this.form)
   }
 
   showResenas(idGranja: number) {

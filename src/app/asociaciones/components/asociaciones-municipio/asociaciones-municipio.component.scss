@@ -106,6 +106,14 @@
 .buscador-container__search {
   width: 100%
 }
+.container-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 50px;
+  gap: 20px;
+}
 @media screen and (min-width: 770px) {
   .buscador-container {
     flex-direction: row !important;

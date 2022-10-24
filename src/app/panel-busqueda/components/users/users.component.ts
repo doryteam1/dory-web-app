@@ -68,7 +68,6 @@ export class UsersComponent implements OnInit {
     this.getUsers()!.subscribe((response: any) => {
       this.users = response.data;
       this.usersFiltered = this.users.slice();
-      console.log(this.usersFiltered);
       if (this.usersFiltered.length < 1) {
         this.showNotFound = true;
       } else {

@@ -1,54 +1,43 @@
-<div class="card">
-  <div class="card__meta">
-    <div class="card__meta-photo" (click)="detalle(granja)">
-       <img class="card__meta-photo-img"
-          src="{{ granja.fotos[ran] ? granja.fotos[ran] : 'https://admin.moodyyc.com/img/no-image.png'}}"
-          >
-    </div>
-    <div class="card__meta-details" (click)="detalle(granja)">
-      <div class="card__meta-details-infor">
-        <div> <img src="../../../../assets/icons/person_white_24dp.svg"></div>
-        <div>{{granja.nombres | titlecase}} {{granja.apellidos | titlecase}}</div>
-      </div>
-      <div class="card__meta-details-infor">
-        <div><img src="../../../../assets/icons/set_meal_white_24dp.svg"></div>
-        <div (click)="detalle(granja)"> {{granja.nombre | titlecase}}</div>
-      </div>
-      <div class="card__meta-details-infor">
-        <div><img src="../../../../assets/icons/location_on_white_24dp.svg"></div>
-        <div (click)="detalle(granja)"> {{granja.direccion}} </div>
-      </div>
-      <div class="card__meta-details-infor">
-        <div><img src="../../../../assets/icons/areaterreno_white.svg"></div>
-        <div (click)="detalle(granja)">{{granja.area}} m²</div>
-      </div>
+
+<div class="blog-card"  (mouseover)="mouseCard()"
+  (mouseout)="eliminInfoWindow()">
+  <div class="meta">
+    <div class="photo">
+      <app-carrucel-img class="card__image"
+      [imagenes]="granja.fotos"
+       [indicatorsphoto]="true"
+        [idtarge]=" index"
+         (eventValueResponseClickFotoMiniSlider)="detalle()"
+        (eventValueResponseClickDivIndicadorSlider)="detalle()"
+        (eventValueResponseclickImagenItemSlider)="detalle()">
+      </app-carrucel-img>
     </div>
   </div>
-  <div class="card__description">
-    <div class="card__description-header">
-      <div>
-        <h1 (click)="detalle(granja)">{{granja.nombre | shorter:shorterNumber}}</h1>
+  <div class="description">
+    <div class="description_title_fauvourite">
+      <div class="shorterTextOverflowHidden w-100">
+        <h1 class="description_title_fauvourite--h1 shorterTextAuto" (click)="detalle()">{{granja?.nombre}}</h1>
       </div>
-      <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
-        (click)="changeFavorite(granja)">
-      <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita"
-        (click)="changeFavorite(granja)">
+      <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="favorita"
+        (click)="changeFavorite()">
+      <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!favorita"
+        (click)="changeFavorite()">
     </div>
-    <div class="card__description-container">
-      <p class="estilo-p-card" (click)="detalle(granja)"> {{granja.descripcion | shorter:100}}</p>
+    <div class="mas_description_info" (click)="detalle()">
+      <p class="estilo-p-card" (click)="detalle()"> {{granja?.descripcion}}</p>
     </div>
-    <div class="card__description-container_footer">
-      <div class="card__description-container_footer-rating">
-        <div class="card__rating-container_puntos">
-  <!--   <span class="card__rating">{{granja?.puntuacion !== null && granja?.puntuacion !== undefined ?
-            (granja.puntuacion |
-            number:'1.1-1') : '0'}}</span> -->
+    <div class="card__rating-container">
+      <div class="card__rating-container_info">
+        <div><span class="card__rating">Área: </span>{{granja?.area}} m²</div>
+        <div class="card__rating-container_puntos" (click)="showResenas()">
           <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
         </div>
-        <span class="card__rating__detail" >Reseñas: {{granja.count_resenas}}</span>
+        <div class="card__rating__detail" (click)="showResenas()">
+          <span class="card__rating">Reseñas:</span> {{resena}}
+        </div>
       </div>
-      <p class="read-more"  (click)="detalle(granja)">
-        <a>Detalles</a>
+      <p class="read-more">
+        <img class="photo--verMapa" *ngIf="botonMapaFijo"  src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
       </p>
     </div>
   </div>

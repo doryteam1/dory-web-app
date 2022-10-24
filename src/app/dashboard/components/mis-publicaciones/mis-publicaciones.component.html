@@ -4,6 +4,7 @@
      [publicacion]="publicacion"
      [index]="i"
      (onUpdatePublicacion)="navigate(publicacion,'enable')"
+     (onDetalle)="navigate(publicacion,'enable')"
      (onDeletePublicacion)="deletePublicacion(publicacion.id_publicacion)"
      *ngFor="let publicacion of publicaciones; let i = index">
     </app-card-publicacion>

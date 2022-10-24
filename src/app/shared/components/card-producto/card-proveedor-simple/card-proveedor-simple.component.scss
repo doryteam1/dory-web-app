@@ -1,0 +1,132 @@
+
+.container-card {
+  display: inline-block;
+  margin: 10px;
+  padding: 20px;
+  width: 80vw;
+    max-width: 430px;
+    display: flex;
+      flex-wrap: nowrap;
+    height: fit-content;
+  border: 1px solid rgba(0, 0, 0, 0.077);
+  border-radius: 25px;
+ box-shadow: 0 2px 12px var(--shadow-2);
+  font-size: 0.9em;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+  cursor: pointer;
+}
+
+.container-card:after,
+.container-card:before {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.container-card img {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  float: left;
+  border-radius: 50%;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  transition: all 0.5s ease-in-out;
+}
+
+.container-card .details {
+  float: left;
+  text-align: left;
+  transition: all 0.5s ease-in-out;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.container-card .details>span,
+.container-card .details>a {
+  display: block;
+  padding: 0 15px 0 35px;
+  text-decoration: none;
+  position: relative;
+}
+
+.container-card .details>span:before,
+.container-card .details>a:before {
+  display: inline-block;
+  font: normal normal normal 13px/1 FontAwesome;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-right: 15px;
+  width: 15px;
+  text-align: center;
+  color: #444;
+}
+
+.container-card .details a {
+  color: var(--gris-oscuro);
+  transition: color 0.5s ease-in-out;
+}
+
+.container-card .details a:hover,
+.container-card .details a:focus {
+  color: black;
+  transition: color 0.5s ease-in-out;
+}
+
+.container-card .details .name {
+  font-weight: 600;
+}
+
+.container-card .details .name:before {
+  font-family: 'Bootstrap-icons';
+  content: "\F4E1";
+}
+
+.container-card .details .title:before {
+  font-family: 'Bootstrap-icons';
+  content: "\F3E8";
+}
+
+.container-card .details .phone:before {
+  font-family: 'Bootstrap-icons';
+  content: "\F5C1";
+}
+
+.container-card .details .email:before {
+  font-family: 'Bootstrap-icons';
+  content: "\F32F";
+}
+
+.container-card:hover {
+  background: #26a5b81f;
+  transition: all 0.2s ease-in-out;
+  transform: scale(1.03);
+}
+
+.container-card:hover img {
+  box-shadow: 0 2px 12px var(--shadow-2);
+  transition: all 0.4s ease-in-out;
+}
+
+.container-card:hover .details {
+  transition: all 0.5s ease-in-out;
+  text-shadow: 1px 1px white;
+}
+
+@media (max-width: 480px) {
+  .container-card {
+    margin: 30px auto;
+    align-items: center;
+    flex-direction: column;
+     gap: 10px;
+     .details{
+      width: 100%;
+      span,a{
+        padding: 0 15px 0 0;
+      }
+     }
+  }
+}

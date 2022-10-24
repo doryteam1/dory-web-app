@@ -75,7 +75,7 @@ export class AppModalService {
   ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalGoogleMapComponent, {
       ariaLabelledBy: 'modal-basic-title',
-      size: 'xl',
+      size: 'lg',
       centered: true,
     });
     modalRef.componentInstance.atributos = atributos;

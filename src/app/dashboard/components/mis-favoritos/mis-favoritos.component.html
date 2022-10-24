@@ -1,4 +1,4 @@
-<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-4 my_estilo_cols">
+<div class="my_estilo_cols">
       <div class="search-container" *ngIf="showNotFound ||  sinfavoritos">
         <div class="search-container__box">
           <img class="search-container__image" src="assets/images/layer1sinfavoritos.svg" />
@@ -27,57 +27,19 @@
           </div>
         </div>
       </div>
-  <div class="blog-card" *ngFor="let granja of misGranjaFavoritas; let i = index">
-      <div class="meta">
-        <div class="photo">
-      <img class="card__image" src="{{ granja.fotos[0] ? granja.fotos[0] : 'https://admin.moodyyc.com/img/no-image.png'}}" >
-        </div>
-        <div class="details">
-          <div class="detais-name-propietario">
-            <div> <img src="assets/icons/person_white_24dp.svg"></div>
-            <div>{{granja.propietario | titlecase}}</div>
-          </div>
-          <div class="details-area-nombre-granja">
-              <div><img src="assets/icons/set_meal_white_24dp.svg" ></div>
-              <div (click)="navigate(i)"> {{granja.nombre | titlecase}}</div>
-          </div>
-          <div class="details-area-nombre-granja">
-              <div><img src="assets/icons/location_on_white_24dp.svg" ></div>
-              <div > {{granja.direccion}}
-              </div>
-          </div>
-          <div class="details-area-granja">
-              <div><img src="assets/icons/areaterreno_white.svg" ></div>
-              <div (click)="navigate(i)">{{granja.area | number:'':'es'}} m²</div>
-          </div>
-        </div>
+      <div class="container-card ">
+        <app-card-granjas
+          [granja]="granja"
+          [favorita]="granja?.esfavorita"
+          [resena]="granja?.cantidad_resenas"
+         *ngFor="let granja of misGranjaFavoritas; let i = index"
+          [index]="i"
+          (onDetalle)="navigate(granja.id_granja)"
+          (onChangeFavorite)="changeFavorite(i)"
+          (onShowResenas)="showResenas(granja?.id_granja)"
+          (onSeeFarmsMaptwo)="seeFarmsMaptwo(i)">
+        </app-card-granjas>
       </div>
-      <div class="description">
-        <div>
-          <h1  (click)="navigate(i)" style="color: var(--azul1);">{{granja.nombre | shorter:shorterNumber}}</h1>
-          <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
-            (click)="changeFavorite(i)">
-          <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita"
-            (click)="changeFavorite(i)">
-        </div>
-        <p class="estilo-p-card" (click)="navigate(i)"> {{granja.descripcion | shorter:100}}</p>
-        <div class="card__rating-container">
-            <div class="card__rating-container_info">
-                <div class="card__rating-container_puntos" (click)="showResenas(granja?.id_granja)">
-                  <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
-                </div>
-                <span class="card__rating__detail" (click)="showResenas(granja?.id_granja)">Reseñas: {{granja.cantidad_resenas}}
-                </span>
-            </div>
-            <div class="card__description-footer">
-              <p class="read-more" >
-               <img  (click)="seeFarmsMaptwo(i)"class="photo--verMapa" src="assets/icons/location24dp.svg">
-               <a  (click)="navigate(i)">Detalles</a>
-             </p>
-            </div>
-        </div>
-      </div>
-  </div>
 </div>
 
 

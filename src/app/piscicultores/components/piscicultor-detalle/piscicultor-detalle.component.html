@@ -119,23 +119,26 @@
   </div>
   <div class="container_mytarget" *ngIf="piscicultorgranjas?.length>0 || piscicultorasociaciones?.length>0 ">
     <div class="mytarget" *ngIf="activatelistgranja">
-      <div class="row row-cols-1 row-cols-sm-1 row-cols-xl-2 g-4 row--mi-estilo"
-        [ngClass]="{'mychangeitemheight':piscicultorDetalleGranjaschangeItem,'search-container--flex':piscicultorDetalleGranjasshowNotFound,'container--flex-center':piscicultorgranjas?.length==1}" >
+      <div class="container-card"
+        [ngClass]="{'mychangeitemheight':piscicultorDetalleGranjaschangeItem,'search-container--flex':piscicultorDetalleGranjasshowNotFound}" >
         <div *ngIf="piscicultorDetalleGranjaschangeItem" class="mychangeitem">
           <div>
            <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-          <app-card-granjas
-             *ngFor="let granja of piscicultorgranjas "
+            <app-card-granjas
              [granja]="granja"
-             (onDetalle)="goDetailFarm($event)">
-          </app-card-granjas>
+             [favorita]="granja?.esfavorita"
+             [resena]="granja?.count_resenas"
+              *ngFor="let granja of piscicultorgranjas; let i = index" [index]="i" (onDetalle)="goDetailFarm(granja.id_granja)"
+              (onChangeFavorite)="changeFavorite(i)" (onShowResenas)="showResenas(granja?.id_granja)"
+               [botonMapaFijo]="false">
+            </app-card-granjas>
       </div>
     </div>
     <div class="mytarget" *ngIf="activatelistasociacion">
-      <div class="row row-cols-1 row-cols-sm-1 row-cols-xl-2 g-4  row--mi-estilo"
-        [ngClass]="{'mychangeitemheight':piscicultorDetalleAsociacioneschangeItem,'search-container--flex':piscicultorDetalleAsociacioneshowNotFound , 'container--flex-center':piscicultorasociaciones?.length==1 }">
+      <div class="container-card"
+        [ngClass]="{'mychangeitemheight':piscicultorDetalleAsociacioneschangeItem,'search-container--flex':piscicultorDetalleAsociacioneshowNotFound }">
         <div *ngIf="piscicultorDetalleAsociacioneschangeItem" class="mychangeitem">
           <div>
            <img src="assets/icons/changeiconanimado.svg">

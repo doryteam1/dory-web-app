@@ -4,6 +4,7 @@
     [producto]="producto"
     [indiceProducto]="i"
     [editaAndEliminar]="true"
+    (onDetalle)="updateProducto(producto)"
     (onUpdateProducto)="updateProducto(producto)"
     (onDeleteProducto)="deleteProducto(producto.codigo,producto.nombreProducto,i)"
     *ngFor="let producto of productos; let i=index">

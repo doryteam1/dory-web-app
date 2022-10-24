@@ -65,7 +65,6 @@ export class ModalGoogleMapComponent implements OnInit {
       east: -74.324908,
     };
       this.misfavoritas = this.atributos;
-      console.log(this.misfavoritas);
       this.extractLatLong();
       this.options = {
         center: {

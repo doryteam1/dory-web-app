@@ -1,4 +1,4 @@
-<div>
+
   <div class="data-container">
     <div class="data-container__div">
       <div class="container">
@@ -53,53 +53,21 @@
   <div>
     <div class="container-map-car">
       <div class="row-map-cart">
-        <div *ngIf="granjasFiltered.length >= 1">
-          <div class="blog-card" *ngFor="let granja of granjasFiltered ; let i =index" (mouseover)="onMouseCard(i)"
-            (mouseout)="eliminInfoWindow()">
-            <div class="meta">
-              <div class="photo">
-                <app-carrucel-img
-                   class="card__image"
-                   [imagenes]="granjasFiltered[i].fotos"
-                  [indicatorsphoto]=" indicatorsphotos"
-                  [idtarge]="i"
-                  (eventValueResponseClickFotoMiniSlider)="navigate(granja.id_granja)"
-                  (eventValueResponseClickDivIndicadorSlider)="navigate(granja.id_granja)"
-                  (eventValueResponseclickImagenItemSlider)="navigate(granja.id_granja)">
-                </app-carrucel-img>
-              </div>
-            </div>
-            <div class="description">
-              <div class="description_title_fauvourite">
-                <div>
-                  <h1 class="description_title_fauvourite--h1" (click)="navigate(granja.id_granja)">{{granja.nombre |
-                    shorter:shorterNumber}}</h1>
-                </div>
-                <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita"
-                  (click)="changeFavorite(i)">
-                <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita"
-                  (click)="changeFavorite(i)">
-              </div>
-              <div class="mas_description_info" (click)="navigate(granja.id_granja)">
-                <p class="estilo-p-card" (click)="navigate(granja.id_granja)"> {{granja.descripcion | shorter:80}}</p>
-              </div>
-              <div class="card__rating-container">
-                <div class="card__rating-container_info">
-                  <div><span class="card__rating">Área: </span>{{granja?.area}} m²</div>
-                  <div class="card__rating-container_puntos" (click)="showResenas(granja?.id_granja)">
-                    <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
-                  </div>
-                  <div class="card__rating__detail" (click)="showResenas(granja?.id_granja)">
-                    <span class="card__rating">Reseñas:</span> {{granja.count_resenas}}
-                  </div>
-                </div>
-                <p class="read-more">
-                  <img class="photo--verMapa" src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo(i)">
-                  <a (click)="navigate(granja.id_granja)">Detalles</a>
-                </p>
-              </div>
-            </div>
-          </div>
+        <div *ngIf="granjasFiltered.length >= 1" class="container-card" style="width: fit-content;">
+          <app-card-granjas
+          style="width: fit-content;  display: block;"
+          [granja]="granja"
+          [favorita]="granja?.favorita"
+          [resena]="granja?.count_resenas"
+           *ngFor="let granja of granjasFiltered ; let i =index"
+           (onMouseCard)="onMouseCard(i)"
+           (onEliminInfoWindow)="eliminInfoWindow()"
+           [index]="i"
+           (onDetalle)="navigate(granja.id_granja)"
+           (onChangeFavorite)="changeFavorite(i)"
+           (onShowResenas)="showResenas(granja?.id_granja)"
+           (onSeeFarmsMaptwo)="seeFarmsMaptwo(i)">
+          </app-card-granjas>
         </div>
       </div>
       <div class="mYstiledivmap">
@@ -119,16 +87,20 @@
               <map-info-window [position]="markerPosition" *ngIf="mapaOn">
                 <div class="myestilo-map-info-window">
                   <div class="details_info_windo">
-                    <div class="detais-name-propietario_info_windo ">
+                    <div class="detais">
                       <div> <img src="assets/icons/person_black.svg"></div>
                       <div>{{selectedGranja.propietario.nombre | titlecase }}</div>
                     </div>
-                    <div class="details-area-nombre-granja_info_windo ">
-                      <div><img src="assets/icons/set_meal_black_24dp.svg"></div>
+                    <div class="detais">
+                      <div>
+                        <img src="assets/icons/set_meal_black_24dp.svg">
+                      </div>
                       <div> {{selectedGranja.nombregranja | titlecase}}</div>
                     </div>
-                    <div class="details-area-direccion_info_windo ">
-                      <div><img src="assets/icons/location_on_black_24dp.svg"></div>
+                    <div class="detais ">
+                      <div>
+                        <img src="assets/icons/location_on_black_24dp.svg">
+                      </div>
                       <div *ngIf="!selectedGranja.dirreciongranja">Dirección indefinida</div>
                       <div *ngIf="selectedGranja.dirreciongranja">{{selectedGranja.dirreciongranja}}</div>
                     </div>
@@ -141,4 +113,4 @@
       </div>
     </div>
   </div>
-</div>
+

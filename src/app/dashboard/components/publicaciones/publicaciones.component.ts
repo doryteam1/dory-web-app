@@ -43,9 +43,6 @@ export class PublicacionesComponent implements OnInit {
     object.action = 'update'
     object.actionDos = 'soloVer'
     object.formState = state;
-       let url = this.router.serializeUrl(
-         this.router.createUrlTree(['/dashboard/publicacion/detalle', object])
-       );
-       window.open(url, '_blank');
+    this.router.navigate(['/dashboard/publicacion/detalle', object]);
   }
 }

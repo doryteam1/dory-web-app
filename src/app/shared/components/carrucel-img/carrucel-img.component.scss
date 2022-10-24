@@ -35,7 +35,7 @@
   background-color: white;
   box-shadow: inset 0 0 0 0.5px black;
 }
-.carouselsinfotos {
+.carousel{
   height: 100%;
   width: 100%;
   grid-template-rows: repeat(12, 1fr);
@@ -43,27 +43,6 @@
   display: grid;
   grid-template-areas:
   'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes';
-}
-
-.carouselsinfotosimg1 {
-  height: 100%;
-  width: 100%;
-  grid-template-rows: repeat(12, 1fr);
-  grid-template-columns: repeat(12, 1fr);
-  display: grid;
-  grid-template-areas:
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
     'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '

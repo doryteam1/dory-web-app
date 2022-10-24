@@ -1,12 +1,4 @@
-<!--
 
-id_area_experticia: 0
-id_tipo_usuario: 7
-informacion_adicional_direccion: null
-sobre_mi: ""
-tipo_usuario: "Pescador"
-vereda: null
-[[Prototype]]: -->
 <div class="container mycontainer">
   <div class="mycontainer_info">
     <div class="piscicultor-container">
@@ -18,8 +10,6 @@ vereda: null
           <span>
             <h4 class="piscicultor-container__title">{{pescador?.nombre_completo}}</h4>
           </span>
-         <!--  <img class="detail-container__image" src="assets/icons/person_black.svg">
-          <h3 class="piscicultor-container__title">Pescador - {{pescador?.nombre_completo}} </h3> -->
         </div>
 
         <div class="piscicultor-container__detalle">
@@ -27,12 +17,8 @@ vereda: null
                 <h4 class="detail-container__title">Municipio: </h4>
               </span>
               <span>
-                <!--  <img class="detail-container__image" src="assets/icons/person_black.svg"> -->
                 <h4 class="piscicultor-container__title">{{pescador?.municipio}}, {{pescador?.departamento}}</h4>
               </span>
-       <!--    <img class="detail-container__image" src="assets/icons/travel_explore_black_24dp.svg">
-          <span class="piscicultor-container__description1">
-            {{pescador?.municipio}}-{{pescador?.departamento}}</span> -->
         </div>
       </div>
       <img class="piscicultor-container__image"
@@ -114,7 +100,7 @@ vereda: null
   </div>
   <div class="container_mytarget" *ngIf="pescadorasociaciones?.length > 0">
     <div class="mytarget" *ngIf="activatelistasociacion ">
-      <div class="row row-cols-1 row-cols-sm-1 row-cols-xl-2 g-4 row--mi-estilo"
+      <div class="container-card"
         [ngClass]="{'mychangeitemheight':changeItem,'search-container--flex':showNotFound,'container--flex-center':pescadorasociaciones?.length==1}">
         <div *ngIf="changeItem" class="mychangeitem">
           <div>

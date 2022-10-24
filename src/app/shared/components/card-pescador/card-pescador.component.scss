@@ -1,19 +1,17 @@
-/* stilo car */
 .card {
   display: flex;
   flex-direction: column;
-  margin: 1rem auto;
-  margin-bottom: 1.6%;
+  margin-bottom: 1.2rem;
   background: #fff;
   line-height: 1.4;
   font-family: sans-serif;
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 12px var(--shadow-2);
   overflow: hidden;
   padding-left: 0;
   padding-right: 0px;
   z-index: 0;
+  width: 70vw;
 
   a {
     color: inherit;
@@ -25,75 +23,53 @@
 
   &:hover {
     .card__meta-photo {
-      /* transform: scale(1.3) rotate(3deg); */
-              -webkit-transform: scale(1.3);
-                transform: scale(1.3);
+      -webkit-transform: scale(1.3);
+      transform: scale(1.3);
     }
   }
-p {
-      position: relative;
-      margin: 1rem 0 0;
 
-      &:first-of-type {
-        margin-top: 1.25rem;
+  p {
+    position: relative;
+    margin: 1rem 0 0;
 
-    /*     &:before {
-          content: "";
-          position: absolute;
-          height: 5px;
-          background: var(--azul1);
-          width: 35px;
-          top: -0.75rem;
-          border-radius: 3px;
-        } */
-      }
+    &:first-of-type {
+      margin-top: 1.25rem;
     }
+  }
 
-&:hover {
-      .card__meta-details {
-        left: 0%;
-      }
+  &:hover {
+    .card__meta-details {
+      left: 0%;
     }
+  }
+
   .card__meta {
     position: relative;
     z-index: 0;
     height: 200px;
+    width: 100%;
   }
 
   .card__meta-photo {
     position: absolute;
+    overflow: hidden;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     background-size: cover;
+    transition: transform 0.5s;
     background-position: center;
-    transition: transform 0.2s;
-      .card__meta-photo-img {
-          width: 100%;
-          height: 100%;
-          border-radius: 10px 0px 0px 0px;
-          object-fit: cover;
-          cursor: pointer;
-        }
-  }
-    .card__meta-photo-sin-img {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background-size: cover;
-      background-position: center;
 
-      .card__meta-photo-img {
-        width: 100%;
-        height: 100%;
-        border-radius: 10px 0px 0px 10px;
-        object-fit: cover;
-        cursor: pointer;
-      }
+    .card__meta-photo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px 0px 0px 0px;
+      object-fit: cover;
+      cursor: pointer;
     }
+  }
+
   .card__meta-details {
     position: absolute;
     top: 0;
@@ -108,47 +84,51 @@ p {
     width: 100%;
     font-size: 0.9rem;
     cursor: pointer;
-      .card__meta-details-informacion {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          gap: 5px;
-          margin-bottom: 10px;
-        }
-  }
-.card__description {
-  padding: 1rem;
-  background: #fff;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: stretch;
-  z-index: 1;
 
-  h1,
-  h2 {
-    font-family: Poppins, sans-serif;
-  }
-
-  h1 {
-    line-height: 1;
-    margin: 0;
-    font-size: 1.7rem;
-  }
-
-  h2 {
-    font-size: 1rem;
-    font-weight: 300;
-    text-transform: uppercase;
-    color: #a2a2a2;
-    margin-top: 5px;
-  }
-    .card__description-header {
-    display: flex;
+    .card__meta-details-informacion {
+      display: flex;
+      justify-content: flex-start;
       align-items: center;
       gap: 5px;
-      h1{
+      margin-bottom: 10px;
+    }
+  }
+
+  .card__description {
+    padding: 1rem;
+    background: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: stretch;
+    z-index: 1;
+
+    h1,
+    h2 {
+      font-family: Poppins, sans-serif;
+    }
+
+    h1 {
+      line-height: 1;
+      margin: 0;
+      font-size: 1.5rem
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      color: #a2a2a2;
+      margin-top: 5px;
+    }
+
+    .card__description-header {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      h1 {
         color: var(--azul1);
       }
     }
@@ -170,49 +150,32 @@ p {
     .card__description-footer {
       display: flex;
       justify-content: flex-end;
+
       .read-more {
-            text-align: right;
-              display: flex;
-              flex-direction: column;
-              justify-content: flex-start;
-              align-items: flex-end;
-
-        a {
-          color: var(--azul1);
-          display: inline-block;
-          position: relative;
-          text-decoration: underline var(--azul1) 2px;
-          cursor: pointer;
-
-          &:after {
-            content: url('../../../../assets/icons/navigate_next_black_24dp.svg');
-            font-family: FontAwesome;
-            /* margin-left: -10px; */
-            opacity: 0;
-            vertical-align: middle;
-            transition: margin 0.3s, opacity 0.3s;
-          }
-
-          &:hover:after {
-            margin-left: 5px;
-            opacity: 1;
-          }
-        }
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-end;
+        margin: 0;
       }
     }
-}
+  }
 
   @media (min-width: 520px) {
     flex-direction: row;
-    max-width: 600px;
+    width: 58vw;
+    max-width: 500px;
+    height: 200px;
 
     .card__meta {
-      flex-basis: 40%;
-      height: auto;
+      width: 40%;
+      height: 100%;
     }
 
     .card__description {
-      flex-basis: 60%;
+      width: 60%;
+      height: 100%;
     }
 
     &.alt {
@@ -232,12 +195,40 @@ p {
     }
   }
 }
+
 .photo--verMapa {
-z-index: 100;
+  z-index: 100;
   width: 30px;
   height: 30px;
-  margin-bottom: 15px;
   cursor: pointer;
+}
+
+a:before,
+span:before {
+  display: inline-block;
+  font: normal normal normal 13px/1 FontAwesome;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-right: 15px;
+  width: 15px;
+  text-align: center;
+  color: #444;
+}
+
+.card__phone:before {
+  font-family: 'Bootstrap-icons';
+  content: "\F5C1";
+}
+
+.card__email:before {
+  font-family: 'Bootstrap-icons';
+  content: "\F32F";
+}
+
+.card__description1:before {
+  font-family: 'Bootstrap-icons';
+  content: "\F3E8";
 }
 
 @media screen and (min-width: 1100px) {
@@ -245,16 +236,15 @@ z-index: 100;
     display: none;
   }
 }
+
 @media screen and (max-width: 350px) {
   .card__description {
     h1 {
       font-size: 1.35rem !important;
-
     }
 
     p {
       font-size: 0.85rem !important;
-
     }
   }
 }

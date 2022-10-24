@@ -1,83 +1,77 @@
 <div class="data-container">
   <div class="data-container__div">
     <div class="container">
-        <img class="container__icon" src="assets/icons/build.svg">
-        <div class="container__info">
-            <h3 class="container__title container__title--color-blue">Municipio</h3>
-            <span class="container__description">{{municipio}}</span>
-        </div>
+      <img class="container__icon" src="assets/icons/build.svg">
+      <div class="container__info">
+        <h3 class="container__title container__title--color-blue">Municipio</h3>
+        <span class="container__description">{{municipio}}</span>
+      </div>
     </div>
 
     <div class="container">
-        <img class="container__icon" src="assets/icons/group-circle-solid.svg">
-        <div class="container__info">
-            <h3 class="container__title container__title--color-morado">Población</h3>
-            <span class="container__description">{{poblacion | number:'':'es'}}</span>
-        </div>
+      <img class="container__icon" src="assets/icons/group-circle-solid.svg">
+      <div class="container__info">
+        <h3 class="container__title container__title--color-morado">Población</h3>
+        <span class="container__description">{{poblacion | number:'':'es'}}</span>
+      </div>
     </div>
 
     <div class="container">
-        <img class="container__icon" src="assets/icons/fish.svg">
-        <div class="container__info">
-            <h3 class="container__title container__title--color-blue-2">Pescadores</h3>
-            <span class="container__description">{{pescadores.length}}</span>
-        </div>
+      <img class="container__icon" src="assets/icons/fish.svg">
+      <div class="container__info">
+        <h3 class="container__title container__title--color-blue-2">Pescadores</h3>
+        <span class="container__description">{{pescadores.length}}</span>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="buscadoryfiltro" *ngIf="pescadores.length > 0">
   <div class="buscador-container">
-    <app-search
-    class="buscador-container__search"
-    [buscadorpersonalizado]="true"
-    [placeholderbuscador]="'Buscar pescador...'"
-      (keyEnterPressData)="buscarData($event)">
+    <app-search class="buscador-container__search" [buscadorpersonalizado]="true"
+      [placeholderbuscador]="'Buscar pescador...'" (keyEnterPressData)="buscarData($event)">
     </app-search>
   </div>
 </div>
 <div class="container__app-not-found" *ngIf="showNotFound">
-  <app-not-found  message="No encontramos resultados para esta busqueda "></app-not-found>
+  <app-not-found message="No encontramos resultados para esta busqueda "></app-not-found>
   <button class="btn-rounded btn--blue" (click)="goBack()">Volver al mapa</button>
 </div>
 <div class="container-map-car">
   <div class="row-map-cart">
-    <div *ngIf="pescadores.length >= 1">
-    <app-card-pescador *ngFor="let pescador of pescadores; let i =index " [pescador]="pescador"
-      [mapa]=true (onDetalle)="goPescadorDetail($event)"
-              (onMouseOutCard)="eliminInfoWindow()" (onMouseInsideCard)=" onMouseCard($event, i)">
-    </app-card-pescador>
+    <div style="width: fit-content;" *ngIf="pescadores.length >= 1">
+      <app-card-pescador style="width: fit-content;  display: block;" *ngFor="let pescador of pescadores; let i =index "
+        [pescador]="pescador" [mapa]=true (onDetalle)="goPescadorDetail($event)" (onMouseOutCard)="eliminInfoWindow()"
+        (onMouseInsideCard)=" onMouseCard($event, i)">
+      </app-card-pescador>
     </div>
   </div>
   <div class="mYstiledivmap">
     <div class="sticky-top">
       <div class="mapgoogle" *ngIf="pescadores.length > 0 && (apiLoaded | async)">
-        <google-map
-         width="100%"
-          height="100%"
-          class="mapa__estilos"
-         [options]="options"
-         (tilesloaded)="mapainiciado()">
+        <google-map width="100%" height="100%" class="mapa__estilos" [options]="options" (tilesloaded)="mapainiciado()">
           <map-marker #marker="mapMarker" *ngFor="let markerInfo of markersInfo; index as i"
             [position]="markerInfo.markerPosition" [options]="markerOptions"
             icon="{{ i == indexSelected ? 'assets/icons/person_pin_circle_red_24dp.svg' : 'assets/icons/person_pin_circle_blue_24dp.svg' }}"
-            (mapMouseover)="openInfoWindow(marker,i)"
-            (mapMouseout)="eliminInfoWindow()"
-            (mapClick)="openInfoWindowClick(marker,i)"
-            >
+            (mapMouseover)="openInfoWindow(marker,i)" (mapMouseout)="eliminInfoWindow()"
+            (mapClick)="openInfoWindowClick(marker,i)">
           </map-marker>
           <map-polyline [path]="vertices" [options]="optionPoli"></map-polyline>
           <map-info-window [position]="markerPosition">
             <div class="myestilo-map-info-window">
-              <div class="myestilo-map-info-window-container">
-                <div class="myestilo-map-info-window-container-informa">
-                  <img class="card__icon_info_windows" src="../../../../assets/icons/person_black.svg">
-                  <span>{{selectedPescador.nombre | titlecase }}</span>
+              <div class="details_info_windo">
+                <div class="detais">
+                  <div>
+                    <img class="card__icon_info_windows" src="assets/icons/person_black.svg">
+                  </div>
+                  <div>{{selectedPescador.nombre | titlecase }}</div>
                 </div>
-                <div class="myestilo-map-info-window-container-informa">
-                  <img class="card__icon_info_windows" src="assets/icons/person_pin_circle_black_24dp.svg">
-                  <span *ngIf="!selectedPescador.dirrecion">Dirección indefinida</span>
-                  <span *ngIf="selectedPescador.dirrecion"> {{selectedPescador.dirrecion}}</span>
+                <div class="detais">
+                  <div>
+                    <img class="card__icon_info_windows" src="assets/icons/person_pin_circle_black_24dp.svg">
+                  </div>
+                  <div *ngIf="!selectedPescador.dirrecion">Dirección indefinida</div>
+                  <div *ngIf="selectedPescador.dirrecion"> {{selectedPescador.dirrecion}}</div>
                 </div>
               </div>
             </div>
