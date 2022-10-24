@@ -17,9 +17,7 @@ export class ChatUserComponent implements OnInit {
       chats: {
         fromUserId: number,
         message: string,
-      }[],
-      ultimo_mensaje:string | null,
-      fecha_ultimo_mensaje:string | null
+      }[]
   }[] = [];
   showScreen = false;
   phone!: string;
@@ -84,8 +82,6 @@ export class ChatUserComponent implements OnInit {
             message: data.mensaje
           });
           console.log("seteando ultimo mensaje")
-          this.roomsArray[roomIndex].ultimo_mensaje = data.mensaje;
-          this.roomsArray[roomIndex].fecha_ultimo_mensaje = data.metadata.message.fecha_creacion;
         }else{
           const updateStorage = {
             roomId: data.de,
@@ -101,6 +97,7 @@ export class ChatUserComponent implements OnInit {
           this.roomsArray.push(updateStorage);
         }
         this.chatService.setStorage(this.roomsArray);
+        this.setUltimo(data)
         /*Carga los mensajes del la sala del usuario seleccionado*/
         this.loadRoomMessages();
         this.scrollToBottom()
@@ -137,7 +134,7 @@ export class ChatUserComponent implements OnInit {
 
       this.chatService.getConfirmMessage().subscribe(
         (data)=>{
-          console.log("confirm message ", data)
+          this.setUltimo(data)
         }
       )
       this.chatService.getLastUserConnected().subscribe(
@@ -215,11 +212,6 @@ export class ChatUserComponent implements OnInit {
                 return room.roomId == userId
               }
              )
-
-             if(roomIndex > -1){
-              this.roomsArray[roomIndex].ultimo_mensaje = recent.contenido;
-              this.roomsArray[roomIndex].fecha_ultimo_mensaje = recent.fecha_creacion;
-             }
           }
         )
 
@@ -364,6 +356,43 @@ export class ChatUserComponent implements OnInit {
       return this.recents[index];
     }else{
       return null;
+    }
+  }
+
+  setUltimo(data:{de:number,mensaje:string,metadata:any}){
+    let index = this.recents.findIndex(
+      (element)=>{
+        return element.chat_id ==  data?.metadata?.message?.usuario_emisor_id + data?.metadata?.message?.usuario_receptor_id ;
+      }
+    )
+    if(index > -1){
+      this.recents[index].contenido = data?.mensaje;
+      this.recents[index].fecha_creacion = data?.metadata?.message?.fecha_creacion;
+    }else{
+      let newRecent = data.metadata.message;
+      newRecent.chat_id = newRecent.usuario_emisor_id + newRecent.usuario_receptor_id;
+      this.recents.push(newRecent);
+    }
+
+    let roomId:number;
+    if(data?.metadata?.message?.usuario_emisor_id == this.userService.getAuthUser().sub){
+      roomId = data?.metadata?.message?.usuario_receptor_id;
+    }else{
+      roomId = data?.metadata?.message?.usuario_emisor_id;
+    }
+
+    let roomIndex = this.userList.findIndex(
+      (user)=>{
+        return user.id == roomId;
+      }
+    )
+
+    console.log("roomId ",roomId)
+    if(roomIndex > -1){
+      let user = this.userList[roomIndex]
+      this.userList.splice(roomIndex,1);
+      this.userList.splice(0,0,user);
+      this.onSearch();
     }
   }
 
