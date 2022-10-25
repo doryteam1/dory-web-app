@@ -170,8 +170,8 @@ export class MisAsociacionesComponent
     /*Asociaciones en donde se en miembro*/
     this.asociacionesService
       .getAsociacionesIsMiembroUser(this.authUserId)
-      .subscribe(async (response) => {
-         this.asociacionesIsMiembro = await response.data;
+      .subscribe( (response) => {
+         this.asociacionesIsMiembro = response.data;
          console.log(this.asociacionesIsMiembro)
         if (this.asociacionesIsMiembro.length < 1) {
           this.showNotFoundAsocMiemb = true;
@@ -425,24 +425,6 @@ export class MisAsociacionesComponent
         this.filtroseleccionadoCheckbox,
         'municipio'
       );
-
-      /*          for (
-           let index = 0;
-           index < this.filtroseleccionadoCheckbox.length;
-           index++
-         ) {
-           const element = this.filtroseleccionadoCheckbox[index];
-           let newArray = resultados.filter((dataarray) => {
-             let dataanalisis = dataarray?.municipio;
-             return dataanalisis?.includes(element);
-            });
-            let valores:any ={
-              nombre:element,
-              datos:newArray
-            }
-           this.resultPorMunicipio.push(valores)
-           console.log(this.resultPorMunicipio);
-         } */
     }
     this.asociacionesexistentes = resultados;
   }
