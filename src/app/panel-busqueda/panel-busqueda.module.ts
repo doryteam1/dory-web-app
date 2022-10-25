@@ -30,8 +30,9 @@ import { NgChartsModule } from 'ng2-charts';
     UsersComponent,
     GranjasComponent,
     VehiculosComponent,
-    ConsumosComponent
+    ConsumosComponent,
   ],
+  exports: [GranjasComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -46,7 +47,7 @@ import { NgChartsModule } from 'ng2-charts';
     NgxLongPress2Module,
     NgxPaginationModule,
     RouterModule,
-    NgChartsModule
+    NgChartsModule,
   ],
 })
 export class PanelBusquedaModule {}

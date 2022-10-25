@@ -231,51 +231,6 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
       this.eliminInfoWindow();
     }
   }
-  seeFarmsMaptwo(i: number) {
-    this.modalGogleMapOpen = true;
-    let modalheadergooglemap = false;
-    let shared = false;
-    let atributos = {
-      longAndLat: {
-        lat: this.granjasFiltered[i].latitud,
-        lng: this.granjasFiltered[i].longitud,
-      },
-      mapInfoWindowData: [
-        {
-          icon: 'assets/icons/person_black.svg',
-          dataNombre: this.granjasFiltered[i].nombre,
-          sinDataNombre: 'Nombre indefinido',
-        },
-        {
-          icon: 'assets/icons/person_pin_circle_black_24dp.svg',
-          dataNombre: this.granjasFiltered[i].direccion,
-          sinDataNombre: 'Dirección indefinida',
-        },
-      ],
-      nombreAtributo: {
-        dato1: 'Compartir ubicación de la granja',
-      },
-    };
-    let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
-    this.location2.onPopState(() => {
-      this.appModalService.CloseGoogleMapGeneralModal();
-    });
-    this.appModalService
-      .GoogleMapModalGeneral(
-        atributos,
-        modalheadergooglemap,
-        iconMarkerGoogleMap,
-        false,
-        '',
-        shared
-      )
-      .then((result) => {
-        this.modalGogleMapOpen = false;
-      })
-      .catch((result) => {
-        this.modalGogleMapOpen = false;
-      });
-  }
   navigate(id: number) {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + id);
   }

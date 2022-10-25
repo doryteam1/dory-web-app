@@ -3,7 +3,6 @@ import { Component, OnInit ,  ElementRef,
   AfterViewInit } from '@angular/core';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
-import { HttpClient } from '@angular/common/http';
 import { MODO_FILTRO_DATOS_VARIOS, vertices } from '../../../global/constants';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { registerLocaleData } from '@angular/common';
@@ -15,6 +14,7 @@ import { Filtro, MetaFiltro } from '../../../../models/filtro.model';
 import { Checkbox } from 'src/models/checkbox.model';
 import { BuscarPor } from '../../../../models/buscarPor.model';
 import { StorageService } from 'src/app/services/storage.service';
+import { async } from '@angular/core/testing';
 const _ = require('lodash');
 
 
@@ -170,8 +170,9 @@ export class MisAsociacionesComponent
     /*Asociaciones en donde se en miembro*/
     this.asociacionesService
       .getAsociacionesIsMiembroUser(this.authUserId)
-      .subscribe((response) => {
-        this.asociacionesIsMiembro = response.data;
+      .subscribe(async (response) => {
+         this.asociacionesIsMiembro = await response.data;
+         console.log(this.asociacionesIsMiembro)
         if (this.asociacionesIsMiembro.length < 1) {
           this.showNotFoundAsocMiemb = true;
         }

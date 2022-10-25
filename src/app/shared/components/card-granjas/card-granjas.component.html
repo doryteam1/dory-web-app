@@ -18,9 +18,9 @@
       <div class="shorterTextOverflowHidden w-100">
         <h1 class="description_title_fauvourite--h1 shorterTextAuto" (click)="detalle()">{{granja?.nombre}}</h1>
       </div>
-      <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="favorita"
+      <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="favorita && botonFavorito"
         (click)="changeFavorite()">
-      <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!favorita"
+      <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!favorita && botonFavorito"
         (click)="changeFavorite()">
     </div>
     <div class="mas_description_info" (click)="detalle()">
@@ -38,6 +38,7 @@
       </div>
       <p class="read-more">
         <img class="photo--verMapa" *ngIf="botonMapaFijo"  src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
+        <img class="photo--verMapa2" *ngIf="!botonMapaFijo"  src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
       </p>
     </div>
   </div>

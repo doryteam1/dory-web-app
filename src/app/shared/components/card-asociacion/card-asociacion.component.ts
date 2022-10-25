@@ -36,7 +36,6 @@ export class CardAsociacionComponent
        this.us.getUsuarioByEmail(email).subscribe((response) => {
         this.idEmailUser = response.data[0].id;
        });
-       console.log(this.asociacion)
   }
 
   detalle(asociacion: any) {

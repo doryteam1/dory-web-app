@@ -13,15 +13,14 @@
         <div style="cursor:pointer; width: 100%;"  (click)="detalle(asociacion)">
           <h2>Información general</h2>
           <div class="card__description-container-infor-1  shorterTextOverflowHidden ">
-            <div class="card__description-container-infor-1-div"  *ngIf=" asociacion?.usuarios_id == idEmailUser ">
-              <img  src="assets/icons/travel_explore_black_24dp.svg">
-              <span >{{asociacion?.municipio}}-{{asociacion?.departamento}}</span>
+            <div class="card__description-container-infor-1-div">
+              <span class="munici shorterTextAuto">{{asociacion?.municipio}}-{{asociacion?.departamento}}</span>
             </div>
             <div class="card__description-container-infor-1-div">
               <span class="direccion shorterTextAuto">{{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion}}</span>
             </div>
-            <div class="card__description-container-infor-1-div" *ngIf="asociacion?.email">
-              <span class="email shorterTextAuto"> {{asociacion?.email}}</span>
+            <div class="card__description-container-infor-1-div" >
+              <span class="email shorterTextAuto">{{asociacion?.email? asociacion?.email : 'Correo sin definir'}}</span>
             </div>
           </div>
           <h2>Tipo de asociación</h2>

@@ -43,6 +43,8 @@ import { SliderInicioDetalleFormComponent } from './components/slider-inicio-det
 import { EnlacesDirectosInicioComponent } from './components/enlaces-directos-inicio/enlaces-directos-inicio.component';
 import { EnlacesDirectosInicioDetalleFormComponent } from './components/enlaces-directos-inicio-detalle-form/enlaces-directos-inicio-detalle-form.component';
 import { GalleryModule } from 'ng-gallery';
+import { PanelBusquedaModule } from '../panel-busqueda/panel-busqueda.module';
+import { GranjasTodasComponent } from './components/granjas-todas/granjas-todas.component';
 
 
 
@@ -78,6 +80,7 @@ import { GalleryModule } from 'ng-gallery';
     SliderInicioDetalleFormComponent,
     EnlacesDirectosInicioComponent,
     EnlacesDirectosInicioDetalleFormComponent,
+    GranjasTodasComponent,
   ],
   imports: [
     CommonModule,
@@ -96,6 +99,7 @@ import { GalleryModule } from 'ng-gallery';
     GuidedTourModule,
     PublicacionesModule,
     GalleryModule,
+    PanelBusquedaModule,
   ],
   providers: [GuidedTourService],
 })

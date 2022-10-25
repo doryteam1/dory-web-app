@@ -11,13 +11,15 @@
     <div class="card__description-header shorterTextOverflowHidden w-100" (click)="detalle (pescador)">
       <h1 class="w-100 shorterTextAuto">{{pescador?.nombre | titlecase}}</h1>
     </div>
-    <p> </p>
     <div  style="cursor: pointer;" class="card__description-body" (click)="detalle (pescador)">
       <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
         <span class="card__phone w-100 shorterTextAuto">{{pescador?.celular? pescador?.celular : 'Contacto sin definir'}}</span>
       </div>
       <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
         <span class="card__email w-100 shorterTextAuto">{{pescador?.email}}</span>
+      </div>
+      <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
+        <span class="munici shorterTextAuto">{{pescador?.municipio}}-{{pescador?.departamento}}</span>
       </div>
       <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
         <span *ngIf="pescador?.direccion" class="card__description1 shorterTextAuto">{{pescador?.direccion ? 'Dir.' : ''}}

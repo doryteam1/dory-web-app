@@ -166,7 +166,7 @@
     flex-direction: row;
     width: 58vw;
     max-width: 500px;
-    height: 200px;
+    height: 180px;
 
     .card__meta {
       width: 40%;
@@ -228,9 +228,13 @@ span:before {
 
 .card__description1:before {
   font-family: 'Bootstrap-icons';
-  content: "\F3E8";
+  content: "\F64C";
 }
 
+.munici:before {
+  font-family: 'Bootstrap-icons';
+  content: "\F3E8";
+}
 @media screen and (min-width: 1100px) {
   .photo--verMapa {
     display: none;
