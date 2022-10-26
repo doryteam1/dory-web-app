@@ -1,10 +1,10 @@
 .data-container {
   display: flex;
-  margin-top: 50px;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-  margin-right: 10px;
+    margin-top: 25px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .data-container__div {
@@ -155,8 +155,8 @@ div.container-map-car>div>div:nth-child(1) {
 
 .buscadoryfiltro {
   display: flex;
-  flex-direction: column;
-  margin-top: 21px;
+    flex-direction: column;
+    margin-top: 10px;
 
   .buscador-container {
     display: flex;
@@ -217,17 +217,17 @@ app-card-piscicultor {
 
 @media screen and (min-width: 1100px) {
   .mYstiledivmap {
-    display: block;
-    width: 50%;
+  display: block;
+    width: 100%;
   }
 
   .container-map-car {
     padding: 30px;
-    justify-content: space-evenly;
-    align-items: normal;
-    flex-direction: row;
-    width: 100%;
-    gap: 10px;
+      justify-content: space-evenly;
+      align-items: normal;
+      flex-direction: row;
+      width: 100%;
+      gap: 38px;
   }
 
   .photo--verMapa {
@@ -235,25 +235,28 @@ app-card-piscicultor {
   }
 
   .row-map-cart {
-    margin-right: 0;
-    padding-right: 0px;
-    padding-left: 0px;
-    width: 50%;
+    margin-right: 0 !important;
+      margin-left: 0 !important;
+      padding-right: 0px;
+      padding-left: 0px;
+      justify-content: flex-start;
+      width: 50%;
   }
 
   div.container-map-car>div>div:nth-child(1) {
-    padding-top: 80px;
-    padding-bottom: 0;
-    width: 100%;
-    max-width: 100%;
+    /* padding-top: 80px; */
+      top: 80px;
+      padding-bottom: 0;
+      width: 100%;
+      max-width: 100%;
   }
 
   .mapgoogle {
-    width: 100%;
-    max-width: 100%;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    height: 40vw !important;
+      width: 100%;
+        max-width: 100%;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        height: 38vw !important;
   }
 }
 

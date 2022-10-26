@@ -14,13 +14,13 @@ export class GranjasTodasComponent implements OnInit {
   constructor(private router: Router, private us: UsuarioService) {}
 
   ngOnInit(): void {
-    let token = localStorage.getItem('token');
-    let payload = Utilities.parseJwt(token!);
-    this.authUserId = payload.sub;
     let email = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe((response) => {
       this.UserTipo = response.data[0].tipo_usuario;
     });
+    let token = localStorage.getItem('token');
+    let payload = Utilities.parseJwt(token!);
+    this.authUserId = payload.sub;
   }
   editarGranja(granja: any, formState: string) {
     if (this.UserTipo == 'Administrador') {
