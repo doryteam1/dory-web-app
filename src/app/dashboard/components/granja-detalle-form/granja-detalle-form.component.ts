@@ -16,6 +16,7 @@ import { SafeUrl } from '@angular/platform-browser';
 import { ComunicacionEntreComponentesService } from '../../../shared/services/comunicacion-entre-componentes.service';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { limiteMapa } from '../../../../models/limiteMapaGoogle.model';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 const _ = require('lodash');
 @Component({
@@ -66,6 +67,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     arrayEspecies: new FormArray([], [Validators.required]),
   });
   onMapa: boolean = false;
+  UserTipo: any;
   constructor(
     private granjaService: GranjasService,
     private places: PlacesService,
@@ -74,7 +76,8 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     private appModalService: AppModalService,
     private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
     private compressImageSizeService: CompressImageSizeService,
-    private storage: FirebaseStorageService
+    private storage: FirebaseStorageService,
+    private us: UsuarioService
   ) {}
   /* agregar esto para camcelar el subscribe de  comunicacionEntreComponentesService*/
   public changeArray!: Subscription;
@@ -83,6 +86,10 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     registerLocaleData(es);
     this.granja = this.ar.snapshot.params;
+    let email = localStorage.getItem('email');
+    this.us.getUsuarioByEmail(email).subscribe((response) => {
+      this.UserTipo = response.data[0].tipo_usuario;
+    });
     let action = this.ar.snapshot.paramMap.get('action');
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
     this.authUserId = Number(this.ar.snapshot.paramMap.get('authUserId')!);

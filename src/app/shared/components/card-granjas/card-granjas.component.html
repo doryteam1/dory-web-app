@@ -18,26 +18,27 @@
       <div class="shorterTextOverflowHidden w-100">
         <h1 class="description_title_fauvourite--h1 shorterTextAuto" (click)="detalle()">{{granja?.nombre}}</h1>
       </div>
-      <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="favorita"
+      <img class="card__icon-favorite" src="assets/icons/heart-filled.svg" *ngIf="favorita && botonFavorito"
         (click)="changeFavorite()">
-      <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!favorita"
+      <img class="card__icon-favorite" src="assets/icons/heart-outline.svg" *ngIf="!favorita && botonFavorito"
         (click)="changeFavorite()">
     </div>
-    <div class="mas_description_info" (click)="detalle()">
-      <p class="estilo-p-card" (click)="detalle()"> {{granja?.descripcion}}</p>
+    <div class="mas_description_info shorterTextOverflowHidden w-100" (click)="detalle()">
+      <p class="estilo-p-card shorterTextAuto" (click)="detalle()"> {{granja?.descripcion}}</p>
     </div>
     <div class="card__rating-container">
       <div class="card__rating-container_info">
         <div><span class="card__rating">Área: </span>{{granja?.area}} m²</div>
-        <div class="card__rating-container_puntos" (click)="showResenas()">
-          <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
-        </div>
         <div class="card__rating__detail" (click)="showResenas()">
           <span class="card__rating">Reseñas:</span> {{resena}}
+        </div>
+        <div class="card__rating-container_puntos" (click)="showResenas()">
+          <app-stars [selectedStar]="granja?.puntuacion" size="mini"></app-stars>
         </div>
       </div>
       <p class="read-more">
         <img class="photo--verMapa" *ngIf="botonMapaFijo"  src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
+        <img class="photo--verMapa2" *ngIf="!botonMapaFijo"  src="assets/icons/location24dp.svg" (click)="seeFarmsMaptwo()">
       </p>
     </div>
   </div>

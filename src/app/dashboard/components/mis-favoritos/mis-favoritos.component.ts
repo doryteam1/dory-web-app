@@ -129,49 +129,5 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
-  seeFarmsMaptwo(i: number) {
-    this.modalGogleMapOpen = true;
-    let modalheadergooglemap = false;
-    let shared = true;
-    let atributos = {
-      longAndLat: {
-        lat: this.misGranjaFavoritas[i].latitud,
-        lng: this.misGranjaFavoritas[i].longitud,
-      },
-      mapInfoWindowData: [
-        {
-          icon: 'assets/icons/person_black.svg',
-          dataNombre: this.misGranjaFavoritas[i].nombre,
-          sinDataNombre: 'Nombre indefinido',
-        },
-        {
-          icon: 'assets/icons/person_pin_circle_black_24dp.svg',
-          dataNombre: this.misGranjaFavoritas[i].direccion,
-          sinDataNombre: 'Dirección indefinida',
-        },
-      ],
-      nombreAtributo: {
-        dato1: 'Compartir ubicación de la granja',
-      },
-    };
-    let iconMarkerGoogleMap = 'assets/icons/Groupfavoritoblue.svg';
-    this.location.onPopState(() => {
-      this.appModalService.CloseGoogleMapGeneralModal();
-    });
-    this.appModalService
-      .GoogleMapModalGeneral(
-        atributos,
-        modalheadergooglemap,
-        iconMarkerGoogleMap,
-        false,
-        '',
-        shared
-      )
-      .then((result) => {
-        this.modalGogleMapOpen = false;
-      })
-      .catch((result) => {
-        this.modalGogleMapOpen = false;
-      });
-  }
+
 }

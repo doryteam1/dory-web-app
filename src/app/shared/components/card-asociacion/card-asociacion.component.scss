@@ -11,18 +11,22 @@
   padding-left: 0;
   padding-right: 0px;
   z-index: 0;
-    width: 70vw;
-      height: 250px;
-      max-width: 400px;
+  width: 70vw;
+  height: 280px;
+  max-width: 400px;
+
   a {
     color: inherit;
+
     &:hover {
       color: var(--azul1);
     }
   }
+
   p {
     position: relative;
     margin: 1rem 0 0;
+
     &:first-of-type {
       margin-top: 1.25rem;
     }
@@ -37,25 +41,29 @@
     justify-content: space-evenly;
     align-items: stretch;
     z-index: 1;
+
     h1,
     h2,
     h3 {
       font-family: Poppins, sans-serif;
     }
+
     h1 {
       line-height: 1;
       margin: 0;
-      font-size: 1.7rem;
+      font-size: 1.5rem;
     }
+
     h2 {
       font-size: 1rem;
       font-weight: 300;
-      color: var(--azul1);;
+      color: var(--azul1);
+      ;
       margin-top: 5px;
     }
 
-    span{
-    color: #5c5757;
+    span {
+      color: #5c5757;
     }
 
     .card__description-header {
@@ -63,31 +71,37 @@
       align-items: center;
       justify-content: space-between;
       gap: 5px;
-      img{
+
+      img {
         width: 30px;
         height: 30px;
       }
     }
+
     .card__description-container {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+
       .card__description-container-infor-1 {
         display: flex;
         flex-direction: column;
         gap: 5px;
         align-items: flex-start;
-      width: 100%;
+        width: 100%;
+
         h2 {
           font-size: 1rem;
           font-weight: 300;
           color: #a2a2a2;
         }
+
         .card__description-container-infor-1-div {
           display: flex;
           gap: 1px;
           align-items: center;
           width: 100%;
+
           .card_description--span {
             padding-left: 28px;
             font-size: 14px;
@@ -95,24 +109,28 @@
 
         }
       }
+
       .card__description-container-infor-2 {
         display: flex;
         flex-direction: column;
         gap: 1px;
         align-items: flex-start;
         width: 100%;
+
         .card__description-container-infor-2-div {
           display: flex;
           gap: 5px;
           align-items: center;
           width: 100%;
+
           a {
             color: #5c5757;
             width: auto !important;
             text-decoration: none;
             cursor: default;
           }
-          .legal-repre-hover:hover{
+
+          .legal-repre-hover:hover {
             cursor: pointer;
             color: var(--azul1);
           }
@@ -133,43 +151,58 @@
     }
   }
 
-    .second {
-      height: 100%;
-    }
-     a:before , span:before {
-      display: inline-block;
-      font: normal normal normal 13px/1 FontAwesome;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin-right: 15px;
-      width: 15px;
-      text-align: center;
-      color: #444;
-    }
-    .direccion:before {
-      font-family: 'Bootstrap-icons';
-      content: "\F3E8";
-    }
-    .email:before {
-      font-family: 'Bootstrap-icons';
-      content: "\F32F";
-    }
-    .tipo-aso:before {
-      font-family: 'Bootstrap-icons';
-      content: "\F2ED";
-    }
-    .legal-repre:before {
-      font-family: 'Bootstrap-icons';
-      content: "\F4D7";
-    }
+  .second {
+    height: 100%;
+  }
+
+  a:before,
+  span:before {
+    display: inline-block;
+    font: normal normal normal 13px/1 FontAwesome;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-right: 15px;
+    width: 15px;
+    text-align: center;
+    color: #444;
+  }
+
+  .munici:before {
+    font-family: 'Bootstrap-icons';
+    content: "\F3E8";
+  }
+
+  .direccion:before {
+    font-family: 'Bootstrap-icons';
+    content: "\F64C";
+  }
+
+  .email:before {
+    font-family: 'Bootstrap-icons';
+    content: "\F32F";
+  }
+
+  .tipo-aso:before {
+    font-family: 'Bootstrap-icons';
+    content: "\F2ED";
+  }
+
+  .legal-repre:before {
+    font-family: 'Bootstrap-icons';
+    content: "\F4D7";
+  }
+
   @media (min-width: 640px) {
     flex-direction: row;
+
     .card__description {
       flex-basis: 100%;
     }
+
     &.alt {
       flex-direction: row-reverse;
+
       .card__description {
         &:before {
           left: inherit;
@@ -189,4 +222,3 @@
   }
 
 }
-

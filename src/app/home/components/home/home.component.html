@@ -5,7 +5,7 @@
      [counter]="false"
      [attr.fluid]="false"
      [loadingStrategy]="'lazy'"
-      [imageSize]="'cover'"
+      [imageSize]="'contain'"
       id="homegallery"
       [itemTemplate]="itemTemplate"
        [thumbHeight]="70"
@@ -24,17 +24,22 @@
   <div class="row align-items-center row--miestilo">
     <div class="col-12  container-publicacion">
       <div class="text-publicacion">
-        <h3 class="mb-3">Surtipez</h3>
-        <p class="mb-4">En esta sección podrá encontrar distintos tipos de peces para la venta, ofrecidos por piscicultores y/o pescadores.</p>
-        <p class="mb-4">Los peces aquí ofrecidos, se encuentran en el departamento de Sucre, aquí puede contactar al piscicultor o pescador si
-        se encuentra interesado.</p>
+        <div>
+          <h3 class="mb-3">Surtipez</h3>
+          <p style="margin:0 ;">En esta sección podrá encontrar distintos tipos de peces para la venta, ofrecidos por piscicultores y/o pescadores.</p>
+          <p class="mb-4">Los peces aquí ofrecidos, se encuentran en el departamento de Sucre, aquí puede contactar al piscicultor o pescador si
+          se encuentra interesado.</p>
+        </div>
+          <div class="imagen-publicacion2">
+            <img class="publicacion-img" src="assets/images/wave-efect.svg">
+          </div>
+        <div class="container-publicacion-button">
+          <button class="btn-square-blue"  (click)=" navigate('/publicaciones')"> Más Información</button>
+        </div>
       </div>
       <div class="imagen-publicacion">
         <img class="publicacion-img" src="assets/images/wave-efect.svg">
       </div>
-    </div>
-    <div class="col-12  container-publicacion-button">
-      <button class="btn-square-blue"  (click)=" navigate('/publicaciones')"> Más Información</button>
     </div>
   </div>
 </div>
@@ -71,7 +76,7 @@
 </ng-template>
 <!-- Add custom template to image items -->
 <ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
-  <span *ngIf="type === 'image' && index === currIndex && data?.title" class="item-text animate__bounceIn item-title-gallery">
+<!--   <span *ngIf="type === 'image' && index === currIndex && data?.title" class="item-text animate__bounceIn item-title-gallery">
     {{data?.title}}
-  </span>
+  </span> -->
 </ng-template>

@@ -8,8 +8,9 @@
   <div  style="cursor:pointer;" class="card-body shorterTextOverflowHidden" (click)="goDetail()" >
     <h5 class="card__title card-title shorterTextAuto">{{datos?.modelo}}</h5>
     <h5 class="card__sub-title card-title shorterTextAuto">{{datos?.capacidad}} TON</h5>
-    <p class="card__descripction card-text shorterTextAuto">Transporta alimentos : {{datos?.transporte_alimento ? 'Si' : 'No'}}</p>
-    <div>
+<!--     <p class="card__descripction card-text shorterTextAuto">Transporta alimentos : {{datos?.transporte_alimento ? 'Si' : 'No'}}</p> -->
+    <p class="card__descripction card-text shorterTextAuto" style="margin-bottom: 0;margin-right: 20px;">{{datos?.descripcion}}</p>
+    <div *ngIf="editaAndEliminar">
       <div *ngIf="editaAndEliminar">
         <i class="container__icon bi bi-pencil text-success me-3 mitextcolorpencil" (click)="updateProducto()"></i>
         <i class="container__icon bi bi-trash text-danger mitextcolorpencil" (click)="deleteProducto()"></i>

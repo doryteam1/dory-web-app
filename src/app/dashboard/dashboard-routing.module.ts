@@ -30,6 +30,7 @@ import { SliderInicioComponent } from './components/slider-inicio/slider-inicio.
 import { SliderInicioDetalleFormComponent } from './components/slider-inicio-detalle-form/slider-inicio-detalle-form.component';
 import { EnlacesDirectosInicioComponent } from './components/enlaces-directos-inicio/enlaces-directos-inicio.component';
 import { EnlacesDirectosInicioDetalleFormComponent } from './components/enlaces-directos-inicio-detalle-form/enlaces-directos-inicio-detalle-form.component';
+import { GranjasTodasComponent } from './components/granjas-todas/granjas-todas.component';
 const routes: Routes = [
   {
     path: '',
@@ -68,6 +69,10 @@ const routes: Routes = [
       {
         path: 'slider-inicio-admi',
         component: SliderInicioComponent,
+      },
+      {
+        path: 'granjas-todas-admi',
+        component: GranjasTodasComponent,
       },
       {
         path: 'slider-inicio-admi/detalle',

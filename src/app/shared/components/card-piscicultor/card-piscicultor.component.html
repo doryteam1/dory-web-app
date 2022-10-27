@@ -17,6 +17,9 @@
         <span class="card__email w-100 shorterTextAuto">{{piscicultor?.email}}</span>
       </div>
       <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
+        <span class="munici shorterTextAuto">{{piscicultor?.municipio}}-{{piscicultor?.departamento}}</span>
+      </div>
+      <div class="card__description-body-informacion shorterTextOverflowHidden w-100">
         <span *ngIf="piscicultor?.direccion" class="card__description1 shorterTextAuto">{{piscicultor?.direccion ? 'Dir.' : ''}}
           {{piscicultor?.direccion}}</span>
         <span *ngIf="!piscicultor?.direccion" class="card__description1 shorterTextAuto">Dirección indefinida</span>

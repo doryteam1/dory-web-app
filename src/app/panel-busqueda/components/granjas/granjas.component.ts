@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES } from 'src/app/global/constants';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
@@ -16,6 +16,9 @@ import { Filtro, MetaFiltro } from 'src/models/filtro.model';
   styleUrls: ['./granjas.component.scss'],
 })
 export class GranjasComponent implements OnInit {
+  @Input() editAdmi: boolean = false;
+  @Input() botonFavori: boolean = true;
+  @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   granjasFiltered!: any[];
   filtroseleccionadoCheckbox: string[] = [];
   selectedOrderFilter!: MetaFiltro | any;
@@ -155,14 +158,14 @@ export class GranjasComponent implements OnInit {
     this.loadMunic();
   }
 
-  goDetail(granja: any) {
+  /* goDetail(granja: any) {
     let url = this.router.serializeUrl(
       this.router.createUrlTree([
         `/granjas/municipio/detalle/${granja.id_granja}`,
       ])
     );
     window.open(url, '_blank');
-  }
+  } */
   datosContactoUser(granja: any) {
     let object: any;
     object = {
@@ -373,7 +376,13 @@ export class GranjasComponent implements OnInit {
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
-  goDetailFarm(idgranja: any) {
-    this.router.navigateByUrl('/granjas/municipio/detalle/' + idgranja);
+  goDetailFarm(granja: any) {
+    if (this.editAdmi) {
+      this.onDetalle.emit(granja);
+    } else {
+      this.router.navigateByUrl(
+        '/granjas/municipio/detalle/' + granja.id_granja
+      );
+    }
   }
 }

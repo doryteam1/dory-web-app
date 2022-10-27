@@ -20,6 +20,7 @@ export class VehiculoDetalleFormComponent implements OnInit {
     modelo: new FormControl('', [Validators.required]),
     capacidad: new FormControl(0, [Validators.required]),
     transporte_alimento: new FormControl('', [Validators.required]),
+    descripcion: new FormControl('',),
   });
   loading: boolean = false;
   /* showErrorNotImageSelected: boolean = false; */
@@ -101,13 +102,15 @@ export class VehiculoDetalleFormComponent implements OnInit {
       this.modelo?.setValue(vehiculo.modelo);
       this.capacidad?.setValue(Number(vehiculo.capacidad));
       this.transporteAlimento?.setValue(vehiculo.transporte_alimento);
+      this.descripcion?.setValue(vehiculo.descripcion);
     }
   }
   formInit() {
     this.modelo?.setValue('');
     this.capacidad?.setValue(null);
     this.transporteAlimento?.setValue('');
-    /*  this.showErrorNotImageSelected = false; */
+  this.descripcion?.setValue('')
+
   }
   invalid(controlFormName: string) {
     return (
@@ -118,21 +121,18 @@ export class VehiculoDetalleFormComponent implements OnInit {
   }
   addVehiculo() {
     this.loading = true;
-    if (!this.form.valid /* || this.filesfinalCreate.length == 0 */) {
+    if (!this.form.valid ) {
       this.form.markAllAsTouched();
-      /*  if (this.filesfinalCreate.length == 0) {
-        this.showErrorNotImageSelected = true;
-      } */
       console.log('Faltan datos');
       this.loading = false;
       return;
     }
-    /* this.showErrorNotImageSelected = false; */
     this.form.disable();
     let newVehiculo = {
       modelo: this.modelo?.value,
       capacidad: this.capacidad?.value,
       transporte_alimento: this.transporteAlimento?.value,
+      descripcion: this.descripcion?.value,
     };
     this.vehiculosService.addVehiculo(newVehiculo).subscribe(
       (response) => {
@@ -159,6 +159,7 @@ export class VehiculoDetalleFormComponent implements OnInit {
       modelo: this.modelo?.value,
       capacidad: this.capacidad?.value,
       transporte_alimento: this.transporteAlimento?.value,
+      descripcion:this.descripcion?.value
     };
     this.form.disable();
     this.vehiculosService
@@ -343,6 +344,9 @@ export class VehiculoDetalleFormComponent implements OnInit {
   }
   get transporteAlimento() {
     return this.form.get('transporte_alimento');
+  }
+  get descripcion() {
+    return this.form.get('descripcion');
   }
   get precio() {
     return this.form.get('imagen');

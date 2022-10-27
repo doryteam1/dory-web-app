@@ -56,7 +56,6 @@ import { ModalMultiFiltersComponent } from './components/filtros/modal-multi-fil
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ModalContactCardComponent } from './components/modal-contact-card/modal-contact-card.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { CardComponent } from './components/card/card.component';
 import { CardPublicacionComponent } from './components/card-publicacion/card-publicacion.component';
 import { CardProductoComponent } from './components/card-producto/card-producto.component';
 import { CardGeneralTresDComponent } from './components/card-general-tres-d/card-general-tres-d.component';
@@ -109,7 +108,6 @@ import { ReloadStateAuthDirective } from './directives/reload-state-auth.directi
     NotFoundComponent,
     ModalContactCardComponent,
     SpinnerComponent,
-    CardComponent,
     CardPublicacionComponent,
     CardProductoComponent,
     CardGeneralTresDComponent,

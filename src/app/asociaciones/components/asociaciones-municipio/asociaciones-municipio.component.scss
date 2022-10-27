@@ -1,11 +1,10 @@
 .data-container {
   display: flex;
-  margin-top: 50px;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 21px;
+    margin-top: 50px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .data-container__div {
@@ -65,7 +64,8 @@
 }
 .buscadoryfiltro {
   display: flex;
-  flex-direction: column;
+    flex-direction: column;
+    margin-top: 10px;
 
   .buscador-container {
       display: flex;

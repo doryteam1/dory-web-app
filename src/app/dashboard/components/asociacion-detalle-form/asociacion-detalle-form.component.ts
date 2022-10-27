@@ -44,6 +44,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
   fileRut: any = null;
   datosAsociacion: any;
   urls: any[] = [];
+  hasDocument:boolean=false;
   constructor(
     private asociacionesService: AsociacionesService,
     private storage: FirebaseStorageService,
@@ -86,9 +87,24 @@ export class AsociacionDetalleFormComponent implements OnInit {
         .getMiembrosPrivado(this.asociacion.nit)
         .subscribe( (response) => {
           let representante = response.data.representante;
-          let miembros = response.data.miembros
-          console.log(miembros)
-          console.log(representante)
+          let miembros = response.data.miembros;
+          if (representante.url_imagen_cedula || representante.url_sisben) {
+            this.hasDocument = true;
+          } else {
+            let index = miembros.findIndex((miembro: any) => {
+              if (miembro.url_imagen_cedula || miembro.url_sisben) {
+                return true;
+              } else {
+                return false;
+              }
+            });
+            if (index > -1) {
+               this.hasDocument = true;
+            } else {
+               this.hasDocument = false;
+            }
+          }
+
         })
   }
 

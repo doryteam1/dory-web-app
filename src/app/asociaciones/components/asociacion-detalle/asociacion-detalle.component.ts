@@ -68,7 +68,6 @@ export class AsociacionDetalleComponent implements OnInit {
     let email = localStorage.getItem('email');
     console.log(this.asociacion);
     this.userService.getUsuarioByEmail(email).subscribe((response) => {
-      console.log(response);
       this.idEmailUser = response.data[0].id;
     });
     this.selectedAsociacionnit = Number(
@@ -459,44 +458,5 @@ export class AsociacionDetalleComponent implements OnInit {
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
-  seeFarmsMaptwo(i: number) {
-    let modalheadergooglemap = false;
-    let shared = false;
-    let atributos = {
-      longAndLat: {
-        lat: this.granjasAsociacion[i].latitud,
-        lng: this.granjasAsociacion[i].longitud,
-      },
-      mapInfoWindowData: [
-        {
-          icon: 'assets/icons/person_black.svg',
-          dataNombre: this.granjasAsociacion[i].nombre,
-          sinDataNombre: 'Nombre indefinido',
-        },
-        {
-          icon: 'assets/icons/person_pin_circle_black_24dp.svg',
-          dataNombre: this.granjasAsociacion[i].direccion,
-          sinDataNombre: 'Dirección indefinida',
-        },
-      ],
-      nombreAtributo: {
-        dato1: 'Compartir ubicación de la granja',
-      },
-    };
-    let iconMarkerGoogleMap = 'assets/icons/fish-marker.svg';
-    this.location2.onPopState(() => {
-      this.appModalService.CloseGoogleMapGeneralModal();
-    });
-    this.appModalService
-      .GoogleMapModalGeneral(
-        atributos,
-        modalheadergooglemap,
-        iconMarkerGoogleMap,
-        false,
-        '',
-        shared
-      )
-      .then((result) => {})
-      .catch((result) => {});
-  }
+
 }

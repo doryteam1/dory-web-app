@@ -256,7 +256,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
  this.us.getUsuarioByEmail(email).subscribe(
    (response) => {
      this.usuario = response.data[0];
-     console.log(this.usuario);
      this.form.get('id')?.setValue(this.usuario.id);
      this.form.get('cedula')?.setValue(this.usuario.cedula);
      this.form.get('nombres')?.setValue(this.usuario.nombres);

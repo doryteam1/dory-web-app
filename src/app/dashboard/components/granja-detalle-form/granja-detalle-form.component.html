@@ -6,6 +6,12 @@
 
   <div class="modal-body">
     <form [formGroup]="form">
+      <div class="mb-3" *ngIf="modalMode == 'update' && UserTipo == 'Administrador' ">
+        <label for="dateOfBirth">Propietario</label>
+        <div class="input-group">
+          <input [disabled]="true"  id="productName" class="form-control" placeholder="Nombre" [value]="granja?.propietario">
+        </div>
+      </div>
       <div class="mb-3">
         <label for="dateOfBirth">Nombre</label>
         <div class="input-group">
