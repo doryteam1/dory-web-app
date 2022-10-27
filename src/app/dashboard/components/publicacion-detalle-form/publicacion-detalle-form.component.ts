@@ -15,6 +15,8 @@ import { ComunicacionEntreComponentesService } from '../../../shared/services/co
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { ChatService } from 'src/app/services/chat.service';
+
 
 const _ = require('lodash');
 
@@ -63,7 +65,8 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
     private compressImageSizeService: CompressImageSizeService,
     private storage: FirebaseStorageService,
-    private userService:UsuarioService
+    private userService:UsuarioService,
+    private chatService:ChatService
   ) {}
   /* agregar esto para camcelar el subscribe de  comunicacionEntreComponentesService*/
   public changeArray!: Subscription;
@@ -397,6 +400,10 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       )
       .then((result: any) => {})
       .catch((result) => {});
+  }
+
+  sendMessage(){
+    this.chatService.openUser(this.usuario?.value);
   }
 
   get idEspecie() {

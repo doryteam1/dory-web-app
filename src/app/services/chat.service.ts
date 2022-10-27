@@ -4,13 +4,15 @@ import { io, Socket } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 import { HttpsService } from './https.service';
 import { UsuarioService } from './usuario.service';
-
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
   private socket: Socket;
   private url = environment.doryServerUrl;
+  chatRefs: { btnChat: HTMLElement, userRefs: any } | null = null;
+  subject:Subject<string> = new Subject<string>();
   constructor(private userService:UsuarioService, private https: HttpsService) {
     this.socket = io(this.url, {
       transports: ['websocket', 'polling', 'flashsocket'],
@@ -129,4 +131,23 @@ export class ChatService {
       return true;
     }
   }
+
+  setChatRefs(refs:{
+    btnChat:HTMLElement,
+    userRefs:any
+  }){
+      this.chatRefs = refs;
+  }
+
+  openUser(userId:number){
+    console.log("open user")
+    this.subject.next(JSON.stringify(userId))
+    //this.chatRefs?.btnChat.click();
+    //this.chatRefs.userRefs[userId].click();
+  }
+
+  getOpenChatUserObservable(){
+    return this.subject.asObservable();
+  }
+
 }

@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import * as dayjs from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
 import { Subscription } from 'rxjs';
+import { ThumbnailsMode } from 'ng-gallery';
 dayjs.extend(relativeTime);
 @Component({
   selector: 'app-chat-user',
   templateUrl: './chat-user.component.html',
   styleUrls: ['./chat-user.component.scss'],
 })
-export class ChatUserComponent implements OnInit {
+export class ChatUserComponent implements OnInit,AfterViewInit {
   messageText!: string;
   messageArray: { fromUserId:number, message: string }[] = [];
   private roomsArray: {
@@ -36,11 +37,15 @@ export class ChatUserComponent implements OnInit {
   filteredUserList: any[] = [];
   textSearch:string='';
   recents: any[] = [];
+  @ViewChild('chatFloatinBtn') chatFloatingBtnRef!: ElementRef;
+  userChatRefs:any;
   constructor(
     private chatService: ChatService,
     private userService: UsuarioService
   ) {
-    console.log("chat!")
+  }
+  ngAfterViewInit(): void {
+    this.getRefs()
   }
   subscriptions: Subscription[]= [];
   ngOnInit(): void {
@@ -339,6 +344,7 @@ export class ChatUserComponent implements OnInit {
     this.Onlist = true;
   }
   openChat() {
+    console.log("open chat")
     this.chatOpen = true;
   }
   closeChat() {
@@ -404,5 +410,24 @@ export class ChatUserComponent implements OnInit {
 
   dateFromX(date:string){
     return dayjs(date).fromNow(true)
+  }
+
+  getRefs(){
+    this.chatService.getOpenChatUserObservable().subscribe(
+      (userId:string)=>{
+        console.log("Yeah ",userId),
+        this.chatOpen = true;
+        setTimeout(()=>{
+          let userRef = document.getElementById(userId);
+          console.log(userRef)
+          userRef?.click()
+        },100)
+        
+      }
+    )
+  }
+
+  toString(id:number){
+    return JSON.stringify(id)
   }
 }
