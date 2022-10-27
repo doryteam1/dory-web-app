@@ -5,6 +5,8 @@ import * as dayjs from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
 import { Subscription } from 'rxjs';
 import { ThumbnailsMode } from 'ng-gallery';
+import { Utilities } from 'src/app/utilities/utilities';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 dayjs.extend(relativeTime);
 @Component({
   selector: 'app-chat-user',
@@ -41,7 +43,8 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
   userChatRefs:any;
   constructor(
     private chatService: ChatService,
-    private userService: UsuarioService
+    private userService: UsuarioService,
+    private utilities:UtilitiesService
   ) {
   }
   ngAfterViewInit(): void {
@@ -80,6 +83,7 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
       .getMessage()
       .subscribe((data: { de: number;  mensaje: string, metadata:any }) => {
         console.log(data)
+        this.utilities.playSound("assets/sounds/notification-sound.mp3");
         //TODO: hacer algo con el mensaje de confirmacion
         this.roomsArray = this.chatService.getStorage();
         const roomIndex = this.roomsArray.findIndex(
