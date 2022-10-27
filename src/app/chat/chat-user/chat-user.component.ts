@@ -3,6 +3,7 @@ import { ChatService } from 'src/app/services/chat.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import * as dayjs from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
+import { Subscription } from 'rxjs';
 dayjs.extend(relativeTime);
 @Component({
   selector: 'app-chat-user',
@@ -38,9 +39,13 @@ export class ChatUserComponent implements OnInit {
   constructor(
     private chatService: ChatService,
     private userService: UsuarioService
-  ) {}
-
+  ) {
+    console.log("chat!")
+  }
+  subscriptions: Subscription[]= [];
   ngOnInit(): void {
+    console.log("chat ng on init!")
+    let tempSub:Subscription;
     this.currentUser = this.userService.getAuthUser();
     this.userService.getTodosUsuarioAll().subscribe(
       (response)=>{
@@ -66,7 +71,7 @@ export class ChatUserComponent implements OnInit {
         }
       }
     )
-    this.chatService
+    tempSub = this.chatService
       .getMessage()
       .subscribe((data: { de: number;  mensaje: string, metadata:any }) => {
         console.log(data)
@@ -103,6 +108,7 @@ export class ChatUserComponent implements OnInit {
         this.scrollToBottom()
       });
 
+      this.chatService.requestLastConectedUsers();
       this.chatService
       .getConectedUsers()
       .subscribe((data:any[]) => {

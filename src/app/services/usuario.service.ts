@@ -5,11 +5,12 @@ import { environment } from 'src/environments/environment';
 import { Utilities } from '../utilities/utilities';
 import { HttpsService } from './https.service';
 import { StorageService } from './storage.service';
-
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
+  isAuthSubject = new Subject<boolean>();
   constructor(
     private httpsService: HttpsService,
     private storageService: StorageService,
@@ -80,14 +81,19 @@ export class UsuarioService {
     );
   }
 
+  setLoginData(token:string,authWith:string){
+    localStorage.setItem('token', token);
+    this.setAuthWith(authWith);
+    this.isAuthSubject.next(true);
+  }
+
   logout() {
     localStorage.removeItem('email');
     localStorage.removeItem('token');
     localStorage.removeItem('photoUser');
     localStorage.removeItem('nomApell');
     localStorage.removeItem('chats');
-    console.log('logout google');
-    this.socialAuthService?.signOut();
+    this.isAuthSubject.next(false);
   }
 
   logoutElectron() {
@@ -96,6 +102,7 @@ export class UsuarioService {
     localStorage.removeItem('photoUser');
     localStorage.removeItem('nomApell');
     localStorage.removeItem('chats');
+    this.isAuthSubject.next(false);
     this.socialAuthService?.signOut();
   }
   recoveryPassword(email: string) {
@@ -216,5 +223,9 @@ export class UsuarioService {
   getAuthUserToken(){
     let token = localStorage.getItem('token');
     return token;
+  }
+
+  getAuthObservable(){
+    return this.isAuthSubject.asObservable()
   }
 }

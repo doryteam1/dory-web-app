@@ -28,6 +28,10 @@ export class ChatService {
     this.socket.emit('new-message', data);
   }
 
+  requestLastConectedUsers(): void {
+    this.socket.emit('usuarios-activos', null);
+  }
+
   getMessage(): Observable<any> {
     return new Observable<{ de: number;  mensaje: string, metadata:any }>((observer) => {
       this.socket.on('new-message', (data) => {

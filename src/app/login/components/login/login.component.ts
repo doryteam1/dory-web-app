@@ -66,8 +66,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(data).subscribe(
       (response) => {
         localStorage.setItem('email', data.email);
-        localStorage.setItem('token', response.body.token);
-        this.userService.setAuthWith('email');
+        this.userService.setLoginData(response.body.token,'email')
         if (this.recordarme == true) {
           localStorage.setItem('rememberEmail', data.email);
         } else {
@@ -143,8 +142,7 @@ export class LoginComponent implements OnInit {
   getTokenWithGoogleIdToken(idToken:string,email:string){
     this.userService.loginWithGoogle(idToken).subscribe(
       (response) => {
-        localStorage.setItem('token', response.body.token);
-        this.userService.setAuthWith('google');
+        this.userService.setLoginData(response.body.token,'google')
         this.navigateTo(email)
       },err=>{
         console.log(err);

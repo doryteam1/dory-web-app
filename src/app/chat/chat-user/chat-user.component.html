@@ -4,7 +4,7 @@
       <div class="container__list-search">
         <div class="input-wrapper">
           <div class="bi bi-search"></div>
-          <input type="text" placeholder="Buscar un chat." [(ngModel)]="textSearch" (ngModelChange)="onSearch()"/>
+          <input type="text" placeholder="Buscar" [(ngModel)]="textSearch" (ngModelChange)="onSearch()"/>
           <i class="img-x" *ngIf="false"></i>
           <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" *ngIf="false">
           <!-- <app-search (textSearch)="onSearch($event)"></app-search> -->

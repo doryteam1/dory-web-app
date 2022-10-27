@@ -155,8 +155,7 @@ export class RegistroComponent implements OnInit {
   getTokenWithGoogleIdToken(idToken:string,email:string){
     this.userService.loginWithGoogle(idToken).subscribe(
       (response)=>{
-        localStorage.setItem('token',response.body.token);
-        this.userService.setAuthWith('google');
+        this.userService.setLoginData(response.body.token,'google')
         this.navigateTo(email)
       },err=>{
         console.log(err);

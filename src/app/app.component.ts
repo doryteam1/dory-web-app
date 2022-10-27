@@ -18,6 +18,7 @@ export class AppComponent implements OnInit{
   @ViewChild(FloatingBtnAutoUpComponent)
   floatingBtn!: FloatingBtnAutoUpComponent;
   @ViewChild('main') divMain!: ElementRef;
+  isAuthUser:boolean = false;
   constructor(
     private _electronService: ElectronjsService,
     public userService:UsuarioService,
@@ -25,9 +26,15 @@ export class AppComponent implements OnInit{
   ) {
   }
   ngOnInit(): void {
-    console.log("api rest url ", environment.doryApiRestBaseUrl)
+    this.isAuthUser = this.userService.isAuthenticated();
+    console.log("Is auth ",this.isAuthUser)
     //console.log("process.env.FIREBASE_PROJECT_ID ", process.env.FIREBASE_PROJECT_ID)
     this.customTitleBarElectron = this._electronService.ipcActivo;
+    this.userService.getAuthObservable().subscribe(
+      (isAuth)=>{
+        this.isAuthUser = isAuth;
+      }
+    )
   }
   exit(event: any) {
     console.log('exit app');
