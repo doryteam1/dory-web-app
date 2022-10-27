@@ -12,6 +12,10 @@ export class ReloadStateAuthDirective {
     private viewContainerRef:ViewContainerRef,
     private userService:UsuarioService
   ) { 
+    if(this.userService.isAuthenticated()){
+      this.viewContainerRef.clear();
+      this.viewContainerRef.createEmbeddedView( this.templateRef );
+    }
     this.userService.getAuthObservable().subscribe(
       (state)=>{
         console.log("from reload directive user state auth ",state)
