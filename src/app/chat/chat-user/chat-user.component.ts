@@ -418,10 +418,15 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
         console.log("Yeah ",userId),
         this.chatOpen = true;
         setTimeout(()=>{
-          let userRef = document.getElementById(userId);
-          console.log(userRef)
-          userRef?.click()
-        },100)
+          if(!this.Onlist){
+            this.back();
+          }
+          setTimeout(()=>{
+            let userRef = document.getElementById(userId);
+            console.log(userRef)
+            userRef?.click()
+          },50)
+        },50)
         
       }
     )
