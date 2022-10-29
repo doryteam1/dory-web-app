@@ -4,8 +4,6 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import * as dayjs from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
 import { Subscription } from 'rxjs';
-import { ThumbnailsMode } from 'ng-gallery';
-import { Utilities } from 'src/app/utilities/utilities';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 dayjs.extend(relativeTime);
 @Component({
@@ -39,6 +37,7 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
   filteredUserList: any[] = [];
   textSearch:string='';
   recents: any[] = [];
+  unreads: any[] = [];
   @ViewChild('chatFloatinBtn') chatFloatingBtnRef!: ElementRef;
   userChatRefs:any;
   constructor(
@@ -201,7 +200,8 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
   orderRecentChats(){
     this.chatService.getUltimosMensajes().subscribe(
       (response)=>{
-        this.recents = response.data;
+        this.recents = response?.data?.ultimos;
+        this.unreads = response?.data?.unreads?.chats;
         let usersOrder:any[] = [];
         this.recents?.forEach(
           (recent)=>{
@@ -229,7 +229,6 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
              )
           }
         )
-
         this.userList = usersOrder.concat(this.userList)
         this.filteredUserList = this.userList.slice();
       },err=>{
@@ -278,6 +277,25 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
         this.chatService.setStorage(this.roomsArray);
         this.messageArray = this.roomsArray[roomIndex].chats;
         this.scrollToBottom();
+        let tempCount:number;
+        let index = this.unreads.findIndex(
+          (element)=>{
+            return element.usuario_emisor_id == this.selectedUser.id
+          }
+        )
+        if(index > -1){
+          tempCount = this.unreads[index].count;
+          this.unreads[index].count = null;
+        }
+              
+        this.chatService.setReaded(this.selectedUser.id).subscribe(
+          ()=>{
+            
+          },err=>{
+            if(index > -1)
+            this.unreads[index].count = tempCount;
+          }
+        )
       }
     )
     
@@ -370,6 +388,20 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
 
     if(index > -1){
       return this.recents[index];
+    }else{
+      return null;
+    }
+  }
+
+  getUnreadCount(userId:number){
+    let index = this.unreads.findIndex(
+      (element)=>{
+        return element.chat_id ==  this.userService.getAuthUser().sub + userId;
+      }
+    )
+
+    if(index > -1){
+      return this.unreads[index];
     }else{
       return null;
     }

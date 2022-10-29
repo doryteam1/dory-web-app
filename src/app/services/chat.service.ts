@@ -150,4 +150,8 @@ export class ChatService {
     return this.subject.asObservable();
   }
 
+  setReaded(idUsuarioEmisor:number){
+    return this.https.put('https://dory-api-rest.herokuapp.com/api/chat/set/readed/all/'+idUsuarioEmisor,null)
+  }
+
 }

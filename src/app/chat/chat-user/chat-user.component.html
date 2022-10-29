@@ -22,7 +22,11 @@
             <p class="username">{{user?.name}}</p>
             <span class="user-card__label1">{{getUltimo(user?.id)?.contenido}}</span>
             <span class="user-card__label2">{{getUltimo(user?.id)?.contenido ? dateFromX(getUltimo(user?.id)?.fecha_creacion) : ''}}</span>
+            <span class="user-card__label1"></span>
           </div>
+          <span class="user-card__badge translate-middle badge rounded-pill" *ngIf="getUnreadCount(user?.id)?.count">
+            {{getUnreadCount(user?.id)?.count > 99 ? '99+' : getUnreadCount(user?.id)?.count}}
+          </span>
         </div>
       </div>
     </div>

@@ -80,7 +80,7 @@
     display: flex;
     padding: 10px;
     cursor: pointer;
-
+    position:relative;
     &.active {
       background-color: #EDEDED;
     }
@@ -130,6 +130,12 @@
   }
 }
 
+.user-card__badge{
+  position:absolute;
+  top: 24px;
+  right: -20px;
+  background-color: var(--azul1);
+}
 .user-card__label1{
   color:#3b4a54;
   font-size: 14px;
