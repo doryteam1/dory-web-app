@@ -25,7 +25,7 @@
             <span class="user-card__label1"></span>
           </div>
           <span class="user-card__badge translate-middle badge rounded-pill" *ngIf="getUnreadCount(user?.id)?.count">
-            {{getUnreadCount(user?.id)?.count > 99 ? '99+' : getUnreadCount(user?.id)?.count}}
+            {{user?.unreadsCount > 99 ? '99+' : user?.unreadsCount}}
           </span>
         </div>
       </div>
