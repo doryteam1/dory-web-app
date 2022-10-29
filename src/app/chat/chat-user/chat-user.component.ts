@@ -111,6 +111,17 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
         }
         this.chatService.setStorage(this.roomsArray);
         this.setUltimo(data)
+        if(this.chatOpen && this.Onlist == false && this.selectedUser.id == data?.de){
+          this.chatService.setReaded(this.selectedUser.id).subscribe(
+            ()=>{
+
+            },err=>{
+
+            }
+          )
+        }else{
+          this.setUnreadCount(data?.de)
+        }
         /*Carga los mensajes del la sala del usuario seleccionado*/
         this.loadRoomMessages();
         this.scrollToBottom()
@@ -230,6 +241,19 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
           }
         )
         this.userList = usersOrder.concat(this.userList)
+        this.recents.forEach(
+          (element)=>{
+            let index = this.userList.findIndex(
+              (user)=>{
+                return user.id == element.usuario_emisor_id;
+              }
+            )
+            if(index > -1){
+              this.userList[index].last_message = element.contenido;
+              this.userList[index].created_at = element.fecha_creacion;
+            }
+          }
+        )
         this.filteredUserList = this.userList.slice();
       },err=>{
 
@@ -437,7 +461,9 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
 
     console.log("roomId ",roomId)
     if(roomIndex > -1){
-      let user = this.userList[roomIndex]
+      let user = this.userList[roomIndex];
+      user.last_message = data.mensaje;
+      user.created_at = data?.metadata?.message?.fecha_creacion;
       this.userList.splice(roomIndex,1);
       this.userList.splice(0,0,user);
       this.onSearch();
@@ -466,6 +492,22 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
         
       }
     )
+  }
+
+  setUnreadCount(idUsuarioEmisor:number){
+    let index = this.unreads.findIndex(
+      (element)=>{
+        return element.usuario_emisor_id == idUsuarioEmisor;
+      }
+    )
+
+    if(index > -1){
+      if(this.unreads[index].count != null && this.unreads[index].count != undefined){
+        this.unreads[index].count = this.unreads[index].count + 1;  
+      }else{
+        this.unreads[index].count = 1;
+      }
+    }
   }
 
   toString(id:number){

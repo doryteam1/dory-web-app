@@ -58,8 +58,6 @@ export class ChatService {
     });
   }
 
-  
-
   getConectedUsers(): Observable<any> {
     return new Observable<any>((observer) => {
       this.socket.on('usuarios-activos', (data) => {
