@@ -3,6 +3,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 70px;
 }
 .img2item {
   height: 100%;
@@ -25,8 +26,8 @@
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 30px;
-  margin-bottom: 30px;
+    margin-top: 10px;
+      margin-bottom: 10px;
 }
 
 .filter {

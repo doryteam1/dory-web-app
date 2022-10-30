@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES } from 'src/app/global/constants';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { PlacesService } from 'src/app/services/places.service';
-import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { BuscarPor } from 'src/models/buscarPor.model';
@@ -132,7 +131,6 @@ export class GranjasComponent implements OnInit {
   resultFiltroPorMunicipio: any[] = [];
   constructor(
     private granjasService: GranjasService,
-    private appModalService: AppModalService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
     private places: PlacesService
@@ -158,29 +156,6 @@ export class GranjasComponent implements OnInit {
     this.loadMunic();
   }
 
-  /* goDetail(granja: any) {
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree([
-        `/granjas/municipio/detalle/${granja.id_granja}`,
-      ])
-    );
-    window.open(url, '_blank');
-  } */
-  datosContactoUser(granja: any) {
-    let object: any;
-    object = {
-      nombreGranja: granja.nombre,
-      count_resenas: granja.count_resenas,
-      puntuacion: granja.puntuacion,
-      foto: granja.imagen,
-      area: granja.area,
-      rutaUserDetalle: `/granjas/municipio/detalle/${granja.id_granja}`,
-    };
-    this.appModalService
-      .modalContactCardComponent(object, false)
-      .then((result) => {})
-      .catch((result) => {});
-  }
 
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);

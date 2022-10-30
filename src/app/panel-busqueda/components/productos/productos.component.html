@@ -1,4 +1,4 @@
-<div class="mt-5">
+<div>
   <div class="search">
     <app-search class="app-search" (textSearch)="onSearch($event)"></app-search>
     <app-modal-multi-filters
@@ -12,7 +12,7 @@
   </div>
 </div>
 <app-not-found class="app-not-found" *ngIf="showNotFound" objectName="productos"></app-not-found>
-<div class="chip-container">
+<div class="chip-container" >
   <app-chip-con-boton-close class="chip-container__element"
   *ngIf="filtroseleccionado"
   [iconoChip]="true"

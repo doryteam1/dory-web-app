@@ -1,36 +1,24 @@
+
 <div class="container">
-      <app-not-found *ngIf="showNotFound" message="Aun no has registrado tus negocios"></app-not-found>
-    <div class="container__table" *ngIf="!showNotFound">
-        <table class="table mt-40">
-            <thead class="table-light">
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Municipio</th>
-                <th>Departamento</th>
-                <th>Dirección</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let negocio of negocios |  paginate: { itemsPerPage: 5, currentPage: p }; let i=index">
-                <td>{{negocio?.nombre_negocio | shorter:25}}</td>
-                <td>{{negocio?.descripcion_negocio | shorter:25}}</td>
-                <td>{{negocio?.nombre_municipio}}</td>
-                <td>{{negocio?.nombre_departamento}}</td>
-                <td>{{negocio?.direccion}}</td>
-                <td>
-                    <div class="container-row">
-                        <i class="container__icon1 bi bi-pencil text-success me-2"  (click)="editarNegocio(negocio)" ngbTooltip="Crear y actualizar"></i>
-                        <i class="container__icon2 bi bi-trash text-danger me-2" (click)="deleteNegocio(negocio)" ngbTooltip="Eliminar"></i>
-                        <i class="container__icon3 bi bi-geo-alt-fill text-danger me-2" (click)="verMap(negocio.id_negocio)"  ngbTooltip="Mi ubicación"></i>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <pagination-controls *ngIf="!showNotFound" class="my-pagination" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente">
-        </pagination-controls>
-    </div>
-    <button class="btn-outline-blue button" (click)="createNewNegocio()">Agregar negocio</button>
+  <div class="container-card" *ngIf="!showNotFound">
+      <app-card-negocio
+       [datos]="negocio"
+       [indiceDatos]="i"
+       [editaAndEliminar]="true"
+       *ngFor="let negocio of negocios; let i=index;"
+        (onDetalle)="editarNegocio(negocio)"
+        (onUpdateDatos)="editarNegocio(negocio)"
+        (onDeleteDatos)="deleteNegocio(negocio)">
+      </app-card-negocio>
+  </div>
+  <app-spinner [showText]="false" *ngIf="loading"></app-spinner>
+  <div class="center" *ngIf="showNotFound">
+    <app-not-found message="Aun no has registrado tus negocios"></app-not-found>
+  </div>
+  <div class="center" *ngIf="showError">
+    <app-not-found [genericError]="showError"></app-not-found>
+  </div>
+  <app-basic-floating-btn [tooltip]="'Crear negocio'" [agregar]="true" (click)="createNewNegocio()">
+  </app-basic-floating-btn>
 </div>
+

@@ -5,14 +5,15 @@
     </app-carrucel-img>
     <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="datos.fotos.length == 0">
   </div>
-  <div   class="card-body shorterTextOverflowHidden" >
-    <div (click)="goDetail()" class="w-100" style="text-align: start;cursor:pointer">
-      <h5 class="card__title card-title shorterTextAuto">{{datos.nombre_negocio}}</h5>
-      <h5 class="card__sub-title card-title shorterTextAuto">{{datos.nombre_municipio}}</h5>
-      <p class="card__descripction card-text shorterTextAuto">{{datos.direccion}}</p>
+  <div class="card-body shorterTextOverflowHidden">
+    <div (click)="goDetail()" class="w-100" style="text-align: start;cursor:pointer;">
+      <h5 class="card__title card-title shorterTextAuto">{{datos?.nombre}}</h5>
+      <h5 class="card__sub-title card-title shorterTextAuto">Área: {{datos?.area}} m²</h5>
+      <h5 class="card__sub-title card-title shorterTextAuto">Trabajadores: {{datos?.numero_trabajadores}}</h5>
+      <h5 class="card__sub-title card-title shorterTextAuto">Producción: {{datos?.produccion_estimada_mes}} (kg/mes)</h5>
     </div>
     <div *ngIf="editaAndEliminar">
-      <div >
+      <div>
         <i class="container__icon bi bi-pencil text-success me-3 mitextcolorpencil" (click)="updateProducto()"></i>
         <i class="container__icon bi bi-trash text-danger mitextcolorpencil" (click)="deleteProducto()"></i>
       </div>

@@ -1,31 +1,23 @@
+
 <div class="container">
-    <app-not-found *ngIf="showNotFound" message="Aun no has registrado tus vehículos"></app-not-found>
-  <div class="container-table-pagination" *ngIf="!showNotFound">
-    <table class="table mt-40">
-        <thead class="table-light">
-          <tr>
-            <th>Modelo del vehículo</th>
-            <th>Capacidad(TON)</th>
-            <th>Transporta alimentos(Si/No)</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let vehiculo of vehiculos |  paginate: { itemsPerPage: 3, currentPage: p };  let i=index">
-            <td>{{vehiculo.modelo| shorter:25}}</td>
-            <td>{{vehiculo.capacidad}}</td>
-            <td>{{vehiculo.transporte_alimento == 1 ? 'Si' : 'No'}}</td>
-            <td>
-                <div class="container-row">
-                    <i class="container__icon bi bi-pencil me-3" (click)=" updateVehiculo(vehiculo)"></i>
-                    <i class="container__icon bi bi-trash" (click)="deleteVehiculo(vehiculo.id_vehiculo)"></i>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <pagination-controls *ngIf="!showNotFound" class="my-pagination" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente">
-      </pagination-controls>
+  <div class="container-card" *ngIf="!showNotFound">
+    <app-card-vehiculo
+       *ngFor="let vehiculo of vehiculos; let i=index;"
+       [datos]="vehiculo"
+       [indiceDatos]="i"
+       [editaAndEliminar]="true"
+       (onDetalle)="updateVehiculo(vehiculo)"
+       (onUpdateDatos)="updateVehiculo(vehiculo)"
+       (onDeleteDatos)="deleteVehiculo(vehiculo)">
+    </app-card-vehiculo>
   </div>
-  <button class="btn-outline-blue button" (click)="addVehiculo()">Agrega un nuevo vehículo</button>
+  <app-spinner [showText]="false" *ngIf="loading"></app-spinner>
+  <div class="center" *ngIf="showNotFound">
+    <app-not-found message="Aun no has registrado tus vehículos"></app-not-found>
+  </div>
+  <div class="center" *ngIf="showError">
+    <app-not-found [genericError]="showError"></app-not-found>
+  </div>
+  <app-basic-floating-btn [tooltip]="'Crear vehículo'" [agregar]="true" (click)="addVehiculo()">
+  </app-basic-floating-btn>
 </div>

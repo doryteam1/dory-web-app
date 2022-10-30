@@ -1,4 +1,4 @@
-<div class="search mt-5">
+<div class="search">
     <app-search [placeholderbuscador]="'Buscar...'"
     (textSearch)="onBuscarPalabra($event)">
     </app-search>
@@ -6,7 +6,7 @@
     (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
     </app-filtro>
 </div>
-<div class="chip mb-4">
+<div class="chip">
     <app-chip-con-boton-close
     *ngIf="filtroseleccionado"
     [iconoChip]="true"
@@ -26,18 +26,7 @@
 </div>
 
 <app-not-found *ngIf="showNotFound" [objectName]="userType"></app-not-found>
-<div class="">
   <div   *ngIf="!showNotFound"class="container-card">
     <app-card-proveedor-simple (onDetalle)="goDetail(user)" [dato]="user" *ngFor="let user of usersFiltered"></app-card-proveedor-simple>
-  <!-- <div  class="card" *ngFor="let user of usersFiltered">
-      <div class="card__user-info d-flex flex-row"  (click)="goDetail(user)">
-          <img class="card__image" src="{{user?.foto ? user?.foto : '/assets/images/avatar-person.svg'}}">
-          <div class="container-nombre shorterTextOverflowHidden">
-            <span class="card__title shorterTextAuto">{{user?.nombre || user?.nombre_completo}}
-            </span>
-            <small >{{user?.municipio? user?.municipio: 'Sin municipio'}}</small>
-          </div>
-      </div>
-      </div> -->
   </div>
-</div>
+

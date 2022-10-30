@@ -33,7 +33,6 @@ export class MisProductosComponent implements OnInit {
       (respose) => {
         this.loading = false;
         this.productos = respose.data;
-        console.log(this.productos);
         if (this.productos.length < 1 || this.productos.length == 0) {
           this.showNotFound = true;
         } else {

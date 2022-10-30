@@ -402,6 +402,7 @@
 .usuarioFotoYnombre {
   border-bottom: 1px solid #d1d1d1;
   margin-bottom: 5px;
+  cursor: pointer;
   div {
     display: flex;
     flex-direction: column;
@@ -416,10 +417,6 @@
     button {
       margin-bottom: 5px;
       margin-top: 5px;
-    }
-
-    button:hover {
-      background-color: #E9ECEF;
     }
   }
 }

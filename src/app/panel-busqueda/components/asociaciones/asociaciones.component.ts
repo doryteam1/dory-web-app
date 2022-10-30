@@ -5,7 +5,6 @@ import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.
 import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { PlacesService } from 'src/app/services/places.service';
-import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { BuscarPor } from 'src/models/buscarPor.model';
@@ -66,7 +65,6 @@ export class AsociacionesComponent implements OnInit {
   resultFiltroPorMunicipio: any[] = [];
   constructor(
     private asociacionService: AsociacionesService,
-    private appModalService: AppModalService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
     private places: PlacesService,
@@ -87,7 +85,6 @@ export class AsociacionesComponent implements OnInit {
         return asociacion.id_propietario !== this.authUserId;
       });
       this.asociacionesFiltered = this.asociaciones.slice();
-      console.log(this.asociacionesFiltered);
       if (this.asociacionesFiltered.length < 1) {
         this.showNotFound = true;
       } else {
@@ -96,74 +93,6 @@ export class AsociacionesComponent implements OnInit {
     });
 
     this.loadMunic();
-  }
-  invitarAnular(asociacion: any) {
-    if (asociacion.estado_solicictud == 'Aceptada') {
-      this.appModalService
-        .confirm(
-          'Salir de la asociación',
-          'Usted ya no es miembro de esta asociación',
-          'Aceptar',
-          'Cancelar'
-        )
-        .then((result) => {
-          if (result == true) {
-            let estado = asociacion.estado_solicitud;
-            let enviadaPor = asociacion.solicitud_enviada_por;
-            asociacion.estado_solicitud = null;
-            asociacion.solicitud_enviada_por = null;
-            this.asociacionService
-              .eliminarSolicitud(asociacion.id_solicitud)
-              .subscribe(
-                (response) => {
-                  console.log(response);
-                },
-                (err) => {
-                  asociacion.estado_solicitud = estado;
-                  asociacion.solicitud_enviada_por = enviadaPor;
-                  console.log(err);
-                }
-              );
-          }
-        })
-        .catch((result) => {});
-    } else if (asociacion.estado_solicitud == 'Enviada') {
-      let estado = asociacion.estado_solicitud;
-      let enviadaPor = asociacion.solicitud_enviada_por;
-      asociacion.estado_solicitud = null;
-      asociacion.solicitud_enviada_por = null;
-      this.asociacionService
-        .eliminarSolicitud(asociacion.id_solicitud)
-        .subscribe(
-          (response) => {
-            console.log(response);
-          },
-          (err) => {
-            asociacion.estado_solicitud = estado;
-            asociacion.solicitud_enviada_por = enviadaPor;
-            console.log(err);
-          }
-        );
-    } else {
-      let data = {
-        quienEnvia: 'usuario',
-      };
-      asociacion.estado_solicitud = 'Enviada';
-      asociacion.solicitud_enviada_por = 'usuario';
-      this.asociacionService
-        .invitarUsuarioAsociacion(data, asociacion.nit)
-        .subscribe(
-          (response) => {
-            console.log(response);
-            asociacion.id_solicitud = response.body.insertId;
-          },
-          (err) => {
-            asociacion.estado_solicitud = null;
-            asociacion.solicitud_enviada_por = null;
-            console.log(err);
-          }
-        );
-    }
   }
 
   goAssociationDetail(asociacion: any) {
@@ -177,7 +106,6 @@ export class AsociacionesComponent implements OnInit {
 
   delateFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
-    console.log(this.filtroseleccionadoCheckbox);
     this.searchReset();
   }
 
@@ -194,12 +122,11 @@ export class AsociacionesComponent implements OnInit {
         this.filtroseleccionadoCheckbox,
         resultados
       );
-        this.resultFiltroPorMunicipio =
-          this.searchBuscadorService.filterEspecial(
-            resultados,
-            this.filtroseleccionadoCheckbox,
-            'municipio'
-          );
+      this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
+        resultados,
+        this.filtroseleccionadoCheckbox,
+        'municipio'
+      );
     }
     this.asociacionesFiltered = resultados;
     if (this.asociacionesFiltered.length < 1) {
@@ -255,12 +182,12 @@ export class AsociacionesComponent implements OnInit {
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
-      if (checkboxs.length == 0) {
-        this.filtroseleccionadoCheckbox = [];
-        this.resultFiltroPorMunicipio = [];
-      } else {
-        this.filtroseleccionadoCheckbox = checkboxs;
-      }
+    if (checkboxs.length == 0) {
+      this.filtroseleccionadoCheckbox = [];
+      this.resultFiltroPorMunicipio = [];
+    } else {
+      this.filtroseleccionadoCheckbox = checkboxs;
+    }
     this.searchReset();
   }
 
@@ -285,5 +212,16 @@ export class AsociacionesComponent implements OnInit {
     this.filtroseleccionado = result.radioFilter1;
     this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
     this.searchReset();
+  }
+  goDetalleRepresentante(asociacion: any) {
+    if (asociacion.tipo_usuario_propietario == 'Pescador') {
+      this.router.navigateByUrl(
+        '/pescadores/municipio/detalle/' + asociacion.id_propietario
+      );
+    } else if (asociacion.tipo_usuario_propietario == 'Piscicultor') {
+      this.router.navigateByUrl(
+        '/piscicultores/municipio/detalle/' + asociacion.id_propietario
+      );
+    }
   }
 }

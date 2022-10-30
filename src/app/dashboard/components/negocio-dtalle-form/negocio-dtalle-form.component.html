@@ -9,7 +9,6 @@
           <label for="dateOfBirth">Nombre</label>
           <div class="input-group">
             <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre_negocio">
-            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
           </div>
           <div *ngIf="invalid('nombre_negocio')" class="container__alert-msg danger-message">
             <div *ngIf="nombreNegocio?.errors?.['required']">
@@ -23,8 +22,6 @@
           <div class="input-group">
             <textarea class="form-control" name="textarea" rows="5" cols="50"
               formControlName="descripcion_negocio">Write something here</textarea>
-            <!-- <input id="productName" class="form-control" placeholder="Descripción" formControlName="descripcion"> -->
-            <!-- <button class="btn btn-outline-secondary" type="button"></button> -->
           </div>
           <div *ngIf="invalid('descripcion_negocio')" class="container__alert-msg danger-message">
             <div *ngIf="descripcion?.errors?.['required']">
@@ -146,7 +143,7 @@
           </div>
         </button>
         <button [disabled]="loading1" type="button"
-           (click)="updateNegocio()"*ngIf="modalMode=='update'">
+           (click)="updateNegocio()"*ngIf="modalMode=='update'" class="btn-rounded btn--blue container__btn">
           <span *ngIf="!loading1">Actualizar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>

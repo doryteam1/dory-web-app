@@ -3,14 +3,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 70px;
 }
-.img2item {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
 .search {
   display: flex;
   flex-direction: row;
@@ -23,6 +17,8 @@
   flex-direction: row;
   gap: 10px;
   justify-content: center;
+    margin-top: 10px;
+      margin-bottom: 10px;
 }
 
 @media screen and (max-width: 764px) {

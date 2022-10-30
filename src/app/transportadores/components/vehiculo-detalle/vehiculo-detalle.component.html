@@ -21,10 +21,9 @@
             <span class="card__description-title">{{vehiculo?.transporte_alimento ? 'Si' : 'No'}}</span>
           </div>
         </div>
-                <span  *ngIf="vehiculo?.descripcion" class="card__title2 mt-2">Descripción</span>
-                <span *ngIf="vehiculo?.descripcion" class="card__description">{{vehiculo?.descripcion}}</span>
-        <span class="link" (click)="goDetail(vehiculo.usuarios_id)">Ver detalle propietario</span>
-
+            <span  *ngIf="vehiculo?.descripcion" class="card__title2 mt-2">Descripción</span>
+            <span *ngIf="vehiculo?.descripcion" class="card__description">{{vehiculo?.descripcion}}</span>
+            <span class="link" (click)="goDetail(vehiculo.usuarios_id)">Ver detalle propietario</span>
       </div>
     </div>
   </div>
