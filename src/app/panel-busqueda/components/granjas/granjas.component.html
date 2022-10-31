@@ -1,4 +1,4 @@
-<div class="search mt-5">
+<div class="search">
     <app-search [placeholderbuscador]="'Buscar granja...'"
     (textSearch)="onBuscarPalabra($event)">
     </app-search>
@@ -11,7 +11,7 @@
      [deleteRadioFilter1]="selectedStarFilter "
      (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
 </div>
-<div class="chip mb-4">
+<div class="chip">
     <app-chip-con-boton-close class="chip__element"
     *ngIf="selectedOrderFilter"
     [iconoChip]="true"
@@ -50,16 +50,4 @@
      [botonMapaFijo]="false">
   </app-card-granjas>
 </div>
-<!-- <div class="list overflow-auto d-flex flex-column" *ngIf="!showNotFound" >
-<div class="card" *ngFor="let granja of granjasFiltered">
-    <div class="card__row" (click)="datosContactoUser(granja)">
-        <div class="card__item">
-            <img class="card__image" src="{{granja.imagen ? granja.imagen : '/assets/images/avatar-person.svg'}}">
-                  <div class="container-nombre shorterTextOverflowHidden">
-                    <span class="card__title shorterTextAuto" >{{granja.nombre}}</span>
-                    <small>{{granja?.municipio? granja?.municipio: 'Sin municipio'}}</small>
-                  </div>
-        </div>
-    </div>
-</div>
-</div> -->
+

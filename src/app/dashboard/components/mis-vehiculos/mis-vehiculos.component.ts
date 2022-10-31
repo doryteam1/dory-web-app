@@ -1,6 +1,4 @@
-import { Component, HostListener,OnInit } from '@angular/core';
-import { SafeUrl } from '@angular/platform-browser';
-import {NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Component,OnInit } from '@angular/core';
 import { VehiculosService } from 'src/app/services/vehiculos.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { Router } from '@angular/router';
@@ -14,8 +12,9 @@ import { FirebaseStorageService } from 'src/app/services/firebase-storage.servic
 export class MisVehiculosComponent implements OnInit {
   vehiculos: Array<any> = [];
   showNotFound: boolean = false;
-  p!: number;
   authUserId: number = -1;
+  showError: boolean = false;
+  loading: boolean = false;
   constructor(
     private vehiculosService: VehiculosService,
     private router: Router,
@@ -23,45 +22,50 @@ export class MisVehiculosComponent implements OnInit {
     private storage: FirebaseStorageService
   ) {}
   ngOnInit(): void {
+    this.loading = true;
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
     this.vehiculosService.getVehiculosUser(this.authUserId).subscribe(
       (respose) => {
-        this.showNotFound = false;
+        this.loading = false;
         this.vehiculos = respose.data;
         console.log(this.vehiculos);
         if (this.vehiculos.length < 1 || this.vehiculos.length == 0) {
           this.showNotFound = true;
+        } else {
+          this.showNotFound = false;
         }
       },
       (err) => {
+        console.log(err);
         if (err.status == 404) {
           this.showNotFound = true;
+          this.loading = false;
+        } else {
+          this.showError = true;
+          this.showNotFound = false;
+          this.loading = false;
         }
       }
     );
   }
-  deleteVehiculo(id: number) {
-    let i = this.vehiculos.findIndex((vehiculo: any) => {
-      return vehiculo.id_vehiculo == id;
-    });
-    let arrayFotos = this.vehiculos[i].fotos;
-    console.log(arrayFotos)
+  deleteVehiculo(vehiculo:any) {
+    let arrayFotos = vehiculo.fotos;
     this.appModalService
       .confirm(
         'Eliminar vehículo',
         'Esta seguro que desea eliminar el vehículo con id',
         'Si',
         'No',
-        this.vehiculos[i].modelo
+        vehiculo.modelo
       )
       .then((result) => {
         if (result == true) {
-          this.vehiculosService.deleteVehiculo(id).subscribe(
+          this.vehiculosService.deleteVehiculo(vehiculo.id_vehiculo).subscribe(
             (response) => {
-              let index = this.vehiculos.findIndex((vehiculo: any) => {
-                return vehiculo.id_vehiculo == id;
+              let index = this.vehiculos.findIndex((vehicul: any) => {
+                return vehicul.id_vehiculo == vehiculo.id_vehiculo;
               });
               this.vehiculos.splice(index, 1);
               this.storage.deleteMultipleByUrls(arrayFotos);

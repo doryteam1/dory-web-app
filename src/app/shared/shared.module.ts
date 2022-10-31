@@ -67,6 +67,7 @@ import { CardNegocioComponent } from './components/card-negocio/card-negocio.com
 import { CardEventoComponent } from './components/card-evento/card-evento.component';
 import { CardProveedorSimpleComponent } from './components/card-producto/card-proveedor-simple/card-proveedor-simple.component';
 import { ReloadStateAuthDirective } from './directives/reload-state-auth.directive';
+import { CardGranjaSimpleComponent } from './components/card-granjas/card-granja-simple/card-granja-simple.component';
 
 
 @NgModule({
@@ -118,7 +119,8 @@ import { ReloadStateAuthDirective } from './directives/reload-state-auth.directi
     CardNegocioComponent,
     CardEventoComponent,
     CardProveedorSimpleComponent,
-    ReloadStateAuthDirective
+    ReloadStateAuthDirective,
+    CardGranjaSimpleComponent,
   ],
   imports: [
     CommonModule,
@@ -181,7 +183,8 @@ import { ReloadStateAuthDirective } from './directives/reload-state-auth.directi
     CardNegocioComponent,
     CardEventoComponent,
     CardProveedorSimpleComponent,
-    ReloadStateAuthDirective
+    ReloadStateAuthDirective,
+    CardGranjaSimpleComponent,
   ],
 
   providers: [

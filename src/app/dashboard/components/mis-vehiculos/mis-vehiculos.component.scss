@@ -1,43 +1,16 @@
-.container-row {
+.container-card {
   display: flex;
-  justify-content: stretch;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 30px;
+    margin-bottom: 30px;
+    gap: 70px;
 }
-.button {
-  width: 200px;
-  align-self: center;
-}
-.container {
+
+.center {
   display: flex;
-  flex-direction: column;
-  width: 80vw;
-  overflow-x: scroll;
-  padding-right: 0 !important;
-  padding-left: 0 !important;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-}
-.container__icon {
-  cursor: pointer;
-  color: var(--azul1)
-}
-.container__spinner {
-  width: 20px;
-  height: 20px;
-}
-.container-table-pagination {
-  width: 800px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-button:focus {
-  border-color: none !important;
-  box-shadow: none !important;
-  outline: 0 none !important;
-}
-@media screen and (min-width: 1000px) {
-.container-table-pagination{
-  width: 100% !important;
-}
+  justify-content: center;
+  align-items: center;
+  height: 80vh
 }

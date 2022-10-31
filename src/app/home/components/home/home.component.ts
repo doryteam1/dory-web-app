@@ -5,14 +5,9 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Gallery, GalleryRef } from 'ng-gallery';
-import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
-import { GranjasService } from 'src/app/granjas/services/granjas.service';
-import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
-import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
 import { DashboardInicioService } from 'src/app/services/dashboard-inicio.service';
 import { EnlacesDirectosInicioService } from 'src/app/services/enlaces-directos-inicio.service';
 import { SliderInicioService } from 'src/app/services/slider-inicio.service';
-import { UsuarioService } from 'src/app/services/usuario.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

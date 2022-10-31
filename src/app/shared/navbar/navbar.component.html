@@ -350,7 +350,6 @@
           </div>
 </ng-template>
 <!-- ventana obciones usurio registrados  menor 1400-->
-
 <ng-template #ventaUserLogin >
 <div class="dropdown" *ngIf="authenticated()">
   <div id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -358,12 +357,12 @@
       [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'">
   </div>
   <ul class="dropdown-menu dropdown-menu-login" aria-labelledby="dropdownMenu2">
-    <div class="usuarioFotoYnombre">
+    <div class="usuarioFotoYnombre" routerLink="/dashboard">
       <div>
         <img class="container__img container__img--button heightAndWidth "
           [src]="authUserPhoto() ? authUserPhoto() : 'assets/images/avatar-person.svg'">
         <span>{{authUserTipo_usuario()}}</span>
-        <button class="container__button btn btn-secondary" type="button" routerLink="/dashboard">
+        <button class="container__button btn btn-secondary" type="button" >
           {{authUserNomApell()}}
         </button>
       </div>

@@ -1,167 +1,19 @@
-.container-row{
-    display: flex;
-    justify-content: stretch;
-}
 
-.container_img{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
-.button{
-    width: 200px;
-    align-self: center;
-}
-
-.container{
-    display: flex;
-    flex-direction: column;
-    width: 80vw;
-    overflow-x: scroll;
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-
-.container__icon1{
-    cursor: pointer;
-
-}
-.container__icon1::before{
-color: var(--azul1);
-}
-
-.container__icon2{
-  cursor: pointer;
-}
-.container__icon2::before{
-  color: var(--azul1);
-}
-
-.container__icon3{
-  cursor: pointer;
-}
-.container__icon3::before{
-color: var(--azul1);
-}
-
-.container__icon4{
-  cursor: pointer;
-  color:var(--morado)
-}
-.container__icon4::before{
-color: var(--azul1);
-}
-.modal__image{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    display: block;
-}
-
-.modal__box{
-    display: flex;
-    flex-direction: column;
-}
-
-.container__table{
-  width: 1200px;
+.container-card {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  gap: 70px;
+  row-gap: 50px;
 }
 
-.container__input{
-    width: 100%;
-}
-
-.container__link{
-    margin-right: 10px;
-}
-.container__spinner{
-    width: 20px;
-    height: 20px;
-}
-
-.container__btn1{
-    width: 150px;
-    height: 38px;
-    background-color: var(--morado);
-}
-
-.container__btn2{
-  width: 200px;
-  height: 38px;
-}
-
-.spinner{
-}
-
-.container__box{
+.center {
   display: flex;
   justify-content: center;
-  height: 100%;
-  width: 100%;
+  align-items: center;
+  height: 80vh
 }
-
-.modal__image{
-  width: 200px;
-  height: 160px;
-  object-fit: cover;
-  display: block;
-  line-height: 1.5;
-  border-radius: 15px;
-  position: relative;
-}
-
-.image-box{
-  position:relative;
-}
-
-.square{
-  border: 1px solid white;
-  position:absolute;
-  right: 10px;
-  bottom: 10px;
-  width: 25px;
-  height: 25px;
-  border-radius: 4px;
-  background-color: var(--morado);
-}
-
-.square__icon{
-  color: white;
-  font-weight: 700;
-  font-size: 30px;
-  position: absolute;
-  right: -3px;
-  bottom: -10px;
-}
-.box{
-  display: flex;
-  justify-content: center;
-}
-
-.box__title{
-  margin-left: 15px;
-}
-
-.box__button{
-  align-self: center;
-}
-/* mi  estilo */
-
-
-  .footerheadermodal{
-    padding: 10px;
-  }
-
-
-/* fin mi estilo */
-/* prueba estilo */
-
-
 
