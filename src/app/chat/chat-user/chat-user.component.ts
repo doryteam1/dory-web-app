@@ -82,7 +82,7 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
       .getMessage()
       .subscribe((data: { de: number;  mensaje: string, metadata:any }) => {
         console.log(data)
-        this.utilities.playSound("assets/sounds/notification-sound.mp3");
+        this.utilities.playSound("assets/sounds/recived-message.mpeg");
         //TODO: hacer algo con el mensaje de confirmacion
         this.roomsArray = this.chatService.getStorage();
         const roomIndex = this.roomsArray.findIndex(
@@ -342,6 +342,8 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
       mensaje: this.messageText,
     });
 
+    this.utilities.playSound("assets/sounds/sendmessage.wav");
+    
     this.roomsArray = this.chatService.getStorage();
     console.log("en send message ", this.roomsArray)
     const roomIndex = this.roomsArray.findIndex(
