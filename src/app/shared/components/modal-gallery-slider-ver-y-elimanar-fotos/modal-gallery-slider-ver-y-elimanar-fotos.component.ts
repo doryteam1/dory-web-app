@@ -43,6 +43,7 @@ export class ModalGallerySliderVerYElimanarFotosComponent
   arrayamandar: any = [];
   indicePhotodelate: number[] = [];
   cancelarseleccionphoto: boolean = false;
+  maxFotosAlert:boolean=false;
   constructor(
     private _modalService: NgbActiveModal,
     private sanitizer: DomSanitizer,
@@ -192,6 +193,17 @@ export class ModalGallerySliderVerYElimanarFotosComponent
   }
   @HostListener('openAddFileDialogCreate')
   fileChangeCreate(event: any) {
+    let time;
+    this.maxFotosAlert = false
+    if (event.target.files.length > 10- this.ArrayFotos.length) {
+      this.maxFotosAlert=true
+      time =setTimeout(() => {
+        this.maxFotosAlert = false;
+      },5000);
+      return;
+    }
+    clearTimeout(time)
+   this.maxFotosAlert = false;
     if (this.action == 'create') {
       this.file = event.target.files;
       for (let index = 0; index < this.file.length; index++) {
@@ -199,10 +211,11 @@ export class ModalGallerySliderVerYElimanarFotosComponent
         this.filesfinalCreate.push(element);
         let objectURL = URL.createObjectURL(element);
         this.previewImageCreate =
-          this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        this.sanitizer.bypassSecurityTrustUrl(objectURL);
         this.ArrayFotos = this.ArrayFotos.concat(this.previewImageCreate);
         this.photosAppArray = this.ArrayFotos;
       }
+
       this.arrayamandar = [
         this.photosAppArray,
         this.filesfinalCreate,

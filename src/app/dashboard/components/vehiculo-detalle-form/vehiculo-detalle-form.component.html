@@ -46,56 +46,25 @@
           </div>
         </div>
       </div>
-        <div class="mb-3">
-          <label for="dateOfBirth">Descripción del vehículo</label>
-          <div class="input-group">
-            <div class="input-wrapper w-100">
-              <textarea id="productName" class="form-control" name="textarea" rows="3" cols="50"
-                placeholder="Información adicional" formControlName="descripcion">
+      <div class="mb-3">
+        <label for="dateOfBirth">Descripción del vehículo</label>
+        <div class="input-group">
+          <div class="input-wrapper w-100">
+            <textarea id="productName" class="form-control" name="textarea" rows="3" cols="50"
+              placeholder="Información adicional" formControlName="descripcion">
                           Write something here</textarea>
-            </div>
-          </div>
-          <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
-            <div *ngIf="descripcion?.errors?.['required']">
-              Campo requerido
-            </div>
           </div>
         </div>
-      <!-- Fotos mini -->
-      <div class="mb-5 clasfotoMiniy" *ngIf="photosVehicuArray.length > 0">
-        <div class="Photos-mini-container">
-          <div class="Photos-mini-data">
-            <div class="Photos-mini--div" *ngFor="let foto of photosVehicuArray | slice:0:3; let i =index">
-              <img class="Photos-mini__img" [src]="foto" (click)="openPhotosModal()">
-            </div>
-            <div class="masimagenescontador" *ngIf="photosVehicuArray.length >3" (click)="openPhotosModal()">
-              <img class="Photos-mini__img" *ngFor="let fotogranja of photosVehicuArray | slice:3:4; let i =index"
-                [src]="fotogranja">
-              <div *ngIf="photosVehicuArray.length > 4">
-                <p>+ {{photosVehicuArray.length-4}} </p>
-              </div>
-            </div>
-          </div>
-          <button [disabled]="loading" type="button" class="btn btn-primary container__btn--azul1"
-            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-            (click)="openPhotosModal()">
-            <div>
-              <img *ngIf="photosVehicuArray.length > 0 " src="assets/icons/pngegg.svg">
-              <span *ngIf="photosVehicuArray.length == 1 ">
-                Ver Foto
-              </span>
-              <span *ngIf="photosVehicuArray.length >=2">
-                Ver Fotos
-              </span>
-            </div>
-          </button>
-        </div>
-        <div *ngIf="loadingphoto && modalMode != 'update'" class="container__alert-msg danger-message">
-          <div>
-            Por favor; espere miestras se cargan las fotos
+        <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
+          <div *ngIf="descripcion?.errors?.['required']">
+            Campo requerido
           </div>
         </div>
       </div>
+      <!-- Fotos mini -->
+      <app-fotos-mini-detalle-form (onDetalle)="openPhotosModal()" *ngIf="photosVehicuArray.length > 0"
+        [loadingphoto]="loadingphoto" [modalMode]="modalMode" [fotos]="photosVehicuArray">
+      </app-fotos-mini-detalle-form>
       <div class="mb-5 clasfotoMiniyBoton" *ngIf="photosVehicuArray.length <= 0">
         <button [disabled]="loading" type="button" class="btn btn-primary container__btn--azul1"
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
@@ -112,19 +81,19 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
-        (click)="addVehiculo()" *ngIf="modalMode=='create'">
+      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn" (click)="addVehiculo()"
+        *ngIf="modalMode=='create'">
         <span *ngIf="!loading">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
-        (click)="updateVehiculo()" *ngIf="modalMode=='update'">
+      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn" (click)="updateVehiculo()"
+        *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button  type="button"  class="btn-rounded btn--grey container__btn container__btn--azul" (click)="goBack()">
+      <button type="button" class="btn-rounded btn--grey container__btn container__btn--azul" (click)="goBack()">
         <span>Atrás</span>
       </button>
     </div>

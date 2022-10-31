@@ -12,15 +12,12 @@ export class ComunicacionEntreComponentesService {
   @Output() Action: EventEmitter<boolean> = new EventEmitter();
 
   changeMyArray(Array: any[]) {
-    console.log('changeArray');
     this.changeArray.emit(Array);
   }
   changeMyArray2(Array: any[]) {
-    console.log('changeArray2');
     this.changeArray2.emit(Array);
   }
   arrayDelate(Array: any[]) {
-    console.log('ArrayDelate');
     this.ArrayDelate.emit(Array);
   }
   activateOrDeactivate(action:boolean){

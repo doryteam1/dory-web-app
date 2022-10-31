@@ -45,6 +45,7 @@ import { EnlacesDirectosInicioDetalleFormComponent } from './components/enlaces-
 import { GalleryModule } from 'ng-gallery';
 import { PanelBusquedaModule } from '../panel-busqueda/panel-busqueda.module';
 import { GranjasTodasComponent } from './components/granjas-todas/granjas-todas.component';
+import { FotosMiniDetalleFormComponent } from './components/fotos-mini-detalle-form/fotos-mini-detalle-form.component';
 
 
 
@@ -81,6 +82,7 @@ import { GranjasTodasComponent } from './components/granjas-todas/granjas-todas.
     EnlacesDirectosInicioComponent,
     EnlacesDirectosInicioDetalleFormComponent,
     GranjasTodasComponent,
+    FotosMiniDetalleFormComponent,
   ],
   imports: [
     CommonModule,
