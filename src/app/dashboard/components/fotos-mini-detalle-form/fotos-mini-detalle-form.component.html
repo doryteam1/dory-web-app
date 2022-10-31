@@ -1,0 +1,47 @@
+      <div class="clasfotoMiniy">
+        <div class="Photos-mini-container Photos-mini-ajuste1">
+          <div class="Photos-mini-data">
+            <div class="Photos-mini--div" *ngFor="let foto of fotos; let i =index">
+              <img class="Photos-mini__img" [src]="foto" (click)="openPhotosModal()">
+            </div>
+         <!--    <div class="masimagenescontador"  (click)="openPhotosModal()">
+              <img class="Photos-mini__img" *ngFor="let fotox of fotos | slice:fotos.length-1:fotos.length; let i =index" [src]="fotox">
+              <div >
+                <img src="assets/icons/ojo.svg">
+              </div>
+            </div> -->
+          </div>
+        </div>
+                <div class="Photos-mini-container Photos-mini-ajuste2">
+                  <div class="Photos-mini-data">
+                    <div class="Photos-mini--div" *ngFor="let foto of fotos | slice:0:3; let i =index">
+                      <img class="Photos-mini__img" [src]="foto" (click)="openPhotosModal()">
+                    </div>
+                    <div class="masimagenescontador" *ngIf="fotos.length >3" (click)="openPhotosModal()">
+                      <img class="Photos-mini__img" *ngFor="let fotox of fotos | slice:3:4; let i =index"
+                        [src]="fotox">
+                      <div *ngIf="fotos.length > 4">
+                        <p>+ {{fotos.length-4}} </p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div type="button" class="btn btn-primary container__btn--azul1"
+                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                    (click)="openPhotosModal()">
+                    <div>
+                      <img *ngIf="fotos.length > 0 " src="assets/icons/pngegg.svg">
+                      <span *ngIf="fotos.length == 1 ">
+                        Ver Foto
+                      </span>
+                      <span *ngIf="fotos.length >=2">
+                        Ver Fotos
+                      </span>
+                    </div>
+                  </div> -->
+                </div>
+                <div *ngIf="loadingphoto && modalMode != 'update'" class="container__alert-msg danger-message">
+                  <div>
+                    Por favor; espere miestras se cargan las fotos
+                  </div>
+                </div>
+      </div>

@@ -285,7 +285,7 @@ export class VehiculoDetalleFormComponent implements OnInit {
             this.goBack();
             this.loading = false;
             this.loadingphoto = false;
-            console.log('Fotos guardadas: ');
+            console.log('Fotos guardadas');
           },
           (err) => {
                this.filesfinalCreate = [];
@@ -293,7 +293,7 @@ export class VehiculoDetalleFormComponent implements OnInit {
                this.goBack();
                this.loading = false;
                this.loadingphoto = false;
-               console.log('Fotos guardadas: ');
+               console.log('Fotos guardadas');
              console.log(err);
           }
         );
@@ -306,7 +306,7 @@ export class VehiculoDetalleFormComponent implements OnInit {
           (response) => {
             this.filesfinalCreate = [];
             this.loading = false;
-            console.log('Fotos guardadas: ');
+            console.log('Fotos guardadas');
           },
           (err) =>
           {

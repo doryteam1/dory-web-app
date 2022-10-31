@@ -90,7 +90,7 @@
 .gallery--class {
   background-color: white;
   cursor: pointer;
-  height: 70vh;
+  height: 50vh;
   width: 50% !important;
 }
 .basic-container{
@@ -313,6 +313,10 @@
     display: none !important;
   }
 }
+.gallery--class {
+  height: 70vh !important;
+  width: 70% !important;
+}
 }
 @media screen and (max-width: 770px) {
   .container-statics {
@@ -342,8 +346,4 @@
 }
 
 
-@media screen and (max-width: 640px) {
-  .gallery--class {
-    height: 80vw;
-  }
-}
+

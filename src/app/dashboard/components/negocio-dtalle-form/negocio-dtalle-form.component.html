@@ -86,40 +86,9 @@
           </div>
         </div>
             <!-- Fotos mini -->
-            <div class="clasfotoMiniy" *ngIf="photosNegocioArray.length > 0">
-              <div class="Photos-mini-container">
-                <div class="Photos-mini-data">
-                  <div class="Photos-mini--div" *ngFor="let foto of photosNegocioArray | slice:0:3; let i =index">
-                    <img class="Photos-mini__img" [src]="foto" (click)="openPhotosModal()">
-                  </div>
-                  <div class="masimagenescontador" *ngIf="photosNegocioArray.length >3" (click)="openPhotosModal()">
-                    <img class="Photos-mini__img" *ngFor="let fotogranja of photosNegocioArray | slice:3:4; let i =index"
-                      [src]="fotogranja">
-                    <div *ngIf="photosNegocioArray.length > 4">
-                      <p>+ {{photosNegocioArray.length-4}} </p>
-                    </div>
-                  </div>
-                </div>
-                <button [disabled]="loading1" type="button" class="btn btn-primary container__btn--azul1"
-                  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                  (click)="openPhotosModal()">
-                  <div>
-                    <img *ngIf="photosNegocioArray.length > 0 " src="assets/icons/pngegg.svg">
-                    <span *ngIf="photosNegocioArray.length == 1 ">
-                      Ver Foto
-                    </span>
-                    <span *ngIf="photosNegocioArray.length >=2">
-                      Ver Fotos
-                    </span>
-                  </div>
-                </button>
-              </div>
-              <div *ngIf="loadingphoto && modalMode != 'update'" class="container__alert-msg danger-message">
-                <div>
-                  Por favor; espere miestras se cargan las fotos
-                </div>
-              </div>
-            </div>
+            <app-fotos-mini-detalle-form (onDetalle)="openPhotosModal()" *ngIf="photosNegocioArray.length > 0"
+              [loadingphoto]="loadingphoto" [modalMode]="modalMode" [fotos]="photosNegocioArray">
+            </app-fotos-mini-detalle-form>
             <div class="clasfotoMiniyBoton" *ngIf="photosNegocioArray.length <= 0">
               <button [disabled]="loading1" type="button" class="btn btn-primary container__btn--azul1"
                 style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"

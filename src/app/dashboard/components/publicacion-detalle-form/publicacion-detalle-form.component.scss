@@ -9,7 +9,7 @@
   .direccion-class {
     cursor: pointer;
   }
- 
+
   .direccion-class:hover {
     background-color: #e4f4ff;
   }
@@ -54,7 +54,7 @@
    border-radius: 4px;
    background-color: var(--morado);
  }
- 
+
  .square__icon {
    color: white;
    font-weight: 700;
@@ -75,7 +75,7 @@
    height: 38px;
    background-color: var(--morado);
  }
- 
+
  /* estilos  botones*/
  .container__btn {
    width: 200px;
@@ -83,30 +83,30 @@
    margin-left: 10px;
    margin-top: 0;
  }
- 
+
  .container__btn--azul {
    background-color: var(azul1);
  }
- 
+
  .container__spinner {
    width: 20px;
    height: 20px;
    color: var(--white);
  }
- 
+
  .justify-content-between {
    align-items: center;
  }
- 
+
  .btn-mi-estilo {
    width: 174.13px;
  }
- 
+
  .container__btn--azul1 {
    background-color: var(--azul1);
    font-weight: 700;
    border-color: var(--azul1);
- 
+
    div {
      display: flex;
      align-items: center;
@@ -114,138 +114,55 @@
      gap: 5px;
    }
  }
- 
- .Photos-mini-container {
-   display: flex;
-   height: 50px;
-   justify-content: flex-start;
-   align-items: center;
-   gap: 5px;
-   margin-bottom: 10px;
- 
-   .Photos-mini-data {
-     display: flex;
-     height: 100%;
-     justify-content: flex-start;
-     align-items: center;
-     gap: 5px;
- 
-     .Photos-mini--div {
-       width: 50px;
-       height: 100%;
- 
-       .Photos-mini__img {
-         border-radius: 10%;
-         width: 100%;
-         height: 100%;
-         object-fit: cover;
-         cursor: pointer;
-       }
-     }
- 
-     .masimagenescontador {
-       position: relative;
-       color: #fff;
-       font-size: 1.50em;
-       width: 50px;
-       height: 100%;
- 
-       .Photos-mini__img {
-         cursor: pointer;
-         position: absolute;
-         top: 0;
-         right: 0;
-         bottom: 0;
-         left: 0;
-         background-size: cover;
-         background-position: center;
-         width: 100%;
-         height: 100%;
-         border-radius: 10%;
-       }
- 
-       div {
-         position: absolute;
-         top: 0;
-         bottom: 0;
-         margin: auto;
-         transition: left 0.2s;
-         background: rgba(0, 0, 0, 0.6);
-         color: #fff;
-         padding: 10px;
-         width: 100%;
-         font-size: 0.9rem;
-         border-radius: 10%;
-         text-align: center;
-         cursor: pointer;
-         display: flex;
-         justify-content: center;
-         align-items: center;
- 
-         p {
-           margin: 0;
-         }
-       }
-     }
-   }
- }
- 
+
+
+
  .clasfotoMiniyBoton {
    margin-bottom: 10px !important;
  }
- 
- .clasfotoMiniy {
-   margin-bottom: 10px !important;
- }
- 
+
+
+
  button:focus {
    border-color: none !important;
    box-shadow: none !important;
    outline: 0 none !important;
  }
- 
+
  @media screen and (max-width: 600px) {
    .justify-content-between {
      flex-direction: column !important;
      gap: 10px;
    }
- 
+
    .modal-footer {
      justify-content: center;
    }
- 
+
    .clasfotoMiniyBoton {
      text-align: center;
    }
  
-   .clasfotoMiniy {
-     height: 80px;
-   }
- 
-   .Photos-mini-container {
-     flex-direction: column;
-   }
  }
- 
+
  @media screen and (max-width: 500px) {
    .d-flex-button-footer {
      flex-direction: column;
      gap: 10px;
    }
- 
+
    .modal-footer {
      display: flex;
      justify-content: center;
      align-items: center;
    }
  }
- 
+
  @media screen and (max-width: 400px) {
    .d-flex-button {
      flex-direction: column-reverse !important;
      gap: 10px;
      align-items: center;
    }
- 
+
  }
- 
