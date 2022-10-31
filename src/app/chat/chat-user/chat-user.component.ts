@@ -38,6 +38,7 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
   textSearch:string='';
   recents: any[] = [];
   unreads: any[] = [];
+  totalUnreads:number=0;
   @ViewChild('chatFloatinBtn') chatFloatingBtnRef!: ElementRef;
   userChatRefs:any;
   constructor(
@@ -51,7 +52,6 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
   }
   subscriptions: Subscription[]= [];
   ngOnInit(): void {
-    console.log("chat ng on init!")
     let tempSub:Subscription;
     this.currentUser = this.userService.getAuthUser();
     this.userService.getTodosUsuarioAll().subscribe(
@@ -94,7 +94,6 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
             fromUserId: data.de,
             message: data.mensaje
           });
-          console.log("seteando ultimo mensaje")
         }else{
           const updateStorage = {
             roomId: data.de,
@@ -213,6 +212,7 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
       (response)=>{
         this.recents = response?.data?.ultimos;
         this.unreads = response?.data?.unreads?.chats;
+        this.totalUnreads = response?.data?.unreads?.totalCount;
         let usersOrder:any[] = [];
         this.recents?.forEach(
           (recent)=>{
@@ -229,37 +229,20 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
               )
              if(index > -1)
              {
+              this.userList[index].last_message = recent.contenido;
+              this.userList[index].created_at = recent.fecha_creacion;
               usersOrder.push(this.userList[index]);
               this.userList.splice(index,1);
              }
-
-             let roomIndex = this.roomsArray.findIndex(
-              (room)=>{
-                return room.roomId == userId
-              }
-             )
           }
         )
         this.userList = usersOrder.concat(this.userList)
-        this.recents.forEach(
-          (element)=>{
-            let index = this.userList.findIndex(
-              (user)=>{
-                return user.id == element.usuario_emisor_id;
-              }
-            )
-            if(index > -1){
-              this.userList[index].last_message = element.contenido;
-              this.userList[index].created_at = element.fecha_creacion;
-            }
-          }
-        )
 
         this.unreads.forEach(
           (element)=>{
             let index = this.userList.findIndex(
               (user)=>{
-                return user.id == element.usuario_emisor_id;
+                return user?.id == element.usuario_emisor_id;
               }
             )
             if(index > -1){
@@ -323,14 +306,16 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
         if(index > -1){
           tempCount = this.userList[index].unreadsCount;
           this.userList[index].unreadsCount = null;
+          this.totalUnreads -= tempCount;
         }
-              
+        
         this.chatService.setReaded(this.selectedUser.id).subscribe(
           ()=>{
             
           },err=>{
             if(index > -1)
             this.userList[index].unreadsCount = tempCount;
+            this.totalUnreads += tempCount;
           }
         )
       }
@@ -521,6 +506,7 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
         this.userList[index].unreadsCount = 1;
       }
     }
+    this.totalUnreads++;
     this.onSearch();
   }
 

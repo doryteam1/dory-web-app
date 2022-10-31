@@ -307,6 +307,27 @@ button:focus {
   border-color: #26a5b8;
 }
 
+.floating-btn__badge1{
+  position: absolute;
+  top: 1px;
+  right: -17px;
+  background-color: var(--azul1);
+}
+
+.floating-btn__badge2{
+  position: absolute;
+  top: 1px;
+  right: -27px;
+  background-color: var(--azul1);
+}
+
+.floating-btn__badge3{
+  position: absolute;
+  top: 1px;
+  right: -41px;
+  background-color: var(--azul1);
+}
+
 .floating-btn .flecha {
   fill: #26a5b8;
 }
