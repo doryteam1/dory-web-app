@@ -2,6 +2,7 @@ import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ChatService } from 'src/app/services/chat.service';
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
 @Component({
   selector: 'app-publicacion-detalle',
@@ -15,7 +16,8 @@ export class PublicacionDetalleComponent implements OnInit {
   constructor(
     private publicacionesService: PublicacionesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private chatService:ChatService
   ) {}
   ngOnInit(): void {
      registerLocaleData(es);
@@ -36,5 +38,9 @@ export class PublicacionDetalleComponent implements OnInit {
       this.router.createUrlTree(['transportadores/detalle/' + id])
     );
     window.open(url, '_blank');
+  }
+
+  sendMessage(){
+    this.chatService.openUser(this.publicacion?.usuarios_id);
   }
 }

@@ -487,8 +487,8 @@ export class ChatUserComponent implements OnInit,AfterViewInit {
             let userRef = document.getElementById(userId);
             console.log(userRef)
             userRef?.click()
-          },50)
-        },50)
+          },3)
+        },3)
         
       }
     )

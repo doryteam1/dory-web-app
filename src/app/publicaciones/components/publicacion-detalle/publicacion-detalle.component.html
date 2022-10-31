@@ -33,6 +33,7 @@
         <span class="card__title2">Correo</span>
         <span class="card__description-title">{{publicacion?.email}}</span>
         <!-- <span class="link" (click)="goDetail(vehiculo.usuarios_id)">Ver detalle propietario</span> -->
+        <span class="link" (click)="sendMessage()" *ngIf="publicacion">Enviar mensaje</span>
       </div>
     </div>
   </div>

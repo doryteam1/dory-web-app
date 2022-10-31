@@ -14,7 +14,6 @@ import { Filtro, MetaFiltro } from '../../../../models/filtro.model';
 import { Checkbox } from 'src/models/checkbox.model';
 import { BuscarPor } from '../../../../models/buscarPor.model';
 import { StorageService } from 'src/app/services/storage.service';
-import { async } from '@angular/core/testing';
 const _ = require('lodash');
 
 
@@ -75,6 +74,8 @@ export class MisAsociacionesComponent
   activeclass3: boolean = false;
   asociacionesexistentes!: any[];
   showNotFoundAsocexistente: boolean = false;
+  isUserRep:boolean = false;
+  isUserMiemb:boolean = false;
   /* varibles de buscqueda y filtros */
   filtro: Filtro[] = [
     {
@@ -157,6 +158,9 @@ export class MisAsociacionesComponent
         this.asociaciones = response.data;
         if (this.asociaciones.length <= 0) {
           this.showNotFound = true;
+          this.isUserRep = false;
+        }else{
+          this.isUserRep = true;
         }
         this.loading1 = false;
       },
@@ -168,6 +172,7 @@ export class MisAsociacionesComponent
     );
 
     /*Asociaciones en donde se en miembro*/
+    this.loading2 = true;
     this.asociacionesService
       .getAsociacionesIsMiembroUser(this.authUserId)
       .subscribe( (response) => {
@@ -175,7 +180,14 @@ export class MisAsociacionesComponent
          console.log(this.asociacionesIsMiembro)
         if (this.asociacionesIsMiembro.length < 1) {
           this.showNotFoundAsocMiemb = true;
+          this.isUserMiemb = false;
+        }else{
+          this.isUserMiemb = true;
         }
+        this.loading2 = false;
+      },err=>{
+        this.showNotFoundAsocMiemb = true;
+        this.loading2 = false;
       });
     /*Todas las asociaones que existen*/
     this.asociacionesService.getAsociacionesTodas().subscribe((response) => {

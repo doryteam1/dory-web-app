@@ -56,6 +56,7 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
   action_dos:any='ver_editar'
   remitente:any
   municipioRemitente:any
+  authUser: any;
   constructor(
     private publicacionesService: PublicacionesService,
     private granjasServices:GranjasService,
@@ -157,9 +158,9 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
   }
 
   async getAuthUserDetail(){
-    let authUser = this.userService.getAuthUser();
-    this.authUserId = authUser.sub;
-    let authUserDetail = await this.userService.getUsuarioByEmail(authUser.email).toPromise();
+    this.authUser = this.userService.getAuthUser();
+    this.authUserId = this.authUser.sub;
+    let authUserDetail = await this.userService.getUsuarioByEmail(this.authUser.email).toPromise();
     authUserDetail = authUserDetail?.data[0];
     this.municipio?.setValue(authUserDetail?.id_municipio)
     this.usuario?.setValue(this.authUserId)

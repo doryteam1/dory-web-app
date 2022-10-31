@@ -1,19 +1,19 @@
 <div class="container-misasociaciones">
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <!-- Home tab pane -->
-    <li class="nav-item" role="presentation">
+    <li class="nav-item" role="presentation" *ngIf="isUserRep">
       <a #tabSoyRep [ngClass]="{'active nav-link--mytabstilo': activeclass1}" class="nav-link nav-link--color" id="home-tab"
         data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
         aria-selected="true" (click)="activeTabClick('representante')">Donde soy representante</a>
     </li>
     <!-- Profile-tab-pane -->
-    <li class="nav-item" role="presentation">
+    <li class="nav-item" role="presentation" *ngIf="isUserMiemb">
       <a #tabSoyMiemb [ngClass]="{'active nav-link--mytabstilo': activeclass2}" class="nav-link nav-link--color" id="profile-tab"
         data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab"
         aria-controls="profile-tab-pane" aria-selected="false" (click)="activeTabClick('miembro')">Donde soy miembro</a>
     </li>
     <!-- Unirme_a_una_asociacion -->
-    <li class="nav-item" role="presentation">
+    <li class="nav-item" role="presentation" *ngIf="!isUserRep && !isUserMiemb">
       <a #tabUnir [ngClass]="{'active nav-link--mytabstilo': activeclass3}" class="nav-link nav-link--color" id="Unirme_a_una_asociacion-tab"
         data-bs-toggle="tab" data-bs-target="#Unirme_a_una_asociacion" type="button" role="tab"
         aria-controls="Unirme_a_una_asociacion" aria-selected="false"
@@ -22,7 +22,7 @@
   </ul>
   <div class="tab-content" id="myTabContent">
     <!-- Home tab panel -->
-    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0" *ngIf="isUserRep">
       <div class="container-card" *ngIf="!showNotFound">
         <app-card-asociacion  *ngFor="let asociacion of asociaciones" [asociacion]="asociacion"
           [delatecard]="true" [showRepLegal]="false" (onDetalle)="navigate($event,'enable','tabSoyRep')"
@@ -35,7 +35,7 @@
       <app-spinner [showText]=false *ngIf="loading1"></app-spinner>
     </div>
     <!-- Profile-tab-pane -->
-    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0" *ngIf="isUserMiemb">
       <div class="container-card " *ngIf="!showNotFoundAsocMiemb">
         <app-card-asociacion   *ngFor="let asociacion of asociacionesIsMiembro" [asociacion]="asociacion"
           [delatecard]="false" (onDetalle)="navigate($event,'disable','tabSoyMiemb')" (onDelete)="delete($event)">
@@ -46,7 +46,7 @@
       </div>
     </div>
     <!-- Unirme_a_una_asociacion -->
-    <div class="tab-pane fade" id="Unirme_a_una_asociacion" role="tabpanel" aria-labelledby="Unirme_a_una_asociacion-tab" tabindex="0">
+    <div class="tab-pane fade" id="Unirme_a_una_asociacion" role="tabpanel" aria-labelledby="Unirme_a_una_asociacion-tab" tabindex="0" *ngIf="!isUserRep && !isUserMiemb">
       <div class="buscadoryfiltro mt-4">
         <div class="buscador-container">
           <app-search class="app-search" [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar asociacion..'"
@@ -116,5 +116,5 @@
     </div>
   </div>
 </div>
-<app-basic-floating-btn [tooltip]="'Crear asociación'" [agregar]="true" (click)="create()" *ngIf="selectedTab == 'representante'">
+<app-basic-floating-btn [tooltip]="'Crear asociación'" [agregar]="true" (click)="create()" *ngIf="selectedTab == 'representante' && !isUserRep && !isUserMiemb && !loading1 && !loading2">
 </app-basic-floating-btn>
