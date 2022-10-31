@@ -22,7 +22,7 @@ export class AppComponent implements OnInit{
   constructor(
     private _electronService: ElectronjsService,
     public userService:UsuarioService,
-    
+    private chatService: ChatService
   ) {
   }
   ngOnInit(): void {
@@ -33,6 +33,11 @@ export class AppComponent implements OnInit{
     this.userService.getAuthObservable().subscribe(
       (isAuth)=>{
         this.isAuthUser = isAuth;
+        if(!this.isAuthUser){
+          this.chatService.disconnect();
+        }else{
+          this.chatService.connect();
+        }
       }
     )
   }

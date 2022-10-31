@@ -9,17 +9,18 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class ChatService {
-  private socket: Socket;
+  private socket!: Socket;
   private url = environment.doryServerUrl;
   chatRefs: { btnChat: HTMLElement, userRefs: any } | null = null;
   subject:Subject<string> = new Subject<string>();
   constructor(private userService:UsuarioService, private https: HttpsService) {
-    this.socket = io(this.url, {
+    /* this.socket = io(this.url, {
       transports: ['websocket', 'polling', 'flashsocket'],
       auth: {
         token: "Bearer " + this.userService.getAuthUserToken()!
       }
-    });
+    }); */
+    this.connect();
   }
 
   joinRoom(data: any): void {
@@ -116,8 +117,14 @@ export class ChatService {
   }
 
   connect(){
-    this.socket.connect();
+    this.socket = io(this.url, {
+      transports: ['websocket', 'polling', 'flashsocket'],
+      auth: {
+        token: "Bearer " + this.userService.getAuthUserToken()!
+      }
+    });
   }
+
   isUserAuth(){
     if(!this.userService.isAuthenticated()){
       this.disconnect();
