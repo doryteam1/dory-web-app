@@ -159,4 +159,16 @@ export class ChatService {
     return this.https.put('https://dory-api-rest.herokuapp.com/api/chat/set/readed/all/'+idUsuarioEmisor,null)
   }
 
+  /*Escucha si hay nuevas solicitudes de asociaciones --> usuario o usuario --> asociaciones*/  
+  listenNewSolicitudes(): Observable<any> {
+    return new Observable<{ de: number;  mensaje: string, metadata:any }>((observer) => {
+      this.socket.on('new-solicitud', (data) => {
+        observer.next(data);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+  }
 }

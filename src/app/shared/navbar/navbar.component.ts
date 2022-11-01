@@ -10,6 +10,7 @@ require('dayjs/locale/es')
 dayjs.locale('es')
 import { ResizeObserver } from '@juggle/resize-observer';
 import { AppModalService } from '../services/app-modal.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-navbar',
@@ -58,7 +59,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private storageService: StorageService,
     private _electronService: ElectronjsService,
     private renderer: Renderer2,
-    private appModalService: AppModalService
+    private appModalService: AppModalService,
+    private chatService:ChatService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -94,6 +96,13 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     });
+
+    this.chatService.listenNewSolicitudes().subscribe(
+      (data)=>{
+        console.log(data)
+        this.updateAsocRequest()
+      }
+    )
   }
   @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
     if (event.target.innerWidth >= 950) {
