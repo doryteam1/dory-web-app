@@ -4,9 +4,9 @@
       <div class="container__list-search">
         <div class="input-wrapper">
           <div class="bi bi-search"></div>
-          <input type="text" placeholder="Buscar" [(ngModel)]="textSearch" (ngModelChange)="onSearch()"/>
-          <i class="img-x" *ngIf="false"></i>
-          <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" *ngIf="false">
+          <input type="text" placeholder="Buscar" [(ngModel)]="textSearch" (ngModelChange)="onSearch()" (keyup)="onKey($event)"/>
+          <i class="img-x"  (click)="borrarBusqueda()" *ngIf="borrarseart && !loadingseart"></i>
+          <!-- <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" *ngIf="loadingseart"> -->
           <!-- <app-search (textSearch)="onSearch($event)"></app-search> -->
         </div>
         <button type="button" class="btn-close button_close" (click)="closeChat()"></button>
