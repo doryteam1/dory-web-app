@@ -177,7 +177,7 @@ class="galleryslider"
     <div class="box-calificar" *ngIf="!miresena">
       <h4 class="box-calificar__title">Calificar granja</h4>
       <span class="box-calificar__sub-title">Comparte tu opinión con otros usuarios</span>
-      <app-stars class="box-calificar__stars" (rating)="onRating($event)" (click)="openQualifyModal(qualifyModal)"></app-stars>
+      <app-stars class="box-calificar__stars"  [selectedStar]="rating" (rating)="onRating($event)" (click)="openQualifyModal(qualifyModal)"></app-stars>
       <span class="box-calificar__action" (click)="openQualifyModal(qualifyModal)">Escribe una opinión</span>
     </div>
 

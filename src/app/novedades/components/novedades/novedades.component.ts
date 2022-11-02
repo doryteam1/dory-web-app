@@ -1,7 +1,9 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NovedadesService } from 'src/app/services/novedades.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { BuscarPor } from 'src/models/buscarPor.model';
 import { Novedad } from 'src/models/novedad.model';
@@ -16,13 +18,16 @@ export class NovedadesComponent implements OnInit {
   tipo!: string;
   showNotFound: boolean = false;
   loading: boolean = false;
-  novedades: any[]=[];
-  palabra: string='';
+  novedades: any[] = [];
+  palabra: string = '';
   constructor(
     private activatedRoute: ActivatedRoute,
     private nService: NovedadesService,
     private userService: UsuarioService,
-    private searchBuscadorService: SearchBuscadorService
+    private searchBuscadorService: SearchBuscadorService,
+    private appModalService: AppModalService,
+    public location2: PlatformLocation,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +48,7 @@ export class NovedadesComponent implements OnInit {
     this.nService.getNovedadesByTipo(this.tipo).subscribe(
       (response) => {
         this.novedadesFiltered = response.data;
-        this.novedades = this.novedadesFiltered.slice()
+        this.novedades = this.novedadesFiltered.slice();
         if (this.novedadesFiltered.length < 1) {
           this.showNotFound = true;
         }
@@ -90,8 +95,20 @@ export class NovedadesComponent implements OnInit {
           }
         );
       }
-    } else {
-      console.log('El usuario debe estar autenticado para poder dar like');
+    } else if (!this.userService.isAuthenticated()) {
+      this.location2.onPopState(() => {
+        this.appModalService.closeModalAlertSignu();
+      });
+      this.appModalService
+        .modalAlertSignu()
+        .then((result: any) => {
+          if (result == 'registrate') {
+            this.router.navigate(['/registro']);
+          } else if (result == 'ingresar') {
+            this.router.navigate(['/login']);
+          }
+        })
+        .catch((result) => {});
     }
   }
   navigateDetalle(url_novedad: any) {
@@ -123,12 +140,12 @@ export class NovedadesComponent implements OnInit {
     this.reseteoDeBusqueda();
   }
   reseteoDeBusqueda() {
-     let resultados: any[] = this.buscarData(this.palabra);
-     this.novedades = resultados;
-     if (this.novedades.length < 1) {
-       this.showNotFound = true;
-     } else {
-       this.showNotFound = false;
-     }
+    let resultados: any[] = this.buscarData(this.palabra);
+    this.novedades = resultados;
+    if (this.novedades.length < 1) {
+      this.showNotFound = true;
+    } else {
+      this.showNotFound = false;
+    }
   }
 }

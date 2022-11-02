@@ -29,6 +29,6 @@
   </app-chip-con-boton-close>
 </div>
 
-<div class="container">
+<div class="container mb-4">
   <app-card-vehiculo [datos]="vehiculo" [indiceDatos]="i" *ngFor="let vehiculo of vehiculosFiltered; let i=index;" (onDetalle)="goDetail(vehiculo.id_vehiculo)"></app-card-vehiculo>
 </div>

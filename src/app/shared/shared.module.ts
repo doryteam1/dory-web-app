@@ -68,6 +68,7 @@ import { CardEventoComponent } from './components/card-evento/card-evento.compon
 import { CardProveedorSimpleComponent } from './components/card-producto/card-proveedor-simple/card-proveedor-simple.component';
 import { ReloadStateAuthDirective } from './directives/reload-state-auth.directive';
 import { CardGranjaSimpleComponent } from './components/card-granjas/card-granja-simple/card-granja-simple.component';
+import { ModalAlertSignupComponent } from './components/modal-alert-signup/modal-alert-signup.component';
 
 
 @NgModule({
@@ -121,6 +122,7 @@ import { CardGranjaSimpleComponent } from './components/card-granjas/card-granja
     CardProveedorSimpleComponent,
     ReloadStateAuthDirective,
     CardGranjaSimpleComponent,
+    ModalAlertSignupComponent,
   ],
   imports: [
     CommonModule,

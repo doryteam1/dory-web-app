@@ -79,4 +79,5 @@ export class CardGranjasComponent implements OnInit {
       .then((result) => {})
       .catch((result) => {});
   }
+  
 }

@@ -28,7 +28,7 @@
         >
     </app-chip-con-boton-close>
 </div>
-  <div class="container-card" *ngIf="!showNotFound">
+  <div class="container-card mb-4" *ngIf="!showNotFound">
     <app-card-asociacion *ngFor="let asociacion of  asociacionesFiltered" [asociacion]="asociacion" [delatecard]="false"
       (onDetalle)="goAssociationDetail(asociacion)" (onDetalleRepresentante)="goDetalleRepresentante($event)">
     </app-card-asociacion>
