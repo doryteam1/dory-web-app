@@ -5,6 +5,7 @@ import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
+import { TopAlertControllerService } from 'src/app/shared/services/top-alert-controller.service';
 
 @Component({
   selector: 'app-solicitudes-modal-content',
@@ -20,13 +21,15 @@ export class SolicitudesModalContentComponent implements OnInit {
   pescadoresFiltered: any[] = [];
   activeclass1: boolean = false;
   activeclass2: boolean = false;
+  error:string = '';
   constructor(
     public activeModal: NgbActiveModal,
     private pescadoresService: PescadoresService,
     private piscicultoresService: PiscicultoresService,
     private asociacionService: AsociacionesService,
     private appModalService: AppModalService,
-    private router: Router
+    private router: Router,
+    private topAlertController:TopAlertControllerService
   ) {}
 
   ngOnInit(): void {
@@ -110,7 +113,10 @@ export class SolicitudesModalContentComponent implements OnInit {
           (err) => {
             usuario.estado_solicitud = null;
             usuario.solicitud_enviada_por = null;
-            console.log(err);
+            this.error = err.error.message;
+            setTimeout(()=>{
+              this.error = '';
+            },3000)
           }
         );
     }

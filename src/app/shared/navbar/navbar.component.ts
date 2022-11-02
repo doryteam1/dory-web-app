@@ -89,14 +89,13 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           this.isHidden = false;
         }
-        if (route.includes('dashboard')) {
-          if (this.userService.isAuthenticated()) {
-            this.updateAsocRequest();
-          }
-        }
       }
     });
 
+    if (this.userService.isAuthenticated()) {
+      this.updateAsocRequest();
+    }
+    
     this.chatService.listenNewSolicitudes().subscribe(
       (data)=>{
         console.log(data)
