@@ -1,28 +1,39 @@
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Granja } from 'src/models/granja.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GranjasService } from '../../services/granjas.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location, PlatformLocation, registerLocaleData } from '@angular/common';
+import {
+  Location,
+  PlatformLocation,
+  registerLocaleData,
+
+} from '@angular/common';
 import es from '@angular/common/locales/es';
 import { environment } from 'src/environments/environment';
 import { PlacesService } from 'src/app/services/places.service';
-import {MapInfoWindow, MapMarker} from '@angular/google-maps';
+import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { vertices } from '../../../global/constants';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { BuscarPor } from '../../../../models/buscarPor.model';
 import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { MediaQueryService } from 'src/app/services/media-query.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-granjas-municipio',
   templateUrl: './granjas-municipio.component.html',
   styleUrls: ['./granjas-municipio.component.scss'],
 })
-export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
+export class GranjasMunicipioComponent implements OnInit, OnDestroy {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   @ViewChild('marker') marker!: MapMarker;
   showNotFound: boolean = false;
@@ -91,6 +102,7 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
   filtroseleccionado!: MetaFiltro | null;
   contador = 0;
   modalGogleMapOpen: boolean = false;
+  isAuthUser: boolean = false;
 
   constructor(
     httpClient: HttpClient,
@@ -102,7 +114,8 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
     private location: Location,
     private appModalService: AppModalService,
     public location2: PlatformLocation,
-    public mediaQueryService: MediaQueryService
+    public mediaQueryService: MediaQueryService,
+    public userService: UsuarioService,
   ) {
     this.apiLoaded = httpClient
       .jsonp(
@@ -161,13 +174,13 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
           };
         }
       });
-          this.mediaQuery2 = this.mediaQueryService
-            .mediaQuery('min-width: 1100px')
-            .subscribe((matches) => {
-              if (matches && this.modalGogleMapOpen) {
-                this.appModalService.CloseGoogleMapGeneralModal();
-              }
-            });
+    this.mediaQuery2 = this.mediaQueryService
+      .mediaQuery('min-width: 1100px')
+      .subscribe((matches) => {
+        if (matches && this.modalGogleMapOpen) {
+          this.appModalService.CloseGoogleMapGeneralModal();
+        }
+      });
   }
   ngOnDestroy(): void {
     this.mediaQuery2.unsubscribe();
@@ -235,18 +248,39 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
     this.router.navigateByUrl('/granjas/municipio/detalle/' + id);
   }
   changeFavorite(i: number) {
-    this.granjasFiltered[i].favorita =
-      this.granjasFiltered[i].favorita == 1 ? 0 : 1;
-    this.granjasService.esFavorita(this.granjasFiltered[i].id_granja).subscribe(
-      (response) => {
-        console.log(response);
-      },
-      (err) => {
-        console.log(err);
-        this.granjasFiltered[i].favorita =
-          this.granjasFiltered[i].favorita == 1 ? 0 : 1;
-      }
-    );
+    this.isAuthUser = this.userService.isAuthenticated();
+    if (this.isAuthUser) {
+      this.granjasFiltered[i].favorita =
+        this.granjasFiltered[i].favorita == 1 ? 0 : 1;
+      this.granjasService
+        .esFavorita(this.granjasFiltered[i].id_granja)
+        .subscribe(
+          (response) => {
+            console.log(response);
+          },
+          (err) => {
+            console.log(err);
+            this.granjasFiltered[i].favorita =
+              this.granjasFiltered[i].favorita == 1 ? 0 : 1;
+          }
+        );
+    } else if (!this.isAuthUser) {
+         this.location2.onPopState(() => {
+           this.appModalService.closeModalAlertSignu();
+         });
+      this.appModalService
+        .modalAlertSignu()
+        .then((result: any) => {
+          if (result == 'registrate') {
+             this.router.navigate(['/registro']);
+          } else if (result == 'ingresar') {
+            this.router.navigate(['/login']);
+          }
+        })
+        .catch((result) => {});
+    }
+
+    //
   }
 
   showResenas(idGranja: number) {
@@ -310,5 +344,6 @@ export class GranjasMunicipioComponent implements OnInit,OnDestroy  {
 
   goBack() {
     this.location.back();
+
   }
 }

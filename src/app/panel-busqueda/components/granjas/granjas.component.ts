@@ -1,8 +1,11 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES } from 'src/app/global/constants';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { PlacesService } from 'src/app/services/places.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { BuscarPor } from 'src/models/buscarPor.model';
@@ -133,7 +136,10 @@ export class GranjasComponent implements OnInit {
     private granjasService: GranjasService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private places: PlacesService
+    private places: PlacesService,
+    public userService: UsuarioService,
+    private appModalService: AppModalService,
+    public location2: PlatformLocation
   ) {}
   ngOnInit(): void {
     let token = localStorage.getItem('token');
@@ -155,7 +161,6 @@ export class GranjasComponent implements OnInit {
     /* municipios sucre */
     this.loadMunic();
   }
-
 
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
@@ -335,18 +340,36 @@ export class GranjasComponent implements OnInit {
     this.searchReset();
   }
   changeFavorite(i: number) {
-    this.granjasFiltered[i].favorita =
-      this.granjasFiltered[i].favorita == 1 ? 0 : 1;
-    this.granjasService.esFavorita(this.granjasFiltered[i].id_granja).subscribe(
-      (response) => {
-        console.log(response);
-      },
-      (err) => {
-        console.log(err);
-        this.granjasFiltered[i].favorita =
-          this.granjasFiltered[i].favorita == 1 ? 0 : 1;
-      }
-    );
+    if (this.userService.isAuthenticated()) {
+      this.granjasFiltered[i].favorita =
+        this.granjasFiltered[i].favorita == 1 ? 0 : 1;
+      this.granjasService
+        .esFavorita(this.granjasFiltered[i].id_granja)
+        .subscribe(
+          (response) => {
+            console.log(response);
+          },
+          (err) => {
+            console.log(err);
+            this.granjasFiltered[i].favorita =
+              this.granjasFiltered[i].favorita == 1 ? 0 : 1;
+          }
+        );
+    } else if (!this.userService.isAuthenticated()) {
+      this.location2.onPopState(() => {
+        this.appModalService.closeModalAlertSignu();
+      });
+      this.appModalService
+        .modalAlertSignu()
+        .then((result: any) => {
+          if (result == 'registrate') {
+            this.router.navigate(['/registro']);
+          } else if (result == 'ingresar') {
+            this.router.navigate(['/login']);
+          }
+        })
+        .catch((result) => {});
+    }
   }
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);

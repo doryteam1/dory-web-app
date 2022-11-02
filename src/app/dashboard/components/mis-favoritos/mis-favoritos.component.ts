@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component,  OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import es from '@angular/common/locales/es';

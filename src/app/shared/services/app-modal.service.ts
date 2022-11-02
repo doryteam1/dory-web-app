@@ -10,6 +10,7 @@ import { ModalGoogleGeneralComponent } from '../components/modal-google-general/
 import { SafeUrl } from '@angular/platform-browser';
 import { ModalContactCardComponent } from '../components/modal-contact-card/modal-contact-card.component';
 import { ModalSearchComponent } from '../components/modal-search/modal-search.component';
+import { ModalAlertSignupComponent } from '../components/modal-alert-signup/modal-alert-signup.component';
 
 interface atributos {
   nameButton: string;
@@ -40,6 +41,23 @@ export class AppModalService {
     modalRef.componentInstance.btnOkText = btnOkText;
     modalRef.componentInstance.btnCancelText = btnCancelText;
     modalRef.componentInstance.resourceId = resourceId;
+    return modalRef.result;
+  }
+  // modalalert registrate
+  public closeModalAlertSignu(): void {
+    this.modalService.dismissAll();
+  }
+  public modalAlertSignu(
+    btn1: string = 'Registrate',
+    btn2: string = 'Ingresar',
+  ): Promise<boolean> {
+    const modalRef = this.modalService.open(ModalAlertSignupComponent, {
+      size: 'sm',
+      centered: true,
+      backdropClass: 'modal-AlertSignu-BackdropClass',
+    });
+    modalRef.componentInstance.btn1 = btn1;
+    modalRef.componentInstance.btn2 = btn2;
     return modalRef.result;
   }
   /* modal shared */

@@ -38,7 +38,7 @@
     </app-chip-con-boton-close>
 </div>
 <app-not-found *ngIf="showNotFound" objectName="granjas"></app-not-found>
-<div  class="container-card" *ngIf="!showNotFound">
+<div  class="container-card mb-4" *ngIf="!showNotFound">
   <app-card-granjas [granja]="granja"
     [favorita]="granja?.favorita"
     [botonFavorito]="botonFavori"

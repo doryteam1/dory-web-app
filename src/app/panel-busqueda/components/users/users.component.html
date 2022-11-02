@@ -26,7 +26,7 @@
 </div>
 
 <app-not-found *ngIf="showNotFound" [objectName]="userType"></app-not-found>
-  <div   *ngIf="!showNotFound"class="container-card">
+  <div   *ngIf="!showNotFound"class="container-card mb-4">
     <app-card-proveedor-simple (onDetalle)="goDetail(user)" [dato]="user" *ngFor="let user of usersFiltered"></app-card-proveedor-simple>
   </div>
 

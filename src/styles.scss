@@ -432,6 +432,10 @@ textarea:focus, input:focus{
   background-color: white !important;
   opacity: 0.9 !important;
 }
+.modal-AlertSignu-BackdropClass{
+backdrop-filter: blur(10px) !important;
+  background: rgba(51, 32, 0, 0.4) !important;
+}
 .modal-equipo-trabajo-DialogClass {
   max-width: 1140px !important;
   /* margin-top: 0 !important; */

@@ -1,5 +1,5 @@
 import { Component,OnDestroy,OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GranjasService } from '../../services/granjas.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Utilities } from 'src/app/utilities/utilities';
@@ -8,13 +8,14 @@ import { AppModalService } from '../../../shared/services/app-modal.service';
 import * as dayjs from 'dayjs'
 import { Subscription } from 'rxjs';
 import { MediaQueryService } from 'src/app/services/media-query.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-granja-detalle',
   templateUrl: './granja-detalle.component.html',
   styleUrls: ['./granja-detalle.component.scss'],
 })
-export class GranjaDetalleComponent implements OnInit,OnDestroy  {
+export class GranjaDetalleComponent implements OnInit, OnDestroy {
   granja: any;
   fotosgranja: any = [];
   showNotFound: boolean = false;
@@ -47,16 +48,20 @@ export class GranjaDetalleComponent implements OnInit,OnDestroy  {
   showResenasNotFound: boolean = false;
   arrayFotosGranja: any[] = [];
   modalGogleMapOpen: boolean = false;
+  isAuthUser: boolean = false;
   constructor(
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
     public location: PlatformLocation,
     private modalService: NgbModal,
     private appModalService: AppModalService,
-    public mediaQueryService: MediaQueryService
+    public mediaQueryService: MediaQueryService,
+    public userService: UsuarioService,
+    private router: Router
   ) {}
   mediaQuery1!: Subscription;
   ngOnInit(): void {
+    this.rating = -1;
     this.selectedGranjaId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
@@ -81,10 +86,6 @@ export class GranjaDetalleComponent implements OnInit,OnDestroy  {
           this.granja = response.data[0];
           this.currentRate = this.granja?.puntuacion;
           this.fotosgranja = response.data[0].fotos;
-
-          /*   if (this.fotosgranja.length >= 7) {
-            this.arrayFotosGranja = this.fotosgranja.slice(0, 7);
-          } */
           if (this.fotosgranja.length == 0) {
             this.sinfotos = true;
           }
@@ -153,36 +154,53 @@ export class GranjaDetalleComponent implements OnInit,OnDestroy  {
   }
 
   openQualifyModal(content: any, editingMiResena?: number) {
-    if (editingMiResena && editingMiResena == 1) {
-      this.rating = -1;
-      this.descResena = this.miresena.descripcion;
-      this.editingMiResena = true;
-    } else {
-      this.editingMiResena = false;
+    this.isAuthUser = this.userService.isAuthenticated();
+    if (this.isAuthUser) {
+      if (editingMiResena && editingMiResena == 1) {
+        this.rating = -1;
+        this.descResena = this.miresena.descripcion;
+        this.editingMiResena = true;
+      } else {
+        this.editingMiResena = false;
+      }
+      this.modalService
+        .open(content, {
+          ariaLabelledBy: 'modal-basic-title',
+          windowClass: 'qualify-modal',
+          scrollable: true,
+          centered: true,
+        })
+        .result.then(
+          (result) => {
+            this.success = false;
+            this.descResena = '';
+            this.editingMiResena = false;
+            this.ngOnInit();
+          },
+          (reason) => {
+            this.success = false;
+            this.descResena = '';
+            this.editingMiResena = false;
+            this.ngOnInit();
+          }
+        );
+    } else if (!this.isAuthUser) {
+       this.rating = -1;
+      this.location.onPopState(() => {
+        this.appModalService.closeModalAlertSignu();
+      });
+      this.appModalService
+        .modalAlertSignu()
+        .then((result: any) => {
+          if (result == 'registrate') {
+            this.router.navigate(['/registro']);
+          } else if (result == 'ingresar') {
+            this.router.navigate(['/login']);
+          }
+        })
+        .catch((result) => {
+        });
     }
-    this.modalService
-      .open(content, {
-        ariaLabelledBy: 'modal-basic-title',
-        windowClass: 'qualify-modal',
-        scrollable: true,
-        centered: true,
-      })
-      .result.then(
-        (result) => {
-          this.success = false;
-          this.descResena = '';
-          this.editingMiResena = false;
-          this.ngOnInit();
-          /* window.location.reload(); */
-        },
-        (reason) => {
-          this.success = false;
-          this.descResena = '';
-          this.editingMiResena = false;
-          this.ngOnInit();
-          /* window.location.reload(); */
-        }
-      );
   }
 
   changeFavorite() {
@@ -205,7 +223,6 @@ export class GranjaDetalleComponent implements OnInit,OnDestroy  {
   }
 
   onRating(event: number) {
-    console.log(event);
     this.rating = event;
   }
 
@@ -220,8 +237,6 @@ export class GranjaDetalleComponent implements OnInit,OnDestroy  {
       calificacion: this.rating,
     };
     this.loading = true;
-    console.log(resena);
-
     if (this.editingMiResena) {
       this.granjasService.updateResena(resena, this.miresena.id).subscribe(
         (respose) => {
@@ -235,10 +250,6 @@ export class GranjaDetalleComponent implements OnInit,OnDestroy  {
     } else {
       this.granjasService.addResena(resena).subscribe(
         (respose) => {
-          /*this.resenas.push(resena)
-          let calif = this.acumCalif();
-          calif += resena.calificacion;
-          calif = calif / (this.granja.resenas.length + 1); */
           this.loading = false;
           this.success = true;
         },
