@@ -282,6 +282,7 @@
               <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion(invitacion)">Eliminar</button>
             </div>
             <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
+            <span class="danger-message" *ngIf="invitacion.error">{{invitacion.error}}</span>
           </div>
         </div>
         <hr class="dropdown-divider" *ngIf="i < invitaciones.length - 1">
@@ -307,6 +308,7 @@
               <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion(invitacion)">Eliminar</button>
             </div>
             <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
+            <span class="danger-message" *ngIf="invitacion.error">{{invitacion.error}}</span>
           </div>
         </div>
         <hr class="dropdown-divider" *ngIf="i < invitacionesFromUsers.length - 1">

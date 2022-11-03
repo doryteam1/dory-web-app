@@ -11,6 +11,7 @@ dayjs.locale('es')
 import { ResizeObserver } from '@juggle/resize-observer';
 import { AppModalService } from '../services/app-modal.service';
 import { ChatService } from 'src/app/services/chat.service';
+import { TopAlertControllerService } from '../services/top-alert-controller.service';
 
 @Component({
   selector: 'app-navbar',
@@ -60,7 +61,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private _electronService: ElectronjsService,
     private renderer: Renderer2,
     private appModalService: AppModalService,
-    private chatService:ChatService
+    private chatService:ChatService,
+    private alertController:TopAlertControllerService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -211,7 +213,11 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userService.aceptarInvitacion(invitacion.id_solicitud).subscribe(
       (response) => {},
       (err) => {
+        invitacion.error = err.error.message;
         invitacion.message = undefined;
+        setTimeout(()=>{
+          invitacion.error = '';
+        },5000)
       }
     );
   }
