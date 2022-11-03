@@ -89,10 +89,10 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
       .catch((result) => {});
   }
 
-  navigate(i: number) {
+  navigate(granja:any) {
     const url = this.router.serializeUrl(
       this.router.createUrlTree([
-        `/granjas/municipio/detalle/${this.misGranjaFavoritas[i].id_granja}`,
+        `/granjas/municipio/detalle/${granja?.id_granja}`,
       ])
     );
     window.open(url, '_blank');
