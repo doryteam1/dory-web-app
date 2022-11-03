@@ -360,7 +360,7 @@ export class GranjasComponent implements OnInit {
         this.appModalService.closeModalAlertSignu();
       });
       this.appModalService
-        .modalAlertSignu()
+        .modalAlertSignu(', para agregar esta granja como favorita')
         .then((result: any) => {
           if (result == 'registrate') {
             this.router.navigate(['/registro']);

@@ -269,7 +269,9 @@ export class GranjasMunicipioComponent implements OnInit, OnDestroy {
            this.appModalService.closeModalAlertSignu();
          });
       this.appModalService
-        .modalAlertSignu()
+        .modalAlertSignu(
+           ', para agregar esta granja como favorita'
+        )
         .then((result: any) => {
           if (result == 'registrate') {
              this.router.navigate(['/registro']);
