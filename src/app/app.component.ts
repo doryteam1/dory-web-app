@@ -36,7 +36,10 @@ export class AppComponent implements OnInit{
         if(!this.isAuthUser){
           this.chatService.disconnect();
         }else{
-          this.chatService.connect();
+          //this.chatService.connect();
+          setTimeout(()=>{
+            window.location.reload();
+          },500)
         }
       }
     )

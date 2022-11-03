@@ -12,6 +12,7 @@ import { ResizeObserver } from '@juggle/resize-observer';
 import { AppModalService } from '../services/app-modal.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { TopAlertControllerService } from '../services/top-alert-controller.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-navbar',
@@ -62,7 +63,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private renderer: Renderer2,
     private appModalService: AppModalService,
     private chatService:ChatService,
-    private alertController:TopAlertControllerService
+    private alertController:TopAlertControllerService,
+    private utilities:UtilitiesService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -101,6 +103,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.chatService.listenNewSolicitudes().subscribe(
       (data)=>{
         console.log(data)
+        this.utilities.playSound('assets/sounds/sendmessage.wav');
         this.updateAsocRequest()
       }
     )
