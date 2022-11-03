@@ -10,6 +10,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ModalAlertSignupComponent implements OnInit {
   @Input() btn1: string = 'Registrarme';
   @Input() btn2: string = 'Ingresar';
+  @Input() message: string =
+    '';
   constructor(private _modalService: NgbActiveModal) {}
 
   ngOnInit(): void {}

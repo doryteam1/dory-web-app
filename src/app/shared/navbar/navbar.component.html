@@ -166,6 +166,7 @@
                 </div>
                 <span class="notify__message notify__message-miestilo"
                   *ngIf="invitacion.message">{{invitacion.message}}</span>
+                  <span class="danger-message" *ngIf="invitacion.error">{{invitacion.error}}</span>
               </div>
               <div class="dropdown" *ngIf="!invitacion.message">
                 <div #notifyModalDropdown class="notification-list_feature-img img"
@@ -216,6 +217,7 @@
                 </div>
                 <span class="notify__message notify__message-miestilo"
                   *ngIf="invitacion.message">{{invitacion.message}}</span>
+                  <span class="danger-message" *ngIf="invitacion.error">{{invitacion.error}}</span>
               </div>
               <div class="dropdown" *ngIf="!invitacion.message">
                 <div #notifyModalDropdown class="notification-list_feature-img img"

@@ -48,6 +48,7 @@ export class AppModalService {
     this.modalService.dismissAll();
   }
   public modalAlertSignu(
+    message?:any,
     btn1: string = 'Registrate',
     btn2: string = 'Ingresar',
   ): Promise<boolean> {
@@ -56,6 +57,7 @@ export class AppModalService {
       centered: true,
       backdropClass: 'modal-AlertSignu-BackdropClass',
     });
+    modalRef.componentInstance.message = message;
     modalRef.componentInstance.btn1 = btn1;
     modalRef.componentInstance.btn2 = btn2;
     return modalRef.result;

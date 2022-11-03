@@ -20,6 +20,7 @@ dayjs.extend(relativeTime);
 require('dayjs/locale/es');
 dayjs.locale('es');
 import { ResizeObserver } from '@juggle/resize-observer';
+import { ChatService } from 'src/app/services/chat.service';
 declare var window: any;
 @Component({
   selector: 'app-navbar-electronjs',
@@ -76,7 +77,8 @@ export class NavbarElectronjsComponent
     private storageService: StorageService,
     private _electronService: ElectronjsService,
     private ngZone: NgZone,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private chatService: ChatService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -131,12 +133,14 @@ export class NavbarElectronjsComponent
         } else {
           this.isHidden = false;
         }
-        if (route.includes('dashboard')) {
-          if (this.userService.isAuthenticated()) {
-            this.updateAsocRequest();
-          }
-        }
       }
+    });
+    if (this.userService.isAuthenticated()) {
+      this.updateAsocRequest();
+    }
+    this.chatService.listenNewSolicitudes().subscribe((data) => {
+      console.log(data);
+      this.updateAsocRequest();
     });
   }
   updateAsocRequest() {
@@ -263,11 +267,14 @@ export class NavbarElectronjsComponent
     this.userService.aceptarInvitacion(invitacion.id_solicitud).subscribe(
       (response) => {},
       (err) => {
+        invitacion.error = err.error.message;
         invitacion.message = undefined;
+        setTimeout(() => {
+          invitacion.error = '';
+        }, 5000);
       }
     );
   }
-
   eliminarInvitacion(invitacion: any) {
     invitacion.message = 'Solicitud eliminada';
     this.userService.eliminarSolicitud(invitacion.id_solicitud).subscribe(
