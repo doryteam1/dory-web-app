@@ -1,5 +1,22 @@
 
-  <app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)"></app-search>
+
+    <div class="buscadoryfiltro">
+      <div class="buscador-container">
+        <app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)"></app-search>
+        <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)"
+          [filtroSeleccionado]="filtroseleccionado" *ngIf="userService.isAuthenticated()">
+        </app-filtro>
+      </div>
+      <div class="chip" *ngIf="userService.isAuthenticated()">
+        <app-chip-con-boton-close
+        *ngIf="filtroseleccionado"
+         [iconoChip]="true"
+          [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+           [contenidoChip]="filtroseleccionado.nombrefiltro"
+          (onCloseClip)="delateFilter()">
+        </app-chip-con-boton-close>
+      </div>
+    </div>
 <div  *ngIf="novedades.length > 0 && novedadesFiltered.length > 0 "class="container">
   <div class="card" *ngFor="let novedad of novedades; let i=index;">
     <div class="card__autor-photo">

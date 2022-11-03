@@ -1,11 +1,13 @@
 import { PlatformLocation } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { NovedadesService } from 'src/app/services/novedades.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { BuscarPor } from 'src/models/buscarPor.model';
+import { Filtro, MetaFiltro } from 'src/models/filtro.model';
 import { Novedad } from 'src/models/novedad.model';
 
 @Component({
@@ -20,10 +22,25 @@ export class NovedadesComponent implements OnInit {
   loading: boolean = false;
   novedades: any[] = [];
   palabra: string = '';
+  filtroseleccionado!: MetaFiltro | null;
+  filtro: Filtro[] = [
+    {
+      nameButton: 'Filtrar',
+      data: [
+        {
+          id: 0,
+          nombrecampoDB: 'me_gusta',
+          nombrefiltro: 'Mis favoritos',
+          datoafiltrar: 'me_gusta',
+          modoFiltro: MODO_FILTRO_DATOS_VARIOS,
+        },
+      ],
+    },
+  ];
   constructor(
     private activatedRoute: ActivatedRoute,
     private nService: NovedadesService,
-    private userService: UsuarioService,
+    public userService: UsuarioService,
     private searchBuscadorService: SearchBuscadorService,
     private appModalService: AppModalService,
     public location2: PlatformLocation,
@@ -41,7 +58,23 @@ export class NovedadesComponent implements OnInit {
     }
     this.cargarTodos();
   }
-
+  onFiltroChange(filtro: MetaFiltro) {
+    this.filtroseleccionado = filtro;
+    this.reseteoDeBusqueda();
+  }
+  filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
+    let filtroresult = [];
+    filtroresult = arrayafiltar.filter((dataarray) => {
+      let dataanalisis =
+        dataarray[filtroSelecOptionData.nombrecampoDB!].toString();
+      return dataanalisis?.includes('1');
+    });
+    return filtroresult;
+  }
+  delateFilter() {
+    this.filtroseleccionado = null;
+    this.reseteoDeBusqueda();
+  }
   cargarTodos() {
     this.showNotFound = false;
     this.loading = true;
@@ -49,6 +82,7 @@ export class NovedadesComponent implements OnInit {
       (response) => {
         this.novedadesFiltered = response.data;
         this.novedades = this.novedadesFiltered.slice();
+        console.log(this.novedades);
         if (this.novedadesFiltered.length < 1) {
           this.showNotFound = true;
         }
@@ -141,6 +175,9 @@ export class NovedadesComponent implements OnInit {
   }
   reseteoDeBusqueda() {
     let resultados: any[] = this.buscarData(this.palabra);
+    if (this.filtroseleccionado) {
+      resultados = this.filtradoData(this.filtroseleccionado, resultados);
+    }
     this.novedades = resultados;
     if (this.novedades.length < 1) {
       this.showNotFound = true;
