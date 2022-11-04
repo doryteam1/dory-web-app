@@ -26,9 +26,9 @@ export class MisAsociacionesComponent
   implements OnInit, AfterViewInit
 {
   @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
-  @ViewChild('tabSoyRep') tabSoyRep!: ElementRef;
-  @ViewChild('tabSoyMiemb') tabSoyMiemb!: ElementRef;
-  @ViewChild('tabUnir') tabUnir!: ElementRef;
+  @ViewChild('tabSoyRep',{static: false}) tabSoyRep!: ElementRef;
+  @ViewChild('tabSoyMiemb',{static: false}) tabSoyMiemb!: ElementRef;
+  @ViewChild('tabUnir',{static: false}) tabUnir!: ElementRef;
 
   asociaciones: Array<any> = [];
   showNotFound: boolean = false;
@@ -134,16 +134,23 @@ export class MisAsociacionesComponent
   ) {
   }
   ngAfterViewInit(): void {
-    /*Se abre el tab que estuvo seleccionado antes de ir a ver el detalle de una asociación*/
     let selectedTab = this.storageService.get('misAsocSelecTab');
-    if (selectedTab && selectedTab == 'tabSoyRep') {
-      this.htmlElementClick(this.tabSoyRep);
-    } else if (selectedTab && selectedTab == 'tabSoyMiemb') {
-      this.htmlElementClick(this.tabSoyMiemb);
-    } else if (selectedTab && selectedTab == 'tabUnir') {
-      this.htmlElementClick(this.tabUnir);
-    }
-    this.storageService.remove('misAsocSelecTab');
+    //TODO:la referencia de tabSoyMiemb no esta disponible y deberia estarlo
+  
+      setTimeout(()=>{
+        /*Se abre el tab que estuvo seleccionado antes de ir a ver el detalle de una asociación*/
+        
+        if (selectedTab && selectedTab == 'tabSoyRep') {
+          this.htmlElementClick(this.tabSoyRep);
+        } else if (selectedTab && selectedTab == 'tabSoyMiemb') {
+          this.htmlElementClick(this.tabSoyMiemb);
+        } else if (selectedTab && selectedTab == 'tabUnir') {
+          this.htmlElementClick(this.tabUnir);
+        }
+        if(!selectedTab){
+          this.htmlElementClick(this.tabSoyMiemb);
+        }
+      },1000)
   }
 
   ngOnInit(): void {
@@ -292,6 +299,11 @@ export class MisAsociacionesComponent
                 (element) => element.nit == asociacion.nit
               );
               this.asociaciones.splice(index, 1);
+              this.isUserRep = false;
+              this.htmlElementClick(this.tabSoyRep)
+              if(this.asociaciones.length == 0){
+                this.showNotFound = true;
+              }
             },
             (err) => {
               console.log(err);

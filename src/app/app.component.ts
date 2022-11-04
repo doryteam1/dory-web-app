@@ -39,7 +39,7 @@ export class AppComponent implements OnInit{
           //this.chatService.connect();
           setTimeout(()=>{
             window.location.reload();
-          },500)
+          },1000)
         }
       }
     )

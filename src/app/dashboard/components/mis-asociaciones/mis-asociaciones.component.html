@@ -10,7 +10,7 @@
     <li class="nav-item" role="presentation" *ngIf="isUserMiemb">
       <a #tabSoyMiemb [ngClass]="{'active nav-link--mytabstilo': activeclass2}" class="nav-link nav-link--color" id="profile-tab"
         data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab"
-        aria-controls="profile-tab-pane" aria-selected="false" (click)="activeTabClick('miembro')">Donde soy miembro</a>
+        aria-controls="profile-tab-pane" aria-selected="false" (click)="activeTabClick('miembro')" id="tabSoyMiemb">Donde soy miembro</a>
     </li>
     <!-- Unirme_a_una_asociacion -->
     <li class="nav-item" role="presentation" *ngIf="!isUserRep && !isUserMiemb">
