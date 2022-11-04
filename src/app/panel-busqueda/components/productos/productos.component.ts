@@ -138,7 +138,6 @@ export class ProductosComponent implements OnInit {
         this.filtroseleccionadoCheckbox,
         resultados
       );
-      console.log(resultados)
       this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
         resultados,
         this.filtroseleccionadoCheckbox,
