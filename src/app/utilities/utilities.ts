@@ -1,3 +1,6 @@
+import * as dayjs from 'dayjs';
+import * as relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 export class Utilities{
     static dateTimeNow():string{
         let today = new Date();
@@ -21,5 +24,10 @@ export class Utilities{
         }).join(''));
       
         return JSON.parse(jsonPayload);
-      }
+    }
+
+    /*retorna un string indicando cuanto tiempo ha pasado desde la fecha date hasta el tiempo presente*/
+    static dateFromX(date: string) {
+        return dayjs(date).fromNow(true);
+    }
 }

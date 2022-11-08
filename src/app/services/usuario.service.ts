@@ -21,7 +21,7 @@ export class UsuarioService {
     let body = {
       nombres: usuario.nombres || '',
       apellidos: usuario.apellidos || '',
-      id_tipo_usuario: usuario.tipoUsuario || '',
+      id_tipo_usuario: usuario.tipoUsuario || null,
       email: usuario.email || '',
       password: usuario.password || '',
       foto: usuario.foto || '',

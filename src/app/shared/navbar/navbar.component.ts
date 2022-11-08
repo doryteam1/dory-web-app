@@ -2,17 +2,13 @@ import { AfterViewInit, Component, ElementRef, HostBinding, HostListener, OnDest
 import {  NavigationEnd, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import * as dayjs from 'dayjs';
-import * as relativeTime from 'dayjs/plugin/relativeTime';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
-dayjs.extend(relativeTime);
-require('dayjs/locale/es')
-dayjs.locale('es')
 import { ResizeObserver } from '@juggle/resize-observer';
 import { AppModalService } from '../services/app-modal.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { TopAlertControllerService } from '../services/top-alert-controller.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { Utilities } from 'src/app/utilities/utilities';
 
 @Component({
   selector: 'app-navbar',
@@ -239,9 +235,9 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   timeToNow(date: string) {
-    dayjs.extend(relativeTime);
-    return dayjs().toNow(true);
+    return Utilities.dateFromX(date);
   }
+
   serch() {
     this.appModalService
       .modalSearchComponentl(
