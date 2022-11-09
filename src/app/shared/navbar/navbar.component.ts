@@ -53,7 +53,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   notifyStyloContainer: boolean = false;
   constructor(
     private router: Router,
-    private userService: UsuarioService,
+    public userService: UsuarioService,
     private storageService: StorageService,
     private _electronService: ElectronjsService,
     private renderer: Renderer2,

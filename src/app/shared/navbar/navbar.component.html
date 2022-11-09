@@ -403,7 +403,7 @@
   <ng-container *ngTemplateOutlet="botonregistroylogintemplDos"></ng-container>
   <!-- Notificaciones patalla superior a  1400px-->
   <div class="notifyAndUserOption">
-    <div class="notify dropstart" *ngIf="authenticated()">
+    <div class="notify dropstart" *ngIf="authenticated() && (userService.getAuthUser().rol == 'Piscicultor' || userService.getAuthUser().rol == 'Pescador')">
       <!-- Boton notificacion normal -->
       <ng-container *ngTemplateOutlet="botonNotificacionNormal"></ng-container>
       <!-- Ventana notificacion normal-->
