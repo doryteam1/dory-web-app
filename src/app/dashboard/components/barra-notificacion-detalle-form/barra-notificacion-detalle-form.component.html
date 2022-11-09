@@ -6,15 +6,12 @@
     (keyup)="onKeyup($event,htmlContent)"
     (click)="verfySelect()"
       onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !(event.code =='Enter') && (event.target.innerText.length <= 200)">
-      <ng-template #customButtons let-executeCommandFn="executeCommandFn">
-        <ae-toolbar-set>
-            <ae-button  iconClass="fa fa-link" title="Insert Link"
-              (buttonClick)="openModal()">
+      <ng-template #customButtons let-executeCommandFn="executeCommandFn" >
+        <ae-toolbar-set >
+            <ae-button iconClass="fa fa-link" title="Insert Link"
+              (buttonClick)="alertModalElectron()"[hidden]="!electronjsService.ipcActivo" >
             </ae-button>
         </ae-toolbar-set>
-        <button (click)="openModal()" *ngIf="!electronjsService.ipcActivo"></button>
-        <button (click)="ok()" *ngIf="electronjsService.ipcActivo"></button>
-
       </ng-template>
     </angular-editor>
     <p>{{angualarEditor.textArea.nativeElement?.innerText.length}}/200</p>
