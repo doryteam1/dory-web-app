@@ -12,7 +12,14 @@
 .gallery--class {
   background-color: white;
   cursor: pointer;
-  height: 70vh;
+    height: 50vh;
+  width: 50% !important;
+}
+.container-gallery-time{
+display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 /* formulario tiempo */
 .paragraph {
@@ -102,7 +109,12 @@ app-not-found {
     width: 100%;
   }
 }
-
+@media screen and (max-width: 820px) {
+  .gallery--class {
+    height: 70vh !important;
+    width: 70% !important;
+  }
+}
 @media screen and (max-width: 600px) {
   .justify-content-between {
     flex-direction: column !important;

@@ -1,0 +1,55 @@
+<div class="container container-public" >
+  <div>
+    <angular-editor #angualarEditor
+    [(ngModel)]="htmlContent "
+    [config]="config"
+    (keyup)="onKeyup($event,htmlContent)"
+    (click)="verfySelect()"
+      onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !(event.code =='Enter') && (event.target.innerText.length <= 200)">
+      <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+        <ae-toolbar-set>
+            <ae-button  iconClass="fa fa-link" title="Insert Link"
+              (buttonClick)="openModal()">
+            </ae-button>
+        </ae-toolbar-set>
+        <button (click)="openModal()" *ngIf="!electronjsService.ipcActivo"></button>
+        <button (click)="ok()" *ngIf="electronjsService.ipcActivo"></button>
+
+      </ng-template>
+    </angular-editor>
+    <p>{{angualarEditor.textArea.nativeElement?.innerText.length}}/200</p>
+  </div>
+    <div id="htmlDiv" class="html" >
+      {{htmlContent}}
+
+      </div>
+  <h5 class="html-header">Mi publicación</h5>
+  <div class="alert-container" [style.background]="color">
+    <div class="alert-container__message" [innerHTML]="htmlContent ">
+    </div>
+    <div class="container-button-color-close">
+      <div class="color-picker-icon">
+        <img class="" src="assets/icons/colorpicke.svg"
+          [cpPresetColors]="['#26a5b8', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']"
+          [(colorPicker)]="color" [cpOutputFormat]="'hex'" [(cpToggle)]="toggle" [cpDisableInput]="true"
+          [cpWidth]="'180'" [cpPosition]="'bottom-left'" [cpDisabled]="loading" (click)="colorPicker()">
+      </div>
+      <img class="alert-container__close-button" src="assets/icons/close.svg">
+    </div>
+  </div>
+  <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer"
+    style="gap: 10px;">
+    <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn myButton"
+      (click)="savePublic()" >
+      <span *ngIf="!loading">Guardar publicación</span>
+      <div class="container__spinner spinner-border" role="status" *ngIf="loading"></div>
+    </button>
+    <button [disabled]="loading" type="button"
+      class="btn-rounded btn--grey container__btn container__btn--azul myButton" (click)="goBack()">
+      <span>Atrás</span>
+    </button>
+  </div>
+</div>
+
+
+

@@ -46,6 +46,11 @@ import { GalleryModule } from 'ng-gallery';
 import { PanelBusquedaModule } from '../panel-busqueda/panel-busqueda.module';
 import { GranjasTodasComponent } from './components/granjas-todas/granjas-todas.component';
 import { FotosMiniDetalleFormComponent } from './components/fotos-mini-detalle-form/fotos-mini-detalle-form.component';
+import { BarraNotificacionGeneralComponent } from './components/barra-notificacion-general/barra-notificacion-general.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { BarraNotificacionDetalleFormComponent } from './components/barra-notificacion-detalle-form/barra-notificacion-detalle-form.component';
+
 
 
 
@@ -83,6 +88,8 @@ import { FotosMiniDetalleFormComponent } from './components/fotos-mini-detalle-f
     EnlacesDirectosInicioDetalleFormComponent,
     GranjasTodasComponent,
     FotosMiniDetalleFormComponent,
+    BarraNotificacionGeneralComponent,
+    BarraNotificacionDetalleFormComponent,
   ],
   imports: [
     CommonModule,
@@ -102,6 +109,8 @@ import { FotosMiniDetalleFormComponent } from './components/fotos-mini-detalle-f
     PublicacionesModule,
     GalleryModule,
     PanelBusquedaModule,
+    AngularEditorModule,
+    ColorPickerModule,
   ],
   providers: [GuidedTourService],
 })

@@ -31,6 +31,8 @@ import { SliderInicioDetalleFormComponent } from './components/slider-inicio-det
 import { EnlacesDirectosInicioComponent } from './components/enlaces-directos-inicio/enlaces-directos-inicio.component';
 import { EnlacesDirectosInicioDetalleFormComponent } from './components/enlaces-directos-inicio-detalle-form/enlaces-directos-inicio-detalle-form.component';
 import { GranjasTodasComponent } from './components/granjas-todas/granjas-todas.component';
+import { BarraNotificacionGeneralComponent } from './components/barra-notificacion-general/barra-notificacion-general.component';
+import { BarraNotificacionDetalleFormComponent } from './components/barra-notificacion-detalle-form/barra-notificacion-detalle-form.component';
 const routes: Routes = [
   {
     path: '',
@@ -77,6 +79,14 @@ const routes: Routes = [
       {
         path: 'slider-inicio-admi/detalle',
         component: SliderInicioDetalleFormComponent,
+      },
+      {
+        path: 'barra-notificacion-general-admi',
+        component: BarraNotificacionGeneralComponent,
+      },
+      {
+        path: 'barra-notificacion-general-admi/detalle',
+        component: BarraNotificacionDetalleFormComponent,
       },
       {
         path: 'enlaces-directos-inicio-admi',

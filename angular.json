@@ -28,8 +28,15 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@kolkov/angular-editor/assets/",
+                "output": "./assets/fonts/"
+              }
+
             ],
+
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/bootstrap/scss/bootstrap.scss",

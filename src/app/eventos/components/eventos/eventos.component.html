@@ -5,14 +5,10 @@
       <div class="container-card__imagen">
        <img class="card__image"  [src]="evento?.imagen ? evento?.imagen: 'assets/images/no-image-photography.svg'" >
       </div>
-      <div class="container-data">
-        <h4 class="card__title">{{evento?.nombre}}</h4>
+      <div class="container-data shorterTextOverflowHidden">
+        <h6 class="card__title w-100 shorterTextAuto">{{evento?.nombre}}</h6>
         <h5 class="card__sub-title">Resumen</h5>
-        <p class="card__description">{{evento?.resumen}}</p>
-        <h5 class="card__sub-title">A quien va dirigido</h5>
-        <p class="card__description">{{evento?.dirigidoa}}</p>
-        <h5 class="card__sub-title">Organizador</h5>
-        <p class="card__description">{{evento?.organizador}}</p>
+        <p class="card__description w-100 shorterTextAuto">{{evento.resumen}}</p>
       </div>
       <div class="card__icon-box">
         <div>

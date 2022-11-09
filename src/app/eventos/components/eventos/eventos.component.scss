@@ -3,18 +3,16 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
-  margin-top: 50px;
+  gap: 50px;
   height: 100%;
 }
 
 .card {
-  padding: 20px;
+padding: 20px;
   max-width: 400px;
-  height: 600px;
+  height: fit-content;
   width: 80vw;
   border: 1px solid var(--azul2);
-  margin: 30px;
   border-radius: 10px;
 
   .card__link {
@@ -35,9 +33,8 @@
     }
 
     .container-data {
-      height: 150px;
+    height: 110px;
       overflow: hidden;
-      overflow-y: auto;
       padding: 5px 10px;
       margin-top: 10px;
     }
@@ -58,10 +55,10 @@
 
 
 .card__title {
-  font-size: 18px;
-  text-align: center;
-  margin-bottom: 19px;
-  margin-top: 24px;
+    font-size: 16px;
+      text-align: center;
+      margin-bottom: 10px;
+      margin-top: 10px;
 }
 
 .card__sub-title {

@@ -1,26 +1,26 @@
-import { IpcRenderer } from 'electron';
+import { Dialog, IpcRenderer } from 'electron';
 import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
 export class ElectronjsService {
   private ipc!: IpcRenderer;
-  public ipcActivo:boolean=false
+  public ipcActivo: boolean = false;
   constructor() {
     if (window.require) {
       try {
         this.ipc = window.require('electron').ipcRenderer;
         console.log('electron aqui');
-        this.ipcActivo=true
+        this.ipcActivo = true;
       } catch (e) {
         throw e;
-
       }
     } else {
-        this.ipcActivo = false;
+      this.ipcActivo = false;
       console.warn('Electron IPC was not loaded');
     }
   }
+
   // Las funciones que hemos añadido, para ipcRenderer
   public on(channel: string, listener: any): void {
     if (!this.ipc) {

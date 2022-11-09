@@ -506,6 +506,12 @@ color: white;
   font-size: 1rem;
   color: var(--azul1);
 }
+.AzulDoryText{
+  color: var(--azul1);
+}
+.GrisOscuroText{
+  color: var(--gris-oscuro);
+}
 /* fin */
 @media (max-width: 575px) {
   .modal-dialog-centered {

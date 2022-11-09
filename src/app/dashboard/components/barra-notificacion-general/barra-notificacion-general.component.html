@@ -1,0 +1,30 @@
+
+<div class="container container-public" >
+  <div >
+    <angular-editor #angualarEditor
+     [(ngModel)]="htmlContent "
+     [config]="config"></angular-editor>
+    <p>{{angualarEditor.textArea.nativeElement?.innerText.length}}/200</p>
+  </div>
+  <h5 class="html-header">Mi publicación</h5>
+  <div class="alert-container" [style.background]="color">
+    <div class="alert-container__message" [innerHTML]="htmlContent " >
+    </div>
+    <div  class="container-button-color-close">
+      <img class="alert-container__close-button" src="assets/icons/close.svg" >
+    </div>
+  </div>
+  <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer" style="gap: 10px;">
+    <button   *ngIf="buttonPublicar" type="button"(click)="publicar()"
+      class="btn-rounded btn--blue container__btn myButton" [ngClass]="{'btn--grey': onPublicar==1}">
+      <span *ngIf="onPublicar==0">Publicar</span>
+      <span *ngIf="onPublicar==1">Ocultar publicación</span>
+      <app-simple-checkbox-switch [selectCheckbox]="onPublicar" (onSelectCheckbox)="publicar()">
+      </app-simple-checkbox-switch>
+    </button>
+    <button  type="button" (click)="updatePublic()"
+      class="btn-rounded btn--blue container__btn myButton">
+      <span >Editar publicación</span>
+    </button>
+  </div>
+</div>

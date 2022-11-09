@@ -24,6 +24,9 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { ShareButtonsConfig } from 'ngx-sharebuttons';
 import { ChatModule } from './chat/chat.module';
 import { DatePipe, DecimalPipe, TitleCasePipe } from '@angular/common';
+import { NoSanitizePipe } from './pipes/noSanitize.pipe';
+
+
 
 const customConfig: ShareButtonsConfig = {
   include: ['whatsapp', 'email', 'copy'],
@@ -49,7 +52,7 @@ const customConfig: ShareButtonsConfig = {
     PoliticaComponent,
     CondicionesComponent,
     WelcomeComponent,
-    VerifyAccountComponent
+    VerifyAccountComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,12 +69,14 @@ const customConfig: ShareButtonsConfig = {
     ShareIconsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
-    ChatModule
+    ChatModule,
+
   ],
   providers: [
     TitleCasePipe,
     DatePipe,
     DecimalPipe,
+    NoSanitizePipe,
     HttpsService,
     {
       provide: 'SocialAuthServiceConfig',
@@ -80,9 +85,7 @@ const customConfig: ShareButtonsConfig = {
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              environment.oAuthClientId
-            ), // your client id
+            provider: new GoogleLoginProvider(environment.oAuthClientId), // your client id
           },
         ],
       },

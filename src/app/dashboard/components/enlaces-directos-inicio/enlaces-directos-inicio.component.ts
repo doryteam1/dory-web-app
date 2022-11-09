@@ -3,7 +3,6 @@ import es from '@angular/common/locales/es';
 import { Component,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EnlacesDirectosInicioService } from 'src/app/services/enlaces-directos-inicio.service';
-import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 
  interface enlace_rapido {
@@ -25,7 +24,6 @@ export class EnlacesDirectosInicioComponent implements OnInit {
   constructor(
     private enlacesDirectosInicioService: EnlacesDirectosInicioService,
     public platformLocation: PlatformLocation,
-    private appModalService: AppModalService,
     private router: Router
   ) {}
   ngOnInit(): void {
@@ -54,38 +52,7 @@ export class EnlacesDirectosInicioComponent implements OnInit {
       }
     );
   }
- /*  deleteData(data: any,i:number) {
-    let id = data.id_enlace_rapido;
-    let nombre = data.nombre;
-    let imagen = data.imagen;
-    let idx = i;
 
-    this.appModalService
-      .confirm(
-        'Eliminar enlace rapido',
-        'Está seguro que desea eliminar este enlace rápido',
-        'Si',
-        'No',
-        nombre
-      )
-      .then((result) => {
-        if (result == true) {
-          this.enlacesDirectosInicioService.delete(id).subscribe(
-            (response) => {
-              this.enlaceRapido.splice(idx, 1);
-              this.storage.deleteByUrl(imagen);
-              if (this.enlaceRapido.length <= 0) {
-                this.showNotFound = true;
-              }
-            },
-            (err) => {
-              console.log(err);
-            }
-          );
-        }
-      })
-      .catch((result) => {});
-  } */
   editarData(data: any) {
     let id = data.id_enlace_rapido;
     let object: any = {

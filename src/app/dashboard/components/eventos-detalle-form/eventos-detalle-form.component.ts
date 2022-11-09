@@ -223,12 +223,12 @@ export class EventosDetalleFormComponent implements OnInit {
       .updateEvento(this.evento.id_evento!, newEvento)
       .subscribe(
         (response) => {
-          /*  this.goBack(); */
+           this.goBack();
           this.loading = false;
         },
         (err) => {
           console.log(err);
-           /* this.goBack(); */
+           this.goBack();
           this.loading = false;
         }
       );

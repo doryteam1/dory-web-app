@@ -169,6 +169,14 @@
               Enlaces directos inicio
             </a>
           </li>
+          <li id="barra-notificacion-general-inicio" class="nav-item" *ngIf="tipoUsuario == 'Administrador'" (click)="closeOffcanvas()">
+            <a class="nav-link" aria-current="page"
+            [ngClass]="{'miclase':_router.url.includes('/dashboard/barra-notificacion-general-admi/detalle'),'disabled':disableTags }"
+            [routerLink]="['/dashboard/barra-notificacion-general-admi']" routerLinkActive="active">
+              <span data-feather="home"></span>
+              Barra de notificación
+            </a>
+          </li>
           <li id="granjas-todas" class="nav-item" *ngIf="tipoUsuario == 'Administrador'" (click)="closeOffcanvas()">
             <a class="nav-link" aria-current="page"
              [ngClass]="{'miclase':_router.url.includes('/dashboard/granja/detalle'),'disabled':disableTags }"

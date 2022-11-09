@@ -119,6 +119,7 @@ export class HomeComponent implements OnInit {
         srcUrl: element.url_imagen,
         previewUrl: element.url_imagen,
         title: element.titulo,
+        mostrar_titulo:element.mostrar_titulo
       });
     });
     for (let index = 0; index < imageData.length; index++) {
@@ -127,6 +128,7 @@ export class HomeComponent implements OnInit {
         src: element.srcUrl,
         thumb: element.previewUrl,
         title: element.title,
+        mostrar_titulo: element.mostrar_titulo,
       });
     }
   }

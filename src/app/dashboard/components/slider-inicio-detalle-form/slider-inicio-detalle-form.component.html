@@ -15,6 +15,12 @@
             Campo requerido
           </div>
         </div>
+        <div class="checkbox-switch" *ngIf="titulo?.value.trim()">
+          <div>
+            Mostrar el título
+          </div>
+          <app-simple-checkbox-switch [selectCheckbox]="mostrar_titulo" (onSelectCheckbox)="checkbokSwitch($event)"></app-simple-checkbox-switch>
+        </div>
       </div>
       <div class="mb-3">
         <label for="dateOfBirth">Url</label>

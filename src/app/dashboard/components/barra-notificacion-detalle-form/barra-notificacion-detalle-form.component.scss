@@ -1,3 +1,11 @@
+.container-public {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
 .container-button-color-close {
   display: flex;
   gap: 20px;
@@ -10,9 +18,10 @@
   color: var(--white);
   display: flex;
   justify-content: flex-end;
-  /* padding: 5px; */
+  padding: 5px;
   gap: 20px;
   align-items: center;
+
 }
 
 .alert-container__message {
@@ -35,3 +44,19 @@
   margin-right: 10px;
   cursor: pointer;
 }
+
+.color-picker-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.myButton {
+  width: 220px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+

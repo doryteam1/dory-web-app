@@ -69,6 +69,8 @@ import { CardProveedorSimpleComponent } from './components/card-producto/card-pr
 import { ReloadStateAuthDirective } from './directives/reload-state-auth.directive';
 import { CardGranjaSimpleComponent } from './components/card-granjas/card-granja-simple/card-granja-simple.component';
 import { ModalAlertSignupComponent } from './components/modal-alert-signup/modal-alert-signup.component';
+import { SimpleCheckboxSwitchComponent } from './components/simple-checkbox-switch/simple-checkbox-switch.component';
+import { ModalInsertLinkComponent } from './components/modal-insert-link/modal-insert-link.component';
 
 
 @NgModule({
@@ -123,6 +125,8 @@ import { ModalAlertSignupComponent } from './components/modal-alert-signup/modal
     ReloadStateAuthDirective,
     CardGranjaSimpleComponent,
     ModalAlertSignupComponent,
+    SimpleCheckboxSwitchComponent,
+    ModalInsertLinkComponent,
   ],
   imports: [
     CommonModule,
@@ -187,6 +191,8 @@ import { ModalAlertSignupComponent } from './components/modal-alert-signup/modal
     CardProveedorSimpleComponent,
     ReloadStateAuthDirective,
     CardGranjaSimpleComponent,
+    SimpleCheckboxSwitchComponent,
+    ModalInsertLinkComponent,
   ],
 
   providers: [

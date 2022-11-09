@@ -11,6 +11,7 @@ import { SafeUrl } from '@angular/platform-browser';
 import { ModalContactCardComponent } from '../components/modal-contact-card/modal-contact-card.component';
 import { ModalSearchComponent } from '../components/modal-search/modal-search.component';
 import { ModalAlertSignupComponent } from '../components/modal-alert-signup/modal-alert-signup.component';
+import { ModalInsertLinkComponent } from '../components/modal-insert-link/modal-insert-link.component';
 
 interface atributos {
   nameButton: string;
@@ -48,9 +49,9 @@ export class AppModalService {
     this.modalService.dismissAll();
   }
   public modalAlertSignu(
-    message?:any,
+    message?: any,
     btn1: string = 'Registrate',
-    btn2: string = 'Ingresar',
+    btn2: string = 'Ingresar'
   ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalAlertSignupComponent, {
       size: 'sm',
@@ -60,6 +61,21 @@ export class AppModalService {
     modalRef.componentInstance.message = message;
     modalRef.componentInstance.btn1 = btn1;
     modalRef.componentInstance.btn2 = btn2;
+    return modalRef.result;
+  }
+  // modalal insert link
+  public closeModalInsertLink(): void {
+    this.modalService.dismissAll();
+  }
+  public modalInsertLink(
+    url:string='http'
+  ): Promise<boolean> {
+    const modalRef = this.modalService.open(ModalInsertLinkComponent, {
+      size: 'lg',
+      centered: true,
+      backdropClass: 'modal-AlertSignu-BackdropClass',
+    });
+     modalRef.componentInstance.url = url;
     return modalRef.result;
   }
   /* modal shared */

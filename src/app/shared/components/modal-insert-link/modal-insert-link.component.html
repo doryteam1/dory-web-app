@@ -1,0 +1,15 @@
+<div class="modal-body">
+  <div class="w-100 button-close">
+    <button type="button" class="btn-close" aria-describedby="modal-title" (click)="dismiss()"></button>
+  </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Insert URL link</label>
+        <div class="input-group">
+          <input id="dateOfBirth"  type="text" class="form-control" placeholder="Aquí va la URL" [value]="url"  [(ngModel)]="url"/>
+        </div>
+      </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger coloraceptar" (click)="aceptar()">Aceptar</button>
+  <button type="button" class="btn btn-danger coloraceptar2 " (click)="cancelar() ">Cancelar</button>
+</div>

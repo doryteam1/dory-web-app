@@ -76,7 +76,7 @@
 </ng-template>
 <!-- Add custom template to image items -->
 <ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
-<!--   <span *ngIf="type === 'image' && index === currIndex && data?.title" class="item-text animate__bounceIn item-title-gallery">
+  <span *ngIf="type === 'image' && index === currIndex && data?.title && data?.mostrar_titulo" class="item-text animate__bounceIn item-title-gallery">
     {{data?.title}}
-  </span> -->
+  </span>
 </ng-template>

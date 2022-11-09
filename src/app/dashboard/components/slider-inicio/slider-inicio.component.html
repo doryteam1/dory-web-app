@@ -1,8 +1,8 @@
 <div class="container-todo" style="margin-top: 20px;">
   <div class="basic-container">
-    <div *ngIf="sliderActive">
+    <div *ngIf="sliderActive" class="container-gallery-time" >
       <gallery  *ngIf="modalMode == 'visualice'" class="gallery--class" [counter]="false" [attr.fluid]="false" [loadingStrategy]="'lazy'"
-        [imageSize]="'cover'" id="homegallery" [thumbHeight]="70" [thumbWidth]="80" [thumbMode]="'free'" [dots]="true"
+         id="homegallery" [thumbHeight]="70" [thumbWidth]="80" [thumbMode]="'free'" [imageSize]="'contain'" [dots]="true"
         [autoPlay]="tiempoSlide>0" [playerInterval]="tiempoSlide" [thumb]="false" [nav]="true" [items]="items "
         (itemClick)="clisFotoSlide($event)">
       </gallery>

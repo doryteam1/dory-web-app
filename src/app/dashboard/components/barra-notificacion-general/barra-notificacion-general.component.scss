@@ -1,16 +1,22 @@
-.container-button-color-close {
+.container-public {
+  margin-top: 20px;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+.container-button-color-close{
+display: flex;
   gap: 20px;
   flex-wrap: nowrap;
 }
-
 .alert-container {
   width: 100%;
   background: var(--high-blue);
   color: var(--white);
   display: flex;
   justify-content: flex-end;
-  /* padding: 5px; */
+  padding: 5px;
   gap: 20px;
   align-items: center;
 }
@@ -34,4 +40,11 @@
   align-self: center;
   margin-right: 10px;
   cursor: pointer;
+}
+.myButton{
+  width: 220px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }

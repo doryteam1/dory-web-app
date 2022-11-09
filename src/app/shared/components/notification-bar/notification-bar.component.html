@@ -1,6 +1,7 @@
-<div class="alert-container" *ngIf="hasAlert">
-    <div class="alert-container__message">
-      😀¡Productores ! ¡Aprende <a class="alert-container__link" target="_blank" href="https://www.mininterior.gov.co/sites/default/files/noticias/cartilla_ley_organica_de_ordenamiento_territorial.pdf">sistemas eficientes para pesca</a> con el especialista  Emanuel  Fernandez el 30 de octubre! No te lo pierdas  ️
+<div class="alert-container" *ngIf="hasAlert" [style.background]="color">
+    <div class="alert-container__message"  [innerHTML]="htmlContent" >️
     </div>
-    <img class="alert-container__close-button" src="assets/icons/close.svg" (click)="changeAlertState()">
-</div>
+    <div class="container-button-color-close">
+      <img class="alert-container__close-button" src="assets/icons/close.svg" (click)="changeAlertState()">
+    </div>
+  </div>

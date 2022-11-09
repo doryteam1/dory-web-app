@@ -7,7 +7,13 @@
   margin-top: 50px;
   height: 100%;
 }
-
+.checkbox-switch{
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px;
+}
 .container__btn {
   width: 200px;
   height: 38px;

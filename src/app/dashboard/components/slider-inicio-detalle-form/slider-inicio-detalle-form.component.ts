@@ -13,6 +13,7 @@ import { SliderInicioService } from 'src/app/services/slider-inicio.service';
    url_imagen: string;
    url_enlace: string;
    titulo: string;
+   mostrar_titulo:number;
  }
 @Component({
   selector: 'app-slider-inicio-detalle-form',
@@ -32,8 +33,9 @@ export class SliderInicioDetalleFormComponent implements OnInit {
   fotoAmandar: string = '';
   file: any = null;
   slide!: slide;
-  sinFoto:boolean=false
+  sinFoto: boolean = false;
   id_slide: number = -1;
+  mostrar_titulo:number=0
   constructor(
     private storage: FirebaseStorageService,
     public platformLocation: PlatformLocation,
@@ -75,10 +77,12 @@ export class SliderInicioDetalleFormComponent implements OnInit {
       this.loading = false;
       this.sinFoto = false;
       this.fotoAmandar = '';
+      this.mostrar_titulo=0
     } else if (this.modalMode == 'update') {
       this.titulo?.setValue(this.slide?.titulo);
       this.url_enlace?.setValue(this.slide?.url_enlace);
       this.fotoSlide = this.slide?.url_imagen;
+      this.mostrar_titulo = this.slide?.mostrar_titulo;
     }
   }
   invalid(controlFormName: string) {
@@ -130,7 +134,7 @@ export class SliderInicioDetalleFormComponent implements OnInit {
     }
   }
   async updateData() {
-     this.loading = true;
+    this.loading = true;
     if (!this.form.valid) {
       this.form.markAllAsTouched();
       this.loading = false;
@@ -152,31 +156,36 @@ export class SliderInicioDetalleFormComponent implements OnInit {
       console.log('Foto cargada de DB');
       foto = this.slide?.url_imagen;
     }
-    let newslide:slide = {
+       if (!this.titulo?.value.trim()) {
+         this.mostrar_titulo = 0;
+       }
+    let newslide: slide = {
       titulo: this.titulo?.value,
-      url_enlace:this.url_enlace?.value,
-      url_imagen:foto
+      url_enlace: this.url_enlace?.value,
+      url_imagen: foto,
+      mostrar_titulo:this.mostrar_titulo
     };
-    this.sliderInicioService
-      .updateSlide(this.id_slide, newslide)
-      .subscribe(
-        (response) => {
-          this.goBack();
-          this.loading = false;
-          this.sinFoto = false;
-        },
-        (err) => {
-          console.log(err);
-          this.goBack();
-          this.loading = false;
-          this.sinFoto = false;
-        }
-      );
+    this.sliderInicioService.updateSlide(this.id_slide, newslide).subscribe(
+      (response) => {
+        this.goBack();
+        this.loading = false;
+        this.sinFoto = false;
+      },
+      (err) => {
+        console.log(err);
+        this.goBack();
+        this.loading = false;
+        this.sinFoto = false;
+      }
+    );
   }
   async addData() {
-       this.loading = true;
-       this.sinFoto = false;
-    if (!this.form.valid || !this.fotoAmandar.includes('firebasestorage') && !this.file) {
+    this.loading = true;
+    this.sinFoto = false;
+    if (
+      !this.form.valid ||
+      (!this.fotoAmandar.includes('firebasestorage') && !this.file)
+    ) {
       this.form.markAllAsTouched();
       this.loading = false;
       if (!this.fotoAmandar.includes('firebasestorage') && !this.file) {
@@ -186,11 +195,15 @@ export class SliderInicioDetalleFormComponent implements OnInit {
     }
     this.form.disable();
     await this.loadPhotos();
-      let newslide: slide = {
-        titulo: this.titulo?.value,
-        url_enlace: this.url_enlace?.value,
-        url_imagen: this.fotoAmandar,
-      };
+    if (!this.titulo?.value.trim()) {
+     this.mostrar_titulo=0
+    }
+    let newslide: slide = {
+      titulo: this.titulo?.value,
+      url_enlace: this.url_enlace?.value,
+      url_imagen: this.fotoAmandar,
+      mostrar_titulo: this.mostrar_titulo,
+    };
 
     this.sliderInicioService.addSlide(newslide).subscribe(
       (response) => {
@@ -211,6 +224,9 @@ export class SliderInicioDetalleFormComponent implements OnInit {
     this.slide = slide;
     this.modalMode = 'update';
     this.prepareForm();
+  }
+  checkbokSwitch(event: number) {
+    this.mostrar_titulo=event
   }
   goBack() {
     this.platformLocation.back();
