@@ -99,6 +99,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.chatService.listenNewSolicitudes().subscribe(
       (data)=>{
         console.log(data)
+        this.notificatiosOpened = false;
         this.utilities.playSound('assets/sounds/sendmessage.wav');
         this.updateAsocRequest()
       }

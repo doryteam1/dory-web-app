@@ -333,8 +333,8 @@
                   <i class="notify__icon bi bi-bell"></i>
                 </div>
                 <span class="position-absolute top-4px start-100 translate-middle badge rounded-pill bg-danger"
-                  *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
-                  {{invitaciones.length}}
+                  *ngIf="!notificatiosOpened && ( invitaciones?.length! > 0 || invitacionesFromUsers.length! > 0)">
+                  {{invitaciones.length + invitacionesFromUsers.length}}
                   <span class="visually-hidden">tienes notificaciones</span>
                 </span>
               </div>
@@ -347,8 +347,8 @@
               <i class="notify__icon bi bi-bell"></i>
             </div>
             <span class="position-absolute top-4px  start-100 translate-middle badge rounded-pill bg-danger"
-              *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
-              {{invitaciones.length}}
+              *ngIf="!notificatiosOpened && ( invitaciones?.length! > 0 || invitacionesFromUsers.length! > 0)">
+              {{invitaciones.length + invitacionesFromUsers.length}}
               <span class="visually-hidden">tienes notificaciones</span>
             </span>
           </div>
