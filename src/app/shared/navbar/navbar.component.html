@@ -16,7 +16,7 @@
             <!-- Botones registro y login menor 1400-->
             <ng-container *ngTemplateOutlet="botonregistroylogintempl"></ng-container>
             <!-- Botones y  ventanas notificacion -->
-            <div class="notify dropstart" *ngIf="authenticated()">
+            <div class="notify dropstart" *ngIf="authenticated() && (userService.getAuthUser().rol == 'Piscicultor' || userService.getAuthUser().rol == 'Pescador')">
               <!-- Boton notificacion modal se muestra cuando es  menor 960px -->
               <ng-container *ngTemplateOutlet="botonNotificacionModal"></ng-container>
               <!-- Boton notificacion normal mayor 960px -->
