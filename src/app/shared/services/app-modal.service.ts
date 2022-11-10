@@ -155,6 +155,8 @@ export class AppModalService {
       ariaLabelledBy: 'modal-basic-title',
       size: 'xl',
       centered: true,
+      backdropClass: 'modal-AlertSignu-BackdropClass',
+      modalDialogClass: 'modalDialogClassSearch',
     });
     return modalRef.dismissed.toPromise();
   }

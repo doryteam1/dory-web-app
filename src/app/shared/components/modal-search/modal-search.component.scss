@@ -4,7 +4,11 @@
 }
 
 .footerheadermodal {
-  padding: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .search {
@@ -26,10 +30,18 @@
   justify-content: space-between;
   background-color: var(--white);
   padding: 0.5rem 0.5rem 0.5rem 15px;
-  border-radius: 133px;
+  border-radius: 10px;
   color: white;
-  box-shadow: 0 2px 12px var(--shadow-2);
   width: 100%;
+  height: 60px;
+  border: 3px solid var(--azul1);
+}
+
+input::placeholder {
+  font-weight: bold;
+  opacity: .5;
+  font-size: 1.2rem;
+
 }
 
 .bi-search {
@@ -76,4 +88,125 @@ input {
 .modal-body {
   width: 100%;
   height: 100%;
+}
+
+.ModalBody {
+  min-height: 200px !important;
+  max-height: 500px !important;
+  overflow: hidden;
+  background: #f5f6f7;
+  border-radius: 6px;
+  box-shadow: inset 1px 1px 0 0 #ffffff80,
+    0 3px 8px 0 #555a64;
+}
+
+.modalconteni {
+max-height: 400px;
+  overflow: hidden;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.whiteColor {
+  color: white !important;
+}
+
+.DocSearch-Hit a {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 #d4d9e1;
+  display: block;
+  padding-left: 12px;
+  width: 100%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.active:hover{
+background: var(--azul1) !important;
+.DocSearch-Hit-icon,.DocSearch-Hit-title,.DocSearch-Hit-path,.DocSearch-Hit-action{
+color: white !important;
+}
+}
+.DocSearch-Container a,
+.appCard_nA_C:hover {
+  text-decoration: none;
+}
+
+*,
+.DocSearch-Container,
+.DocSearch-Container * {
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--azul1);
+  text-decoration: none;
+}
+
+.DocSearch-Hit-Container {
+  align-items: center;
+  color: #444950;
+  display: flex;
+  flex-direction: row;
+  height: 56px;
+  padding: 0 12px 0 0;
+}
+
+.DocSearch-Hit-icon {
+  height: 20px;
+  width: 20px;
+  color: #969faf;
+  stroke-width: 1.4;
+}
+
+.DocSearch-Hit-content-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1.2em;
+  margin: 0 8px;
+  overflow-x: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 80%;
+}
+
+.DocSearch-Hit-title {
+  font-size: .9em;
+}
+
+.DocSearch-Hit-path {
+  color: #969faf;
+  font-size: .75em;
+}
+
+.DocSearch-Hit-action {
+  align-items: center;
+  display: flex;
+  height: 22px;
+  width: 22px;
+  color: #969faf;
+  stroke-width: 1.4;
+}
+
+.DocSearch-Hit-action svg {
+  display: block;
+  height: 18px;
+  width: 18px;
+}
+
+svg.DocSearch-Hit-Select-Icon {
+  display: none;
 }
