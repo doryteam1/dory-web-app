@@ -13,7 +13,7 @@
   </div>
   <app-spinner [showText]="false" *ngIf="loading"></app-spinner>
   <div class="center" *ngIf="showNotFound">
-    <app-not-found message="Aun no has registrado tus vehículos"></app-not-found>
+    <app-not-found message="Aun no has registrado tus vehículos" [imgType]="'vehiculo'"></app-not-found>
   </div>
   <div class="center" *ngIf="showError">
     <app-not-found [genericError]="showError"></app-not-found>

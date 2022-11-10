@@ -1,9 +1,11 @@
-import { registerLocaleData } from '@angular/common';
+import { PlatformLocation, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { AppModalService } from 'src/app/shared/services/app-modal.service';
 @Component({
   selector: 'app-publicacion-detalle',
   templateUrl: './publicacion-detalle.component.html',
@@ -17,20 +19,24 @@ export class PublicacionDetalleComponent implements OnInit {
     private publicacionesService: PublicacionesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private chatService:ChatService
+    private chatService: ChatService,
+    public userService: UsuarioService,
+    private appModalService: AppModalService,
+    public location2: PlatformLocation
   ) {}
   ngOnInit(): void {
-     registerLocaleData(es);
+    registerLocaleData(es);
     this.selectedId = Number(this.activatedRoute.snapshot.paramMap.get('id')!);
-    this.publicacionesService
-      .getPublicacionDetail(this.selectedId)
-      .subscribe((response) => {
+    this.publicacionesService.getPublicacionDetail(this.selectedId).subscribe(
+      (response) => {
         this.publicacion = response?.data[0];
-        console.log(this.publicacion)
+        console.log(this.publicacion);
         this.images = this.publicacion.fotos;
-      },(err) => {
+      },
+      (err) => {
         console.log(err);
-      });
+      }
+    );
   }
 
   goDetail(id: number) {
@@ -40,7 +46,23 @@ export class PublicacionDetalleComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  sendMessage(){
-    this.chatService.openUser(this.publicacion?.usuarios_id);
+  sendMessage() {
+    if (this.userService.isAuthenticated()) {
+      this.chatService.openUser(this.publicacion?.usuarios_id);
+    } else {
+      this.location2.onPopState(() => {
+        this.appModalService.closeModalAlertSignu();
+      });
+      this.appModalService
+        .modalAlertSignu(', para agregar esta granja como favorita')
+        .then((result: any) => {
+          if (result == 'registrate') {
+            this.router.navigate(['/registro']);
+          } else if (result == 'ingresar') {
+            this.router.navigate(['/login']);
+          }
+        })
+        .catch((result) => {});
+    }
   }
 }

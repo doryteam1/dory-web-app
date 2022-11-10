@@ -12,7 +12,7 @@
         <div class="navbar-toggler--miestilo__1">
           <!-- Buscador -->
           <!-- <input class="container__input form-input-text-square" type="text" placeholder="Buscar..."> -->
-            <div class=" no-drag buscador--container-icon heightAndWidth">
+            <div class=" no-drag buscador--container-icon heightAndWidth" (click)="search()">
               <img src="/assets/icons/search.svg">
             </div>
           <!-- Botones registro y login -->
@@ -23,7 +23,7 @@
           </div>
           <div style="display: flex; align-items: center;height: 100%;"  *ngIf="authenticated()">
             <!-- Interfas de notificaciones este boton abre la modal -->
-            <div #buttonOpenModalNotify class="no-drag notify dropstart">
+            <div #buttonOpenModalNotify class="no-drag notify dropstart" *ngIf="authenticated() && (userService.getAuthUser().rol == 'Piscicultor' || userService.getAuthUser().rol == 'Pescador')">
               <div
                   class="notify__box-miestilo position-relative "
                   placement="bottom"
@@ -48,7 +48,7 @@
     <!-- Fin responsibe -->
     <div #toggleButton2 class="collapse--miestilo collapse navbar-collapse" id="navbarSupportedContent">
       <div style="display: flex; align-items: center;height: 100%;">
-        <div class=" no-drag buscador--container-icon heightAndWidth buscador-container-otro">
+        <div class=" no-drag buscador--container-icon heightAndWidth buscador-container-otro" (click)="search()">
           <img src="/assets/icons/search.svg">
         </div>
       <ul #toggleButton class="navbar-nav--miestilo navbar-nav  mb-2 mb-lg-0 bg-light">
@@ -162,7 +162,7 @@
         <button class=" no-drag boton-ingresar" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
         <button class=" no-drag ms-2 boton-registrate" (click)="navegarRuta('/registro')"
           *ngIf="!authenticated()">Registrate</button>
-        <div class=" no-drag notify dropstart" *ngIf="authenticated()">
+        <div class=" no-drag notify dropstart" *ngIf="authenticated() && (userService.getAuthUser().rol == 'Piscicultor' || userService.getAuthUser().rol == 'Pescador')">
           <ng-container *ngTemplateOutlet="botonNotificacionNormal"></ng-container>
           <ng-container *ngTemplateOutlet="notificacionNormal"></ng-container>
         </div>
