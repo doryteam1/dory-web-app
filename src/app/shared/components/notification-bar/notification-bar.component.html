@@ -1,4 +1,4 @@
-<div class="alert-container" *ngIf="hasAlert" [style.background]="color">
+<div class="alert-container" *ngIf="hasAlert && onPublicar==1" [style.background]="color">
     <div class="alert-container__message"  [innerHTML]="htmlContent" >️
     </div>
     <div class="container-button-color-close">
