@@ -239,7 +239,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     return Utilities.dateFromX(date);
   }
 
-  serch() {
+  search() {
     this.appModalService
       .modalSearchComponentl(
       )

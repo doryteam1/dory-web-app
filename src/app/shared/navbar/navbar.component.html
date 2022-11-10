@@ -5,7 +5,7 @@
       <!-- Buscador -->
       <div class="logoAndSearch">
         <img *ngIf="!electronjs" class="logo2 heightAndWidth" src="assets/images/logo-no-name.svg" routerLink="/home"><!-- No Disponible en electronjs -->
-        <div class="buscador--container-icon heightAndWidth" (click)="serch()">
+        <div class="buscador--container-icon heightAndWidth" (click)="search()">
           <img src="/assets/icons/search.svg">
         </div>
       </div>
@@ -397,7 +397,7 @@
      <!--  <app-search class="buscador-container__search" [buscadorpersonalizado]="true" [activeClase]="true"
         [placeholderbuscador]="'Buscar...'">
       </app-search> -->
-        <div class="buscador--container-icon heightAndWidth" (click)="serch()">
+        <div class="buscador--container-icon heightAndWidth" (click)="search()">
           <img src="/assets/icons/search.svg">
         </div>
   <ng-container *ngTemplateOutlet="botonregistroylogintemplDos"></ng-container>
