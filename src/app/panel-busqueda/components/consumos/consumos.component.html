@@ -2,6 +2,22 @@
 <div *ngIf="!loading">
         <span class="title">Consumo de peces en el departamento de Sucre</span>
         <span class="description">A continuación se muestra la cantidad de pescado que consumen algunos del los usuarios de la plataforma Dory agrupados por cada municipio del departamento de Sucre. La cantidad que consumen esta expresada en Kilogramos por mes. Los municipios que no aparecen se debe a que por lo menos un habitante de este municipio no ha ingresado algún consumo. </span>
+        <form id="createForm" [formGroup]="form" class="formControl">
+                <div id="anio" class="d-flex flex-row justify-content-center">
+                        <div class="form">
+                            <span class="form__label">Escoge un año</span>
+                                <div class="form__input">
+                                        <select class="form-input-text-square form__input-select"
+                                                formControlName='anio' (ngModelChange)='onChange($event)'>
+                                                <optgroup label="Escoge un año">
+                                                <option *ngFor="let anio of anios" [ngValue]="anio" >{{anio}}</option>
+                                                </optgroup>
+                                        </select>
+                                </div>
+                        </div>
+                </div>
+        </form>
+        
         <div class="container">
                 <div *ngFor="let configChart of configChartArray">
                         <div class="container__chart" *ngIf="configChart?.consumoTotal > 0">

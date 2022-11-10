@@ -22,7 +22,7 @@ export class ConsumidorService {
   getConsumosMunicipios(){
     return this.https.get(environment.doryApiRestBaseUrl+'/municipios/consumo/especies/total/nuevo')
   }
-  getConsumosDepartamento(idDepartamento:number){
-    return this.https.get(environment.doryApiRestBaseUrl+'/municipios/consumo/especies/departamento/'+ idDepartamento)
+  getConsumosDepartamento(idDpto:number,year:number){
+    return this.https.get(environment.doryApiRestBaseUrl+'/municipios/consumo/especies/departamento',{ idDepartamento:idDpto, year:year })
   }
 }

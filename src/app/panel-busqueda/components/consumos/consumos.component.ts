@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ChartConfiguration } from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConsumidorService } from 'src/app/services/consumidor.service';
@@ -11,23 +12,25 @@ export class ConsumosComponent implements OnInit {
   loading:boolean = false;
   configChartArray:any[] = [];
   consumosMunic:Array<any> = [];
+  anios:number[] = [];
+  form: FormGroup = new FormGroup({
+    anio: new FormControl(''),
+  });
+
   public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: false,
   };
 
   constructor(private consumidorService:ConsumidorService,private spinner: NgxSpinnerService) {}
   ngOnInit(): void {
-    this.loading = true;
-    this.consumidorService.getConsumosDepartamento(70).subscribe(
-      (response)=>{
-        this.consumosMunic = response.data;
-        console.log(this.consumosMunic);
-        this.poblateDoughnutChartDatasetArray();
-        this.loading = false;
-      },err=>{
-        this.loading = false;
-      }
-    )
+    let start = 2019;
+    let end = new Date().getFullYear()
+    let i = start;
+
+    while(i <= end){
+      this.anios.push(i);
+      i++;
+    }
   }
 
   poblateDoughnutChartDatasetArray(){
@@ -51,5 +54,20 @@ export class ConsumosComponent implements OnInit {
         consumoTotal:totalConsum
       })
     }
+  }
+
+  onChange(year:number){
+    console.log("change year!",year)
+    this.loading = true;
+    this.consumidorService.getConsumosDepartamento(70,year).subscribe(
+      (response)=>{
+        this.consumosMunic = response.data;
+        console.log(this.consumosMunic);
+        this.poblateDoughnutChartDatasetArray();
+        this.loading = false;
+      },err=>{
+        this.loading = false;
+      }
+    )
   }
 }
