@@ -9,12 +9,12 @@
   </div>
   <app-spinner [showText]="false" *ngIf="loading"></app-spinner>
   <div class="center" *ngIf="showNotFound">
-    <app-not-found message="Aun no has registrado los productos que vendes"></app-not-found>
+    <app-not-found message="Aun no has registrado granjas"></app-not-found>
   </div>
   <div class="center" *ngIf="showError">
     <app-not-found [genericError]="showError"></app-not-found>
   </div>
-  <app-basic-floating-btn [tooltip]="'Crear producto'" [agregar]="true" (click)="createNewGranja()">
+  <app-basic-floating-btn [tooltip]="'Crear granja'" [agregar]="true" (click)="createNewGranja()">
   </app-basic-floating-btn>
 </div>
 

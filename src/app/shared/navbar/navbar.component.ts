@@ -6,7 +6,6 @@ import { ElectronjsService } from 'src/app/services/electronjs.service';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { AppModalService } from '../services/app-modal.service';
 import { ChatService } from 'src/app/services/chat.service';
-import { TopAlertControllerService } from '../services/top-alert-controller.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Utilities } from 'src/app/utilities/utilities';
 
@@ -59,7 +58,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private renderer: Renderer2,
     private appModalService: AppModalService,
     private chatService:ChatService,
-    private alertController:TopAlertControllerService,
     private utilities:UtilitiesService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
@@ -95,7 +93,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.userService.isAuthenticated()) {
       this.updateAsocRequest();
     }
-    
+
     this.chatService.listenNewSolicitudes().subscribe(
       (data)=>{
         console.log(data)

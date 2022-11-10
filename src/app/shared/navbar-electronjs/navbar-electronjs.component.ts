@@ -21,6 +21,7 @@ require('dayjs/locale/es');
 dayjs.locale('es');
 import { ResizeObserver } from '@juggle/resize-observer';
 import { ChatService } from 'src/app/services/chat.service';
+import { AppModalService } from '../services/app-modal.service';
 declare var window: any;
 @Component({
   selector: 'app-navbar-electronjs',
@@ -73,12 +74,13 @@ export class NavbarElectronjsComponent
   notifyStyloContainer: boolean = false;
   constructor(
     private router: Router,
-    private userService: UsuarioService,
+    public userService: UsuarioService,
     private storageService: StorageService,
     private _electronService: ElectronjsService,
     private ngZone: NgZone,
     private renderer: Renderer2,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private appModalService: AppModalService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -293,5 +295,11 @@ export class NavbarElectronjsComponent
   timeToNow(date: string) {
     dayjs.extend(relativeTime);
     return dayjs().toNow(true);
+  }
+  search() {
+    this.appModalService
+      .modalSearchComponentl()
+      .then((result) => {})
+      .catch((result) => {});
   }
 }
