@@ -17,7 +17,8 @@ export const environment = {
   production: false,
   doryApiRestBaseUrl:process.env.DORY_API_REST,
   oAuthClientId:process.env.OAUTH_CLIENT_ID,
-  doryServerUrl:process.env.DORY_SERVER_URL
+  doryServerUrl:process.env.DORY_SERVER_URL,
+  thisWebUrl:process.env.THIS_WEB_URL
 };
 /*
  * For easier debugging in development mode, you can import the following file

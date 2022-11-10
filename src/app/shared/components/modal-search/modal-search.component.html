@@ -5,7 +5,7 @@
       <!-- header modal -->
       <div class="input-wrapper">
         <div class="bi bi-search"></div>
-        <input type="text" placeholder="Buscar documentos" />
+        <input type="text" placeholder="Buscar documentos"  [(ngModel)]="text" (ngModelChange)="onChange()"/>
         <i class="img-x" *ngIf="true" ></i>
         <!-- <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" > -->
       </div>
@@ -18,8 +18,8 @@
     </div>
 <div class="modalconteni">
   <ul>
-    <li  class="DocSearch-Hit"  role="option" aria-selected="false" *ngFor="let result of busqueda; let i=index;" >
-      <a  #Mycard  href="/blog/beaker-browser#what-is-beaker-and-why-did-you-create-it" class="active">
+    <li class="DocSearch-Hit"  role="option" aria-selected="false" *ngFor="let entry of indexFiltered; let i=index;" >
+      <a #Mycard [href]="baseUrl + entry?.href" class="active">
         <div class="DocSearch-Hit-Container">
           <div class="DocSearch-Hit-icon">
             <svg width="20" height="20" viewBox="0 0 20 20">
@@ -30,13 +30,13 @@
           </div>
           <div class="DocSearch-Hit-content-wrapper shorterTextOverflowHidden">
             <span class="DocSearch-Hit-title shorterTextAuto" >
-            ¿Qué es Beaker y por qué? hizo tu lo creas?
+              {{entry?.title}}
             </span>
             <span class="DocSearch-Hit-path shorterTextAuto" >
-              Proyecto de la semana: Beaker Browser Proyecto de la semana
+              {{entry?.description}}
             </span>
           </div>
-          <div class="DocSearch-Hit-action" >
+          <div class="DocSearch-Hit-action">
             <svg class="DocSearch-Hit-Select-Icon" width="20" height="20"
               viewBox="0 0 20 20">
               <g stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
@@ -49,7 +49,6 @@
       </a>
     </li>
   </ul>
-
 </div>
   </div>
 </div>

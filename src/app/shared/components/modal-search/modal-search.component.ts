@@ -1,5 +1,8 @@
 import { Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SearchIndexService } from 'src/app/services/search-index.service';
+import { environment } from 'src/environments/environment';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-modal-search',
@@ -7,18 +10,37 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./modal-search.component.scss'],
 })
 export class ModalSearchComponent implements OnInit {
-  constructor(
-    private _modalService: NgbActiveModal,
-    private renderer: Renderer2
-  ) {}
   @ViewChildren('Mycard') items!: QueryList<ElementRef>;
   mouseOverCart: boolean = false;
   idxCard: number = -1;
-  ngOnInit(): void {}
-  busqueda: any[] = [1, 2, 3, 4, 5, 6, 5, 6, 4, 8, 9];
+  index:any[] = [];
+  indexFiltered: any[] = [];
+  baseUrl:string = environment.thisWebUrl;
+  text:string = '';
+  constructor(
+    private _modalService: NgbActiveModal,
+    private renderer: Renderer2,
+    private searchIdxService: SearchIndexService,
+    private sanitizer:DomSanitizer
+  ) {}
+
+  ngOnInit(): void {
+    this.searchIdxService.getIndex().subscribe(
+      (response)=>{
+        this.index = response.data;
+        this.indexFiltered = this.index.slice();
+      }
+    )
+  }
+
   public dismiss() {
     this._modalService.dismiss();
   }
+
+  sanitize(url:string){
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
   mouseoverCart(idx: number) {
  /*    if (idx == this.idxCard) {
       this.idxCard = -1;
@@ -46,5 +68,14 @@ export class ModalSearchComponent implements OnInit {
 
 //       this.renderer.addClass(card, 'active');
 //     }
+  }
+
+  onChange(){
+    console.log(this.text)
+    this.indexFiltered = this.index.filter(
+      (element)=>{
+        return element?.title?.toLowerCase().includes(this.text?.toLowerCase()); 
+      }
+    )
   }
 }

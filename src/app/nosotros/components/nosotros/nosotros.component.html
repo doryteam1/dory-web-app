@@ -10,7 +10,7 @@
     </div>
     <div class="container-mision" *ngIf="!loading">
         <div>
-          <h3 class="container__title">Misión</h3>
+          <h3 id="mision" class="container__title">Misión</h3>
           <p class="container__description presaltoLinea">{{misionVision.mision}}</p>
         </div>
         <img class="container__image animate__bounceIn" [src]="fotoMision ? fotoMision  : 'assets/images/no-image-photography.svg'" alt="">

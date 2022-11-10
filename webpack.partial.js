@@ -13,7 +13,8 @@ module.exports = {
             "process.env.MAPS_API_KEY": JSON.stringify(process.env.MAPS_API_KEY),
             "process.env.DORY_API_REST": JSON.stringify(process.env.DORY_API_REST),
             "process.env.OAUTH_CLIENT_ID": JSON.stringify(process.env.OAUTH_CLIENT_ID),
-            "process.env.DORY_SERVER_URL": JSON.stringify(process.env.DORY_SERVER_URL)
+            "process.env.DORY_SERVER_URL": JSON.stringify(process.env.DORY_SERVER_URL),
+            "process.env.THIS_WEB_URL": JSON.stringify(process.env.THIS_WEB_URL)
         }),
         new Dotenv()
     ]
