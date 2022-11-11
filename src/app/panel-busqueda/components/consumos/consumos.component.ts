@@ -13,6 +13,7 @@ export class ConsumosComponent implements OnInit {
   configChartArray:any[] = [];
   consumosMunic:Array<any> = [];
   anios:number[] = [];
+  showNotFound:boolean = false;
   form: FormGroup = new FormGroup({
     anio: new FormControl(''),
   });
@@ -34,6 +35,7 @@ export class ConsumosComponent implements OnInit {
   }
 
   poblateDoughnutChartDatasetArray(){
+    this.configChartArray = [];
     for(let i=0; i < this.consumosMunic.length; i++){
       let doughnutChartDatasets: ChartConfiguration<'doughnut'>['data']['datasets'] =
       [{ data: [], label: 'Series A' }];
@@ -54,15 +56,25 @@ export class ConsumosComponent implements OnInit {
         consumoTotal:totalConsum
       })
     }
+
+    let index = this.configChartArray.findIndex(
+      (element)=>{
+        element.consumoTotal > 0;
+      }
+    )
+
+    if(index == -1){
+      this.showNotFound = true;
+    }
   }
 
   onChange(year:number){
     console.log("change year!",year)
     this.loading = true;
+    this.showNotFound = false;
     this.consumidorService.getConsumosDepartamento(70,year).subscribe(
       (response)=>{
         this.consumosMunic = response.data;
-        console.log(this.consumosMunic);
         this.poblateDoughnutChartDatasetArray();
         this.loading = false;
       },err=>{
