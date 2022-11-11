@@ -82,7 +82,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route: string = event.url;
-        if (route.includes('welcome')) {
+        if (route.includes('welcome') || route.includes('politica')) {
           this.isHidden = true;
         } else {
           this.isHidden = false;

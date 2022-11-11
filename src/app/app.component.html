@@ -11,6 +11,6 @@
 <app-navbar *ngIf="!customTitleBarElectron"></app-navbar>
 <router-outlet *ngIf="!customTitleBarElectron"></router-outlet>
 <app-floating-btn-auto-up *ngIf="!customTitleBarElectron"></app-floating-btn-auto-up>
-<div *ngIf="isAuthUser">
+<div *ngIf="isAuthUser && show">
   <app-chat-user *appReloadStateAuth></app-chat-user>
 <div>

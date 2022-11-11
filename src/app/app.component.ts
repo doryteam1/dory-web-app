@@ -4,6 +4,7 @@ import { ElectronjsService } from 'src/app/services/electronjs.service';
 import { environment } from 'src/environments/environment';
 import { ChatService } from './services/chat.service';
 import { UsuarioService } from './services/usuario.service';
+import { NavigationEnd, Router } from '@angular/router';
 declare const process: any;
 
 @Component({
@@ -19,10 +20,12 @@ export class AppComponent implements OnInit{
   floatingBtn!: FloatingBtnAutoUpComponent;
   @ViewChild('main') divMain!: ElementRef;
   isAuthUser:boolean = false;
+  show: boolean = true;
   constructor(
     private _electronService: ElectronjsService,
     public userService:UsuarioService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private router: Router,
   ) {
   }
   ngOnInit(): void {
@@ -43,6 +46,18 @@ export class AppComponent implements OnInit{
         }
       }
     )
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        let route: string = event.url;
+        if (route.includes('welcome') || 
+        route.includes('politica')) {
+          this.show = false;
+        } else {
+          this.show = true;
+        }
+      }
+    });
   }
   exit(event: any) {
     console.log('exit app');
