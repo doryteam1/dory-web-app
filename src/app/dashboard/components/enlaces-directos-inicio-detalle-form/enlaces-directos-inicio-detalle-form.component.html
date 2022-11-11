@@ -4,7 +4,7 @@
       : 'Actualizar enlace rapido'}}</h4>
   </div>
   <div class="modal-body">
-    <form [formGroup]="form">
+    <form [formGroup]="form" autocomplete="off">
       <div class="mb-3">
         <label for="dateOfBirth">Título</label>
         <div class="input-group">
@@ -60,7 +60,7 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn" 
+      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
         (click)="updateData()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
