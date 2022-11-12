@@ -13,6 +13,8 @@
   padding: 5px;
   gap: 20px;
   align-items: center;
+  position: relative;
+    z-index: 1020;
 }
 
 .alert-container__message {

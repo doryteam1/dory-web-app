@@ -9,6 +9,8 @@
           <!-- <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" *ngIf="loadingseart"> -->
           <!-- <app-search (textSearch)="onSearch($event)"></app-search> -->
         </div>
+        <i class="bi bi-envelope-check myChat-text"></i>
+        <i class="bi bi-envelope myChat-text" *ngIf="false"></i>
         <button type="button" class="btn-close button_close" (click)="closeChat()"></button>
       </div>
       <div class="user-list-card">
@@ -29,6 +31,7 @@
           </span>
         </div>
       </div>
+      <div class="espaceBottom"></div>
     </div>
     <!-- Chat de usurio -->
     <div *ngIf="!Onlist" class="container__chats">

@@ -1,5 +1,40 @@
-<div class="d-flex flex-column">
-    <span class="link" *ngFor="let date of dates" (click)="navigateTo(date)">
-        {{getMonthName(date.month()) + ' de ' + date.year()}}
-    </span>    
+<!-- <div class="d-flex flex-column">
+    <span class="link" *ngFor="let date of dates;let primero = first" (click)="navigateTo(date)">
+    {{getMonthName(date.month()) + ' de ' + date.year()}}
+    </span>
+</div> -->
+<!-- otro -->
+
+
+<div id="carouselExampleIndicators" class="carousel  carousel-dark slide myClassCarousel" data-bs-ride="carousel" data-bs-interval="false">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators"  [attr.data-bs-slide-to]="idx"
+        aria-current="true" [attr.aria-label]="'Slide' + idx" *ngFor="let date of dates;let primero = first;let idx=index" [ngClass]="{active: primero}"></button>
+    </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active"
+     *ngFor="let date of dates;let primero = first"
+    [ngClass]="{active: primero}"
+    >
+     <ul>
+  <li class="card" (click)="navigateTo(date)">
+    <div class="card__flipper">
+      <div class="card__front">
+        <p class="card__name"><br>{{getMonthName(date.month())}}</p>
+        <p class="card__num">{{date.year()}}</p>
+      </div>
+    </div>
+  </li>
+     </ul>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
+

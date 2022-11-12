@@ -67,7 +67,9 @@
             </a>
           </li>
           <li id="consumo" class="nav-item" *ngIf="tipoUsuario == 'Consumidor'" (click)="closeOffcanvas()">
-            <a class="nav-link" [ngClass]="{'disabled':disableTags }" [routerLink]="['/dashboard/mi-consumo']"
+            <a class="nav-link"
+               [ngClass]="{'miclase':_router.url.includes('/dashboard/form-consumo'),'disabled':disableTags }"
+               aria-current="page" [routerLink]="['/dashboard/mi-consumo']"
               routerLinkActive="active">
               <span data-feather="file"></span>
               Mis consumos

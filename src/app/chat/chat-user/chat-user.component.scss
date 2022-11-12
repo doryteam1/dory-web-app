@@ -8,7 +8,8 @@
   max-height: 500px;
   padding: 10px;
   padding-top: 30px;
-    z-index: 20;
+  z-index: 20;
+
   .container__chats {
     width: 100%;
     height: 100%;
@@ -17,29 +18,35 @@
   .container__list {
     width: 100%;
     height: 100%;
-    overflow-y: auto;
+    overflow:hidden;
     border-radius: 10px;
     background-color: #EDEDED;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    padding: 10px;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 5%);
     margin-bottom: 10px;
+    position: relative;
 
     .container__list-search {
       display: flex;
+      grid-gap: 10px;
       gap: 10px;
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
+      position: sticky;
+      z-index: 10;
+      top: 0;
+      background-color: #EDEDED;
+      padding: 10px;
 
       .input-wrapper {
         display: flex;
         align-items: center;
         justify-content: space-between;
         background-color: var(--white);
-        padding: 0.5rem 0.5rem 0.5rem 15px;
+        padding: 0.2rem 0.2rem 0.2rem 10px;
         border-radius: 133px;
         color: white;
         box-shadow: 0 2px 12px var(--shadow-2);
-        width: 100%;
+        width: 80%;
 
       }
 
@@ -76,11 +83,16 @@
 }
 
 .user-list-card {
+    width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding: 10px;
   .user-card {
     display: flex;
     padding: 10px;
     cursor: pointer;
-    position:relative;
+    position: relative;
+
     &.active {
       background-color: #EDEDED;
     }
@@ -129,20 +141,28 @@
     border-bottom: 1px solid #bbbbbb;
   }
 }
-
-.user-card__badge{
-  position:absolute;
+.espaceBottom{
+  position: sticky;
+  z-index: 10;
+  bottom: 0;
+  background-color: #EDEDED;
+  height: 10px;
+  width: 100%;
+}
+.user-card__badge {
+  position: absolute;
   top: 24px;
   right: -20px;
   background-color: var(--azul1);
 }
-.user-card__label1{
-  color:#3b4a54;
+
+.user-card__label1 {
+  color: #3b4a54;
   font-size: 14px;
 }
 
-.user-card__label2{
-  color:#3b4a54;
+.user-card__label2 {
+  color: #3b4a54;
   font-size: 11px;
 }
 
@@ -227,7 +247,7 @@
       .message-container {
         //border-top-right-radius: 0;
         background-color: var(--azul5);
-        color:white;
+        color: white;
       }
     }
   }
@@ -261,7 +281,14 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+.button_close{
+font-size: 13px !important;
+}
+.myChat-text{
+  color: var(--azul1);
+  font-size: 20px;
+  cursor: pointer;
+}
 button:focus {
   border-color: none !important;
   box-shadow: none !important;
@@ -270,7 +297,7 @@ button:focus {
 
 .input {
   background-color: white;
-  border:none;
+  border: none;
   box-sizing: border-box;
   border-radius: 20px;
   font-size: 1rem;
@@ -307,21 +334,21 @@ button:focus {
   border-color: #26a5b8;
 }
 
-.floating-btn__badge1{
+.floating-btn__badge1 {
   position: absolute;
   top: 1px;
   right: -17px;
   background-color: var(--azul1);
 }
 
-.floating-btn__badge2{
+.floating-btn__badge2 {
   position: absolute;
   top: 1px;
   right: -27px;
   background-color: var(--azul1);
 }
 
-.floating-btn__badge3{
+.floating-btn__badge3 {
   position: absolute;
   top: 1px;
   right: -41px;
@@ -357,28 +384,30 @@ button:focus {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .scrollhide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
-.send-btn{
-  background-color:var(--azul5);
-  color:white;
+.send-btn {
+  background-color: var(--azul5);
+  color: white;
   width: 35px;
   height: 35px;
   min-width: 35px;
   min-height: 35px;
   border-radius: 50%;
-  border:none;
+  border: none;
 }
 
-.send-btn__img{
+.send-btn__img {
   width: 20px;
   height: 20px;
   min-width: 20px;
   min-height: 30px;
 }
 
-.text{
-  border:none;
+.text {
+  border: none;
 }
