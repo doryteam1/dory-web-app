@@ -50,6 +50,7 @@ import { BarraNotificacionGeneralComponent } from './components/barra-notificaci
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { BarraNotificacionDetalleFormComponent } from './components/barra-notificacion-detalle-form/barra-notificacion-detalle-form.component';
+import { MonthPickerComponent } from './components/month-picker/month-picker.component';
 
 
 
@@ -90,6 +91,7 @@ import { BarraNotificacionDetalleFormComponent } from './components/barra-notifi
     FotosMiniDetalleFormComponent,
     BarraNotificacionGeneralComponent,
     BarraNotificacionDetalleFormComponent,
+    MonthPickerComponent,
   ],
   imports: [
     CommonModule,

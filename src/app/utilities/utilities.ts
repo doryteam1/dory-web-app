@@ -30,4 +30,22 @@ export class Utilities{
     static dateFromX(date: string) {
         return dayjs(date).fromNow(true);
     }
+
+    static isMinor(a:dayjs.Dayjs,b:dayjs.Dayjs){
+        if(a.year() < b.year()){
+            return true
+        }else if((a.year() == b.year()) && (a.month() < b.month())){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //0 - 11 Enero - Febrero
+    static getMonthName(monthNumber:number) {
+        const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ];
+        return monthNames[monthNumber];
+    }
 }

@@ -11,12 +11,12 @@ export class ConsumidorService {
 
   }
 
-  getMisConsumos(){
-    return this.https.get(environment.doryApiRestBaseUrl+'/usuario/misconsumos')
+  getMisConsumos(year:number,month:number){
+    return this.https.get(environment.doryApiRestBaseUrl+'/usuario/misconsumos',{year:year,month:month})
   }
 
-  updateConsumo(arrayConsumos:any){
-    return this.https.put(environment.doryApiRestBaseUrl+'/usuario/update/misconsumos',{arrayConsumos:arrayConsumos})
+  updateConsumo(arrayConsumos:any,year:number,month:number){
+    return this.https.put(environment.doryApiRestBaseUrl+'/usuario/update/misconsumos',{arrayConsumos:arrayConsumos, year:year,month:month})
   }
 
   getConsumosMunicipios(){

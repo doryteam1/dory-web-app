@@ -33,6 +33,7 @@ import { EnlacesDirectosInicioDetalleFormComponent } from './components/enlaces-
 import { GranjasTodasComponent } from './components/granjas-todas/granjas-todas.component';
 import { BarraNotificacionGeneralComponent } from './components/barra-notificacion-general/barra-notificacion-general.component';
 import { BarraNotificacionDetalleFormComponent } from './components/barra-notificacion-detalle-form/barra-notificacion-detalle-form.component';
+import { MonthPickerComponent } from './components/month-picker/month-picker.component';
 const routes: Routes = [
   {
     path: '',
@@ -46,7 +47,8 @@ const routes: Routes = [
       { path: 'mis-vehiculos', component: MisVehiculosComponent },
       { path: 'vehiculo/detalle', component: VehiculoDetalleFormComponent },
       { path: 'mis-favoritos', component: MisFavoritosComponent },
-      { path: 'mi-consumo', component: MiConsumoComponent },
+      { path: 'mi-consumo', component: MonthPickerComponent },
+      { path: 'form-consumo', component: MiConsumoComponent },
       { path: 'mis-negocios', component: MisNegociosComponent },
       { path: 'negocio/detalle', component: NegocioDtalleFormComponent },
       { path: 'mis-asociaciones', component: MisAsociacionesComponent },

@@ -24,7 +24,7 @@ export class ConsumosComponent implements OnInit {
 
   constructor(private consumidorService:ConsumidorService,private spinner: NgxSpinnerService) {}
   ngOnInit(): void {
-    let start = 2019;
+    let start = 2022;
     let end = new Date().getFullYear()
     let i = start;
 
@@ -59,7 +59,7 @@ export class ConsumosComponent implements OnInit {
 
     let index = this.configChartArray.findIndex(
       (element)=>{
-        element.consumoTotal > 0;
+        return element.consumoTotal > 0;
       }
     )
 

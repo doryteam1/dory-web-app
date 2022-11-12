@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ConsumidorService } from 'src/app/services/consumidor.service';
 import { EspeciesService } from 'src/app/services/especies.service';
 
@@ -11,15 +12,21 @@ export class MiConsumoComponent implements OnInit, AfterViewInit {
   consumos:Array<any> = []
   misConsumos:Array<any> = [];
   loading:boolean = false;
-  constructor(private especiesService:EspeciesService, private consumidorService:ConsumidorService){ }
+  year:number | null = null;
+  month:number | null = null;
+  constructor(private especiesService:EspeciesService, 
+              private consumidorService:ConsumidorService,
+              private ar:ActivatedRoute){ }
   ngAfterViewInit(): void {
   }
 
   ngOnInit(): void {
+    this.year = JSON.parse(this.ar.snapshot.paramMap.get('year')!);
+    this.month = JSON.parse(this.ar.snapshot.paramMap.get('month')!);
     this.especiesService.getEspecies().subscribe(
       (response)=>{
         this.consumos = response.data;
-        this.consumidorService.getMisConsumos().subscribe(
+        this.consumidorService.getMisConsumos(this.year!,this.month!).subscribe(
           (response)=>{
             this.misConsumos = response.data;
             this.consumos.forEach((consumo)=>{
@@ -48,7 +55,7 @@ export class MiConsumoComponent implements OnInit, AfterViewInit {
         return consumo.check;
       }
     )
-    this.consumidorService.updateConsumo(consumosFiltered).subscribe(
+    this.consumidorService.updateConsumo(consumosFiltered,this.year!,this.month!).subscribe(
       (response)=>{
         this.loading = false;
         console.log(response)

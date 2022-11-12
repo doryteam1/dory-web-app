@@ -1,0 +1,5 @@
+<div class="d-flex flex-column">
+    <span class="link" *ngFor="let date of dates" (click)="navigateTo(date)">
+        {{getMonthName(date.month()) + ' de ' + date.year()}}
+    </span>    
+</div>
