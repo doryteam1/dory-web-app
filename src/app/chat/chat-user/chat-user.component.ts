@@ -48,6 +48,7 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   userChatRefs: any;
   borrarseart: boolean = false;
   loadingseart: boolean = false;
+  showUnreads:boolean = false;
   constructor(
     private chatService: ChatService,
     private userService: UsuarioService,
@@ -370,6 +371,19 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
     );
   }
 
+  unreadFilter(){
+    this.showUnreads = true;
+    this.filteredUserList = this.userList.filter(
+      (element)=>{
+        return element.unreadsCount > 0;
+      }
+    )
+  }
+
+  cancelUnreadFilter(){
+    this.showUnreads = false;
+    this.onSearch();
+  }
   getUltimo(userId: number) {
     let index = this.recents.findIndex((element) => {
       return element.chat_id == this.userService.getAuthUser().sub + userId;

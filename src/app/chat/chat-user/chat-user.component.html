@@ -9,8 +9,8 @@
           <!-- <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" *ngIf="loadingseart"> -->
           <!-- <app-search (textSearch)="onSearch($event)"></app-search> -->
         </div>
-        <i class="bi bi-envelope-check myChat-text"></i>
-        <i class="bi bi-envelope myChat-text" *ngIf="false"></i>
+        <i class="bi bi-envelope-check myChat-text" (click)="unreadFilter()" *ngIf="!showUnreads"></i>
+        <i class="bi bi-envelope myChat-text" *ngIf="showUnreads" (click)="cancelUnreadFilter()"></i>
         <button type="button" class="btn-close button_close" (click)="closeChat()"></button>
       </div>
       <div class="user-list-card">
