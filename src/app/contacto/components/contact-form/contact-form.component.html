@@ -3,7 +3,7 @@
         <h4 class="container__title">Formulario de contacto</h4>
         <img class="container__logo"  src="assets/images/logo-no-name.svg">
 
-        <form  style="width: 100%;" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form  style="width: 100%;" [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
         <div class="container-form__box">
             <span class="container-form__label">Nombres y Apellidos: <span class="container-form__simbol">*</span></span>
             <input  class="container-form__input" placeholder="Escriba aquí su nombre y apellido" [ngClass]="invalid('nomCompleto') ? 'invalid-input' : ''" type="text" formControlName="nomCompleto" (input)="onChange()">

@@ -4,7 +4,7 @@
       : 'Actualizar miembro'}}</h4>
   </div>
   <div class="modal-body">
-    <form [formGroup]="form">
+    <form [formGroup]="form" autocomplete="off">
       <div class="mb-3">
         <label for="dateOfBirth">Nombres</label>
         <div class="input-group">
@@ -156,7 +156,7 @@
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn" 
+      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
         (click)="addMiembro()" *ngIf="modalMode=='create'">
         <span *ngIf="!loading">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">

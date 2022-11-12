@@ -4,7 +4,7 @@
         <h4 class="container__title">Inicia sesión</h4>
         <img class="container__logo" src="assets/images/logo-no-name.svg">
       </div>
-        <form [formGroup]="form">
+        <form [formGroup]="form" autocomplete="off">
             <div class="container-form__box">
                 <span class="container-form__label">Correo electrónico: <span class="container-form__simbol">*</span></span>
                 <input class="container-form__input" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" formControlName="email" (input)="onChange()">

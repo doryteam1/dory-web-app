@@ -12,7 +12,7 @@
                 <img class="container__logo" src="assets/images/logo-no-name.svg">
             </div>
         </div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="container-form__box1">
         <span class="container-form__label">Correo electrónico*</span>
         <input class="container-form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="Ingresa tu correo electrónico" formControlName="email" (input)="onChange()">
