@@ -259,7 +259,7 @@ export class NavbarElectronjsComponent
 
   updatePassword() {
     this.ngZone.run(() => {
-      this.router.navigateByUrl('update-password');
+      this.router.navigateByUrl('dashboard/update-password');
       this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
     });
   }

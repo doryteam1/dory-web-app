@@ -110,7 +110,7 @@ ul {
   transform: rotateY(180deg);
 }
 
-.card_info .info {
+.card_info .back .info {
   height: calc(100% - 80px);
   overflow: hidden;
   overflow-y: auto;
@@ -125,10 +125,11 @@ ul {
 
 .info-front {
   height: 120px !important;
-  overflow: hidden !important;
-  overflow-y: auto !important;
-  margin: 10px !important;
-  padding: 0 !important;
+ /*  overflow: hidden !important;
+  overflow-y: auto !important; */
+ /*  margin: 10px !important;
+  padding: 0 !important; */
+        padding: 10px !important;
 
   h5 {
     overflow-wrap: break-word;

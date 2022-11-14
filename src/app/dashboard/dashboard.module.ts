@@ -51,6 +51,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { BarraNotificacionDetalleFormComponent } from './components/barra-notificacion-detalle-form/barra-notificacion-detalle-form.component';
 import { MonthPickerComponent } from './components/month-picker/month-picker.component';
+import { UpdatePasswordModule } from '../update-password/update-password.module';
 
 
 
@@ -113,6 +114,7 @@ import { MonthPickerComponent } from './components/month-picker/month-picker.com
     PanelBusquedaModule,
     AngularEditorModule,
     ColorPickerModule,
+    UpdatePasswordModule,
   ],
   providers: [GuidedTourService],
 })

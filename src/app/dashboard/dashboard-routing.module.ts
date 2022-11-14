@@ -34,6 +34,7 @@ import { GranjasTodasComponent } from './components/granjas-todas/granjas-todas.
 import { BarraNotificacionGeneralComponent } from './components/barra-notificacion-general/barra-notificacion-general.component';
 import { BarraNotificacionDetalleFormComponent } from './components/barra-notificacion-detalle-form/barra-notificacion-detalle-form.component';
 import { MonthPickerComponent } from './components/month-picker/month-picker.component';
+import { UpdatePasswordComponent } from '../update-password/components/update-password/update-password.component';
 const routes: Routes = [
   {
     path: '',
@@ -77,6 +78,10 @@ const routes: Routes = [
       {
         path: 'granjas-todas-admi',
         component: GranjasTodasComponent,
+      },
+      {
+        path: 'update-password',
+        component: UpdatePasswordComponent,
       },
       {
         path: 'slider-inicio-admi/detalle',
