@@ -6,35 +6,44 @@
 <!-- otro -->
 
 
-<div id="carouselExampleIndicators" class="carousel  carousel-dark slide myClassCarousel" data-bs-ride="carousel" data-bs-interval="false">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleIndicators"  [attr.data-bs-slide-to]="idx"
-        aria-current="true" [attr.aria-label]="'Slide' + idx" *ngFor="let date of dates;let primero = first;let idx=index" [ngClass]="{active: primero}"></button>
-    </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active"
-     *ngFor="let date of dates;let primero = first"
-    [ngClass]="{active: primero}"
-    >
-     <ul>
-  <li class="card" (click)="navigateTo(date)">
-    <div class="card__flipper">
-      <div class="card__front">
-        <p class="card__name"><br>{{getMonthName(date.month())}}</p>
-        <p class="card__num">{{date.year()}}</p>
+
+
+<!--  -->
+<div class="container">
+  <div class="container-month-picker">
+    <div class="container_control_bar_month">
+      <div id="carouselExampleIndicators" class="carousel  carousel-dark slide myClassCarousel w-100 h-100" data-bs-ride="carousel"
+        data-bs-interval="false">
+        <div class="carousel-inner">
+          <div class="carousel-item active" *ngFor="let date of dates;let primero = first" [ngClass]="{active: primero}">
+            <h6 class="title"> {{getMonthName(date.month()) + ' de ' + date.year()}}</h6>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" (click)="Prev()">
+          <div class="control_bar_leght" aria-hidden="true"></div>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" (click)="Next()">
+          <div class="control_bar_right" aria-hidden="true"></div>
+        </button>
       </div>
     </div>
-  </li>
-     </ul>
+    <div class="container_data_month">
+      <div class="data_month_title">
+        <div class="imagen-fish">
+          <img src="assets/icons/fishx.svg">
+        </div>
+        <div class="container-title">
+          <h6 class="title">Total consumido</h6>
+          <h6 class="title title_dos">0 kg/mes</h6>
+        </div>
+        <div class="imagen-fish">
+          <img src="assets/icons/fishx.svg">
+        </div>
+      </div>
+      <div class="data_month">
+
+      </div>
+      <img src="assets/icons/edit-lapiz.svg" class="data_month_edit" >
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>
-

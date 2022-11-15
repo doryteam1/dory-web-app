@@ -16,12 +16,12 @@
         <div class="img" (click)="openDetalle()">
           <img class="img1" [src]="dato.imagen ? dato.imagen: 'assets/images/no-image-photography.svg'" alt="Foto">
         </div>
-        <div class="info info-front" (click)="openDetalle()">
-          <h5 *ngIf="dato.titulo">{{dato.titulo | titlecase}}</h5>
-          <div *ngFor="let item of dato.subTitle" >
-            <p  *ngIf="item?.titulo && item?.detail">{{item?.titulo | titlecase}} <span>{{item?.detail}}</span></p>
+        <div class="info info-front shorterTextOverflowHidden w-100" (click)="openDetalle()">
+          <h5 *ngIf="dato.titulo" class="shorterTextAuto">{{dato.titulo | titlecase}}</h5>
+          <div *ngFor="let item of dato.subTitle" class="w-100">
+            <p  *ngIf="item?.titulo && item?.detail" class="shorterTextAuto">{{item?.titulo | titlecase}} <span>{{item?.detail}}</span></p>
           </div>
-          <p *ngIf="dato.subTitleNormal">{{dato.subTitleNormal | titlecase}}</p>
+          <p *ngIf="dato.subTitleNormal" class="shorterTextAuto">{{dato.subTitleNormal | titlecase}}</p>
         </div>
       </div>
       <div class="side back">

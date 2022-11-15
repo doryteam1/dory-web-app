@@ -203,7 +203,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updatePassword() {
     this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
-    this.router.navigateByUrl('update-password');
+    this.router.navigateByUrl('dashboard/update-password');
   }
 
   confirmarInvitacion(invitacion: any) {

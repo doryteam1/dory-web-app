@@ -416,9 +416,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   takedTour() {
     return this.storage.get('takeTour');
   }
-  updatePassword() {
-    this._router.navigateByUrl('update-password');
-  }
   logout() {
     this.userService.logout();
     this._router.navigateByUrl('/home');
