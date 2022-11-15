@@ -363,6 +363,7 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   }
   closeChat() {
     this.chatOpen = false;
+    this.Onlist = true;
   }
 
   onSearch() {
