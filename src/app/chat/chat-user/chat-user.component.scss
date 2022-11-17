@@ -18,7 +18,7 @@
   .container__list {
     width: 100%;
     height: 100%;
-    overflow:hidden;
+    overflow: hidden;
     border-radius: 10px;
     background-color: #EDEDED;
     box-shadow: 0 10px 30px rgb(0 0 0 / 5%);
@@ -83,10 +83,11 @@
 }
 
 .user-list-card {
-    width: 100%;
-      height: calc(100% - 64px);
-      overflow-y: auto;
-      padding: 10px;
+  width: 100%;
+  height: calc(100% - 64px);
+  overflow-y: auto;
+  padding: 10px;
+
   .user-card {
     display: flex;
     padding: 10px;
@@ -141,7 +142,8 @@
     border-bottom: 1px solid #bbbbbb;
   }
 }
-.espaceBottom{
+
+.espaceBottom {
   position: sticky;
   z-index: 10;
   bottom: 0;
@@ -149,6 +151,7 @@
   height: 10px;
   width: 100%;
 }
+
 .user-card__badge {
   position: absolute;
   top: 24px;
@@ -159,6 +162,8 @@
 .user-card__label1 {
   color: #3b4a54;
   font-size: 14px;
+  overflow-wrap: break-word;
+  width: 100%;
 }
 
 .user-card__label2 {
@@ -281,14 +286,17 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
-.button_close{
-font-size: 13px !important;
+
+.button_close {
+  font-size: 13px !important;
 }
-.myChat-text{
+
+.myChat-text {
   color: var(--azul1);
   font-size: 20px;
   cursor: pointer;
 }
+
 button:focus {
   border-color: none !important;
   box-shadow: none !important;
@@ -411,46 +419,48 @@ button:focus {
 .text {
   border: none;
 }
- .tooltip-one {
-    padding: 10px 15px;
-      background: #fff;
-      position: absolute;
-      width: max-content;
-      height: max-content;
-      max-width: 300px;
-      border-radius: 0.25rem;
-      text-align: center;
-      filter: drop-shadow(0 3px 5px #ccc);
-      line-height: 1.5;
-      display: none;
-          left: -100px;
-      top: -3px;
-      margin-right: -110px;
-      color: #fff;
-      background-color: #000;
-      z-index: 2;
-      font-size: 0.875rem;
 
- }
+.tooltip-one {
+  padding: 10px 15px;
+  background: #fff;
+  position: absolute;
+  width: max-content;
+  height: max-content;
+  max-width: 300px;
+  border-radius: 0.25rem;
+  text-align: center;
+  filter: drop-shadow(0 3px 5px #ccc);
+  line-height: 1.5;
+  display: none;
+  left: -100px;
+  top: -3px;
+  margin-right: -110px;
+  color: #fff;
+  background-color: #000;
+  z-index: 2;
+  font-size: 0.875rem;
 
- .tooltip-one:after {
-   content: "";
-   position: absolute;
-   z-index: -1;
-   bottom: 31%;
-   left: 95%;
-   margin-left: -9px;
-   width: 18px;
-   height: 18px;
-   background-color: #000;
-   transform: rotate(45deg);
- }
+}
 
- .tooltip-trigger:hover+.tooltip-one {
-   display: block;
- }
+.tooltip-one:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 31%;
+  left: 95%;
+  margin-left: -9px;
+  width: 18px;
+  height: 18px;
+  background-color: #000;
+  transform: rotate(45deg);
+}
+
+.tooltip-trigger:hover+.tooltip-one {
+  display: block;
+}
+
 .no-read {
-display: flex;
+  display: flex;
   width: 20px;
   justify-content: center;
   align-items: center;
@@ -462,4 +472,9 @@ display: flex;
   right: -9px;
   font-size: 0.65rem;
   color: white;
+}
+
+.user-card__container {
+  align-items: flex-start;
+  width: calc(100% - 45px);
 }
