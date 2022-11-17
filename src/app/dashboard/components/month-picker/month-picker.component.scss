@@ -1,5 +1,3 @@
-
-
 /*  */
 .container {
   display: flex;
@@ -21,7 +19,7 @@
   overflow: hidden;
 
   .container_control_bar_month {
-    background: #FFB6B6;
+    background: var(--azul1);
     width: 100%;
     height: 70px;
     position: absolute;
@@ -35,7 +33,7 @@
     .control_bar_leght {
       width: 0;
       height: 0;
-      border-bottom: 10px solid var(--azul1);
+      border-bottom: 10px solid white;
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
       transform: rotate(-90deg);
@@ -47,7 +45,7 @@
     .control_bar_right {
       width: 0;
       height: 0;
-      border-bottom: 10px solid var(--azul1);
+      border-bottom: 10px solid white;
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
       transform: rotate(90deg);
@@ -60,11 +58,11 @@
   .container_data_month {
     display: flex;
     width: 100%;
-    height: 100%;
     position: absolute;
     top: 70px;
     align-items: center;
     flex-direction: column;
+    height: calc(100% - 70px);
 
     .data_month_title {
       width: 95%;
@@ -73,56 +71,106 @@
       box-shadow: 0 2px 12px var(--shadow-2);
       margin-top: 10px;
       display: flex;
-    justify-content: space-evenly;
+      justify-content: space-evenly;
       align-items: center;
       gap: 10px;
-      .imagen-fish{
+
+      .imagen-fish {
         padding: 5px;
         width: 40px;
         height: 40px;
-        img{
+
+        img {
           width: 100%;
           height: 100%;
         }
       }
-      .container-title{
+
+      .container-title {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 70%;
-        .title_dos{
+
+        .title_dos {
           font-size: 0.9rem;
-            color: #847f7f;
+          color: #847f7f;
         }
       }
     }
-    .data_month{
-      width: 100%;
-       height: 100%;
-       position: relative;
-      }
-      .data_month_edit{
-          position: absolute;
-            right: 30px;
-            bottom: 100px;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
 
-      }
+    .data_month {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .data_month_edit {
+      position: absolute;
+      right: 30px;
+      bottom: 40px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+
+    }
+
+    .data_month_ver {
+      position: absolute;
+      right: 30px;
+      bottom: 40px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
   }
 }
+
 .title {
   color: var(--gris-oscuro);
   margin: 0;
 }
-.myClassCarousel{
+
+.myClassCarousel {
   display: flex;
   justify-content: center;
   align-items: center;
-  .carousel-inner{
+
+  .carousel-inner {
     width: max-content;
     height: max-content;
   }
+}
+
+.spinner {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.canvas__class {
+  width: 200px !important;
+  height: 200px !important;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.search-container__box {
+  text-align: center;
+  padding: 20px;
+}
+
+.search-container__image {
+  width: 150px;
 }

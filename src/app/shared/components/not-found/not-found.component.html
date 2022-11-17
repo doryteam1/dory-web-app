@@ -2,6 +2,7 @@
     <div class="search-container__box">
       <img class="search-container__image" *ngIf="imgType == 'default'" src="assets/images/searching.svg">
       <img class="search-container__image" *ngIf="imgType == 'vehiculo'" src="assets/images/searchVehi.svg">
+      <img class="search-container__image" *ngIf="imgType == 'pez'" src="assets/images/searchPez.svg">
       <h5 style="color:var(--gris-oscuro);">No se han encontrado resultados</h5>
       <p *ngIf="!message" style="color:var(--gris-oscuro);">No se encontraron {{objectName}} con esta busqueda</p>
       <p *ngIf="message" style="color:var(--gris-oscuro);">{{message}}</p>

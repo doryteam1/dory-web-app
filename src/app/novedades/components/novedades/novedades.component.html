@@ -3,9 +3,13 @@
     <div class="buscadoryfiltro">
       <div class="buscador-container">
         <app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)"></app-search>
-        <app-filtro [filtro]="filtro" [checkboxfiltro]="false" (onFilterSeleccionado)="onFiltroChange($event)"
-          [filtroSeleccionado]="filtroseleccionado" *ngIf="userService.isAuthenticated()">
-        </app-filtro>
+        <button class="btn-filter"
+        *ngIf="userService.isAuthenticated()"
+        type="button"
+        (click)="onFiltroChange()">
+        <img class="novedad__like-icon novedad__like-icon--fill filtroStilo"
+          src="assets/icons/happy-face-white.svg" >
+      </button>
       </div>
       <div class="chip" *ngIf="userService.isAuthenticated()">
         <app-chip-con-boton-close
