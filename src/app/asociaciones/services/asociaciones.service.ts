@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpsService } from 'src/app/services/https.service';
 import { environment } from 'src/environments/environment';
@@ -10,91 +10,91 @@ import { SolicitudesModalContentComponent } from '../components/modals/solicitud
   providedIn: 'root',
 })
 export class AsociacionesService {
+  actionBotton$: EventEmitter<boolean> = new EventEmitter();
   constructor(private https: HttpsService, private modalService: NgbModal) {}
-
   getAsociaciones() {
-    return this.https.get(
-      environment.doryApiRestBaseUrl+'/asociaciones'
-    );
+    return this.https.get(environment.doryApiRestBaseUrl + '/asociaciones');
   }
   getAsociacionesTodas() {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/asociaciones/todas'
+      environment.doryApiRestBaseUrl + '/asociaciones/todas'
     );
   }
 
   getAsociacionesMunicipio(idMunicipio: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/asociaciones/municipio/' +
-        idMunicipio
+      environment.doryApiRestBaseUrl + '/asociaciones/municipio/' + idMunicipio
     );
   }
 
   getAsociacionesDpto(dptoId: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/asociaciones/departamento/' +
-        dptoId
+      environment.doryApiRestBaseUrl + '/asociaciones/departamento/' + dptoId
     );
   }
 
   getAsociacionesUsuario(idUsuario: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/asociaciones/usuario/' +
-        idUsuario
+      environment.doryApiRestBaseUrl + '/asociaciones/usuario/' + idUsuario
     );
   }
   getAsociacionDetalle(nit: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/asociaciones/detail/' + nit
+      environment.doryApiRestBaseUrl + '/asociaciones/detail/' + nit
     );
   }
   add(asociacion: any) {
     return this.https.post(
-      environment.doryApiRestBaseUrl+'/asociaciones',
+      environment.doryApiRestBaseUrl + '/asociaciones',
       asociacion
     );
   }
 
   delete(nit: number) {
     return this.https.delete(
-      environment.doryApiRestBaseUrl+'/asociaciones/' + nit
+      environment.doryApiRestBaseUrl + '/asociaciones/' + nit
     );
   }
 
   update(nit: number, newDataAsociacion: any) {
     return this.https.put(
-      environment.doryApiRestBaseUrl+'/asociaciones/' + nit,
+      environment.doryApiRestBaseUrl + '/asociaciones/' + nit,
       newDataAsociacion
     );
   }
 
-  updateParcial(nit:number, newDataAsociacion: any){
+  updateParcial(nit: number, newDataAsociacion: any) {
     return this.https.put(
-      environment.doryApiRestBaseUrl+'/asociaciones/parcial/' + nit,
+      environment.doryApiRestBaseUrl + '/asociaciones/parcial/' + nit,
       newDataAsociacion
     );
   }
 
   detail(nit: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/asociaciones/' + nit
+      environment.doryApiRestBaseUrl + '/asociaciones/' + nit
     );
   }
   tiposAsociacion() {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/tipos-asociaciones'
+      environment.doryApiRestBaseUrl + '/tipos-asociaciones'
     );
   }
 
-  public showSolicitudesModal(datos:any, title?: string): Promise<boolean> {
+  public showSolicitudesModal(datos: any, title?: string): Promise<boolean> {
     const modalRef = this.modalService.open(SolicitudesModalContentComponent);
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.datos = datos;
     return modalRef.result;
   }
 
-  public showAscociacionMiembrosModal(datos:any, title?: string): Promise<boolean> {
-    const modalRef = this.modalService.open(MiembrosAsociacionModalContentComponent);
+  public showAscociacionMiembrosModal(
+    datos: any,
+    title?: string
+  ): Promise<boolean> {
+    const modalRef = this.modalService.open(
+      MiembrosAsociacionModalContentComponent
+    );
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.datos = datos;
     return modalRef.result;
@@ -102,24 +102,32 @@ export class AsociacionesService {
 
   invitarUsuarioAsociacion(solicitud: any, nit: number) {
     return this.https.post(
-      environment.doryApiRestBaseUrl+'/asociaciones/solicitud/adicion/' +
-        nit,
+      environment.doryApiRestBaseUrl + '/asociaciones/solicitud/adicion/' + nit,
       solicitud
     );
   }
 
-  eliminarSolicitud(idSolicitud:number){
-    return this.https.delete(environment.doryApiRestBaseUrl+'/asociaciones/solicitud/eliminar/'+idSolicitud)
+  eliminarSolicitud(idSolicitud: number) {
+    return this.https.delete(
+      environment.doryApiRestBaseUrl +
+        '/asociaciones/solicitud/eliminar/' +
+        idSolicitud
+    );
   }
 
-  getAsociacionesIsMiembroUser(id:number){
-    return this.https.get(environment.doryApiRestBaseUrl+'/asociaciones/miembros/'+id);
+  getAsociacionesIsMiembroUser(id: number) {
+    return this.https.get(
+      environment.doryApiRestBaseUrl + '/asociaciones/miembros/' + id
+    );
   }
 
-  getMiembrosPrivado(nit:string){
-    return this.https.get(environment.doryApiRestBaseUrl+'/asociaciones/miembros/privado/nit/'+nit)
+  getMiembrosPrivado(nit: string) {
+    return this.https.get(
+      environment.doryApiRestBaseUrl +
+        '/asociaciones/miembros/privado/nit/' +
+        nit
+    );
   }
-
 }
 
 

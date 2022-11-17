@@ -14,6 +14,8 @@ import { Filtro, MetaFiltro } from '../../../../models/filtro.model';
 import { Checkbox } from 'src/models/checkbox.model';
 import { BuscarPor } from '../../../../models/buscarPor.model';
 import { StorageService } from 'src/app/services/storage.service';
+import { OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/internal/Subscription';
 const _ = require('lodash');
 
 
@@ -23,7 +25,7 @@ const _ = require('lodash');
   styleUrls: ['./mis-asociaciones.component.scss'],
 })
 export class MisAsociacionesComponent
-  implements OnInit, AfterViewInit
+  implements OnInit, AfterViewInit,OnDestroy
 {
   @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
   @ViewChild('tabSoyRep',{static: false}) tabSoyRep!: ElementRef;
@@ -123,6 +125,7 @@ export class MisAsociacionesComponent
   shorterNumber: number = 20;
   resultFiltroPorMunicipio: any[] = [];
   resultFiltroSeleccionado: any[] = [];
+  BotonNotificacion!:Subscription
   constructor(
     private asociacionesService: AsociacionesService,
     private appModalService: AppModalService,
@@ -133,13 +136,15 @@ export class MisAsociacionesComponent
     private storageService: StorageService,
   ) {
   }
+  ngOnDestroy(): void {
+    this.BotonNotificacion.unsubscribe()
+
+  }
   ngAfterViewInit(): void {
     let selectedTab = this.storageService.get('misAsocSelecTab');
     //TODO:la referencia de tabSoyMiemb no esta disponible y deberia estarlo
-  
       setTimeout(()=>{
         /*Se abre el tab que estuvo seleccionado antes de ir a ver el detalle de una asociación*/
-        
         if (selectedTab && selectedTab == 'tabSoyRep') {
           this.htmlElementClick(this.tabSoyRep);
         } else if (selectedTab && selectedTab == 'tabSoyMiemb') {
@@ -158,6 +163,40 @@ export class MisAsociacionesComponent
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
+   this.preCarga()
+    /* municipios sucre */
+   this.BotonNotificacion= this.asociacionService.actionBotton$.subscribe((action:boolean)=>{
+      if (action) {
+         this.showNotFoundAsocMiemb = false;
+        /* window.location.reload(); */
+        /*Asociaciones en donde se en miembro*/
+        this.loading2 = true;
+        this.asociacionesService
+          .getAsociacionesIsMiembroUser(this.authUserId)
+          .subscribe(
+            (response) => {
+              this.asociacionesIsMiembro = response.data;
+              console.log(this.asociacionesIsMiembro)
+              if (this.asociacionesIsMiembro.length < 1) {
+                this.showNotFoundAsocMiemb = true;
+                this.isUserMiemb = false;
+              } else {
+                this.isUserMiemb = true;
+                setTimeout(() => {
+                  this.htmlElementClick(this.tabSoyMiemb);
+                }, 1000);
+              }
+              this.loading2 = false;
+            },
+            (err) => {
+              this.showNotFoundAsocMiemb = true;
+              this.loading2 = false;
+            }
+          );
+      }
+    })
+  }
+  preCarga(){
     /*Asociaciones en donde se es representante legal*/
     this.loading1 = true;
     this.asociacionesService.getAsociacionesUsuario(this.authUserId).subscribe(
@@ -166,13 +205,13 @@ export class MisAsociacionesComponent
         if (this.asociaciones.length <= 0) {
           this.showNotFound = true;
           this.isUserRep = false;
-        }else{
+        } else {
           this.isUserRep = true;
         }
         this.loading1 = false;
       },
       (err) => {
-         this.showNotFound = true;
+        this.showNotFound = true;
         console.log(err);
         this.loading1 = false;
       }
@@ -182,20 +221,22 @@ export class MisAsociacionesComponent
     this.loading2 = true;
     this.asociacionesService
       .getAsociacionesIsMiembroUser(this.authUserId)
-      .subscribe( (response) => {
-         this.asociacionesIsMiembro = response.data;
-         console.log(this.asociacionesIsMiembro)
-        if (this.asociacionesIsMiembro.length < 1) {
+      .subscribe(
+        (response) => {
+          this.asociacionesIsMiembro = response.data;
+          if (this.asociacionesIsMiembro.length < 1) {
+            this.showNotFoundAsocMiemb = true;
+            this.isUserMiemb = false;
+          } else {
+            this.isUserMiemb = true;
+          }
+          this.loading2 = false;
+        },
+        (err) => {
           this.showNotFoundAsocMiemb = true;
-          this.isUserMiemb = false;
-        }else{
-          this.isUserMiemb = true;
+          this.loading2 = false;
         }
-        this.loading2 = false;
-      },err=>{
-        this.showNotFoundAsocMiemb = true;
-        this.loading2 = false;
-      });
+      );
     /*Todas las asociaones que existen*/
     this.asociacionesService.getAsociacionesTodas().subscribe((response) => {
       this.asociasionesexistentesarray = response.data;
@@ -210,8 +251,7 @@ export class MisAsociacionesComponent
         this.showNotFoundAsocexistente = false;
       }
     });
-    /* municipios sucre */
-    this.loadMunic();
+     this.loadMunic();
   }
   invitarAnular(asociacion: any) {
     if (asociacion.estado_solicitud == 'Aceptada') {
@@ -340,7 +380,6 @@ export class MisAsociacionesComponent
     }
   }
   navigate(event: any, formState: string, from: string) {
-    console.log('formState ', formState);
     let object: any = { ...event };
     (object.action = 'update'),
       (object.formState =
@@ -428,7 +467,6 @@ export class MisAsociacionesComponent
   }
   delateFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
-    console.log(this.filtroseleccionadoCheckbox);
     this.reseteoDeBusqueda();
   }
   reseteoDeBusqueda() {
@@ -454,8 +492,9 @@ export class MisAsociacionesComponent
   }
 
   htmlElementClick(eRef: ElementRef) {
-    const element: HTMLElement = eRef.nativeElement;
-    element.click();
+    const element: HTMLElement = eRef?.nativeElement;
+    console.log(element)
+    element?.click();
     console.log('clicked!');
   }
 }

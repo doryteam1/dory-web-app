@@ -10,16 +10,16 @@
         <!-- <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" *ngIf="loadingseart"> -->
         <!-- <app-search (textSearch)="onSearch($event)"></app-search> -->
       </div>
-      <div style="position: relative;" >
-        <i class="bi bi-envelope-check myChat-text tooltip-trigger" (click)="unreadFilter()" *ngIf="!showUnreads">
+      <div style="position: relative;" *ngIf="!showUnreads">
+        <i class="bi bi-envelope-check myChat-text tooltip-trigger" (click)="unreadFilter()" >
         </i>
         <div class="tooltip-one">
           No leidos
         </div>
         <small class="no-read">5+</small>
       </div>
-      <div style="position: relative;">
-        <i class="bi bi-envelope myChat-text tooltip-trigger" *ngIf="showUnreads" (click)="cancelUnreadFilter()"></i>
+      <div style="position: relative;" *ngIf="showUnreads" >
+        <i class="bi bi-envelope myChat-text tooltip-trigger" (click)="cancelUnreadFilter()"></i>
         <div class="tooltip-one">
           Mensajes
         </div>

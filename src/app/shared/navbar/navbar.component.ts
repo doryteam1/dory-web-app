@@ -8,6 +8,7 @@ import { AppModalService } from '../services/app-modal.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Utilities } from 'src/app/utilities/utilities';
+import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 
 @Component({
   selector: 'app-navbar',
@@ -50,6 +51,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   isHidden: boolean = false;
   electronjs: boolean = false;
   notifyStyloContainer: boolean = false;
+  rutaActiva:string=''
   constructor(
     private router: Router,
     public userService: UsuarioService,
@@ -57,8 +59,9 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private _electronService: ElectronjsService,
     private renderer: Renderer2,
     private appModalService: AppModalService,
-    private chatService:ChatService,
-    private utilities:UtilitiesService
+    private chatService: ChatService,
+    private utilities: UtilitiesService,
+    private asociacionesService: AsociacionesService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -82,6 +85,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route: string = event.url;
+        this.rutaActiva=event.url
         if (route.includes('welcome') || route.includes('politica')) {
           this.isHidden = true;
         } else {
@@ -94,14 +98,12 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.updateAsocRequest();
     }
 
-    this.chatService.listenNewSolicitudes().subscribe(
-      (data)=>{
-        console.log(data)
-        this.notificatiosOpened = false;
-        this.utilities.playSound('assets/sounds/sendmessage.wav');
-        this.updateAsocRequest()
-      }
-    )
+    this.chatService.listenNewSolicitudes().subscribe((data) => {
+      console.log(data);
+      this.notificatiosOpened = false;
+      this.utilities.playSound('assets/sounds/sendmessage.wav');
+      this.updateAsocRequest();
+    });
   }
   @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
     if (event.target.innerWidth >= 950) {
@@ -209,13 +211,20 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   confirmarInvitacion(invitacion: any) {
     invitacion.message = 'Aceptaste la solicitud. Ya eres miembro.';
     this.userService.aceptarInvitacion(invitacion.id_solicitud).subscribe(
-      (response) => {},
+      (response) => {
+        if (this.rutaActiva.includes('/dashboard/mis-asociaciones')) {
+          this.asociacionesService.actionBotton$.emit(true)
+        }
+      },
       (err) => {
+         if (this.rutaActiva.includes('/dashboard/mis-asociaciones')) {
+           this.asociacionesService.actionBotton$.emit(false);
+         }
         invitacion.error = err.error.message;
         invitacion.message = undefined;
-        setTimeout(()=>{
+        setTimeout(() => {
           invitacion.error = '';
-        },5000)
+        }, 5000);
       }
     );
   }
@@ -239,11 +248,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   search() {
     this.appModalService
-      .modalSearchComponentl(
-      )
-      .then((result) => {
-
-      })
+      .modalSearchComponentl()
+      .then((result) => {})
       .catch((result) => {});
   }
 }
