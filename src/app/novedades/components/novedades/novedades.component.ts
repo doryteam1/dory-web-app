@@ -30,7 +30,7 @@ export class NovedadesComponent implements OnInit {
         {
           id: 0,
           nombrecampoDB: 'me_gusta',
-          nombrefiltro: 'Mis favoritos',
+          nombrefiltro: 'Me gustas',
           datoafiltrar: 'me_gusta',
           modoFiltro: MODO_FILTRO_DATOS_VARIOS,
         },
@@ -58,7 +58,8 @@ export class NovedadesComponent implements OnInit {
     }
     this.cargarTodos();
   }
-  onFiltroChange(filtro: MetaFiltro) {
+  onFiltroChange() {
+    let filtro:any = this.filtro[0].data[0];
     this.filtroseleccionado = filtro;
     this.reseteoDeBusqueda();
   }

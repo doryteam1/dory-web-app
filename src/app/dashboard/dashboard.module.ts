@@ -52,6 +52,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { BarraNotificacionDetalleFormComponent } from './components/barra-notificacion-detalle-form/barra-notificacion-detalle-form.component';
 import { MonthPickerComponent } from './components/month-picker/month-picker.component';
 import { UpdatePasswordModule } from '../update-password/update-password.module';
+import { NgChartsModule } from 'ng2-charts';
 
 
 
@@ -115,6 +116,7 @@ import { UpdatePasswordModule } from '../update-password/update-password.module'
     AngularEditorModule,
     ColorPickerModule,
     UpdatePasswordModule,
+    NgChartsModule,
   ],
   providers: [GuidedTourService],
 })

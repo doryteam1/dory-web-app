@@ -1,11 +1,11 @@
 <div class="box d-flex flex-column align-items-center">
     <div class="container">
-        <div class="card" [ngClass]="consumo.check ? 'card--border-blue' : ''" *ngFor="let consumo of consumos" (click)="onCheck(consumo,$event, consumo.id_especie)"> 
+        <div class="card" [ngClass]="consumo.check ? 'card--border-blue' : ''" *ngFor="let consumo of consumos" (click)="onCheck(consumo,$event, consumo.id_especie)">
             <div class="card__header">
                 <span class="card__title">
                     {{consumo.nombre}}
                 </span>
-                <input class="card__input" type="checkbox" [(ngModel)]="consumo.check">
+                <input [disabled]="!edition" class="card__input" type="checkbox" [(ngModel)]="consumo.check">
             </div>
             <div>
                 <img class="card__img" [src]="consumo.imagen">
@@ -15,15 +15,24 @@
                     ¿Cuantos kilos al mes consumes?
                 </span>
                 <div class="d-flex flex-row mt-2">
-                    <input [id]="consumo.id_especie"class="card__input2" type="number" [(ngModel)]="consumo.cantidad_consumo" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" (ngModelChange)="onChange(consumo,$event)">
+                    <input
+                    [disabled]="!edition"
+                    [id]="consumo.id_especie"class="card__input2"
+                    type="number"
+                    [(ngModel)]="consumo.cantidad_consumo" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" (ngModelChange)="onChange(consumo,$event)">
                     <span class="card__label">Kg/mes</span>
                 </div>
             </div>
         </div>
     </div>
-    <button class="btn-square-blue2" (click)="updateConsumo()">
-        <span *ngIf="!loading">Actualizar consumo</span>
-        <div class="spinner spinner-border text-light" role="status" *ngIf="loading">
-        </div>
-    </button>
+    <div class="button_collection">
+      <button  [disabled]="loading" class="btn-square-blue2" (click)="updateConsumo()" *ngIf="edition">
+          <span *ngIf="!loading">Actualizar consumo</span>
+          <div class="spinner spinner-border text-light" role="status" *ngIf="loading">
+          </div>
+      </button>
+      <button  [disabled]="loading" class="btn-square-blue2" (click)="goBack()" >
+          <span *ngIf="!loading">Atras</span>
+      </button>
+    </div>
 </div>

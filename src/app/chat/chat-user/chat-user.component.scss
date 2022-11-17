@@ -84,7 +84,7 @@
 
 .user-list-card {
     width: 100%;
-      height: 100%;
+      height: calc(100% - 64px);
       overflow-y: auto;
       padding: 10px;
   .user-card {
@@ -410,4 +410,56 @@ button:focus {
 
 .text {
   border: none;
+}
+ .tooltip-one {
+    padding: 10px 15px;
+      background: #fff;
+      position: absolute;
+      width: max-content;
+      height: max-content;
+      max-width: 300px;
+      border-radius: 0.25rem;
+      text-align: center;
+      filter: drop-shadow(0 3px 5px #ccc);
+      line-height: 1.5;
+      display: none;
+          left: -100px;
+      top: -3px;
+      margin-right: -110px;
+      color: #fff;
+      background-color: #000;
+      z-index: 2;
+      font-size: 0.875rem;
+
+ }
+
+ .tooltip-one:after {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   bottom: 31%;
+   left: 95%;
+   margin-left: -9px;
+   width: 18px;
+   height: 18px;
+   background-color: #000;
+   transform: rotate(45deg);
+ }
+
+ .tooltip-trigger:hover+.tooltip-one {
+   display: block;
+ }
+.no-read {
+display: flex;
+  width: 20px;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  border-radius: 100%;
+  background: var(--azul1);
+  position: absolute;
+  top: 16px;
+  right: -9px;
+  font-size: 0.65rem;
+  color: white;
 }

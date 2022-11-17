@@ -175,6 +175,7 @@ app-search {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  margin-bottom: 10px;
 }
 
 .buscadoryfiltro {
@@ -191,7 +192,15 @@ app-search {
     margin-bottom: 10px;
   }
 }
-
+.btn-filter {
+  height: 45px;
+  color: rgba(0, 0, 0, 0.55) !important;
+  display: flex;
+    align-items: center;
+}
+.filtroStilo{
+  margin: 0 !important;
+}
 @media screen and (max-width: 978px) {
   .container {
     flex-wrap: wrap;
