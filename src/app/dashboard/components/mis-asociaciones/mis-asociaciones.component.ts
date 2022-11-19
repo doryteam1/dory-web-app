@@ -493,8 +493,8 @@ export class MisAsociacionesComponent
   }
 
   htmlElementClick(eRef: ElementRef) {
-    const element: HTMLElement = eRef?.nativeElement;
-    element?.click();
+    const element: HTMLElement = eRef.nativeElement;
+    element.click();
     console.log('clicked!');
   }
 }

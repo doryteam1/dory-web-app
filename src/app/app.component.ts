@@ -40,9 +40,14 @@ export class AppComponent implements OnInit{
           this.chatService.disconnect();
         }else{
           //this.chatService.connect();
-          setTimeout(()=>{
-            window.location.reload();
-          },1000)
+          this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+              let route: string = event.url;
+              if (route.includes('dashboard')) {
+                window.location.reload();
+              }
+            }
+          });
         }
       }
     )
