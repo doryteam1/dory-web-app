@@ -25,7 +25,8 @@
     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0" *ngIf="isUserRep || (!isUserRep && !isUserMiemb)">
       <div class="container-card" *ngIf="!showNotFound">
         <app-card-asociacion  *ngFor="let asociacion of asociaciones" [asociacion]="asociacion"
-          [delatecard]="true" [showRepLegal]="false" (onDetalle)="navigate($event,'enable','tabSoyRep')"
+          [delatecard]="true" [showRepLegal]="false"
+          (onDetalle)="navigate($event,'enable','tabSoyRep')"
           (onDelete)="delete($event)">
         </app-card-asociacion>
       </div>
@@ -37,8 +38,12 @@
     <!-- Profile-tab-pane -->
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0" *ngIf="isUserMiemb">
       <div class="container-card " *ngIf="!showNotFoundAsocMiemb">
-        <app-card-asociacion   *ngFor="let asociacion of asociacionesIsMiembro" [asociacion]="asociacion"
-          [delatecard]="false" (onDetalle)="navigate($event,'disable','tabSoyMiemb')" (onDelete)="delete($event)">
+        <app-card-asociacion
+         *ngFor="let asociacion of asociacionesIsMiembro"
+         [asociacion]="asociacion"
+         [userMiembro]="true"
+         (onDetalle)="navigate($event,'disable','tabSoyMiemb')"
+           (onSalirAsocia)="salirAsociacion($event)">
         </app-card-asociacion>
       </div>
       <div class="not-found" *ngIf="showNotFoundAsocMiemb">

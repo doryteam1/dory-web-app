@@ -192,7 +192,9 @@
     font-family: 'Bootstrap-icons';
     content: "\F4D7";
   }
-
+.btn__close{
+  font-size: 15px !important;
+}
   @media (min-width: 640px) {
     flex-direction: row;
 

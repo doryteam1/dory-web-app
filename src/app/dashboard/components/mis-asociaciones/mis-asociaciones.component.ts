@@ -143,18 +143,21 @@ export class MisAsociacionesComponent
   ngAfterViewInit(): void {
     let selectedTab = this.storageService.get('misAsocSelecTab');
     //TODO:la referencia de tabSoyMiemb no esta disponible y deberia estarlo
-      setTimeout(()=>{
-        /*Se abre el tab que estuvo seleccionado antes de ir a ver el detalle de una asociación*/
+    setTimeout(()=>{
+      if (this.isUserMiemb) {
+        this.htmlElementClick(this.tabSoyMiemb);
+      }else{
         if (selectedTab && selectedTab == 'tabSoyRep') {
-          this.htmlElementClick(this.tabSoyRep);
-        } else if (selectedTab && selectedTab == 'tabSoyMiemb') {
-          this.htmlElementClick(this.tabSoyMiemb);
-        } else if (selectedTab && selectedTab == 'tabUnir') {
-          this.htmlElementClick(this.tabUnir);
-        }
-        if(!selectedTab){
-          this.htmlElementClick(this.tabSoyMiemb);
-        }
+            console.log("soy miembro")
+            this.htmlElementClick(this.tabSoyRep);
+          } else if (selectedTab && selectedTab == 'tabSoyMiemb') {
+            this.htmlElementClick(this.tabSoyMiemb);
+          } else if (selectedTab && selectedTab == 'tabUnir') {
+            this.htmlElementClick(this.tabUnir);
+          }
+      }
+      /*Se abre el tab que estuvo seleccionado antes de ir a ver el detalle de una asociación*/
+
       },1000)
   }
 
@@ -224,7 +227,6 @@ export class MisAsociacionesComponent
       .subscribe(
         (response) => {
           this.asociacionesIsMiembro = response.data;
-          console.log(this.asociacionesIsMiembro);
           if (this.asociacionesIsMiembro.length < 1) {
             this.showNotFoundAsocMiemb = true;
             this.isUserMiemb = false;
@@ -496,5 +498,31 @@ export class MisAsociacionesComponent
     const element: HTMLElement = eRef.nativeElement;
     element.click();
     console.log('clicked!');
+  }
+  salirAsociacion(asociacion:any){
+    console.log(asociacion)
+       this.appModalService
+         .confirm(
+           'Salir de la asociación',
+           'Está seguro que desea salir  de esta asociación',
+           'Salir',
+           'Cancelar'
+         )
+         .then((result) => {
+           if (result == true) {
+           /*   this.asociacionService
+               .eliminarSolicitud(asociacion.id_solicitud)
+               .subscribe(
+                 (response) => {
+                   console.log(response);
+                 },
+                 (err) => {
+                   console.log(err);
+                 }
+               ); */
+           }
+         })
+         .catch((result) => {});
+
   }
 }

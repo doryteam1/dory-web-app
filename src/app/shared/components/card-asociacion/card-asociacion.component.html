@@ -8,6 +8,7 @@
         </div>
         <i  style="color: var(--azul1);" class="card__icon bi bi-pencil" (click)="detalle(asociacion)" *ngIf="delatecard"></i>
         <i style="color: var(--red);" class="card__icon bi bi-trash3" (click)="eliminar(asociacion)" *ngIf="delatecard"></i>
+        <button type="button" class="btn-close card__icon btn__close" *ngIf="userMiembro" (click)="salirAsocia(asociacion)"></button>
       </div>
       <div class="card__description-container">
         <div style="cursor:pointer; width: 100%;"  (click)="detalle(asociacion)">

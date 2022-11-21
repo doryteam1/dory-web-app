@@ -292,8 +292,9 @@
 }
 
 .myChat-text {
-  color: var(--azul1);
   font-size: 20px;
+  color: #000;
+  opacity: 0.5;
   cursor: pointer;
 }
 
@@ -460,6 +461,21 @@ button:focus {
 }
 
 .no-read {
+display: flex;
+  width: 15px;
+  justify-content: center;
+  align-items: center;
+  height: 11px;
+  border-radius: 30%;
+  background: #EDEDED;
+  position: absolute;
+  top: 16px;
+  right: -5px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #f44336;
+}
+/* .no-read {
   display: flex;
   width: 20px;
   justify-content: center;
@@ -472,7 +488,7 @@ button:focus {
   right: -9px;
   font-size: 0.65rem;
   color: white;
-}
+} */
 
 .user-card__container {
   align-items: flex-start;

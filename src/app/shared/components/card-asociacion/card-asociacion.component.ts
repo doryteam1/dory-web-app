@@ -10,32 +10,32 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
   templateUrl: './card-asociacion.component.html',
   styleUrls: ['./card-asociacion.component.scss'],
 })
-export class CardAsociacionComponent
-  implements OnInit
-{
+export class CardAsociacionComponent implements OnInit {
   @Input() asociacion: any;
-  @Input() delatecard!: boolean;
+  @Input() delatecard: boolean = false;
+  @Input() userMiembro: boolean = false;
   @Input() showRepLegal: boolean = true;
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   @Output() onDetalleRepresentante: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
+  @Output() onSalirAsocia: EventEmitter<any> = new EventEmitter();
   showNotFound: boolean = false;
   changeItem: boolean = true;
   piscicultorasociaciones: any;
   showError: boolean = false;
   errorMessage = '';
   ngOnlnitPiscicultorDetalle: boolean = false;
-  idEmailUser:number=-1
+  idEmailUser: number = -1;
   constructor(
     public mediaQueryService: MediaQueryService,
     private us: UsuarioService
   ) {}
 
   ngOnInit(): void {
-       let email = localStorage.getItem('email');
-       this.us.getUsuarioByEmail(email).subscribe((response) => {
-        this.idEmailUser = response.data[0].id;
-       });
+    let email = localStorage.getItem('email');
+    this.us.getUsuarioByEmail(email).subscribe((response) => {
+      this.idEmailUser = response.data[0].id;
+    });
   }
 
   detalle(asociacion: any) {
@@ -45,6 +45,9 @@ export class CardAsociacionComponent
 
   eliminar(asociacion: any) {
     return this.onDelete.emit(asociacion);
+  }
+  salirAsocia(asociacion: any) {
+    return this.onSalirAsocia.emit(asociacion);
   }
   goDetalleRepresentante(asociacion: any) {
     console.log(asociacion);

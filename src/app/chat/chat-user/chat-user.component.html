@@ -16,7 +16,7 @@
         <div class="tooltip-one">
           No leidos
         </div>
-        <small class="no-read">{{totalUnreads > 4 ? '+5' : totalUnreads}}</small>
+        <small class="no-read" *ngIf="totalUnreads != 0">{{totalUnreads > 4 ? '+5' : totalUnreads}}</small>
       </div>
       <div style="position: relative;" *ngIf="showUnreads" >
         <i class="bi bi-envelope myChat-text tooltip-trigger" (click)="cancelUnreadFilter()"></i>
