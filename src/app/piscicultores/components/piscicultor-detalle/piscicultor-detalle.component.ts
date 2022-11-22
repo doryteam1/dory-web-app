@@ -148,6 +148,14 @@ export class PiscicultorDetalleComponent implements OnInit {
       this.activatelistgranja = false;
     }
   }
+  openAsocia(){
+    if(this.activatelistasociacion){
+      this.activatelistasociacion = false;
+    }else{
+      this.activatelistasociacion = true;
+    }
+
+  }
   goAssociationDetail(asociacion: any) {
     this.router.navigateByUrl(
       '/asociaciones/municipio/detalle/' + asociacion.nit
@@ -186,5 +194,4 @@ export class PiscicultorDetalleComponent implements OnInit {
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
-
 }

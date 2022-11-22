@@ -76,14 +76,32 @@
       <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Asociaciones </h4>
-        <span class="detail-container__value"
-          *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}} asociaciones en
-          total</span>
-        <span class="detail-container__value"
-          *ngIf="piscicultorasociaciones?.length==1">{{piscicultorasociaciones?.length}} asociación en
-          total</span>
+        <ul class="nav" id="myTab0" role="tablist" *ngIf="piscicultorasociaciones?.length>0">
+          <li class="nav-item nav-item-asoc">
+        <span
+           (click)="openAsocia()"
+            class="detail-container__value nav-link nav-link-asoc"
+            [ngClass]="{active: activatelistasociacion }"
+            id="home-tab0"
+            data-bs-toggle="tab"
+           data-bs-target="#home0"
+            type="button"
+           role="tab"
+           aria-controls="home"
+           aria-selected="true">{{activatelistasociacion ? 'Ocultar asociación':  'Ver asociación'}}</span>
+           <!-- https://www.delftstack.com/howto/angular/if-else-statement-in-angular/ -->
+            <div class="control_bar_90 " [ngClass]="{control_bar_180: activatelistasociacion}"  (click)="openAsocia()"></div>
+              </li>
+              </ul>
         <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con
           asociaciones</span>
+          <div class="tab-content" id="myTabContent0">
+            <div class="tab-pane fade show" [ngClass]="{active: activatelistasociacion }" id="home0" role="tabpanel" aria-labelledby="home-tab0">
+              <app-card-asociacion *ngFor="let asociacion of piscicultorasociaciones" [asociacion]="asociacion" [delatecard]="false"
+                (onDetalle)="goAssociationDetail($event)" (onDetalleRepresentante)="goDetalleRepresentante($event)">
+              </app-card-asociacion>
+            </div>
+          </div>
       </div>
     </div>
     <div class="detail-container mt-4">

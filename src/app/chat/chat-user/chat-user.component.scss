@@ -436,8 +436,8 @@ button:focus {
   left: -100px;
   top: -3px;
   margin-right: -110px;
-  color: #fff;
-  background-color: #000;
+    color: white;
+      background-color: #87878a;
   z-index: 2;
   font-size: 0.875rem;
 
@@ -452,7 +452,7 @@ button:focus {
   margin-left: -9px;
   width: 18px;
   height: 18px;
-  background-color: #000;
+background-color: #87878a;
   transform: rotate(45deg);
 }
 
@@ -462,18 +462,18 @@ button:focus {
 
 .no-read {
 display: flex;
-  width: 15px;
+  width: 17px;
   justify-content: center;
   align-items: center;
-  height: 11px;
-  border-radius: 30%;
-  background: #EDEDED;
+  height: 17px;
+  border-radius: 100%;
+      background: var(--azul1);
   position: absolute;
   top: 16px;
   right: -5px;
   font-size: 0.65rem;
   font-weight: 700;
-  color: #f44336;
+  color: white;
 }
 /* .no-read {
   display: flex;
