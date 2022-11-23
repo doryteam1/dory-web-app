@@ -39,11 +39,11 @@
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0" *ngIf="isUserMiemb">
       <div class="container-card " *ngIf="!showNotFoundAsocMiemb">
         <app-card-asociacion
-         *ngFor="let asociacion of asociacionesIsMiembro"
+         *ngFor="let asociacion of asociacionesIsMiembro;let i=index"
          [asociacion]="asociacion"
          [userMiembro]="true"
          (onDetalle)="navigate($event,'disable','tabSoyMiemb')"
-           (onSalirAsocia)="salirAsociacion($event)">
+           (onSalirAsocia)="salirAsociacion($event,i)">
         </app-card-asociacion>
       </div>
       <div class="not-found" *ngIf="showNotFoundAsocMiemb">
