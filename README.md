@@ -117,23 +117,23 @@ Diligencie el formulario y haga clic en el botón Create app
 
 Para configurar la app en Heroku realice los siguientes pasos:
 	
-1. Seleccione GitHub como método de despliegue.
+1.) Seleccione GitHub como método de despliegue.
 
 ![image](https://user-images.githubusercontent.com/118612137/203828301-cdb4cab3-2cc4-4243-a896-06feed680546.png)
 
-2. Presione el botón Connect to GitHub
+2.) Presione el botón Connect to GitHub
 
 ![image](https://user-images.githubusercontent.com/118612137/203828373-b4e8f257-c48c-4f11-b9c6-54af59f194f1.png)
 
-3. Inicie sesión con su usuario y contraseña de GitHub para conectarse a Heroku
+3.) Inicie sesión con su usuario y contraseña de GitHub para conectarse a Heroku
 
-4. Conecte la App con el nuevo repositorio
+4.) Conecte la App con el nuevo repositorio
 
 ![image](https://user-images.githubusercontent.com/118612137/203828430-65a6eda1-28e9-49b3-9669-1243e52f2793.png)
 
 Seleccione el nuevo repositorio creado en el punto 3
 
-5. Seleccione la rama master para despliegues automáticos.
+5.) Seleccione la rama master para despliegues automáticos.
 
 ![image](https://user-images.githubusercontent.com/118612137/203828538-c51f9b7a-dcbe-4bfe-bebd-bf47c3a4ec46.png)
 
