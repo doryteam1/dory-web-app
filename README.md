@@ -163,11 +163,17 @@ OAUTH_CLIENT_ID: ID de cliente. Siga los pasos para obtener uno en: https://deve
 Para configurar las siguientes variable use el objeto “firebaseConfig” obtenido en el punto 0 sección 3:
 
 FIREBASE_API_KEY
+
 FIREBASE_APP_ID
+
 FIREBASE_AUTH_DOMAIN
+
 FIREBASE_LOCATION_ID
+
 FIREBASE_MESSAGING_SENDER_ID
+
 FIREBASE_PROJECT_ID
+
 FIREBASE_STORAGE_BUCKET
 
  
