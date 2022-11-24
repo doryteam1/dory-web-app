@@ -10,6 +10,25 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## 1.Configuraciones previas
 
+1. Instalar servidor de api rest
+	    
+El funcionamiento de la aplicación web depende del funcionamiento del servidor        
+de api rest. Siga la guía de instalación “Guía De Instalación Api Rest”.
+            
+2. Cree un proyecto en firebase
+	 
+De clic en el siguiente enlace para acceder a la guia:
+https://firebase.google.com/docs/web/setup?hl=es-419#create-project
+
+	
+3. Registre la aplicación en firebase
+	
+https://firebase.google.com/docs/web/setup?hl=es-419#register-app
+
+Durante el este proceso obtendrá el objeto firebaseConfig, guárdelo se usará posteriormente:
+
+![image](https://user-images.githubusercontent.com/118612137/203827326-4d484a9e-d8f5-4135-b0a6-e0043f4d526c.png)
+
 ## 1. Cree un proyecto en firebase
 	 
 De clic en el siguiente enlace para acceder a la guia:
