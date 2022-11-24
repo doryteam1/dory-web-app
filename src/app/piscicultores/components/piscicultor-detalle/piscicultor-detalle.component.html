@@ -75,7 +75,7 @@
     <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
       <div class="detail-container__data">
-        <h4 class="detail-container__title">Asociaciones </h4>
+        <h4 class="detail-container__title">Asociación a la que pertenece </h4>
         <ul class="nav" id="myTab0" role="tablist" *ngIf="piscicultorasociaciones?.length>0">
           <li class="nav-item nav-item-asoc">
         <span
@@ -92,7 +92,7 @@
            <!-- https://www.delftstack.com/howto/angular/if-else-statement-in-angular/ -->
             <div class="control_bar_90 " [ngClass]="{control_bar_180: activatelistasociacion}"  (click)="openAsocia()"></div>
               </li>
-              </ul>
+        </ul>
         <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con
           asociaciones</span>
           <div class="tab-content" id="myTabContent0">
@@ -120,23 +120,17 @@
   <!-- granjas y asociaciones -->
   <div class="mynavtabs" *ngIf="piscicultorgranjas?.length>0 || piscicultorasociaciones?.length>0">
     <ul class="nav nav-tabs">
-      <li class="nav-item" (click)="activeTabClick(1)" *ngIf="piscicultorgranjas?.length>0">
-        <a class="nav-link nav-link--color" [ngClass]="{'active mynav-link': activatelistgranja}" aria-current="page">
+      <li class="nav-item"  *ngIf="piscicultorgranjas?.length>0">
+        <a class="nav-link nav-link--color active mynav-link"  aria-current="page">
           <span>
             <img class="detail-container__image" src="../../../../assets/icons/set_meal_black_24dp.svg">
           </span> Granjas
         </a>
       </li>
-      <li class="nav-item" (click)="activeTabClick(2)" *ngIf="piscicultorasociaciones?.length>0">
-        <a class="nav-link nav-link--color" [ngClass]="{'active mynav-link': activatelistasociacion}">
-          <span>
-            <img class="detail-container__image" src="assets/icons/asociacion_black_24dp.svg">
-          </span> Asociaciones</a>
-      </li>
     </ul>
   </div>
   <div class="container_mytarget" *ngIf="piscicultorgranjas?.length>0 || piscicultorasociaciones?.length>0 ">
-    <div class="mytarget" *ngIf="activatelistgranja">
+    <div class="mytarget" >
       <div class="container-card"
         [ngClass]="{'mychangeitemheight':piscicultorDetalleGranjaschangeItem,'search-container--flex':piscicultorDetalleGranjasshowNotFound}" >
         <div *ngIf="piscicultorDetalleGranjaschangeItem" class="mychangeitem">
@@ -152,21 +146,6 @@
               (onChangeFavorite)="changeFavorite(i)" (onShowResenas)="showResenas(granja?.id_granja)"
                [botonMapaFijo]="false">
             </app-card-granjas>
-      </div>
-    </div>
-    <div class="mytarget" *ngIf="activatelistasociacion">
-      <div class="container-card"
-        [ngClass]="{'mychangeitemheight':piscicultorDetalleAsociacioneschangeItem,'search-container--flex':piscicultorDetalleAsociacioneshowNotFound }">
-        <div *ngIf="piscicultorDetalleAsociacioneschangeItem" class="mychangeitem">
-          <div>
-           <img src="assets/icons/changeiconanimado.svg">
-          </div>
-        </div>
-          <app-card-asociacion *ngFor="let asociacion of piscicultorasociaciones" [asociacion]="asociacion"
-            [delatecard]="false"
-             (onDetalle)="goAssociationDetail($event)"
-             (onDetalleRepresentante)="goDetalleRepresentante($event)">
-          </app-card-asociacion>
       </div>
     </div>
   </div>

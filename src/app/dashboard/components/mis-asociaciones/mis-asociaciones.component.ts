@@ -180,7 +180,6 @@ export class MisAsociacionesComponent
             .subscribe(
               (response) => {
                 this.asociacionesIsMiembro = response.data;
-                console.log(this.asociacionesIsMiembro);
                 if (this.asociacionesIsMiembro.length < 1) {
                   this.showNotFoundAsocMiemb = true;
                   this.isUserMiemb = false;
@@ -492,8 +491,8 @@ export class MisAsociacionesComponent
   }
 
   htmlElementClick(eRef: ElementRef) {
-    const element: HTMLElement = eRef.nativeElement;
-    element.click();
+    const element: HTMLElement = eRef?.nativeElement;
+    element?.click();
     console.log('clicked!');
   }
   salirAsociacion(asociacion: any, idx:number) {

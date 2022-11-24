@@ -22,9 +22,7 @@ export class PiscicultorDetalleComponent implements OnInit {
   piscicultorDetalleAsociacioneshowError: boolean = false;
   piscicultorDetalleGranjasshowError: boolean = false;
   errorMessage = '';
-  activatelistgranja: boolean = false;
   activatelistasociacion: boolean = false;
-  piscicultorDetalleAsociacioneschangeItem: boolean = true;
   piscicultorDetalleGranjaschangeItem: boolean = true;
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -95,20 +93,16 @@ export class PiscicultorDetalleComponent implements OnInit {
         .toPromise();
       this.piscicultorasociaciones = response.data;
       await this.piscicultorDetalleGranjas();
-      this.activeTabVerifi();
       if (response.data.length > 0) {
         this.piscicultorDetalleAsociacioneshowError = false;
         this.piscicultorDetalleAsociacioneshowNotFound = false;
-        this.piscicultorDetalleAsociacioneschangeItem = false;
       } else {
         this.piscicultorDetalleAsociacioneshowNotFound = true;
         this.piscicultorDetalleAsociacioneshowError = false;
-        this.piscicultorDetalleAsociacioneschangeItem = false;
       }
     } catch (err: any) {
       this.piscicultorDetalleAsociacioneshowNotFound = false;
       this.piscicultorDetalleAsociacioneshowError = false;
-      this.piscicultorDetalleAsociacioneschangeItem = false;
       if (err.status == 404) {
         this.piscicultorDetalleAsociacioneshowNotFound = true;
       } else {
@@ -118,36 +112,8 @@ export class PiscicultorDetalleComponent implements OnInit {
     }
   }
 
-  activeTabVerifi() {
-    if (
-      this.piscicultorgranjas.length > 0 &&
-      this.piscicultorasociaciones.length > 0
-    ) {
-      this.activatelistgranja = true;
-      this.activatelistasociacion = false;
-    } else if (
-      this.piscicultorgranjas.length > 0 &&
-      this.piscicultorasociaciones.length <= 0
-    ) {
-      this.activatelistgranja = true;
-      this.activatelistasociacion = false;
-    } else if (
-      this.piscicultorgranjas.length <= 0 &&
-      this.piscicultorasociaciones.length > 0
-    ) {
-      this.activatelistgranja = false;
-      this.activatelistasociacion = true;
-    }
-  }
-  activeTabClick(i: number) {
-    if (i == 1 && this.piscicultorgranjas.length > 0) {
-      this.activatelistgranja = true;
-      this.activatelistasociacion = false;
-    } else if (i == 2 && this.piscicultorasociaciones.length > 0) {
-      this.activatelistasociacion = true;
-      this.activatelistgranja = false;
-    }
-  }
+
+
   openAsocia(){
     if(this.activatelistasociacion){
       this.activatelistasociacion = false;

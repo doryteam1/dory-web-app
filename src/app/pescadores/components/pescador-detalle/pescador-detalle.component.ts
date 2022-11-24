@@ -15,8 +15,7 @@ export class PescadorDetalleComponent implements OnInit {
   showNotFound: boolean = false;
   showError: boolean = false;
   errorMessage = '';
-  activatelistgranja: boolean = false;
-  activatelistasociacion: boolean = true;
+  activatelistasociacion: boolean = false;
   changeItem: boolean = true;
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -96,6 +95,13 @@ export class PescadorDetalleComponent implements OnInit {
       this.router.navigateByUrl(
         '/piscicultores/municipio/detalle/' + asociacion.id_propietario
       );
+    }
+  }
+  openAsocia() {
+    if (this.activatelistasociacion) {
+      this.activatelistasociacion = false;
+    } else {
+      this.activatelistasociacion = true;
     }
   }
 }

@@ -19,7 +19,7 @@
           <div style="display: flex; align-items: center;height: 100%;">
             <button class="no-drag boton-ingresar2 btn" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
             <button class=" no-drag ms-2 boton-registrate2 btn" (click)="navegarRuta('/registro')"
-              *ngIf="!authenticated()">Registrate</button>
+              *ngIf="!authenticated()">Regístrate</button>
           </div>
           <div style="display: flex; align-items: center;height: 100%;"  *ngIf="authenticated()">
             <!-- Interfas de notificaciones este boton abre la modal -->
@@ -161,7 +161,7 @@
       <div class="buscadorAndRegistro">
         <button class=" no-drag boton-ingresar" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
         <button class=" no-drag ms-2 boton-registrate" (click)="navegarRuta('/registro')"
-          *ngIf="!authenticated()">Registrate</button>
+          *ngIf="!authenticated()">Regístrate</button>
         <div class=" no-drag notify dropstart" *ngIf="authenticated() && (userService.getAuthUser().rol == 'Piscicultor' || userService.getAuthUser().rol == 'Pescador')">
           <ng-container *ngTemplateOutlet="botonNotificacionNormal"></ng-container>
           <ng-container *ngTemplateOutlet="notificacionNormal"></ng-container>

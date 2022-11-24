@@ -5,7 +5,7 @@ import { FirebaseStorageService } from 'src/app/services/firebase-storage.servic
 import { PlacesService } from 'src/app/services/places.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { DatePipe, formatDate, Location } from '@angular/common'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -44,7 +44,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
   fileRut: any = null;
   datosAsociacion: any;
   urls: any[] = [];
-  hasDocument:boolean=false;
+  hasDocument: boolean = false;
   constructor(
     private asociacionesService: AsociacionesService,
     private storage: FirebaseStorageService,
@@ -52,10 +52,14 @@ export class AsociacionDetalleFormComponent implements OnInit {
     private ar: ActivatedRoute,
     private location: Location,
     private datePipe: DatePipe,
-    private utilitiesService: UtilitiesService
+    private utilitiesService: UtilitiesService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.onAsociacionDetalles();
+  }
+  onAsociacionDetalles() {
     registerLocaleData(es);
     this.asociacion = { ...this.ar.snapshot.params };
     this.datosAsociacion = {
@@ -63,6 +67,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
       tipo_asociacion: this.asociacion.tipo_asociacion,
     };
     let action = this.ar.snapshot.paramMap.get('action');
+    console.log(action)
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
     if (action == 'create') {
       this.prepareForm(action!, this.asociacion);
@@ -76,6 +81,9 @@ export class AsociacionDetalleFormComponent implements OnInit {
           let tempAsoc = response.data[0];
           this.asociacion.url_rut = tempAsoc.url_rut;
           this.asociacion.foto_camarac = tempAsoc.foto_camarac;
+          if (!this.asociacion.count_miembros) {
+            this.asociacion.count_miembros=tempAsoc.count_miembros
+          }
           this.prepareForm(action!, this.asociacion);
           this.loadDptos();
           this.loadTiposAsociaciones();
@@ -83,31 +91,29 @@ export class AsociacionDetalleFormComponent implements OnInit {
         });
     }
     this.idTipoAsoc?.valueChanges.subscribe((value) => {});
-     this.asociacionesService
-        .getMiembrosPrivado(this.asociacion.nit)
-        .subscribe( (response) => {
-          let representante = response.data.representante;
-          let miembros = response.data.miembros;
-          if (representante.url_imagen_cedula || representante.url_sisben) {
+    this.asociacionesService
+      .getMiembrosPrivado(this.asociacion.nit)
+      .subscribe((response) => {
+        let representante = response.data.representante;
+        let miembros = response.data.miembros;
+        if (representante.url_imagen_cedula || representante.url_sisben) {
+          this.hasDocument = true;
+        } else {
+          let index = miembros.findIndex((miembro: any) => {
+            if (miembro.url_imagen_cedula || miembro.url_sisben) {
+              return true;
+            } else {
+              return false;
+            }
+          });
+          if (index > -1) {
             this.hasDocument = true;
           } else {
-            let index = miembros.findIndex((miembro: any) => {
-              if (miembro.url_imagen_cedula || miembro.url_sisben) {
-                return true;
-              } else {
-                return false;
-              }
-            });
-            if (index > -1) {
-               this.hasDocument = true;
-            } else {
-               this.hasDocument = false;
-            }
+            this.hasDocument = false;
           }
-
-        })
+        }
+      });
   }
-
   async updateAsociacion() {
     this.loading1 = true;
 
@@ -296,8 +302,22 @@ export class AsociacionDetalleFormComponent implements OnInit {
       //No hay archivo rut para subir
       this.asociacionesService.add(asociacion).subscribe(
         (response) => {
-          this.location.back();
-          this.loading1 = false;
+          if (response.body.message.nit) {
+            this.asociacionesService
+              .getAsociacionDetalle(response.body.message.nit)
+              .subscribe((response) => {
+                let asoci= response.data[0];
+                let object: any = { ...asoci };
+                (object.action = 'update'),
+                  (object.formState = 'enable'),
+                this.router.navigate(['/dashboard/asociacion/detalle', object]).then((value:any)=>{
+                  if (value) {
+                    this.onAsociacionDetalles();
+                  }
+                  this.loading1 = false;
+                })
+              });
+          }
         },
         (err) => {
           this.loading1 = false;

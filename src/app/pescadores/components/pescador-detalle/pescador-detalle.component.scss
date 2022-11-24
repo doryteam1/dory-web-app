@@ -145,6 +145,38 @@
   padding: 10px;
 
 }
+.nav-link-asoc {
+  padding: 0;
+  color: var(--azul1) !important;
+}
+
+.nav-item-asoc {
+  position: relative;
+  padding: 0.5rem 1rem;
+  padding-left: 0px !important;
+  padding-right: 1px !important;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+.control_bar_90 {
+  width: 0;
+  height: 0;
+  border-bottom: 4px solid #222121;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  transform: rotate(90deg);
+  position: absolute;
+  right: -6px;
+  top: 19px;
+  cursor: pointer;
+}
+
+.control_bar_180 {
+  transform: rotate(180deg);
+  right: -8px;
+}
 @media screen and (max-width: 775px) {
   .piscicultor-container {
     justify-content: center;
