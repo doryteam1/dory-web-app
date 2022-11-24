@@ -25,20 +25,29 @@ Durante el este proceso obtendrá el objeto firebaseConfig, guárdelo se usará 
 
 ![image](https://user-images.githubusercontent.com/118612137/203827326-4d484a9e-d8f5-4135-b0a6-e0043f4d526c.png)
 
-### 1. Cree un proyecto en firebase
-	 
-De clic en el siguiente enlace para acceder a la guia:
-https://firebase.google.com/docs/web/setup?hl=es-419#create-project
+3. Obtenga un apikey de google maps
 
-	
-### 2. Registre la aplicación en firebase
-	
-https://firebase.google.com/docs/web/setup?hl=es-419#register-app
+https://developers.google.com/maps/documentation/javascript/get-api-key
 
-Durante el este proceso obtendrá el objeto firebaseConfig, guárdelo se usará posteriormente:
+4. Obtenga un client id oauth2
 
+https://developers.google.com/identity/protocols/oauth2
 
-««««<Configuración del CORS en google cloud mirar en trello«««««««««««
+5. Configuración del CORS en el google cloud
+
+Ingrese a https://console.cloud.google.com/ con el mismo usuario del proyecto de firebase
+
+Ingrese a Cloud Shell Terminal
+
+Cree el archivo cors.json con el siguiente contenido:
+
+![image](https://user-images.githubusercontent.com/118612137/203834496-50257bf1-899a-42e9-987f-97a2d762ffd1.png)
+
+Ejecute el siguiente comando remplazando "gs://exampleproject.appspot.com" con el nombre del bucket:
+
+gsutil cors set cors.json gs://exampleproject.appspot.com
+
+Para mas información visite: https://stackoverflow.com/questions/37760695/firebase-storage-and-access-control-allow-origin
 
 ### 2. Instale GIT
 
