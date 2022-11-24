@@ -11,18 +11,13 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ### 1.Configuraciones previas
 
-1. Instalar servidor de api rest
-	    
-El funcionamiento de la aplicación web depende del funcionamiento del servidor        
-de api rest. Siga la guía de instalación “Guía De Instalación Api Rest”.
-            
-2. Cree un proyecto en firebase
+1. Cree un proyecto en firebase
 	 
 De clic en el siguiente enlace para acceder a la guia:
 https://firebase.google.com/docs/web/setup?hl=es-419#create-project
 
 	
-3. Registre la aplicación en firebase
+2. Registre la aplicación en firebase
 	
 https://firebase.google.com/docs/web/setup?hl=es-419#register-app
 
@@ -150,9 +145,9 @@ Una ves terminado el proceso la app se encuentra online.
 
 En la pestaña “Settings” de la aplicación en la sección “Config Vars” configurar  las siguientes variables de entorno:
 
-DORY_API_REST: Url base del api rest de la plataforma. Se obtuvo en la guía de instalación del api rest(enlace en el punto 0).
+DORY_API_REST: Url base del api rest de la plataforma.
  
-DORY_SERVER_URL: Url del servidor del backend. Se obtuvo en la guia de instalación del servidor(enlace en el punto 0).
+DORY_SERVER_URL: Url del servidor del backend.
 
 THIS_WEB_URL: Url o dominio donde se encuentra esta aplicación web. Lo puede encontrar en la pestaña “Settings” de la app en la sección “Domains”.
 
@@ -160,21 +155,9 @@ MAPS_API_KEY:  Api key de google. Puedes generar una en el siguiente enlace: htt
 
 OAUTH_CLIENT_ID: ID de cliente. Siga los pasos para obtener uno en: https://developers.google.com/identity/protocols/oauth2
 
-Para configurar las siguientes variable use el objeto “firebaseConfig” obtenido en el punto 0 sección 3:
+Para configurar las siguientes variable use el objeto “firebaseConfig” obtenido en el punto 1 sección 2:
 
-FIREBASE_API_KEY
-
-FIREBASE_APP_ID
-
-FIREBASE_AUTH_DOMAIN
-
-FIREBASE_LOCATION_ID
-
-FIREBASE_MESSAGING_SENDER_ID
-
-FIREBASE_PROJECT_ID
-
-FIREBASE_STORAGE_BUCKET
+FIREBASE_API_KEY, FIREBASE_APP_ID, FIREBASE_AUTH_DOMAIN, FIREBASE_LOCATION_ID, FIREBASE_MESSAGING_SENDER_ID, FIREBASE_PROJECT_ID, FIREBASE_STORAGE_BUCKET
 
  
 ## 14. Verifique
