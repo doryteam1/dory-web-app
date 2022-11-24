@@ -1,6 +1,10 @@
-import { Component, OnInit ,  ElementRef,
+import {
+  Component,
+  OnInit,
+  ElementRef,
   ViewChild,
-  AfterViewInit } from '@angular/core';
+  AfterViewInit,
+} from '@angular/core';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { MODO_FILTRO_DATOS_VARIOS, vertices } from '../../../global/constants';
@@ -18,19 +22,18 @@ import { OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 const _ = require('lodash');
 
-
 @Component({
   selector: 'app-mis-asociaciones',
   templateUrl: './mis-asociaciones.component.html',
   styleUrls: ['./mis-asociaciones.component.scss'],
 })
 export class MisAsociacionesComponent
-  implements OnInit, AfterViewInit,OnDestroy
+  implements OnInit, AfterViewInit, OnDestroy
 {
   @ViewChild('myselecmunicipio') myselecmunicipio!: ElementRef;
-  @ViewChild('tabSoyRep',{static: false}) tabSoyRep!: ElementRef;
-  @ViewChild('tabSoyMiemb',{static: false}) tabSoyMiemb!: ElementRef;
-  @ViewChild('tabUnir',{static: false}) tabUnir!: ElementRef;
+  @ViewChild('tabSoyRep', { static: false }) tabSoyRep!: ElementRef;
+  @ViewChild('tabSoyMiemb', { static: false }) tabSoyMiemb!: ElementRef;
+  @ViewChild('tabUnir', { static: false }) tabUnir!: ElementRef;
 
   asociaciones: Array<any> = [];
   showNotFound: boolean = false;
@@ -76,8 +79,8 @@ export class MisAsociacionesComponent
   activeclass3: boolean = false;
   asociacionesexistentes!: any[];
   showNotFoundAsocexistente: boolean = false;
-  isUserRep:boolean = false;
-  isUserMiemb:boolean = false;
+  isUserRep: boolean = false;
+  isUserMiemb: boolean = false;
   /* varibles de buscqueda y filtros */
   filtro: Filtro[] = [
     {
@@ -125,7 +128,7 @@ export class MisAsociacionesComponent
   shorterNumber: number = 20;
   resultFiltroPorMunicipio: any[] = [];
   resultFiltroSeleccionado: any[] = [];
-  BotonNotificacion!:Subscription
+  BotonNotificacion!: Subscription;
   constructor(
     private asociacionesService: AsociacionesService,
     private appModalService: AppModalService,
@@ -133,29 +136,29 @@ export class MisAsociacionesComponent
     private places: PlacesService,
     private searchBuscadorService: SearchBuscadorService,
     private asociacionService: AsociacionesService,
-    private storageService: StorageService,
-  ) {
-  }
+    private storageService: StorageService
+  ) {}
   ngOnDestroy(): void {
-    this.BotonNotificacion.unsubscribe()
-
+    this.BotonNotificacion.unsubscribe();
   }
   ngAfterViewInit(): void {
     let selectedTab = this.storageService.get('misAsocSelecTab');
     //TODO:la referencia de tabSoyMiemb no esta disponible y deberia estarlo
-      setTimeout(()=>{
-        /*Se abre el tab que estuvo seleccionado antes de ir a ver el detalle de una asociación*/
+    setTimeout(() => {
+      if (this.isUserMiemb) {
+        this.htmlElementClick(this.tabSoyMiemb);
+      } else {
         if (selectedTab && selectedTab == 'tabSoyRep') {
+          console.log('soy miembro');
           this.htmlElementClick(this.tabSoyRep);
         } else if (selectedTab && selectedTab == 'tabSoyMiemb') {
           this.htmlElementClick(this.tabSoyMiemb);
         } else if (selectedTab && selectedTab == 'tabUnir') {
           this.htmlElementClick(this.tabUnir);
         }
-        if(!selectedTab){
-          this.htmlElementClick(this.tabSoyMiemb);
-        }
-      },1000)
+      }
+      /*Se abre el tab que estuvo seleccionado antes de ir a ver el detalle de una asociación*/
+    }, 1000);
   }
 
   ngOnInit(): void {
@@ -163,40 +166,42 @@ export class MisAsociacionesComponent
     let token = localStorage.getItem('token');
     let payload = Utilities.parseJwt(token!);
     this.authUserId = payload.sub;
-   this.preCarga()
+    this.preCarga();
     /* municipios sucre */
-   this.BotonNotificacion= this.asociacionService.actionBotton$.subscribe((action:boolean)=>{
-      if (action) {
-         this.showNotFoundAsocMiemb = false;
-        /* window.location.reload(); */
-        /*Asociaciones en donde se en miembro*/
-        this.loading2 = true;
-        this.asociacionesService
-          .getAsociacionesIsMiembroUser(this.authUserId)
-          .subscribe(
-            (response) => {
-              this.asociacionesIsMiembro = response.data;
-              console.log(this.asociacionesIsMiembro);
-              if (this.asociacionesIsMiembro.length < 1) {
+    this.BotonNotificacion = this.asociacionService.actionBotton$.subscribe(
+      (action: boolean) => {
+        if (action) {
+          this.showNotFoundAsocMiemb = false;
+          /* window.location.reload(); */
+          /*Asociaciones en donde se en miembro*/
+          this.loading2 = true;
+          this.asociacionesService
+            .getAsociacionesIsMiembroUser(this.authUserId)
+            .subscribe(
+              (response) => {
+                this.asociacionesIsMiembro = response.data;
+                console.log(this.asociacionesIsMiembro);
+                if (this.asociacionesIsMiembro.length < 1) {
+                  this.showNotFoundAsocMiemb = true;
+                  this.isUserMiemb = false;
+                } else {
+                  this.isUserMiemb = true;
+                  setTimeout(() => {
+                    this.htmlElementClick(this.tabSoyMiemb);
+                  }, 1000);
+                }
+                this.loading2 = false;
+              },
+              (err) => {
                 this.showNotFoundAsocMiemb = true;
-                this.isUserMiemb = false;
-              } else {
-                this.isUserMiemb = true;
-                setTimeout(() => {
-                  this.htmlElementClick(this.tabSoyMiemb);
-                }, 1000);
+                this.loading2 = false;
               }
-              this.loading2 = false;
-            },
-            (err) => {
-              this.showNotFoundAsocMiemb = true;
-              this.loading2 = false;
-            }
-          );
+            );
+        }
       }
-    })
+    );
   }
-  preCarga(){
+  preCarga() {
     /*Asociaciones en donde se es representante legal*/
     this.loading1 = true;
     this.asociacionesService.getAsociacionesUsuario(this.authUserId).subscribe(
@@ -224,7 +229,6 @@ export class MisAsociacionesComponent
       .subscribe(
         (response) => {
           this.asociacionesIsMiembro = response.data;
-          console.log(this.asociacionesIsMiembro);
           if (this.asociacionesIsMiembro.length < 1) {
             this.showNotFoundAsocMiemb = true;
             this.isUserMiemb = false;
@@ -252,17 +256,12 @@ export class MisAsociacionesComponent
         this.showNotFoundAsocexistente = false;
       }
     });
-     this.loadMunic();
+    this.loadMunic();
   }
   invitarAnular(asociacion: any) {
     if (asociacion.estado_solicitud == 'Aceptada') {
       this.appModalService
-        .confirm(
-          'Salir de la asociación',
-          'Está seguro',
-          'Aceptar',
-          'Cancelar'
-        )
+        .confirm('Salir de la asociación', 'Está seguro', 'Aceptar', 'Cancelar')
         .then((result) => {
           if (result == true) {
             let estado = asociacion.estado_solicitud;
@@ -341,8 +340,8 @@ export class MisAsociacionesComponent
               );
               this.asociaciones.splice(index, 1);
               this.isUserRep = false;
-              this.htmlElementClick(this.tabSoyRep)
-              if(this.asociaciones.length == 0){
+              this.htmlElementClick(this.tabSoyRep);
+              if (this.asociaciones.length == 0) {
                 this.showNotFound = true;
               }
             },
@@ -496,5 +495,32 @@ export class MisAsociacionesComponent
     const element: HTMLElement = eRef.nativeElement;
     element.click();
     console.log('clicked!');
+  }
+  salirAsociacion(asociacion: any, idx:number) {
+    this.appModalService
+      .confirm(
+        'Salir de la asociación',
+        'Está seguro que desea salir  de esta asociación',
+        'Salir',
+        'Cancelar'
+      )
+      .then((result) => {
+        if (result == true) {
+          this.asociacionService
+            .eliminarSolicitud(asociacion.id_solicitud)
+            .subscribe(
+              (response) => {
+                this.asociacionesIsMiembro.splice(idx, 1);
+                if (this.asociacionesIsMiembro.length <= 0) {
+                  this.showNotFoundAsocMiemb = true;
+                }
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+        }
+      })
+      .catch((result) => {});
   }
 }

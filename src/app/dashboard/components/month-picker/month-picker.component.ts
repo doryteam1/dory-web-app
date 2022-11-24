@@ -25,8 +25,8 @@ export class MonthPickerComponent implements OnInit, AfterViewInit {
   dates: dayjs.Dayjs[] = [];
   formModal: any;
   elementDate!: dayjs.Dayjs;
-  //startDate:dayjs.Dayjs = dayjs('2022-11-1');
-  startDate: dayjs.Dayjs = dayjs('2019-11-1');
+  startDate:dayjs.Dayjs = dayjs('2022-11-1');
+  /* startDate: dayjs.Dayjs = dayjs('2019-11-1'); */
   totalCosumo: number = 0;
   loading: boolean = false;
   showNotFound: boolean = false;
