@@ -14,12 +14,6 @@ export class ChatService {
   chatRefs: { btnChat: HTMLElement, userRefs: any } | null = null;
   subject:Subject<string> = new Subject<string>();
   constructor(private userService:UsuarioService, private https: HttpsService) {
-    /* this.socket = io(this.url, {
-      transports: ['websocket', 'polling', 'flashsocket'],
-      auth: {
-        token: "Bearer " + this.userService.getAuthUserToken()!
-      }
-    }); */
     this.connect();
   }
 
