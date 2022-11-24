@@ -11,13 +11,13 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ### 1.Configuraciones previas
 
-1. Cree un proyecto en firebase
+* Cree un proyecto en firebase
 	 
 De clic en el siguiente enlace para acceder a la guia:
 https://firebase.google.com/docs/web/setup?hl=es-419#create-project
 
 	
-2. Registre la aplicación en firebase
+* Registre la aplicación en firebase
 	
 https://firebase.google.com/docs/web/setup?hl=es-419#register-app
 
@@ -25,15 +25,15 @@ Durante el este proceso obtendrá el objeto firebaseConfig, guárdelo se usará 
 
 ![image](https://user-images.githubusercontent.com/118612137/203827326-4d484a9e-d8f5-4135-b0a6-e0043f4d526c.png)
 
-3. Obtenga un apikey de google maps
+* Obtenga un apikey de google maps
 
 https://developers.google.com/maps/documentation/javascript/get-api-key
 
-4. Obtenga un client id oauth2
+* Obtenga un client id oauth2
 
 https://developers.google.com/identity/protocols/oauth2
 
-5. Configuración del CORS en el google cloud
+* Configuración del CORS en el google cloud
 
 Ingrese a https://console.cloud.google.com/ con el mismo usuario del proyecto de firebase
 
