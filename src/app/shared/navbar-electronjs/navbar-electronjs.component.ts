@@ -22,6 +22,7 @@ dayjs.locale('es');
 import { ResizeObserver } from '@juggle/resize-observer';
 import { ChatService } from 'src/app/services/chat.service';
 import { AppModalService } from '../services/app-modal.service';
+import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 declare var window: any;
 @Component({
   selector: 'app-navbar-electronjs',
@@ -72,6 +73,7 @@ export class NavbarElectronjsComponent
   currentRoute: string = '';
   showMenu: boolean = false;
   notifyStyloContainer: boolean = false;
+  rutaActiva: string = '';
   constructor(
     private router: Router,
     public userService: UsuarioService,
@@ -80,7 +82,8 @@ export class NavbarElectronjsComponent
     private ngZone: NgZone,
     private renderer: Renderer2,
     private chatService: ChatService,
-    private appModalService: AppModalService
+    private appModalService: AppModalService,
+    private asociacionesService: AsociacionesService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -129,6 +132,7 @@ export class NavbarElectronjsComponent
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route: string = event.url;
+        this.rutaActiva = event.url;
         this.currentRoute = event.url;
         if (route.includes('welcome')) {
           this.isHidden = true;
@@ -267,8 +271,15 @@ export class NavbarElectronjsComponent
   confirmarInvitacion(invitacion: any) {
     invitacion.message = 'Aceptaste la solicitud. Ya eres miembro.';
     this.userService.aceptarInvitacion(invitacion.id_solicitud).subscribe(
-      (response) => {},
+      (response) => {
+        if (this.rutaActiva.includes('/dashboard/mis-asociaciones')) {
+          this.asociacionesService.actionBotton$.emit(true);
+        }
+      },
       (err) => {
+        if (this.rutaActiva.includes('/dashboard/mis-asociaciones')) {
+          this.asociacionesService.actionBotton$.emit(false);
+        }
         invitacion.error = err.error.message;
         invitacion.message = undefined;
         setTimeout(() => {

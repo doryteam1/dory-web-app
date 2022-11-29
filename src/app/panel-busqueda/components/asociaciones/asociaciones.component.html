@@ -28,8 +28,35 @@
         >
     </app-chip-con-boton-close>
 </div>
-  <div class="container-card mb-4" *ngIf="!showNotFound">
+  <div class="container-card mb-4" *ngIf="!showNotFound && cardAsocia">
     <app-card-asociacion *ngFor="let asociacion of  asociacionesFiltered" [asociacion]="asociacion" [delatecard]="false"
       (onDetalle)="goAssociationDetail(asociacion)" (onDetalleRepresentante)="goDetalleRepresentante($event)">
     </app-card-asociacion>
   </div>
+<div class="container-card-list mb-4" *ngIf="!showNotFound && !cardAsocia">
+    <div class="list overflow-auto d-flex flex-column">
+      <div class="card" *ngFor="let asociacion of  asociacionesFiltered">
+        <div class="card__user-info d-flex flex-row" (click)="goAssociationDetail(asociacion)">
+          <img class="card__image" src="{{asociacion.foto ? asociacion.foto : '/assets/images/avatar-person.svg'}}">
+          <div class="asociacion-nombre shorterTextOverflowHidden">
+            <span class="card__title shorterTextAuto">{{asociacion.nombre}}
+            </span>
+            <small class="shorterTextAuto">{{asociacion?.municipio? asociacion?.municipio: 'Sin municipio'}}</small>
+          </div>
+        </div>
+        <button class="card__button btn-square btn--azul1 " (click)="invitarAnular(asociacion)"
+          *ngIf="!asociacion?.estado_solicitud">Unirme</button>
+        <button class="card__button btn-square btn--grey " (click)="invitarAnular(asociacion)"
+          *ngIf="asociacion?.estado_solicitud == 'Enviada'">Anular</button>
+        <div class="btn-group " *ngIf="asociacion?.estado_solicitud == 'Aceptada'">
+          <button class="card__button btn-square btn--grey dropdown-toggle" id="dropdownMenuButton"
+            data-bs-toggle="dropdown" aria-expanded="false">Miembro</button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li (click)="invitarAnular(asociacion)"><a class="dropdown-item"><i class="bi bi-box-arrow-left"></i> No
+                soy
+                miembro</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>

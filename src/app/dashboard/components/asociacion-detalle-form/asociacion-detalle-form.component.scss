@@ -44,6 +44,17 @@
 .input-wrapper{
   width: 100%;
 }
+@media screen and (max-width: 700px) {
+  .d-flex-button-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-footer {
+    align-items: center;
+    justify-content: center;
+  }
+}
 @media screen and (max-width: 640px) {
 .justify-content-between {
     flex-direction: column !important;
@@ -53,15 +64,7 @@
     justify-content: center !important;
   }
 }
-@media screen and (max-width: 500px) {
-.d-flex-button-footer{
-  flex-direction: column;
-  gap: 10px;
-}
-.modal-footer{
-  align-items: center;
-}
-}
+
 @media screen and (max-width: 400px) {
   .d-flex-button{
     flex-direction: column-reverse !important;

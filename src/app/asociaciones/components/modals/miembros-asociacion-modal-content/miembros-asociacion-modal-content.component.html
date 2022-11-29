@@ -5,7 +5,7 @@
 <div class="modal-body">
   <app-search class="app-search" (textSearch)="onSearch($event)"></app-search>
   <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation" *ngIf="datos.tipo_asociacion == 'Piscicultores' || datos.tipo_asociacion =='Mixta'">
+    <li class="nav-item" role="presentation" *ngIf="datos.tipo_asociacion == 1 || datos.tipo_asociacion == 3">
       <button class="nav-link nav-link--color"
         [ngClass]="{'active nav-link--mytabstilo':activeclass1}"
       id="home-tab"
@@ -15,9 +15,9 @@
         role="tab"
         aria-controls="home-tab-pane"
         aria-selected="true"
-        (click)="activeTabClick( 'Piscicultores')">Piscicultores</button>
+        (click)="activeTabClick(1)">Piscicultores</button>
     </li>
-    <li class="nav-item" role="presentation"  *ngIf="datos.tipo_asociacion == 'Pescadores'  || datos.tipo_asociacion == 'Mixta'">
+    <li class="nav-item" role="presentation"  *ngIf="datos.tipo_asociacion == 2  || datos.tipo_asociacion == 3">
       <button class="nav-link nav-link--color"
         [ngClass]="{'active nav-link--mytabstilo':activeclass2 }"
        id="profile-tab"
@@ -27,11 +27,11 @@
         role="tab"
          aria-controls="profile-tab-pane"
          aria-selected="false"
-        (click)="activeTabClick('Pescadores')">Pescadores</button>
+        (click)="activeTabClick(2)">Pescadores</button>
     </li>
   </ul>
   <div class="tab-content  list" id="myTabContent">
-      <div class="tab-pane fade" [ngClass]="{'show active':datos.tipo_asociacion == 'Piscicultores' || datos.tipo_asociacion =='Mixta'}"
+      <div class="tab-pane fade" [ngClass]="{'show active':datos.tipo_asociacion == 1 || datos.tipo_asociacion == 3}"
       id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
       <app-not-found *ngIf="showNotFound2 || showError2" message="Parece que no cuentas con mienbros"></app-not-found>
         <div class="d-flex flex-column">
@@ -40,7 +40,7 @@
               <img (click)="navigateDetalle(piscicultor)" class="card__image"
                 src="{{piscicultor?.foto ? piscicultor?.foto : '/assets/images/avatar-person.svg'}}">
               <div class="container-nombre shorterTextOverflowHidden">
-                <span class="card__title  shorterTextAuto" (click)="datosContactoPiscicultor(piscicultor)">{{piscicultor?.nombre}}
+                <span class="card__title  shorterTextAuto" (click)="datosContacto(piscicultor, 'Piscicultor')"> {{piscicultor?.nombre}}
                 </span>
                 <small class="shorterTextAuto" (click)="navigateDetalle(piscicultor)">{{piscicultor?.municipio? piscicultor?.municipio: 'Sin municipio'}}</small>
               </div>
@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="tab-pane fade"
-       [ngClass]="{'show active':datos.tipo_asociacion == 'Pescadores' }"
+       [ngClass]="{'show active':datos.tipo_asociacion == 2 }"
        id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <app-not-found *ngIf="showNotFound1 || showError1" message="Parece que no cuentas con mienbros"></app-not-found>
         <div class="d-flex flex-column">
@@ -59,7 +59,7 @@
               <img (click)="navigateDetalle(pescador)" class="card__image"
                 src="{{pescador?.foto ? pescador?.foto : '/assets/images/avatar-person.svg'}}">
               <div class="container-nombre shorterTextOverflowHidden">
-                <span class="card__title shorterTextAuto" (click)="datosContactoPescador(pescador)">{{pescador?.nombre}}
+                <span class="card__title shorterTextAuto"  (click)="datosContacto(pescador, 'Pescador')">{{pescador?.nombre}}
                 </span>
                 <small class="shorterTextAuto" (click)="navigateDetalle(pescador)">{{pescador?.municipio? pescador?.municipio: 'Sin municipio'}}</small>
               </div>

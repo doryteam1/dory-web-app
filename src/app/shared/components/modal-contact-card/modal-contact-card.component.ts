@@ -12,7 +12,7 @@ export class ModalContactCardComponent implements OnInit {
   modalDetalle: boolean = true;
   constructor(private _modalService: NgbActiveModal, private router: Router) {}
   ngOnInit(): void {
-    console.log(this.datos);
+
   }
   navigateDetalle() {
     let url = '';

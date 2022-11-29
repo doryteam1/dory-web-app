@@ -29,10 +29,11 @@
       </div>
       <div class="container-card ">
         <app-card-granjas
+        *ngFor="let granja of misGranjaFavoritas; let i = index"
           [granja]="granja"
           [favorita]="granja?.favorita"
           [resena]="granja?.cantidad_resenas"
-         *ngFor="let granja of misGranjaFavoritas; let i = index"
+          [granjaMunici]="true"
           [index]="i"
           (onDetalle)="navigate(granja)"
           (onChangeFavorite)="changeFavorite(i)"

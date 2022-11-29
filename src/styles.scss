@@ -512,6 +512,32 @@ color: white;
 .GrisOscuroText{
   color: var(--gris-oscuro);
 }
+
+.tooltipClass-map-ngb .tooltip-inner {
+  background-color: var(--gris-oscuro);
+  font-size: 125%;
+
+}
+
+.tooltipClass-map-ngb.bs-tooltip-end .tooltip-arrow::before {
+  border-right-color: var(--gris-oscuro);
+
+}
+
+.tooltipClass-map-ngb.bs-tooltip-start .tooltip-arrow::before {
+  border-left-color: var(--gris-oscuro);
+
+}
+
+.tooltipClass-map-ngb.bs-tooltip-top .tooltip-arrow::before {
+  border-top-color: var(--gris-oscuro);
+
+}
+
+.tooltipClass-map-ngb.bs-tooltip-bottom .tooltip-arrow::before {
+  border-bottom-color: var(--gris-oscuro);
+
+}
 /* fin */
 @media (max-width: 575px) {
   .modal-dialog-centered {

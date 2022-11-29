@@ -8,7 +8,7 @@
     </div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <!-- Home tab piscicultores -->
-      <li class="nav-item" role="presentation" *ngIf="datos.tipo_asociacion == 'Piscicultores' || datos.tipo_asociacion =='Mixta'">
+      <li class="nav-item" role="presentation" *ngIf="datos.tipo_asociacion == 1 || datos.tipo_asociacion ==3">
         <button class="nav-link nav-link--color"
         [ngClass]="{'active nav-link--mytabstilo':activeclass1}"
           id="home-tab"
@@ -18,11 +18,11 @@
          role="tab"
          aria-controls="home-tab-pane"
          aria-selected="true"
-         (click)="activeTabClick( 'Piscicultores')"
+         (click)="activeTabClick(1)"
         >Piscicultores</button>
       </li>
       <!-- Home tab pescadores -->
-      <li class="nav-item" role="presentation" *ngIf="datos.tipo_asociacion == 'Pescadores'  || datos.tipo_asociacion == 'Mixta'">
+      <li class="nav-item" role="presentation" *ngIf="datos.tipo_asociacion == 2  || datos.tipo_asociacion == 3">
         <button class="nav-link nav-link--color"
         [ngClass]="{'active nav-link--mytabstilo':activeclass2 }"
         id="profile-tab"
@@ -32,19 +32,19 @@
         role="tab"
         aria-controls="profile-tab-pane"
          aria-selected="false"
-         (click)="activeTabClick('Pescadores')"
+         (click)="activeTabClick(2)"
         >Pescadores</button>
       </li>
     </ul>
     <div class="tab-content list " id="myTabContent">
-      <div class="tab-pane fade" [ngClass]="{'show active':datos.tipo_asociacion == 'Piscicultores' || datos.tipo_asociacion =='Mixta'}"
+      <div class="tab-pane fade" [ngClass]="{'show active':datos.tipo_asociacion == 1 || datos.tipo_asociacion ==3}"
            id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
           <div class="d-flex flex-column">
               <div class="card" *ngFor="let piscicultor of piscicultoresFiltered">
                   <div class="card__user-info d-flex flex-row">
                       <img (click)="navigateDetalle(piscicultor)" class="card__image" src="{{piscicultor.foto ? piscicultor.foto : '/assets/images/avatar-person.svg'}}">
                           <div class="container-nombre shorterTextOverflowHidden">
-                            <span class="card__title shorterTextAuto" (click)="datosContactoPiscicultor(piscicultor)">{{piscicultor?.nombres}}
+                            <span class="card__title shorterTextAuto" (click)="datosContacto(piscicultor,'Piscicultor')">{{piscicultor?.nombres}}
                             </span>
                             <small class="shorterTextAuto" (click)="navigateDetalle(piscicultor)">{{piscicultor?.municipio? piscicultor?.municipio: 'Sin municipio'}}</small>
                           </div>
@@ -61,13 +61,13 @@
               </div>
           </div>
       </div>
-      <div class="tab-pane fade"  [ngClass]="{'show active':datos.tipo_asociacion == 'Pescadores' }" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <div class="tab-pane fade"  [ngClass]="{'show active':datos.tipo_asociacion == 2 }" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
           <div class="d-flex flex-column">
               <div class="card" *ngFor="let pescador of pescadoresFiltered">
                   <div class="card__user-info d-flex flex-row" >
                       <img (click)="navigateDetalle(pescador)"class="card__image" src="{{pescador.foto ? pescador.foto : '/assets/images/avatar-person.svg'}}">
                           <div class="container-nombre shorterTextOverflowHidden">
-                            <span class="card__title shorterTextAuto" (click)="datosContactoPescador(pescador)">{{pescador?.nombres}}
+                            <span class="card__title shorterTextAuto" (click)="datosContacto(pescador,'Pescador')">{{pescador?.nombres}}
                             </span>
                             <small class="shorterTextAuto" (click)="navigateDetalle(pescador)">{{pescador?.municipio? pescador?.municipio:
                               'Sin municipio'}}</small>

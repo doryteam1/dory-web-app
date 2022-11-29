@@ -52,16 +52,6 @@
         <span class="detail-container__value detail-container__value-legal">{{asociacion?.propietario}}</span>
       </div>
     </div>
-    <div class="detail-container mt-4">
-      <img class="detail-container__image" src="assets/icons/litigation-negotiation.svg">
-      <div class="detail-container__data">
-        <h4 class="detail-container__title">Constituida legalmente</h4>
-        <span *ngIf="asociacion?.legalconstituida == 1" class="detail-container__value">
-          Si </span>
-        <span *ngIf="asociacion?.legalconstituida == 2" class="detail-container__value">
-          No </span>
-      </div>
-    </div>
     <div class="detail-container mt-4" *ngIf="asociacion?.foto_camarac">
       <img class="detail-container__image" src="assets/icons/picture_as_pdf_black_24dp.svg">
       <div class="detail-container__data">

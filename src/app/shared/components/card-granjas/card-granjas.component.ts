@@ -11,6 +11,7 @@ export class CardGranjasComponent implements OnInit {
   @Input() granja: any;
   @Input() index: any;
   @Input() favorita: any;
+  @Input() granjaMunici:boolean=false;
   @Input() resena: any;
   @Input() botonMapaFijo: boolean = true;
   @Input() botonFavorito: boolean = true;
@@ -79,5 +80,5 @@ export class CardGranjasComponent implements OnInit {
       .then((result) => {})
       .catch((result) => {});
   }
-  
+
 }

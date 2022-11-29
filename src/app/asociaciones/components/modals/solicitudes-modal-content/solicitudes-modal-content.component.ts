@@ -1,3 +1,4 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -5,7 +6,6 @@ import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.
 import { PescadoresService } from 'src/app/pescadores/services/pescadores.service';
 import { PiscicultoresService } from 'src/app/piscicultores/services/piscicultores.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
-import { TopAlertControllerService } from 'src/app/shared/services/top-alert-controller.service';
 
 @Component({
   selector: 'app-solicitudes-modal-content',
@@ -21,7 +21,7 @@ export class SolicitudesModalContentComponent implements OnInit {
   pescadoresFiltered: any[] = [];
   activeclass1: boolean = false;
   activeclass2: boolean = false;
-  error:string = '';
+  error: string = '';
   constructor(
     public activeModal: NgbActiveModal,
     private pescadoresService: PescadoresService,
@@ -29,7 +29,7 @@ export class SolicitudesModalContentComponent implements OnInit {
     private asociacionService: AsociacionesService,
     private appModalService: AppModalService,
     private router: Router,
-    private topAlertController:TopAlertControllerService
+    public platformLocation: PlatformLocation
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +37,6 @@ export class SolicitudesModalContentComponent implements OnInit {
     this.pescadoresService
       .getPescadoresEstadoSolicitud(this.datos.nit)
       .subscribe((response: any) => {
-        console.log(response);
         this.pescadores = response.data;
         this.pescadoresFiltered = this.pescadores;
       });
@@ -51,6 +50,9 @@ export class SolicitudesModalContentComponent implements OnInit {
   }
 
   invitarAnular(usuario: any) {
+      this.platformLocation.onPopState(() => {
+        this.appModalService.closeModal();
+      });
     if (usuario.estado_solicitud == 'Aceptada') {
       this.appModalService
         .confirm(
@@ -106,44 +108,37 @@ export class SolicitudesModalContentComponent implements OnInit {
         .invitarUsuarioAsociacion(data, this.datos.nit)
         .subscribe(
           (response) => {
-            console.log(response);
             usuario.id_solicitud = response.body.insertId;
-            console.log('usuario.id_solicitud ', usuario.id_solicitud);
           },
           (err) => {
             usuario.estado_solicitud = null;
             usuario.solicitud_enviada_por = null;
             this.error = err.error.message;
-            setTimeout(()=>{
+            setTimeout(() => {
               this.error = '';
-            },3000)
+            }, 3000);
           }
         );
     }
   }
-  datosContactoPescador(pescador: any) {
+
+  datosContacto(datos: any, userType: string) {
+     this.platformLocation.onPopState(() => {
+       this.appModalService.closeModal();
+     });
     let object: any = {
-      nombreUser: pescador.nombres,
-      tipoUser: 'Pescador',
-      foto: pescador.foto,
-      correoUser: pescador.email,
-      telefonoUser: pescador.telefono,
-      rutaUserDetalle: `/pescadores/detalle/${pescador.id}`,
+      nombreUser: datos.nombres,
+      tipoUser: userType,
+      foto: datos.foto,
+      correoUser: datos.email,
+      telefonoUser: datos.telefono,
     };
-    this.appModalService
-      .modalContactCardComponent(object)
-      .then((result) => {})
-      .catch((result) => {});
-  }
-  datosContactoPiscicultor(piscicultor: any) {
-    let object: any = {
-      nombreUser: piscicultor.nombres,
-      tipoUser: 'Piscicultor',
-      foto: piscicultor.foto,
-      correoUser: piscicultor.email,
-      telefonoUser: piscicultor.telefono,
-      rutaUserDetalle: `/piscicultores/detalle/${piscicultor.id}`,
-    };
+    if (userType == 'Pescador') {
+      object.rutaUserDetalle = `/pescadores/detalle/${datos.id}`;
+      object.nombreUser = datos.nombres;
+    } else if (userType == 'Piscicultor') {
+      object.rutaUserDetalle = `/piscicultores/detalle/${datos.id}`;
+    }
     this.appModalService
       .modalContactCardComponent(object)
       .then((result) => {})
@@ -171,26 +166,26 @@ export class SolicitudesModalContentComponent implements OnInit {
 
   navigateDetalle(user: any) {
     let url = '';
-    if (this.datos.tipo_asociacion == 'Piscicultores') {
+    if (this.datos.tipo_asociacion == 1) {
       url = this.router.serializeUrl(
         this.router.createUrlTree([`/piscicultores/detalle/${user.id}`])
       );
       window.open(url, '_blank');
-    } else if (this.datos.tipo_asociacion == 'Pescadores') {
+    } else if (this.datos.tipo_asociacion == 2) {
       url = this.router.serializeUrl(
         this.router.createUrlTree([`/pescadores/detalle/${user.id}`])
       );
       window.open(url, '_blank');
     }
   }
-  activeTabClick(selectedTab?: string) {
-    if (selectedTab == 'Piscicultores') {
+  activeTabClick(selectedTab?: any) {
+    if (selectedTab == 1) {
       this.activeclass1 = true;
       this.activeclass2 = false;
-    } else if (selectedTab == 'Pescadores') {
+    } else if (selectedTab == 2) {
       this.activeclass1 = false;
       this.activeclass2 = true;
-    } else if (selectedTab == 'Mixta') {
+    } else if (selectedTab == 3) {
       this.activeclass1 = true;
       this.activeclass2 = false;
     }

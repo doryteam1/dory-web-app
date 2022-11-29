@@ -37,7 +37,7 @@ export class ModalGoogleMapComponent implements OnInit {
   mapaOn:boolean=false
   options: google.maps.MapOptions = {
     center: { lat: 9.214145, lng: -75.188469 },
-    zoom: 10,
+    zoom: 5,
     scrollwheel: true,
   };
   markerPosition: google.maps.LatLngLiteral = {
@@ -71,7 +71,7 @@ export class ModalGoogleMapComponent implements OnInit {
           lat: parseFloat(this.misfavoritas[0].latitud),
           lng: parseFloat(this.misfavoritas[0].longitud),
         },
-        zoom: 13,
+        zoom: 5,
         scrollwheel: true,
         restriction: {
           latLngBounds: sucreColombia,
@@ -218,6 +218,14 @@ export class ModalGoogleMapComponent implements OnInit {
         lat: Number(this.misfavoritas[indexSelected].latitud),
         lng: Number(this.misfavoritas[indexSelected].longitud),
       };
+        this.options = {
+          center: {
+            lat: parseFloat(this.misfavoritas[indexSelected].latitud),
+            lng: parseFloat(this.misfavoritas[indexSelected].longitud),
+          },
+          zoom: 13,
+          /* https://developers.google.com/maps/documentation/javascript/controls */
+        };
       this.openInfoWindowvarios(this.marker, indexSelected);
     }
   }

@@ -3,12 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlacesService } from 'src/app/services/places.service';
-import { Utilities } from 'src/app/utilities/utilities';
-import { DatePipe, formatDate, Location } from '@angular/common'
+import { DatePipe, formatDate, Location, PlatformLocation } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { AppModalService } from 'src/app/shared/services/app-modal.service';
 
 @Component({
   selector: 'app-asociacion-detalle-form',
@@ -28,7 +28,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
     direccion: new FormControl('', [Validators.required]),
     telefono: new FormControl('', [Validators.required]),
     nombre: new FormControl('', [Validators.required]),
-    legalconstituida: new FormControl('', [Validators.required]),
     informacion_adicional_direccion: new FormControl(''),
     fecha_renovacion_camarac: new FormControl('', [Validators.required]),
     id_departamento: new FormControl(70, [Validators.required]),
@@ -38,13 +37,14 @@ export class AsociacionDetalleFormComponent implements OnInit {
     url_rut: new FormControl(''),
     id_tipo_asociacion_fk: new FormControl('', [Validators.required]),
   });
-  tiposAsociaciones: any;
+  tiposAsociaciones: any[] = [];
   departamentos: any;
   municipios: any;
   fileRut: any = null;
-  datosAsociacion: any;
   urls: any[] = [];
   hasDocument: boolean = false;
+  verifyTypeAssociation: any;
+  recargarComponen: number = 0;
   constructor(
     private asociacionesService: AsociacionesService,
     private storage: FirebaseStorageService,
@@ -53,47 +53,42 @@ export class AsociacionDetalleFormComponent implements OnInit {
     private location: Location,
     private datePipe: DatePipe,
     private utilitiesService: UtilitiesService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private appModalService: AppModalService,
+    public platformLocation: PlatformLocation
+  ) {
+
+  }
 
   ngOnInit(): void {
-    this.onAsociacionDetalles();
+    this.loadNgOnlnit();
+      this.platformLocation.onPopState((even: any) => {
+        console.log(even)
+          this.appModalService.closeModal();
+        /* this.router.navigate(['/dashboard/mis-asociaciones']); */
+      });
   }
-  onAsociacionDetalles() {
+
+  loadNgOnlnit() {
     registerLocaleData(es);
-    this.asociacion = { ...this.ar.snapshot.params };
-    this.datosAsociacion = {
-      nit: this.asociacion?.nit,
-      tipo_asociacion: this.asociacion.tipo_asociacion,
-    };
     let action = this.ar.snapshot.paramMap.get('action');
-    console.log(action)
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
+    let nit: any = this.ar.snapshot.paramMap.get('nit');
     if (action == 'create') {
-      this.prepareForm(action!, this.asociacion);
+      this.modalMode = action;
+      this.form.reset();
       this.loadDptos();
-      this.loadTiposAsociaciones();
-      this.onChangeLegalConst();
+      this.loadTiposAsociaciones('create');
     } else {
       this.asociacionesService
-        .getAsociacionDetalle(this.asociacion.nit)
+        .getAsociacionDetalle(nit)
         .subscribe((response) => {
-          let tempAsoc = response.data[0];
-          this.asociacion.url_rut = tempAsoc.url_rut;
-          this.asociacion.foto_camarac = tempAsoc.foto_camarac;
-          if (!this.asociacion.count_miembros) {
-            this.asociacion.count_miembros=tempAsoc.count_miembros
-          }
-          this.prepareForm(action!, this.asociacion);
+          this.asociacion = response.data[0];
+          this.prepareForm();
           this.loadDptos();
-          this.loadTiposAsociaciones();
-          this.onChangeLegalConst();
+          this.loadTiposAsociaciones('update');
         });
-    }
-    this.idTipoAsoc?.valueChanges.subscribe((value) => {});
-    this.asociacionesService
-      .getMiembrosPrivado(this.asociacion.nit)
-      .subscribe((response) => {
+      this.asociacionesService.getMiembrosPrivado(nit).subscribe((response) => {
         let representante = response.data.representante;
         let miembros = response.data.miembros;
         if (representante.url_imagen_cedula || representante.url_sisben) {
@@ -113,13 +108,14 @@ export class AsociacionDetalleFormComponent implements OnInit {
           }
         }
       });
+    }
   }
+
   async updateAsociacion() {
     this.loading1 = true;
-
     if (
-      this.isLegalConstituida?.value == '0' ||
-      (this.asociacion.foto_camarac && this.asociacion.foto_camarac != 'null')
+      this.asociacion.foto_camarac &&
+      this.asociacion.foto_camarac != 'null'
     ) {
       this.fotoCamc?.clearValidators();
       this.fotoCamc?.updateValueAndValidity();
@@ -134,7 +130,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
     this.fotoCamc?.setValidators([Validators.required]);
     this.fotoCamc?.updateValueAndValidity();
-    if (this.fotoCamc?.invalid || this.isLegalConstituida?.value == '0') {
+    if (this.fotoCamc?.invalid) {
       //No cargó un nuevo archivo de camara de comercio
       let updatedAsociacion = { ...this.form.getRawValue() };
       updatedAsociacion.foto_camarac = this.asociacion.foto_camarac;
@@ -183,14 +179,13 @@ export class AsociacionDetalleFormComponent implements OnInit {
         });
     }
   }
-
   async sendAsociacionUpdated(updatedAsociacion: any, nit: number) {
     if (this.fileRut == null) {
       //No hay archivo rut para subir
       this.asociacionesService.updateParcial(nit, updatedAsociacion).subscribe(
         (response) => {
+          this.onAsociacionDetalles(nit, 'update');
           this.loading1 = false;
-          this.location.back();
         },
         (err) => {
           console.log(err);
@@ -226,8 +221,8 @@ export class AsociacionDetalleFormComponent implements OnInit {
                     .update(nit, updatedAsociacion)
                     .subscribe(
                       (response) => {
+                        this.onAsociacionDetalles(nit, 'update');
                         this.loading1 = false;
-                        this.location.back();
                       },
                       (err) => {
                         console.log(err);
@@ -247,10 +242,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
   }
   addAsociaciones() {
     this.loading1 = true;
-    if (this.isLegalConstituida?.value == '0') {
-      this.fotoCamc?.clearValidators();
-      this.fotoCamc?.updateValueAndValidity();
-    }
     if (!this.form.valid) {
       console.log('Not valid!');
       this.form.markAllAsTouched();
@@ -259,42 +250,35 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
     this.fotoCamc?.setValidators([Validators.required]);
     this.fotoCamc?.updateValueAndValidity();
-
-    if (this.isLegalConstituida?.value == '0') {
-      let asociacion = { ...this.form.getRawValue() };
-      this.sendAsociacionToAdd(asociacion);
-    } else {
-      let ext = this.file.name.split('.')[1];
-      let token = localStorage.getItem('token');
-      let payload = Utilities.parseJwt(token!);
-      let basePath = '/asociaciones/camaracomercio/todas/';
-      let fileName =
-        'camc-asociacion-' + this.form.getRawValue().nit + '.' + ext;
-      let filePath = basePath + fileName;
-      this.storage
-        .cloudStorageTask(filePath, this.file)
-        .percentageChanges()
-        .subscribe((response) => {
-          if (response == 100) {
-            //porcentaje de carga de la camara de comercio
-            this.storage
-              .cloudStorageRef(filePath)
-              .getDownloadURL()
-              .subscribe(
-                (downloadUrl) => {
-                  let asociacion = { ...this.form.getRawValue() };
-                  asociacion.foto_camarac = downloadUrl;
-                  this.sendAsociacionToAdd(asociacion);
-                },
-                (err) => {
-                  this.loading1 = false;
-                  //this.error = 'A ocurrido un error al subir la camara de comercio'
-                  console.log(err);
-                }
-              );
-          }
-        });
-    }
+    let ext = this.file.name.split('.')[1];
+    let token = localStorage.getItem('token');
+    let basePath = '/asociaciones/camaracomercio/todas/';
+    let fileName = 'camc-asociacion-' + this.form.getRawValue().nit + '.' + ext;
+    let filePath = basePath + fileName;
+    this.storage
+      .cloudStorageTask(filePath, this.file)
+      .percentageChanges()
+      .subscribe((response) => {
+        if (response == 100) {
+          //porcentaje de carga de la camara de comercio
+          this.storage
+            .cloudStorageRef(filePath)
+            .getDownloadURL()
+            .subscribe(
+              (downloadUrl) => {
+                let asociacion = { ...this.form.getRawValue() };
+                asociacion.legalconstituida = 0;
+                asociacion.foto_camarac = downloadUrl;
+                this.sendAsociacionToAdd(asociacion);
+              },
+              (err) => {
+                this.loading1 = false;
+                //this.error = 'A ocurrido un error al subir la camara de comercio'
+                console.log(err);
+              }
+            );
+        }
+      });
   }
 
   async sendAsociacionToAdd(asociacion: any) {
@@ -302,22 +286,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
       //No hay archivo rut para subir
       this.asociacionesService.add(asociacion).subscribe(
         (response) => {
-          if (response.body.message.nit) {
-            this.asociacionesService
-              .getAsociacionDetalle(response.body.message.nit)
-              .subscribe((response) => {
-                let asoci= response.data[0];
-                let object: any = { ...asoci };
-                (object.action = 'update'),
-                  (object.formState = 'enable'),
-                this.router.navigate(['/dashboard/asociacion/detalle', object]).then((value:any)=>{
-                  if (value) {
-                    this.onAsociacionDetalles();
-                  }
-                  this.loading1 = false;
-                })
-              });
-          }
+          this.UpdatedRouter(response.body.message.nit);
         },
         (err) => {
           this.loading1 = false;
@@ -349,8 +318,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
                   asociacion.url_rut = downloadUrl;
                   this.asociacionesService.add(asociacion).subscribe(
                     (response) => {
-                      this.location.back();
-                      this.loading1 = false;
+                      this.UpdatedRouter(response.body.message.nit);
                     },
                     (err) => {
                       this.loading1 = false;
@@ -373,7 +341,24 @@ export class AsociacionDetalleFormComponent implements OnInit {
         });
     }
   }
-
+  UpdatedRouter(nit: any) {
+    if (nit) {
+      let object: any = {};
+      (object.nit = nit),
+        (object.action = 'update'),
+        (object.formState = 'enable'),
+        this.router
+          .navigate(['/dashboard/asociacion/detalle', object])
+          .then((value: any) => {
+            if (value) {
+              this.loadNgOnlnit();
+            }
+            this.loading1 = false;
+          });
+    } else {
+      this.loading1 = false;
+    }
+  }
   fileChange(event: any) {
     this.file = event.target.files[0];
   }
@@ -381,10 +366,27 @@ export class AsociacionDetalleFormComponent implements OnInit {
   fileRutChange(event: any) {
     this.fileRut = event.target.files[0];
   }
-  loadTiposAsociaciones() {
+
+  loadTiposAsociaciones(action: any) {
     this.asociacionesService.tiposAsociacion().subscribe(
       (response) => {
+        for (let index = 0; index < response.data.length; index++) {
+          response.data[index].status = 1;
+        }
         this.tiposAsociaciones = response.data;
+        if (action == 'update') {
+          if (
+            this.asociacion.count_pescadores != 0 &&
+            this.asociacion.count_piscicultores != 0
+          ) {
+            this.tiposAsociaciones[0].status = 0;
+            this.tiposAsociaciones[1].status = 0;
+          } else if (this.asociacion.count_pescadores != 0) {
+            this.tiposAsociaciones[0].status = 0;
+          } else if (this.asociacion.count_piscicultores != 0) {
+            this.tiposAsociaciones[1].status = 0;
+          }
+        }
       },
       (err) => {
         console.log(err);
@@ -430,14 +432,23 @@ export class AsociacionDetalleFormComponent implements OnInit {
   }
 
   verMiembros() {
+    let datosAsociacion: any = {
+      nit: this.asociacion.nit,
+      tipo_asociacion: this.asociacion.id_tipo_asociacion_fk,
+    };
     this.asociacionesService.showAscociacionMiembrosModal(
-      this.datosAsociacion,
+      datosAsociacion,
       'Miembros'
     );
   }
   agregarMiembro() {
+    let datosAsociacion: any = {
+      nit: this.asociacion.nit,
+      tipo_asociacion: this.asociacion.id_tipo_asociacion_fk,
+    };
+
     this.asociacionesService.showSolicitudesModal(
-      this.datosAsociacion,
+      datosAsociacion,
       'Agregar miembro'
     );
   }
@@ -448,45 +459,34 @@ export class AsociacionDetalleFormComponent implements OnInit {
         this.form.get(controlFormName)?.touched)
     );
   }
-  prepareForm(action: string, asociacion?: any) {
-    this.modalMode = action;
+  prepareForm() {
+    this.modalMode = 'update';
     this.form.reset();
-    if (action == 'update') {
-      this.idDpto?.setValue(asociacion.id_departamento);
-      this.idMunic?.setValue(asociacion.id_municipio);
-      this.nit?.setValue(asociacion.nit);
-      this.direccion?.setValue(asociacion.direccion);
-      this.infoAdicionalDir?.setValue(
-        asociacion.informacion_adicional_direccion
-      );
-      this.nombre?.setValue(asociacion.nombre);
-      this.isLegalConstituida?.setValue(asociacion.legalconstituida);
-      this.telefono?.setValue(asociacion.telefono);
-      let fechaRenv: string = '';
-      if (asociacion?.fecha_renovacion_camarac) {
-        fechaRenv = asociacion?.fecha_renovacion_camarac as string;
-        fechaRenv = fechaRenv.split('T')[0];
-      }
-      this.fechRenvCamc?.setValue(formatDate(fechaRenv, 'yyyy-MM-dd', 'es'));
-      //this.fotoCamc?.setValue(asociacion.foto_camarac);
-      this.idTipoAsoc?.setValue(asociacion.id_tipo_asociacion_fk);
-      this.corregVereda?.setValue(asociacion.corregimiento_vereda);
-      this.direccion?.setValue(asociacion.direccion);
-      this.nit?.disable();
-      if (this.formState == 'disable') {
-        this.form.disable();
-      }
+    this.idDpto?.setValue(this.asociacion.id_departamento);
+    this.idMunic?.setValue(this.asociacion.id_municipio);
+    this.nit?.setValue(this.asociacion.nit);
+    this.direccion?.setValue(this.asociacion.direccion);
+    this.infoAdicionalDir?.setValue(
+      this.asociacion.informacion_adicional_direccion
+    );
+    this.nombre?.setValue(this.asociacion.nombre);
+    this.telefono?.setValue(this.asociacion.telefono);
+    let fechaRenv: string = '';
+    if (this.asociacion?.fecha_renovacion_camarac) {
+      fechaRenv = this.asociacion?.fecha_renovacion_camarac as string;
+      fechaRenv = fechaRenv.split('T')[0];
+    }
+    this.fechRenvCamc?.setValue(formatDate(fechaRenv, 'yyyy-MM-dd', 'es'));
+    this.idTipoAsoc?.setValue(this.asociacion.id_tipo_asociacion_fk);
+    this.corregVereda?.setValue(this.asociacion.corregimiento_vereda);
+    this.direccion?.setValue(this.asociacion.direccion);
+    this.nit?.disable();
+    if (this.formState == 'disable') {
+      this.form.disable();
     }
   }
   goBack() {
     this.location.back();
-  }
-  onChangeLegalConst() {
-    if (this.isLegalConstituida?.value == '1') {
-      this.fotoCamc?.enable();
-    } else {
-      this.fotoCamc?.disable();
-    }
   }
   download() {
     try {
@@ -580,7 +580,49 @@ export class AsociacionDetalleFormComponent implements OnInit {
       console.log(err);
     }
   }
+  eliminarAsociacion() {
+    this.appModalService
+      .confirm(
+        'Eliminar asociación',
+        'Esta seguro que desea eliminar esta asociación',
+        'Si',
+        'No',
+        this.asociacion.nombre
+      )
+      .then((result) => {
+        if (result == true) {
+          this.asociacionesService.delete(this.asociacion.nit).subscribe(
+            (response: any) => {
+              this.goBack();
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
+        }
+      })
+      .catch((result) => {});
+  }
 
+  onAsociacionDetalles(nit: any, action: any) {
+    this.asociacionesService.getAsociacionDetalle(nit).subscribe((response) => {
+      this.asociacion = response.data[0];
+      for (let index = 0; index < this.tiposAsociaciones.length; index++) {
+        this.tiposAsociaciones[index].status = 1;
+      }
+      if (
+        this.asociacion.count_pescadores != 0 &&
+        this.asociacion.count_piscicultores != 0
+      ) {
+        this.tiposAsociaciones[0].status = 0;
+        this.tiposAsociaciones[1].status = 0;
+      } else if (this.asociacion.count_pescadores != 0) {
+        this.tiposAsociaciones[0].status = 0;
+      } else if (this.asociacion.count_piscicultores != 0) {
+        this.tiposAsociaciones[1].status = 0;
+      }
+    });
+  }
   get idDpto() {
     return this.form.get('id_departamento');
   }
@@ -599,11 +641,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
   get nombre() {
     return this.form.get('nombre');
   }
-
-  get isLegalConstituida() {
-    return this.form.get('legalconstituida');
-  }
-
   get fechRenvCamc() {
     return this.form.get('fecha_renovacion_camarac');
   }

@@ -32,7 +32,7 @@ import { NgChartsModule } from 'ng2-charts';
     VehiculosComponent,
     ConsumosComponent,
   ],
-  exports: [GranjasComponent],
+  exports: [GranjasComponent, AsociacionesComponent],
   imports: [
     CommonModule,
     FormsModule,

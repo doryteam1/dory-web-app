@@ -28,7 +28,12 @@
     </div>
     <div class="card__rating-container">
       <div class="card__rating-container_info">
-        <div><span class="card__rating">Área: </span>{{granja?.area}} m²</div>
+        <div>
+          <span class="card__rating">Municipio: </span>{{granja?.municipio}}
+        </div>
+        <div>
+          <span class="card__rating">Área: </span>{{granja?.area}} m²
+        </div>
         <div class="card__rating__detail" (click)="showResenas()">
           <span class="card__rating">Reseñas:</span> {{resena}}
         </div>

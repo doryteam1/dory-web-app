@@ -39,7 +39,6 @@ export class CardAsociacionComponent implements OnInit {
   }
 
   detalle(asociacion: any) {
-    console.log(asociacion);
     return this.onDetalle.emit(asociacion);
   }
 
@@ -50,7 +49,6 @@ export class CardAsociacionComponent implements OnInit {
     return this.onSalirAsocia.emit(asociacion);
   }
   goDetalleRepresentante(asociacion: any) {
-    console.log(asociacion);
     return this.onDetalleRepresentante.emit(asociacion);
   }
 }

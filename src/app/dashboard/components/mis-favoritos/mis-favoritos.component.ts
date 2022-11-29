@@ -33,26 +33,26 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
       (response) => {
         this.misfavoritoscargados = true;
         this.misGranjaFavoritas = response.data;
-
         if (this.misGranjaFavoritas.length < 1) {
           this.showNotFound = true;
         }
-        console.log(this.misGranjaFavoritas);
       },
-      (err) => {}
+      (err) => {
+        this.showNotFound = true;
+        console.log(err)
+      }
     );
     this.mediaQuery2 = this.mediaQueryService
       .mediaQuery('min-width: 1100px')
-      .subscribe(
-        (matches) => {
-               if (matches && this.modalGogleMapOpen) {
-                 this.appModalService.CloseGoogleMapGeneralModal();
-               } else {
-                 this.appModalService.CloseGoogleMapModal();
-               }
+      .subscribe((matches) => {
+        if (matches && this.modalGogleMapOpen) {
+          this.appModalService.CloseGoogleMapGeneralModal();
+        } else {
+          this.appModalService.CloseGoogleMapModal();
         }
-      );
+      });
   }
+
   ngOnDestroy(): void {
     this.mediaQuery2.unsubscribe();
   }
@@ -89,7 +89,7 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
       .catch((result) => {});
   }
 
-  navigate(granja:any) {
+  navigate(granja: any) {
     const url = this.router.serializeUrl(
       this.router.createUrlTree([
         `/granjas/municipio/detalle/${granja?.id_granja}`,
@@ -129,5 +129,4 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
-
 }

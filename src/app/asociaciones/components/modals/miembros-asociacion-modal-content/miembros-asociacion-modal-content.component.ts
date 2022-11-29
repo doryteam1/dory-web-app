@@ -1,3 +1,4 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -21,8 +22,8 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
   activeclass1: boolean = false;
   activeclass2: boolean = false;
   showNotFound1: boolean = false;
-  showError1: boolean = false;
   showNotFound2: boolean = false;
+  showError1: boolean = false;
   showError2: boolean = false;
   errorMessage1 = '';
   errorMessage2 = '';
@@ -32,10 +33,31 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
     private piscicultoresService: PiscicultoresService,
     private asociacionService: AsociacionesService,
     private appModalService: AppModalService,
-    private router: Router
+    private router: Router,
+    public platformLocation: PlatformLocation
   ) {}
 
   ngOnInit(): void {
+    console.log(this.datos);
+    this.preCarga();
+  }
+  reseptVariables() {
+    console.log('rse');
+    this.piscicultores = [];
+    this.pescadores = [];
+    this.piscicultoresFiltered = [];
+    this.pescadoresFiltered = [];
+    this.activeclass1 = false;
+    this.activeclass2 = false;
+    this.showNotFound1 = false;
+    this.showNotFound2 = false;
+    this.showError1 = false;
+    this.showError2 = false;
+    this.errorMessage1 = '';
+    this.errorMessage2 = '';
+  }
+  preCarga() {
+    this.reseptVariables();
     this.activeTabClick(this.datos.tipo_asociacion);
     this.pescadoresService.getPescadoresAsociacion(this.datos.nit).subscribe(
       (response: any) => {
@@ -45,8 +67,6 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
           this.showError1 = false;
           this.showNotFound1 = false;
         } else {
-          console.log(this.showNotFound1);
-          console.log(this.showError1);
           this.showNotFound1 = true;
           this.showError1 = false;
         }
@@ -73,8 +93,6 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
             this.showError2 = false;
             this.showNotFound2 = false;
           } else {
-            console.log('sindata pisci');
-            console.log(this.showError1);
             this.showNotFound2 = true;
             this.showError2 = false;
           }
@@ -92,8 +110,10 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
         }
       );
   }
-
   anularInvitacion(usuario: any) {
+   this.platformLocation.onPopState(() => {
+     this.appModalService.closeModal();
+   });
     this.appModalService
       .confirm(
         'Eliminar miembro',
@@ -107,22 +127,7 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
             .eliminarSolicitud(usuario.id_solicitud)
             .subscribe(
               (response) => {
-                console.log(response);
-                if (usuario.tipo_usuario == 'Piscicultor') {
-                  let index = this.piscicultores.findIndex((element: any) => {
-                    return element.id == usuario.id;
-                  });
-                  if (index != -1) {
-                    this.piscicultores.splice(index, 1);
-                  }
-                } else if (usuario.tipo_usuario === 'Pescador') {
-                  let index = this.pescadores.findIndex((element: any) => {
-                    return element.id == usuario.id;
-                  });
-                  if (index != -1) {
-                    this.pescadores.splice(index, 1);
-                  }
-                }
+                this.preCarga();
               },
               (err) => {
                 console.log(err);
@@ -132,34 +137,28 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
       })
       .catch((result) => {});
   }
-  datosContactoPescador(pescador: any) {
+  datosContacto(datos: any, userType: string) {
+      this.platformLocation.onPopState(() => {
+        this.appModalService.closeModal();
+      });
     let object: any = {
-      nombreUser: pescador.nombre,
-      tipoUser: 'Pescador',
-      foto: pescador.foto,
-      correoUser: pescador.email,
-      telefonoUser: pescador.telefono,
-      rutaUserDetalle: `/pescadores/detalle/${pescador.id}`,
+      nombreUser: datos.nombre,
+      tipoUser: userType,
+      foto: datos.foto,
+      correoUser: datos.email,
+      telefonoUser: datos.telefono,
     };
+    if (userType == 'Pescador') {
+      object.rutaUserDetalle = `/pescadores/detalle/${datos.id}`;
+    } else if (userType == 'Piscicultor') {
+      object.rutaUserDetalle = `/piscicultores/detalle/${datos.id}`;
+    }
     this.appModalService
       .modalContactCardComponent(object)
       .then((result) => {})
       .catch((result) => {});
   }
-  datosContactoPiscicultor(piscicultor: any) {
-    let object: any = {
-      nombreUser: piscicultor.nombre,
-      tipoUser: 'Piscicultor',
-      foto: piscicultor.foto,
-      correoUser: piscicultor.email,
-      telefonoUser: piscicultor.telefono,
-      rutaUserDetalle: `/piscicultores/detalle/${piscicultor.id}`,
-    };
-    this.appModalService
-      .modalContactCardComponent(object)
-      .then((result) => {})
-      .catch((result) => {});
-  }
+
   onSearch(text: string) {
     if (text == '') {
       this.piscicultoresFiltered = this.piscicultores;
@@ -182,26 +181,26 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
 
   navigateDetalle(user: any) {
     let url = '';
-    if (this.datos.tipo_asociacion == 'Piscicultores') {
+    if (this.datos.tipo_asociacion == 1) {
       url = this.router.serializeUrl(
         this.router.createUrlTree([`/piscicultores/detalle/${user.id}`])
       );
       window.open(url, '_blank');
-    } else if (this.datos.tipo_asociacion == 'Pescadores') {
+    } else if (this.datos.tipo_asociacion == 2) {
       url = this.router.serializeUrl(
         this.router.createUrlTree([`/pescadores/detalle/${user.id}`])
       );
       window.open(url, '_blank');
     }
   }
-  activeTabClick(selectedTab?: string) {
-    if (selectedTab == 'Piscicultores') {
+  activeTabClick(selectedTab?: any) {
+    if (selectedTab == 1) {
       this.activeclass1 = true;
       this.activeclass2 = false;
-    } else if (selectedTab == 'Pescadores') {
+    } else if (selectedTab == 2) {
       this.activeclass1 = false;
       this.activeclass2 = true;
-    } else if (selectedTab == 'Mixta') {
+    } else if (selectedTab == 3) {
       this.activeclass1 = true;
       this.activeclass2 = false;
     }

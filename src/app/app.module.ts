@@ -52,7 +52,7 @@ const customConfig: ShareButtonsConfig = {
     PoliticaComponent,
     CondicionesComponent,
     WelcomeComponent,
-    VerifyAccountComponent,
+    VerifyAccountComponent
   ],
   imports: [
     BrowserModule,

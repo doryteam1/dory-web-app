@@ -1,10 +1,11 @@
 
-import { Component,OnInit } from '@angular/core';
+import { Component,EventEmitter,Input,OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { MODO_FILTRO_DATOS_VARIOS } from 'src/app/global/constants';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { PlacesService } from 'src/app/services/places.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { BuscarPor } from 'src/models/buscarPor.model';
@@ -17,6 +18,9 @@ import { Filtro, MetaFiltro } from 'src/models/filtro.model';
   styleUrls: ['./asociaciones.component.scss'],
 })
 export class AsociacionesComponent implements OnInit {
+  @Input() cardAsocia: boolean = true;
+  @Input() botonFavori: boolean = true;
+  @Output() onInvitarAnular: EventEmitter<any> = new EventEmitter();
   asociacionesFiltered!: any[];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
@@ -68,7 +72,8 @@ export class AsociacionesComponent implements OnInit {
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
     private places: PlacesService,
-    public mediaQueryService: MediaQueryService
+    public mediaQueryService: MediaQueryService,
+    public userService: UsuarioService
   ) {}
 
   ngOnInit(): void {
@@ -81,9 +86,25 @@ export class AsociacionesComponent implements OnInit {
     /*Todas las asociaones que existen*/
     this.asociacionService.getAsociacionesTodas().subscribe((response) => {
       this.asociaciones = response.data;
-      this.asociaciones = this.asociaciones.filter((asociacion) => {
-        return asociacion.id_propietario !== this.authUserId;
-      });
+      if (this.authRol=='Piscicultor') {
+        this.asociaciones = this.asociaciones.filter((asociacion) => {
+          return (
+            asociacion.tipo_asociacion == 'Piscicultores' ||
+            (asociacion.tipo_asociacion == 'Mixta' &&
+              asociacion.id_propietario !== this.authUserId)
+          );
+        });
+
+      } else if (this.authRol == 'Pescador') {
+         this.asociaciones = this.asociaciones.filter((asociacion) => {
+        return (
+          asociacion.tipo_asociacion == 'Pescadores' ||
+          (asociacion.tipo_asociacion == 'Mixta' &&
+            asociacion.id_propietario !== this.authUserId)
+        );
+
+         });
+      }
       this.asociacionesFiltered = this.asociaciones.slice();
       if (this.asociacionesFiltered.length < 1) {
         this.showNotFound = true;
@@ -223,5 +244,8 @@ export class AsociacionesComponent implements OnInit {
         '/piscicultores/municipio/detalle/' + asociacion.id_propietario
       );
     }
+  }
+  invitarAnular(asociacion: any) {
+    this.onInvitarAnular.emit(asociacion);
   }
 }

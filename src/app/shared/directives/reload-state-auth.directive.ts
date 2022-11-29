@@ -1,5 +1,4 @@
 import { Directive, TemplateRef, ViewContainerRef } from '@angular/core';
-import { WindowRefService } from 'ngx-guided-tour';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Directive({
@@ -11,7 +10,7 @@ export class ReloadStateAuthDirective {
     private templateRef: TemplateRef<any>,
     private viewContainerRef:ViewContainerRef,
     private userService:UsuarioService
-  ) { 
+  ) {
     if(this.userService.isAuthenticated()){
       this.viewContainerRef.clear();
       this.viewContainerRef.createEmbeddedView( this.templateRef );

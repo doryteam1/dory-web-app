@@ -26,6 +26,9 @@ interface atributos {
 export class AppModalService {
   constructor(private modalService: NgbModal) {}
   /* modal confirmar click */
+  public closeModal(): void {
+    this.modalService.dismissAll();
+  }
   public confirm(
     title: string,
     message: string,
@@ -67,15 +70,13 @@ export class AppModalService {
   public closeModalInsertLink(): void {
     this.modalService.dismissAll();
   }
-  public modalInsertLink(
-    url:string='http'
-  ): Promise<boolean> {
+  public modalInsertLink(url: string = 'http'): Promise<boolean> {
     const modalRef = this.modalService.open(ModalInsertLinkComponent, {
       size: 'lg',
       centered: true,
       backdropClass: 'modal-AlertSignu-BackdropClass',
     });
-     modalRef.componentInstance.url = url;
+    modalRef.componentInstance.url = url;
     return modalRef.result;
   }
   /* modal shared */
