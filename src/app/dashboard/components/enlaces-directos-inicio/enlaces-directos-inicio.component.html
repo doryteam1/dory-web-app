@@ -15,18 +15,7 @@
       <img [src]="item.url_imagen" width="100%" height="100%" alt="Imagen{i}">
     </div>
   </div>
-<!--   <app-card-slider-enlaces-directos-inicio
-  [editaAndEliminar]="true"
-   [dato]="{
-                titulo:enlace?.titulo,
-                imagen:enlace?.url_imagen,
-                urlEnlace:enlace.url_enlace
-              }"
-    (onUpdateCard)="editarData(enlace)"
-    (onDeleteCard)="deleteData(enlace,i )"
-    *ngFor="let enlace of enlaceRapido; let i=index">
-  </app-card-slider-enlaces-directos-inicio> -->
+
 </div>
 <app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay enlaces Rapidos asignados'"></app-not-found>
-<!-- <app-basic-floating-btn [tooltip]="'Crear un enlace rapido'" [agregar]="true" (click)="openFormCrear()">
-</app-basic-floating-btn> -->
+

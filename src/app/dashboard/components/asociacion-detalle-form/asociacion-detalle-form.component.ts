@@ -45,6 +45,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
   hasDocument: boolean = false;
   verifyTypeAssociation: any;
   recargarComponen: number = 0;
+  nitAsociacion: any;
   constructor(
     private asociacionesService: AsociacionesService,
     private storage: FirebaseStorageService,
@@ -56,30 +57,28 @@ export class AsociacionDetalleFormComponent implements OnInit {
     private router: Router,
     private appModalService: AppModalService,
     public platformLocation: PlatformLocation
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadNgOnlnit();
-      this.platformLocation.onPopState((even: any) => {
-        console.log(even)
-          this.appModalService.closeModal();
-        /* this.router.navigate(['/dashboard/mis-asociaciones']); */
-      });
+    this.platformLocation.onPopState((even: any) => {
+      this.appModalService.closeModal();
+      /* this.router.navigate(['/dashboard/mis-asociaciones']); */
+    });
   }
 
   loadNgOnlnit() {
     registerLocaleData(es);
     let action = this.ar.snapshot.paramMap.get('action');
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
-    let nit: any = this.ar.snapshot.paramMap.get('nit');
     if (action == 'create') {
       this.modalMode = action;
       this.form.reset();
       this.loadDptos();
       this.loadTiposAsociaciones('create');
     } else {
+      let nit: any = this.ar.snapshot.paramMap.get('nit');
+      this.nitAsociacion = nit;
       this.asociacionesService
         .getAsociacionDetalle(nit)
         .subscribe((response) => {
@@ -304,7 +303,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
       let fileName =
         'rut-asociacion-' + this.form.getRawValue().nit + '.' + ext;
       let filePath = basePath + fileName;
-
       this.storage
         .cloudStorageTask(filePath, this.fileRut)
         .percentageChanges()
@@ -436,21 +434,28 @@ export class AsociacionDetalleFormComponent implements OnInit {
       nit: this.asociacion.nit,
       tipo_asociacion: this.asociacion.id_tipo_asociacion_fk,
     };
-    this.asociacionesService.showAscociacionMiembrosModal(
-      datosAsociacion,
-      'Miembros'
-    );
+    this.asociacionesService
+      .showAscociacionMiembrosModal(datosAsociacion, 'Miembros')
+      .then((result) => {
+        this.onAsociacionDetalles(this.nitAsociacion, 'update');
+      })
+      .catch((result) => {
+        this.onAsociacionDetalles(this.nitAsociacion, 'update');
+      });
   }
   agregarMiembro() {
     let datosAsociacion: any = {
       nit: this.asociacion.nit,
       tipo_asociacion: this.asociacion.id_tipo_asociacion_fk,
     };
-
-    this.asociacionesService.showSolicitudesModal(
-      datosAsociacion,
-      'Agregar miembro'
-    );
+    this.asociacionesService
+      .showSolicitudesModal(datosAsociacion, 'Agregar miembro')
+      .then((result) => {
+        this.onAsociacionDetalles(this.nitAsociacion, 'update');
+      })
+      .catch((result) => {
+        this.onAsociacionDetalles(this.nitAsociacion, 'update');
+      });
   }
   invalid(controlFormName: string) {
     return (

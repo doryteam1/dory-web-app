@@ -43,16 +43,15 @@ export class SolicitudesModalContentComponent implements OnInit {
     this.piscicultoresService
       .getPiscicultoresEstadoSolicitud(this.datos.nit)
       .subscribe((response) => {
-        console.log(response);
         this.piscicultores = response.data;
         this.piscicultoresFiltered = this.piscicultores;
       });
   }
 
   invitarAnular(usuario: any) {
-      this.platformLocation.onPopState(() => {
-        this.appModalService.closeModal();
-      });
+    this.platformLocation.onPopState(() => {
+      this.appModalService.closeModal();
+    });
     if (usuario.estado_solicitud == 'Aceptada') {
       this.appModalService
         .confirm(
@@ -71,7 +70,6 @@ export class SolicitudesModalContentComponent implements OnInit {
               .eliminarSolicitud(usuario.id_solicitud)
               .subscribe(
                 (response) => {
-                  console.log(response);
                 },
                 (err) => {
                   usuario.estado_solicitud = estado;
@@ -89,7 +87,6 @@ export class SolicitudesModalContentComponent implements OnInit {
       usuario.solicitud_enviada_por = null;
       this.asociacionService.eliminarSolicitud(usuario.id_solicitud).subscribe(
         (response) => {
-          console.log(response);
         },
         (err) => {
           usuario.estado_solicitud = estado;
@@ -123,9 +120,9 @@ export class SolicitudesModalContentComponent implements OnInit {
   }
 
   datosContacto(datos: any, userType: string) {
-     this.platformLocation.onPopState(() => {
-       this.appModalService.closeModal();
-     });
+    this.platformLocation.onPopState(() => {
+      this.appModalService.closeModal();
+    });
     let object: any = {
       nombreUser: datos.nombres,
       tipoUser: userType,
@@ -189,5 +186,9 @@ export class SolicitudesModalContentComponent implements OnInit {
       this.activeclass1 = true;
       this.activeclass2 = false;
     }
+  }
+
+  public dismiss() {
+    this.activeModal.dismiss();
   }
 }

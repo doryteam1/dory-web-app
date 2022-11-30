@@ -118,7 +118,7 @@
     </div>
   </div>
   <!-- granjas y asociaciones -->
-  <div class="mynavtabs" *ngIf="piscicultorgranjas?.length>0 || piscicultorasociaciones?.length>0">
+  <div class="mynavtabs" *ngIf="piscicultorgranjas?.length>0">
     <ul class="nav nav-tabs">
       <li class="nav-item"  *ngIf="piscicultorgranjas?.length>0">
         <a class="nav-link nav-link--color active mynav-link"  aria-current="page">
@@ -129,7 +129,7 @@
       </li>
     </ul>
   </div>
-  <div class="container_mytarget" *ngIf="piscicultorgranjas?.length>0 || piscicultorasociaciones?.length>0 ">
+  <div class="container_mytarget" *ngIf="piscicultorgranjas?.length>0">
     <div class="mytarget" >
       <div class="container-card"
         [ngClass]="{'mychangeitemheight':piscicultorDetalleGranjaschangeItem,'search-container--flex':piscicultorDetalleGranjasshowNotFound}" >

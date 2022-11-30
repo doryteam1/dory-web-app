@@ -1,6 +1,6 @@
 <div class="modal-header">
     <h4 class="modal-title">{{title}}</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+    <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
   </div>
   <div class="modal-body">
     <div class="buscador-container">
@@ -89,6 +89,6 @@
   </div>
   <div class="modal-footer">
     <span class="danger-message">{{error}}</span>
-    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Cerrar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="dismiss()">Cerrar</button>
   </div>
 

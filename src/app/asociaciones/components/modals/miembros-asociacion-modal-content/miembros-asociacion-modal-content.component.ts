@@ -38,11 +38,9 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.datos);
     this.preCarga();
   }
   reseptVariables() {
-    console.log('rse');
     this.piscicultores = [];
     this.pescadores = [];
     this.piscicultoresFiltered = [];
@@ -111,15 +109,15 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
       );
   }
   anularInvitacion(usuario: any) {
-   this.platformLocation.onPopState(() => {
-     this.appModalService.closeModal();
-   });
+    this.platformLocation.onPopState(() => {
+      this.appModalService.closeModal();
+    });
     this.appModalService
       .confirm(
         'Eliminar miembro',
         'Desea eliminar este miembro de esta asociación',
-        'Eliminar',
-        'Cancelar'
+        'Si',
+        'No'
       )
       .then((result) => {
         if (result == true) {
@@ -138,9 +136,9 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
       .catch((result) => {});
   }
   datosContacto(datos: any, userType: string) {
-      this.platformLocation.onPopState(() => {
-        this.appModalService.closeModal();
-      });
+    this.platformLocation.onPopState(() => {
+      this.appModalService.closeModal();
+    });
     let object: any = {
       nombreUser: datos.nombre,
       tipoUser: userType,
@@ -204,5 +202,8 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
       this.activeclass1 = true;
       this.activeclass2 = false;
     }
+  }
+  public dismiss() {
+    this.activeModal.dismiss();
   }
 }
