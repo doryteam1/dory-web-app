@@ -32,7 +32,7 @@
         *ngFor="let granja of misGranjaFavoritas; let i = index"
           [granja]="granja"
           [favorita]="granja?.favorita"
-          [resena]="granja?.cantidad_resenas"
+          [resena]="granja?.count_resenas"
           [granjaMunici]="true"
           [index]="i"
           (onDetalle)="navigate(granja)"
