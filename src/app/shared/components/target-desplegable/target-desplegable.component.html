@@ -1,0 +1,61 @@
+<!--  -->
+<div class="contact-area">
+  <div class="contact">
+    <main>
+      <section>
+        <div class="content">
+          <img [src]="titleLogo" alt="Profile Image">
+
+          <aside>
+            <h1>{{title}}</h1>
+            <p>{{contentTitle}}</p>
+          </aside>
+
+          <button (click)="openData()" [ngClass]="{active: classActive}">
+            <span> {{titleButton}}</span>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+              <g class="nc-icon-wrapper" fill="#444444">
+                <path d="M14.83 30.83L24 21.66l9.17 9.17L36 28 24 16 12 28z"></path>
+              </g>
+            </svg>
+          </button>
+        </div>
+
+        <div class="titlexc" [ngClass]="{active: classActive}">
+          <p> <!-- {{titleButton}} --> Manuales</p>
+        </div>
+      </section>
+
+
+    </main>
+
+    <nav [ngClass]="{active: classActive}">
+      <a href="data.url" class="gmail " *ngFor="let data of dropdownData">
+        <div class="content__icon">
+          <div class="icon">
+            <img [src]="data.icon" >
+          </div>
+          <div class="content">
+            <h1>{{data.title}}</h1>
+  <!--           <span>Riccavallo@gmail.com</span> -->
+          </div>
+        </div>
+          <svg  class="arrow" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_1327_2)">
+              <path
+                d="M5.72812 3.80508L17.1906 15.2676L5.72812 26.7301L9.26562 30.2676L24.2656 15.2676L9.26562 0.267578L5.72812 3.80508Z"
+                fill="#444444" class="nc-icon-wrapper" />
+            </g>
+            <defs>
+              <clipPath id="clip0_1327_2">
+                <rect width="30" height="30" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+
+      </a>
+    </nav>
+  </div>
+</div>
+

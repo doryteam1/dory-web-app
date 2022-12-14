@@ -7,6 +7,7 @@ import { BasicMessageComponent } from './components/basic-message/basic-message.
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 
 
+
 const routes: Routes = [
   {
     path: '',
@@ -155,8 +156,18 @@ const routes: Routes = [
     path: 'manual',
     loadChildren: () =>
       import('./manual/manual.module').then(
-        (m) => m.ManualModule
+        (m) => m.ManualModule),
+  },
+  {
+    path: 'download-resource-dory',
+    loadChildren: () =>
+      import('./download-resource-dory/download-resource-dory.module').then(
+        (m) => m.DownloadResourceDoryModule
       ),
+  },
+  {
+    path: 'testchat',
+    loadChildren: () => import('./chat/chat.module').then((m) => m.ChatModule),
   },
   {
     path: 'verify-account',
@@ -178,6 +189,10 @@ const routes: Routes = [
     path: 'basic-message',
     component: BasicMessageComponent,
   },
+  /*   {
+    path: 'resource-dory',
+    component: DownloadResourceDoryComponent,
+  }, */
 ];
 
 @NgModule({
