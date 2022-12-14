@@ -1,0 +1,34 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 30px;
+}
+
+.container__menu{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin-right: 20px;
+    height:70vh;
+    width: 200px;
+    min-width: 200px;
+    overflow-y: scroll;
+    font-size: 20px;
+}
+
+.container__item{
+    cursor:pointer;
+    font-size: .875em;
+}
+
+.container__content{
+}
+
+.container__item-title{
+    font-weight: 600;
+    margin-bottom: 5px;
+}

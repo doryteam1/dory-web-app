@@ -152,10 +152,10 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'testchat',
+    path: 'manual',
     loadChildren: () =>
-      import('./chat/chat.module').then(
-        (m) => m.ChatModule
+      import('./manual/manual.module').then(
+        (m) => m.ManualModule
       ),
   },
   {
