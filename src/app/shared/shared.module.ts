@@ -71,6 +71,7 @@ import { CardGranjaSimpleComponent } from './components/card-granjas/card-granja
 import { ModalAlertSignupComponent } from './components/modal-alert-signup/modal-alert-signup.component';
 import { SimpleCheckboxSwitchComponent } from './components/simple-checkbox-switch/simple-checkbox-switch.component';
 import { ModalInsertLinkComponent } from './components/modal-insert-link/modal-insert-link.component';
+import { TargetDesplegableComponent } from './components/target-desplegable/target-desplegable.component';
 
 
 @NgModule({
@@ -127,6 +128,7 @@ import { ModalInsertLinkComponent } from './components/modal-insert-link/modal-i
     ModalAlertSignupComponent,
     SimpleCheckboxSwitchComponent,
     ModalInsertLinkComponent,
+    TargetDesplegableComponent,
   ],
   imports: [
     CommonModule,
@@ -193,6 +195,7 @@ import { ModalInsertLinkComponent } from './components/modal-insert-link/modal-i
     CardGranjaSimpleComponent,
     SimpleCheckboxSwitchComponent,
     ModalInsertLinkComponent,
+    TargetDesplegableComponent,
   ],
 
   providers: [

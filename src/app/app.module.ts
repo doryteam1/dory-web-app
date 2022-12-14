@@ -28,6 +28,7 @@ import { NoSanitizePipe } from './pipes/noSanitize.pipe';
 
 
 
+
 const customConfig: ShareButtonsConfig = {
   include: ['whatsapp', 'email', 'copy'],
   exclude: [],
@@ -52,7 +53,7 @@ const customConfig: ShareButtonsConfig = {
     PoliticaComponent,
     CondicionesComponent,
     WelcomeComponent,
-    VerifyAccountComponent
+    VerifyAccountComponent,
   ],
   imports: [
     BrowserModule,

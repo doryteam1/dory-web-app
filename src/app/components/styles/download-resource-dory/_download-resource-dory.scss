@@ -1,0 +1,221 @@
+.container-proyecto {
+    text-align: center;
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+
+    section {
+        background-color: white;
+        border-radius: 10px;
+        padding: 10px;
+        max-width: 100%;
+        box-shadow: 0 1px 15px 5px var(--shadow-2);
+    }
+}
+
+.container-section {
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.title {
+    margin: 16px 16px;
+    margin-bottom: 30px;
+    color: var(--azul1);
+    font-size: 45px;
+}
+
+.description {
+    margin: 0px 16px 16px 16px;
+    color: var(--gris-oscuro);
+    text-align: justify;
+
+    b {
+        color: var(--gris-oscuro2)
+    }
+}
+
+.container-fluid--edit {
+    padding-bottom: 30px
+}
+
+.presaltoLinea {
+    white-space: pre-wrap;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+    color: var(--gris-oscuro);
+}
+
+.row__download {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.text-xs-left {
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: left !important;
+}
+
+.btn-lg {
+    border-radius: 50px;
+    padding: 13px 27px;
+    font-size: 20px;
+}
+
+.btn-lg .bi {
+    position: relative;
+    top: 3px;
+    margin-right: 16px;
+    font-size: 40px;
+}
+
+
+.btn-primary {
+    display: flex;
+    height: 100%;
+    width: fit-content;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    box-shadow: 0 1px 15px 1px var(--shadow-2);
+    color: var(--gris-oscuro2);
+    background: #f8f8f8;
+}
+
+
+.btn-primary:hover {
+    transform: translate(0px, -3px);
+}
+
+.btn {
+    transition: .5s;
+}
+
+.btn-primary:first-child:active,
+:not(.btn-check)+.btn-primary:active {
+    border: none;
+    color: var(--gris-oscuro2);
+    background: #f8f8f8;
+}
+
+.caja-download {
+    width: 255px;
+    height: 78px;
+}
+.row__manuales {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    width: 100%;
+    gap: 80px;
+}
+
+.icon-download {
+    width: 40px;
+    height: 50px;
+}
+
+.row__manuales--install,
+.row__manuales--uso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+}
+// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Extra large devices (large desktops, 1200px and up)
+@media (max-width: 1200px) {
+    .title {
+        font-size: 2rem !important;
+    }
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (max-width: 992px) {
+    .title {
+        font-size: 1.6rem !important;
+    }
+
+    .btn-primary {
+        font-size: 1rem !important;
+    }
+
+    .caja-download {
+        width: 230px;
+        height: 70px;
+    }
+
+}
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.4rem !important;
+    }
+
+    .imgpc {
+        width: 150px !important;
+    }
+
+    .imgmovil {
+        width: 80px !important;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 700px) {
+.row__manuales{
+    flex-direction: column;
+    gap: 50px;
+}
+.row__manuales--install,
+.row__manuales--uso {
+    width: 100%;
+}
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+    .title {
+        font-size: 1.2rem !important;
+    }
+
+    .btn-primary {
+        font-size: 0.8rem !important;
+    }
+
+    .caja-download {
+        width: 180px;
+        height: 60px;
+    }
+
+    .btn-lg .bi {
+        margin-right: 3px !important;
+        font-size: 25px !important;
+    }
+
+    .imgpc {
+        width: 100px !important;
+    }
+
+    .imgmovil {
+        width: 75px !important;
+    }
+
+    .container-proyecto {
+        padding: 10px;
+    }
+}
