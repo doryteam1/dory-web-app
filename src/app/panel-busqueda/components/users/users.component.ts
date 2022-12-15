@@ -92,10 +92,8 @@ export class UsersComponent implements OnInit {
   }
   getUsers(): Observable<any> | null {
     if (this.userType == 'pescadores') {
-      console.log('entro por pescadores');
       return this.pescadoresService.getPescadores();
     } else if (this.userType == 'piscicultores') {
-      console.log('entro por piscicultores');
       return this.piscicultoresService.getPiscicultores();
     } else if (this.userType == 'investigadores') {
       return this.investigadoresServices.getInvestigadoresAll();
@@ -104,6 +102,8 @@ export class UsersComponent implements OnInit {
     } else if (this.userType == 'transportadores') {
       return this.transportadoresService.getTransportadoresAll();
     } else if (this.userType == 'comerciantes') {
+      return this.negociosService.getComerciantesAll();
+    } else if (this.userType == 'consumidores') {
       return this.negociosService.getComerciantesAll();
     }
     return null;

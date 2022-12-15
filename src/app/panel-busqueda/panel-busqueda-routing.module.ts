@@ -20,6 +20,7 @@ const routes: Routes = [
       {path:'asociaciones',component:AsociacionesComponent},
       {path:'pescadores',component:UsersComponent},
       {path:'piscicultores',component:UsersComponent},
+      {path:'consumidores',component:UsersComponent},
       {path:'comerciantes',component:UsersComponent},
       {path:'proveedores',component:UsersComponent},
       {path:'investigadores',component:UsersComponent},
