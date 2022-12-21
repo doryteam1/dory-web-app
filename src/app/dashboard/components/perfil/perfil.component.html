@@ -23,6 +23,7 @@
             <div class="container__spinner-photo spinner-border text-info" role="status" *ngIf="loadingPhoto">
             </div>
             <input #fileInput type="file" accept="image/png, image/jpeg" name="resume" (change)='fileChange($event)' hidden>
+            <input #fileInputimgpdf type="file" accept="image/png, image/jpeg, .pdf" name="resume" (change)='fileChange($event)' hidden>
         </div>
         <div *ngIf="photoDelate" class="container__alert-msg danger-message">
           Foto de perfil  eliminada
@@ -178,13 +179,13 @@
         <span class="text-danger" *ngIf="photoDelete2">Docuemento eliminado</span>
       </div>
       <div  class="d-flex flex-row justify-content-center align-items-center gap-2 d-flex-delate-add-otros">
-        <button class="container__btn3 btn" *ngIf="!usuario?.url_imagen_cedula" (click)="openAddFileDialog('cedula')">
+        <button class="container__btn3 btn" *ngIf="!usuario?.url_imagen_cedula" (click)="openAddFileDialogDos('cedula')">
           <div class="container__btn3-div">
             <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
             <span>Agregar cédula</span>
           </div>
         </button>
-        <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="openAddFileDialog('cedula')">
+        <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="openAddFileDialogDos('cedula')">
           <div class="container__btn3-div">
             <img src="assets/icons/update-icon-photo-perfil.svg">
             <span>Actualizar cédula</span>
@@ -197,13 +198,13 @@
           </div>
         </button>
 
-        <button class="container__btn3 btn" *ngIf="!usuario?.url_sisben" (click)="openAddFileDialog('sisben')">
+        <button class="container__btn3 btn" *ngIf="!usuario?.url_sisben" (click)="openAddFileDialogDos('sisben')">
           <div class="container__btn3-div">
             <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
             <span>Agregar sisben</span>
           </div>
         </button>
-        <button class="container__btn3 btn" *ngIf="usuario?.url_sisben" (click)="openAddFileDialog('sisben')">
+        <button class="container__btn3 btn" *ngIf="usuario?.url_sisben" (click)="openAddFileDialogDos('sisben')">
           <div class="container__btn3-div">
             <img src="assets/icons/update-icon-photo-perfil.svg">
             <span>Actualizar sisben</span>
@@ -273,8 +274,8 @@
                     [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil && usuario?.tipo_usuario !== 'Proveedor'}"
                     type="text" formControlName='direccion' [placeholder]="editarperfil ? 'Selecciona aquí tu dirección' : ''"
                     >
-                    <img *ngIf="editarperfil" class="input-icon option" src ="assets/icons/ojoanimado.svg">
-                    <img *ngIf="!editarperfil" class="input-icon option" src ="assets/icons/ojoanimadocerrado.svg">
+                    <img *ngIf="editarperfil && usuario?.tipo_usuario !== 'Proveedor'" class="input-icon option" src ="assets/icons/ojoanimado.svg">
+                    <img *ngIf="!editarperfil && usuario?.tipo_usuario !== 'Proveedor'" class="input-icon option" src ="assets/icons/ojoanimadocerrado.svg">
                   </div>
               </div>
               <div *ngIf="faltadireccion" class="container__alert-msg danger-message">

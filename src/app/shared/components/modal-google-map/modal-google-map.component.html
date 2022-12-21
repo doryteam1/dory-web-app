@@ -18,9 +18,9 @@
         <div class="description">
           <div class="shorterTextOverflowHidden">
             <h1 (click)="navigate(i)" class="shorterTextAuto" >{{granja.nombre}}</h1>
-            <img class="card__icon-favoritex" src="assets/icons/heart-filled.svg" *ngIf="granja?.esfavorita"
+            <img class="card__icon-favoritex" src="assets/icons/heart-filled.svg" *ngIf="granja?.favorita"
               (click)="changeFavorite(i)">
-            <img class="card__icon-favoritex" src="assets/icons/heart-outline.svg" *ngIf="!granja?.esfavorita"
+            <img class="card__icon-favoritex" src="assets/icons/heart-outline.svg" *ngIf="!granja?.favorita"
               (click)="changeFavorite(i)">
           </div>
           <div class="estilo-p-card" (click)="navigate(i)"></div>

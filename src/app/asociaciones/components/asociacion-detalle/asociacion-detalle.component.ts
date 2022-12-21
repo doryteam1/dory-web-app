@@ -18,7 +18,7 @@ import { PlatformLocation } from '@angular/common';
   styleUrls: ['./asociacion-detalle.component.scss'],
 })
 export class AsociacionDetalleComponent implements OnInit {
-  selectedAsociacionnit: number = -1;
+  selectedAsociacionnit: any = -1;
   asociacion: any;
   piscicultorasociaciones: any;
   piscicultorgranjas: any;
@@ -45,6 +45,7 @@ export class AsociacionDetalleComponent implements OnInit {
   granjaChangeItem: boolean = false;
   urls: any[] = [];
   idEmailUser!: number;
+  hasDocument: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private asociacionesService: AsociacionesService,
@@ -61,25 +62,24 @@ export class AsociacionDetalleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.selectedAsociacionnit = Number(
+      this.activatedRoute.snapshot.paramMap.get('id')!
+    );
     let token = localStorage.getItem('token');
     if (token && token != 'undefined') {
       this.tipoUsuario = Utilities.parseJwt(token!).rol;
     }
     let email = localStorage.getItem('email');
-    console.log(this.asociacion);
-    this.userService.getUsuarioByEmail(email).subscribe((response) => {
-      this.idEmailUser = response.data[0].id;
-    });
-    this.selectedAsociacionnit = Number(
-      this.activatedRoute.snapshot.paramMap.get('id')!
-    );
+    if (email) {
+      this.userService.getUsuarioByEmail(email).subscribe((response) => {
+        this.idEmailUser = response.data[0].id;
+      });
+    }
     this.asociacionesService
       .getAsociacionDetalle(this.selectedAsociacionnit)
       .subscribe(
         (response) => {
-          console.log(response.data[0]);
           this.asociacion = response.data[0];
-          console.log('asociacion ', this.asociacion);
           if (response.data.length > 0) {
             this.asociacionesshowError = false;
             this.asociacionesshowNotFound = false;
@@ -100,6 +100,28 @@ export class AsociacionDetalleComponent implements OnInit {
           }
         }
       );
+    this.asociacionesService
+      .getMiembrosPrivado(this.selectedAsociacionnit)
+      .subscribe((response) => {
+        let representante = response.data.representante;
+        let miembros = response.data.miembros;
+        if (representante.url_imagen_cedula || representante.url_sisben) {
+          this.hasDocument = true;
+        } else {
+          let index = miembros.findIndex((miembro: any) => {
+            if (miembro.url_imagen_cedula || miembro.url_sisben) {
+              return true;
+            } else {
+              return false;
+            }
+          });
+          if (index > -1) {
+            this.hasDocument = true;
+          } else {
+            this.hasDocument = false;
+          }
+        }
+      });
     this.pescadoresPorAsociacions();
     this.granjasPorAsociacion();
   }
@@ -458,5 +480,4 @@ export class AsociacionDetalleComponent implements OnInit {
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
-
 }

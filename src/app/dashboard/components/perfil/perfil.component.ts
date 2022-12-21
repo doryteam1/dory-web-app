@@ -22,6 +22,7 @@ import { limiteMapa } from 'src/models/limiteMapaGoogle.model';
 export class PerfilComponent implements OnInit, OnDestroy {
   usuario: any;
   @ViewChild('fileInput') inputFileDialog!: ElementRef;
+  @ViewChild('fileInputimgpdf') inputFileDialogDos!: ElementRef;
   inputOn: boolean = true;
   fueraDirecion: boolean = false;
   loading: boolean = false;
@@ -40,7 +41,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
   mylongitudidmunicipio!: number;
   faltadireccion: boolean = false;
   escogerdireccion: boolean = false;
-  readonly:boolean=true
+  readonly: boolean = true;
   form: FormGroup = new FormGroup({
     id: new FormControl(''),
     cedula: new FormControl(''),
@@ -230,105 +231,116 @@ export class PerfilComponent implements OnInit, OnDestroy {
           this.closeMap();
         }
       );
-   this.myNgOnInit();
+    this.myNgOnInit();
   }
 
   myNgOnInit() {
- this.nombres?.disable();
- this.cedula?.disable();
- this.apellidos?.disable();
- this.celular?.disable();
- this.informacion_adicional_direccion?.disable();
- this.nombre_corregimiento?.disable();
- this.idMunic?.disable();
- this.idAreaExpert?.disable();
- this.sobre_mi?.disable();
- this.otraAreaExp?.disable();
- this.otraAreaExpDesc?.disable();
- this.latitud?.disable();
- this.longitud?.disable();
- this.email?.disable();
- this.sexo?.disable();
- this.etnia?.disable();
- this.idDpto?.disable();
- registerLocaleData(es);
- let email: string | null = localStorage.getItem('email');
- this.us.getUsuarioByEmail(email).subscribe(
-   (response) => {
-     this.usuario = response.data[0];
-     this.form.get('id')?.setValue(this.usuario.id);
-     this.form.get('cedula')?.setValue(this.usuario.cedula);
-     this.form.get('nombres')?.setValue(this.usuario.nombres);
-     this.form.get('apellidos')?.setValue(this.usuario.apellidos);
-     this.form.get('celular')?.setValue(this.usuario.celular);
-     this.form.get('direccion')?.setValue(this.usuario.direccion);
-     this.form
-       .get('informacion_adicional_direccion')
-       ?.setValue(this.usuario.informacion_adicional_direccion);
-     this.form.get('id_tipo_usuario')?.setValue(this.usuario.id_tipo_usuario);
-     this.form.get('email')?.setValue(this.usuario.email);
-     this.form
-       .get('id_area_experticia')
-       ?.setValue(this.usuario.id_area_experticia);
-     this.form.get('sobre_mi')?.setValue(this.usuario.sobre_mi);
-     this.form.get('nombre_negocio')?.setValue(this.usuario.nombre_negocio);
-     this.form.get('foto')?.setValue(this.usuario.foto);
-     this.form
-       .get('fecha_registro')
-       ?.setValue(Utilities.dateToISOString(this.usuario.fecha_registro));
-     this.form
-       .get('fecha_nacimiento')
-       ?.setValue(Utilities.dateToISOString(this.usuario.fecha_nacimiento));
-     this.form.get('nombre_vereda')?.setValue(this.usuario.nombre_vereda);
+    this.nombres?.disable();
+    this.cedula?.disable();
+    this.apellidos?.disable();
+    this.celular?.disable();
+    this.informacion_adicional_direccion?.disable();
+    this.nombre_corregimiento?.disable();
+    this.idMunic?.disable();
+    this.idAreaExpert?.disable();
+    this.sobre_mi?.disable();
+    this.otraAreaExp?.disable();
+    this.otraAreaExpDesc?.disable();
+    this.latitud?.disable();
+    this.longitud?.disable();
+    this.email?.disable();
+    this.sexo?.disable();
+    this.etnia?.disable();
+    this.idDpto?.disable();
+    registerLocaleData(es);
+    let email: string | null = localStorage.getItem('email');
+    this.us.getUsuarioByEmail(email).subscribe(
+      (response) => {
+        this.usuario = response.data[0];
+        this.form.get('id')?.setValue(this.usuario.id);
+        this.form.get('cedula')?.setValue(this.usuario.cedula);
+        this.form.get('nombres')?.setValue(this.usuario.nombres);
+        this.form.get('apellidos')?.setValue(this.usuario.apellidos);
+        this.form.get('celular')?.setValue(this.usuario.celular);
+        this.form.get('direccion')?.setValue(this.usuario.direccion);
+        this.form
+          .get('informacion_adicional_direccion')
+          ?.setValue(this.usuario.informacion_adicional_direccion);
+        this.form
+          .get('id_tipo_usuario')
+          ?.setValue(this.usuario.id_tipo_usuario);
+        this.form.get('email')?.setValue(this.usuario.email);
+        this.form
+          .get('id_area_experticia')
+          ?.setValue(this.usuario.id_area_experticia);
+        this.form.get('sobre_mi')?.setValue(this.usuario.sobre_mi);
+        this.form.get('nombre_negocio')?.setValue(this.usuario.nombre_negocio);
+        this.form.get('foto')?.setValue(this.usuario.foto);
+        this.form
+          .get('fecha_registro')
+          ?.setValue(Utilities.dateToISOString(this.usuario.fecha_registro));
+        this.form
+          .get('fecha_nacimiento')
+          ?.setValue(Utilities.dateToISOString(this.usuario.fecha_nacimiento));
+        this.form.get('nombre_vereda')?.setValue(this.usuario.nombre_vereda);
 
-     this.form.get('id_corregimiento')?.setValue(this.usuario.id_corregimiento);
-     this.form.get('id_vereda')?.setValue(this.usuario.id_vereda);
-     this.form.get('latitud')?.setValue(this.usuario.latitud);
-     this.form.get('longitud')?.setValue(this.usuario.longitud);
-     this.form
-       .get('nombre_corregimiento')
-       ?.setValue(this.usuario.nombre_corregimiento);
-     this.otraAreaExp?.setValue(this.usuario.otra_area_experticia);
-     this.otraAreaExpDesc?.setValue(
-       this.usuario.otra_area_experticia_descripcion
-     );
+        this.form
+          .get('id_corregimiento')
+          ?.setValue(this.usuario.id_corregimiento);
+        this.form.get('id_vereda')?.setValue(this.usuario.id_vereda);
+        this.form.get('latitud')?.setValue(this.usuario.latitud);
+        this.form.get('longitud')?.setValue(this.usuario.longitud);
+        this.form
+          .get('nombre_corregimiento')
+          ?.setValue(this.usuario.nombre_corregimiento);
+        this.otraAreaExp?.setValue(this.usuario.otra_area_experticia);
+        this.otraAreaExpDesc?.setValue(
+          this.usuario.otra_area_experticia_descripcion
+        );
 
-     this.sexo?.setValue(this.usuario?.id_sexo);
-     this.etnia?.setValue(this.usuario?.id_etnia);
-     if (
-       this.usuario.id_departamento == 0 ||
-       this.usuario.id_departamento == null
-     ) {
-       this.form.get('id_departamento')?.setValue(70);
-     } else {
-       this.form.get('id_departamento')?.setValue(this.usuario.id_departamento);
-     }
-     this.form.get('id_municipio')?.setValue(this.usuario.id_municipio);
-     this.loadAreasExp();
-     this.loadDptos();
-     this.loadMunic();
-     this.loadCorregVeredas();
-     this.nomCorregVeredasubs();
-     this.loadSexos();
-     this.loadEtnias();
-     this.storageService.add('photoUser', this.usuario.foto);
-     this.storageService.add('tipoUser', this.usuario.tipo_usuario);
-     this.storageService.add(
-       'nomApell',
-       this.getNomApell(this.usuario.nombres, this.usuario.apellidos)
-     );
-     this.us.setAuthUserPhoto(this.usuario.foto);
-     this.tempDir = this.form.get('direccion')?.value;
-     this.tempMunicId = this.form.get('id_municipio')?.value;
-   },
-   (err) => {
-     console.log(err);
-   }
- );
+        this.sexo?.setValue(this.usuario?.id_sexo);
+        this.etnia?.setValue(this.usuario?.id_etnia);
+        if (
+          this.usuario.id_departamento == 0 ||
+          this.usuario.id_departamento == null
+        ) {
+          this.form.get('id_departamento')?.setValue(70);
+        } else {
+          this.form
+            .get('id_departamento')
+            ?.setValue(this.usuario.id_departamento);
+        }
+        this.form.get('id_municipio')?.setValue(this.usuario.id_municipio);
+        this.loadAreasExp();
+        this.loadDptos();
+        this.loadMunic();
+        this.loadCorregVeredas();
+        this.nomCorregVeredasubs();
+        this.loadSexos();
+        this.loadEtnias();
+        this.storageService.add('photoUser', this.usuario.foto);
+        this.storageService.add('tipoUser', this.usuario.tipo_usuario);
+        this.storageService.add(
+          'nomApell',
+          this.getNomApell(this.usuario.nombres, this.usuario.apellidos)
+        );
+        this.us.setAuthUserPhoto(this.usuario.foto);
+        this.tempDir = this.form.get('direccion')?.value;
+        this.tempMunicId = this.form.get('id_municipio')?.value;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
   openAddFileDialog(document: string) {
     this.updatingDocument = document;
     const element: HTMLElement = this.inputFileDialog.nativeElement;
+    element.click();
+  }
+  openAddFileDialogDos(document: string) {
+    this.updatingDocument = document;
+    const element: HTMLElement = this.inputFileDialogDos.nativeElement;
     element.click();
   }
 
@@ -469,14 +481,14 @@ export class PerfilComponent implements OnInit, OnDestroy {
     }
   }
   deletePhotoPerfil() {
-    let fotoUrle=this.usuario.foto
+    let fotoUrle = this.usuario.foto;
     this.us.actualizarUsuario(this.id?.value, { foto: '' }).subscribe(
       (response) => {
         this.usuario.foto = '';
         this.us.setAuthUserPhoto(this.usuario.foto);
         this.storageService.add('photoUser', '');
         this.photoDelate = true;
-         this.storage.deleteByUrl(fotoUrle);
+        this.storage.deleteByUrl(fotoUrle);
         setTimeout(() => {
           this.photoDelate = false;
           /*  window.location.reload(); */
@@ -899,7 +911,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
     this.editarperfil = true;
     if (this.usuario?.tipo_usuario == 'Proveedor') {
       this.mensajedirecion = 'Escriba aquí su direción';
-      this.readonly=false
+      this.readonly = false;
       this.idDpto?.enable();
     } else if (this.usuario?.tipo_usuario !== 'Proveedor') {
       this.idDpto?.disable();

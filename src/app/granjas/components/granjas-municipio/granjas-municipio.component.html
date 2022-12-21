@@ -59,6 +59,7 @@
           [granja]="granja"
           [favorita]="granja?.favorita"
           [resena]="granja?.count_resenas"
+          [granjaMunici]="false"
            *ngFor="let granja of granjasFiltered ; let i =index"
            (onMouseCard)="onMouseCard(i)"
            (onEliminInfoWindow)="eliminInfoWindow()"
