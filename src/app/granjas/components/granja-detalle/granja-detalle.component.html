@@ -62,7 +62,9 @@ class="galleryslider"
     <div class="proprietary-container__info">
       <div class="proprietary-container__data">
         <span><h4 class="detail-container__title">Propietario: </h4></span>
-        <span><h4 class="proprietary-container__description">{{granja?.propietarios[0]?.nombre_completo}}</h4></span>
+        <span>
+          <h4 class="proprietary-container__description">{{granja?.propietarios[0]?.nombre_completo ? granja?.propietarios[0]?.nombre_completo:'Sin definir'}}</h4>
+        </span>
       </div>
       <div class="proprietary-container__data">
         <span><h4 class="detail-container__title">Contacto:</h4></span>
@@ -72,7 +74,7 @@ class="galleryslider"
       </div>
       <div class="proprietary-container__data">
         <span><h4 class="detail-container__title">Dirección:</h4></span>
-        <span><h4 class="proprietary-container__description">{{granja?.propietarios[0]?.direccion}}</h4></span>
+        <span><h4 class="proprietary-container__description">{{granja?.propietarios[0]?.direccion ? granja?.propietarios[0]?.direccion:'Sin definir'}}</h4></span>
       </div>
     </div>
     <img class="proprietary-container__image" [src]="granja?.propietarios[0]?.foto ? granja?.propietarios[0]?.foto : 'assets/images/avatar-person.svg'">
@@ -84,7 +86,7 @@ class="galleryslider"
         <img class="detail-container__image"src="assets/icons/person_pin_circle_black_24dp.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Dirección de la granja</h4>
-            <span class="detail-container__value">{{granja?.direccion}}</span>
+            <span class="detail-container__value">{{granja?.direccion ? granja?.direccion:'No existe información'}}</span>
         </div>
     </div>
 
@@ -112,7 +114,7 @@ class="galleryslider"
         <img class="detail-container__image" src="assets/images/layers.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Área (M²)</h4>
-            <span class="detail-container__value">{{granja?.area}}</span>
+            <span class="detail-container__value">{{granja?.area ? granja?.area:'No existe información'}}</span>
         </div>
     </div>
 
@@ -120,7 +122,12 @@ class="galleryslider"
         <img class="detail-container__image" src="assets/images/fish.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Especies cultivadas</h4>
-            <span class="detail-container__value" *ngFor="let especie of granja?.especies">{{especie.nombre}}</span>
+            <div *ngIf="granja?.especies">
+              <span class="detail-container__value" *ngFor="let especie of granja?.especies">{{especie?.nombre}}</span>
+            </div>
+            <div *ngIf="!granja?.especies">
+              <span class="detail-container__value" >No existe información</span>
+            </div>
         </div>
     </div>
 
@@ -128,7 +135,8 @@ class="galleryslider"
         <img class="detail-container__image" src="assets/images/worker.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Trabajadores</h4>
-            <span class="detail-container__value">{{granja?.numero_trabajadores}} trabajadores en total.</span>
+            <span class="detail-container__value" *ngIf="granja?.numero_trabajadores">{{granja?.numero_trabajadores}} trabajadores en total.</span>
+            <span class="detail-container__value" *ngIf="!granja?.numero_trabajadores">No existe información</span>
         </div>
     </div>
 
@@ -136,7 +144,8 @@ class="galleryslider"
         <img class="detail-container__image" src="assets/images/weigth.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Producción estimada al mes (kg)</h4>
-            <span class="detail-container__value">{{granja?.produccion_estimada_mes}} kg</span>
+            <span class="detail-container__value" *ngIf="granja?.produccion_estimada_mes">{{granja?.produccion_estimada_mes}} kg</span>
+            <span class="detail-container__value" *ngIf="!granja?.produccion_estimada_mes">No existe información</span>
         </div>
     </div>
 
@@ -144,7 +153,12 @@ class="galleryslider"
         <img class="detail-container__image" src="assets/images/wave.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Tipo de infraestructura</h4>
-            <span class="detail-container__value" *ngFor="let infraestructura of granja?.infraestructuras">{{infraestructura.nombre}}</span>
+            <div *ngIf="granja?.infraestructuras">
+              <span class="detail-container__value" *ngFor="let infraestructura of granja?.infraestructuras">{{infraestructura?.nombre}}</span>
+            </div>
+            <div *ngIf="!granja?.infraestructuras">
+              <span class="detail-container__value" >No existe información</span>
+            </div>
         </div>
     </div>
     <div class="box-miopinion" *ngIf="miresena">
@@ -191,7 +205,7 @@ class="galleryslider"
              <div class="d-flex flex-row justify-content-start">
                 <img src="{{ resena.foto_usuario ? resena.foto_usuario : 'assets/images/avatar-person.svg' }}" alt="" class="card__image">
                 <div class="card__box">
-                    <span class="card__title">{{resena.nombre_usuario}}</span>
+                    <span class="card__title">{{resena?.nombre_usuario}}</span>
                     <span *ngIf="i < 3">{{resena?.fecha?.slice(0, resena?.fecha?.indexOf('T')) | date:'dd/MM/yyyy'}}</span>
                 </div>
               </div>

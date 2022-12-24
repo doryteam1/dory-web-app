@@ -139,6 +139,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'consumidores',
+    loadChildren: () =>
+      import('./consumidores/consumidores.module').then(
+        (m) => m.ConsumidoresModule
+      ),
+  },
+  {
     path: 'comerciantes',
     loadChildren: () =>
       import('./comerciantes/comerciantes.module').then(

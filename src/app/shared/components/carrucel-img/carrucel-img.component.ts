@@ -22,7 +22,6 @@ export class CarrucelImgComponent implements OnInit {
   @Input() efect: boolean = false;
   @Input() cover: boolean = false;
   @Input() scaledown: boolean = false;
-
   id!: string;
   idnumeral!: string;
   widthExp: number = 0;
@@ -41,6 +40,7 @@ export class CarrucelImgComponent implements OnInit {
   @Output() eventValueResponseclickImagenItemSlider: EventEmitter<any> =
     new EventEmitter();
   @Output() eventClickOnPreviousOrNew: EventEmitter<any> = new EventEmitter();
+  @Output() eventClickImagen: EventEmitter<any> = new EventEmitter();
   ngOnInit(): void {
     if (this.indicatorsphoto) {
       this.id = `carouselExampleCaptions${this.idtarge}`;
@@ -111,5 +111,9 @@ export class CarrucelImgComponent implements OnInit {
         }
       }
     }
+  }
+  clickImagen(){
+    this.eventClickImagen.emit()
+    console.log("open url")
   }
 }

@@ -4,9 +4,17 @@
     <span class="card__info mb-4">{{vehiculo?.capacidad}} TON</span>
     <div class="d-flex flex-row d-flex-ajuste mb-4">
       <div class="card__image-container">
-        <app-ng-gallery-slider [fullScreen]="false" [contador]="false" [imagenes]="images" class="card__image"
+        <app-ng-gallery-slider
+        *ngIf="images.length > 0"
+         [fullScreen]="false"
+          [contador]="false"
+          [imagenes]="images"
+           class="card__image"
           [id]="'vehiculodetallesFotos'">
         </app-ng-gallery-slider>
+        <div *ngIf="images.length <= 0" class="container-no-img">
+          <img src="assets/images/no-image-photography.svg" alt="Sin fotos">
+        </div>
       </div>
       <div class="card__container">
         <div class="d-flex flex-row justify-content-start">

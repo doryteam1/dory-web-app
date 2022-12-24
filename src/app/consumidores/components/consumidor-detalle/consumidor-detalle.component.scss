@@ -1,22 +1,7 @@
-/* estilo card negocio */
-.container-card {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  gap: 30px;
-}
-
 @media screen and (max-width: 775px) {
-  .container-ajuste {
-    justify-content: center;
-    flex-direction: column-reverse !important;
-  }
-
   .container {
-    flex-direction: column;
+    justify-content: center;
+    flex-direction: column-reverse;
     grid-gap: 10px;
     gap: 10px;
     margin-top: 20px !important;
@@ -32,5 +17,5 @@
   }
 
 }
-
 @import "../../../components/styles/detalles-usurios/detalles-usurio-uno/detalles-user.scss"
+

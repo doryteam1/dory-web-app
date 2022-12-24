@@ -3,7 +3,7 @@
     margin-bottom: 0px;
     display: flex;
     justify-content: center;
-    padding: 30px;
+    padding: 50px 150px;
 
     section {
         background-color: white;
@@ -26,7 +26,7 @@
     margin: 16px 16px;
     margin-bottom: 30px;
     color: var(--azul1);
-    font-size: 45px;
+    font-size: 1.7rem;
 }
 
 .description {
@@ -140,11 +140,21 @@
 // Extra large devices (large desktops, 1200px and up)
 @media (max-width: 1200px) {
     .title {
-        font-size: 2rem !important;
+        font-size: 1.5rem !important;
     }
 
 }
+@media (max-width: 992px) {
+.row__manuales {
+        flex-direction: column;
+        gap: 50px;
+    }
 
+    .row__manuales--install,
+    .row__manuales--uso {
+        width: 100%;
+    }
+}
 // Large devices (desktops, 992px and up)
 @media (max-width: 992px) {
     .title {
@@ -173,19 +183,12 @@
     .imgmovil {
         width: 80px !important;
     }
+         .container-proyecto {
+             padding: 80px;
+         }
 }
 
 // Medium devices (tablets, 768px and up)
-@media (max-width: 700px) {
-.row__manuales{
-    flex-direction: column;
-    gap: 50px;
-}
-.row__manuales--install,
-.row__manuales--uso {
-    width: 100%;
-}
-}
 
 // Small devices (landscape phones, 576px and up)
 @media (max-width: 576px) {

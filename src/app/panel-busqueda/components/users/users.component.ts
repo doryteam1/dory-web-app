@@ -14,6 +14,7 @@ import { Utilities } from 'src/app/utilities/utilities';
 import { BuscarPor } from 'src/models/buscarPor.model';
 import { Checkbox } from 'src/models/checkbox.model';
 import { MetaFiltro } from 'src/models/filtro.model';
+import { ConsumidorService } from 'src/app/services/consumidor.service';
 
 @Component({
   selector: 'app-users',
@@ -50,13 +51,13 @@ export class UsersComponent implements OnInit {
     private transportadoresService: TransportadoresService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
+    private consumidorService:ConsumidorService,
     private places: PlacesService,
     private ar: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.userType = this.ar.snapshot.url[0].path!;
-    console.log('userType ', this.userType);
     let token = localStorage.getItem('token');
     if (token) {
       let payload = Utilities.parseJwt(token!);
@@ -92,10 +93,8 @@ export class UsersComponent implements OnInit {
   }
   getUsers(): Observable<any> | null {
     if (this.userType == 'pescadores') {
-      console.log('entro por pescadores');
       return this.pescadoresService.getPescadores();
     } else if (this.userType == 'piscicultores') {
-      console.log('entro por piscicultores');
       return this.piscicultoresService.getPiscicultores();
     } else if (this.userType == 'investigadores') {
       return this.investigadoresServices.getInvestigadoresAll();
@@ -105,6 +104,8 @@ export class UsersComponent implements OnInit {
       return this.transportadoresService.getTransportadoresAll();
     } else if (this.userType == 'comerciantes') {
       return this.negociosService.getComerciantesAll();
+    } else if (this.userType == 'consumidores') {
+      return this.consumidorService.getConsumidoresAll()
     }
     return null;
   }
@@ -123,6 +124,8 @@ export class UsersComponent implements OnInit {
       baseUrl = '/transportadores/detalle/';
     } else if (user.tipo_usuario == 'Comerciante') {
       baseUrl = '/comerciantes/detalle/';
+    } else if (user.tipo_usuario == 'Consumidor') {
+      baseUrl = '/consumidores/detalle/';
     }
     let url = this.router.serializeUrl(
       this.router.createUrlTree([baseUrl + `${user.id}`])
@@ -132,7 +135,6 @@ export class UsersComponent implements OnInit {
 
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
-    console.log(this.filtroseleccionadoCheckbox);
     this.searchReset();
   }
 
@@ -194,12 +196,22 @@ export class UsersComponent implements OnInit {
     if (texto.trim().length === 0) {
       result = this.users;
     } else {
-      let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }];
-      result = this.searchBuscadorService.buscarData(
-        this.users,
-        texto,
-        buscardatospor
-      );
+      if (this.userType == 'consumidores') {
+        let buscardatospor: BuscarPor[] = [{ data1: 'nombre_completo' }];
+        result = this.searchBuscadorService.buscarData(
+          this.users,
+          texto,
+          buscardatospor
+        );
+      }else{
+         let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }];
+         result = this.searchBuscadorService.buscarData(
+           this.users,
+           texto,
+           buscardatospor
+         );
+      }
+
     }
     return result;
   }

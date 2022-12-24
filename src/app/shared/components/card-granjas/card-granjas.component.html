@@ -28,8 +28,8 @@
     </div>
     <div class="card__rating-container">
       <div class="card__rating-container_info">
-        <div>
-          <span class="card__rating">Municipio: </span>{{granja?.municipio}}
+        <div *ngIf="granjaMunici">
+          <span class="card__rating">Municipio: </span>{{granja?.municipio || granja?.nombre_municipio}}
         </div>
         <div>
           <span class="card__rating">Área: </span>{{granja?.area}} m²

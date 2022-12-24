@@ -4,9 +4,16 @@
     <span class="card__info mb-4"  (click)="goDetail(negocio.usuarios_id)">{{negocio?.propietario}}</span>
     <div class="d-flex flex-row d-flex-ajuste">
       <div class="card__image-container">
-        <app-ng-gallery-slider [fullScreen]="false" [contador]="false" [imagenes]="images"
+        <app-ng-gallery-slider
+         *ngIf="images.length > 0"
+         [fullScreen]="false"
+         [contador]="false"
+          [imagenes]="images"
           [id]="'granjasFotos'">
         </app-ng-gallery-slider>
+        <div *ngIf="images.length <= 0" class="container-no-img">
+          <img src="assets/images/no-image-photography.svg" alt="Sin fotos">
+        </div>
       </div>
       <div class="card__container">
         <span class="card__title2">Municipio</span>

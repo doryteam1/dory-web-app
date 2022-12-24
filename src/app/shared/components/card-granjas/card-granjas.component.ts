@@ -11,7 +11,7 @@ export class CardGranjasComponent implements OnInit {
   @Input() granja: any;
   @Input() index: any;
   @Input() favorita: any;
-  @Input() granjaMunici:boolean=false;
+  @Input() granjaMunici:boolean=true;
   @Input() resena: any;
   @Input() botonMapaFijo: boolean = true;
   @Input() botonFavorito: boolean = true;
@@ -24,7 +24,8 @@ export class CardGranjasComponent implements OnInit {
     public location2: PlatformLocation,
     private appModalService: AppModalService
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
   detalle() {
     this.onDetalle.emit();
   }

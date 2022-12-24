@@ -101,7 +101,7 @@
         <h6 class="detail-container__value">No se ha cargado documento</h6>
       </div>
     </div>
-    <div class="detail-container mt-4" *ngIf="asociacion?.id_propietario==idEmailUser">
+    <div class="detail-container mt-4" *ngIf="asociacion?.id_propietario===idEmailUser && hasDocument">
       <img class="detail-container__image" src="assets/icons/file-zipper-regular.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Documentos miembros</h4>
@@ -248,8 +248,11 @@
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-            <app-card-granjas [granja]="granja" [favorita]="granja?.favorita"
+            <app-card-granjas
+            [granja]="granja"
+             [favorita]="granja?.favorita"
             [resena]="granja?.count_resenas"
+          
               *ngFor="let granja of granjasAsociacion; let i = index" [index]="i" (onDetalle)="goDetailFarm(granja.id_granja)"
               (onChangeFavorite)="changeFavorite(i)" (onShowResenas)="showResenas(granja?.id_granja)"
                [botonMapaFijo]="false">
