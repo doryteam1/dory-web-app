@@ -8,9 +8,10 @@
                 [rounded]="false"
                 [scale]=false
                 [scaledown]="false"
+                 (eventClickImagen)="goDetail()"
                 >
         </app-carrucel-img>
-        <img class="sin-img" src='assets/images/no-image.jpg' *ngIf="publicacion.fotos.length == 0">
+        <img class="sin-img" src='assets/images/no-image.jpg' *ngIf="publicacion.fotos.length == 0" (click)="goDetail()" >
     </div>
     <div  class="card-body shorterTextOverflowHidden" >
       <div class="w-100" style="text-align: start;cursor:pointer" (click)="goDetail()" >

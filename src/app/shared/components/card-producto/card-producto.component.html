@@ -7,9 +7,10 @@
       [idtarge]="indiceProducto"
       [rounded]="false"
       [scale]=true
-       [scaledown]="true">
+       [scaledown]="true"
+       (eventClickImagen)="goDetail()">
     </app-carrucel-img>
-    <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="producto.fotos.length == 0">
+    <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="producto.fotos.length == 0" (click)="goDetail()">
   </div>
   <div  class="card-body shorterTextOverflowHidden" >
     <div class="w-100" style="text-align: start;cursor:pointer" (click)="goDetail()" >

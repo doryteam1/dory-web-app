@@ -1,9 +1,9 @@
 <div class="card">
   <div class="card__img-box">
     <app-carrucel-img *ngIf="datos.fotos.length != 0" [imagenes]="datos.fotos" [indicatorsphoto]="true"
-      [idtarge]="indiceDatos" [rounded]="false" [scale]=true [scaledown]="true">
+      [idtarge]="indiceDatos" [rounded]="false" [scale]=true [scaledown]="true" (eventClickImagen)="goDetail()">
     </app-carrucel-img>
-    <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="datos.fotos.length == 0">
+    <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="datos.fotos.length == 0" (click)="goDetail()" >
   </div>
   <div class="card-body shorterTextOverflowHidden">
     <div (click)="goDetail()" class="w-100" style="text-align: start;cursor:pointer; height: 75px;">
