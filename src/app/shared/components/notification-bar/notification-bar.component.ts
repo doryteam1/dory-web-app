@@ -42,7 +42,8 @@ export class NotificationBarComponent implements OnInit {
           route.includes('piscicultores') ||
           route.includes('panel-busqueda') ||
           route.includes('proveedores/producto/detalle') ||
-          route.includes('politica')
+          route.includes('politica')||
+          route.includes('manual')
         ) {
           this.isHidden = true;
         } else {

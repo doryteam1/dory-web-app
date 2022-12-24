@@ -30,6 +30,11 @@
   --red: #ff0f00;
   --grey: #abacae;
   --shadow-2: rgba(0, 0, 0, 0.2);
+  --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body{
+  font-family: var(--system-ui);
 }
 
 /*Fonts*/
@@ -299,12 +304,43 @@ textarea:focus, input:focus{
 
 
 .docs__title{
+  font-size: 3rem;
+}
 
+.docs__sub-title{
+  font-size: 1.7rem;
+}
+
+.docs__sub-title-2{
+  font-size: 1.2rem;
 }
 
 .docs__paragraph{
-  font-size: calc(1.275rem + .3vw);
+  font-size: 1.25rem;
   font-weight: 300;
+  line-height: 200%;
+}
+
+.docs__figure{
+  font-weight:500;
+  font-style: italic;
+}
+
+.docs__image{
+  //0width: calc(calc(calc(100vw - 200px) / 3) * 2 );
+  width: 100%;
+}
+
+.docs__image-xxs{
+  width: 25%;
+}
+
+.docs__image-xs{
+  width: 50%;
+}
+
+.docs__image-md{
+  width: 75%;
 }
 
 /* Put your css in here */
