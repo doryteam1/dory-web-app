@@ -5,7 +5,13 @@ import { CambioContrasenaComponent } from './components/cambio-contrasena/cambio
 import { DocsComponent } from './components/docs/docs.component';
 import { GuiaUsoComponent } from './components/guia-uso/guia-uso.component';
 import { IngresarComponent } from './components/ingresar/ingresar.component';
+import { InterfazComercianteComponent } from './components/interfaz-comerciante/interfaz-comerciante.component';
+import { InterfazConsumidorComponent } from './components/interfaz-consumidor/interfaz-consumidor.component';
+import { InterfazInvestigadorComponent } from './components/interfaz-investigador/interfaz-investigador.component';
 import { InterfazPescadorComponent } from './components/interfaz-pescador/interfaz-pescador.component';
+import { InterfazPiscicultorComponent } from './components/interfaz-piscicultor/interfaz-piscicultor.component';
+import { InterfazProveedorComponent } from './components/interfaz-proveedor/interfaz-proveedor.component';
+import { InterfazTransportadorComponent } from './components/interfaz-transportador/interfaz-transportador.component';
 import { InterfazUsuarioComponent } from './components/interfaz-usuario/interfaz-usuario.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
 import { ObjetivoComponent } from './components/objetivo/objetivo.component';
@@ -65,6 +71,30 @@ const routes: Routes = [
       {
         path:'interfaz-pescador',
         component:InterfazPescadorComponent
+      },
+      {
+        path:'interfaz-proveedor',
+        component:InterfazProveedorComponent
+      },
+      {
+        path:'interfaz-transportador',
+        component:InterfazTransportadorComponent
+      },
+      {
+        path:'interfaz-investigador',
+        component:InterfazInvestigadorComponent
+      },
+      {
+        path:'interfaz-comerciante',
+        component:InterfazComercianteComponent
+      },
+      {
+        path:'interfaz-consumidor',
+        component:InterfazConsumidorComponent
+      },
+      {
+        path:'interfaz-piscicultor',
+        component:InterfazPiscicultorComponent
       }
     ]
   }

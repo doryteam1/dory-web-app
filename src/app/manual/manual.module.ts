@@ -14,6 +14,12 @@ import { CambioContrasenaComponent } from './components/cambio-contrasena/cambio
 import { IngresarComponent } from './components/ingresar/ingresar.component';
 import { InterfazUsuarioComponent } from './components/interfaz-usuario/interfaz-usuario.component';
 import { InterfazPescadorComponent } from './components/interfaz-pescador/interfaz-pescador.component';
+import { InterfazProveedorComponent } from './components/interfaz-proveedor/interfaz-proveedor.component';
+import { InterfazTransportadorComponent } from './components/interfaz-transportador/interfaz-transportador.component';
+import { InterfazInvestigadorComponent } from './components/interfaz-investigador/interfaz-investigador.component';
+import { InterfazComercianteComponent } from './components/interfaz-comerciante/interfaz-comerciante.component';
+import { InterfazConsumidorComponent } from './components/interfaz-consumidor/interfaz-consumidor.component';
+import { InterfazPiscicultorComponent } from './components/interfaz-piscicultor/interfaz-piscicultor.component';
 
 
 @NgModule({
@@ -29,7 +35,13 @@ import { InterfazPescadorComponent } from './components/interfaz-pescador/interf
     CambioContrasenaComponent,
     IngresarComponent,
     InterfazUsuarioComponent,
-    InterfazPescadorComponent
+    InterfazPescadorComponent,
+    InterfazProveedorComponent,
+    InterfazTransportadorComponent,
+    InterfazInvestigadorComponent,
+    InterfazComercianteComponent,
+    InterfazConsumidorComponent,
+    InterfazPiscicultorComponent
   ],
   imports: [
     CommonModule,
