@@ -10,6 +10,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/internal/operators/filter';
+import { ElectronjsService } from 'src/app/services/electronjs.service';
 import { IntrojsService } from 'src/app/services/introjs.service';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -263,6 +264,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   sidebar: boolean = false;
   closeOffCamba: boolean = false;
   disableTags: boolean = false;
+  electronActivo: boolean=false;
   constructor(
     private socialService: SocialAuthService,
     private userService: UsuarioService,
@@ -270,7 +272,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private storage: StorageService,
     private us: UsuarioService,
     public mediaQueryService: MediaQueryService,
-    private introService: IntrojsService
+    private introService: IntrojsService,
+    private _electronService: ElectronjsService,
   ) {}
   subscriber!: Subscription;
   MediaQuery!: Subscription;
@@ -300,6 +303,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   ngOnInit(): void {
+    this.electronActivo= this._electronService.ipcActivo;
     this.elementoActivoTour = this.introService.onElementoActivoTour.subscribe(
       (elemento: any) => {
         if (this.sidebar && elemento.id == 'basicos' && !this.closeOffCamba) {
@@ -417,7 +421,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.storage.get('takeTour');
   }
   logout() {
-    this.userService.logout();
+    if (this.electronActivo) {
+      this.userService.logoutElectron()
+    }else{
+      this.userService.logout();
+    }
     this._router.navigateByUrl('/home');
   }
 }

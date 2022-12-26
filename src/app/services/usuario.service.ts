@@ -6,6 +6,7 @@ import { Utilities } from '../utilities/utilities';
 import { HttpsService } from './https.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs';
+import { ElectronjsService } from './electronjs.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,7 +15,8 @@ export class UsuarioService {
   constructor(
     private httpsService: HttpsService,
     private storageService: StorageService,
-    private socialAuthService: SocialAuthService
+    private socialAuthService: SocialAuthService,
+    private _electronService: ElectronjsService,
   ) {}
 
   registrarUsuario(usuario: any): Observable<any> {
@@ -97,13 +99,8 @@ export class UsuarioService {
   }
 
   logoutElectron() {
-    localStorage.removeItem('email');
-    localStorage.removeItem('token');
-    localStorage.removeItem('photoUser');
-    localStorage.removeItem('nomApell');
-    localStorage.removeItem('chats');
-    this.isAuthSubject.next(false);
-    this.socialAuthService?.signOut();
+  this.logout();
+  window.open('https://accounts.google.com/logout', '_blank');
   }
   recoveryPassword(email: string) {
     return this.httpsService.post(

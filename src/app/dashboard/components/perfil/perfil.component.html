@@ -6,11 +6,13 @@
             <div class="btn-group dropend container__image2">
               <div id="fotoedit" data-bs-toggle="dropdown" aria-expanded="false">
                 <div *ngIf="usuario?.foto">
+                  <!-- Existe foto -->
                   <img   class="container__image2"   src="assets/icons/camera.svg"  >
                 </div>
-                <img class="container__image2" *ngIf="!usuario?.foto" src="assets/icons/camera.svg"   (click)="openAddFileDialog('foto')">
               </div>
-              <ul class="dropdown-menu dropdown-menu-photo" aria-labelledby="fotoedit" *ngIf="usuario?.foto" >
+              <!-- Icono se activa cuando no existe foto -->
+              <img class="container__image2" *ngIf="!usuario?.foto" src="assets/icons/camera.svg"   (click)="openAddFileDialog('foto')">
+              <ul class="dropdown-menu dropdown-menu-photo" aria-labelledby="fotoedit">
                 <li class="dropdown-menu--li">
                   <img src="assets/icons/delete_black_24dp.svg">
                   <a class="dropdown-item dropdown-item-myestilo" (click)="deletePhotoPerfil()">Eliminar </a></li>
@@ -48,7 +50,7 @@
               <div class="container__box" *ngIf="mostrarPorTipo('nombres')">
                   <span class="container__label">Nombres: <span class="asterisk">*</span></span>
                   <div class="input-wrapper">
-                      <input name= "nombr" class="container__input form-input-text-square" (keyup)="onKeyInput('nombres')" [ngClass]="{'container__input--color':!editarperfil}"
+                      <input name= "nombr" class="container__input form-input-text-square" [ngClass]="{'container__input--color':!editarperfil}"
                       type="text" formControlName='nombres' [placeholder]="editarperfil ? 'Ingrese su(s) nombre(s)' : ''">
                   </div>
               </div>
@@ -58,7 +60,7 @@
               <div class="container__box left" *ngIf="mostrarPorTipo('apellidos')">
                   <span class="container__label">Apellidos: <span class="asterisk">*</span></span>
                   <div class="input-wrapper">
-                      <input class="container__input form-input-text-square" (keyup)="onKeyInput('apellidos')"  [ngClass]="{'container__input--color':!editarperfil}"
+                      <input class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
                         type="text" formControlName='apellidos' [placeholder]="editarperfil ? 'Ingrese su(s) apellido(s)' : ''">
                   </div>
               </div>
@@ -70,7 +72,7 @@
               <div class="container__box" *ngIf="mostrarPorTipo('cedula')">
                   <span class="container__label">Cédula</span>
                   <div class="input-wrapper">
-                      <input class="container__input form-input-text-square" (keyup)="onKeyInput('cedula')" [ngClass]="{'container__input--color':!editarperfil}"
+                      <input class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
                        type="number"  formControlName='cedula' [placeholder]="editarperfil ? 'Ingrese su número de cédula' : ''">
                   </div>
               </div>
@@ -122,7 +124,7 @@
           <div  class="container__box" *ngIf="mostrarPorTipo('celular')">
               <span class="container__label">Celular <span class="asterisk">*</span></span>
               <div class="input-wrapper">
-                  <input class="container__input form-input-text-square" (keyup)="onKeyInput('celular')" [ngClass]="{'container__input--color':!editarperfil}"
+                  <input class="container__input form-input-text-square" [ngClass]="{'container__input--color':!editarperfil}"
                     type="number" formControlName='celular' [placeholder]="editarperfil ? 'Ingrese su número de celular' : ''" >
               </div>
           </div>
@@ -261,7 +263,7 @@
               <div class="container__box"  *ngIf="mostrarPorTipo('corregimiento')">
                   <span class="container__label">Corregimiento</span>
                   <div class="input-wrapper">
-                    <input class="container__input form-input-text-square" (keyup)="onKeyInput('nombre_corregimiento')"  [ngClass]="{'container__input--color':!editarperfil}"
+                    <input class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
                       type="text" formControlName='nombre_corregimiento' [placeholder]="editarperfil ? 'Corregimiento o vereda' : ''">
                   </div>
               </div>
@@ -290,7 +292,7 @@
                   <label  class="container__label" for="dateOfBirth">Información adicional de la dirección</label>
                   <div class="input-group">
                     <div class="input-wrapper">
-                      <textarea  (keyup)="onKeyInput('informacion_adicional_direccion')" class="form-control" [ngClass]="{'container__input--color':!editarperfil}"
+                      <textarea   class="form-control" [ngClass]="{'container__input--color':!editarperfil}"
                         name="textarea" rows="3" cols="50"
                         [placeholder]="editarperfil ? 'Información adicional de la ubicación seleccionada' : ''"
                         formControlName="informacion_adicional_direccion">Escribe algo aquí</textarea>
@@ -314,7 +316,7 @@
                     <select class="container__input form-input-text-square"
                           formControlName='id_area_experticia' [ngClass]="{'container__input--color':!editarperfil}">
                         <optgroup label="Escoge un área">
-                            <option *ngFor="let area of areas"(keyup)="onKeyInput('sobre_mi')"[ngValue]="area.id_area">{{area.nombre}} </option>
+                            <option *ngFor="let area of areas"[ngValue]="area.id_area">{{area.nombre}} </option>
                             <option [ngValue]='-1'>Otra...</option>
                         </optgroup>
                     </select>
@@ -326,7 +328,7 @@
             <div class="container__box left" *ngIf="mostrarPorTipo('sobre_mi')">
                 <span class="container__label">Cuéntanos sobre ti: </span>
                 <div>
-                    <input class="container__input form-input-text-square"  (keyup)="onKeyInput('sobre_mi')"
+                    <input class="container__input form-input-text-square"
                     type="text" formControlName='sobre_mi' [placeholder]="editarperfil ? 'Cuéntanos sobre ti' : ''" [ngClass]="{'container__input--color':!editarperfil}">
                 </div>
             </div>
@@ -341,7 +343,6 @@
                     <input class="container__input form-input-text-square"  type="text-area"
                     formControlName='otra_area_experticia_descripcion'
                      [placeholder]="editarperfil ? 'En que consiste tu área de experticia' : ''"
-                     (keyup)="onKeyInput('otra_area_experticia_descripcion')"
                      [ngClass]="{'container__input--color':!editarperfil}">
                 </div>
             </div>
@@ -351,7 +352,6 @@
                 <span class="container__label">Escribe el nombre del área experticia: </span>
                 <div>
                     <input class="container__input form-input-text-square"  type="text"
-                    (keyup)="onKeyInput('otra_area_experticia')"
                      [ngClass]="{'container__input--color':!editarperfil}"
                     formControlName='otra_area_experticia'
                     [placeholder]="editarperfil ? 'Tu área de experticia' : ''">

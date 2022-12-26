@@ -30,7 +30,6 @@ export class AppComponent implements OnInit{
   }
   ngOnInit(): void {
     this.isAuthUser = this.userService.isAuthenticated();
-    console.log("Is auth ",this.isAuthUser)
     //console.log("process.env.FIREBASE_PROJECT_ID ", process.env.FIREBASE_PROJECT_ID)
     this.customTitleBarElectron = this._electronService.ipcActivo;
     this.userService.getAuthObservable().subscribe(
@@ -55,7 +54,7 @@ export class AppComponent implements OnInit{
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route: string = event.url;
-        if (route.includes('welcome') || 
+        if (route.includes('welcome') ||
         route.includes('politica')) {
           this.show = false;
         } else {
