@@ -201,6 +201,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
     this.userService?.logout();
     this.router.navigateByUrl('/home');
+   
+
   }
 
   updatePassword() {

@@ -255,7 +255,7 @@ export class NavbarElectronjsComponent
   }
   logout() {
     this.ngZone.run(() => {
-      this.userService.logout();
+      this.userService.logoutElectron()
       this.router.navigateByUrl('/home');
       this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
     });

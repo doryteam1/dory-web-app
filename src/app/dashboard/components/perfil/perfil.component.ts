@@ -350,7 +350,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
       .cloudStorageTask(fileName, file)
       .percentageChanges()
       .subscribe((response) => {
-        console.log(response);
         this.percentUploaded = response;
         if (this.percentUploaded == 100) {
           this.storage
@@ -358,7 +357,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
             .getDownloadURL()
             .subscribe(
               (downloadUrl) => {
-                console.log(downloadUrl);
                 this.us
                   .actualizarUsuario(this.id?.value, { foto: downloadUrl })
                   .subscribe(
@@ -411,7 +409,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
       .cloudStorageTask(fileName, file)
       .percentageChanges()
       .subscribe((response) => {
-        console.log(response);
         this.percentUploaded2 = response;
         if (this.percentUploaded2 == 100) {
           this.storage
@@ -491,7 +488,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
         this.storage.deleteByUrl(fotoUrle);
         setTimeout(() => {
           this.photoDelate = false;
-          /*  window.location.reload(); */
         }, 3000);
       },
       (err) => {
@@ -623,12 +619,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
   }
   invalid(datos: any) {
     if (!this.form.get('direccion')?.value) {
-      console.log(this.usuario.direccion);
-      console.log(datos);
       this.faltadireccion = true;
     } else {
-      console.log(this.usuario.direccion);
-      console.log(datos);
       this.faltadireccion = false;
     }
   }
@@ -871,42 +863,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
     index = this.campos[tipoUsuario?.toLowerCase()]?.indexOf(campo);
     return index > -1;
   }
-  onKeyInput(nombreinput?: any) {
-    /*  if (this.form.getRawValue()[nombreinput] == this.usuario[nombreinput]) {
-      this.validateInputFormObject.forEach((o) => (o[nombreinput] = false));
-      let objeto = Object.values(this.validateInputFormObject[0]);
-      if (objeto.includes(true)) {
-        this.EditedInputValue = true;
-      } else {
-        this.EditedInputValue = false;
-      }
-      return;
-    }
-    if (
-      this.form.getRawValue()[nombreinput] == '' ||
-      (null && this.usuario[nombreinput] == null) ||
-      ''
-    ) {
-      this.validateInputFormObject.forEach((o) => (o[nombreinput] = false));
-      let objeto = Object.values(this.validateInputFormObject[0]);
-      if (objeto.includes(true)) {
-        this.EditedInputValue = true;
-      } else {
-        this.EditedInputValue = false;
-      }
-      return;
-    }
-    if (this.form.getRawValue()[nombreinput] !== this.usuario[nombreinput]) {
-      this.validateInputFormObject.forEach((o) => (o[nombreinput] = true));
-      let objeto = Object.values(this.validateInputFormObject[0]);
-      if (objeto.includes(true)) {
-        this.EditedInputValue = true;
-      } else {
-        this.EditedInputValue = false;
-      }
-      return;
-    } */
-  }
+
   editarPerfi() {
     this.editarperfil = true;
     if (this.usuario?.tipo_usuario == 'Proveedor') {
