@@ -20,6 +20,16 @@ import { InterfazInvestigadorComponent } from './components/interfaz-investigado
 import { InterfazComercianteComponent } from './components/interfaz-comerciante/interfaz-comerciante.component';
 import { InterfazConsumidorComponent } from './components/interfaz-consumidor/interfaz-consumidor.component';
 import { InterfazPiscicultorComponent } from './components/interfaz-piscicultor/interfaz-piscicultor.component';
+import { EncabezadoComponent } from './components/encabezado/encabezado.component';
+import { DoryComponent } from './components/dory/dory.component';
+import { ProductoresComponent } from './components/productores/productores.component';
+import { NovedadesActualidadComponent } from './components/novedades-actualidad/novedades-actualidad.component';
+import { EventosComponent } from './components/eventos/eventos.component';
+import { NormatividadComponent } from './components/normatividad/normatividad.component';
+import { PanelBusquedaComponent } from './components/panel-busqueda/panel-busqueda.component';
+import { BuscadorComponent } from './components/buscador/buscador.component';
+import { CuerpoPaginaComponent } from './components/cuerpo-pagina/cuerpo-pagina.component';
+import { PiePaginaComponent } from './components/pie-pagina/pie-pagina.component';
 
 
 @NgModule({
@@ -41,7 +51,17 @@ import { InterfazPiscicultorComponent } from './components/interfaz-piscicultor/
     InterfazInvestigadorComponent,
     InterfazComercianteComponent,
     InterfazConsumidorComponent,
-    InterfazPiscicultorComponent
+    InterfazPiscicultorComponent,
+    EncabezadoComponent,
+    DoryComponent,
+    ProductoresComponent,
+    NovedadesActualidadComponent,
+    EventosComponent,
+    NormatividadComponent,
+    PanelBusquedaComponent,
+    BuscadorComponent,
+    CuerpoPaginaComponent,
+    PiePaginaComponent
   ],
   imports: [
     CommonModule,
