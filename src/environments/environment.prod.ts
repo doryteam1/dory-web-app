@@ -14,5 +14,6 @@ export const environment = {
   doryApiRestBaseUrl:process.env.DORY_API_REST,
   oAuthClientId:process.env.OAUTH_CLIENT_ID,
   doryServerUrl:process.env.DORY_SERVER_URL,
-  thisWebUrl:process.env.THIS_WEB_URL
+  thisWebUrl:process.env.THIS_WEB_URL,
+  ginelectURL:process.env.GINELECT_URL
 };

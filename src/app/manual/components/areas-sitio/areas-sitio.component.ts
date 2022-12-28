@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-areas-sitio',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./areas-sitio.component.scss']
 })
 export class AreasSitioComponent implements OnInit {
-
-  constructor() { }
+  baseUrl:string = environment.ginelectURL;
+  constructor() { 
+    console.log(this.baseUrl)
+  }
 
   ngOnInit(): void {
   }

@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./punto-inicio.component.scss']
 })
 export class PuntoInicioComponent implements OnInit {
+  baseUrl:string = environment.ginelectURL;
   thisWebUrl:string = environment.thisWebUrl; 
   constructor() { }
 

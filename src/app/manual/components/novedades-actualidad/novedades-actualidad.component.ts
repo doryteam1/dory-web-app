@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-novedades-actualidad',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./novedades-actualidad.component.scss']
 })
 export class NovedadesActualidadComponent implements OnInit {
-
+  baseUrl:string = environment.ginelectURL;
   constructor() { }
 
   ngOnInit(): void {

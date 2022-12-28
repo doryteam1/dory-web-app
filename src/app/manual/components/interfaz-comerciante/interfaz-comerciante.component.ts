@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-interfaz-comerciante',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./interfaz-comerciante.component.scss']
 })
 export class InterfazComercianteComponent implements OnInit {
-
+  baseUrl:string = environment.ginelectURL;
   constructor() { }
 
   ngOnInit(): void {
