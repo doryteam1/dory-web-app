@@ -1,103 +1,126 @@
+<div class="d-flex justify-start" *ngIf="innerWidth < 997">
+    <button class="btn float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+        <i class="bi bi-list fs-3"  style="font-size: 2rem !important;" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
+    </button>
+</div>
 <div class="container">
-    <div class="container__menu" *ngIf="innerWidth > 996">
-        <span class="container__item-title">
-            Inicio
-        </span>
-        <span class="container__item" routerLink="introduccion">
-            Introducción
-        </span>
-        <span class="container__item" routerLink="objetivo">
-            Objetivo
-        </span>
-        <span class="container__item" routerLink="guia-uso">
-            Guia de uso
-        </span>
-        <span class="container__item" routerLink="punto-inicio">
-            Punto de incio
-        </span>
-        <span class="container__item" routerLink="areas-sitio">
-            Areas del sitio
-        </span>
-        <span class="container__item-title">
-            Portal de entrada
-        </span>
-        <span class="container__item" routerLink="registro-usuario">
-            Registro de usuario
-        </span>
-        <span class="container__item" routerLink="registro-google">
-            Registro con google
-        </span>
-        <span class="container__item" routerLink="cambio-contrasena">
-            Cambiar Contraseña
-        </span>
-        <span class="container__item" routerLink="ingresar">
-            Ingresar
-        </span>
-        <span class="container__item-title">
-            Interfaz de usuario
-        </span>
-        <span class="container__item" routerLink="interfaz-usuario">
-            Interfaz de usuario
-        </span>
-        <span class="container__item" routerLink="interfaz-pescador">
-            Interfaz pescador
-        </span>
-        <span class="container__item" routerLink="interfaz-proveedor">
-            Interfaz proveedor
-        </span>
-        <span class="container__item" routerLink="interfaz-transportador">
-            Interfaz transportador
-        </span>
-        <span class="container__item" routerLink="interfaz-investigador">
-            Interfaz investigador
-        </span>
-        <span class="container__item" routerLink="interfaz-comerciante">
-            Interfaz comerciante
-        </span>
-        <span class="container__item" routerLink="interfaz-consumidor">
-            Interfaz consumidor
-        </span>
-        <span class="container__item" routerLink="interfaz-piscicultor">
-            Interfaz piscicultor
-        </span>
-        <span class="container__item-title">
-            Menú principal
-        </span>
-        <span class="container__item" routerLink="encabezado">
-            Encabezado de la página
-        </span>
-        <span class="container__item" routerLink="dory">
-            Dory
-        </span>
-        <span class="container__item" routerLink="productores">
-            Productores
-        </span>
-        <span class="container__item" routerLink="novedades">
-            Novedades y Actualidad
-        </span>
-        <span class="container__item" routerLink="eventos">
-            Eventos
-        </span>
-        <span class="container__item" routerLink="normatividad">
-            Normatividad
-        </span>        
-        <span class="container__item" routerLink="panel-busqueda">
-            Página de busqueda
-        </span>
-        <span class="container__item-title">
-            Otros
-        </span>
-        <span class="container__item" routerLink="buscador">
-            Buscador
-        </span>
-        <span class="container__item" routerLink="cuerpo-pagina">
-            Cuerpo de la página
-        </span>
-        <span class="container__item" routerLink="pie-pagina">
-            Pie de página
-        </span>
+    <div *ngIf="innerWidth > 996">
+        <ng-container *ngTemplateOutlet="menu">
+        </ng-container>
     </div>
     <div class="container__content">
         <router-outlet></router-outlet>
     </div>
 </div>
+
+<div class="offcanvas offcanvas-start w-75" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+    <div class="offcanvas-header">
+        <h6 class="offcanvas-title d-none d-sm-block">Menu</h6>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body px-0" [ngClass]="{ 'flex-center': innerWidth < 997 }">
+        <ng-container *ngTemplateOutlet="menu">
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #menu>
+    <div class="container__menu" [ngClass]="{ 'container__menu--center': innerWidth < 997 }">
+        <span class="container__item-title">
+            Inicio
+        </span>
+        <span class="container__item" routerLink="introduccion"  routerLinkActive="active" (click)="closeOffcanvas()">
+            Introducción
+        </span>
+        <span class="container__item" routerLink="objetivo" routerLinkActive="active" (click)="closeOffcanvas()">
+            Objetivo
+        </span>
+        <span class="container__item" routerLink="guia-uso" routerLinkActive="active" (click)="closeOffcanvas()">
+            Guia de uso
+        </span>
+        <span class="container__item" routerLink="punto-inicio" routerLinkActive="active" (click)="closeOffcanvas()">
+            Punto de incio
+        </span>
+        <span class="container__item" routerLink="areas-sitio" routerLinkActive="active" (click)="closeOffcanvas()">
+            Areas del sitio
+        </span>
+        <span class="container__item-title" routerLinkActive="active" (click)="closeOffcanvas()">
+            Portal de entrada
+        </span>
+        <span class="container__item" routerLink="registro-usuario" routerLinkActive="active" (click)="closeOffcanvas()">
+            Registro de usuario
+        </span>
+        <span class="container__item" routerLink="registro-google" routerLinkActive="active" (click)="closeOffcanvas()">
+            Registro con google
+        </span>
+        <span class="container__item" routerLink="cambio-contrasena" routerLinkActive="active" (click)="closeOffcanvas()">
+            Cambiar Contraseña
+        </span>
+        <span class="container__item" routerLink="ingresar" routerLinkActive="active" (click)="closeOffcanvas()">
+            Ingresar
+        </span>
+        <span class="container__item-title">
+            Interfaz de usuario
+        </span>
+        <span class="container__item" routerLink="interfaz-usuario" routerLinkActive="active" (click)="closeOffcanvas()">
+            Interfaz de usuario
+        </span>
+        <span class="container__item" routerLink="interfaz-pescador" routerLinkActive="active" (click)="closeOffcanvas()">
+            Interfaz pescador
+        </span>
+        <span class="container__item" routerLink="interfaz-proveedor" routerLinkActive="active" (click)="closeOffcanvas()">
+            Interfaz proveedor
+        </span>
+        <span class="container__item" routerLink="interfaz-transportador" routerLinkActive="active" (click)="closeOffcanvas()">
+            Interfaz transportador
+        </span>
+        <span class="container__item" routerLink="interfaz-investigador" routerLinkActive="active" (click)="closeOffcanvas()">
+            Interfaz investigador
+        </span>
+        <span class="container__item" routerLink="interfaz-comerciante" routerLinkActive="active" (click)="closeOffcanvas()">
+            Interfaz comerciante
+        </span>
+        <span class="container__item" routerLink="interfaz-consumidor" routerLinkActive="active" (click)="closeOffcanvas()">
+            Interfaz consumidor
+        </span>
+        <span class="container__item" routerLink="interfaz-piscicultor" routerLinkActive="active" (click)="closeOffcanvas()">
+            Interfaz piscicultor
+        </span>
+        <span class="container__item-title">
+            Menú principal
+        </span>
+        <span class="container__item" routerLink="encabezado" routerLinkActive="active" (click)="closeOffcanvas()">
+            Encabezado de la página
+        </span>
+        <span class="container__item" routerLink="dory" routerLinkActive="active" (click)="closeOffcanvas()">
+            Dory
+        </span>
+        <span class="container__item" routerLink="productores" routerLinkActive="active" (click)="closeOffcanvas()">
+            Productores
+        </span>
+        <span class="container__item" routerLink="novedades" routerLinkActive="active" (click)="closeOffcanvas()">
+            Novedades y Actualidad
+        </span>
+        <span class="container__item" routerLink="eventos" routerLinkActive="active" (click)="closeOffcanvas()">
+            Eventos
+        </span>
+        <span class="container__item" routerLink="normatividad" routerLinkActive="active" (click)="closeOffcanvas()">
+            Normatividad
+        </span>        
+        <span class="container__item" routerLink="panel-busqueda" routerLinkActive="active" (click)="closeOffcanvas()">
+            Página de busqueda
+        </span>
+        <span class="container__item-title">
+            Otros
+        </span>
+        <span class="container__item" routerLink="buscador" routerLinkActive="active" (click)="closeOffcanvas()">
+            Buscador
+        </span>
+        <span class="container__item" routerLink="cuerpo-pagina" routerLinkActive="active" (click)="closeOffcanvas()">
+            Cuerpo de la página
+        </span>
+        <span class="container__item" routerLink="pie-pagina" routerLinkActive="active" (click)="closeOffcanvas()">
+            Pie de página
+        </span>
+    </div>
+</ng-template>

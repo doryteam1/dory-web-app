@@ -22,6 +22,12 @@
     font-size: 20px;
 }
 
+.container__menu--center{
+    align-items: center;
+    margin-right: 0px;
+    width: 100%;
+}
+
 .container__item{
     cursor:pointer;
     font-size: .813rem;
@@ -50,4 +56,9 @@
 
 .container__content::-webkit-scrollbar{
     width: 0px;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
 }
