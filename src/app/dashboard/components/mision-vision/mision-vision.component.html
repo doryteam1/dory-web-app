@@ -6,114 +6,27 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="form" autocomplete="off">
-      <div class="mb-3">
-        <label for="dateOfBirth">Entidad</label>
-        <div class="input-group">
-          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Entidad"
-            formControlName="entidad"></textarea>
+      <ng-container *ngTemplateOutlet="inputData;context:{title:'Entidad',forControl:entidad,invali:'entidad'}">
+      </ng-container>
+          <ng-container
+            *ngTemplateOutlet="photoAndupload;context:{title:'Foto entidad',ngif:fotoEntidad,img:fotoEntidad,boton:'entidad'}">
+          </ng-container>
+      <div class="container-mis-vis">
+        <div class="container-mis-vis__item">
+          <!-- foto entidad -->
+          <ng-container *ngTemplateOutlet="inputData;context:{title:'Misión',forControl:mision,invali:'mision'}">
+          </ng-container>
+            <ng-container
+              *ngTemplateOutlet="photoAndupload;context:{title:'Foto misión',ngif:fotoMision,img:fotoMision,boton:'mision'}">
+            </ng-container>
         </div>
-        <div *ngIf="invalid('entidad')" class="container__alert-msg danger-message">
-          <div *ngIf="entidad?.errors?.['required']">
-            Campo requerido
-          </div>
-        </div>
-      </div>
-      <div class="photoAnduploadPhoto">
-        <label for="dateOfBirth">Foto entidad</label>
-        <div class="photoAnduploadPhoto-container">
-          <div class="mb-3 imagen" *ngIf="fotoEntidad">
-            <div class="imagen-container">
-              <img [src]="fotoEntidad ? fotoEntidad : 'assets/images/no-image-photography.svg'" alt="">
-            </div>
-          </div>
-          <div class="input-imagen">
-            <div >
-              <button [disabled]="modalMode == 'visualize'" type="button" class="btn btn-primary container__btn--azul1"
-                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                (click)="openAddFileDialogCreate('entidad')">
-                <div>
-                  <img src="assets/icons/file_upload_black_24dp.svg">
-                  <span>
-                    Subir Fotos
-                  </span>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- foto entidad -->
-      <div class="mb-3">
-        <label for="dateOfBirth">Misión</label>
-        <div class="input-group">
-          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Misión"
-            formControlName="mision"></textarea>
-        </div>
-        <div *ngIf="invalid('mision')" class="container__alert-msg danger-message">
-          <div *ngIf="mision?.errors?.['required']">
-            Campo requerido
-          </div>
-        </div>
-      </div>
-      <div class="photoAnduploadPhoto">
-        <label for="dateOfBirth">Foto misión</label>
-        <div class="photoAnduploadPhoto-container">
-          <div class="mb-3 imagen" *ngIf="fotoMision">
-            <div class="imagen-container">
-              <img [src]="fotoMision ? fotoMision : 'assets/images/no-image-photography.svg'" alt="">
-            </div>
-          </div>
-          <div class="input-imagen">
-            <div >
-              <button [disabled]="modalMode == 'visualize'" type="button" class="btn btn-primary container__btn--azul1"
-                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                (click)="openAddFileDialogCreate('mision')">
-                <div>
-                  <img src="assets/icons/file_upload_black_24dp.svg">
-                  <span>
-                    Subir Fotos
-                  </span>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- foto mision -->
-      <div class="mb-3">
-        <label for="dateOfBirth">Visión</label>
-        <div class="input-group">
-          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Visión"
-            formControlName="vision"></textarea>
-        </div>
-        <div *ngIf="invalid('vision')" class="container__alert-msg danger-message">
-          <div *ngIf="vision?.errors?.['required']">
-            Campo requerido
-          </div>
-        </div>
-      </div>
-      <div class="photoAnduploadPhoto">
-        <label for="dateOfBirth">Foto visión</label>
-        <div class="photoAnduploadPhoto-container">
-          <div class="mb-3 imagen" *ngIf="fotoVision">
-            <div class="imagen-container">
-              <img [src]="fotoVision ? fotoVision : 'assets/images/no-image-photography.svg'" alt="">
-            </div>
-          </div>
-          <div class="input-imagen">
-            <div >
-              <button [disabled]="modalMode == 'visualize'" type="button" class="btn btn-primary container__btn--azul1"
-                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                (click)="openAddFileDialogCreate('vision')">
-                <div>
-                  <img src="assets/icons/file_upload_black_24dp.svg">
-                  <span>
-                    Subir Fotos
-                  </span>
-                </div>
-              </button>
-            </div>
-          </div>
+        <div  class="container-mis-vis__item">
+          <ng-container
+            *ngTemplateOutlet="inputData;context:{title:'Visión',forControl:vision,invali:'vision'}">
+          </ng-container>
+          <ng-container
+          *ngTemplateOutlet="photoAndupload;context:{title:'Foto visión',ngif:fotoVision,img:fotoVision,boton:'vision'}">
+          </ng-container>
         </div>
       </div>
     </form>
@@ -139,3 +52,50 @@
     </div>
   </div>
 </div>
+
+<ng-template #inputData let-title="title" let-forControl=forControl let-invali="invali">
+<div class="mb-3">
+  <label for="dateOfBirth">{{title}}</label>
+  <div class="input-group">
+    <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" [placeholder]="title"
+     [formControl]=forControl></textarea>
+  </div>
+  <div *ngIf="invalid(invali)" class="container__alert-msg danger-message">
+    <div *ngIf="forControl?.errors?.['required']">
+      Campo requerido
+    </div>
+  </div>
+</div>
+</ng-template>
+<ng-template #photoAndupload let-title="title" let-ngif="ngif" let-img="img" let-boton="boton">
+<div class="photoAnduploadPhoto">
+  <label for="dateOfBirth">{{title}}</label>
+  <div class="photoAnduploadPhoto-container">
+    <div class="mb-3 imagen" *ngIf="ngif">
+      <div class="imagen-container">
+        <img [src]="img ? img : 'assets/images/no-image-photography.svg'" alt="">
+      </div>
+    </div>
+    <div class="input-imagen">
+      <div>
+        <button [disabled]="modalMode == 'visualize'" type="button" class="btn btn-primary container__btn--azul1"
+          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+          (click)="openAddFileDialogCreate(boton)">
+          <div>
+            <img src="assets/icons/file_upload_black_24dp.svg">
+            <span>
+              Subir Fotos
+            </span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-template>
+<!-- <ng-container [ngTemplateOutlet]="miPlantilla" [ngTemplateOutletContext]="{clases: 'rojo verde'}"></ng-container>
+
+<ng-template #miPlantilla let-clases>
+  <div [ngClass]="clases">Contenido de la ng-template</div>
+</ng-template>
+ -->
