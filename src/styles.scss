@@ -305,6 +305,7 @@ textarea:focus, input:focus{
 
 .docs__title{
   font-size: 3rem;
+  overflow-wrap: break-word;
 }
 
 .docs__sub-title{
@@ -586,11 +587,20 @@ color: white;
 
 }
 /* fin */
+@media (max-width: 900px) {
+.docs__title {
+    font-size: 2.5rem;
+  }
+}
+/* fin */
 @media (max-width: 575px) {
   .modal-dialog-centered {
     margin: 30px !important;
     /* ajusta el boton de pantalla completa del mapa */
   }
+    .docs__title {
+      font-size: 2.2rem;
+    }
 }
 .modalDialogClassContactCard {
   width: 100vw;

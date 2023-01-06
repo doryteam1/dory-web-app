@@ -3,7 +3,7 @@
         <i class="bi bi-list fs-3"  style="font-size: 2rem !important;" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
     </button>
 </div>
-<div class="container">
+<div class="containerx">
     <div *ngIf="innerWidth > 996">
         <ng-container *ngTemplateOutlet="menu">
         </ng-container>
@@ -13,12 +13,12 @@
     </div>
 </div>
 
-<div class="offcanvas offcanvas-start w-75" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+<div class="offcanvas offcanvas-start offcanvas-start--edit" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
     <div class="offcanvas-header">
-        <h6 class="offcanvas-title d-none d-sm-block">Menu</h6>
+        <h6 class="offcanvas-title  d-sm-block">Menu</h6>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body px-0" [ngClass]="{ 'flex-center': innerWidth < 997 }">
+    <div class="offcanvas-body px-0 offcanvas-body--edit" [ngClass]="{ 'flex-center': innerWidth < 997 }">
         <ng-container *ngTemplateOutlet="menu">
         </ng-container>
     </div>
@@ -106,7 +106,7 @@
         </span>
         <span class="container__item" routerLink="normatividad" routerLinkActive="active" (click)="closeOffcanvas()">
             Normatividad
-        </span>        
+        </span>
         <span class="container__item" routerLink="panel-busqueda" routerLinkActive="active" (click)="closeOffcanvas()">
             Página de busqueda
         </span>
