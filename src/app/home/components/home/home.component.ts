@@ -8,6 +8,7 @@ import { Gallery, GalleryRef } from 'ng-gallery';
 import { DashboardInicioService } from 'src/app/services/dashboard-inicio.service';
 import { EnlacesDirectosInicioService } from 'src/app/services/enlaces-directos-inicio.service';
 import { SliderInicioService } from 'src/app/services/slider-inicio.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -15,10 +16,7 @@ import { SliderInicioService } from 'src/app/services/slider-inicio.service';
 })
 export class HomeComponent implements OnInit {
   datosCounter = [
-    { title: 'Granjas',
-    img: 'assets/icons/granja-icon-home.svg',
-     cantidad: 0
-     },
+    { title: 'Granjas', img: 'assets/icons/granja-icon-home.svg', cantidad: 0 },
     {
       title: 'Asociaciones',
       img: 'assets/icons/asociacio-icon-home.svg',
@@ -62,12 +60,13 @@ export class HomeComponent implements OnInit {
   lightboxRef!: GalleryRef;
   sliders: any[] = [];
   tiempoSlide: any = 0;
+  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
   constructor(
     public gallery: Gallery,
     private sliderInicioService: SliderInicioService,
     private enlacesDirectosInicioService: EnlacesDirectosInicioService,
     private router: Router,
-    private dashboardInicioService:DashboardInicioService
+    private dashboardInicioService: DashboardInicioService
   ) {}
   ngOnInit() {
     this.servicesDataLength();
@@ -78,8 +77,8 @@ export class HomeComponent implements OnInit {
     this.dashboardInicioService.getDatosLenght().subscribe((response: any) => {
       let datos = Object.values(response.data);
       for (let index = 0; index < datos.length; index++) {
-        const element:any = datos[index];
-         this.datosCounter[index].cantidad = element;
+        const element: any = datos[index];
+        this.datosCounter[index].cantidad = element;
       }
     });
   }
@@ -119,7 +118,7 @@ export class HomeComponent implements OnInit {
         srcUrl: element.url_imagen,
         previewUrl: element.url_imagen,
         title: element.titulo,
-        mostrar_titulo:element.mostrar_titulo
+        mostrar_titulo: element.mostrar_titulo,
       });
     });
     for (let index = 0; index < imageData.length; index++) {
@@ -143,9 +142,13 @@ export class HomeComponent implements OnInit {
     window.open(url, '_blank');
   }
   navigate(ruta: any) {
-    let url = '';
-    url = this.router.serializeUrl(this.router.createUrlTree([ruta]));
-    window.open(url, '_blank');
+    if (this.electronActive) {
+      this.router.navigateByUrl(`${ruta}`);
+    } else {
+      let url = '';
+      url = this.router.serializeUrl(this.router.createUrlTree([ruta]));
+      window.open(url, '_blank');
+    }
   }
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {

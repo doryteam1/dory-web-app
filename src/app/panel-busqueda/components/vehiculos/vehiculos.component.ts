@@ -79,6 +79,7 @@ export class VehiculosComponent implements OnInit {
   };
   showNotFound: boolean = false;
   resultFiltroPorMunicipio: any[] = [];
+  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
   ngOnInit(): void {
     this.loadMunic();
   }
@@ -152,7 +153,7 @@ export class VehiculosComponent implements OnInit {
         this.filtroseleccionadoCheckbox,
         result
       );
-      console.log(result)
+      console.log(result);
       this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
         result,
         this.filtroseleccionadoCheckbox,
@@ -235,9 +236,13 @@ export class VehiculosComponent implements OnInit {
   }
 
   goDetail(id: number) {
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree(['transportadores/vehiculo/detalle/' + id])
-    );
-    window.open(url, '_blank');
+    if (this.electronActive) {
+      this.router.navigateByUrl('transportadores/vehiculo/detalle/' + id);
+    } else {
+      const url = this.router.serializeUrl(
+        this.router.createUrlTree(['transportadores/vehiculo/detalle/' + id])
+      );
+      window.open(url, '_blank');
+    }
   }
 }

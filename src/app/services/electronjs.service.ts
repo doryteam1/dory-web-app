@@ -1,4 +1,4 @@
-import { Dialog, IpcRenderer } from 'electron';
+import {  IpcRenderer } from 'electron';
 import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',

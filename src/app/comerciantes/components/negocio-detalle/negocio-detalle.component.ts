@@ -13,17 +13,17 @@ export class NegocioDetalleComponent implements OnInit {
   negocio!: negocio;
   images: any = [];
   fullScreen: boolean = true;
+  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
   constructor(
     private negociosService: NegociosService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.selectedId = Number(this.activatedRoute.snapshot.paramMap.get('id')!);
     this.negociosService.detail(this.selectedId).subscribe(
       (response) => {
-        console.log(response);
         this.negocio = response?.data[0];
         if (this.negocio && this.negocio.fotos_negocio) {
           this.images = this.negocio.fotos_negocio;
@@ -36,9 +36,14 @@ export class NegocioDetalleComponent implements OnInit {
   }
 
   goDetail(id: number) {
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree(['comerciantes/detalle/' + id])
-    );
-    window.open(url, '_blank');
+    const url = `comerciantes/detalle/${id}`;
+    if (this.electronActive) {
+      this.router.navigateByUrl(url);
+    } else {
+      const serializedUrl = this.router.serializeUrl(
+        this.router.createUrlTree([url])
+      );
+      window.open(serializedUrl, '_blank');
+    }
   }
 }

@@ -20,13 +20,14 @@ import { PlacesService } from 'src/app/services/places.service';
 })
 export class ProductosComponent implements OnInit {
   productos: Array<any> = [];
-  showNotFound: boolean = false;;
+  showNotFound: boolean = false;
   palabra: string = '';
   productosFiltered: Array<any> = [];
   municipios: Array<any> = [];
   filtroseleccionadoCheckbox: string[] = [];
   filtroseleccionado!: MetaFiltro | any;
   selectedPriceFilter!: MetaFiltro | any;
+  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
   checkbox: Checkbox[] = [
     {
       nameButton: 'Municipio de proveedor',
@@ -264,7 +265,7 @@ export class ProductosComponent implements OnInit {
   }
 
   onFiltersAplied(result: any) {
-    console.log(result)
+    console.log(result);
     this.selectedPriceFilter = result.chipFilter1;
     this.filtroseleccionado = result.radioFilter1;
     this.filtroseleccionadoCheckbox = result.selectedCheckboxs;
@@ -272,11 +273,17 @@ export class ProductosComponent implements OnInit {
   }
 
   goDetail(producto: any) {
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree([
-        `/proveedores/producto/detalle/${producto.codigo}`,
-      ])
-    );
-    window.open(url, '_blank');
+    if (this.electronActive) {
+      this.router.navigateByUrl(
+        `/proveedores/producto/detalle/${producto.codigo}`
+      );
+    } else {
+      let url = this.router.serializeUrl(
+        this.router.createUrlTree([
+          `/proveedores/producto/detalle/${producto.codigo}`,
+        ])
+      );
+      window.open(url, '_blank');
+    }
   }
 }

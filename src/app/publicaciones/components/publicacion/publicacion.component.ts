@@ -25,6 +25,7 @@ export class PublicacionComponent implements OnInit {
   loading: boolean = false;
   showNotFound: boolean = false;
   showError: boolean = false;
+  electronActive:any = window.require //verificar la disponibilidad, solo esta disponible en electronJS;
   /* varibles de buscqueda y filtros */
   palabra: string = '';
   publicacionesFiltered: Array<any> = [];
@@ -111,8 +112,9 @@ export class PublicacionComponent implements OnInit {
     private publicacionService: PublicacionesService,
     private searchBuscadorService: SearchBuscadorService,
     private places: PlacesService,
-    private granjasServices: GranjasService
-  ) {}
+    private granjasServices: GranjasService,
+  ) {
+  }
 
   ngOnInit(): void {
     this.loading = true;
@@ -120,14 +122,14 @@ export class PublicacionComponent implements OnInit {
       (response) => {
         this.loading = false;
         if (response.data.length > 0) {
-              this.publicaciones = response.data;
-              this.publicacionesFiltered = this.publicaciones;
-              this.showError = false;
-              this.showNotFound = false;
-            } else {
-              this.showNotFound = true;
-              this.showError = false;
-            }
+          this.publicaciones = response.data;
+          this.publicacionesFiltered = this.publicaciones;
+          this.showError = false;
+          this.showNotFound = false;
+        } else {
+          this.showNotFound = true;
+          this.showError = false;
+        }
       },
       (err) => {
         console.log(err);
@@ -260,7 +262,7 @@ export class PublicacionComponent implements OnInit {
     this.selectedPriceFilter = null;
     this.searchReset();
   }
-/* Evento modal-retorna resultados de los filtros seleccionados */
+  /* Evento modal-retorna resultados de los filtros seleccionados */
   onFiltersAplied(result: any) {
     /* Resultado filtro por precio */
     this.selectedPriceFilter = result.chipFilter1;
@@ -337,12 +339,18 @@ export class PublicacionComponent implements OnInit {
     if (this.otraRuta) {
       this.onDetallePublicacion.emit(publicacion);
     } else {
-      let url = this.router.serializeUrl(
-        this.router.createUrlTree([
-          'publicaciones/publicacion/detalle/' + idPublicacion,
-        ])
-      );
-      window.open(url, '_blank');
+      if (this.electronActive) {
+        this.router.navigateByUrl(
+          'publicaciones/publicacion/detalle/' + idPublicacion
+        );
+      } else {
+        let url = this.router.serializeUrl(
+          this.router.createUrlTree([
+            'publicaciones/publicacion/detalle/' + idPublicacion,
+          ])
+        );
+        window.open(url, '_blank');
+      }
     }
   }
 }

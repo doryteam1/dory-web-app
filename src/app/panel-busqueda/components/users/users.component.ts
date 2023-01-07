@@ -31,6 +31,7 @@ export class UsersComponent implements OnInit {
   showNotFound: boolean = false;
   authUserId: number = -1;
   authRol: string = '';
+  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
   checkbox: Checkbox[] = [
     {
       nameButton: 'Municipios',
@@ -51,9 +52,9 @@ export class UsersComponent implements OnInit {
     private transportadoresService: TransportadoresService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private consumidorService:ConsumidorService,
+    private consumidorService: ConsumidorService,
     private places: PlacesService,
-    private ar: ActivatedRoute,
+    private ar: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -76,8 +77,8 @@ export class UsersComponent implements OnInit {
       }
     });
     /* municipios sucre */
-    if(this.userType == 'proveedores'){
-     this.checkbox = [
+    if (this.userType == 'proveedores') {
+      this.checkbox = [
         {
           nameButton: 'Departamentos',
           nombrecampoDB: 'departamento',
@@ -87,7 +88,7 @@ export class UsersComponent implements OnInit {
         /* modoFiltro: 'number_ordenarmayoramenor', */
       ];
       this.loadDptos();
-    }else{
+    } else {
       this.loadMunic();
     }
   }
@@ -105,34 +106,32 @@ export class UsersComponent implements OnInit {
     } else if (this.userType == 'comerciantes') {
       return this.negociosService.getComerciantesAll();
     } else if (this.userType == 'consumidores') {
-      return this.consumidorService.getConsumidoresAll()
+      return this.consumidorService.getConsumidoresAll();
     }
     return null;
   }
 
   goDetail(user: any) {
-    let baseUrl = '';
-    if (user.tipo_usuario == 'Pescador') {
-      baseUrl = '/pescadores/municipio/detalle/';
-    } else if (user.tipo_usuario == 'Piscicultor') {
-      baseUrl = '/piscicultores/municipio/detalle/';
-    } else if (user.tipo_usuario == 'Proveedor') {
-      baseUrl = '/proveedores/detalle/';
-    } else if (user.tipo_usuario == 'Investigador Experto') {
-      baseUrl = '/investigadores/detalle/';
-    } else if (user.tipo_usuario == 'Transportador') {
-      baseUrl = '/transportadores/detalle/';
-    } else if (user.tipo_usuario == 'Comerciante') {
-      baseUrl = '/comerciantes/detalle/';
-    } else if (user.tipo_usuario == 'Consumidor') {
-      baseUrl = '/consumidores/detalle/';
+  const map:any =
+    {
+      'Pescador': '/pescadores/municipio/detalle/',
+      'Piscicultor': '/piscicultores/municipio/detalle/',
+      'Proveedor': '/proveedores/detalle/',
+      'Investigador Experto': '/investigadores/detalle/',
+      'Transportador': '/transportadores/detalle/',
+      'Comerciante': '/comerciantes/detalle/',
+      'Consumidor': '/consumidores/detalle/',
     }
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree([baseUrl + `${user.id}`])
-    );
-    window.open(url, '_blank');
+   const baseUrl: string = map[user.tipo_usuario] ?? '';
+    if (this.electronActive) {
+      this.router.navigateByUrl(baseUrl + `${user.id}`);
+    } else {
+      const url = this.router.serializeUrl(
+        this.router.createUrlTree([baseUrl + `${user.id}`])
+      );
+      window.open(url, '_blank');
+    }
   }
-
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
     this.searchReset();
@@ -149,7 +148,7 @@ export class UsersComponent implements OnInit {
         resultados
       );
       let filterBy = 'municipio';
-      if(this.userType == 'proveedores'){
+      if (this.userType == 'proveedores') {
         filterBy = 'departamento';
       }
       this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
@@ -203,15 +202,14 @@ export class UsersComponent implements OnInit {
           texto,
           buscardatospor
         );
-      }else{
-         let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }];
-         result = this.searchBuscadorService.buscarData(
-           this.users,
-           texto,
-           buscardatospor
-         );
+      } else {
+        let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }];
+        result = this.searchBuscadorService.buscarData(
+          this.users,
+          texto,
+          buscardatospor
+        );
       }
-
     }
     return result;
   }
@@ -222,12 +220,12 @@ export class UsersComponent implements OnInit {
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
-      if (checkboxs.length == 0) {
-        this.filtroseleccionadoCheckbox = [];
-        this.resultFiltroPorMunicipio = [];
-      } else {
-        this.filtroseleccionadoCheckbox = checkboxs;
-      }
+    if (checkboxs.length == 0) {
+      this.filtroseleccionadoCheckbox = [];
+      this.resultFiltroPorMunicipio = [];
+    } else {
+      this.filtroseleccionadoCheckbox = checkboxs;
+    }
     this.searchReset();
   }
 
@@ -248,16 +246,16 @@ export class UsersComponent implements OnInit {
     return this.locations;
   }
 
-  loadDptos(){
+  loadDptos() {
     this.places.getDepartamentos().subscribe(
       (response) => {
         this.locations = response.data;
-        this.locations = this.locations.map((location)=>{
+        this.locations = this.locations.map((location) => {
           return {
-            id:location.id_departamento,
-            nombre:location.nombre_departamento
-          }
-        })
+            id: location.id_departamento,
+            nombre: location.nombre_departamento,
+          };
+        });
       },
       (err) => {
         console.log(err);

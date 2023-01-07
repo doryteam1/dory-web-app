@@ -17,6 +17,7 @@ export class TransportadorDetalleComponent implements OnInit {
   vehiculosFiltered: any;
   showNotFoundDataUser: boolean = false;
   showErrorDataUser: boolean = false;
+  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UsuarioService,
@@ -79,9 +80,13 @@ export class TransportadorDetalleComponent implements OnInit {
   }
 
   goDetail(id: number) {
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree(['transportadores/vehiculo/detalle/' + id])
-    );
-    window.open(url, '_blank');
+    if (this.electronActive) {
+      this.router.navigateByUrl('transportadores/vehiculo/detalle/' + id);
+    } else {
+      let url = this.router.serializeUrl(
+        this.router.createUrlTree(['transportadores/vehiculo/detalle/' + id])
+      );
+      window.open(url, '_blank');
+    }
   }
 }

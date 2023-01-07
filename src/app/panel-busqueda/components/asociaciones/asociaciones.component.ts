@@ -30,6 +30,7 @@ export class AsociacionesComponent implements OnInit {
   showNotFound: boolean = false;
   authUserId: number = -1;
   authRol: string = '';
+  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
   checkbox: Checkbox[] = [
     {
       nameButton: 'Municipios',
@@ -86,7 +87,7 @@ export class AsociacionesComponent implements OnInit {
     /*Todas las asociaones que existen*/
     this.asociacionService.getAsociacionesTodas().subscribe((response) => {
       this.asociaciones = response.data;
-      if (this.authRol=='Piscicultor') {
+      if (this.authRol == 'Piscicultor') {
         this.asociaciones = this.asociaciones.filter((asociacion) => {
           return (
             asociacion.tipo_asociacion == 'Piscicultores' ||
@@ -94,16 +95,14 @@ export class AsociacionesComponent implements OnInit {
               asociacion.id_propietario !== this.authUserId)
           );
         });
-
       } else if (this.authRol == 'Pescador') {
-         this.asociaciones = this.asociaciones.filter((asociacion) => {
-        return (
-          asociacion.tipo_asociacion == 'Pescadores' ||
-          (asociacion.tipo_asociacion == 'Mixta' &&
-            asociacion.id_propietario !== this.authUserId)
-        );
-
-         });
+        this.asociaciones = this.asociaciones.filter((asociacion) => {
+          return (
+            asociacion.tipo_asociacion == 'Pescadores' ||
+            (asociacion.tipo_asociacion == 'Mixta' &&
+              asociacion.id_propietario !== this.authUserId)
+          );
+        });
       }
       this.asociacionesFiltered = this.asociaciones.slice();
       if (this.asociacionesFiltered.length < 1) {
@@ -117,12 +116,18 @@ export class AsociacionesComponent implements OnInit {
   }
 
   goAssociationDetail(asociacion: any) {
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree([
-        `/asociaciones/municipio/detalle/${asociacion.nit}`,
-      ])
-    );
-    window.open(url, '_blank');
+    if (this.electronActive) {
+      this.router.navigateByUrl(
+        `/asociaciones/municipio/detalle/${asociacion.nit}`
+      );
+    } else {
+      let url = this.router.serializeUrl(
+        this.router.createUrlTree([
+          `/asociaciones/municipio/detalle/${asociacion.nit}`,
+        ])
+      );
+      window.open(url, '_blank');
+    }
   }
 
   delateFilterCheckbox(index: number) {

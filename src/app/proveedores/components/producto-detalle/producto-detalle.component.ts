@@ -10,6 +10,7 @@ export class ProductoDetalleComponent implements OnInit {
   selectedId: number = -1;
   producto: any;
   images: any = [];
+  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
   constructor(
     private proveedorService: ProveedorService,
     private activatedRoute: ActivatedRoute,
@@ -33,10 +34,14 @@ export class ProductoDetalleComponent implements OnInit {
   }
 
   goDetail(id: number) {
-    /*     this.router.navigateByUrl('proveedores/detalle/'+id) */
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree(['proveedores/detalle/' + id])
-    );
-    window.open(url, '_blank');
+     if (this.electronActive) {
+     this.router.navigateByUrl('proveedores/detalle/' + id);
+     } else {
+        let url = this.router.serializeUrl(
+          this.router.createUrlTree(['proveedores/detalle/' + id])
+        );
+        window.open(url, '_blank');
+     }
+
   }
 }

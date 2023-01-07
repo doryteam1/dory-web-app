@@ -17,6 +17,7 @@ export class NegociosComponent implements OnInit {
   negociosFiltered: Array<any> = [];
   filtroseleccionadoCheckbox: string[] = [];
   showNotFound: boolean = false;
+  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
   checkbox: Checkbox[] = [
     {
       nameButton: 'Municipios',
@@ -70,12 +71,12 @@ export class NegociosComponent implements OnInit {
   }
 
   onFiltroChangeCheckbox(checkboxs: string[]) {
-      if (checkboxs.length == 0) {
-        this.filtroseleccionadoCheckbox = [];
-        this.resultFiltroPorMunicipio = [];
-      } else {
-        this.filtroseleccionadoCheckbox = checkboxs;
-      }
+    if (checkboxs.length == 0) {
+      this.filtroseleccionadoCheckbox = [];
+      this.resultFiltroPorMunicipio = [];
+    } else {
+      this.filtroseleccionadoCheckbox = checkboxs;
+    }
     this.searchReset();
   }
 
@@ -127,10 +128,15 @@ export class NegociosComponent implements OnInit {
     return this.municipios;
   }
   goDetail(id: number) {
-    let url = this.router.serializeUrl(
-      this.router.createUrlTree(['comerciantes/negocio/detalle/' + id])
-    );
-    window.open(url, '_blank');
+       const url = `comerciantes/negocio/detalle/${id}`;
+       if (this.electronActive) {
+         this.router.navigateByUrl(url);
+       } else {
+         const serializedUrl = this.router.serializeUrl(
+           this.router.createUrlTree([url])
+         );
+         window.open(serializedUrl, '_blank');
+       }
   }
 
   deleteFilterCheckbox(index: number) {
