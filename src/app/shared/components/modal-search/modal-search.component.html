@@ -6,7 +6,7 @@
       <div class="input-wrapper">
         <div class="bi bi-search"></div>
         <input type="text" placeholder="Buscar documentos"  [(ngModel)]="text" (ngModelChange)="onChange()"/>
-        <i class="img-x" *ngIf="true" ></i>
+        <i class="img-x" (click)="borrarBusqueda()"  *ngIf="text" ></i>
         <!-- <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" > -->
       </div>
       <!-- button close- modal -->

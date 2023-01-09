@@ -13,36 +13,34 @@ export class ModalSearchComponent implements OnInit {
   @ViewChildren('Mycard') items!: QueryList<ElementRef>;
   mouseOverCart: boolean = false;
   idxCard: number = -1;
-  index:any[] = [];
+  index: any[] = [];
   indexFiltered: any[] = [];
-  baseUrl:string = environment.thisWebUrl;
-  text:string = '';
+  baseUrl: string = environment.thisWebUrl;
+  text: string = '';
   constructor(
     private _modalService: NgbActiveModal,
     private renderer: Renderer2,
     private searchIdxService: SearchIndexService,
-    private sanitizer:DomSanitizer
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
-    this.searchIdxService.getIndex().subscribe(
-      (response)=>{
-        this.index = response.data;
-        this.indexFiltered = this.index.slice();
-      }
-    )
+    this.searchIdxService.getIndex().subscribe((response) => {
+      this.index = response.data;
+      this.indexFiltered = this.index.slice();
+    });
   }
 
   public dismiss() {
     this._modalService.dismiss();
   }
 
-  sanitize(url:string){
+  sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   mouseoverCart(idx: number) {
- /*    if (idx == this.idxCard) {
+    /*    if (idx == this.idxCard) {
       this.idxCard = -1;
     } else {
       this.idxCard = idx;
@@ -52,30 +50,30 @@ export class ModalSearchComponent implements OnInit {
     }else{
        this.mouseOverCart=true
     } */
-  /*   console.log(
+    /*   console.log(
       this.items.forEach((item: ElementRef<any>, index: number) => {
         console.log(item);
       })
     ); */
-//     let valor = this.items?.get(idx);
-// console.log(valor)
-//     let card = valor?.nativeElement;
-//     if (card.className.includes('active')) {
-//       this.renderer.removeClass(card, 'active');
-
-//     } else {
-//    /*    this.mouseOverCart = true; */
-
-//       this.renderer.addClass(card, 'active');
-//     }
+    //     let valor = this.items?.get(idx);
+    // console.log(valor)
+    //     let card = valor?.nativeElement;
+    //     if (card.className.includes('active')) {
+    //       this.renderer.removeClass(card, 'active');
+    //     } else {
+    //    /*    this.mouseOverCart = true; */
+    //       this.renderer.addClass(card, 'active');
+    //     }
   }
 
-  onChange(){
-    console.log(this.text)
-    this.indexFiltered = this.index.filter(
-      (element)=>{
-        return element?.title?.toLowerCase().includes(this.text?.toLowerCase()); 
-      }
-    )
+  onChange() {
+    console.log(this.text);
+    this.indexFiltered = this.index.filter((element) => {
+      return element?.title?.toLowerCase().includes(this.text?.toLowerCase());
+    });
+  }
+  borrarBusqueda() {
+    this.text = '';
+    this.onChange()
   }
 }
