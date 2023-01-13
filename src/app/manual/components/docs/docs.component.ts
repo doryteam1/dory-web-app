@@ -1,19 +1,18 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 declare var window: any;
 @Component({
   selector: 'app-docs',
   templateUrl: './docs.component.html',
   styleUrls: ['./docs.component.scss']
 })
-export class DocsComponent implements OnInit {
+export class DocsComponent implements OnInit{
   innerWidth:number = window.innerWidth;
   offcanvas: any;
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.innerWidth = window.innerWidth;
   }
-  constructor(private router:Router) { 
+  constructor() { 
   }
 
   ngOnInit(): void {
@@ -22,7 +21,7 @@ export class DocsComponent implements OnInit {
       {
         backdrop: true,
       }
-    );
+    );    
   }
 
   openOffcanvas() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -6,10 +6,14 @@ import { environment } from 'src/environments/environment';
   templateUrl: './interfaz-investigador.component.html',
   styleUrls: ['./interfaz-investigador.component.scss']
 })
-export class InterfazInvestigadorComponent implements OnInit {
+export class InterfazInvestigadorComponent implements OnInit, AfterViewInit {
   baseUrl:string = environment.ginelectURL;
-  constructor() { }
-
+  constructor(private elRef:ElementRef) { 
+  }
+  
+  ngAfterViewInit(): void {
+    this.elRef.nativeElement.scrollIntoView();
+  }
   ngOnInit(): void {
   }
 

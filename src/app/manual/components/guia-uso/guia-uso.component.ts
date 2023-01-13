@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -6,9 +7,14 @@ import { environment } from 'src/environments/environment';
   templateUrl: './guia-uso.component.html',
   styleUrls: ['./guia-uso.component.scss']
 })
-export class GuiaUsoComponent implements OnInit {
+export class GuiaUsoComponent implements OnInit, AfterViewInit {
   baseUrl:string = environment.ginelectURL;
-  constructor() { }
+  constructor(private elRef:ElementRef) { 
+  }
+  
+  ngAfterViewInit(): void {
+    this.elRef.nativeElement.scrollIntoView();
+  }
 
   ngOnInit(): void {
   }

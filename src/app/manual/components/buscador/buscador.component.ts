@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -8,7 +8,12 @@ import { environment } from 'src/environments/environment';
 })
 export class BuscadorComponent implements OnInit {
   baseUrl:string = environment.ginelectURL;
-  constructor() { }
+  constructor(private elRef:ElementRef) { 
+  }
+  
+  ngAfterViewInit(): void {
+    this.elRef.nativeElement.scrollIntoView();
+  }
 
   ngOnInit(): void {
   }

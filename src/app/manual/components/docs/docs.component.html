@@ -8,7 +8,7 @@
         <ng-container *ngTemplateOutlet="menu">
         </ng-container>
     </div>
-    <div class="container__content">
+    <div id="content" class="container__content">
         <router-outlet></router-outlet>
     </div>
 </div>
@@ -31,9 +31,6 @@
         </span>
         <span class="container__item" routerLink="introduccion"  routerLinkActive="active" (click)="closeOffcanvas()">
             Introducción
-        </span>
-        <span class="container__item" routerLink="objetivo" routerLinkActive="active" (click)="closeOffcanvas()">
-            Objetivo
         </span>
         <span class="container__item" routerLink="guia-uso" routerLinkActive="active" (click)="closeOffcanvas()">
             Guia de uso
@@ -60,9 +57,6 @@
             Ingresar
         </span>
         <span class="container__item-title">
-            Interfaz de usuario
-        </span>
-        <span class="container__item" routerLink="interfaz-usuario" routerLinkActive="active" (click)="closeOffcanvas()">
             Interfaz de usuario
         </span>
         <span class="container__item" routerLink="interfaz-pescador" routerLinkActive="active" (click)="closeOffcanvas()">
@@ -108,7 +102,7 @@
             Normatividad
         </span>
         <span class="container__item" routerLink="panel-busqueda" routerLinkActive="active" (click)="closeOffcanvas()">
-            Página de busqueda
+            Panel de busqueda
         </span>
         <span class="container__item-title">
             Otros

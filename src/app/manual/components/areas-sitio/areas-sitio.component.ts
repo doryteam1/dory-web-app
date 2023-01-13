@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -6,10 +6,13 @@ import { environment } from 'src/environments/environment';
   templateUrl: './areas-sitio.component.html',
   styleUrls: ['./areas-sitio.component.scss']
 })
-export class AreasSitioComponent implements OnInit {
+export class AreasSitioComponent implements OnInit, AfterViewInit {
   baseUrl:string = environment.ginelectURL;
-  constructor() { 
-    console.log(this.baseUrl)
+  constructor(private elRef:ElementRef) { 
+  }
+  
+  ngAfterViewInit(): void {
+    this.elRef.nativeElement.scrollIntoView();
   }
 
   ngOnInit(): void {

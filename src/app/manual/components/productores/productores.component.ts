@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -6,9 +6,14 @@ import { environment } from 'src/environments/environment';
   templateUrl: './productores.component.html',
   styleUrls: ['./productores.component.scss']
 })
-export class ProductoresComponent implements OnInit {
+export class ProductoresComponent implements OnInit, AfterViewInit {
   baseUrl:string = environment.ginelectURL;
-  constructor() { }
+  constructor(private elRef:ElementRef) { 
+  }
+  
+  ngAfterViewInit(): void {
+    this.elRef.nativeElement.scrollIntoView();
+  }
 
   ngOnInit(): void {
   }
