@@ -1,17 +1,15 @@
 .card {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.2rem;
   background: #fff;
   line-height: 1.4;
   font-family: sans-serif;
   border-radius: 10px;
     box-shadow: 0 2px 12px var(--shadow-2);
   overflow: hidden;
-  padding-left: 0;
-  padding-right: 0px;
   z-index: 0;
-  width: 70vw;
+  max-width: 500px;
+   width: 80vw;
 
   a {
     color: inherit;
@@ -164,8 +162,8 @@
 
   @media (min-width: 520px) {
     flex-direction: row;
-    width: 58vw;
-    max-width: 500px;
+   /*  width: 58vw;
+    max-width: 500px; */
     height: 180px;
 
     .card__meta {

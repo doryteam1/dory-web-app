@@ -14,12 +14,14 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {}
   navigate(ruta: any) {
-    if (this.electronActive) {
+    this.router.navigateByUrl(`${ruta}`);
+  /*   if (this.electronActive) {
       this.router.navigateByUrl(`${ruta}`);
     } else {
       let url = '';
       url = this.router.serializeUrl(this.router.createUrlTree([ruta]));
       window.open(url, '_blank');
-    }
+    } */
   }
+  
 }

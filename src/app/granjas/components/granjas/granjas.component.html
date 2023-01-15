@@ -1,27 +1,20 @@
 <div class="stats">
-    <div class="data-container">
-        <div class="stats-container">
-            <img class="stats-container__icon" src="assets/icons/build.svg">
-            <div class="stats-container__info">
-                <h3 class="stats-container__title container__title--color-blue">Departamento</h3>
-                <span class="stats-container__description">Sucre</span>
-            </div>
-        </div>
-        <div class="stats-container">
-            <img class="stats-container__icon" src="assets/icons/group-circle-solid.svg">
-            <div class="stats-container__info">
-                <h3 class="stats-container__title container__title--color-morado">Población</h3>
-                <span class="stats-container__description">{{poblacion | number:'':'es'}}</span>
-            </div>
-        </div>
-        <div class="stats-container">
-            <img class="stats-container__icon" src="assets/icons/fish.svg">
-            <div class="stats-container__info">
-                <h3 class="stats-container__title container__title--color-blue-2">Granjas</h3>
-                <span class="stats-container__description">{{granjas | number:'':'es'}}</span>
-            </div>
-        </div>
+  <div class="data-container ">
+    <div class="stats-container">
+      <img class="stats-container__icon" src="assets/icons/group-circle-solid.svg">
+      <div class="stats-container__info">
+        <h3 class="stats-container__title container__title--color-morado">Población</h3>
+        <span class="stats-container__description">{{poblacion | number:'':'es'}}</span>
+      </div>
     </div>
+    <div class="stats-container">
+      <img class="stats-container__icon" src="assets/icons/fish.svg">
+      <div class="stats-container__info">
+        <h3 class="stats-container__title container__title--color-blue-2">Granjas</h3>
+        <span class="stats-container__description">{{granjas | number:'':'es'}}</span>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="container ">
     <h4 class="container__title">Granjas piscicultoras en el departamento de Sucre</h4>
@@ -32,3 +25,4 @@
     </div>
 </div>
 <app-footer></app-footer>
+

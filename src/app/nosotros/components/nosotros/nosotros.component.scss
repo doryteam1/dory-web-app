@@ -60,14 +60,17 @@
 }
 
 .container__title {
+  font-size: 46px;
+  font-weight: 800;
+  text-align: center;
   margin: 16px 16px;
-  font-size: 40px;
   color: var(--azul1);
+  font-family: JosefinSans-Regular;
 }
-
 .container__description {
   margin: 0px 16px 16px 16px;
   text-align: justify;
+  font-family: OpenSans-Regular;
   color: var(--gris-oscuro);
 }
 
@@ -112,7 +115,11 @@
       margin: 16px 16px 16px 16px;
     }
 }
-
+@media screen and (max-width: 385px) {
+ .container-f-div{
+  padding: 10px !important;
+ }
+}
 @media screen and (max-width: 340px) {
   .container__title {
     font-size: 30px;

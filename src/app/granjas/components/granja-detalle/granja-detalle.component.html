@@ -6,58 +6,28 @@
         </div>
       </div>
 </div>
-<div *ngIf="!sinfotos">
-  <ng-container *ngTemplateOutlet="header"></ng-container>
-</div>
+<ng-container *ngTemplateOutlet="header"></ng-container>
+<h3 class="photo__foot d-flex flex-row justify-content-center" *ngIf="sinfotos">No hay imagenes disponibles :(</h3>
+<!-- Eslaider o fotos  -->
 <div class="container__box" *ngIf="!sinfotos">
-<div class="photo-container" >
-<div class="photo-container-padre"
-[ngClass]="{
-  'photo-container1-div': (fotosgranja?.length ==1 || fotosgranja?.length ==0),
-  'photo-container2-div': fotosgranja?.length ==2,
-  'photo-container3-div': fotosgranja?.length ==3,
-  'photo-container4-div': fotosgranja?.length ==4,
-  'photo-container5-div': fotosgranja?.length ==5,
-  'photo-container6-div': fotosgranja?.length ==6,
-  'photo-container7-div': fotosgranja?.length >=7}">
-
-  <img  class="photo-container-img box-shadow-efecthover" id="photo-container__photo{{i+1}}"
-    src="{{ fotogranja ? fotogranja : 'assets/images/no-image.jpg'}}"
-    *ngFor="let fotogranja of fotosgranja | slice:0:7; let i =index"
-    (click)="fotoSele(i)">
-
-  <img class="photo-container-img" id="photo-container__photo1"
-  src='assets/images/no-image.jpg'
-  *ngIf="sinfotos">
-  <button class="masimagenescontador" (click)="OpenGalleryModalOptionOne()" *ngIf="fotosgranja?.length >7 "
-      (click)=" shadoweffectindice=-1 && valorindicecarrucel=-1 && imgselecmodal=-1">
-      <span *ngIf="fotosgranja?.length - 7 >1 "style=" border-bottom: 1px solid #fff;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.5);">+ {{fotosgranja?.length-7}} fotos
-      </span>
-      <span *ngIf="fotosgranja?.length - 7 ==1 " style=" border-bottom: 1px solid #fff;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.5);">+ {{fotosgranja?.length-7}} foto
-      </span>
-  </button>
-</div>
-<button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length >1 && fotosgranja?.length<7" >Ver fotos</button>
-<button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length ==1 " >Ver la foto</button>
-<button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()" *ngIf="fotosgranja?.length >=7 ">Ver todas las fotos</button>
-</div>
-<div class="photo-container-slider">
+  <div [ngClass]="fotosgranja?.length == 1 ? 'w-100' : 'photo-container-activate w-100'">
+    <ng-container *ngTemplateOutlet="photocontainer"></ng-container>
+  </div>
+  <div class="photo-container-slider" *ngIf="fotosgranja?.length != 1">
 <app-ng-gallery-slider
-[fullScreen]="true"
+[fullScreen]="false"
+[activateStyle]="true"
 [contador]="false"
 [imagenes]="fotosgranja"
 class="galleryslider"
 [id]="'granjasFotos'"
 >
 </app-ng-gallery-slider>
+  </div>
 </div>
-</div>
-<div *ngIf="sinfotos">
-<ng-container *ngTemplateOutlet="header"></ng-container>
-  <h3 class="photo__foot d-flex flex-row justify-content-center" *ngIf="sinfotos">No hay imagenes disponibles :(</h3>
-</div>
+<!-- fin -->
+
+
 <div class="proprietary-container mt-5" >
     <div class="proprietary-container__info">
       <div class="proprietary-container__data">
@@ -122,7 +92,7 @@ class="galleryslider"
         <img class="detail-container__image" src="assets/images/fish.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Especies cultivadas</h4>
-            <div *ngIf="granja?.especies">
+            <div *ngIf="granja?.especies" class="detail-container__data--for">
               <span class="detail-container__value" *ngFor="let especie of granja?.especies">{{especie?.nombre}}</span>
             </div>
             <div *ngIf="!granja?.especies">
@@ -153,7 +123,7 @@ class="galleryslider"
         <img class="detail-container__image" src="assets/images/wave.svg">
         <div class="detail-container__data">
             <h4 class="detail-container__title">Tipo de infraestructura</h4>
-            <div *ngIf="granja?.infraestructuras">
+            <div *ngIf="granja?.infraestructuras" class="detail-container__data--for">
               <span class="detail-container__value" *ngFor="let infraestructura of granja?.infraestructuras">{{infraestructura?.nombre}}</span>
             </div>
             <div *ngIf="!granja?.infraestructuras">
@@ -191,7 +161,7 @@ class="galleryslider"
     <div class="box-calificar" *ngIf="!miresena">
       <h4 class="box-calificar__title">Calificar granja</h4>
       <span class="box-calificar__sub-title">Comparte tu opinión con otros usuarios</span>
-      <app-stars class="box-calificar__stars"  [selectedStar]="rating" (rating)="onRating($event)" (click)="openQualifyModal(qualifyModal)"></app-stars>
+      <app-stars class="box-calificar__stars"  [selectedStar]="rating" (rating)="onRating($event)" (click)="openQualifyModal(qualifyModal)" [overStar]="rating"></app-stars>
       <span class="box-calificar__action" (click)="openQualifyModal(qualifyModal)">Escribe una opinión</span>
     </div>
 
@@ -221,32 +191,8 @@ class="galleryslider"
 <app-not-found *ngIf="showNotFound" message="No encontramos la granja solicitada"></app-not-found>
 <app-not-found *ngIf="showError" [errorData]="true"  message="No pudimos recuperar la granja solicitada :(" ></app-not-found>
 
-<ng-template #qualifyModal let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title" *ngIf="!success">Calificar esta granja</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <div class="qualify-modal__container" *ngIf="!success">
-      <app-stars class="qualify-modal__stars" [selectedStar]="rating" (rating)="onRating($event)" [editMode]="editingMiResena"></app-stars>
-      <textarea class="qualify-modal__input form-input-text-square" placeholder="Describe tu experiencia (opcional)" [(ngModel)]="descResena"></textarea>
-
-      <button class="btn qualify-modal__button mi-btn-rounded-blue" [ngClass]="(rating < 1 || rating > 5) ? 'disabled' : ''" (click)="publicarResena()" [disabled]="rating < 1 || rating > 5">
-        <span *ngIf="!loading">Publicar</span>
-        <div class="qualify__spinner spinner-border" role="status" *ngIf="loading">
-        </div>
-      </button>
-    </div>
-    <div class="search-container" *ngIf="success">
-      <div class="search-container__box">
-          <img class="search-container__image" src="assets/images/undraw_appreciation_re_p6rl.svg">
-          <h3 class="mt-4">Gracias por darnos tu opinión👍</h3>
-      </div>
-  </div>
-  </div>
-</ng-template>
 <app-footer></app-footer>
-
+<!--ng-template  -->
 <ng-template #header>
   <div class="container-flex">
     <div class="header">
@@ -276,4 +222,50 @@ class="galleryslider"
     </div>
   </div>
 
+</ng-template>
+<ng-template #photocontainer>
+<div class="photo-container">
+  <div [class]="getPhotoContainerClass()">
+    <img  *ngFor="let fotogranja of fotosgranja | slice:0:7; let i =index"
+      class="photo-container-img box-shadow-efecthover"
+      id="photo-container__photo{{i+1}}"
+      [src]="fotogranja ? fotogranja : 'assets/images/no-image.jpg'"
+      (click)="fotoSele(i)">
+      <button class="masimagenescontador"
+        (click)="OpenGalleryModalOptionOne(); shadoweffectindice=-1; valorindicecarrucel=-1; imgselecmodal=-1"
+        *ngIf="fotosgranjaLength >7">
+        <span> + {{fotosgranjaLength - 7}} {{fotosgranjaLength - 7 > 1 ? 'fotos' : 'foto'}} </span>
+      </button>
+  </div>
+    <button class="photo-container__button btn-square-blue" (click)="OpenGalleryModalOptionTwo()"
+      *ngIf="fotosgranjaLength !=1">{{fotosgranjaLength >=7 ? 'Ver todas las fotos' : 'Ver fotos'}}</button>
+</div>
+</ng-template>
+<ng-template #qualifyModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" *ngIf="!success">Calificar esta granja</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="qualify-modal__container" *ngIf="!success">
+      <app-stars class="qualify-modal__stars" [selectedStar]="rating" (rating)="onRating($event)"
+        [editMode]="editingMiResena"></app-stars>
+      <textarea class="qualify-modal__input form-input-text-square" placeholder="Describe tu experiencia (opcional)"
+        [(ngModel)]="descResena"></textarea>
+
+      <button class="btn qualify-modal__button mi-btn-rounded-blue"
+        [ngClass]="(rating < 1 || rating > 5) ? 'disabled' : ''" (click)="publicarResena()"
+        [disabled]="rating < 1 || rating > 5">
+        <span *ngIf="!loading">Publicar</span>
+        <div class="qualify__spinner spinner-border" role="status" *ngIf="loading">
+        </div>
+      </button>
+    </div>
+    <div class="search-container" *ngIf="success">
+      <div class="search-container__box" >
+        <img class="search-container__image" src="assets/images/undraw_appreciation_re_p6rl.svg">
+        <h3 class="mt-4">Gracias por darnos tu opinión👍</h3>
+      </div>
+    </div>
+  </div>
 </ng-template>

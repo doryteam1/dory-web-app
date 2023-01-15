@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
   @Input() buscadorpersonalizado: boolean = false;
   @Input() placeholderbuscador!: string;
   @Input() activeClase: boolean = false;
+  @Input() activeClasetwo: boolean = false;
   sinresultados: boolean = false;
 
   @Output() textSearch: EventEmitter<string> = new EventEmitter();

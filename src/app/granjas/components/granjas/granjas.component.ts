@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
-import { createUnparsedSourceFile } from 'typescript';
 import { GranjasService } from '../../services/granjas.service';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-granjas',
   templateUrl: './granjas.component.html',
@@ -46,7 +44,7 @@ export class GranjasComponent implements OnInit {
     count:0
   }
 
-  
+
   resumenDepartamento:Array<any> = [];
 
   constructor(private granjasService:GranjasService, private router:Router) { }

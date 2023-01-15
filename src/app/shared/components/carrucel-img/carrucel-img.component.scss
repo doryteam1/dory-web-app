@@ -1,30 +1,37 @@
+$border-radius: 100%;
+$background-color: rgba(255, 255, 255, 0.77);
+$icon-size: 32px;
+$icon-margin: 5px;
+$border-radius: 100%;
+
+@mixin common-button-styles {
+  width: auto;
+  height: auto;
+
+  .icon {
+    background: $background-color;
+    border-radius: $border-radius;
+    width: $icon-size;
+    height: $icon-size;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    svg {
+      display: block;
+      fill: none;
+      height: 12px;
+      width: 12px;
+      stroke: currentcolor;
+      stroke-width: 4;
+      overflow: visible;
+      color: black;
+    }
+  }
+}
 
 .carousel-indicators button {
-  background-color: #333944;
-}
-.puntosindicators {
-  grid-area: imagenes;
-  height: 15%;
-  margin: 0px;
-  overflow: hidden;
-}
-.puntosindicators__div1{
-  width: 100px;
-  height: auto;
-  overflow: hidden;
-  display: flex;
-    flex-direction: row;
-    gap: 10px;
-    height: 100%;
-}
-.puntosindicators__div2 {
-  left: 0px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  height: 100%;
-}
-.puntosindicators__div2 >button {
   width: 10px;
   height: 10px;
   border-radius: 100%;
@@ -35,94 +42,67 @@
   background-color: white;
   box-shadow: inset 0 0 0 0.5px black;
 }
-.cursorPoin{
+
+.puntosindicators {
+  grid-area: imagenes;
+  height: 15%;
+  margin: 0px;
+  overflow: hidden;
+
+  &__container {
+    width: 100px;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    height: 100%;
+
+    div {
+      position: relative;
+      left: 0px;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      height: 100%;
+    }
+  }
+}
+
+.cursorPoin {
   cursor: pointer;
 }
-.carousel{
+
+.carousel {
   height: 100%;
   width: 100%;
-  grid-template-rows: repeat(12, 1fr);
-  grid-template-columns: repeat(12, 1fr);
   display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
   grid-template-areas:
-  'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes'
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes '
-    'imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes imagenes';
+    'imagenes'
+    'imagenes'
 }
+
 
 .carousel-control-prev {
   grid-area: atras;
-  width: auto;
-  height: auto;
-  .mYcarousel-control-prev-icon {
-      background: rgba(255, 255, 255, 0.77);
-      border-radius: 100%;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      margin-left: 5px;
-      svg {
-          display: block;
-          fill: none;
-          height: 12px;
-          width: 12px;
-          stroke: currentcolor;
-          stroke-width: 4;
-          overflow: visible;
-          color: black;
-        }
-    }
+
+  .icon {
+    margin-left: $icon-margin;
+  }
+
+  @include common-button-styles;
 }
 
 .carousel-control-next {
   grid-area: alante;
-  width: auto;
-  height: auto;
-  .mYcarousel-control-next-icon {
-      background: rgba(255, 255, 255, 0.77);
-      border-radius: 100%;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      margin-right: 5px;
-      svg {
-          display: block;
-          fill: none;
-          height: 12px;
-          width: 12px;
-          stroke: currentcolor;
-          stroke-width: 4;
-          overflow: visible;
-          color: black;
 
-        }
-    }
-}
-.carousel-control-prev-icon {
-background: rgba(255, 255, 255, 0.77);
-  border-radius: 100%;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000000'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
-}
+  .icon {
+    margin-right: $icon-margin;
+  }
 
-.carousel-control-next-icon {
-background: rgba(255, 255, 255, 0.77);
-border-radius: 100%;
-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000000'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  @include common-button-styles;
 }
 
 .imagenes-carrucel {
@@ -147,36 +127,43 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
   object-fit: cover;
 }
 
-.img1item--rounded{
+.img1item--rounded {
   border-radius: 8px;
 }
-.img1item--scale
-{
+
+.img1item--scale {
   object-fit: scale-down;
 }
-.img1item--efect{
-  filter:brightness(85%);
+
+.img1item--efect {
+  filter: brightness(85%);
 }
-.img1item--cover{
+
+.img1item--cover {
   object-fit: cover !important;
 }
-.img1item--scaledown{
+
+.img1item--scaledown {
   object-fit: scale-down !important;
 }
-.img1item--efect:hover{
-  filter:brightness(100%);
+
+.img1item--efect:hover {
+  filter: brightness(100%);
   animation: scale 1.5s infinite alternate;
 }
+
 .img2item {
   height: 100%;
   width: 100%;
   object-fit: cover;
 }
-@keyframes scale{
-  to{
+
+@keyframes scale {
+  to {
     transform: scale(1);
   }
-  from{
+
+  from {
     transform: scale(1.05);
   }
 }

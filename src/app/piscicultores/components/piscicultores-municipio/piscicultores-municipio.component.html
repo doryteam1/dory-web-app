@@ -27,6 +27,7 @@
   <div class="buscador-container" >
     <app-search class="buscador-container__search"
        [buscadorpersonalizado]="true"
+       [activeClasetwo]="true"
        [placeholderbuscador]="'Buscar piscicultor...'"
        (keyEnterPressData)="buscarData($event)">
     </app-search>
@@ -38,7 +39,7 @@
 </div>
 <div class="container-map-car">
   <div class="row-map-cart">
-    <div  style="width: fit-content;" *ngIf="piscicultoresFiltered.length >= 1"  >
+    <div  class="container-card" *ngIf="piscicultoresFiltered.length >= 1"  >
               <app-card-piscicultor style="width: fit-content;  display: block;" *ngFor="let piscicultor of piscicultoresFiltered; let i =index "
                [piscicultor]="piscicultor "
                [mapa]="true"
