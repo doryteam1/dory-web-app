@@ -12,7 +12,7 @@ export class InterfazConsumidorComponent implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit(): void {
-    this.elRef.nativeElement.scrollTop = 0;
+    this.elRef.nativeElement.scrollIntoView();
   }
 
   ngOnInit(): void {
