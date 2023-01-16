@@ -1,28 +1,35 @@
 
-<div id="{{id}}" data-bs-ride="carousel" class="carousel" data-bs-interval="false"
-  #myCarousel *ngIf="indicatorsphoto">
+<div id="{{id}}" data-bs-ride="false" class="carousel "
+  #myCarousel >
   <div class="carousel-indicators  puntosindicators" *ngIf="imagenes.length > 1">
-    <div class="puntosindicators__div1" [ngStyle]="{'justify-content': justyfycentercontent}" (click)="clickDivIndicadorSlider()">
-      <div class="puntosindicators__div2"  [ngStyle]="{'left.px': widthExp,'position': posicionsliderleftindicatorssinfotos}">
-        <button  type="button" [attr.data-bs-target]="idnumeral"
-          *ngFor="let item of imagenes; let i= index; let isFirst = first" [attr.data-bs-slide-to]="i"
-          [ngClass]="{'active':isFirst}" aria-current="true" aria-label="Slide"
+    <div class="puntosindicators__container" [ngStyle]="{'justify-content': justyfycentercontent}" (click)="clickDivIndicadorSlider()">
+      <div [ngStyle]="{'left.px': widthExp}">
+        <button  type="button"
+          [attr.data-bs-target]="idnumeral"
+          *ngFor="let item of imagenes; let i= index; let isFirst = first"
+          [attr.data-bs-slide-to]="i"
+          [ngClass]="{'active':isFirst}" aria-current="true"
+          aria-label="Slide"
           (click)="clickImgIndiceIndicadorSlide(i)">
         </button>
       </div>
     </div>
   </div>
   <div class="carousel-inner  imagenes-carrucel">
+
     <div class="carousel-item" *ngFor="let img of imagenes;let index = index; let isFirst = first"
       [ngClass]="{active: isFirst }" (click)="clickImagenItemSlider()" >
-      <img class="cursorPoin" [ngClass]="{ 'img1item': imagenes.length==1,'img2item':imagenes.length>1,'img1item--rounded':rounded == true ,'img1item--scale':scale==true, 'img1item--efect':efect, 'img1item--cover' : cover,'img1item--scaledown':scaledown}"
-        src="{{ img? img: 'https://admin.moodyyc.com/img/no-image.png'}}" (click)="clickImagen()">
+      <img
+      [class]="getImgClasses(imagenes.length, rounded, scale, efect, cover, scaledown)"
+        [src]="img? img: 'https://admin.moodyyc.com/img/no-image.png'" (click)="clickImagen()">
     </div>
-    <img class="img1item cursorPoin" [ngClass]="{'img1item--rounded':rounded == true ,'img1item--scale':scale==true, 'img1item--efect':efect, 'img1item--cover' : cover,'img1item--scaledown':scaledown}"
-        src='https://admin.moodyyc.com/img/no-image.png' *ngIf="imagenes.length == 0" (click)="clickImagen()">
+
+    <img [class]="getImgClasses(imagenes.length, rounded, scale, efect, cover, scaledown)"
+      src='https://admin.moodyyc.com/img/no-image.png' *ngIf="imagenes.length == 0" (click)="clickImagen()">
+
     <button class="carousel-control-prev" type="button" [attr.data-bs-target]="idnumeral" data-bs-slide="prev"
       (click)="clickButtonPrevious()" *ngIf="imagenes.length > 1">
-      <span class="mYcarousel-control-prev-icon" aria-hidden="true">
+      <span class="icon" aria-hidden="true">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false">
           <g fill="none">
             <path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932">
@@ -33,7 +40,7 @@
     </button>
     <button class="carousel-control-next" type="button" [attr.data-bs-target]="idnumeral" data-bs-slide="next"
       (click)="clickButtonNext()" *ngIf="imagenes.length > 1">
-      <span class="mYcarousel-control-next-icon" aria-hidden="true">
+      <span class="icon" aria-hidden="true">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false">
           <g fill="none">
             <path d="m12 4 11.2928932 11.2928932c.3905243.3905243.3905243 1.0236893 0 1.4142136l-11.2928932 11.2928932"></path>

@@ -11,7 +11,7 @@ export class DoryDesktopComponent implements OnInit {
     {
       title: 'Descargar',
       icon: 'assets/icons/windows.svg',
-      url: '#',
+      url: 'https://ginelect.net/desktop/dory-desktop.exe',
     },
     {
       title: 'Descargar',

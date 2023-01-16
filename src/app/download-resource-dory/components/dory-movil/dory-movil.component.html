@@ -4,7 +4,7 @@
             <div class="container-fluid container-fluid--edit">
                 <div class="row">
                     <div class="col-xs-12 text-xs-center">
-                        <h3 class="title">Dory web versión móvil</h3>
+                        <h3 class="title">Aplicación móvil DORY</h3>
                         <p class="description mt-1">
                             La Plataforma <b>DORY</b>, está pensada y diseñada para facilitar a los usuarios del departamento de Sucre una herramienta
                             con ítems bien definidos de consulta e información suministrada acerca del sector piscícola y de los servicios que la
@@ -19,19 +19,6 @@
                         <ng-container *ngTemplateOutlet="Buttondownload;context:datosboton[0]"></ng-container>
                     </div>
                     <div class="row__manuales">
-                        <div class="row__manuales--install">
-                            <div>
-                                <h3 class="title" style="text-align: center;">Manual de instalación</h3>
-                                <p class="description mt-1 mb-5">El presente manual te guiará durante todo el proceso de
-                                    instalación del
-                                    App DORY. Los indicativos aquí presentes
-                                    son muy concisos, intuitivos y fácil de comprender. Antes de iniciar, verificar si tu
-                                    Android cumple
-                                    con todo los
-                                    requisitos del sistema.</p>
-                            </div>
-                            <ng-container *ngTemplateOutlet="Buttondownload;context:datosboton[1]"></ng-container>
-                        </div>
                         <div class="row__manuales--uso">
                             <div>
                                 <h3 class="title" style="text-align: center;">Manual de uso </h3>
@@ -53,7 +40,7 @@
 <app-footer></app-footer>
 <ng-template #Buttondownload let-title="title" let-icon="icon" let-url="url">
     <div class="caja-download">
-        <a class="btn btn-primary btn-lg  mb-1 w-100" [href]="url" role="button" aria-disabled="true">
+        <a class="btn btn-primary btn-lg  mb-1 w-100" [href]="url" target="_blank" role="button" aria-disabled="true">
             <img [src]="icon" class="icon-download">
             <div class="text-xs-left"><span class="font-weight-bold">{{title}}</span>
             </div>

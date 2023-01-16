@@ -218,13 +218,13 @@ export class GranjasMunicipioComponent implements OnInit, OnDestroy {
     if (this.granjasFiltered.length > 0 && this.mapaOn) {
       this.indexSelected = index;
       this.infoWindow.open(marker);
-      this.selectedGranja.nombregranja = this.granjasFiltered[index].nombre;
-      this.selectedGranja.area = this.granjasFiltered[index].area;
+      this.selectedGranja.nombregranja = this.granjasFiltered[index]?.nombre;
+      this.selectedGranja.area = this.granjasFiltered[index]?.area;
       this.selectedGranja.dirreciongranja =
-        this.granjasFiltered[index].direccion;
+        this.granjasFiltered[index]?.direccion;
       this.selectedGranja.propietario.nombre =
-        this.granjasFiltered[index].propietario ||
-        this.granjasFiltered[index].propietarios[0].nombre_completo;
+        this.granjasFiltered[index]?.propietario ||
+        this.granjasFiltered[index]?.propietarios[0].nombre_completo;
     }
   }
   openInfoWindowClick(marker: MapMarker, index: number) {

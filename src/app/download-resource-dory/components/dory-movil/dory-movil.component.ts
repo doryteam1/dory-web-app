@@ -11,7 +11,7 @@ export class DoryMovilComponent implements OnInit {
     {
       title: 'Descargar',
       icon: 'assets/icons/android.svg',
-      url: '#',
+      url: 'https://play.google.com/store/apps/details?id=com.app.dory',
     },
     {
       title: 'Descargar',

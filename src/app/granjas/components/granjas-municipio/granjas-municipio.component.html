@@ -26,7 +26,10 @@
   </div>
   <div class="buscadoryfiltro" *ngIf="granjas.length > 0">
     <div class="buscador-container">
-      <app-search class="buscador-container__search" [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar granjas...'"
+      <app-search class="buscador-container__search"
+      [activeClasetwo]="true"
+      [buscadorpersonalizado]="true"
+      [placeholderbuscador]="'Buscar granjas...'"
         (keyEnterPressData)="onBuscarPalabra($event)">
       </app-search>
       <app-filtro
@@ -53,9 +56,8 @@
   <div>
     <div class="container-map-car">
       <div class="row-map-cart">
-        <div *ngIf="granjasFiltered.length >= 1" class="container-card" style="width: fit-content;">
+        <div *ngIf="granjasFiltered.length >= 1" class="container-card" >
           <app-card-granjas
-          style="width: fit-content;  display: block;"
           [granja]="granja"
           [favorita]="granja?.favorita"
           [resena]="granja?.count_resenas"

@@ -2,20 +2,15 @@
 .blog-card {
   display: flex;
   flex-direction: column;
-  margin: 1rem auto;
-  margin-top: 0;
-  margin-bottom: 20px;
   background: #fff;
   line-height: 1.4;
   font-family: sans-serif;
   border-radius: 10px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  padding-left: 0;
-  padding-right: 0px;
   z-index: 0;
   box-shadow: 0 2px 12px var(--shadow-2);
-  width: 75vw;
+  max-width: 500px;
+  width: 80vw;
 
   a {
     color: inherit;
@@ -101,8 +96,8 @@
 
   @media (min-width: 520px) {
     flex-direction: row;
-     width: 58vw;
-    max-width: 500px;
+    /*  width: 58vw;
+    max-width: 500px; */
     height: 200px;
     .meta {
       width: 40%;

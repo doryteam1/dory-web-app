@@ -1,6 +1,7 @@
-<div class="basic-container">
+<div  [ngClass]="{basic_container: activateStyle}">
   <gallery
-  class="gallery--class"
+  class="galleryclass"
+  [ngClass]="{galleryclassactive: activateStyle}"
    [counter]="contador"
   [attr.fluid]  ="fullScreen"
   [loadingStrategy]="'lazy'"
@@ -11,6 +12,7 @@
   [thumbWidth]="80"
   [thumbMode]="'free'"
     [dots]="puntos"
+    [dotsSize]="20"
   [autoPlay]="autoPlay.autoPlay"
   [playerInterval]="autoPlay.time"
   [thumb]="imgMini"

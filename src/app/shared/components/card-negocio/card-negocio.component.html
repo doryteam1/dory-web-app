@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card__img-box">
-    <app-carrucel-img *ngIf="datos.fotos.length != 0" [imagenes]="datos.fotos" [indicatorsphoto]="true"
+    <app-carrucel-img *ngIf="datos.fotos.length != 0" [imagenes]="datos.fotos" 
       [idtarge]="indiceDatos" [rounded]="false" [scale]=true [scaledown]="true" (eventClickImagen)="goDetail()">
     </app-carrucel-img>
     <img class="sin-img" src='https://admin.moodyyc.com/img/no-image.png' *ngIf="datos.fotos.length == 0" (click)="goDetail()">

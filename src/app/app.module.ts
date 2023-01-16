@@ -37,16 +37,21 @@ const customConfig: ShareButtonsConfig = {
   prop: {
     whatsapp: {
       icon: ['fab', 'whatsapp'],
-      text: 'Whatsapp'
+      text: 'Whatsapp',
     },
     email: {
-      text: 'Correo'
+      text: 'Correo',
     },
     copy: {
-      text: 'Copiar link'
-    }
-  }
-}
+      text: 'Copiar link',
+      data: {
+        text: 'Copiar link',
+        successText: 'Copiado',
+      },
+    },
+  },
+  /* https://github.com/MurhafSousli/ngx-sharebuttons/blob/master/projects/ngx-sharebuttons/src/lib/share.defaults.ts */
+};
 @NgModule({
   declarations: [
     AppComponent,

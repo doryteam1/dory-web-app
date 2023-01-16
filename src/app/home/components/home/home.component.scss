@@ -92,13 +92,16 @@
 .gallery--class {
   background-color: white;
   cursor: pointer;
-  height: 50vh;
+  height: 100%;
   width: 50% !important;
 }
 .basic-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 400px;
+    height: 80vw;
+    min-height: 250px;
 }
 .item-title-gallery {
   position: absolute;
@@ -151,7 +154,7 @@
   }
 }
 .gallery--class {
-  height: 70vh !important;
+  height: 100% !important;
   width: 70% !important;
 }
 }

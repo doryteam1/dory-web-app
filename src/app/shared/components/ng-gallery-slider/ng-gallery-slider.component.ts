@@ -29,6 +29,7 @@ export class NgGallerySliderComponent implements OnInit {
   @Input() puntos: boolean = false;
   @Input() imgMini: boolean = true;
   @Input() nave: boolean = true;
+  @Input() activateStyle: boolean = false;
   @Input() imageSiz: any = 'contain';
   @Input() autoPlay: any = {
     autoPlay: false,
@@ -39,7 +40,7 @@ export class NgGallerySliderComponent implements OnInit {
   items!: GalleryItem[];
   imageData: any[] = [];
   reseteSlider: boolean = false;
-  lightboxRef!:GalleryRef;
+  lightboxRef!: GalleryRef;
   counter: number = 0;
   setIntervalFoto: any;
   percent: number = 0;
@@ -49,7 +50,7 @@ export class NgGallerySliderComponent implements OnInit {
         this.imageData.push({
           srcUrl: element.changingThisBreaksApplicationSecurity || element,
           previewUrl: element.changingThisBreaksApplicationSecurity || element,
-          title:''
+          title: '',
         });
       });
       this.items = this.imageData.map(

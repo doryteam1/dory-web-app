@@ -49,6 +49,7 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
   arrayFotosGranja: any[] = [];
   modalGogleMapOpen: boolean = false;
   isAuthUser: boolean = false;
+  fotosgranjaLength: number=0;
   constructor(
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
@@ -61,6 +62,7 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
   ) {}
   mediaQuery1!: Subscription;
   ngOnInit(): void {
+    this.isAuthUser = this.userService.isAuthenticated();
     this.rating = -1;
     this.selectedGranjaId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
@@ -74,7 +76,6 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
         .subscribe(
           (response) => {
             this.miresena = response.data.resena;
-            /* console.log('mi reseña', this.miresena); */
             this.editedDescResena = this.miresena?.descripcion;
           },
           (err) => {}
@@ -86,6 +87,7 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
           this.granja = response.data[0];
           this.currentRate = this.granja?.puntuacion;
           this.fotosgranja = response.data[0].fotos;
+          this.fotosgranjaLength = this.fotosgranja.length;
           if (this.fotosgranja.length == 0) {
             this.sinfotos = true;
           }
@@ -138,10 +140,12 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
     this.mediaQuery1.unsubscribe();
   }
   fotoSele(i: number) {
-    this.shadoweffectindice = i;
-    this.imgselecmodal = -1;
-    this.valorindicecarrucel = -1;
-    this.OpenGalleryModalOptionOne();
+    if (this.fotosgranja?.length != 1) {
+      this.shadoweffectindice = i;
+      this.imgselecmodal = -1;
+      this.valorindicecarrucel = -1;
+      this.OpenGalleryModalOptionOne();
+    }
   }
   imgSelecionadaModal(i: number) {
     this.imgselecmodal = i;
@@ -154,7 +158,7 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
   }
 
   openQualifyModal(content: any, editingMiResena?: number) {
-    this.isAuthUser = this.userService.isAuthenticated();
+
     if (this.isAuthUser) {
       if (editingMiResena && editingMiResena == 1) {
         this.rating = -1;
@@ -185,7 +189,6 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
           }
         );
     } else if (!this.isAuthUser) {
-       this.rating = -1;
       this.location.onPopState(() => {
         this.appModalService.closeModalAlertSignu();
       });
@@ -199,6 +202,7 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
           }
         })
         .catch((result) => {
+
         });
     }
   }
@@ -214,6 +218,7 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
     );
   }
 
+
   showResenas(granja: any) {
     this.granjasService.showResenasModal(
       `Reseñas (${granja?.count_resenas})`,
@@ -223,7 +228,9 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
   }
 
   onRating(event: number) {
-    this.rating = event;
+    if (this.isAuthUser) {
+      this.rating = event;
+    }
   }
 
   publicarResena() {
@@ -275,7 +282,6 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
   }
   OpenGalleryModalOptionOne() {
     this.location.onPopState(() => {
-      console.log('pressed back!');
       this.appModalService.CloseModalGalleryVerAdiconarEliminarFotos();
       //  detecta  cuando se da click atras detecta y cierra la cualquiera modal activa
     });
@@ -311,7 +317,6 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
         });
         this.resenas.splice(index, 1);
         this.miresena = null;
-        console.log(response);
         this.ngOnInit();
       },
       (err) => {
@@ -395,6 +400,34 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
         this.modalGogleMapOpen = false;
       });
   }
+
+  getPhotoContainerClass() {
+let className = "photo-container-padre";
+if(this.fotosgranjaLength <= 1) {
+className += " photo-container1-div";
+} else if(this.fotosgranjaLength == 2) {
+className += " photo-container2-div";
+} else if(this.fotosgranjaLength == 3) {
+className += " photo-container3-div";
+} else if(this.fotosgranjaLength == 4) {
+className += " photo-container4-div";
+} else if(this.fotosgranjaLength == 5) {
+className += " photo-container5-div";
+} else if(this.fotosgranjaLength == 6) {
+className += " photo-container6-div";
+} else if(this.fotosgranjaLength >= 7) {
+className += " photo-container7-div";
+}
+console.log(className)
+return className;
+}
+
+
+
+
+
+
+
 }
 
 

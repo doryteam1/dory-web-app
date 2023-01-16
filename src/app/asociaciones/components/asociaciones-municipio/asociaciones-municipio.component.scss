@@ -1,6 +1,6 @@
 .data-container {
   display: flex;
-    margin-top: 50px;
+      margin-top: 30px;
     justify-content: center;
     align-items: center;
     margin-left: 10px;
@@ -9,8 +9,10 @@
 
 .data-container__div {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+    grid-gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
 
 .container2 {
@@ -65,7 +67,7 @@
 .buscadoryfiltro {
   display: flex;
     flex-direction: column;
-    margin-top: 10px;
+    margin-top: 30px;
 
   .buscador-container {
       display: flex;
@@ -111,8 +113,34 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 30px;
   gap: 20px;
+}
+@media screen and (max-width: 610px) {
+  .container__icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .container__title {
+    font-size: 15px;
+  }
+
+  .container__description {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .container__icon {
+    width: 25px;
+    height: 25px;
+  }
+
+  .container__title {
+    font-size: 14px;
+  }
+
 }
 @media screen and (min-width: 770px) {
   .buscador-container {
