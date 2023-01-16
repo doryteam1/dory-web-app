@@ -5,6 +5,7 @@ import { CondicionesComponent } from './components/condiciones/condiciones.compo
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { BasicMessageComponent } from './components/basic-message/basic-message.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 
@@ -87,6 +88,7 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () =>
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+    canActivate:[AuthGuard]
   },
   {
     path: 'panel-busqueda',
