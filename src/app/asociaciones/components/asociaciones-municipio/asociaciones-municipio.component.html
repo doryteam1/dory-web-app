@@ -32,7 +32,7 @@
       class="buscador-container__search"
          [buscadorpersonalizado]="true"
          [activeClasetwo]="true"
-         [placeholderbuscador]="'Buscar asociacion..'"
+         [placeholderbuscador]="'Buscar asociación..'"
          (keyEnterPressData)=" onBuscarPalabra($event)"
         >
       </app-search>
@@ -66,6 +66,12 @@
     <button class="btn-rounded btn--blue" (click)="goBack()">Volver al mapa</button>
   </div>
   <div class="container-card" *ngIf="asociaciones.length > 0 && !showNotFound">
+      <app-card-asociacion  *ngFor="let asociacion of  asociaciones" [asociacion]="asociacion" [delatecard]="false"
+        (onDetalle)="goAsociacionDetail($event)" (onDetalleRepresentante)="goDetalleRepresentante($event)">
+      </app-card-asociacion>
+      <app-card-asociacion  *ngFor="let asociacion of  asociaciones" [asociacion]="asociacion" [delatecard]="false"
+        (onDetalle)="goAsociacionDetail($event)" (onDetalleRepresentante)="goDetalleRepresentante($event)">
+      </app-card-asociacion>
       <app-card-asociacion  *ngFor="let asociacion of  asociaciones" [asociacion]="asociacion" [delatecard]="false"
         (onDetalle)="goAsociacionDetail($event)" (onDetalleRepresentante)="goDetalleRepresentante($event)">
       </app-card-asociacion>

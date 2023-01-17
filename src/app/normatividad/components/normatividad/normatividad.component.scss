@@ -2,14 +2,15 @@
 display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 20px;
+  margin: 30px;
   justify-content: space-evenly;
+
   .container {
       max-width: 400px;
       height: auto;
-      margin-top: 40px;
+      margin: 0;
+      padding: 0;
     }
-
     .container__title {
       text-align: center;
     }
@@ -34,7 +35,6 @@ display: flex;
 .filters-container{
     display: flex;
     justify-content: center;
-    margin: 50px 20px 28px 20px;
     button {
       width: 133px;
     };
@@ -42,8 +42,7 @@ display: flex;
 
 app-search {
   display: block;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin: 30px 15px;
 }
 app-not-found {
   display: block;
@@ -53,13 +52,14 @@ app-not-found {
   background-color: var(--azul4);
 }
 .container-card {
-  display: flex;
+display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
-  margin-top: 50px;
+  grid-gap: 20px;
+  gap: 30px;
   height: 100%;
+
 }
 /*  */
 .btn-outline-black{

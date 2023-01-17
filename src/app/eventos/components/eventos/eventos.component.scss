@@ -3,13 +3,12 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 50px;
-  /* height: 100%; */
+  gap: 30px;
   height: fit-content;
 }
 
 .card {
-padding: 20px;
+  padding: 20px;
   max-width: 400px;
   height: fit-content;
   width: 80vw;
@@ -34,7 +33,7 @@ padding: 20px;
     }
 
     .container-data {
-    height: 110px;
+      height: 110px;
       overflow: hidden;
       padding: 5px 10px;
       margin-top: 10px;
@@ -56,10 +55,10 @@ padding: 20px;
 
 
 .card__title {
-    font-size: 16px;
-      text-align: center;
-      margin-bottom: 10px;
-      margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .card__sub-title {
@@ -74,6 +73,7 @@ padding: 20px;
   text-justify: inter-word;
   margin-top: 10px;
 }
+
 .card__icon {
   width: 22px;
   height: 22px;
@@ -87,21 +87,23 @@ padding: 20px;
   max-width: 100%;
 
 }
+
 .container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
 }
+
 app-search {
   display: block;
-  margin-bottom: 20px;
-  margin-top: 20px;
-}
-@media screen and (max-width: 450px) {
-.card__icon-box {
-  flex-direction: column;
-  gap: 5px;
-}
+  margin: 30px 15px;
+
 }
 
+@media screen and (max-width: 450px) {
+  .card__icon-box {
+    flex-direction: column;
+    gap: 5px;
+  }
+}

@@ -11,10 +11,11 @@ export class CardGranjasComponent implements OnInit {
   @Input() granja: any;
   @Input() index: any;
   @Input() favorita: any;
-  @Input() granjaMunici:boolean=true;
+  @Input() granjaMunici: boolean = true;
   @Input() resena: any;
   @Input() botonMapaFijo: boolean = true;
   @Input() botonFavorito: boolean = true;
+  @Input() myclass: boolean = false;
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   @Output() onEliminInfoWindow: EventEmitter<any> = new EventEmitter();
   @Output() onMouseCard: EventEmitter<any> = new EventEmitter();
@@ -24,8 +25,7 @@ export class CardGranjasComponent implements OnInit {
     public location2: PlatformLocation,
     private appModalService: AppModalService
   ) {}
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   detalle() {
     this.onDetalle.emit();
   }
@@ -81,5 +81,4 @@ export class CardGranjasComponent implements OnInit {
       .then((result) => {})
       .catch((result) => {});
   }
-
 }

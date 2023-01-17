@@ -1,15 +1,19 @@
-.card {
+.activateclass {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+.blog-card {
   display: flex;
   flex-direction: column;
   background: #fff;
   line-height: 1.4;
   font-family: sans-serif;
   border-radius: 10px;
-    box-shadow: 0 2px 12px var(--shadow-2);
   overflow: hidden;
   z-index: 0;
+  box-shadow: 0 2px 12px var(--shadow-2);
   max-width: 500px;
-   width: 80vw;
+  width: 80vw;
 
   a {
     color: inherit;

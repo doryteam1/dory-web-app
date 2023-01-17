@@ -1,5 +1,5 @@
 
-<div class="blog-card"  (mouseover)="mouseCard()"
+<div class="blog-card"  [ngClass]="{activateclass: myclass}" (mouseover)="mouseCard()"
   (mouseout)="eliminInfoWindow()">
   <div class="meta">
     <div class="photo">

@@ -4,11 +4,11 @@
       <div class="piscicultor-container__info">
         <div class="piscicultor-container__detalle">
               <span>
-                <h4 class="detail-container__title">Piscicultor: </h4>
+                <h4 class="detail-container__title ">Piscicultor: </h4>
               </span>
               <span>
                <!--  <img class="detail-container__image" src="assets/icons/person_black.svg"> -->
-                <h4 class="piscicultor-container__title">{{piscicultor?.nombre_completo}}</h4>
+                <h4 class="piscicultor-container__title overflowwrap">{{piscicultor?.nombre_completo}}</h4>
               </span>
              <!--  <img class="detail-container__image" src="assets/icons/person_black.svg">
             <h3 class="piscicultor-container__title">Piscicultor - {{piscicultor?.nombre_completo}} </h3> -->
@@ -139,6 +139,8 @@
           </div>
         </div>
             <app-card-granjas
+            class="stylecard"
+        [myclass]="true"
              [granja]="granja"
              [favorita]="granja?.esfavorita"
              [resena]="granja?.count_resenas"

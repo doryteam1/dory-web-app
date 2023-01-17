@@ -1,7 +1,6 @@
 
 .container-card {
   display: inline-block;
-  margin: 10px;
   padding: 20px;
   width: 80vw;
     max-width: 430px;
@@ -118,10 +117,9 @@
 
 @media (max-width: 480px) {
   .container-card {
-    margin: 30px auto;
     align-items: center;
     flex-direction: column;
-     gap: 10px;
+
      .details{
       width: 100%;
       span,a{

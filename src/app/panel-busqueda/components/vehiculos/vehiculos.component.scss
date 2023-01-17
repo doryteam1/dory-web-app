@@ -3,7 +3,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 70px;
+  gap: 30px;
 }
 .img2item {
   height: 100%;
@@ -17,7 +17,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px;
+margin: 30px 15px 20px;
 }
 
 .chip {
@@ -26,8 +26,7 @@
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
-    margin-top: 10px;
-      margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .filter {

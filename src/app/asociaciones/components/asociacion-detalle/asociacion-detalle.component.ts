@@ -480,4 +480,21 @@ export class AsociacionDetalleComponent implements OnInit {
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
   }
+  getImgClasses(
+    changeItem: boolean,
+    ShowNotFound: boolean,
+    dataLength: boolean,
+  ): string {
+    let classes = 'container-card';
+    if (changeItem) {
+      classes += ' mychangeitemheight';
+    }
+    if (ShowNotFound) {
+      classes += ' search-container--flex';
+    }
+    if (dataLength) {
+      classes += ' container--flex-center';
+    }
+    return classes;
+  }
 }

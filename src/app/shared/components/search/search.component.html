@@ -1,7 +1,7 @@
 <div class="buscador-container" *ngIf="!buscadorpersonalizado">
   <div class="buscador-containe__div-search">
-    <div class="buscador-containe__search">
-      <input class="buscador-containe__search-input"  [ngClass]="{stylo_heght:activeClasetwo}" placeholder="Buscar..." [(ngModel)]="text" (ngModelChange)="onChange()"
+    <div class="buscador-containe__search" [ngClass]="{stylo_heght:activeClasetwo}">
+      <input class="buscador-containe__search-input"   placeholder="Buscar..." [(ngModel)]="text" (ngModelChange)="onChange()"
         (keyup.enter)="onEnterPress()">
     </div>
   </div>
