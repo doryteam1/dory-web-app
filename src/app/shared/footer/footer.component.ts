@@ -23,5 +23,8 @@ export class FooterComponent implements OnInit {
       window.open(url, '_blank');
     } */
   }
-  
+  navigateDos(ruta: any) {
+     window.open(ruta, '_blank');
+  }
+
 }

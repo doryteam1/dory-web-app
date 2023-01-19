@@ -100,9 +100,10 @@
 .social-container__box {
   display: flex;
   justify-content: space-evenly;
-  width: 200px;
+  width: 180px;
 }
 .social-container__icon {
+  cursor: pointer;
   width: 20px;
   height: 20px;
 }
