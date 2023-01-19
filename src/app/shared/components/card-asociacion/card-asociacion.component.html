@@ -1,50 +1,50 @@
-
 <div class="card" [ngClass]="{ 'second': !delatecard}">
-    <div class="card__description w-100">
-      <div class="card__description-header w-100">
-        <div style="cursor:pointer;" class="d-flex flex-direction-row shorterTextOverflowHidden w-100">
-          <img src="assets/icons/icono-asociacio.svg">
-          <h1 class="card__title shorterTextAuto" (click)="detalle(asociacion)">{{asociacion?.nombre}}</h1>
-        </div>
-        <i  style="color: var(--azul1);" class="card__icon bi bi-pencil" (click)="detalle(asociacion)" *ngIf="delatecard"></i>
-        <i style="color: var(--red);" class="card__icon bi bi-trash3" (click)="eliminar(asociacion)" *ngIf="delatecard"></i>
-        <!-- <i style="color: var(--red);" class="card__icon bi bi-trash3" (click)="salirAsocia(asociacion)" *ngIf="userMiembro"></i> -->
-        <div
-        style="font-size: 15px;
-    opacity: 0.5;"
-    type="button" class="btn-close card__icon"  (click)="salirAsocia(asociacion)"*ngIf="userMiembro" ></div>
+  <div class="card__description w-100">
+    <div class="card__description-header w-100">
+      <div style="cursor:pointer;" class="d-flex flex-direction-row shorterTextOverflowHidden w-100">
+        <img src="assets/icons/icono-asociacio.svg">
+        <h1 class="card__title shorterTextAuto" (click)="detalle(asociacion)">{{asociacion?.nombre}}</h1>
       </div>
-      <div class="card__description-container">
-        <div style="cursor:pointer; width: 100%;"  (click)="detalle(asociacion)">
-          <h2>Información general</h2>
-          <div class="card__description-container-infor-1  shorterTextOverflowHidden ">
-            <div class="card__description-container-infor-1-div">
-              <span class="munici shorterTextAuto">{{asociacion?.municipio}}-{{asociacion?.departamento}}</span>
-            </div>
-            <div class="card__description-container-infor-1-div">
-              <span class="direccion shorterTextAuto">{{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion}}</span>
-            </div>
-            <div class="card__description-container-infor-1-div" >
-              <span class="email shorterTextAuto">{{asociacion?.email? asociacion?.email : 'Correo sin definir'}}</span>
-            </div>
+      <i style="color: var(--azul1);" class="card__icon bi bi-pencil" (click)="detalle(asociacion)"
+        *ngIf="delatecard"></i>
+      <i style="color: var(--red);" class="card__icon bi bi-trash3" (click)="eliminar(asociacion)"
+        *ngIf="delatecard"></i>
+      <div style="font-size: 15px;
+    opacity: 0.5;" type="button" class="btn-close card__icon" (click)="salirAsocia(asociacion)" *ngIf="userMiembro">
+      </div>
+    </div>
+    <div class="card__description-container">
+      <div style="cursor:pointer; width: 100%;" (click)="detalle(asociacion)">
+        <h2>Información general</h2>
+        <div class="card__description-container-infor-1  shorterTextOverflowHidden ">
+          <div class="card__description-container-infor-1-div">
+            <span class="munici shorterTextAuto">{{asociacion?.municipio}}-{{asociacion?.departamento}}</span>
           </div>
-          <h2>Tipo de asociación</h2>
-          <div class="card__description-container-infor-1">
-            <div class="card__description-container-infor-1-div">
-              <span class="tipo-aso">{{asociacion?.tipo_asociacion}}</span>
-            </div>
+          <div class="card__description-container-infor-1-div">
+            <span class="direccion shorterTextAuto">{{asociacion?.direccion ? 'Dir.' : ''}}
+              {{asociacion?.direccion}}</span>
+          </div>
+          <div class="card__description-container-infor-1-div" *ngIf="!delatecard">
+            <span class="email shorterTextAuto">{{asociacion?.email? asociacion?.email : 'Correo sin definir'}}</span>
           </div>
         </div>
-        <div *ngIf="showRepLegal" class="w-100">
-          <h2>Representante legal</h2>
-          <div class="card__description-container-infor-2" >
-            <div class="card__description-container-infor-2-div shorterTextOverflowHidden">
-              <a class="legal-repre shorterTextAuto legal-repre-hover" (click)="goDetalleRepresentante(asociacion)" *ngIf="asociacion?.propietario">{{asociacion?.propietario}}</a>
-              <a  class="legal-repre shorterTextAuto" *ngIf="!asociacion?.propietario">Representante legal indefinido</a>
-            </div>
+        <h2>Tipo de asociación</h2>
+        <div class="card__description-container-infor-1">
+          <div class="card__description-container-infor-1-div">
+            <span class="tipo-aso">{{asociacion?.tipo_asociacion}}</span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showRepLegal" class="w-100">
+        <h2>Representante legal</h2>
+        <div class="card__description-container-infor-2">
+          <div class="card__description-container-infor-2-div shorterTextOverflowHidden">
+            <a class="legal-repre shorterTextAuto legal-repre-hover" (click)="goDetalleRepresentante(asociacion)"
+              *ngIf="asociacion?.propietario">{{asociacion?.propietario}}</a>
+            <a class="legal-repre shorterTextAuto" *ngIf="!asociacion?.propietario">Representante legal indefinido</a>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </div>
-

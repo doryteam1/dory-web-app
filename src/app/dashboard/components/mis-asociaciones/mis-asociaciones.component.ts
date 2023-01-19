@@ -137,6 +137,7 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
       .getAsociacionesIsMiembroUser(this.authUserId)
       .subscribe(
         (response) => {
+          console.log(response.data);
           this.asociacionesIsMiembro = response.data;
           if (this.asociacionesIsMiembro.length < 1) {
             this.showNotFoundAsocMiemb = true;
