@@ -116,18 +116,9 @@ export class AsociacionesComponent implements OnInit {
   }
 
   goAssociationDetail(asociacion: any) {
-    if (this.electronActive) {
       this.router.navigateByUrl(
         `/asociaciones/municipio/detalle/${asociacion.nit}`
       );
-    } else {
-      let url = this.router.serializeUrl(
-        this.router.createUrlTree([
-          `/asociaciones/municipio/detalle/${asociacion.nit}`,
-        ])
-      );
-      window.open(url, '_blank');
-    }
   }
 
   delateFilterCheckbox(index: number) {

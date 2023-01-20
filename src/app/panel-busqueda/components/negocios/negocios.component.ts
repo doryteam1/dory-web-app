@@ -128,15 +128,8 @@ export class NegociosComponent implements OnInit {
     return this.municipios;
   }
   goDetail(id: number) {
-       const url = `comerciantes/negocio/detalle/${id}`;
-       if (this.electronActive) {
-         this.router.navigateByUrl(url);
-       } else {
-         const serializedUrl = this.router.serializeUrl(
-           this.router.createUrlTree([url])
-         );
-         window.open(serializedUrl, '_blank');
-       }
+      const url = `comerciantes/negocio/detalle/${id}`;
+      this.router.navigateByUrl(url);
   }
 
   deleteFilterCheckbox(index: number) {

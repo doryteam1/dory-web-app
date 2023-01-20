@@ -273,17 +273,8 @@ export class ProductosComponent implements OnInit {
   }
 
   goDetail(producto: any) {
-    if (this.electronActive) {
       this.router.navigateByUrl(
         `/proveedores/producto/detalle/${producto.codigo}`
       );
-    } else {
-      let url = this.router.serializeUrl(
-        this.router.createUrlTree([
-          `/proveedores/producto/detalle/${producto.codigo}`,
-        ])
-      );
-      window.open(url, '_blank');
-    }
   }
 }

@@ -142,13 +142,7 @@ export class HomeComponent implements OnInit {
     window.open(url, '_blank');
   }
   navigate(ruta: any) {
-    if (this.electronActive) {
       this.router.navigateByUrl(`${ruta}`);
-    } else {
-      let url = '';
-      url = this.router.serializeUrl(this.router.createUrlTree([ruta]));
-      window.open(url, '_blank');
-    }
   }
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {

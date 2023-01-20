@@ -236,13 +236,6 @@ export class VehiculosComponent implements OnInit {
   }
 
   goDetail(id: number) {
-    if (this.electronActive) {
       this.router.navigateByUrl('transportadores/vehiculo/detalle/' + id);
-    } else {
-      const url = this.router.serializeUrl(
-        this.router.createUrlTree(['transportadores/vehiculo/detalle/' + id])
-      );
-      window.open(url, '_blank');
-    }
   }
 }

@@ -339,18 +339,9 @@ export class PublicacionComponent implements OnInit {
     if (this.otraRuta) {
       this.onDetallePublicacion.emit(publicacion);
     } else {
-      if (this.electronActive) {
         this.router.navigateByUrl(
           'publicaciones/publicacion/detalle/' + idPublicacion
         );
-      } else {
-        let url = this.router.serializeUrl(
-          this.router.createUrlTree([
-            'publicaciones/publicacion/detalle/' + idPublicacion,
-          ])
-        );
-        window.open(url, '_blank');
-      }
     }
   }
 }

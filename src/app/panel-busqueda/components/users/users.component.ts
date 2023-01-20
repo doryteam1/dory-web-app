@@ -123,14 +123,7 @@ export class UsersComponent implements OnInit {
       'Consumidor': '/consumidores/detalle/',
     }
    const baseUrl: string = map[user.tipo_usuario] ?? '';
-    if (this.electronActive) {
       this.router.navigateByUrl(baseUrl + `${user.id}`);
-    } else {
-      const url = this.router.serializeUrl(
-        this.router.createUrlTree([baseUrl + `${user.id}`])
-      );
-      window.open(url, '_blank');
-    }
   }
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
