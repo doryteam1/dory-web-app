@@ -6,7 +6,7 @@
           <span>
             <h4 class="detail-container__title">Asociación: </h4>
           </span>
-          <span>
+          <span class="overflowwrap">
             <h4 class="asociacion-container__title">{{asociacion?.nombre}}</h4>
           </span>
         </div>
@@ -214,48 +214,41 @@
 
   <div class="container_mytarget" *ngIf="piscicultorasociaciones?.length>0 || pescadorasociaciones?.length>0">
     <div class="mytarget" *ngIf="activatelistpiscicultores">
-      <div class="row row-cols-1 row-cols-sm-1 row-cols-xl-2 g-4 row--mi-estilo"
-        [ngClass]="{'mychangeitemheight':piscicultorchangeItem,'search-container--flex':piscicultorshowNotFound,'container--flex-center':piscicultorasociaciones?.length==1}">
+      <div [class]="getImgClasses(piscicultorchangeItem, piscicultorshowNotFound, piscicultorasociaciones?.length==1)">
         <div *ngIf="piscicultorchangeItem" class="mychangeitem">
           <div>
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <app-card-piscicultor style="width: fit-content;display: block;" *ngFor="let piscicultor of piscicultorasociaciones; let i =index "
+        <app-card-piscicultor  class="stylecard"  [myclass]="true" *ngFor="let piscicultor of piscicultorasociaciones; let i =index "
           [piscicultor]="piscicultor " (onDetalle)="gopiscicultorDetail($event)">
         </app-card-piscicultor>
-
       </div>
     </div>
     <div class="mytarget" *ngIf="activatelistpescadores">
-      <div class="row row-cols-1 row-cols-sm-1 row-cols-xl-2 g-4  row--mi-estilo"
-        [ngClass]="{'mychangeitemheight':pescadorchangeItem,'search-container--flex':pescadorshowNotFound, 'container--flex-center':pescadorasociaciones?.length==1 }">
+      <div [class]="getImgClasses(pescadorchangeItem, pescadorshowNotFound, pescadorasociaciones?.length==1)">
         <div *ngIf="pescadorchangeItem" class="mychangeitem">
           <div>
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-        <app-card-pescador style="width: fit-content;display: block;" *ngFor="let pescador of pescadorasociaciones; let i =index " [pescador]="pescador"
+        <app-card-pescador class="stylecard"
+        [myclass]="true"
+         *ngFor="let pescador of pescadorasociaciones; let i =index " [pescador]="pescador"
           (onDetalle)="gopescadorDetail($event)">
         </app-card-pescador>
       </div>
     </div>
     <div class="mytarget" *ngIf="activatelistgranjas">
-      <div class="container-card"
-        [ngClass]="{'mychangeitemheight':granjaChangeItem,'search-container--flex':granjaShowNotFound, 'container--flex-center':granjasAsociacion?.length==1 }">
+      <div [class]="getImgClasses(granjaChangeItem, granjaShowNotFound, granjasAsociacion?.length==1)">
         <div *ngIf="granjaChangeItem" class="mychangeitem">
           <div>
             <img src="assets/icons/changeiconanimado.svg">
           </div>
         </div>
-            <app-card-granjas
-            [granja]="granja"
-             [favorita]="granja?.favorita"
-            [resena]="granja?.count_resenas"
-          
+            <app-card-granjas class="stylecard" [granja]="granja" [favorita]="granja?.favorita" [resena]="granja?.count_resenas" [myclass]="true"
               *ngFor="let granja of granjasAsociacion; let i = index" [index]="i" (onDetalle)="goDetailFarm(granja.id_granja)"
-              (onChangeFavorite)="changeFavorite(i)" (onShowResenas)="showResenas(granja?.id_granja)"
-               [botonMapaFijo]="false">
+              (onChangeFavorite)="changeFavorite(i)" (onShowResenas)="showResenas(granja?.id_granja)" [botonMapaFijo]="false">
             </app-card-granjas>
       </div>
     </div>

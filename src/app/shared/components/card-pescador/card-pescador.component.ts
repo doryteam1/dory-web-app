@@ -12,6 +12,7 @@ import { AppModalService } from '../../services/app-modal.service';
 export class CardPescadorComponent implements OnInit, OnDestroy {
   @Input() pescador: any;
   @Input() mapa: boolean = false;
+  @Input() myclass: boolean = false;
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   @Output() onMouseOutCard: EventEmitter<any> = new EventEmitter();
   @Output() onMouseInsideCard: EventEmitter<any> = new EventEmitter();

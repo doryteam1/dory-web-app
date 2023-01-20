@@ -1,4 +1,4 @@
-<nav class="navbar sticky-top navbar-expand-xl navbar-light bg-light">
+<nav class="navbar sticky-top navbar-expand-xl navbar-light bg-light navbar--edit">
   <div class="container-fluid">
     <img *ngIf="!electronjs" class="logo1" src="assets/images/logo-no-name.svg" routerLink="/home"><!-- No Disponible en electronjs -->
     <div class="container-fluid-miestilo__1">
@@ -394,12 +394,7 @@
 <!-- ventana obciones usurio registrados  mayor 1400-->
 <ng-template #ventaUserLoginDos >
 <div class="searchAndRegsitroAndLogin">
-     <!--  <app-search class="buscador-container__search" [buscadorpersonalizado]="true" [activeClase]="true"
-        [placeholderbuscador]="'Buscar...'">
-      </app-search> -->
-        <div class="buscador--container-icon heightAndWidth" (click)="search()">
-          <img src="/assets/icons/search.svg">
-        </div>
+
   <ng-container *ngTemplateOutlet="botonregistroylogintemplDos"></ng-container>
   <!-- Notificaciones patalla superior a  1400px-->
   <div class="notifyAndUserOption">

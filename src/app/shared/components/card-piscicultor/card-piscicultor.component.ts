@@ -12,6 +12,7 @@ import { AppModalService } from '../../services/app-modal.service';
 export class CardPiscicultorComponent implements OnInit, OnDestroy {
   @Input() piscicultor: any;
   @Input() mapa: boolean = false;
+  @Input() myclass: boolean = false;
   @Output() onDetalle: EventEmitter<any> = new EventEmitter();
   @Output() onMouseOutCard: EventEmitter<any> = new EventEmitter();
   @Output() onMouseInsideCard: EventEmitter<any> = new EventEmitter();
@@ -29,13 +30,13 @@ export class CardPiscicultorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-        this.cardPiscicuMediaQuery1 = this.mediaQueryService
-          .mediaQuery('min-width: 1100px')
-          .subscribe((matches) => {
-            if (matches && this.modalGogleMapOpen) {
-              this.appModalService.CloseGoogleMapModal();
-            }
-          });
+    this.cardPiscicuMediaQuery1 = this.mediaQueryService
+      .mediaQuery('min-width: 1100px')
+      .subscribe((matches) => {
+        if (matches && this.modalGogleMapOpen) {
+          this.appModalService.CloseGoogleMapModal();
+        }
+      });
   }
 
   detalle(piscicultor: any) {

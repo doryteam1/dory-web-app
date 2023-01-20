@@ -1,4 +1,4 @@
-<app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)"></app-search>
+<app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)" [activeClasetwo]="true"></app-search>
 <div *ngIf="eventsFiltered.length > 0 && eventos.length > 0 " class="container-card">
   <div class="card" *ngFor="let evento of eventos">
     <a class="card__link" href="{{evento?.url}}" target="_blank">

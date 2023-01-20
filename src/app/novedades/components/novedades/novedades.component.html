@@ -2,7 +2,7 @@
 
     <div class="buscadoryfiltro">
       <div class="buscador-container">
-        <app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)"></app-search>
+        <app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)" [activeClasetwo]="true"></app-search>
         <button class="btn-filter"
         *ngIf="userService.isAuthenticated()"
         type="button"

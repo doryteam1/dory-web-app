@@ -14,8 +14,8 @@
     <div class="container_control_bar_month">
       <div  id="carouselExampleIndicators"
       class="carousel  carousel-dark slide myClassCarousel w-100 h-100"
-        data-bs-ride="carousel"
         data-bs-interval="false"
+        data-bs-ride="false"
         #carousel>
         <div class="carousel-inner">
           <div
@@ -36,16 +36,10 @@
     </div>
     <div class="container_data_month">
       <div class="data_month_title">
-      <!--   <div class="imagen-fish">
-          <img src="assets/icons/fishx.svg">
-        </div> -->
         <div class="container-title">
           <h6 class="title">Total consumido</h6>
           <h6 class="title title_dos">{{totalCosumo}} kg/mes</h6>
         </div>
-       <!--  <div class="imagen-fish">
-          <img src="assets/icons/fishx.svg">
-        </div> -->
       </div>
       <div class="data_month">
         <app-spinner *ngIf="loading"></app-spinner>

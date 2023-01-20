@@ -3,13 +3,14 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 70px;
+  gap: 30px;
 }
 .search {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+margin: 30px 15px 20px;
 }
 
 .chip {
@@ -17,8 +18,7 @@
   flex-direction: row;
   gap: 10px;
   justify-content: center;
-    margin-top: 10px;
-      margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 @media screen and (max-width: 764px) {

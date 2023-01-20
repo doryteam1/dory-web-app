@@ -1,4 +1,4 @@
-<div class="card" (mouseover)="mouseInsideCard (piscicultor)" (mouseout)="mouseOutCard ()">
+<div class="blog-card" [ngClass]="{activateclass: myclass}"  (mouseover)="mouseInsideCard (piscicultor)" (mouseout)="mouseOutCard ()">
   <div class="card__meta">
     <div class="card__meta-photo" (click)="detalle (piscicultor)">
       <img class=" card__meta-photo-img"

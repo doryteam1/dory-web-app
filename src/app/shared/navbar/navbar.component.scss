@@ -424,7 +424,13 @@
       flex-wrap: wrap;
       gap: 5px;
 }
+    .navbar--edit {
+      box-shadow: 0 0.5px 15px 0.5px var(--shadow-2) !important;;
+    }
 @media screen and (min-width: 1200px) {
+  .navbar--edit{
+    box-shadow: none !important ;
+  }
   .searchAndRegsitroAndLogin {
     flex-direction: row
   }
