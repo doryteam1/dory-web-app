@@ -62,30 +62,23 @@ export class EventosComponent implements OnInit {
   searchReset() {
     let resultados: any[] = this.buscarData(this.palabra);
     this.eventos = resultados;
-    if (this.eventos.length < 1) {
-      this.showNotFound = true;
-    } else {
-      this.showNotFound = false;
-    }
+    this.showNotFound = this.eventos.length < 1 ? true : false;
   }
   buscarData(texto: string): any {
-    let result: any[];
-    if (texto.trim().length === 0) {
-      result = this.eventsFiltered;
-    } else {
-      let buscardatospor: BuscarPor[] = [
-        { data1: 'nombre'},
-        { data2: 'resumen'},
-        { data3: 'organizador'},
-        { data4: 'dirigidoa'},
+      if (texto.trim().length === 0) {
+        return this.eventsFiltered;
+      }
+      const buscardatospor: BuscarPor[] = [
+        { data1: 'nombre' },
+        { data2: 'resumen' },
+        { data3: 'organizador' },
+        { data4: 'dirigidoa' },
       ];
-      result = this.searchBuscadorService.buscarData(
+      return this.searchBuscadorService.buscarData(
         this.eventsFiltered,
         texto,
         buscardatospor
       );
-    }
-    return result;
   }
   FechaPipe(fecha: any): any {
     if (fecha) {

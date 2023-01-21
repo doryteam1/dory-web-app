@@ -10,12 +10,12 @@ import { BuscarPor } from 'src/models/buscarPor.model';
   styleUrls: ['./normatividad.component.scss'],
 })
 export class NormatividadComponent implements OnInit {
-  normatividades: any[] = [];
-  norma: any;
+  normatividadesArray: any[] = [];
+  normatividadesArrayCopy: any[] = [];
+  normatividadesArrayLength: boolean = false;
   showError: boolean = false;
   showNotFound: boolean = false;
-  /* normatividadesFiltered: Array<Normatividad> = []; */
-  normatividadesArray: any[] = [];
+  norma: any;
   palabra: string = '';
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -28,37 +28,47 @@ export class NormatividadComponent implements OnInit {
     this.cargaService();
   }
   cargaService() {
+    this.showError = false;
+    this.showNotFound = false;
+    this.normatividadesArray = [];
+    this.normatividadesArrayCopy = [];
     this.nService.getNormatividadesAll().subscribe(
       (response) => {
         if (response.data.length > 0) {
-          this.normatividades = response.data;
-          this.normatividadesArray = this.normatividades.filter((value) => {
-            if (this.activatedRoute.snapshot.url[0].path == 'resoluciones') {
-              return value.tipo == 'Resolución';
-            }
-            if (this.activatedRoute.snapshot.url[0].path == 'leyes') {
-              return value.tipo == 'Ley';
-            }
-            if (this.activatedRoute.snapshot.url[0].path == 'decretos') {
-              return value.tipo == 'Decreto';
-            }
-            return (
-              value.tipo ==
-              this.activatedRoute.snapshot.url[0].path.substring(
-                0,
-                this.activatedRoute.snapshot.url[0].path.length - 1
-              )
-            );
-          });
-          this.showError = false;
-          this.showNotFound = false;
+          /* Este código está asignando un valor a la variable
+          "tipoFiltro" dependiendo del valor de la ruta activa.
+           Está usando el operador ternario para evaluar si
+            la ruta es "resoluciones", "leyes" o "decretos".
+            Si es alguna de estas tres, se asignará el
+            valor correspondiente ("Resolución", "Ley" o "Decreto").
+             Si no es ninguna de ellas, se asignará un substring
+             del valor de la ruta activa sin el último caracter. */
+          const tipoFiltro =
+            this.activatedRoute.snapshot.url[0].path == 'resoluciones'
+              ? 'Resolución'
+              : this.activatedRoute.snapshot.url[0].path == 'leyes'
+              ? 'Ley'
+              : (this.activatedRoute.snapshot.url[0].path == 'decretos'
+                  ? 'Decreto'
+                  : this.activatedRoute.snapshot.url[0].path
+                ).substring(
+                  0,
+                  this.activatedRoute.snapshot.url[0].path.length - 1
+                );
+
+          this.normatividadesArray = response.data.filter(
+            (value: any) => value.tipo == tipoFiltro
+          );
+          this.normatividadesArrayCopy = this.normatividadesArray;
+          this.normatividadesArrayLength = Boolean(
+            this.normatividadesArray.length <= 0
+          );
         } else {
           this.showNotFound = true;
           this.showError = false;
         }
       },
       (err) => {
-        console.log(err);
         this.showNotFound = false;
         this.showError = true;
       }
@@ -66,23 +76,18 @@ export class NormatividadComponent implements OnInit {
   }
 
   buscarData(texto: string): any {
-    let normasresult: any[];
     if (texto.trim().length === 0) {
-      normasresult = this.normatividades;
-    } else {
-      let buscardatospor: BuscarPor[] = [
-        { data1: 'tipo' },
-        { data2: 'nombre' },
-        { data3: 'contenido' },
-        { data4: 'municipio' },
-      ];
-      normasresult = this.searchBuscadorService.buscarData(
-        this.normatividadesArray,
-        texto,
-        buscardatospor
-      );
+      return this.normatividadesArrayCopy;
     }
-    return normasresult;
+    const buscardatospor: BuscarPor[] = [
+      { data1: 'nombre' },
+      { data2: 'contenido' },
+    ];
+    return this.searchBuscadorService.buscarData(
+      this.normatividadesArrayCopy,
+      texto,
+      buscardatospor
+    );
   }
   onBuscarPalabra(palabra: string) {
     this.palabra = palabra;
@@ -91,5 +96,6 @@ export class NormatividadComponent implements OnInit {
   reseteoDeBusqueda() {
     let resultados: any[] = this.buscarData(this.palabra);
     this.normatividadesArray = resultados;
+    this.showNotFound = this.normatividadesArray.length < 1 ? true : false;
   }
 }

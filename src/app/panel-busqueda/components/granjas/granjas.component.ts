@@ -280,7 +280,10 @@ export class GranjasComponent implements OnInit {
     if (texto.trim().length === 0) {
       asociacionesresult = this.granjas;
     } else {
-      let buscardatospor: BuscarPor[] = [{ data1: 'nombre' }];
+      let buscardatospor: BuscarPor[] = [
+        { data1: 'nombre' },
+        { data2: 'descripcion' },
+      ];
       asociacionesresult = this.searchBuscadorService.buscarData(
         this.granjas,
         texto,

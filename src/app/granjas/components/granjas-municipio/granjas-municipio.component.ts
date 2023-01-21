@@ -324,7 +324,6 @@ export class GranjasMunicipioComponent implements OnInit, OnDestroy {
       arrayafiltar,
       filtroSelecOptionData
     );
-    console.log(filtroresult);
     return filtroresult;
   }
   onFiltroChange(filtro: MetaFiltro) {

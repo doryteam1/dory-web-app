@@ -9,60 +9,20 @@ import { BuscarPor } from '../../../models/buscarPor.model';
   providedIn: 'root',
 })
 export class SearchBuscadorService {
-  buscarData(arraydata: any[], query: string, buscarpor: BuscarPor[]) {
+  buscarData(arraydata: any[], query: string, buscarpor: any[]) {
     let arraydatanew = arraydata.slice();
     query = query.toLowerCase();
     let newArray = arraydatanew.filter((dataarray) => {
-      if (buscarpor.length == 1) {
-        let dataanalisis = dataarray[buscarpor[0].data1!]
-          ?.toString()
-          .toLowerCase();
-        return dataanalisis.includes(query);
-      } else if (buscarpor.length == 2) {
-        let dataanalisis1 = dataarray[buscarpor[0].data1!]
-          ?.toString()
-          .toLowerCase();
-        let dataanalisis2 = dataarray[buscarpor[1].data2!]
-          ?.toString()
-          .toLowerCase();
-        return dataanalisis1?.includes(query) || dataanalisis2?.includes(query);
-      } else if (buscarpor.length == 3) {
-        let dataanalisis1 = dataarray[buscarpor[0].data1!]
-          ?.toString()
-          .toLowerCase();
-        let dataanalisis2 = dataarray[buscarpor[1].data2!]
-          ?.toString()
-          .toLowerCase();
-        let dataanalisis3 = dataarray[buscarpor[2].data3!]
-          ?.toString()
-          .toLowerCase();
-        return (
-          dataanalisis1?.includes(query) ||
-          dataanalisis2?.includes(query) ||
-          dataanalisis3?.includes(query)
-        );
-      } else if (buscarpor.length == 4) {
-        let dataanalisis1 = dataarray[buscarpor[0].data1!]
-          ?.toString()
-          .toLowerCase();
-        let dataanalisis2 = dataarray[buscarpor[1].data2!]
-          ?.toString()
-          .toLowerCase();
-        let dataanalisis3 = dataarray[buscarpor[2].data3!]
-          ?.toString()
-          .toLowerCase();
-        let dataanalisis4 = dataarray[buscarpor[3].data4!]
-          ?.toString()
-          .toLowerCase();
-        return (
-          dataanalisis1?.includes(query) ||
-          dataanalisis2?.includes(query) ||
-          dataanalisis3?.includes(query) ||
-          dataanalisis4?.includes(query)
-        );
+      let dataanalisis;
+      for (let i = 0; i < buscarpor.length; i++) {
+        let dta = `data${i + 1}`;
+        dataanalisis = dataarray[buscarpor[i][dta]]?.toString().toLowerCase();
+        if (dataanalisis?.includes(query)) {
+          return true;
+        }
       }
+      return false;
     });
-    /* this._arraydatasearch = newArray; */
     return newArray;
   }
   filterSeleccionadoList(
@@ -71,33 +31,32 @@ export class SearchBuscadorService {
   ): any {
     /* Ordena arrayas de mayor a menor , pasandole una referencia un valor numerico */
     let arraydatanew = arraydataabuscar.slice();
-    if (filtroSelecOptionData.modoFiltro == MODO_FILTRO_ORDER_DES) {
-      let filterarraydata = arraydatanew.sort((a, b) => {
-        if (
-          Number(a[filtroSelecOptionData.datoafiltrar!]) >
-          Number(b[filtroSelecOptionData.datoafiltrar!])
-        ) {
-          return -1;
-        } else if (
-          Number(a[filtroSelecOptionData.datoafiltrar!]) <
-          Number(b[filtroSelecOptionData.datoafiltrar!])
-        ) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-      return filterarraydata;
-    } else if (filtroSelecOptionData.modoFiltro == MODO_FILTRO_ORDER_ASC) {
-      let filterarraydata = arraydatanew.sort((a, b) => {
-        return (
-          Number(a[filtroSelecOptionData.datoafiltrar!]) -
-          Number(b[filtroSelecOptionData.datoafiltrar!])
-        );
-      });
 
-      return filterarraydata;
-    } else if (filtroSelecOptionData.modoFiltro == MODO_FILTRO_DATOS_VARIOS) {
+    const orderAsc = (a:any, b:any) =>
+      Number(a[filtroSelecOptionData.datoafiltrar!]) -
+      Number(b[filtroSelecOptionData.datoafiltrar!]);
+
+    const orderDes = (a:any, b:any) => {
+      if (
+        Number(a[filtroSelecOptionData.datoafiltrar!]) >
+        Number(b[filtroSelecOptionData.datoafiltrar!])
+      ) {
+        return -1;
+      } else if (
+        Number(a[filtroSelecOptionData.datoafiltrar!]) <
+        Number(b[filtroSelecOptionData.datoafiltrar!])
+      ) {
+        return 1;
+      } else {
+        return 0;
+      }
+    };
+
+    if (filtroSelecOptionData.modoFiltro === MODO_FILTRO_ORDER_DES) {
+      return arraydatanew.sort(orderDes);
+    } else if (filtroSelecOptionData.modoFiltro === MODO_FILTRO_ORDER_ASC) {
+      return arraydatanew.sort(orderAsc);
+    } else if (filtroSelecOptionData.modoFiltro === MODO_FILTRO_DATOS_VARIOS) {
       if (
         filtroSelecOptionData.nombrecampoDB == null ||
         filtroSelecOptionData.datoafiltrar == null ||
@@ -115,6 +74,7 @@ export class SearchBuscadorService {
       }
     }
   }
+
   filterCheckbox(
     arraydataabuscar: any[],
     arrayCheckboxSelec: any[],
@@ -136,12 +96,16 @@ export class SearchBuscadorService {
       return _arraydatafilter;
     }
   }
-  filterEspecial(arrayAfiltrar: any[], filtroSelec: any[], nombrecampoDB:string) {
+  filterEspecial(
+    arrayAfiltrar: any[],
+    filtroSelec: any[],
+    nombrecampoDB: string
+  ) {
     let respuestaFinal = [];
     for (let index = 0; index < filtroSelec.length; index++) {
       const element = filtroSelec[index];
       let newArray = arrayAfiltrar.filter((dataarray) => {
-        let dataanalisis = dataarray[nombrecampoDB]
+        let dataanalisis = dataarray[nombrecampoDB];
         return dataanalisis?.includes(element);
       });
       let valores: any = {
@@ -150,6 +114,6 @@ export class SearchBuscadorService {
       };
       respuestaFinal.push(valores);
     }
-    return respuestaFinal
+    return respuestaFinal;
   }
 }
