@@ -17,6 +17,11 @@ export class NormatividadComponent implements OnInit {
   showNotFound: boolean = false;
   norma: any;
   palabra: string = '';
+  filters: any[] = [
+    { label: 'Leyes', route: '/normatividad/leyes' },
+    { label: 'Decretos', route: '/normatividad/decretos' },
+    { label: 'Resoluciones', route: '/normatividad/resoluciones' },
+  ];
   constructor(
     private activatedRoute: ActivatedRoute,
     private nService: NormatividadService,

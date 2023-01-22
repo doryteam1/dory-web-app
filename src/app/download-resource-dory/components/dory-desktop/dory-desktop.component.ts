@@ -16,12 +16,12 @@ export class DoryDesktopComponent implements OnInit {
     {
       title: 'Descargar',
       icon: 'assets/icons/manual.svg',
-      url: '#',
+      url: 'https://ginelect.net/guias/guia-instalacion-dory-desktop.pdf',
     },
     {
       title: 'Descargar',
       icon: 'assets/icons/manual.svg',
-      url: '#',
+      url: 'https://ginelect.net/manual/desktop/manual-desktop-dory.pdf',
     },
   ];
   constructor() {}

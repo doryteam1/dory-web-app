@@ -4,7 +4,15 @@ display: flex;
   flex-wrap: wrap;
   margin: 30px;
   justify-content: space-evenly;
-
+&__card{
+display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  grid-gap: 20px;
+  gap: 30px;
+  height: 100%;
+}
   .container {
       max-width: 400px;
       height: auto;
@@ -35,6 +43,7 @@ display: flex;
 .filters-container{
     display: flex;
     justify-content: center;
+    gap: 16px;
     button {
       width: 133px;
     };
@@ -49,34 +58,31 @@ app-not-found {
   margin-top: 20px;
 }
 .urlActiva{
-  background-color: var(--azul4);
+  background-color: var(--azul4) !important;
 }
-.container-card {
-display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  grid-gap: 20px;
-  gap: 30px;
-  height: 100%;
 
-}
 /*  */
 .btn-outline-black{
   border-radius: 20px;
-  border: 1px solid rgb(0 0 0 / 33%);
   padding: 5px 20px 5px 20px;
   color: rgba(0, 0, 0, 0.55) !important;
+  background: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  transition: all .3s;
+  box-shadow: 2px 2px 12px #c5c5c5,
+    -6px -6px 12px #ffffff;
 }
+
+.btn-outline-black:active {
+  color: #666;
+  box-shadow: inset 4px 4px 12px #c5c5c5,
+    inset -4px -4px 12px #ffffff;
+}
+
 @media screen and (max-width: 480px) {
 .filters-container {
   flex-direction: column;
-  gap: 10px;
   align-items: center;
-  button {
-    width: 133px;
-    margin: 0 !important;
-  };
 }
 }
 

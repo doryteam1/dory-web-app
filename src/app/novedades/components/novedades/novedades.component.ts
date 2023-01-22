@@ -64,13 +64,11 @@ export class NovedadesComponent implements OnInit {
     this.reseteoDeBusqueda();
   }
   filtradoData(filtroSelecOptionData: MetaFiltro, arrayafiltar: any[]) {
-    let filtroresult = [];
-    filtroresult = arrayafiltar.filter((dataarray) => {
+    return arrayafiltar.filter((dataarray) => {
       let dataanalisis =
         dataarray[filtroSelecOptionData.nombrecampoDB!].toString();
       return dataanalisis?.includes('1');
     });
-    return filtroresult;
   }
   delateFilter() {
     this.filtroseleccionado = null;
@@ -83,7 +81,6 @@ export class NovedadesComponent implements OnInit {
       (response) => {
         this.novedadesFiltered = response.data;
         this.novedades = this.novedadesFiltered.slice();
-        console.log(this.novedades);
         if (this.novedadesFiltered.length < 1) {
           this.showNotFound = true;
         }
@@ -97,10 +94,11 @@ export class NovedadesComponent implements OnInit {
     );
   }
   onView(idNovedad: number, i: number, url_novedad?: any) {
-    this.navigateDetalle(url_novedad);
-    this.novedadesFiltered[i].cant_visitas++;
     this.nService.addView(idNovedad).subscribe(
-      (response) => {},
+      (response) => {
+        this.navigateDetalle(url_novedad);
+        this.novedadesFiltered[i].cant_visitas++;
+      },
       (err) => {
         this.novedadesFiltered[i].cant_visitas--;
       }
@@ -146,44 +144,32 @@ export class NovedadesComponent implements OnInit {
         .catch((result) => {});
     }
   }
-  navigateDetalle(url_novedad: any) {
-    console.log(url_novedad);
-    let url = '';
-    url = url_novedad;
-    window.open(url, '_blank');
+  navigateDetalle(urlNovedad: any) {
+    window.open(urlNovedad, '_blank');
   }
   buscarData(texto: string): any {
-    let normasresult: any[];
-    if (texto.trim().length === 0) {
-      normasresult = this.novedadesFiltered;
-    } else {
-      let buscardatospor: BuscarPor[] = [
-        { data1: 'titulo' },
-        { data2: 'autor' },
-        { data3: 'resumen' },
-      ];
-      normasresult = this.searchBuscadorService.buscarData(
-        this.novedadesFiltered,
-        texto,
-        buscardatospor
-      );
-    }
-    return normasresult;
+       if (texto.trim().length === 0) {
+         return this.novedadesFiltered;
+       }
+       const buscardatospor: BuscarPor[] = [
+         { data1: 'titulo' },
+         { data2: 'autor' },
+         { data3: 'resumen' },
+       ];
+       return this.searchBuscadorService.buscarData(
+         this.novedadesFiltered,
+         texto,
+         buscardatospor
+       );
   }
   onBuscarPalabra(palabra: string) {
     this.palabra = palabra;
     this.reseteoDeBusqueda();
   }
   reseteoDeBusqueda() {
-    let resultados: any[] = this.buscarData(this.palabra);
-    if (this.filtroseleccionado) {
-      resultados = this.filtradoData(this.filtroseleccionado, resultados);
-    }
-    this.novedades = resultados;
-    if (this.novedades.length < 1) {
-      this.showNotFound = true;
-    } else {
-      this.showNotFound = false;
-    }
-  }
+   const resultados = this.buscarData(this.palabra);
+  const filtrado = this.filtroseleccionado ? this.filtradoData(this.filtroseleccionado, resultados) : resultados;
+  this.novedades = filtrado;
+  this.showNotFound = !this.novedades.length;
+}
 }

@@ -21,7 +21,7 @@ export class DoryMovilComponent implements OnInit {
     {
       title: 'Descargar',
       icon: 'assets/icons/manual.svg',
-      url: '#',
+      url: 'https://ginelect.net/manual/mobile/manual-mobile-dory.pdf',
     },
   ];
   constructor() {}

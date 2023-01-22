@@ -49,7 +49,7 @@
 <app-footer></app-footer>
 <ng-template #Buttondownload let-title="title" let-icon="icon" let-url="url">
     <div class="caja-download">
-        <a class="btn btn-primary btn-lg  mb-1 w-100" [href]="url" role="button" aria-disabled="true">
+        <a class="btn btn-primary btn-lg  mb-1 w-100" [href]="url"  target="_blank"  role="button" aria-disabled="true">
             <img [src]="icon" class="icon-download">
             <div class="text-xs-left"><span class="font-weight-bold">{{title}}</span>
             </div>

@@ -3,7 +3,7 @@ import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC } from 'src/app/global/
 import { Checkbox } from 'src/models/checkbox.model';
 import { MetaFiltro } from '../../../models/filtro.model';
 import { MODO_FILTRO_ORDER_DES } from '../../global/constants';
-import { BuscarPor } from '../../../models/buscarPor.model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -96,6 +96,7 @@ export class SearchBuscadorService {
       return _arraydatafilter;
     }
   }
+
   filterEspecial(
     arrayAfiltrar: any[],
     filtroSelec: any[],

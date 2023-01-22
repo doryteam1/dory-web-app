@@ -16,11 +16,14 @@
   flex-direction: column;
   flex-wrap: nowrap;
   margin-right: 20px;
-  height: 80vh;
+  height: 100%;
   width: 200px;
   min-width: 200px;
   overflow-y: auto;
   font-size: 20px;
+  @media screen and (max-width: 996px) {
+      height: 80vh;
+    }
 }
 
 .container__menu--center {
@@ -45,20 +48,22 @@
 
 .container__content {
   width: 100%;
-  height: 80vh;
-  overflow-y: auto;
-  scrollbar-width: none;
-  /* Oculta la barra de desplazamiento en Firefox */
-  -ms-overflow-style: none;
-  /* Oculta la barra de desplazamiento en Internet Explorer */
-  overflow: -moz-scrollbars-none;
-  /* Oculta la barra de desplazamiento en Firefox */
-  &::-webkit-scrollbar {
-    width: 0;
-  }
+  margin-left: 220px;
+  position: relative;
+  z-index: 1;
+  top: 0;
+    @media screen and (max-width: 996px) {
+      margin-left: 0px;
+      }
 
 }
-
+.container-menu-fixed {
+  position: fixed;
+  top: 106px;
+  z-index: 10;
+  height: 100%;
+  max-height: calc(100vh - 106px);
+}
 .container__item-title {
   font-size: 1.2rem;
   font-weight: 600;

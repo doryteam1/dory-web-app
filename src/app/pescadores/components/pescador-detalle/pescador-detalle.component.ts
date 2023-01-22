@@ -31,9 +31,9 @@ export class PescadorDetalleComponent implements OnInit {
       .getPescadorDetalle(this.selectedPescadorId)
       .subscribe(
         (response: any) => {
+          console.log(response.data);
           if (response.data.length > 0) {
             this.pescador = response.data[0];
-            console.log(this.pescador);
             this.showError = false;
             this.showNotFound = false;
           } else {
@@ -57,6 +57,8 @@ export class PescadorDetalleComponent implements OnInit {
       .getPescadorDetalleAsociaciones(this.selectedPescadorId)
       .subscribe(
         (response: any) => {
+          console.log(this.selectedPescadorId);
+           console.log(response);
           if (response.data.length > 0 && response.data.length !== null) {
             this.pescadorasociaciones = response.data;
             this.showError = false;
