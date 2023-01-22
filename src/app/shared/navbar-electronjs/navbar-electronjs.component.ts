@@ -13,16 +13,14 @@ import {
 import {  NavigationEnd, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import * as dayjs from 'dayjs';
-import * as relativeTime from 'dayjs/plugin/relativeTime';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
-dayjs.extend(relativeTime);
-require('dayjs/locale/es');
-dayjs.locale('es');
 import { ResizeObserver } from '@juggle/resize-observer';
-import { ChatService } from 'src/app/services/chat.service';
 import { AppModalService } from '../services/app-modal.service';
+import { ChatService } from 'src/app/services/chat.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { Utilities } from 'src/app/utilities/utilities';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
+
 declare var window: any;
 @Component({
   selector: 'app-navbar-electronjs',
@@ -32,28 +30,26 @@ declare var window: any;
 export class NavbarElectronjsComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @ViewChild('notifies', { read: Element }) notifies!: Element;
   @ViewChild('toggleButton') toggleButton!: ElementRef;
-  @ViewChild('toggleButton2') toggleButton2!: ElementRef;
   @ViewChild('botonalbondiga') botonalbondiga!: ElementRef;
+  @ViewChild('notifies', { read: Element }) notifies!: Element;
   @ViewChild('miModalNotificacion')
   miModalNotificacion!: ElementRef;
-  @ViewChild('miModalNotificacionContent')
-  miModalNotificacionContent!: ElementRef;
-  @ViewChild('buttonOpenModalNotify')
-  buttonOpenModalNotify!: ElementRef;
   @ViewChild('dropdownNotificacion')
   dropdownNotificacion!: ElementRef<HTMLElement>;
   @ViewChild('notifyModalDropdown')
   notifyModalDropdown!: ElementRef<HTMLElement>;
-  formModal: any;
+  @ViewChild('toggleButton2') toggleButton2!: ElementRef;
+  @ViewChild('miModalNotificacionContent')
+  miModalNotificacionContent!: ElementRef;
+  @ViewChild('buttonOpenModalNotify')
+  buttonOpenModalNotify!: ElementRef;
   photoUser: string = '';
   nomCom: string = '';
   successMessage = 'Mensaje de prueba';
   invitaciones: Array<any> = [];
   notificatiosOpened: boolean = false;
   invitacionesFromUsers: Array<any> = [];
-  ocultarHtml: boolean = false;
   notifyHeights: string[] = [
     '',
     'notify__menu--height1',
@@ -68,22 +64,27 @@ export class NavbarElectronjsComponent
   resizedObserver!: ResizeObserver;
   notifiesHeigth: number = 0;
   @HostBinding('hidden')
+  notifyStyloContainer: boolean = false;
+  rutaActiva: string = '';
+  /* Propios para electron */
+  formModal: any;
+  ocultarHtml: boolean = false;
   isHidden: boolean = false;
   electronjs: boolean = false;
   currentRoute: string = '';
   showMenu: boolean = false;
-  notifyStyloContainer: boolean = false;
-  rutaActiva: string = '';
+  /* Fin */
   constructor(
     private router: Router,
     public userService: UsuarioService,
     private storageService: StorageService,
     private _electronService: ElectronjsService,
-    private ngZone: NgZone,
     private renderer: Renderer2,
-    private chatService: ChatService,
     private appModalService: AppModalService,
-    private asociacionesService: AsociacionesService
+    private chatService: ChatService,
+    private utilities: UtilitiesService,
+    private asociacionesService: AsociacionesService,
+    private ngZone: NgZone
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -105,13 +106,6 @@ export class NavbarElectronjsComponent
   }
 
   ngOnInit(): void {
-    /* https://www.learmoreseekmore.com/2022/01/usage-of-bootstrap-v5-modal-in-angularv13.html */
-    this.formModal = new window.bootstrap.Modal(
-      document.getElementById('ModalNotificacion'),
-      {
-        backdrop: false,
-      }
-    );
     this.electronjs = this._electronService.ipcActivo;
     this.photoUser = localStorage.getItem('photoUser')!;
     this.nomCom = localStorage.getItem('nomApell')!;
@@ -119,22 +113,12 @@ export class NavbarElectronjsComponent
       this.photoUser = response.photoUser;
       this.nomCom = response.nomApell;
     });
-    this.userService.solicitudesDeAsociaciones().subscribe((response) => {
-      this.invitaciones = response.data;
-    });
-
-    this.userService
-      .solicitudesParaAsociacionesRepresentante()
-      .subscribe((response) => {
-        this.invitacionesFromUsers = response.data;
-      });
-
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route: string = event.url;
         this.rutaActiva = event.url;
         this.currentRoute = event.url;
-        if (route.includes('welcome')) {
+        if (route.includes('welcome') || route.includes('politica')) {
           this.isHidden = true;
         } else {
           this.isHidden = false;
@@ -145,26 +129,17 @@ export class NavbarElectronjsComponent
       this.updateAsocRequest();
     }
     this.chatService.listenNewSolicitudes().subscribe((data) => {
-      console.log(data);
+      this.notificatiosOpened = false;
+      this.utilities.playSound('assets/sounds/sendmessage.wav');
       this.updateAsocRequest();
     });
-  }
-  updateAsocRequest() {
-    this.userService.solicitudesDeAsociaciones().subscribe((response) => {
-      this.invitaciones = response.data;
-    });
-
-    this.userService
-      .solicitudesParaAsociacionesRepresentante()
-      .subscribe((response) => {
-        this.invitacionesFromUsers = response.data;
-      });
-  }
-  openFormModal() {
-    this.formModal.show();
-  }
-  closeModalNotificacion() {
-    this.formModal.hide();
+    /* https://www.learmoreseekmore.com/2022/01/usage-of-bootstrap-v5-modal-in-angularv13.html */
+    this.formModal = new window.bootstrap.Modal(
+      document.getElementById('ModalNotificacion'),
+      {
+        backdrop: false,
+      }
+    );
   }
   @HostListener('window:resize', ['$event']) mediaScreen(event: any) {
     if (event.target.innerWidth >= 1373) {
@@ -182,6 +157,18 @@ export class NavbarElectronjsComponent
       }
     }
   }
+  updateAsocRequest() {
+    this.userService.solicitudesDeAsociaciones().subscribe((response) => {
+      this.invitaciones = response.data;
+    });
+
+    this.userService
+      .solicitudesParaAsociacionesRepresentante()
+      .subscribe((response) => {
+        this.invitacionesFromUsers = response.data;
+      });
+  }
+
   test() {
     setTimeout(() => {
       this.tests.push('test');
@@ -189,22 +176,12 @@ export class NavbarElectronjsComponent
     }, 2000);
   }
   ngAfterViewInit() {
-    console.log('ngAftterViewInit!');
-    /*  console.log(this.notifies)
-     const observer = new ResizeObserver((entries)=>{
-      console.log(entries)
-    })
-
-    observer.observe(this.notifies) */
-    //console.log(this.elRef.nativeElement.querySelector('.notify__menu'))
     const notifies = document.querySelector('.notify__menu')!;
-
     const ro = new ResizeObserver((entries, observer) => {
       if (this.notifiesHeigth < 356) {
         this.notifiesHeigth = entries[0].contentRect.height;
       }
       this.resizedObserver = observer;
-      console.log('resizing!');
     });
 
     ro.observe(notifies); // Watch dimension changes on notifies ul
@@ -213,12 +190,6 @@ export class NavbarElectronjsComponent
   ngOnDestroy(): void {
     console.log('ng on destroy');
     //this.resizedObserver.disconnect();// Stop observing
-  }
-  onResize() {
-    console.log('resize!');
-  }
-  onClick(event: any) {
-    console.log(event);
   }
 
   login() {
@@ -232,12 +203,7 @@ export class NavbarElectronjsComponent
       }
     });
   }
-  navegarRuta(ruta: string) {
-    this.ngZone.run(() => {
-      this.router.navigateByUrl(ruta);
-      this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
-    });
-  }
+
   authenticated() {
     return this.userService.isAuthenticated();
   }
@@ -249,22 +215,24 @@ export class NavbarElectronjsComponent
   authUserNomApell(): any {
     return this.userService.getAuthUserNomApell();
   }
-
+  authUserTipo_usuario(): any {
+    return this.userService.getAuthUserTipo_usuario();
+  }
   authWith() {
     return this.userService.authenticatedWith();
   }
   logout() {
     this.ngZone.run(() => {
-      this.userService.logoutElectron()
-      this.router.navigateByUrl('/home');
       this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
+      this.userService.logoutElectron();
+      this.router.navigateByUrl('/home');
     });
   }
 
   updatePassword() {
     this.ngZone.run(() => {
-      this.router.navigateByUrl('dashboard/update-password');
       this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
+      this.router.navigateByUrl('dashboard/update-password');
     });
   }
 
@@ -300,12 +268,9 @@ export class NavbarElectronjsComponent
       }
     );
   }
-  authUserTipo_usuario(): any {
-    return this.userService.getAuthUserTipo_usuario();
-  }
+
   timeToNow(date: string) {
-    dayjs.extend(relativeTime);
-    return dayjs().toNow(true);
+    return Utilities.dateFromX(date);
   }
   search() {
     this.appModalService
@@ -313,4 +278,18 @@ export class NavbarElectronjsComponent
       .then((result) => {})
       .catch((result) => {});
   }
+  navegarRuta(ruta: string) {
+    this.ngZone.run(() => {
+      this.router.navigateByUrl(ruta);
+      this.renderer.removeClass(this.toggleButton2.nativeElement, 'show');
+    });
+  }
+  /* Electron */
+  openFormModal() {
+    this.formModal.show();
+  }
+  closeModalNotificacion() {
+    this.formModal.hide();
+  }
+  /* fin */
 }

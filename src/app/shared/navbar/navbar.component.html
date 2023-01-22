@@ -262,7 +262,7 @@
     <ul #notifies
      aria-labelledby="dropdownMenuButton1"
      class="notify__menu  dropdown-menu p-3 overflow-auto"
-      [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }" (onresize)="onResize()">
+      [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }" >
       <li class="notify__title"><span
           *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
       <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span>

@@ -44,7 +44,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     'notify__menu--height7',
   ];
   tests: string[] = [];
-
   resizedObserver!: ResizeObserver;
   notifiesHeigth: number = 0;
   @HostBinding('hidden')
@@ -99,7 +98,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.chatService.listenNewSolicitudes().subscribe((data) => {
-      console.log(data);
       this.notificatiosOpened = false;
       this.utilities.playSound('assets/sounds/sendmessage.wav');
       this.updateAsocRequest();
@@ -134,9 +132,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  onResize() {
-    console.log('resize!');
-  }
   closeMenu() {
     this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
   }
@@ -147,14 +142,12 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 2000);
   }
   ngAfterViewInit() {
-    console.log('ngAftterViewInit!');
     const notifies = document.querySelector('.notify__menu')!;
     const ro = new ResizeObserver((entries, observer) => {
       if (this.notifiesHeigth < 356) {
         this.notifiesHeigth = entries[0].contentRect.height;
       }
       this.resizedObserver = observer;
-      console.log('resizing!');
     });
 
     ro.observe(notifies); // Watch dimension changes on notifies ul
@@ -163,10 +156,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     console.log('ng on destroy');
     //this.resizedObserver.disconnect();// Stop observing
-  }
-
-  onClick(event: any) {
-    console.log(event);
   }
 
   login() {
@@ -201,8 +190,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.renderer.removeClass(this.toggleButton.nativeElement, 'show');
     this.userService?.logout();
     this.router.navigateByUrl('/home');
-   
-
   }
 
   updatePassword() {

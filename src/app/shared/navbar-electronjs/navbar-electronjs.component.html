@@ -270,7 +270,7 @@
 <ng-template #notificacionNormal>
   <ul #notifies class="notify__menu notify__menu dropdown-menu p-3 overflow-auto"
     [ngClass]="{'notify__menu--max-heigth' : notifiesHeigth > 356 }" aria-labelledby="dropdownMenuButton1"
-    (onresize)="onResize()" style="-webkit-app-region: no-drag;">
+  style="-webkit-app-region: no-drag;">
     <li class="notify__title"><span
         *ngIf="invitaciones.length > 0 || invitacionesFromUsers.length > 0">Notificaciones</span></li>
     <li class="notify__sub-title"><span *ngIf="invitaciones.length > 0">Solicitudes de asociaciones</span>
@@ -346,6 +346,7 @@
   </span>
 </div>
 </ng-template>
+
  <!-- ventana obciones usurio registrados-->
 <ng-template #ventaUserLogin>
 <div class=" no-drag dropdown--miestilo-login dropdown"*ngIf="authenticated()" >
