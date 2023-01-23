@@ -6,7 +6,8 @@
       <div class="card__image-container">
         <app-ng-gallery-slider
          *ngIf="images.length > 0"
-         [fullScreen]="false"
+        [fullScreen]="false"
+        [activateStyle]="true"
         [contador]="false"
          [imagenes]="images"
           [id]="'vehiculodetallesFotos'">

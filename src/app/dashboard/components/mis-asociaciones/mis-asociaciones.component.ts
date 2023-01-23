@@ -77,22 +77,18 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
         console.log(action);
         if (action) {
           this.showNotFoundAsocMiemb = false;
-          /* window.location.reload(); */
-          /*Asociaciones en donde se en miembro*/
           this.loading2 = true;
           this.asociacionesService
             .getAsociacionesIsMiembroUser(this.authUserId)
             .subscribe(
               (response) => {
+
                 this.asociacionesIsMiembro = response.data;
                 if (this.asociacionesIsMiembro.length < 1) {
                   this.showNotFoundAsocMiemb = true;
                   this.isUserMiemb = false;
                 } else {
                   this.isUserMiemb = true;
-                  /* setTimeout(() => {
-                    this.htmlElementClick(this.tabSoyMiemb);
-                  }, 1000); */
                   this.verifyTypeUser();
                 }
                 this.loading2 = false;
@@ -137,7 +133,7 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
       .getAsociacionesIsMiembroUser(this.authUserId)
       .subscribe(
         (response) => {
-          console.log(response.data);
+           console.log(response.data);
           this.asociacionesIsMiembro = response.data;
           if (this.asociacionesIsMiembro.length < 1) {
             this.showNotFoundAsocMiemb = true;

@@ -9,51 +9,52 @@ export class PescadoresService {
   constructor(private https: HttpClient) {}
 
   getPescadores() {
-    return this.https.get(environment.doryApiRestBaseUrl+'/pescadores/todos');
+    return this.https.get(environment.doryApiRestBaseUrl + '/pescadores/todos');
   }
 
   getPescadoresMunicipio(idMunicipio: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/pescadores/municipio/' +
-        idMunicipio
+      environment.doryApiRestBaseUrl + '/pescadores/municipio/' + idMunicipio
     );
   }
 
   getPescadoresAsociacion(idAsociacion: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/pescadores/asociacion/' +
-        idAsociacion
+      environment.doryApiRestBaseUrl + '/pescadores/asociacion/' + idAsociacion
     );
   }
 
   getPescadoresDepartamento(idDpto: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/pescadores/departamento/' +
-        idDpto
+      environment.doryApiRestBaseUrl + '/pescadores/departamento/' + idDpto
     );
   }
 
   getPescadoresEstadoSolicitud(nit: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/usuario/pescador/asociacion/' +
-        nit
+      environment.doryApiRestBaseUrl + '/usuario/pescador/asociacion/' + nit
     );
   }
   getPescadoresPorAsociacion(nit: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/pescadores/asociacion/' + nit
+      environment.doryApiRestBaseUrl + '/pescadores/asociacion/' + nit
     );
   }
 
   /* sin terminar */
   getPescadorDetalle(id: number) {
+    return this.https.get(environment.doryApiRestBaseUrl + '/usuario/id/' + id);
+  }
+
+  getAsociacionesUsuario(id: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/usuario/id/' + id
+      environment.doryApiRestBaseUrl + '/asociaciones/usuario/' + id
     );
   }
-  getPescadorDetalleAsociaciones(id: number) {
+  getAsociacionesIsMiembroUser(id: number) {
     return this.https.get(
-      environment.doryApiRestBaseUrl+'/asociaciones/usuario/' + id
+      environment.doryApiRestBaseUrl + '/asociaciones/miembros/' + id
     );
   }
 }
+

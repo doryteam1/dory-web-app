@@ -49,8 +49,10 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     id_especie: new FormControl('', [Validators.required]),
     cantidad: new FormControl(0, [Validators.required]),
     preciokilogramo: new FormControl(0, [Validators.required]),
+    titulo:new FormControl('', [Validators.required]),
+    descripcion:new FormControl('', [Validators.required]),
     id_municipio: new FormControl(null),
-    usuarios_id: new FormControl(null)
+    usuarios_id: new FormControl(null),
   });
   onMapa: boolean = false;
   action_dos:any='ver_editar'
@@ -142,8 +144,6 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
                   this.filesfinalCreate.splice(element, 1);
                 }
               } else if (action == 'update') {
-                console.log("Array enviado a loadPhotos ",array)
-                console.log("tipo array loadphotos ",typeof array)
                 this.loadPhotos(array);
               }
             }
@@ -232,6 +232,8 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     this.idEspecie?.setValue('');
     this.cantidad?.setValue(null);
     this.precio?.setValue(null);
+     this.titulo?.setValue('');
+     this.descripcion?.setValue('');
   }
 
   prepareForm(action: string, publicacion?: any) {
@@ -245,6 +247,8 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       this.precio?.setValue(publicacion.preciokilogramo);
       this.municipio?.setValue(publicacion.id_municipio_fk);
       this.usuario?.setValue(publicacion.usuarios_id);
+      this.titulo?.setValue(publicacion.titulo);
+      this.descripcion?.setValue(publicacion.descripcion);
       if (this.formState == 'disable') {
         this.form.disable();
       }
@@ -425,6 +429,13 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
 
   get usuario(){
     return this.form.get('usuarios_id');
+  }
+  get titulo(){
+    return this.form.get('titulo');
+  }
+
+  get descripcion(){
+    return this.form.get('descripcion');
   }
 }
 

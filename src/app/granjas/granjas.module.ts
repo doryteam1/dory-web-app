@@ -29,8 +29,9 @@ import { FormsModule } from '@angular/forms';
     GranjasRoutingModule,
     NgbModule,
     SharedModule,
-    FormsModule
+    FormsModule,
   ],
+  exports: [GranjasComponent],
   providers: [
     GranjasService,
     HttpsService,

@@ -6,6 +6,17 @@
 
     <div class="modal-body">
       <form [formGroup]="form" autocomplete="off">
+          <div class="mb-3">
+            <label for="dateOfBirth">Título</label>
+            <div class="input-group">
+              <input id="productName" class="form-control" placeholder="Título publicación" formControlName="titulo">
+            </div>
+            <div *ngIf="invalid('titulo')" class="container__alert-msg danger-message">
+              <div *ngIf="titulo?.errors?.['required']">
+                Campo requerido
+              </div>
+            </div>
+          </div>
         <div class="mb-3">
             <span class="container__title">Especie</span>
             <div>
@@ -44,6 +55,18 @@
           </div>
           <div *ngIf="invalid('preciokilogramo')" class="container__alert-msg danger-message">
             <div *ngIf="precio?.errors?.['required']">
+              Campo requerido
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="dateOfBirth">Descripción</label>
+          <div class="input-group">
+            <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Descripción publicación"
+              formControlName="descripcion">Write something here</textarea>
+          </div>
+          <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
+            <div *ngIf="descripcion?.errors?.['required']">
               Campo requerido
             </div>
           </div>

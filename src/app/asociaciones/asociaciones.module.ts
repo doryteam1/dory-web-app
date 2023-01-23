@@ -35,11 +35,9 @@ import { MiembrosAsociacionModalContentComponent } from './components/modals/mie
     SharedModule,
     PiscicultoresModule,
     PescadoresModule,
-    RouterModule
+    RouterModule,
   ],
-  providers:[
-    AsociacionesService,
-    HttpsService
-  ]
+  exports: [AsociacionesComponent],
+  providers: [AsociacionesService, HttpsService],
 })
-export class AsociacionesModule { }
+export class AsociacionesModule {}

@@ -1,0 +1,15 @@
+
+<div class="filters-container ">
+  <button *ngFor="let filter of filtersButton" [ngClass]="{'urlActiva':_router.url.includes(filter.route)}"
+    [routerLink]="[filter.route]" class="btn-outline-black button--edit" >
+    {{filter.label}}
+  </button>
+</div>
+<div *ngIf="tipoFiltro">
+<app-piscicultores *ngIf="tipoFiltro == 'piscicultores'"></app-piscicultores>
+<app-pescadores *ngIf="tipoFiltro ==  'pescadores'"></app-pescadores>
+<app-asociaciones  *ngIf="tipoFiltro == 'asociaciones'"></app-asociaciones>
+<app-granjas *ngIf="tipoFiltro == 'granjas'"></app-granjas>
+</div>
+
+

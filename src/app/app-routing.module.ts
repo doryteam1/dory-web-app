@@ -47,6 +47,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'geolocalizacion',
+    loadChildren: () =>
+      import('./geolocalizacion/geolocalizacion.module').then(
+        (m) => m.GeolocalizacionModule
+      ),
+  },
+  {
     path: 'registro',
     loadChildren: () =>
       import('./registro/registro.module').then((m) => m.RegistroModule),
@@ -88,7 +95,7 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () =>
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-    canActivate:[AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'panel-busqueda',
@@ -164,8 +171,7 @@ const routes: Routes = [
   {
     path: 'manual',
     loadChildren: () =>
-      import('./manual/manual.module').then(
-        (m) => m.ManualModule),
+      import('./manual/manual.module').then((m) => m.ManualModule),
   },
   {
     path: 'download-resource-dory',

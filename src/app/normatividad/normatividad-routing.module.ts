@@ -4,20 +4,25 @@ import { NormatividadComponent } from './components/normatividad/normatividad.co
 
 const routes: Routes = [
   {
-    path:'', component:NormatividadComponent
+    path: 'leyes',
+    component: NormatividadComponent,
   },
   {
-    path:'leyes', component:NormatividadComponent
+    path: 'estatutos',
+    component: NormatividadComponent,
   },
   {
-    path:'estatutos', component:NormatividadComponent
+    path: 'decretos',
+    component: NormatividadComponent,
   },
   {
-    path:'decretos', component:NormatividadComponent
+    path: 'resoluciones',
+    component: NormatividadComponent,
   },
   {
-    path:'resoluciones', component:NormatividadComponent
-  }
+    path: '**',
+    redirectTo: '/geolocalizacion/granjas',
+  },
 ];
 
 @NgModule({

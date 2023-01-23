@@ -14,7 +14,7 @@ import { PescadorDetalleComponent } from './components/pescador-detalle/pescador
   declarations: [
     PescadoresComponent,
     PescadoresMunicipioComponent,
-    PescadorDetalleComponent
+    PescadorDetalleComponent,
   ],
   imports: [
     CommonModule,
@@ -23,10 +23,9 @@ import { PescadorDetalleComponent } from './components/pescador-detalle/pescador
     HttpClientModule,
     HttpClientJsonpModule,
     NgbModule,
-    SharedModule
+    SharedModule,
   ],
-  providers:[
-    PescadoresService
-  ]  
+  exports: [PescadoresComponent],
+  providers: [PescadoresService],
 })
-export class PescadoresModule { }
+export class PescadoresModule {}

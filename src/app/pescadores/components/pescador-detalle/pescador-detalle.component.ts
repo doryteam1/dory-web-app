@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PescadoresService } from '../../services/pescadores.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pescador-detalle',
@@ -31,7 +32,6 @@ export class PescadorDetalleComponent implements OnInit {
       .getPescadorDetalle(this.selectedPescadorId)
       .subscribe(
         (response: any) => {
-          console.log(response.data);
           if (response.data.length > 0) {
             this.pescador = response.data[0];
             this.showError = false;
@@ -52,37 +52,53 @@ export class PescadorDetalleComponent implements OnInit {
           }
         }
       );
+   this.getAsociaciones();
 
+  }
+  handleResponse(response: any) {
+    if (!response.data.length) {
+      this.showNotFound = true;
+      this.showError = false;
+      this.changeItem = false;
+    } else {
+      this.pescadorasociaciones = response.data;
+      this.showError = false;
+      this.showNotFound = false;
+      this.changeItem = false;
+    }
+  }
+
+  handleError(err:any) {
+     this.showNotFound = false;
+     this.showError = false;
+     this.changeItem = false;
+     if (err.status == 404 || err.status == 500) {
+       this.showNotFound = true;
+     } else {
+       this.showError = true;
+       this.errorMessage = 'Error inesperado';
+     }
+  }
+  getAsociaciones() {
     this.pescadoresService
-      .getPescadorDetalleAsociaciones(this.selectedPescadorId)
+      .getAsociacionesUsuario(this.selectedPescadorId)
       .subscribe(
         (response: any) => {
-          console.log(this.selectedPescadorId);
-           console.log(response);
-          if (response.data.length > 0 && response.data.length !== null) {
-            this.pescadorasociaciones = response.data;
-            this.showError = false;
-            this.showNotFound = false;
-            this.changeItem = false;
-          } else {
-            this.showNotFound = true;
-            this.showError = false;
-            this.changeItem = false;
+          if (!response.data.length) {
+           this.pescadoresService
+             .getAsociacionesIsMiembroUser(this.selectedPescadorId)
+             .subscribe(
+               (response: any) => this.handleResponse(response),
+               (err) => this.handleError(err)
+             );
+          }else{
+            this.handleResponse(response)
           }
         },
-        (err) => {
-          this.showNotFound = false;
-          this.showError = false;
-          this.changeItem = false;
-          if (err.status == 404 || err.status == 500) {
-            this.showNotFound = true;
-          } else {
-            this.showError = true;
-            this.errorMessage = 'Error inesperado';
-          }
-        }
+        (err) => this.handleError(err)
       );
   }
+
   goAssociationDetail(asociacion: any) {
     this.router.navigateByUrl(
       '/asociaciones/municipio/detalle/' + asociacion.nit

@@ -10,32 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./piscicultores.component.scss']
 })
 export class PiscicultoresComponent implements OnInit {
-  sanOnofreActive:boolean = true;
-  toluActive:boolean = true;
-  toluViejoActive:boolean = true;
-  covenasActive:boolean = true;
-  colosoActive:boolean = true;
-  chalanActive:boolean = true;
-  ovejasActive:boolean = true;
-  palmitoActive:boolean = true;
-  sincelejoActive:boolean = true;
-  morroaActive:boolean = true;
-  losPalmitosActive:boolean = true;
-  sanPedroActive:boolean = true;
-  sampuesActive:boolean = true;
-  corozalActive:boolean = true;
-  sanJuanDeBetuliaActive:boolean = true;
-  sinceActive:boolean = true;
-  buenaVistaActive:boolean = true;
-  elRobleActive:boolean = true;
-  galerasActive:boolean = true;
-  sanBenitoAbadActive:boolean = true;
-  laUnionActive:boolean = true;
-  caimitoActive:boolean = true;
-  sucreActive:boolean = true;
-  sanMarcosActive:boolean = true;
-  majagualActive:boolean = true;
-  guarandaActive:boolean = true;
+
   poblacion:number = 0;
   piscicultores:number = 0;
 
@@ -45,7 +20,7 @@ export class PiscicultoresComponent implements OnInit {
     count:0
   }
 
-  
+
   resumenDepartamento:Array<any> = []
   constructor(private pService:PiscicultoresService,private router:Router) { }
 
@@ -59,7 +34,7 @@ export class PiscicultoresComponent implements OnInit {
         console.log(err);
       }
     )
-    
+
   }
 
   changeSelected(codigo:number){

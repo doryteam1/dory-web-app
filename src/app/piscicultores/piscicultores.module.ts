@@ -18,6 +18,9 @@ import { PiscicultorDetalleComponent } from './components/piscicultor-detalle/pi
     PiscicultorDetalleComponent,
 
   ],
+  exports:[
+    PiscicultoresComponent
+  ],
   imports: [
     CommonModule,
     PiscicultoresRoutingModule,

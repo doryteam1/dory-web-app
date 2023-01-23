@@ -26,12 +26,14 @@
 }
 
 .card__title {
-  font-weight: 600;
+  color: var(--gris-oscuro);
+  font-weight: 620;
   font-size: 1.5rem;
 }
 
 .card__title2 {
-  font-weight: 600;
+  color: var(--gris-oscuro);
+  font-weight: 500;
   font-size: 18px;
 }
 
@@ -42,12 +44,14 @@
 }
 
 .card__description-title {
+  color: var(--gris-oscuro);
   font-size: 16px;
   margin-bottom: 10px;
   text-align: justify;
 }
 
 .card__description {
+  color: var(--gris-oscuro);
   font-size: 16px;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -88,5 +92,8 @@
 
   .card__container {
     width: 100%;
+  }
+  .card__description{
+    max-width: 100%;
   }
 }

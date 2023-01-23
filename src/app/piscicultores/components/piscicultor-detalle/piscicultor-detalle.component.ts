@@ -16,14 +16,14 @@ export class PiscicultorDetalleComponent implements OnInit {
   piscicultor: any;
   piscicultorasociaciones: any;
   piscicultorgranjas: any;
-  piscicultorDetalleAsociacioneshowNotFound: boolean = false;
-  piscicultorDetalleGranjasshowNotFound: boolean = false;
+  piscicultorAsociacionNotFound: boolean = false;
+  piscicultorGranjasNotFound: boolean = false;
   piscicultorDetalleshowError: boolean = false;
-  piscicultorDetalleAsociacioneshowError: boolean = false;
-  piscicultorDetalleGranjasshowError: boolean = false;
+  piscicultorAsociacionError: boolean = false;
+  piscicultorGranjasError:boolean = false;
   errorMessage = '';
   activatelistasociacion: boolean = false;
-  piscicultorDetalleGranjaschangeItem: boolean = true;
+  piscicultorGranjaschangeItem: boolean = true;
   constructor(
     private activatedRoute: ActivatedRoute,
     private piscicultoresService: PiscicultoresService,
@@ -56,71 +56,85 @@ export class PiscicultorDetalleComponent implements OnInit {
           }
         }
       );
-    this.piscicultorDetalleAsociaciones();
+    this.getAsociaciones();
+    this.piscicultorDetalleGranjas();
   }
-  async piscicultorDetalleGranjas() {
-    try {
-      let response = await this.piscicultoresService
-        .getPiscicultorDetalleGranjas(this.selectedPiscicultorId)
-        .toPromise();
-      this.piscicultorgranjas = response.data;
-      console.log(this.piscicultorgranjas);
-      if (response.data.length >= 0) {
-        this.piscicultorDetalleGranjasshowError = false;
-        this.piscicultorDetalleGranjasshowNotFound = false;
-        this.piscicultorDetalleGranjaschangeItem = false;
-      } else {
-        this.piscicultorDetalleGranjasshowNotFound = true;
-        this.piscicultorDetalleGranjasshowError = false;
-        this.piscicultorDetalleGranjaschangeItem = false;
-      }
-    } catch (err: any) {
-      this.piscicultorDetalleGranjasshowNotFound = false;
-      this.piscicultorDetalleGranjasshowError = false;
-      this.piscicultorDetalleGranjaschangeItem = false;
-      if (err.status == 404) {
-        this.piscicultorDetalleGranjasshowNotFound = true;
-      } else {
-        this.piscicultorDetalleGranjasshowError = true;
-        this.errorMessage = 'Error inesperado';
-      }
-    }
+  piscicultorDetalleGranjas() {
+    this.piscicultoresService
+      .getPiscicultorDetalleGranjas(this.selectedPiscicultorId)
+      .subscribe(
+        (response: any) => {
+          if (!response.data.length) {
+            this.piscicultorGranjasNotFound = true;
+            this.piscicultorGranjasError = false;
+            this.piscicultorGranjaschangeItem = false;
+          } else {
+            this.piscicultorgranjas = response.data;
+            this.piscicultorGranjasError = false;
+            this.piscicultorGranjasNotFound = false;
+            this.piscicultorGranjaschangeItem = false;
+          }
+        },
+        (err) => {
+          this.piscicultorGranjasNotFound = false;
+          this.piscicultorGranjasError = false;
+          this.piscicultorGranjaschangeItem = false;
+          if (err.status == 404) {
+            this.piscicultorGranjasNotFound = true;
+          } else {
+            this.piscicultorGranjasError = true;
+            this.errorMessage = 'Error inesperado';
+          }
+        }
+      );
   }
-  async piscicultorDetalleAsociaciones() {
-    try {
-      let response = await this.piscicultoresService
-        .getPiscicultorDetalleAsociaciones(this.selectedPiscicultorId)
-        .toPromise();
+
+  handleResponse(response: any) {
+    if (!response.data.length) {
+      this.piscicultorAsociacionNotFound = true;
+      this.piscicultorAsociacionError = false;
+    } else {
       this.piscicultorasociaciones = response.data;
-      await this.piscicultorDetalleGranjas();
-      if (response.data.length > 0) {
-        this.piscicultorDetalleAsociacioneshowError = false;
-        this.piscicultorDetalleAsociacioneshowNotFound = false;
-      } else {
-        this.piscicultorDetalleAsociacioneshowNotFound = true;
-        this.piscicultorDetalleAsociacioneshowError = false;
-      }
-    } catch (err: any) {
-      this.piscicultorDetalleAsociacioneshowNotFound = false;
-      this.piscicultorDetalleAsociacioneshowError = false;
-      if (err.status == 404) {
-        this.piscicultorDetalleAsociacioneshowNotFound = true;
-      } else {
-        this.piscicultorDetalleAsociacioneshowError = true;
-        this.errorMessage = 'Error inesperado';
-      }
+      this.piscicultorAsociacionError = false;
+      this.piscicultorAsociacionNotFound = false;
     }
   }
 
-
-
-  openAsocia(){
-    if(this.activatelistasociacion){
+  handleError(err: any) {
+    this.piscicultorAsociacionNotFound = false;
+    this.piscicultorAsociacionError = false;
+    if (err.status == 404) {
+      this.piscicultorAsociacionNotFound = true;
+    } else {
+      this.piscicultorAsociacionError = true;
+      this.errorMessage = 'Error inesperado';
+    }
+  }
+  getAsociaciones() {
+    this.piscicultoresService
+      .getAsociacionesUsuario(this.selectedPiscicultorId)
+      .subscribe(
+        (response: any) => {
+          if (!response.data.length) {
+            this.piscicultoresService
+              .getAsociacionesIsMiembroUser(this.selectedPiscicultorId)
+              .subscribe(
+                (response: any) => this.handleResponse(response),
+                (err) => this.handleError(err)
+              );
+          } else {
+            this.handleResponse(response);
+          }
+        },
+        (err) => this.handleError(err)
+      );
+  }
+  openAsocia() {
+    if (this.activatelistasociacion) {
       this.activatelistasociacion = false;
-    }else{
+    } else {
       this.activatelistasociacion = true;
     }
-
   }
   goAssociationDetail(asociacion: any) {
     this.router.navigateByUrl(
