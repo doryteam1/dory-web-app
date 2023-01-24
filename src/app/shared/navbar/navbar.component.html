@@ -51,9 +51,9 @@
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+          <a class="" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
-            Dory
+            <i class="bi bi-list nav-link"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/nosotros">¿Quiénes somos?</a></li>
@@ -61,17 +61,23 @@
             <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/contacto">Contáctanos</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+        <li class="nav-item" routerLink="/geolocalizacion">
+          <a class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
-            Productores
+            Geolocalización
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/granjas">Granjas</a></li>
-            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/piscicultores">Piscicultores</a></li>
-            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/pescadores">Pescadores</a></li>
-            <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/asociaciones">Asociaciones</a></li>
-          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" id="navbarDropdown" (click)="closeMenu()" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false" routerLink="/panel-busqueda">
+            Consulta
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" id="navbarDropdown" (click)="closeMenu()" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false" routerLink="/publicaciones">
+            Plaza de mercado
+          </a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -109,12 +115,6 @@
             <li><a class="dropdown-item" (click)="closeMenu()" routerLink="/normatividad/resoluciones">Resoluciones</a>
             </li>
           </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link" id="navbarDropdown" (click)="closeMenu()" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false" routerLink="/panel-busqueda">
-            Panel de búsqueda
-          </a>
         </li>
       </ul>
       <!-- Panel de notificación, login y registro y seach superior a 1400px -->
