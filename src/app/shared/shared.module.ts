@@ -72,6 +72,8 @@ import { ModalAlertSignupComponent } from './components/modal-alert-signup/modal
 import { SimpleCheckboxSwitchComponent } from './components/simple-checkbox-switch/simple-checkbox-switch.component';
 import { ModalInsertLinkComponent } from './components/modal-insert-link/modal-insert-link.component';
 import { TargetDesplegableComponent } from './components/target-desplegable/target-desplegable.component';
+import { LightboxImagenComponent } from './components/lightbox-imagen/lightbox-imagen.component';
+
 
 
 @NgModule({
@@ -129,6 +131,7 @@ import { TargetDesplegableComponent } from './components/target-desplegable/targ
     SimpleCheckboxSwitchComponent,
     ModalInsertLinkComponent,
     TargetDesplegableComponent,
+    LightboxImagenComponent,
   ],
   imports: [
     CommonModule,
@@ -196,6 +199,7 @@ import { TargetDesplegableComponent } from './components/target-desplegable/targ
     SimpleCheckboxSwitchComponent,
     ModalInsertLinkComponent,
     TargetDesplegableComponent,
+    LightboxImagenComponent,
   ],
 
   providers: [

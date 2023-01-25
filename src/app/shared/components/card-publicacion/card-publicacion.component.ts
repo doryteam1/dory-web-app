@@ -18,6 +18,7 @@ export class CardPublicacionComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+
     registerLocaleData(es);
   }
 

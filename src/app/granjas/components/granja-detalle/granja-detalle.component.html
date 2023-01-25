@@ -231,6 +231,7 @@ class="galleryslider"
       id="photo-container__photo{{i+1}}"
       [src]="fotogranja ? fotogranja : 'assets/images/no-image.jpg'"
       (click)="fotoSele(i)">
+      <app-lightbox-imagen  [thumbnails]="fotosgranja[0]" *ngIf="showLightbox" (onCloseLightbox)="fotoSeleLightbox()"></app-lightbox-imagen>
       <button class="masimagenescontador"
         (click)="OpenGalleryModalOptionOne(); shadoweffectindice=-1; valorindicecarrucel=-1; imgselecmodal=-1"
         *ngIf="fotosgranjaLength >7">
@@ -241,6 +242,7 @@ class="galleryslider"
       *ngIf="fotosgranjaLength !=1">{{fotosgranjaLength >=7 ? 'Ver todas las fotos' : 'Ver fotos'}}</button>
 </div>
 </ng-template>
+
 <ng-template #qualifyModal let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" *ngIf="!success">Calificar esta granja</h4>
@@ -269,3 +271,4 @@ class="galleryslider"
     </div>
   </div>
 </ng-template>
+

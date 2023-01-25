@@ -30,7 +30,7 @@ export class PublicacionDetalleComponent implements OnInit {
     this.publicacionesService.getPublicacionDetail(this.selectedId).subscribe(
       (response) => {
         this.publicacion = response?.data[0];
-        console.log(this.publicacion);
+
         this.images = this.publicacion.fotos;
       },
       (err) => {

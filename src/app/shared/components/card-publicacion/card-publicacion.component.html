@@ -14,10 +14,11 @@
     </div>
     <div  class="card-body shorterTextOverflowHidden" >
       <div class="w-100" style="text-align: start;cursor:pointer" (click)="goDetail()" >
-        <h6 class="card__title card-title shorterTextAuto">{{publicacion.titulo}}</h6>
-        <h6 class="card__title card-title">${{publicacion.preciokilogramo | number:'':'es'}}/Kg</h6>
-        <h5 class="card__sub-title card-title shorterTextAuto">{{publicacion.especie}}</h5>
-        <p class="card__descripction card-text shorterTextAuto">Cantidad disponible: {{publicacion.cantidad}} Kg</p>
+        <h6 class="card__title card-title shorterTextAuto">{{publicacion?.titulo}}</h6>
+        <h6 class="card__title card-title">${{publicacion?.preciokilogramo | number:'':'es'}}/Kg</h6>
+        <h5 class="card__sub-title card-title shorterTextAuto">{{publicacion?.especie}}</h5>
+        <p class="card__sub-title card-title shorterTextAuto">Disponibles: {{publicacion?.cantidad}} Kg</p>
+        <!-- <p class="card__descripction card-text shorterTextAuto">Publicado:{{publicacion?.fecha}}</p> -->
       </div>
       <div>
         <div *ngIf="editaAndEliminar">
