@@ -1,22 +1,4 @@
-<div class="stats">
-    <div class="data-container">
-        <div class="stats-container">
-            <img class="stats-container__icon" src="assets/icons/group-circle-solid.svg">
-            <div class="stats-container__info">
-                <h3 class="stats-container__title container__title--color-morado">Población</h3>
-                <span class="stats-container__description">{{poblacion | number:'':'es'}}</span>
-            </div>
-        </div>
 
-        <div class="stats-container">
-            <img class="stats-container__icon" src="assets/icons/fish.svg">
-            <div class="stats-container__info">
-                <h3 class="stats-container__title container__title--color-blue-2">Piscicultores</h3>
-                <span class="stats-container__description">{{piscicultores| number:'':'es'}}</span>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="container">
     <h4 class="container__title">Piscicultores en el departamento de Sucre</h4>
     <p class="container__description">
@@ -30,8 +12,20 @@
     los datos del piscicultor, lugar de ubicación, el número de celular, correo electrónico,
     dirección, las asociaciones que son registradas y sus granjas.
   </p>
-    <div class="container_box">
-        <app-map-sucre class="mapaMunicipios" (munClick)="munClick($event)" (munOver)="munOver($event)" [munData]="municSeleccionado" labelTooltip="Piscicultores"></app-map-sucre>
-    </div>
+        <div class="container__map_cards">
+          <div class="cards">
+            <app-card-item-data [dataNumber]="poblacion | number:'':'es'" [icon]="'assets/icons/group-circle-solid.svg'"
+              [title]="'Población'">
+            </app-card-item-data>
+            <app-card-item-data [dataNumber]="piscicultores | number:'':'es'" [icon]="'assets/icons/fish.svg'"
+              [title]="'Piscicultores'">
+            </app-card-item-data>
+          </div>
+            <div class="container_box">
+              <app-map-sucre class="mapaMunicipios" (munClick)="munClick($event)" (munOver)="munOver($event)"
+                [munData]="municSeleccionado" labelTooltip="Piscicultores"></app-map-sucre>
+            </div>
+        </div>
+
 </div>
 <app-footer></app-footer>

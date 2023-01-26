@@ -5,7 +5,7 @@
       <ng-container *ngTemplateOutlet="fotosMini;context:{fotosLength: showMore ? 4 : fotos.length}"></ng-container>
     </div>
   </div>
-  <div class="container__alert-msg danger-message">
+  <div *ngIf="loadingphoto && modalMode != 'update'"  class="container__alert-msg danger-message">
     <div>Por favor; espere miestras se cargan las fotos</div>
   </div>
 </div>

@@ -73,6 +73,8 @@ import { SimpleCheckboxSwitchComponent } from './components/simple-checkbox-swit
 import { ModalInsertLinkComponent } from './components/modal-insert-link/modal-insert-link.component';
 import { TargetDesplegableComponent } from './components/target-desplegable/target-desplegable.component';
 import { LightboxImagenComponent } from './components/lightbox-imagen/lightbox-imagen.component';
+import { CardItemDataComponent } from './components/card-item-data/card-item-data.component';
+
 
 
 
@@ -132,6 +134,7 @@ import { LightboxImagenComponent } from './components/lightbox-imagen/lightbox-i
     ModalInsertLinkComponent,
     TargetDesplegableComponent,
     LightboxImagenComponent,
+    CardItemDataComponent,
   ],
   imports: [
     CommonModule,
@@ -200,6 +203,7 @@ import { LightboxImagenComponent } from './components/lightbox-imagen/lightbox-i
     ModalInsertLinkComponent,
     TargetDesplegableComponent,
     LightboxImagenComponent,
+    CardItemDataComponent,
   ],
 
   providers: [

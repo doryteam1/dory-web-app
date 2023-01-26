@@ -52,22 +52,23 @@
           <img src="/assets/icons/search.svg">
         </div>
       <ul #toggleButton class="navbar-nav--miestilo navbar-nav  mb-2 mb-lg-0 bg-light">
-        <li *ngIf="electronjs && currentRoute !== '/home'" class=" no-drag nav-item">
+       <!--  <li *ngIf="electronjs && currentRoute !== '/home'" class=" no-drag nav-item">
           <a class="nav-link " id="navbarDropdown" role="button" (click)="navegarRuta('/home')">
             <span class="title-dropdown-toggle">
               Inicio
             </span>
           </a>
-        </li>
+        </li> -->
         <li class="no-drag nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
-            <div class="dropdown-toggle-div">
+            <!-- <div class="dropdown-toggle-div">
               <span class="title-dropdown-toggle">
                 Dory
               </span>
               <div class="icon-dropdown-toggle"></div>
-            </div>
+            </div> -->
+            <i class="bi bi-list nav-link"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" (click)="navegarRuta('/nosotros')">¿Quiénes somos?</a></li>
@@ -75,7 +76,7 @@
             <li><a class="dropdown-item" (click)="navegarRuta('/contacto')">Contáctanos</a></li>
           </ul>
         </li>
-        <li class=" no-drag nav-item dropdown">
+  <!--       <li class=" no-drag nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             <div class="dropdown-toggle-div">
@@ -91,8 +92,25 @@
             <li><a class="dropdown-item" (click)="navegarRuta('/pescadores')">Pescadores</a></li>
             <li><a class="dropdown-item" (click)="navegarRuta('/asociaciones')">Asociaciones</a></li>
           </ul>
-        </li>
-        <li class=" no-drag nav-item dropdown">
+        </li> -->
+          <li class="no-drag nav-item" (click)="navegarRuta('/geolocalizacion')">
+            <a class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Geolocalización
+            </a>
+          </li>
+                <li class="no-drag nav-item dropdown" (click)="navegarRuta('/panel-busqueda')">
+                  <a class="nav-link" id="navbarDropdown"  role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false" >
+                    Consulta
+                  </a>
+                </li>
+                <li class=" no-drag nav-item dropdown" (click)="navegarRuta('/publicaciones')">
+                  <a class="nav-link" id="navbarDropdown"  role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false" routerLink="/publicaciones">
+                    Plaza de mercado
+                  </a>
+                </li>
+   <!--      <li class=" no-drag nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             <div class="dropdown-toggle-div">
@@ -109,8 +127,8 @@
             <li><a class="dropdown-item" (click)="navegarRuta('/novedades/revistas')">Revistas</a></li>
             <li><a class="dropdown-item" (click)="navegarRuta('/novedades/noticias')">Noticias</a></li>
           </ul>
-        </li>
-        <li class=" no-drag nav-item dropdown">
+        </li> -->
+  <!--       <li class=" no-drag nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             <div class="dropdown-toggle-div">
@@ -125,8 +143,8 @@
             <li><a class="dropdown-item" (click)="navegarRuta('/eventos/capacitaciones')">Capacitaciones</a></li>
             <li><a class="dropdown-item" (click)="navegarRuta('/eventos/congresos')">Congresos</a></li>
           </ul>
-        </li>
-        <li class=" no-drag nav-item dropdown">
+        </li> -->
+     <!--    <li class=" no-drag nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             <div class="dropdown-toggle-div">
@@ -141,15 +159,15 @@
             <li><a class="dropdown-item" (click)="navegarRuta('/normatividad/decretos')">Decretos</a></li>
             <li><a class="dropdown-item" (click)="navegarRuta('/normatividad/resoluciones')">Resoluciones</a></li>
           </ul>
-        </li>
-        <li class=" no-drag nav-item dropdown">
+        </li> -->
+    <!--     <li class=" no-drag nav-item dropdown">
           <a class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
             (click)="navegarRuta('/panel-busqueda')">
             <span class="title-dropdown-toggle">
               Panel de búsqueda
             </span>
           </a>
-        </li>
+        </li> -->
       </ul>
     </div>
 <!--       <div class="d-flex " style="padding-right: 20px;">

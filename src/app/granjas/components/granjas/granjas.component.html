@@ -1,28 +1,25 @@
-<div class="stats">
-  <div class="data-container ">
-    <div class="stats-container">
-      <img class="stats-container__icon" src="assets/icons/group-circle-solid.svg">
-      <div class="stats-container__info">
-        <h3 class="stats-container__title container__title--color-morado">Población</h3>
-        <span class="stats-container__description">{{poblacion | number:'':'es'}}</span>
-      </div>
-    </div>
-    <div class="stats-container">
-      <img class="stats-container__icon" src="assets/icons/fish.svg">
-      <div class="stats-container__info">
-        <h3 class="stats-container__title container__title--color-blue-2">Granjas</h3>
-        <span class="stats-container__description">{{granjas | number:'':'es'}}</span>
-      </div>
-    </div>
-  </div>
-</div>
+
 <div class="container ">
     <h4 class="container__title">Granjas piscicultoras en el departamento de Sucre</h4>
     <p class="container__description">En esta sección se podrá ver el mapa con los distintos municipios del departamento de Sucre, permitiendo elegir el de su interés. Al seleccionarlo podrá ver un listado de las distintas granjas que han sido creada previamente por un piscicultor, así mismo ubicar en el mapa para referenciar con precisión. Se selecciona una granja en el listado dando clic en cualquier parte de la tarjeta o en “ver detalles”.</p>
     <p class="container__description">Luego de dar clic en “ver detalles”, podrá visualizar la información más detallada, como nombre del propietario, número de celular, dirección, tipo de infraestructura para cultivar los peces, tipos de peces que cultiva, imágenes e información relacionada con la descripción. La granja se podrá compartir por WhatsApp, Gmail, entre otros y guardar como favorita. Finalmente, puede calificar y agregar reseña, estando previamente registrado y haber iniciado sesión en Dory, de lo contrario solo podrá ver los comentarios o la calificación.</p>
-    <div class="container_box " >
-        <app-map-sucre  class="mapaMunicipios" (munClick)="munClick($event)" (munOver)="munOver($event)" [munData]="municSeleccionado" labelTooltip="Granjas"></app-map-sucre>
+    <div class="container__map_cards">
+      <div class="cards">
+        <app-card-item-data
+         [dataNumber]="poblacion | number:'':'es'"
+        [icon]="'assets/icons/group-circle-solid.svg'"
+        [title]="'Población'">
+      </app-card-item-data>
+        <app-card-item-data
+         [dataNumber]="granjas | number:'':'es'"
+        [icon]="'assets/icons/fish.svg'"
+        [title]="'Granjas'">
+      </app-card-item-data>
+      </div>
+      <div class="container_box " >
+          <app-map-sucre  class="mapaMunicipios" (munClick)="munClick($event)" (munOver)="munOver($event)" [munData]="municSeleccionado" labelTooltip="Granjas"></app-map-sucre>
+      </div>
     </div>
-</div>
+  </div>
 <app-footer></app-footer>
 
