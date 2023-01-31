@@ -74,6 +74,7 @@ import { ModalInsertLinkComponent } from './components/modal-insert-link/modal-i
 import { TargetDesplegableComponent } from './components/target-desplegable/target-desplegable.component';
 import { LightboxImagenComponent } from './components/lightbox-imagen/lightbox-imagen.component';
 import { CardItemDataComponent } from './components/card-item-data/card-item-data.component';
+import { LinkCardComponent } from './components/link-card/link-card.component';
 
 
 
@@ -135,6 +136,7 @@ import { CardItemDataComponent } from './components/card-item-data/card-item-dat
     TargetDesplegableComponent,
     LightboxImagenComponent,
     CardItemDataComponent,
+    LinkCardComponent,
   ],
   imports: [
     CommonModule,
@@ -204,6 +206,7 @@ import { CardItemDataComponent } from './components/card-item-data/card-item-dat
     TargetDesplegableComponent,
     LightboxImagenComponent,
     CardItemDataComponent,
+    LinkCardComponent
   ],
 
   providers: [

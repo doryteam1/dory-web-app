@@ -1,0 +1,9 @@
+<div class="card h-100">
+    <div class="card-img-box">
+        <img src="assets/images/granja.svg" class="card-img-top" alt="...">
+        <span class="card__title">{{title}}</span>
+    </div>
+    <div class="card-body">
+      <a class="link" *ngFor="let link of links" [routerLink]="link.route">{{link.title}}</a>
+    </div>
+</div>

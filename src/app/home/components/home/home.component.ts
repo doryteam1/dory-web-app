@@ -61,6 +61,55 @@ export class HomeComponent implements OnInit {
   sliders: any[] = [];
   tiempoSlide: any = 0;
   electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
+
+  novedades:Array<any> = [
+    {
+      title:'Artículos',
+      route:'/novedades/articulos'
+    },
+    {
+      title:'Artículos Colombianos',
+      route:'/novedades/articulos-colombia'
+    },
+    {
+      title:'Revistas',
+      route:'/novedades/revistas'
+    },
+    {
+      title:'Noticias',
+      route:'/novedades/noticias'
+    }
+  ]
+
+  eventos:Array<any> = [
+    {
+      title:'Cursos',
+      route:'/eventos/cursos'
+    },
+    {
+      title:'Capacitaciones',
+      route:'/eventos/capacitaciones'
+    },
+    {
+      title:'Congresos',
+      route:'/eventos/congresos'
+    }
+  ]
+
+  normatividades:Array<any> = [
+    {
+      title:'Leyes',
+      route:'/normatividad/leyes'
+    },
+    {
+      title:'Decretos',
+      route:'/normatividad/decretos'
+    },
+    {
+      title:'Resoluciones',
+      route:'/normatividad/resoluciones'
+    }
+  ]
   constructor(
     public gallery: Gallery,
     private sliderInicioService: SliderInicioService,

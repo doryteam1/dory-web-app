@@ -1,0 +1,39 @@
+.card__title{
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    text-decoration: underline;
+}
+
+.card-img-top{
+    opacity: 0.5;
+}
+
+.card-img-box{
+    position: relative;
+}
+
+.card{
+    width: 20rem;
+}
+
+
+@media (max-width:995px) {
+    .card{
+        width: 26rem;
+    }
+}
+
+@media (max-width:420px) {
+    .card{
+        width: 100%;
+    }
+}
