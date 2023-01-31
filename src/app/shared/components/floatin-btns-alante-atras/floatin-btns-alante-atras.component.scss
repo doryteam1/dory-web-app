@@ -27,9 +27,9 @@
       filter: drop-shadow(0 3px 5px #ccc);
       line-height: 1.5;
       display: none;
-      top: calc(100% + 5px);
+        top: 52px;
       color: #fff;
-      background-color: #000;
+      background-color:var(--gris-oscuro);
       z-index: 1080;
       font-size: 0.875rem;
 
@@ -43,7 +43,7 @@ content: "";
   left: calc(50% - 0.59rem);
   width: 18px;
   height: 18px;
-  background-color: #000;
+  background-color: var(--gris-oscuro);;
   transform: rotate(45deg);
  }
 

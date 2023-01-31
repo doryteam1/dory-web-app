@@ -47,7 +47,6 @@ import { FiltrosComponent } from './components/filtros/filtros.component';
 import { ChipConBotonCloseComponent } from './components/chip-con-boton-close/chip-con-boton-close.component';
 import { FloatinBtnsAlanteAtrasComponent } from './components/floatin-btns-alante-atras/floatin-btns-alante-atras.component';
 import { ControlBarComponent } from './control-bar/control-bar.component';
-import { NavbarElectronjsComponent } from './navbar-electronjs/navbar-electronjs.component';
 import { ModalGoogleGeneralComponent } from './components/modal-google-general/modal-google-general.component';
 import { NgGallerySliderComponent } from './components/ng-gallery-slider/ng-gallery-slider.component';
 import { GalleryModule } from 'ng-gallery';
@@ -110,7 +109,6 @@ import { CardItemDataComponent } from './components/card-item-data/card-item-dat
     ChipConBotonCloseComponent,
     FloatinBtnsAlanteAtrasComponent,
     ControlBarComponent,
-    NavbarElectronjsComponent,
     ModalGoogleGeneralComponent,
     ModalMultiFiltersComponent,
     NgGallerySliderComponent,
@@ -180,7 +178,6 @@ import { CardItemDataComponent } from './components/card-item-data/card-item-dat
     ChipConBotonCloseComponent,
     FloatinBtnsAlanteAtrasComponent,
     ControlBarComponent,
-    NavbarElectronjsComponent,
     ModalGoogleGeneralComponent,
     ModalMultiFiltersComponent,
     NgGallerySliderComponent,

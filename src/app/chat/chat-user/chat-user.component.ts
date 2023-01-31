@@ -83,7 +83,6 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
     tempSub = this.chatService
       .getMessage()
       .subscribe((data: { de: number; mensaje: string; metadata: any }) => {
-        console.log(data);
         this.utilities.playSound('assets/sounds/recived-message.mpeg');
         //TODO: hacer algo con el mensaje de confirmacion
         this.roomsArray = this.chatService.getStorage();
@@ -271,14 +270,21 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
         this.chatService.setStorage(this.roomsArray);
         this.messageArray = this.roomsArray[roomIndex].chats;
         this.scrollToBottom();
-        let tempCount: number;
+        let tempCount: number=0;
         let index = this.userList.findIndex((element) => {
           return element.id == this.selectedUser.id;
         });
         if (index > -1) {
+        if (
+          this.userList[index].unreadsCount == null ||
+          this.userList[index].unreadsCount == 0
+        ) {
+          this.userList[index].unreadsCount = 0;
+        } else {
           tempCount = this.userList[index].unreadsCount;
-          this.userList[index].unreadsCount = null;
           this.totalUnreads -= tempCount;
+          this.userList[index].unreadsCount = 0;
+        }
         }
 
         this.chatService.setReaded(this.selectedUser.id).subscribe(
@@ -298,13 +304,10 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   }
 
   sendMessage(): void {
-    console.log('send message!');
-    console.log('mensaje a enviar: ', this.messageText);
+
     if (!this.messageText) {
       return;
     }
-    console.log('send message to');
-    console.log(this.selectedUser);
     this.chatService.sendMessage({
       uid: this.selectedUser.id,
       mensaje: this.messageText,
@@ -313,7 +316,6 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
     this.utilities.playSound('assets/sounds/sendmessage.wav');
 
     this.roomsArray = this.chatService.getStorage();
-    console.log('en send message ', this.roomsArray);
     const roomIndex = this.roomsArray.findIndex(
       (storage: any) => storage.roomId === this.selectedUser.id
     );
@@ -358,7 +360,6 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
     this.Onlist = true;
   }
   openChat() {
-    console.log('open chat');
     this.chatOpen = true;
   }
   closeChat() {
@@ -442,7 +443,6 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
       return user.id == roomId;
     });
 
-    console.log('roomId ', roomId);
     if (roomIndex > -1) {
       let user = this.userList[roomIndex];
       user.last_message = data.mensaje;
@@ -460,7 +460,6 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   getRefs(){
     this.chatService.getOpenChatUserObservable().subscribe(
       (userId:string)=>{
-        console.log("Yeah ",userId),
         this.chatOpen = true;
         setTimeout(()=>{
           if(!this.Onlist){
@@ -468,7 +467,6 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
           }
           setTimeout(()=>{
             let userRef = document.getElementById(userId);
-            console.log(userRef)
             userRef?.click()
           },3)
         },3)

@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   offcanvas: any;
   MediaQuery!: Subscription;
   sidebar: boolean = false;
+  closeOffCamba: boolean = false;
   constructor(
     private socialService: SocialAuthService,
     private userService: UsuarioService,
@@ -65,8 +66,12 @@ export class HomeComponent implements OnInit {
   }
   openOffcanvas() {
     this.offcanvas.show();
+    this.closeOffCamba = false;
   }
   closeOffcanvas() {
-    this.offcanvas.hide();
+    if (this.sidebar) {
+      this.offcanvas.hide();
+      this.closeOffCamba = true;
+    }
   }
 }

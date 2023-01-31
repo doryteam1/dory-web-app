@@ -3,14 +3,16 @@
 <div #main [ngClass]="{'main--web-app':!customTitleBarElectron}" class="main" (scroll)="onScroll($event)" *ngIf="customTitleBarElectron">
   <app-top-alert></app-top-alert>
   <app-notification-bar ></app-notification-bar>
-  <router-outlet></router-outlet>
+  <router-outlet ></router-outlet >
   <app-floating-btn-auto-up [parentContainer]="divMain"></app-floating-btn-auto-up>
 </div>
 <app-top-alert *ngIf="!customTitleBarElectron"></app-top-alert>
 <app-notification-bar *ngIf="!customTitleBarElectron"></app-notification-bar>
-<app-navbar *ngIf="!customTitleBarElectron"></app-navbar>
-<router-outlet *ngIf="!customTitleBarElectron"></router-outlet>
-<app-floating-btn-auto-up *ngIf="!customTitleBarElectron"></app-floating-btn-auto-up>
+<app-control-bar *ngIf="!customTitleBarElectron"></app-control-bar>
+<div #main  class="main" (scroll)="onScroll($event)" *ngIf="!customTitleBarElectron">
+  <router-outlet ></router-outlet>
+  <app-floating-btn-auto-up [parentContainer]="divMain"></app-floating-btn-auto-up>
+</div>
 <div *ngIf="isAuthUser && show">
   <app-chat-user *appReloadStateAuth></app-chat-user>
 <div>
