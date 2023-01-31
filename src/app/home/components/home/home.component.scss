@@ -121,9 +121,9 @@
 .link-cards-container{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px;
   margin-top: 100px;
   margin-bottom: 100px;
 }
