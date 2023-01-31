@@ -84,7 +84,9 @@ body{
   color: var(--black);
   padding: 5px 20px 5px 20px;
 }
-
+/* stylo modal bootra */
+$modal-backdrop-bg: black;
+$modal-backdrop-opacity: .2;
 .btn-square{
   border-radius: 7px;
   width: fit-content;

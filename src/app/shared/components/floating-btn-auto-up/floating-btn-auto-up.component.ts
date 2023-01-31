@@ -1,4 +1,11 @@
-import { Component, OnInit,HostListener, Input, ElementRef, HostBinding } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  Input,
+  ElementRef,
+  HostBinding,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -8,18 +15,49 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class FloatingBtnAutoUpComponent implements OnInit {
   @HostBinding('hidden')
-  isHidden: boolean = false;
+  isHidden: boolean = true;
   @Input() parentContainer: ElementRef | undefined;
   windowScrolled: boolean | undefined;
-  constructor(
-    private router: Router
-  ) {}
+
+  routesToShow: any = [
+    '/geolocalizacion/asociaciones',
+    '/novedades/',
+    '/eventos/',
+    '/normatividad/',
+    '/equipo',
+    '/nosotros',
+    '/geolocalizacion/pescadores',
+    '/geolocalizacion/granjas',
+    '/geolocalizacion/piscicultores',
+    '/dashboard/mis-favoritos',
+    '/home',
+    '/panel-busqueda/productos',
+    '/panel-busqueda/vehiculos',
+    '/panel-busqueda/negocios',
+    '/dashboard/granja/detalle',
+    '/pescadores/municipio/',
+    '/granjas/municipio/',
+    '/piscicultores/municipio/',
+    '/asociaciones/municipio/',
+    'dashboard/granjas',
+    'panel-busqueda/asociaciones',
+    'panel-busqueda/pescadores',
+    'panel-busqueda/piscicultores',
+    'panel-busqueda/granjas',
+    '/welcome',
+    '/dashboard/equipo-trabajo-admi',
+    '/pescadores/municipio',
+    '/granjas/municipio',
+    '/piscicultores/municipio',
+    '/asociaciones/municipio',
+  ];
+  constructor(private router: Router) {}
   @HostListener('window:scroll', [])
   onWindowScroll() {
     if (
       window.pageYOffset ||
       document.documentElement.scrollTop ||
-      document.body.scrollTop > 100
+      document.body.scrollTop > 200
     ) {
       this.windowScrolled = true;
     } else if (
@@ -65,41 +103,11 @@ export class FloatingBtnAutoUpComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        let route: string = event.url;
-        if (
-          route.includes('asociaciones') ||
-          route.includes('novedades/') ||
-          route.includes('eventos/') ||
-          route.includes('normatividad/') ||
-          route.includes('equipo') ||
-          route.includes('nosotros') ||
-          route.includes('pescadores') ||
-          route.includes('granjas') ||
-          route.includes('piscicultores') ||
-          route.includes('dashboard/mis-favoritos') ||
-          route.includes('home') ||
-          route.includes('panel-busqueda/productos') ||
-          route.includes('panel-busqueda/vehiculos') ||
-          route.includes('panel-busqueda/negocios') ||
-          route.includes('dashboard/granja/detalle')
-
-        ) {
-          this.isHidden = false;
-          if (
-            route.includes('/dashboard/granjas') ||
-            route.includes('dashboard/mis-asociaciones') ||
-            route.includes('panel-busqueda/asociaciones') ||
-            route.includes('panel-busqueda/pescadores') ||
-            route.includes('panel-busqueda/piscicultores') ||
-            route.includes('panel-busqueda/granjas') ||
-            route.includes('/welcome') ||
-            route.includes('/dashboard/equipo-trabajo-admi')
-          ) {
-            this.isHidden = true;
-          }
-        } else {
-          this.isHidden = true;
-        }
+        let route: any = event.url;
+        let resultShow: boolean = this.routesToShow.some((element: any) =>
+          route.includes(element)
+        );
+        this.isHidden = !resultShow;
       }
     });
   }

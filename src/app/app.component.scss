@@ -1,12 +1,14 @@
 .main {
-    height: calc(100% - 50px);
-    margin-top: 50px;
-    width: 100vw;
-    overflow-y: auto;
-    position:fixed;
-    user-select: none;
+  height: calc(100% - 100px);
+  margin-top: 100px;
+  width: 100vw;
+  overflow-y: auto;
+  position: fixed;
+  user-select: none;
 }
-.main--web-app{
+
+.main--web-app {
   margin-top: 0 !important;
-  user-select:auto
+  user-select: auto
 }
+
