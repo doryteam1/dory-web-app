@@ -110,6 +110,10 @@ export class HomeComponent implements OnInit {
       route:'/normatividad/resoluciones'
     }
   ]
+
+  urlLinkCardImgNovedades:string = "https://images.pexels.com/photos/242492/pexels-photo-242492.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+  urlLinkCardImgEventos:string = "https://images.pexels.com/photos/4443160/pexels-photo-4443160.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+  urlLinkCardImgNormativas:string = "https://images.pexels.com/photos/48148/document-agreement-documents-sign-48148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
   constructor(
     public gallery: Gallery,
     private sliderInicioService: SliderInicioService,

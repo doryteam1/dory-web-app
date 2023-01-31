@@ -48,7 +48,10 @@
       <ng-container *ngTemplateOutlet="miniCard"></ng-container>
     </div>
   </div>
-  <div class="container-card ">
+  <div class="title d-flex flex-column">
+    <h1 class="align-self-center">Visita los siguientes enlaces...</h1>
+  </div>
+  <div class="container-card">
     <div class="view-content">
       <div class="views-row view--current item-{{i}}" *ngFor="let item of enlaceRapido; index as i">
         <div class="container-target-link" >
@@ -63,10 +66,13 @@
     </div>
   </div>
 </div>
+<div class="title d-flex flex-column">
+  <h1 class="align-self-center">También puedes explorar...</h1>
+</div>
 <div class="link-cards-container">
-    <app-link-card title="Novedades y Actualidad" [links]="novedades"></app-link-card>
-    <app-link-card title="Eventos" [links]="eventos"></app-link-card>
-    <app-link-card title="Normatividad" [links]="normatividades"></app-link-card>
+    <app-link-card title="Novedades y Actualidad" [links]="novedades" [urlImagen]="urlLinkCardImgNovedades"></app-link-card>
+    <app-link-card title="Eventos" [links]="eventos" [urlImagen]="urlLinkCardImgEventos"></app-link-card>
+    <app-link-card title="Normatividad" [links]="normatividades" [urlImagen]="urlLinkCardImgNormativas"></app-link-card>
 </div>
 <app-footer></app-footer>
 

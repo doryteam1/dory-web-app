@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./link-card.component.scss']
 })
 export class LinkCardComponent implements OnInit {
+  @Input() urlImagen:string = 'assets/images/granja.svg'
   @Input() title:string = 'Card Title'
   @Input() links:Array<any> = [
     {
