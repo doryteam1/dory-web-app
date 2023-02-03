@@ -18,6 +18,12 @@
               <h4 class="container__description1">{{investigador?.municipio}}-{{investigador?.departamento}}</h4>
             </span>
           </div>
+          <div class="container__detalle">
+          <span class="card__description-title link" (click)="sendMessage()" *ngIf="authUserId">
+            <i class="bi bi-chat-left-text-fill"></i>
+            Enviar un mensaje
+          </span>
+          </div>
         </div>
         <img class="container__image"
           src="{{investigador?.foto ? investigador.foto : 'assets/images/avatar-person.svg'}}">

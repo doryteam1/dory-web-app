@@ -1,4 +1,4 @@
-<div class="container-list-chat" *ngIf="chatOpen">
+<div  class="container-list-chat" *ngIf="chatOpen">
   <!-- Lista de usurios -->
   <div *ngIf="Onlist" class="container__list">
     <div class="container__list-search">
@@ -87,7 +87,7 @@
 
   </div>
 </div>
-<a #chatFloatinBtn class="floating-btn scroll-to-top" (click)="openChat()" *ngIf="!chatOpen">
+<!-- <a #chatFloatinBtn class="floating-btn scroll-to-top" (click)="openChat()" *ngIf="!chatOpen">
   <div class=" flecha">
     <svg class="svgpath" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#26a5b8"
       class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
@@ -100,4 +100,5 @@
     *ngIf="totalUnreads">
     {{totalUnreads > 99 ? '99+' : totalUnreads}}
   </span>
-</a>
+</a> -->
+<app-button-chat-open (onOpen)="openChat()" *ngIf="!chatOpen" [totalUnreads]="totalUnreads"></app-button-chat-open>

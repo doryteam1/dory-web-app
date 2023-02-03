@@ -50,6 +50,10 @@
       <div class="detail-container__data detail-container__data--legal" (click)="goDetalleRepresentante()">
         <h4 class="detail-container__title detail-container__title--legal">Representante legal</h4>
         <span class="detail-container__value detail-container__value-legal">{{asociacion?.propietario}}</span>
+        <span class="card__description-title link" (click)="sendMessage()" *ngIf="authUserId">
+          <i class="bi bi-chat-left-text-fill"></i>
+          Enviar un mensaje
+        </span>
       </div>
     </div>
     <div class="detail-container mt-4" *ngIf="asociacion?.foto_camarac">

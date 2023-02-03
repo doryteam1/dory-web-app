@@ -6,6 +6,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { BasicMessageComponent } from './components/basic-message/basic-message.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AsociacionesComponent } from './panel-busqueda/components/asociaciones/asociaciones.component';
 
 
 
@@ -187,6 +188,10 @@ const routes: Routes = [
   {
     path: 'verify-account',
     component: VerifyAccountComponent,
+  },
+  {
+    path: 'grupo-asociaciones',
+    component: AsociacionesComponent,
   },
   {
     path: 'politica',

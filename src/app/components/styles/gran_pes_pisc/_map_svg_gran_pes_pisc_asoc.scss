@@ -1,9 +1,12 @@
 .cards {
-  width: 100%;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  gap: 10px;
+      display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    position: sticky;
+    bottom: 100%;
+    right: 75%;
+    grid-gap: 10px;
+    gap: 10px
 }
 
 .container__map_cards {
@@ -11,7 +14,7 @@
   height: 100%;
   position: relative;
   display: flex;
-  flex-direction: column;
+ /*  flex-direction: column; */
   justify-content: center;
   align-items: center;
 }
@@ -104,8 +107,15 @@
   width: 100%;
 }
 
-
-
+@media screen and (max-width: 767px){
+  .container__map_cards {
+    flex-direction: column;
+  }
+  .cards{
+    flex-direction: row;
+    position:initial;
+  }
+}
 @media screen and (max-width: 610px) {
   .stats-container__icon {
     width: 30px;

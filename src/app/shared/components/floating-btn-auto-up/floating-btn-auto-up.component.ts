@@ -50,6 +50,7 @@ export class FloatingBtnAutoUpComponent implements OnInit {
     '/granjas/municipio',
     '/piscicultores/municipio',
     '/asociaciones/municipio',
+    '/grupo-asociaciones',
   ];
   constructor(private router: Router) {}
   @HostListener('window:scroll', [])

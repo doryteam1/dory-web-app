@@ -4,7 +4,21 @@ $gridgap: 9.86px;
   cursor: pointer;
 
 }
+.propitario--Edit{
+  cursor: pointer;
+}
+.propitario--Edit:hover{
+  color: var(--azul1);
+}
+.card__description-title {
+  color: var(--gris-oscuro);
+  font-size: 16px;
+}
 
+.link {
+  color: var(--azul1) !important;
+  font-weight: initial;
+}
 .header-container__resenas:hover {
   color: var(--azul1);
 }

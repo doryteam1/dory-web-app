@@ -5,8 +5,8 @@ $icon-margin: 5px;
 $border-radius: 100%;
 
 @mixin common-button-styles {
-  width: auto;
-  height: auto;
+  width: fit-content;
+  height: fit-content;
 
   .icon {
     background: $background-color;
@@ -87,6 +87,9 @@ $border-radius: 100%;
 
 .carousel-control-prev {
   grid-area: atras;
+  top: 50%;
+  bottom: 50%;
+  transform: translateY(100%) translateY(-50px);
 
   .icon {
     margin-left: $icon-margin;
@@ -97,6 +100,9 @@ $border-radius: 100%;
 
 .carousel-control-next {
   grid-area: alante;
+  top: 50%;
+  bottom: 50%;
+  transform: translateY(100%) translateY(-50px);
 
   .icon {
     margin-right: $icon-margin;

@@ -18,7 +18,7 @@
         <h6 class="card__title card-title">${{publicacion?.preciokilogramo | number:'':'es'}}/Kg</h6>
         <h5 class="card__sub-title card-title shorterTextAuto">{{publicacion?.especie}}</h5>
         <p class="card__sub-title card-title shorterTextAuto">Disponibles: {{publicacion?.cantidad}} Kg</p>
-        <!-- <p class="card__descripction card-text shorterTextAuto">Publicado:{{publicacion?.fecha}}</p> -->
+        <p class="card__sub-title card-title shorterTextAuto">Publicado: {{publicacion?.fecha | date:'dd/MM/yyyy'}}</p>
       </div>
       <div>
         <div *ngIf="editaAndEliminar">

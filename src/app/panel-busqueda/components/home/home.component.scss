@@ -8,24 +8,22 @@
 
 
 .sidebar {
-position: fixed;
-overflow-y: auto;
-top: 0;
-bottom: 0;
-left: 0;
-z-index: 100; /* Behind the navbar */
-padding: 48px 0 0; /* Height of navbar */
-top: 95px;
-  margin-top: 0 !important;
-  padding-top: 16px;
-box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-  height: calc(100% - 95px);
-  overflow-y: auto;
+  position: fixed;
+    left: 0;
+    z-index: 100;
+    margin-top: 0 !important;
+    padding: 12px;
+    padding-top: 16px;
+    box-shadow: inset -1px 0 0 rgb(0 0 0 / 10%);
+    height: 100%;
+    overflow-y: auto;
 }
 
 .sidebar .nav-link {
+
   font-weight: 500;
   color: var(--gris-oscuro);
+  padding: 0;
 }
 .sidebar .nav-link .feather {
   margin-right: 4px;
@@ -49,9 +47,14 @@ box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 .container{
   display: flex;
 }
-
+.conatiner-sticky{
+  padding: 10px
+}
 .menu{
-  padding-left: 40px;
+  display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 .menu__link{
@@ -67,6 +70,7 @@ box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 .nav-link {
   font-weight: 500;
   color: var(--gris-oscuro);
+  padding: 0;
 }
 .nav-link .feather {
   margin-right: 4px;
@@ -90,10 +94,12 @@ box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   width: 100%;
 }
 .offcanvas {
-  top: 95px !important;
+  width:250px !important;
+  top: 95px
 }
 .offcanvas-header {
   justify-content: flex-end;
+  padding: 15px
 }
 .offcanvas-start {
   width: max-content;
@@ -103,7 +109,9 @@ button:focus {
   box-shadow: none !important;
   outline: 0 none !important;
 }
-
+.offcanvas-body {
+  padding: 0 22px;
+}
 .buttonOpenOffCamvas {
   display: none;
 }

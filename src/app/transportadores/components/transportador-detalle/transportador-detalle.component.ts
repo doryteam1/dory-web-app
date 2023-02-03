@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EvaluateRegisteredUserService } from 'src/app/services/evaluate-registered-user.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { VehiculosService } from 'src/app/services/vehiculos.service';
 
@@ -18,16 +19,21 @@ export class TransportadorDetalleComponent implements OnInit {
   showNotFoundDataUser: boolean = false;
   showErrorDataUser: boolean = false;
   electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
+  authUserId: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UsuarioService,
     private vehiculoService: VehiculosService,
-    private router: Router
+    private router: Router,
+    public evaluateRegisteredUserService: EvaluateRegisteredUserService
   ) {}
 
   ngOnInit(): void {
     this.selectedUserId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
+    );
+    this.authUserId = this.evaluateRegisteredUserService.evaluateUser(
+      this.selectedUserId
     );
     this.userService.getDetail(this.selectedUserId).subscribe(
       (response: any) => {
@@ -56,12 +62,9 @@ export class TransportadorDetalleComponent implements OnInit {
       (response) => {
         if (response.data.length > 0) {
           this.vehiculosFiltered = response.data;
-          console.log(this.vehiculosFiltered);
-          this.showErrorDataUser = false;
           this.showNotFoundDataUser = false;
         } else {
           this.showNotFoundDataUser = true;
-          this.showErrorDataUser = false;
         }
       },
       (err) => {
@@ -73,20 +76,18 @@ export class TransportadorDetalleComponent implements OnInit {
         } else {
           this.showErrorDataUser = true;
           this.errorMessage = err.error.message;
-          console.log(this.errorMessage);
         }
       }
     );
   }
 
   goDetail(id: number) {
-    if (this.electronActive) {
-      this.router.navigateByUrl('transportadores/vehiculo/detalle/' + id);
-    } else {
-      let url = this.router.serializeUrl(
-        this.router.createUrlTree(['transportadores/vehiculo/detalle/' + id])
-      );
-      window.open(url, '_blank');
-    }
+    this.router.navigateByUrl('transportadores/vehiculo/detalle/' + id);
+  }
+  sendMessage() {
+    this.evaluateRegisteredUserService.sendMessageOpenChat(
+      this.selectedUserId,
+      ', para enviarle un mensaje a este usuario'
+    );
   }
 }

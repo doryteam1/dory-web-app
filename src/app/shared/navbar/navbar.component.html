@@ -1,6 +1,5 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light" style="min-height: 41px;
-    padding: 0;">
-  <div class="container-fluid" style="min-height: 41px;">
+<nav class="navbar navbar-expand-md navbar-light bg-light navbar--edit" style="user-select: none;">
+  <div class="container-fluid container-fluid--edit">
 
     <div class="menu-icon" #botonalbondiga
     type="button"
@@ -16,17 +15,17 @@
       <ul class="navbar-nav navbar-collapse-ul">
         <ng-container *ngTemplateOutlet="menuNavbar"></ng-container>
       </ul>
-      <div *ngIf="!authenticated()" class="no-button">
+    <!--   <div *ngIf="!authenticated()" class="no-button">
         <button class="no-drag buttons-access__login" (click)="login()" >Ingresar</button>
         <button class=" no-drag ms-2 buttons-access__registration"  (click)="navegarRuta('/registro')"
          >Regístrate</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </nav>
 
 <div #offcanva class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1"
-  id="offcanvasScrollingx" aria-labelledby="offcanvasScrollingLabel">
+  id="navbarOffcanvasScrollingx" aria-labelledby="offcanvasScrollingLabel" [style.top]="heightNavbar[1] + 'px'">
   <div class="offcanvas-body bg-light">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light nav-offcanvas">
       <div class="pt-3">
@@ -49,6 +48,13 @@
           [ngClass]="{'nav-item--color': validateRoute('/equipo')}">Equipo de trabajo</a></li>
     </ul>
   </li>
+<!--   <li class="no-drag nav-item nav-item--width" (click)="navegarRuta('/home')"
+    [ngClass]="{'nav-item--color': validateRoute('/home')}">
+    <a class="nav-link pad-0-8">
+      <i class="bi bi-house-door-fill"></i>
+      Inicio
+    </a>
+  </li> -->
   <li class="no-drag nav-item nav-item--width" (click)="navegarRuta('/geolocalizacion')"
     [ngClass]="{'nav-item--color': validateRoute('/geolocalizacion')}">
     <a class="nav-link pad-0-8">
@@ -67,8 +73,8 @@
       Plaza de mercado
     </a>
   </li>
-  <li class=" no-drag nav-item nav-item--width" (click)="navegarRuta('/publicaciones')"
-    [ngClass]="{'nav-item--color': validateRoute('/publicaciones')}">
+  <li class=" no-drag nav-item nav-item--width" (click)="navegarRuta('/grupo-asociaciones')"
+    [ngClass]="{'nav-item--color': validateRoute('/grupo-asociaciones')}">
     <a class="nav-link pad-0-8">
       Asociaciones piscícolas
     </a>

@@ -1,27 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { SocialAuthService } from 'angularx-social-login';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
+import { OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { CalcHeightNavbarService } from 'src/app/services/calc-height-navbar.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 declare var window: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   tipoUsuario: string = '';
   error: string = '';
   offcanvas: any;
-  MediaQuery!: Subscription;
   sidebar: boolean = false;
   closeOffCamba: boolean = false;
+  heightNavbar: any;
+  MediaQuery!: Subscription;
+  heightNavbarSubs!: Subscription;
   constructor(
     private socialService: SocialAuthService,
     private userService: UsuarioService,
-    public mediaQueryService: MediaQueryService
-  ) {}
+    public mediaQueryService: MediaQueryService,
+    public calcHeightNavbarService: CalcHeightNavbarService
+  ) {
+       this.heightNavbarSubs = this.calcHeightNavbarService.currentUser.subscribe(
+         (height: any) => {
+           this.heightNavbar = height;
+         }
+       );
+  }
 
   ngOnInit(): void {
     this.offcanvas = new window.bootstrap.Offcanvas(
@@ -63,6 +76,7 @@ export class HomeComponent implements OnInit {
         });
       }
     }
+
   }
   openOffcanvas() {
     this.offcanvas.show();
@@ -73,5 +87,10 @@ export class HomeComponent implements OnInit {
       this.offcanvas.hide();
       this.closeOffCamba = true;
     }
+  }
+  ngOnDestroy(): void {
+    this.heightNavbarSubs.unsubscribe();
+    console.log(this.heightNavbarSubs);
+    this.MediaQuery.unsubscribe();
   }
 }

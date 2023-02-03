@@ -1,18 +1,20 @@
 
-<app-control-bar *ngIf="customTitleBarElectron"></app-control-bar>
-<div #main [ngClass]="{'main--web-app':!customTitleBarElectron}" class="main" (scroll)="onScroll($event)" *ngIf="customTitleBarElectron">
-  <app-top-alert></app-top-alert>
+
+<div #navbarDiv>
   <app-notification-bar ></app-notification-bar>
+  <app-control-bar></app-control-bar>
+</div>
+<!-- <div #main [ngClass]="{'main--web-app':!customTitleBarElectron}" class="main" (scroll)="onScroll($event)" *ngIf="customTitleBarElectron">
   <router-outlet ></router-outlet >
   <app-floating-btn-auto-up [parentContainer]="divMain"></app-floating-btn-auto-up>
-</div>
-<app-top-alert *ngIf="!customTitleBarElectron"></app-top-alert>
-<app-notification-bar *ngIf="!customTitleBarElectron"></app-notification-bar>
-<app-control-bar *ngIf="!customTitleBarElectron"></app-control-bar>
-<div #main  class="main" (scroll)="onScroll($event)" *ngIf="!customTitleBarElectron">
-  <router-outlet ></router-outlet>
-  <app-floating-btn-auto-up [parentContainer]="divMain"></app-floating-btn-auto-up>
-</div>
+</div> -->
+
+
+  <div #main  class="mainx" (scroll)="onScroll($event)"  [ngClass]="{'main--web-app':customTitleBarElectron}"  [style.height]="'calc(100vh - ' + navbarDiv.clientHeight + 'px)'">
+    <router-outlet ></router-outlet>
+    <app-floating-btn-auto-up [parentContainer]="divMain"></app-floating-btn-auto-up>
+  </div>
 <div *ngIf="isAuthUser && show">
   <app-chat-user *appReloadStateAuth></app-chat-user>
 <div>
+

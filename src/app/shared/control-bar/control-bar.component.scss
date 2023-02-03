@@ -1,7 +1,22 @@
+
+.nav-link {
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+cursor: pointer;
+  img {
+    border-radius: 50%;
+    margin: -8px 0;
+    float: left;
+    margin-right: 10px;
+  }
+}
 /* Estilos title bar */
 .navbar-titlebar {
   display: block;
-  position: fixed;
+  /* position: fixed; */
   width: 100%;
   background: white;
   padding: 4px;
@@ -94,6 +109,7 @@
 }
 
 .container-navbar-titlebar__icono-img {
+  cursor: pointer;
   height: 100%;
 }
 
@@ -156,7 +172,7 @@ display: flex;
     line-height: 28px;
     padding: 0 1rem;
     padding-left: 2.5rem;
-    border-radius: 8px;
+    border-radius: 40px;
     color: #0d0c22;
     transition: 0.3s ease;
     border: 1px solid #ababb3;
@@ -221,7 +237,7 @@ display: flex;
 .notify__menu {
   max-height: 400px;
   height: 80vh;
-  width: 400px;
+  width: 100%;
   background: white;
   padding: 0 16px !important;
   overflow: hidden !important;
@@ -382,6 +398,7 @@ font-size: 0.8rem;
     padding: 10px;
     right: 0;
     left: unset;
+      max-width: 250px;
   }
 }
 
@@ -510,7 +527,9 @@ font-size: 0.8rem;
   padding-bottom: 0;
   margin-bottom: 50px;
 }
-
+.modal-fullscreen .modal-body--edit {
+  max-height: 100vh !important;
+}
 .notify-button-modal {
   margin-right: 0;
   width: 100%;
@@ -562,13 +581,23 @@ font-size: 0.8rem;
 .modal-content {
   background-color: #EFF1F3;
 }
-
-
-@media screen and (max-width: 520px) {
-.notify__menu{
-    width: 100%
+@media screen and (min-width: 768px) {
+.notify__menu {
+    width: 400px
   }
 }
+@media screen and (max-width: 560px) {
+  .no-button {
+    display: none;
+  }
+
+  .showbuttonthow {
+    display: flex;
+
+  }
+}
+
+
 @media screen and (max-width: 360px) {
   .notification-list .notification-list_content .notification-list_img img {
     height: 32px;
@@ -582,16 +611,6 @@ font-size: 0.8rem;
 
   .notify-button {
     font-size: 0.7rem;
-  }
-}
-@media screen and (max-width: 560px) {
-  .no-button {
-    display: none;
-  }
-
-  .showbuttonthow {
-    display: flex;
-
   }
 }
 

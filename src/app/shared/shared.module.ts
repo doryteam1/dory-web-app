@@ -75,6 +75,9 @@ import { LightboxImagenComponent } from './components/lightbox-imagen/lightbox-i
 import { CardItemDataComponent } from './components/card-item-data/card-item-data.component';
 import { LinkCardComponent } from './components/link-card/link-card.component';
 
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { ProductDetailsCardTemplateComponent } from './components/product-details-card-template/product-details-card-template.component';
+import { ButtonChatOpenComponent } from './components/button-chat-open/button-chat-open.component';
 
 
 
@@ -135,6 +138,8 @@ import { LinkCardComponent } from './components/link-card/link-card.component';
     LightboxImagenComponent,
     CardItemDataComponent,
     LinkCardComponent,
+    ProductDetailsCardTemplateComponent,
+    ButtonChatOpenComponent,
   ],
   imports: [
     CommonModule,
@@ -150,6 +155,7 @@ import { LinkCardComponent } from './components/link-card/link-card.component';
     ReactiveFormsModule,
     GalleryModule,
     LightboxModule,
+    NgxSkeletonLoaderModule,
   ],
   exports: [
     NavbarComponent,
@@ -203,7 +209,9 @@ import { LinkCardComponent } from './components/link-card/link-card.component';
     TargetDesplegableComponent,
     LightboxImagenComponent,
     CardItemDataComponent,
-    LinkCardComponent
+    LinkCardComponent,
+    ProductDetailsCardTemplateComponent,
+    ButtonChatOpenComponent,
   ],
 
   providers: [

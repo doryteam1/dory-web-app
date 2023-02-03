@@ -12,7 +12,8 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver} from '@angular/cdk/layout';
+import { CalcHeightNavbarService } from 'src/app/services/calc-height-navbar.service';
 declare var window: any;
 @Component({
   selector: 'app-navbar',
@@ -31,6 +32,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   offcanvas: any;
   sidebar: boolean = false;
   OffCamba: boolean = false;
+  heightNavbarSubsx!: Subscription;
+  heightNavbar: any;
   /*  innerHeight:any=window.innerHeight */
   /* Fin */
   constructor(
@@ -40,7 +43,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     public mediaQueryService: MediaQueryService,
     public userService: UsuarioService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    public calcHeightNavbarService: CalcHeightNavbarService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (this.offcanva?.nativeElement.className.includes('show')) {
@@ -64,34 +68,40 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.maxWidth.push(result.breakpoints[element]);
         }
         if (this.minWidth[0]) {
-           if (this.offcanva?.nativeElement.className.includes('show')) {
-             this.renderer.removeClass(this.offcanva?.nativeElement, 'show');
-             this.OffCamba = false;
-           }
+          this.closeOffcanvas();
         }
       }
     });
+     this.heightNavbarSubsx = this.calcHeightNavbarService.currentUser.subscribe(
+       (height: any) => {
+         this.heightNavbar = height;
+       }
+     );
   }
 
   ngOnInit(): void {
     this.electronjs = this._electronService.ipcActivo;
     this.offcanvas = new window.bootstrap.Offcanvas(
-      document.getElementById('offcanvasScrollingx'),
+      document.getElementById('navbarOffcanvasScrollingx'),
       {
-        backdrop: true,
+        backdrop: false,
       }
     );
-
   }
   openOffcanvas() {
-    this.offcanvas.show();
-    this.OffCamba = true;
+    if (this.offcanva?.nativeElement.className.includes('show')) {
+      this.offcanvas.hide();
+      this.OffCamba = false;
+    } else {
+      this.offcanvas.show();
+      this.OffCamba = true;
+    }
   }
   closeOffcanvas() {
-       if (this.offcanva?.nativeElement.className.includes('show')) {
-         this.renderer.removeClass(this.offcanva?.nativeElement, 'show');
-        }
-        this.OffCamba = false;
+    if (this.offcanva?.nativeElement.className.includes('show')) {
+      this.offcanvas.hide();
+      this.OffCamba = false;
+    }
   }
 
   validateRoute(route: string) {
@@ -101,7 +111,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   navegarRuta(ruta: string) {
     this.ngZone.run(() => {
       this.router.navigateByUrl(ruta);
-       this.closeOffcanvas();
+      this.closeOffcanvas();
     });
   }
   login() {
@@ -115,6 +125,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+     this.heightNavbarSubsx.unsubscribe();
     this.mediaQuerySubscripNavbarThow.unsubscribe();
   }
 }

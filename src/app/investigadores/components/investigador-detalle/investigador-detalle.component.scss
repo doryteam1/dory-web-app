@@ -1,3 +1,13 @@
+.card__description-title {
+  color: var(--gris-oscuro);
+  font-size: 16px;
+}
+
+.link {
+  color: var(--azul1) !important;
+  font-weight: initial;
+}
+
 @media screen and (max-width: 775px) {
   .container {
     justify-content: center;

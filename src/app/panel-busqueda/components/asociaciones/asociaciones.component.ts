@@ -87,7 +87,6 @@ export class AsociacionesComponent implements OnInit {
     /*Todas las asociaones que existen*/
     this.asociacionService.getAsociacionesTodas().subscribe((response) => {
       this.asociaciones = response.data;
-      console.log(response.data);
       if (this.authRol == 'Piscicultor') {
         this.asociaciones = this.asociaciones.filter((asociacion) => {
           return (
@@ -96,14 +95,12 @@ export class AsociacionesComponent implements OnInit {
           );
         });
       } else if (this.authRol == 'Pescador') {
-        console.log(this.authRol);
         this.asociaciones = this.asociaciones.filter((asociacion) => {
           return (
             asociacion.tipo_asociacion == 'Pescadores' ||
             asociacion.tipo_asociacion == 'Mixta'
           );
         });
-        console.log(this.asociaciones)
       }
       this.asociacionesFiltered = this.asociaciones.slice();
       if (this.asociacionesFiltered.length < 1) {

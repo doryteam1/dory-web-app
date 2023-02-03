@@ -224,7 +224,7 @@ export class GranjasMunicipioComponent implements OnInit, OnDestroy {
         this.granjasFiltered[index]?.direccion;
       this.selectedGranja.propietario.nombre =
         this.granjasFiltered[index]?.propietario ||
-        this.granjasFiltered[index]?.propietarios[0].nombre_completo;
+        this.granjasFiltered[index]?.propietarios[0]?.nombre_completo;
     }
   }
   openInfoWindowClick(marker: MapMarker, index: number) {

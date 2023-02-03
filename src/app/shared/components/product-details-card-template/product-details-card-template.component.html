@@ -1,0 +1,136 @@
+<div class="card" *ngIf="contentLoaded">
+  <div class="card__data">
+    <span class="card__title">{{datos?.headerTitle}}</span>
+    <span class="card__info mb-3">{{datos?.headeSubtitle}} </span>
+    <div class="d-flex flex-row d-flex-ajuste mb-4 ajuste1">
+      <div class="card__image-container">
+        <app-ng-gallery-slider *ngIf="datos?.images.length > 0" [fullScreen]="false" [activateStyle]="true"
+          [contador]="false" [imagenes]="datos?.images" [id]="datos?.idCard">
+        </app-ng-gallery-slider>
+        <div *ngIf="datos?.images.length <= 0" class="container-no-img">
+          <img src="assets/images/no-image-photography.svg" alt="Sin fotos">
+        </div>
+      </div>
+      <div class="card__container">
+        <div class="d-flex flex-row justify-content-start ajuste1">
+
+          <div class="card__fields">
+            <span class="card__title2">Detalles del {{
+              productoDetalles ? 'proveedor': publicacioneDetalles ? 'vendedor': vehiculoDetalles ? 'transportador':
+              negocioDetalles ? 'comerciante': '' }}</span>
+            <span class="card__title3">Nombre</span>
+            <span class="card__description-title link" (click)="goDetail()">{{datos?.nameUser}}</span>
+            <span class="card__description-title link" (click)="sendMessage()" *ngIf="datos?.authUserId">
+              <i class="bi bi-chat-left-text-fill"></i>
+              Enviar un mensaje
+            </span>
+            <span class="card__title3" *ngIf="datos?.department">Departamento</span>
+            <span class="card__description-title" *ngIf="datos?.department">{{datos?.department}}</span>
+            <span class="card__title3" *ngIf="datos?.municipality">Municipio</span>
+            <span class="card__description-title" *ngIf="datos?.municipality">{{datos?.municipality}}</span>
+            <span class="card__title3" *ngIf="datos?.phone">Celular</span>
+            <span class="card__description-title" *ngIf="datos?.phone">{{datos?.phone}}</span>
+            <span class="card__title3" *ngIf="datos?.email">Correo</span>
+            <span class="card__description-title" *ngIf="datos?.email">{{datos?.email}}</span>
+          </div>
+
+          <div class="card__fields">
+             <span class="card__title2">Detalles del {{
+              productoDetalles ? 'producto': publicacioneDetalles ? 'producto': vehiculoDetalles ? 'vehículo':
+              negocioDetalles ? 'negocio': '' }}</span>
+            <ng-container *ngFor="let item of datos?.productDetailsTitle; let i = index">
+              <span class="card__title3">{{negocioDetalles ? itemsNegocio[i].title : productoDetalles ? itemsProducto[i].title :
+                publicacioneDetalles ? itemsPublicacione[i].title : vehiculoDetalles ? itemsVehiculo[i].title :'' }}</span>
+              <span class="card__description-title">{{item.data}}</span>
+            </ng-container>
+          </div>
+        </div>
+
+        <span class="card__title2 mt-2">Descripción adicional del {{
+          productoDetalles ? 'producto': publicacioneDetalles ? 'producto': vehiculoDetalles ? 'vehículo':
+          negocioDetalles ? 'negocio': '' }}</span>
+
+        <span class="card__description" *ngIf="datos?.infoAdicionalData">
+          {{datos?.infoAdicionalData | shorter: showLess ? 300 : datos?.infoAdicionalData?.length}}
+          <span class="link" (click)="toggleContent()" *ngIf="datos?.infoAdicionalData?.length >=300">
+            {{ showLess ? 'Leer más' : 'Leer menos' }}
+          </span>
+        </span>
+
+        <span class="card__description" *ngIf="!datos?.infoAdicionalData">
+          Datos no espesificados
+        </span>
+
+        <span class="card__title2 mt-1" *ngIf="negocioDetalles">Información adicional de la dirección</span>
+
+        <span class="card__description" *ngIf="negocioDetalles && datos?.infoAdicionalDataTwo">
+          {{datos?.infoAdicionalData | shorter: showLess ? 300 : datos?.infoAdicionalData?.length}}
+          <span class="link" (click)="toggleContent()" *ngIf="datos?.infoAdicionalData?.length >=300">
+            {{ showLess ? 'Leer más' : 'Leer menos' }}
+          </span>
+        </span>
+
+        <span class="card__description" *ngIf="negocioDetalles && !datos?.infoAdicionalDataTwo">
+          Datos no espesificados
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- skeleton -->
+<div class="card" *ngIf="!contentLoaded">
+  <div class="card__data">
+    <ngx-skeleton-loader [theme]="skeletonLoaderStyle[0]"></ngx-skeleton-loader>
+    <ngx-skeleton-loader [theme]="skeletonLoaderStyle[2]"></ngx-skeleton-loader>
+    <div class="d-flex flex-row d-flex-ajuste mb-4 ajuste1">
+      <div class="card__image-container">
+        <ngx-skeleton-loader [theme]="skeletonLoaderStyle[4]"></ngx-skeleton-loader>
+      </div>
+      <div class="card__container">
+        <div class="d-flex flex-row justify-content-start ajuste1">
+          <div class="card__fields">
+            <span class="card__title2">Detalles del {{
+              productoDetalles ? 'proveedor': publicacioneDetalles ? 'vendedor': vehiculoDetalles ? 'transportador':
+              negocioDetalles ? 'comerciante': '' }}</span>
+            <span class="card__title3">Nombre</span>
+            <ngx-skeleton-loader [theme]="skeletonLoaderStyle[0]"></ngx-skeleton-loader>
+            <ngx-skeleton-loader [theme]="skeletonLoaderStyle[1]"></ngx-skeleton-loader>
+
+            <span class="card__title3" *ngIf="!negocioDetalles">Departamento</span>
+            <ngx-skeleton-loader *ngIf="!negocioDetalles" [theme]="skeletonLoaderStyle[2]"></ngx-skeleton-loader>
+
+            <span class="card__title3" *ngIf="!negocioDetalles">Municipio</span>
+            <ngx-skeleton-loader *ngIf="!negocioDetalles" [theme]="skeletonLoaderStyle[2]"></ngx-skeleton-loader>
+
+            <span class="card__title3">Celular</span>
+            <ngx-skeleton-loader [theme]="skeletonLoaderStyle[2]"></ngx-skeleton-loader>
+
+            <span class="card__title3">Correo</span>
+            <ngx-skeleton-loader [theme]="skeletonLoaderStyle[0]"></ngx-skeleton-loader>
+          </div>
+
+          <div class="card__fields">
+            <span class="card__title2">Detalles del {{
+              productoDetalles ? 'producto': publicacioneDetalles ? 'producto': vehiculoDetalles ? 'vehículo':
+              negocioDetalles ? 'negocio': '' }}</span>
+
+            <ng-container
+              *ngFor="let item of  negocioDetalles ? itemsNegocio : productoDetalles ? itemsProducto : publicacioneDetalles ? itemsPublicacione : vehiculoDetalles ? itemsVehiculo : []">
+              <span class="card__title3">{{item.title}}</span>
+              <ngx-skeleton-loader [theme]="skeletonLoaderStyle[0]"></ngx-skeleton-loader>
+            </ng-container>
+          </div>
+
+        </div>
+
+        <span class="card__title2 mt-2">Descripción adicional del {{
+          productoDetalles ? 'producto': publicacioneDetalles ? 'producto': vehiculoDetalles ? 'vehículo':
+          negocioDetalles ? 'negocio': '' }}</span>
+        <ngx-skeleton-loader [theme]="skeletonLoaderStyle[3]"></ngx-skeleton-loader>
+
+        <span class="card__title2 mt-1" *ngIf="negocioDetalles">Información adicional de la dirección</span>
+        <ngx-skeleton-loader *ngIf="negocioDetalles" [theme]="skeletonLoaderStyle[3]"></ngx-skeleton-loader>
+      </div>
+    </div>
+  </div>
+</div>

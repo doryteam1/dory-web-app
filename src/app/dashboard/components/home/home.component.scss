@@ -59,7 +59,8 @@ body {
 
 }
 .offcanvas {
-  top: 95px !important;
+  width: 250px !important;
+  top: 95px;
 }
 
 .offcanvas-header {
@@ -92,6 +93,8 @@ button:focus {
 
   .miclassmain {
     margin: 0 !important;
+    padding-left: 0;
+    padding-right: 0;
     width: 100%;
   }
 

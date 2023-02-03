@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PescadoresService } from '../../services/pescadores.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { EvaluateRegisteredUserService } from 'src/app/services/evaluate-registered-user.service';
 
 @Component({
   selector: 'app-pescador-detalle',
@@ -18,15 +19,20 @@ export class PescadorDetalleComponent implements OnInit {
   errorMessage = '';
   activatelistasociacion: boolean = false;
   changeItem: boolean = true;
+  authUserId: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private pescadoresService: PescadoresService,
-    private router: Router
+    private router: Router,
+    public evaluateRegisteredUserService: EvaluateRegisteredUserService
   ) {}
 
   ngOnInit(): void {
     this.selectedPescadorId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
+    );
+    this.authUserId = this.evaluateRegisteredUserService.evaluateUser(
+      this.selectedPescadorId
     );
     this.pescadoresService
       .getPescadorDetalle(this.selectedPescadorId)
@@ -52,8 +58,7 @@ export class PescadorDetalleComponent implements OnInit {
           }
         }
       );
-   this.getAsociaciones();
-
+    this.getAsociaciones();
   }
   handleResponse(response: any) {
     if (!response.data.length) {
@@ -67,17 +72,23 @@ export class PescadorDetalleComponent implements OnInit {
       this.changeItem = false;
     }
   }
+  sendMessage() {
+    this.evaluateRegisteredUserService.sendMessageOpenChat(
+      this.selectedPescadorId,
+      ', para enviarle un mensaje a este usuario'
+    );
+  }
 
-  handleError(err:any) {
-     this.showNotFound = false;
-     this.showError = false;
-     this.changeItem = false;
-     if (err.status == 404 || err.status == 500) {
-       this.showNotFound = true;
-     } else {
-       this.showError = true;
-       this.errorMessage = 'Error inesperado';
-     }
+  handleError(err: any) {
+    this.showNotFound = false;
+    this.showError = false;
+    this.changeItem = false;
+    if (err.status == 404 || err.status == 500) {
+      this.showNotFound = true;
+    } else {
+      this.showError = true;
+      this.errorMessage = 'Error inesperado';
+    }
   }
   getAsociaciones() {
     this.pescadoresService
@@ -85,14 +96,14 @@ export class PescadorDetalleComponent implements OnInit {
       .subscribe(
         (response: any) => {
           if (!response.data.length) {
-           this.pescadoresService
-             .getAsociacionesIsMiembroUser(this.selectedPescadorId)
-             .subscribe(
-               (response: any) => this.handleResponse(response),
-               (err) => this.handleError(err)
-             );
-          }else{
-            this.handleResponse(response)
+            this.pescadoresService
+              .getAsociacionesIsMiembroUser(this.selectedPescadorId)
+              .subscribe(
+                (response: any) => this.handleResponse(response),
+                (err) => this.handleError(err)
+              );
+          } else {
+            this.handleResponse(response);
           }
         },
         (err) => this.handleError(err)

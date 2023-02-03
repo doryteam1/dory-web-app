@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EvaluateRegisteredUserService } from 'src/app/services/evaluate-registered-user.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -13,14 +14,19 @@ export class ConsumidorDetalleComponent implements OnInit {
   showNotFound: boolean = false;
   showError: boolean = false;
   errorMessage = '';
+  authUserId: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private userService: UsuarioService
+    private userService: UsuarioService,
+    public evaluateRegisteredUserService: EvaluateRegisteredUserService
   ) {}
 
   ngOnInit(): void {
     this.selectedUserId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
+    );
+    this.authUserId = this.evaluateRegisteredUserService.evaluateUser(
+      this.selectedUserId
     );
     this.userService.getDetail(this.selectedUserId).subscribe(
       (response: any) => {
@@ -43,6 +49,12 @@ export class ConsumidorDetalleComponent implements OnInit {
           this.errorMessage = 'Error inesperado';
         }
       }
+    );
+  }
+  sendMessage() {
+    this.evaluateRegisteredUserService.sendMessageOpenChat(
+      this.selectedUserId,
+      ', para enviarle un mensaje a este usuario'
     );
   }
 }

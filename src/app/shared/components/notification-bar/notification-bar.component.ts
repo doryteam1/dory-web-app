@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TopAlertNotifyService } from 'src/app/services/top-alert-notify.service';
 interface alert {
@@ -12,7 +12,7 @@ interface alert {
   templateUrl: './notification-bar.component.html',
   styleUrls: ['./notification-bar.component.scss'],
 })
-export class NotificationBarComponent implements OnInit {
+export class NotificationBarComponent implements OnInit{
   hasAlert: boolean = true;
   @HostBinding('hidden')
   isHidden: boolean = false;
@@ -42,7 +42,7 @@ export class NotificationBarComponent implements OnInit {
           route.includes('piscicultores') ||
           route.includes('panel-busqueda') ||
           route.includes('proveedores/producto/detalle') ||
-          route.includes('politica')||
+          route.includes('politica') ||
           route.includes('manual')
         ) {
           this.isHidden = true;
@@ -53,6 +53,7 @@ export class NotificationBarComponent implements OnInit {
     });
     this.cargaService();
   }
+
   cargaService() {
     this.topAlertNotifyService.getTopAlert().subscribe(
       (response) => {

@@ -11,6 +11,7 @@ import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlatformLocation } from '@angular/common';
+import { EvaluateRegisteredUserService } from 'src/app/services/evaluate-registered-user.service';
 
 @Component({
   selector: 'app-asociacion-detalle',
@@ -46,6 +47,7 @@ export class AsociacionDetalleComponent implements OnInit {
   urls: any[] = [];
   idEmailUser!: number;
   hasDocument: boolean = false;
+  authUserId: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private asociacionesService: AsociacionesService,
@@ -58,7 +60,8 @@ export class AsociacionDetalleComponent implements OnInit {
     private granjasService: GranjasService,
     private utilitiesService: UtilitiesService,
     private firebaseStorageService: FirebaseStorageService,
-    public location2: PlatformLocation
+    public location2: PlatformLocation,
+    public evaluateRegisteredUserService: EvaluateRegisteredUserService
   ) {}
 
   ngOnInit(): void {
@@ -75,11 +78,15 @@ export class AsociacionDetalleComponent implements OnInit {
         this.idEmailUser = response.data[0].id;
       });
     }
+
     this.asociacionesService
       .getAsociacionDetalle(this.selectedAsociacionnit)
       .subscribe(
         (response) => {
           this.asociacion = response.data[0];
+          this.authUserId = this.evaluateRegisteredUserService.evaluateUser(
+            this.asociacion.id_propietario
+          );
           if (response.data.length > 0) {
             this.asociacionesshowError = false;
             this.asociacionesshowNotFound = false;
@@ -125,7 +132,12 @@ export class AsociacionDetalleComponent implements OnInit {
     this.pescadoresPorAsociacions();
     this.granjasPorAsociacion();
   }
-
+  sendMessage() {
+    this.evaluateRegisteredUserService.sendMessageOpenChat(
+      this.asociacion.id_propietario,
+      ', para enviarle un mensaje a este usuario'
+    );
+  }
   granjasPorAsociacion() {
     this.granjasService
       .getGranjasByNitAsociacion(this.selectedAsociacionnit)
@@ -192,7 +204,6 @@ export class AsociacionDetalleComponent implements OnInit {
         .getPiscicultorPorAsociacion(this.selectedAsociacionnit)
         .toPromise();
       this.piscicultorasociaciones = response.data;
-      console.log(this.piscicultorasociaciones);
       if (response.data.length > 0) {
         this.piscicultorshowError = false;
         this.piscicultorshowNotFound = false;
@@ -265,9 +276,6 @@ export class AsociacionDetalleComponent implements OnInit {
     this.router.navigateByUrl('pescadores/municipio/detalle/' + pescador.id);
   }
   goDetalleRepresentante() {
-    console.log('representante legal');
-
-    console.log(this.asociacion.tipo_propietario);
     if (this.asociacion.tipo_propietario == 'Pescador') {
       this.router.navigateByUrl(
         '/pescadores/municipio/detalle/' + this.asociacion.id_propietario
@@ -483,7 +491,7 @@ export class AsociacionDetalleComponent implements OnInit {
   getImgClasses(
     changeItem: boolean,
     ShowNotFound: boolean,
-    dataLength: boolean,
+    dataLength: boolean
   ): string {
     let classes = 'container-card';
     if (changeItem) {

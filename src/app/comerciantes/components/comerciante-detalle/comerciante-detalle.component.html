@@ -18,6 +18,12 @@
             <h4 class="container__description1">{{comerciante?.municipio}}-{{comerciante?.departamento}}</h4>
           </span>
         </div>
+        <div class="container__detalle">
+          <span class="card__description-title link" (click)="sendMessage()" *ngIf="authUserId">
+            <i class="bi bi-chat-left-text-fill"></i>
+            Enviar un mensaje
+          </span>
+        </div>
       </div>
       <img class="container__image" src="{{comerciante?.foto ? comerciante.foto : 'assets/images/avatar-person.svg'}}">
     </div>
@@ -69,10 +75,12 @@
       </div>
     </div>
   </div>
-  <h3 *ngIf="!showErrorDataUser && !showNotFoundDataUser" class="mt-5">Negocios</h3>
-  <div *ngIf="!showErrorDataUser && !showNotFoundDataUser" class="container-card">
-    <app-card-negocio [datos]="negocio" [indiceDatos]="i" *ngFor="let negocio of negociosUser; let i=index;"
-      (onDetalle)="goDetail(negocio.id_negocio)">
-    </app-card-negocio>
-  </div>
+  <ng-container *ngIf="negociosUser.length != 0 && !showErrorDataUser && !showNotFoundDataUser ">
+    <h3  class="mt-5">Negocios</h3>
+    <div class="container-card">
+      <app-card-negocio [datos]="negocio" [indiceDatos]="i" *ngFor="let negocio of negociosUser; let i=index;"
+        (onDetalle)="goDetail(negocio.id_negocio)">
+      </app-card-negocio>
+    </div>
+  </ng-container>
 </div>

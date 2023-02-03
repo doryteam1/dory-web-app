@@ -1,40 +1,8 @@
-<div class="card">
-  <div class="card__data">
-    <span class="card__title">{{vehiculo?.modelo}}</span>
-    <span class="card__info mb-4">{{vehiculo?.capacidad}} TON</span>
-    <div class="d-flex flex-row d-flex-ajuste mb-4">
-      <div class="card__image-container">
-        <app-ng-gallery-slider
-        *ngIf="images.length > 0"
-         [fullScreen]="false"
-        [activateStyle]="true"
-          [contador]="false"
-          [imagenes]="images"
-           class="card__image"
-          [id]="'vehiculodetallesFotos'">
-        </app-ng-gallery-slider>
-        <div *ngIf="images.length <= 0" class="container-no-img">
-          <img src="assets/images/no-image-photography.svg" alt="Sin fotos">
-        </div>
-      </div>
-      <div class="card__container">
-        <div class="d-flex flex-row justify-content-start">
-          <div class="card__fields">
-            <span class="card__title2">Modelo</span>
-            <span class="card__description-title">{{vehiculo?.modelo}}</span>
-            <span class="card__title2">Municipio</span>
-            <span class="card__description-title">{{vehiculo?.municipio_propietario}}-Sucre</span>
-            <span class="card__title2">Capacidad</span>
-            <span class="card__description-title">{{vehiculo?.capacidad}}TON</span>
-            <span class="card__title2">Transporta Alimento</span>
-            <span class="card__description-title">{{vehiculo?.transporte_alimento ? 'Si' : 'No'}}</span>
-          </div>
-        </div>
-            <span  *ngIf="vehiculo?.descripcion" class="card__title2 mt-2">Descripción</span>
-            <span *ngIf="vehiculo?.descripcion" class="card__description">{{vehiculo?.descripcion}}</span>
-            <span class="link" (click)="goDetail(vehiculo.usuarios_id)">Ver detalle propietario</span>
-      </div>
-    </div>
-  </div>
 
-</div>
+<app-product-details-card-template
+[contentLoaded]="contentLoaded"
+[vehiculoDetalles]="true"
+ [datos]="datos"
+ (onDetalle)="goDetail(vehiculo.usuarios_id)"
+ (onOpenChat)="sendMessage()">
+</app-product-details-card-template>

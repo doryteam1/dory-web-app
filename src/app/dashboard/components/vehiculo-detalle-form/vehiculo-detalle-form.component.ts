@@ -20,7 +20,7 @@ export class VehiculoDetalleFormComponent implements OnInit {
     modelo: new FormControl('', [Validators.required]),
     capacidad: new FormControl(0, [Validators.required]),
     transporte_alimento: new FormControl('', [Validators.required]),
-    descripcion: new FormControl('',),
+    descripcion: new FormControl('', [Validators.required]),
   });
   loading: boolean = false;
   /* showErrorNotImageSelected: boolean = false; */
@@ -109,8 +109,7 @@ export class VehiculoDetalleFormComponent implements OnInit {
     this.modelo?.setValue('');
     this.capacidad?.setValue(null);
     this.transporteAlimento?.setValue('');
-  this.descripcion?.setValue('')
-
+    this.descripcion?.setValue('');
   }
   invalid(controlFormName: string) {
     return (
@@ -121,7 +120,7 @@ export class VehiculoDetalleFormComponent implements OnInit {
   }
   addVehiculo() {
     this.loading = true;
-    if (!this.form.valid ) {
+    if (!this.form.valid) {
       this.form.markAllAsTouched();
       console.log('Faltan datos');
       this.loading = false;
@@ -159,7 +158,7 @@ export class VehiculoDetalleFormComponent implements OnInit {
       modelo: this.modelo?.value,
       capacidad: this.capacidad?.value,
       transporte_alimento: this.transporteAlimento?.value,
-      descripcion:this.descripcion?.value
+      descripcion: this.descripcion?.value,
     };
     this.form.disable();
     this.vehiculosService
@@ -288,13 +287,13 @@ export class VehiculoDetalleFormComponent implements OnInit {
             console.log('Fotos guardadas');
           },
           (err) => {
-               this.filesfinalCreate = [];
-               this.form.enable();
-               this.goBack();
-               this.loading = false;
-               this.loadingphoto = false;
-               console.log('Fotos guardadas');
-             console.log(err);
+            this.filesfinalCreate = [];
+            this.form.enable();
+            this.goBack();
+            this.loading = false;
+            this.loadingphoto = false;
+            console.log('Fotos guardadas');
+            console.log(err);
           }
         );
     } else {
@@ -308,11 +307,10 @@ export class VehiculoDetalleFormComponent implements OnInit {
             this.loading = false;
             console.log('Fotos guardadas');
           },
-          (err) =>
-          {
-            console.log(err)
-             this.filesfinalCreate = [];
-             this.loading = false;
+          (err) => {
+            console.log(err);
+            this.filesfinalCreate = [];
+            this.loading = false;
           }
         );
     }
@@ -325,7 +323,7 @@ export class VehiculoDetalleFormComponent implements OnInit {
       .subscribe(
         (response) => {
           this.photosVehicuArray = arraydelate.arrayFotosActualizadas;
-           this.storage.deleteMultipleByUrls(arraydelate.arrayFotosBorradas);
+          this.storage.deleteMultipleByUrls(arraydelate.arrayFotosBorradas);
           this.loading = false;
         },
         (err) => {

@@ -44,7 +44,6 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   recents: any[] = [];
   unreads: any[] = [];
   totalUnreads: number = 0;
-  @ViewChild('chatFloatinBtn') chatFloatingBtnRef!: ElementRef;
   userChatRefs: any;
   borrarseart: boolean = false;
   loadingseart: boolean = false;

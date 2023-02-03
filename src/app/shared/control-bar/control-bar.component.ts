@@ -25,7 +25,7 @@ declare var window: any;
   templateUrl: './control-bar.component.html',
   styleUrls: ['./control-bar.component.scss'],
 })
-export class ControlBarComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ControlBarComponent implements OnInit,OnDestroy {
   @ViewChild('notifies', { read: Element }) notifies!: Element;
   @ViewChild('miModalNotificacion') miModalNotificacion!: ElementRef;
   @ViewChild('dropdownNotificacion')
@@ -109,9 +109,9 @@ export class ControlBarComponent implements OnInit, AfterViewInit, OnDestroy {
     );
     /* Se dispara cuando la pantalla es menor o igual a 1000px */
     this.mediaQuerySubscripNavbar = this.mediaQueryService
-      .mediaQuery('max-width: 520px')
+      .mediaQuery('min-width: 768px')
       .subscribe((matches) => {
-        if (matches) {
+        if (!matches) {
           this.responsibe = true;
           if (
             this.dropdownNotificacion?.nativeElement.className.includes('show')
@@ -172,11 +172,8 @@ export class ControlBarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.test();
     }, 2000);
   }
-  ngAfterViewInit() {}
-
   ngOnDestroy(): void {
     this.mediaQuerySubscripNavbar.unsubscribe();
-    //this.resizedObserver.disconnect();// Stop observing
   }
 
   login() {

@@ -47,7 +47,7 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
   form: FormGroup = new FormGroup({
     nombre_negocio: new FormControl('', [Validators.required]),
     direccion: new FormControl('', [Validators.required]),
-    informacion_adicional_direccion: new FormControl(''),
+    informacion_adicional_direccion: new FormControl('', [Validators.required]),
     latitud: new FormControl(0, [Validators.required]),
     longitud: new FormControl(0, [Validators.required]),
     descripcion_negocio: new FormControl('', [Validators.required]),
@@ -56,7 +56,7 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
     corregimiento_vereda: new FormControl(''),
   });
   id_negocio!: number;
-   onMapa: boolean=false;
+  onMapa: boolean = false;
   constructor(
     private negociosService: NegociosService,
     private places: PlacesService,
@@ -65,7 +65,7 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
     private appModalService: AppModalService,
     private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
     private compressImageSizeService: CompressImageSizeService,
-    private storage: FirebaseStorageService,
+    private storage: FirebaseStorageService
   ) {}
   /* agregar esto para camcelar el subscribe de  comunicacionEntreComponentesService*/
   public changeArray!: Subscription;
@@ -81,37 +81,37 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
     this.changeArray =
       this.comunicacionEntreComponentesService.changeArray.subscribe(
         (array) => {
-  if (!this.onMapa) {
-    if (array.length > 0) {
-      if (this.modalMode == 'create') {
-        if (array[0].length > 0) {
-          for (let index = 0; index < array[0].length; index++) {
-            const element = array[0][index];
-            this.photosNegocioArray = array[0];
+          if (!this.onMapa) {
+            if (array.length > 0) {
+              if (this.modalMode == 'create') {
+                if (array[0].length > 0) {
+                  for (let index = 0; index < array[0].length; index++) {
+                    const element = array[0][index];
+                    this.photosNegocioArray = array[0];
+                  }
+                } else {
+                  this.photosNegocioArray = [];
+                }
+                for (let index = 0; index < array[1].length; index++) {
+                  const element = array[1][index];
+                  this.filesfinalCreate.push(element);
+                }
+                for (let index = 0; index < array[2].length; index++) {
+                  const element = array[2][index];
+                  this.filesfinalCreate.splice(element, 1);
+                }
+              } else if (this.modalMode == 'update') {
+                this.loadPhotos(array);
+              }
+            }
+          } else {
+            console.log(array);
+            this.latitud?.setValue(array[0].latitud);
+            this.longitud?.setValue(array[0].longitud);
+            this.direccion?.setValue(array[0].direccion);
+            this.idMunic?.setValue(array[0].id_municipio);
+            this.closeMap();
           }
-        } else {
-          this.photosNegocioArray = [];
-        }
-        for (let index = 0; index < array[1].length; index++) {
-          const element = array[1][index];
-          this.filesfinalCreate.push(element);
-        }
-        for (let index = 0; index < array[2].length; index++) {
-          const element = array[2][index];
-          this.filesfinalCreate.splice(element, 1);
-        }
-      } else if (this.modalMode == 'update') {
-        this.loadPhotos(array);
-      }
-    }
-  } else {
-    console.log(array);
-    this.latitud?.setValue(array[0].latitud);
-    this.longitud?.setValue(array[0].longitud);
-    this.direccion?.setValue(array[0].direccion);
-    this.idMunic?.setValue(array[0].id_municipio);
-    this.closeMap();
-  }
         }
       );
     this.ArrayDelate =
@@ -546,13 +546,13 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
         );
     }
   }
-  photosDelete(arraydelate:any) {
+  photosDelete(arraydelate: any) {
     this.negociosService
       .updatePhotos(Number(this.id_negocio), arraydelate.arrayFotosActualizadas)
       .subscribe(
         (response) => {
           this.photosNegocioArray = arraydelate.arrayFotosActualizadas;
-           this.storage.deleteMultipleByUrls(arraydelate.arrayFotosBorradas);
+          this.storage.deleteMultipleByUrls(arraydelate.arrayFotosBorradas);
         },
         (err) => {
           console.log(err);

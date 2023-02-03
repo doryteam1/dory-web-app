@@ -6,9 +6,20 @@
   position: fixed;
   user-select: none;
 }
+.mainx {
+  height: 100%;
+/*   margin-top: 100px; */
+  width: 100vw;
+  overflow-y: auto;
+  position: fixed;
+/*   height: -webkit-fill-available;
+    width: 100%;
+    overflow-y: auto;
+    position: fixed; */
+}
 
 .main--web-app {
-  margin-top: 0 !important;
-  user-select: auto
+
+  user-select: none;
 }
 

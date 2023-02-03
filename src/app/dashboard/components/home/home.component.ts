@@ -10,6 +10,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/internal/operators/filter';
+import { CalcHeightNavbarService } from 'src/app/services/calc-height-navbar.service';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
 import { IntrojsService } from 'src/app/services/introjs.service';
 import { MediaQueryService } from 'src/app/services/media-query.service';
@@ -25,6 +26,7 @@ declare var window: any;
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('dropdownNotificacion')
+  heightNavbarSubss!: Subscription;
   dropdownNotificacion!: ElementRef<HTMLElement>;
   stepWelcome: IntroToursteps = {
     title: 'Bienvenido',
@@ -55,7 +57,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   stepPublicaciones: IntroToursteps = {
     title: 'Publicaciones',
     element: '#publicaciones_user',
-    intro: 'Desde aquí podrás ver todas las publicaciones, hechas por un pescador o piscicultor',
+    intro:
+      'Desde aquí podrás ver todas las publicaciones, hechas por un pescador o piscicultor',
   };
   stepOtrosDocumentos: IntroToursteps = {
     title: 'Documentos adicionales',
@@ -264,7 +267,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   sidebar: boolean = false;
   closeOffCamba: boolean = false;
   disableTags: boolean = false;
-  electronActivo: boolean=false;
+  electronActivo: boolean = false;
+  heightNavbar: any;
   constructor(
     private socialService: SocialAuthService,
     private userService: UsuarioService,
@@ -274,7 +278,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     public mediaQueryService: MediaQueryService,
     private introService: IntrojsService,
     private _electronService: ElectronjsService,
-  ) {}
+    public calcHeightNavbarService: CalcHeightNavbarService
+  ) {
+    this.heightNavbarSubss = this.calcHeightNavbarService.currentUser.subscribe(
+      (height: any) => {
+        this.heightNavbar = height;
+      }
+    );
+  }
   subscriber!: Subscription;
   MediaQuery!: Subscription;
   elementoActivoTour!: Subscription;
@@ -303,7 +314,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   ngOnInit(): void {
-    this.electronActivo= this._electronService.ipcActivo;
+    this.electronActivo = this._electronService.ipcActivo;
     this.elementoActivoTour = this.introService.onElementoActivoTour.subscribe(
       (elemento: any) => {
         if (this.sidebar && elemento.id == 'basicos' && !this.closeOffCamba) {
@@ -422,8 +433,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   logout() {
     if (this.electronActivo) {
-      this.userService.logoutElectron()
-    }else{
+      this.userService.logoutElectron();
+    } else {
       this.userService.logout();
     }
     this._router.navigateByUrl('/home');

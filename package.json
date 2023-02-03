@@ -9,7 +9,6 @@
     "test": "ng test",
     "postinstall": "ng build --extra-webpack-config webpack.partial.js",
     "ini": "ng serve --host 0.0.0.0 --extra-webpack-config webpack.partialdev.js"
-
   },
   "engines": {
     "node": "14.17.3",
@@ -62,6 +61,7 @@
     "ngx-long-press2": "^2.0.0",
     "ngx-pagination": "^6.0.1",
     "ngx-sharebuttons": "^10.0.0",
+    "ngx-skeleton-loader": "^6.0.0",
     "ngx-spinner": "^12.0.0",
     "path": "^0.12.7",
     "popper.js": "^1.16.1",

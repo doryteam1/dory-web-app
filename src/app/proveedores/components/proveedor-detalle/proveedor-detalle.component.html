@@ -18,6 +18,12 @@
               <h4 class="container__description1">{{proveedor?.municipio}}-{{proveedor?.departamento}}</h4>
             </span>
           </div>
+          <div class="container__detalle">
+            <span class="card__description-title link" (click)="sendMessage()" *ngIf="authUserId">
+              <i class="bi bi-chat-left-text-fill"></i>
+              Enviar un mensaje
+            </span>
+          </div>
         </div>
       <img class="container__image" src="{{proveedor?.foto ? proveedor.foto : 'assets/images/avatar-person.svg'}}">
     </div>
@@ -67,10 +73,13 @@
       </div>
     </div>
   </div>
-    <h3 *ngIf="!showErrorDataUser && !showNotFoundDataUser" class="mt-5">Productos</h3>
-    <div *ngIf="!showErrorDataUser && !showNotFoundDataUser" class="container-card">
+
+    <ng-container *ngIf="productosUser.length > 0 && !showErrorDataUser && !showNotFoundDataUser">
+        <h3  class=" mt-5">Productos</h3>
+      <div class="container-card">
         <app-card-producto [producto]="producto" [indiceProducto]="i" (onDetalle)="goDetail(producto)"
           *ngFor="let producto of productosUser; let i = index">
         </app-card-producto>
-    </div>
+      </div>
+    </ng-container>
 </div>

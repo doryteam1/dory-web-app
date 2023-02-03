@@ -33,7 +33,7 @@ class="galleryslider"
       <div class="proprietary-container__data">
         <span><h4 class="detail-container__title">Propietario: </h4></span>
         <span>
-          <h4 class="proprietary-container__description">{{granja?.propietarios[0]?.nombre_completo ? granja?.propietarios[0]?.nombre_completo:'Sin definir'}}</h4>
+          <h4 class="proprietary-container__description propitario--Edit" (click)="goDetallePropietario()">{{granja?.propietarios[0]?.nombre_completo ? granja?.propietarios[0]?.nombre_completo:'Sin definir'}}</h4>
         </span>
       </div>
       <div class="proprietary-container__data">
@@ -45,6 +45,12 @@ class="galleryslider"
       <div class="proprietary-container__data">
         <span><h4 class="detail-container__title">Dirección:</h4></span>
         <span><h4 class="proprietary-container__description">{{granja?.propietarios[0]?.direccion ? granja?.propietarios[0]?.direccion:'Sin definir'}}</h4></span>
+      </div>
+      <div class="proprietary-container__data">
+        <span class="card__description-title link" (click)="sendMessage()" >
+          <i class="bi bi-chat-left-text-fill"></i>
+          Enviar un mensaje
+        </span>
       </div>
     </div>
     <img class="proprietary-container__image" [src]="granja?.propietarios[0]?.foto ? granja?.propietarios[0]?.foto : 'assets/images/avatar-person.svg'">

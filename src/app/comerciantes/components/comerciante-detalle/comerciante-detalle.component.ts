@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
+import { EvaluateRegisteredUserService } from 'src/app/services/evaluate-registered-user.service';
 import { NegociosService } from 'src/app/services/negocios.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -17,17 +18,21 @@ export class ComercianteDetalleComponent implements OnInit {
   showNotFoundDataUser: boolean = false;
   showErrorDataUser: boolean = false;
   negociosUser: any;
-  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
+  authUserId: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UsuarioService,
     private negociosService: NegociosService,
-    private router: Router
+    private router: Router,
+    public evaluateRegisteredUserService: EvaluateRegisteredUserService
   ) {}
 
   ngOnInit(): void {
     this.selectedUserId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
+    );
+    this.authUserId = this.evaluateRegisteredUserService.evaluateUser(
+      this.selectedUserId
     );
     this.userService.getDetail(this.selectedUserId).subscribe(
       (response: any) => {
@@ -55,12 +60,9 @@ export class ComercianteDetalleComponent implements OnInit {
       (response) => {
         if (response.data.length > 0) {
           this.negociosUser = response.data;
-          console.log(this.negociosUser);
-          this.showErrorDataUser = false;
           this.showNotFoundDataUser = false;
         } else {
           this.showNotFoundDataUser = true;
-          this.showErrorDataUser = false;
         }
       },
       (err) => {
@@ -79,13 +81,12 @@ export class ComercianteDetalleComponent implements OnInit {
   }
   goDetail(id: number) {
     const url = `comerciantes/negocio/detalle/${id}`;
-    if (this.electronActive) {
-      this.router.navigateByUrl(url);
-    } else {
-      const serializedUrl = this.router.serializeUrl(
-        this.router.createUrlTree([url])
-      );
-      window.open(serializedUrl, '_blank');
-    }
+    this.router.navigateByUrl(url);
+  }
+  sendMessage() {
+    this.evaluateRegisteredUserService.sendMessageOpenChat(
+      this.selectedUserId,
+      ', para enviarle un mensaje a este usuario'
+    );
   }
 }

@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Granja } from 'src/models/granja.model';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -13,13 +12,13 @@ import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { vertices } from '../../../global/constants';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { BuscarPor } from 'src/models/buscarPor.model';
-
+declare var window: any;
 @Component({
   selector: 'app-piscicultores-municipio',
   templateUrl: './piscicultores-municipio.component.html',
   styleUrls: ['./piscicultores-municipio.component.scss'],
 })
-export class PiscicultoresMunicipioComponent implements OnInit {
+export class PiscicultoresMunicipioComponent implements OnInit,OnDestroy {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   @ViewChild('marker') marker!: MapMarker;
   apiLoaded: Observable<boolean>;
@@ -139,7 +138,9 @@ export class PiscicultoresMunicipioComponent implements OnInit {
       (err) => {}
     );
   }
-
+  ngOnDestroy() {
+ 
+  }
   extractLatLong() {
     this.markerPositions = [];
     this.markersInfo = [];
@@ -179,7 +180,11 @@ export class PiscicultoresMunicipioComponent implements OnInit {
     }
   }
   openInfoWindowClick(marker: MapMarker, index: number) {
-    if (this.piscicultoresFiltered.length > 0 && this.mapaOn && this.contador == 0) {
+    if (
+      this.piscicultoresFiltered.length > 0 &&
+      this.mapaOn &&
+      this.contador == 0
+    ) {
       this.contador++;
       this.indexSelected = index;
       this.infoWindow.open(marker);

@@ -18,6 +18,12 @@
             <h4 class="container__description1">{{consumidor?.municipio}}-{{consumidor?.departamento}}</h4>
           </span>
         </div>
+        <div class="container__detalle">
+          <span class="card__description-title link" (click)="sendMessage()" *ngIf="authUserId">
+            <i class="bi bi-chat-left-text-fill"></i>
+            Enviar un mensaje
+          </span>
+        </div>
       </div>
       <img class="container__image"
         src="{{consumidor?.foto ? consumidor.foto : 'assets/images/avatar-person.svg'}}">
@@ -42,17 +48,16 @@
       <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Dirección</h4>
-        <span *ngIf="consumidor?.direccion" class="detail-container__value">{{consumidor?.direccion? 'Dir.' : ''}}
-          {{consumidor?.direccion}} </span>
-        <span *ngIf="!consumidor?.direccion" class="detail-container__value">Dirección indefinida</span>
+        <span class="detail-container__value">{{consumidor?.direccion ? 'Dir.' + consumidor?.direccion : 'Dirección
+          indefinida'}}</span>
       </div>
     </div>
-    <div class="detail-container mt-4" *ngIf="consumidor?.informacion_adicional_direccion">
+    <div class="detail-container mt-4" >
       <img class="detail-container__image" src="assets/icons/add_location_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Información adicional de la dirección</h4>
         <span class="detail-container__value">
-          {{consumidor?.informacion_adicional_direccion}}</span>
+          {{consumidor?.informacion_adicional_direccion ? consumidor?.informacion_adicional_direccion : 'Información no espesificada'}}</span>
       </div>
     </div>
   </div>

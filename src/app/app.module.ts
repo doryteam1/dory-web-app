@@ -25,7 +25,7 @@ import { ShareButtonsConfig } from 'ngx-sharebuttons';
 import { ChatModule } from './chat/chat.module';
 import { DatePipe, DecimalPipe, TitleCasePipe } from '@angular/common';
 import { NoSanitizePipe } from './pipes/noSanitize.pipe';
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 
 
@@ -76,7 +76,7 @@ const customConfig: ShareButtonsConfig = {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
     ChatModule,
-
+    NgxSkeletonLoaderModule,
   ],
   providers: [
     TitleCasePipe,

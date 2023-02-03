@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ProveedorService } from 'src/app/services/proveedor.service';
+import { EvaluateRegisteredUserService } from 'src/app/services/evaluate-registered-user.service';
 
 @Component({
   selector: 'app-proveedor-detalle',
@@ -16,18 +17,22 @@ export class ProveedorDetalleComponent implements OnInit {
   showNotFoundDataUser: boolean = false;
   showErrorDataUser: boolean = false;
   productosUser: any;
-  electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
   errorMessage = '';
+  authUserId: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UsuarioService,
     private proveedorService: ProveedorService,
-    private router: Router
+    private router: Router,
+    public evaluateRegisteredUserService: EvaluateRegisteredUserService
   ) {}
 
   ngOnInit(): void {
     this.selectedUserId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
+    );
+    this.authUserId = this.evaluateRegisteredUserService.evaluateUser(
+      this.selectedUserId
     );
     this.userService.getDetail(this.selectedUserId).subscribe(
       (response: any) => {
@@ -55,12 +60,9 @@ export class ProveedorDetalleComponent implements OnInit {
       (response) => {
         if (response.data.length > 0) {
           this.productosUser = response.data;
-          console.log(this.productosUser);
-          this.showErrorDataUser = false;
           this.showNotFoundDataUser = false;
         } else {
           this.showNotFoundDataUser = true;
-          this.showErrorDataUser = false;
         }
       },
       (err) => {
@@ -78,17 +80,15 @@ export class ProveedorDetalleComponent implements OnInit {
     );
   }
   goDetail(producto: any) {
-    if (this.electronActive) {
-      this.router.navigateByUrl(
-        `/proveedores/producto/detalle/${producto.codigo}`
-      );
-    } else {
-      let url = this.router.serializeUrl(
-        this.router.createUrlTree([
-          `/proveedores/producto/detalle/${producto.codigo}`,
-        ])
-      );
-      window.open(url, '_blank');
-    }
+    this.router.navigateByUrl(
+      `/proveedores/producto/detalle/${producto.codigo}`
+    );
+
+  }
+  sendMessage() {
+    this.evaluateRegisteredUserService.sendMessageOpenChat(
+      this.selectedUserId,
+      ', para enviarle un mensaje a este usuario'
+    );
   }
 }

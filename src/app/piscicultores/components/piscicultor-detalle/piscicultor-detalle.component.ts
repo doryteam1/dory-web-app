@@ -6,6 +6,7 @@ import { GranjasService } from 'src/app/granjas/services/granjas.service';
 import { PlatformLocation,
 } from '@angular/common';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
+import { EvaluateRegisteredUserService } from 'src/app/services/evaluate-registered-user.service';
 @Component({
   selector: 'app-piscicultor-detalle',
   templateUrl: './piscicultor-detalle.component.html',
@@ -20,21 +21,26 @@ export class PiscicultorDetalleComponent implements OnInit {
   piscicultorGranjasNotFound: boolean = false;
   piscicultorDetalleshowError: boolean = false;
   piscicultorAsociacionError: boolean = false;
-  piscicultorGranjasError:boolean = false;
+  piscicultorGranjasError: boolean = false;
   errorMessage = '';
   activatelistasociacion: boolean = false;
   piscicultorGranjaschangeItem: boolean = true;
+  authUserId: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private piscicultoresService: PiscicultoresService,
     private router: Router,
     private granjasService: GranjasService,
-    public location2: PlatformLocation
+    public location2: PlatformLocation,
+    public evaluateRegisteredUserService: EvaluateRegisteredUserService
   ) {}
 
   ngOnInit(): void {
     this.selectedPiscicultorId = Number(
       this.activatedRoute.snapshot.paramMap.get('id')!
+    );
+    this.authUserId = this.evaluateRegisteredUserService.evaluateUser(
+      this.selectedPiscicultorId
     );
     this.piscicultoresService
       .getPiscicultorDetalle(this.selectedPiscicultorId)
@@ -173,5 +179,11 @@ export class PiscicultorDetalleComponent implements OnInit {
   }
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);
+  }
+  sendMessage() {
+    this.evaluateRegisteredUserService.sendMessageOpenChat(
+      this.selectedPiscicultorId,
+      ', para enviarle un mensaje a este usuario'
+    );
   }
 }

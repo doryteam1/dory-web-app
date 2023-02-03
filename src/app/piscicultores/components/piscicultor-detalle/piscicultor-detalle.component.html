@@ -22,6 +22,12 @@
             <h4 class="piscicultor-container__title">{{piscicultor?.municipio}}, {{piscicultor?.departamento}}</h4>
           </span>
         </div>
+        <div class="piscicultor-container__detalle">
+        <span class="card__description-title link" (click)="sendMessage()" *ngIf="authUserId">
+          <i class="bi bi-chat-left-text-fill"></i>
+          Enviar un mensaje
+        </span>
+        </div>
       </div>
       <img class="piscicultor-container__image"
         src="{{piscicultor?.foto ? piscicultor?.foto : 'assets/images/avatar-person.svg'}}">

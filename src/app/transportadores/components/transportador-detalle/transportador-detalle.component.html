@@ -18,6 +18,12 @@
               <h4 class="container__description1">{{transportador?.municipio}}-{{transportador?.departamento}}</h4>
             </span>
           </div>
+            <div class="container__detalle">
+              <span class="card__description-title link" (click)="sendMessage()" *ngIf="authUserId">
+                <i class="bi bi-chat-left-text-fill"></i>
+                Enviar un mensaje
+              </span>
+            </div>
         </div>
       <img class="container__image"
         src="{{transportador?.foto ? transportador.foto : 'assets/images/avatar-person.svg'}}">
@@ -70,9 +76,13 @@
           </div>
         </div>
   </div>
-  <h3 *ngIf="!showErrorDataUser && !showNotFoundDataUser" class="mt-5">Vehículos</h3>
-  <div *ngIf="!showErrorDataUser && !showNotFoundDataUser"class="container-card">
+
+  <ng-container *ngIf="vehiculosFiltered.length > 0 && !showNotFoundDataUser && !showErrorDataUser" >
+  <h3 class="mt-5">Vehículos</h3>
+  <div class="container-card">
     <app-card-vehiculo [datos]="vehiculo" [indiceDatos]="i" *ngFor="let vehiculo of vehiculosFiltered; let i=index;"
       (onDetalle)="goDetail(vehiculo.id_vehiculo)"></app-card-vehiculo>
   </div>
+</ng-container>
+
 </div>

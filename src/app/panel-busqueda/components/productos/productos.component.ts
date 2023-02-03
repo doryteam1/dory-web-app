@@ -12,13 +12,16 @@ import { MODO_FILTRO_DATOS_VARIOS, MODO_FILTRO_ORDER_ASC, MODO_FILTRO_ORDER_DES 
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
 import { BuscarPor } from 'src/models/buscarPor.model';
 import { PlacesService } from 'src/app/services/places.service';
+import { CalcHeightNavbarService } from 'src/app/services/calc-height-navbar.service';
+import { OnDestroy } from '@angular/core';
+
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.scss'],
 })
-export class ProductosComponent implements OnInit {
+export class ProductosComponent implements OnInit{
   productos: Array<any> = [];
   showNotFound: boolean = false;
   palabra: string = '';
@@ -92,12 +95,15 @@ export class ProductosComponent implements OnInit {
     ],
   };
   resultFiltroPorMunicipio: any[] = [];
+
   constructor(
     private proveedorService: ProveedorService,
     private router: Router,
     private searchBuscadorService: SearchBuscadorService,
-    private places: PlacesService
+    private places: PlacesService,
+    public calcHeightNavbarService: CalcHeightNavbarService
   ) {}
+
   ngOnInit(): void {
     registerLocaleData(es);
     this.proveedorService.getProductosAll().subscribe((response) => {
@@ -273,8 +279,8 @@ export class ProductosComponent implements OnInit {
   }
 
   goDetail(producto: any) {
-      this.router.navigateByUrl(
-        `/proveedores/producto/detalle/${producto.codigo}`
-      );
+    this.router.navigateByUrl(
+      `/proveedores/producto/detalle/${producto.codigo}`
+    );
   }
 }

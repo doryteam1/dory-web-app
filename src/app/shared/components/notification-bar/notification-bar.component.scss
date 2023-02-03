@@ -8,7 +8,7 @@
   width: 100%;
   background: var(--high-blue);
   color: var(--white);
-  display: flex;
+display: flex;
   justify-content: flex-end;
   padding: 5px;
   gap: 20px;
@@ -16,7 +16,9 @@
   position: relative;
     z-index: 1020;
 }
-
+.display-flex{
+display: flex;
+}
 .alert-container__message {
   margin-left: 10px;
   align-self: center;

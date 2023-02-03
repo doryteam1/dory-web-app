@@ -9,6 +9,7 @@ import * as dayjs from 'dayjs'
 import { Subscription } from 'rxjs';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { EvaluateRegisteredUserService } from 'src/app/services/evaluate-registered-user.service';
 
 @Component({
   selector: 'app-granja-detalle',
@@ -51,6 +52,7 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
   isAuthUser: boolean = false;
   fotosgranjaLength: number = 0;
   showLightbox: boolean = false;
+  userId: boolean = false;
   constructor(
     private granjasService: GranjasService,
     private activatedRoute: ActivatedRoute,
@@ -59,7 +61,8 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
     private appModalService: AppModalService,
     public mediaQueryService: MediaQueryService,
     public userService: UsuarioService,
-    private router: Router
+    private router: Router,
+    public evaluateRegisteredUserService: EvaluateRegisteredUserService
   ) {}
   mediaQuery1!: Subscription;
   ngOnInit(): void {
@@ -73,21 +76,26 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
       let payload = Utilities.parseJwt(this.userToken);
       this.authUserId = payload.sub;
       this.granjasService
-        .resenasUserByIdGranja(this.selectedGranjaId)
-        .subscribe(
-          (response) => {
-            this.miresena = response.data.resena;
-            this.editedDescResena = this.miresena?.descripcion;
-          },
-          (err) => {}
+      .resenasUserByIdGranja(this.selectedGranjaId)
+      .subscribe(
+        (response) => {
+          this.miresena = response.data.resena;
+          this.editedDescResena = this.miresena?.descripcion;
+        },
+        (err) => {}
         );
-    }
+      }
+
+
     this.granjasService.getGranjaDetalle(this.selectedGranjaId).subscribe(
       (response) => {
         if (response.data.length > 0) {
           this.granja = response.data[0];
           this.currentRate = this.granja?.puntuacion;
           this.fotosgranja = response.data[0].fotos;
+            this.userId = this.evaluateRegisteredUserService.evaluateUser(
+              this.granja.propietarios[0].id_propietario
+            );
           this.fotosgranjaLength = this.fotosgranja.length;
           if (this.fotosgranja.length == 0) {
             this.sinfotos = true;
@@ -137,25 +145,36 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
         }
       });
   }
+  sendMessage() {
+    this.evaluateRegisteredUserService.sendMessageOpenChat(
+      this.granja.propietarios[0].id_propietario,
+      ', para enviarle un mensaje a este usuario'
+    );
+  }
+  goDetallePropietario(){
+     this.router.navigateByUrl(
+       '/piscicultores/municipio/detalle/' +
+         this.granja.propietarios[0].id_propietario
+     );
+  }
   ngOnDestroy(): void {
     this.mediaQuery1.unsubscribe();
   }
-  fotoSele(i: number) {;
+  fotoSele(i: number) {
     if (this.fotosgranja?.length != 1) {
       this.shadoweffectindice = i;
       this.imgselecmodal = -1;
       this.valorindicecarrucel = -1;
       this.OpenGalleryModalOptionOne();
-    }else{
+    } else {
       this.fotoSeleLightbox();
     }
   }
   fotoSeleLightbox() {
-  this.shadoweffectindice = -1;
-  this.imgselecmodal = -1;
-  this.valorindicecarrucel = -1;
-  this.showLightbox = !this.showLightbox;
-
+    this.shadoweffectindice = -1;
+    this.imgselecmodal = -1;
+    this.valorindicecarrucel = -1;
+    this.showLightbox = !this.showLightbox;
   }
 
   imgSelecionadaModal(i: number) {
@@ -199,24 +218,24 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
           }
         );
     } else if (!this.isAuthUser) {
-     this.modalRegistrate()
+      this.modalRegistrate();
     }
   }
-modalRegistrate(){
- this.location.onPopState(() => {
-   this.appModalService.closeModalAlertSignu();
- });
- this.appModalService
-   .modalAlertSignu()
-   .then((result: any) => {
-     if (result == 'registrate') {
-       this.router.navigate(['/registro']);
-     } else if (result == 'ingresar') {
-       this.router.navigate(['/login']);
-     }
-   })
-   .catch((result) => {});
-}
+  modalRegistrate() {
+    this.location.onPopState(() => {
+      this.appModalService.closeModalAlertSignu();
+    });
+    this.appModalService
+      .modalAlertSignu()
+      .then((result: any) => {
+        if (result == 'registrate') {
+          this.router.navigate(['/registro']);
+        } else if (result == 'ingresar') {
+          this.router.navigate(['/login']);
+        }
+      })
+      .catch((result) => {});
+  }
   changeFavorite() {
     if (this.isAuthUser) {
       this.granja.favorita = this.granja.favorita == 1 ? 0 : 1;
@@ -228,7 +247,7 @@ modalRegistrate(){
         }
       );
     } else if (!this.isAuthUser) {
-      this.modalRegistrate()
+      this.modalRegistrate();
     }
   }
 
