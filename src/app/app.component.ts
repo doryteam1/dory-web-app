@@ -47,7 +47,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
       this.height = this.navbarDiv.nativeElement.clientHeight;
       //Actualizamos el primer dato y detectamos cualquier cambio en height
       this.changeDetectorRef.detectChanges();
-      this.previousHeight = [`calc(100vh - ${this.height}px)`, this.height];
+      this.previousHeight = [`calc(100% - ${this.height}px)`, this.height];
       //Creamos un array y lo enviamos atravez del servico
       this.calcHeightNavbarService.updateData(this.previousHeight);
     }
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
   ngAfterViewInit(): void {
     /* Obtenemos el primer dato de height */
     this.height = this.navbarDiv.nativeElement.clientHeight;
-    this.previousHeight = [`calc(100vh - ${this.height}px)`, this.height];
+    this.previousHeight = [`calc(100% - ${this.height}px)`, this.height];
   }
   ngOnInit(): void {
     this.isAuthUser = this.userService.isAuthenticated();

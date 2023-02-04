@@ -10,7 +10,8 @@
 </div> -->
 
 
-  <div #main  class="mainx" (scroll)="onScroll($event)"  [ngClass]="{'main--web-app':customTitleBarElectron}"  [style.height]="'calc(100vh - ' + navbarDiv.clientHeight + 'px)'">
+  <div #main  class="mainx" (scroll)="onScroll($event)"  [ngClass]="{'main--web-app':customTitleBarElectron}"  [style.height]="'calc(100% - ' + navbarDiv.clientHeight + 'px)'">
+
     <router-outlet ></router-outlet>
     <app-floating-btn-auto-up [parentContainer]="divMain"></app-floating-btn-auto-up>
   </div>
