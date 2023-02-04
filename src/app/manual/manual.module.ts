@@ -5,8 +5,6 @@ import { ManualRoutingModule } from './manual-routing.module';
 import { DocsComponent } from './components/docs/docs.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
 import { ObjetivoComponent } from './components/objetivo/objetivo.component';
-import { PuntoInicioComponent } from './components/punto-inicio/punto-inicio.component';
-import { GuiaUsoComponent } from './components/guia-uso/guia-uso.component';
 import { AreasSitioComponent } from './components/areas-sitio/areas-sitio.component';
 import { RegistroUsuarioComponent } from './components/registro-usuario/registro-usuario.component';
 import { RegistroGoogleComponent } from './components/registro-google/registro-google.component';
@@ -30,15 +28,15 @@ import { PanelBusquedaComponent } from './components/panel-busqueda/panel-busque
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { CuerpoPaginaComponent } from './components/cuerpo-pagina/cuerpo-pagina.component';
 import { PiePaginaComponent } from './components/pie-pagina/pie-pagina.component';
+import { InicioComponent } from './components/inicio/inicio.component';
 
 
 @NgModule({
   declarations: [
     DocsComponent,
+    InicioComponent,
     IntroductionComponent,
-    ObjetivoComponent,
-    PuntoInicioComponent,
-    GuiaUsoComponent,
+    ObjetivoComponent,    
     AreasSitioComponent,
     RegistroUsuarioComponent,
     RegistroGoogleComponent,
@@ -62,6 +60,7 @@ import { PiePaginaComponent } from './components/pie-pagina/pie-pagina.component
     BuscadorComponent,
     CuerpoPaginaComponent,
     PiePaginaComponent
+    
   ],
   imports: [
     CommonModule,

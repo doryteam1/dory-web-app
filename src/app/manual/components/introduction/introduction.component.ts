@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-introduction',
@@ -7,7 +8,8 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./introduction.component.scss']
 })
 export class IntroductionComponent implements OnInit, AfterViewInit {
-
+  baseUrl:string = environment.ginelectURL;
+  thisWebUrl:string = environment.thisWebUrl; 
   constructor(private elRef:ElementRef) { 
   }
   
@@ -19,3 +21,9 @@ export class IntroductionComponent implements OnInit, AfterViewInit {
   }
 
 }
+
+
+
+
+
+

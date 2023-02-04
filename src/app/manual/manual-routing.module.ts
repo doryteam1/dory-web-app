@@ -8,8 +8,8 @@ import { DocsComponent } from './components/docs/docs.component';
 import { DoryComponent } from './components/dory/dory.component';
 import { EncabezadoComponent } from './components/encabezado/encabezado.component';
 import { EventosComponent } from './components/eventos/eventos.component';
-import { GuiaUsoComponent } from './components/guia-uso/guia-uso.component';
 import { IngresarComponent } from './components/ingresar/ingresar.component';
+import { InicioComponent } from './components/inicio/inicio.component';
 import { InterfazComercianteComponent } from './components/interfaz-comerciante/interfaz-comerciante.component';
 import { InterfazConsumidorComponent } from './components/interfaz-consumidor/interfaz-consumidor.component';
 import { InterfazInvestigadorComponent } from './components/interfaz-investigador/interfaz-investigador.component';
@@ -25,7 +25,6 @@ import { ObjetivoComponent } from './components/objetivo/objetivo.component';
 import { PanelBusquedaComponent } from './components/panel-busqueda/panel-busqueda.component';
 import { PiePaginaComponent } from './components/pie-pagina/pie-pagina.component';
 import { ProductoresComponent } from './components/productores/productores.component';
-import { PuntoInicioComponent } from './components/punto-inicio/punto-inicio.component';
 import { RegistroGoogleComponent } from './components/registro-google/registro-google.component';
 import { RegistroUsuarioComponent } from './components/registro-usuario/registro-usuario.component';
 
@@ -35,8 +34,12 @@ const routes: Routes = [
     children:[
       {
         path:'',
-        redirectTo:'introduccion',
+        redirectTo:'inicio',
         pathMatch:'full'
+      },
+      {
+        path:'inicio', 
+        component:InicioComponent
       },
       {
         path:'introduccion', 
@@ -45,15 +48,7 @@ const routes: Routes = [
       {
         path:'objetivo',
         component:ObjetivoComponent
-      },
-      {
-        path:'guia-uso',
-        component:GuiaUsoComponent
-      },
-      {
-        path:'punto-inicio',
-        component:PuntoInicioComponent
-      },
+      },   
       {
         path:'areas-sitio',
         component:AreasSitioComponent
