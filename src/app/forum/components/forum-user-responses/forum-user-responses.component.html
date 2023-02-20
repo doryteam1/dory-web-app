@@ -6,7 +6,7 @@
   </div>
   <!-- Errores y no datos pregunta -->
   <div class="container__app-not-found" *ngIf="!loadingQuestion && showErrorQuestion  || showNotFoundQuestion">
-    <app-not-found message="No encontramos resultados para esta busqueda" [errorData]="showErrorQuestion">
+    <app-not-found [message]="messageError" [errorData]="showErrorQuestion">
     </app-not-found>
   </div>
 

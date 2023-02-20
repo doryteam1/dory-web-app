@@ -30,8 +30,10 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
   preguntaUser: any;
   tipoFiltro: number = 0;
   nombreFiltro: string = '';
+  messageError: string = 'No encontramos resultados para esta busqueda';
+
   filtros: any[] = [
-  /*   {
+    /*   {
       nombre: 'Más recientes',
       tipo: 0,
     }, */
@@ -83,7 +85,6 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
       (response) => {
         if (response.data.length > 0) {
           this.preguntaUser = response.data[0];
-          console.log(this.preguntaUser)
           this.loadingQuestion = false;
           this.loadingAnswers = true;
           this.reloadAnswers(this.selectedPreguntaId);
@@ -94,6 +95,9 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
       },
       (err) => {
         console.log(err);
+        if (err.status == 404) {
+          this.messageError = err.error.message;
+        }
         this.loadingQuestion = false;
         this.showErrorQuestion = true;
       }
@@ -126,6 +130,7 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
 
   /*  */
   deleteRespuesta(idRespuesta: number, imagen: any[]) {
+    this.messageError = '';
     this.location.onPopState(() => {
       this.appModalService.closeModalAlertSignu();
     });
@@ -145,6 +150,7 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
           if (idx != -1) {
             this.forumService.deleteRespuesta(idRespuesta).subscribe(
               (response) => {
+                console.log(response)
                 this.respuestas.splice(idx, 1);
                 if (imagen.length > 0) {
                   this.storage.deleteMultipleByUrls(imagen);
@@ -153,6 +159,12 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
               },
               (err) => {
                 console.log(err);
+                if (err.status == 404) {
+                  this.messageError = err.error.message;
+                  this.modalError(
+                    '¡Uff, esta pregunta ya no existe en el sistema 😟!'
+                  );
+                }
               }
             );
           }
@@ -160,7 +172,17 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
       })
       .catch((result) => {});
   }
-
+  modalError(error: string) {
+    this.location.onPopState(() => {
+      this.appModalService.closeModalAlertError();
+    });
+    this.appModalService
+      .modalAlertError(error, 'Volver atrás')
+      .then((result: any) => {
+        this.router.navigate(['/foro']);
+      })
+      .catch((result) => {});
+  }
   deleteFilter() {
     this.filtroseleccionado = false;
     this.tipoFiltro = 0;

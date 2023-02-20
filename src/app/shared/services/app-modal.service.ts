@@ -12,6 +12,7 @@ import { ModalContactCardComponent } from '../components/modal-contact-card/moda
 import { ModalSearchComponent } from '../components/modal-search/modal-search.component';
 import { ModalAlertSignupComponent } from '../components/modal-alert-signup/modal-alert-signup.component';
 import { ModalInsertLinkComponent } from '../components/modal-insert-link/modal-insert-link.component';
+import { ModalAlertErrorComponent } from '../components/modal-alert-error/modal-alert-error.component';
 
 interface atributos {
   nameButton: string;
@@ -57,6 +58,24 @@ export class AppModalService {
     btn2: string = 'Ingresar'
   ): Promise<boolean> {
     const modalRef = this.modalService.open(ModalAlertSignupComponent, {
+      size: 'sm',
+      centered: true,
+      backdropClass: 'modal-AlertSignu-BackdropClass',
+    });
+    modalRef.componentInstance.message = message;
+    modalRef.componentInstance.btn1 = btn1;
+    modalRef.componentInstance.btn2 = btn2;
+    return modalRef.result;
+  }
+  public closeModalAlertError(): void {
+    this.modalService.dismissAll();
+  }
+  public modalAlertError(
+    message?: any,
+    btn1: string = '',
+    btn2: string = ''
+  ): Promise<boolean> {
+    const modalRef = this.modalService.open(ModalAlertErrorComponent, {
       size: 'sm',
       centered: true,
       backdropClass: 'modal-AlertSignu-BackdropClass',

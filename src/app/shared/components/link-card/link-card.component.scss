@@ -22,18 +22,19 @@
 }
 
 .card{
-    width: 20rem;
+  width: 90vw !important;
+  max-width: 350px;
 }
 
 
 @media (max-width:995px) {
-    .card{
+   /*  .card{
         width: 26rem;
-    }
+    } */
 }
 
 @media (max-width:420px) {
-    .card{
+   /*  .card{
         width: 100%;
-    }
+    } */
 }

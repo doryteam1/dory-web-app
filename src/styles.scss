@@ -116,6 +116,11 @@ mark {
   .sr-only {
     display: none;
   }
+    @media screen and (max-width: 400px) {
+      a {
+        font-size: 0.8rem;
+      }
+    }
 }
 
 .btn-outline-black {

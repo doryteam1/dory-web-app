@@ -1,4 +1,5 @@
 import { PlatformLocation } from '@angular/common';
+
 import {
   Component,
   ElementRef,
@@ -8,14 +9,14 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { async } from '@angular/core/testing';
 import {
   AbstractControl,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer} from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { CommunicateDataService } from 'src/app/services/communicate-data.service';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
@@ -47,7 +48,7 @@ export class UserAnswersFormForumComponent implements OnInit {
   loading: boolean = false;
   isAuthUserPhoto: any;
   id_respuesta!: number;
-
+  messageError: string = 'No encontramos resultados para esta busqueda';
   photosDeleteStorage: any[] = [];
   previewCreatedPhotos: any[] = [];
 
@@ -58,12 +59,15 @@ export class UserAnswersFormForumComponent implements OnInit {
     private communicateDataService: CommunicateDataService,
     public userService: UsuarioService,
     private storage: FirebaseStorageService,
-    public location: PlatformLocation
+    public location: PlatformLocation,
+    private appModalService: AppModalService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.prepareForm();
     this.isAuthUserPhoto = this.userService.getAuthUserPhoto();
+
   }
 
   async actionData() {
@@ -105,9 +109,13 @@ export class UserAnswersFormForumComponent implements OnInit {
           break;
       }
 
-      this.communicateDataService.updateData(true)
-    } catch (err) {
+      this.communicateDataService.updateData(true);
+    } catch (err:any) {
       console.error(err);
+      if (err.status == 404) {
+        this.messageError = err.error.message;
+        this.modalError('¡Uff, esta pregunta ya no existe en el sistema 😟!');
+      }
       this.openForm();
     } finally {
       this.openForm();
@@ -171,6 +179,18 @@ export class UserAnswersFormForumComponent implements OnInit {
   openForm() {
     this.resetVariables();
     this.onShowForm.emit(this.showForm);
+  }
+
+  modalError(error:string) {
+    this.location.onPopState(() => {
+      this.appModalService.closeModalAlertError();
+    });
+    this.appModalService
+      .modalAlertError(error, 'Volver atrás')
+      .then((result: any) => {
+        this.router.navigate(['/foro']);
+      })
+      .catch((result) => {});
   }
 
   openAddFileDialogCreate() {

@@ -79,6 +79,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { ProductDetailsCardTemplateComponent } from './components/product-details-card-template/product-details-card-template.component';
 import { ButtonChatOpenComponent } from './components/button-chat-open/button-chat-open.component';
 import { VideoEmbedIframeComponent } from './components/video-embed-iframe/video-embed-iframe.component';
+import { ModalAlertErrorComponent } from './components/modal-alert-error/modal-alert-error.component';
 
 
 @NgModule({
@@ -141,6 +142,7 @@ import { VideoEmbedIframeComponent } from './components/video-embed-iframe/video
     ProductDetailsCardTemplateComponent,
     ButtonChatOpenComponent,
     VideoEmbedIframeComponent,
+    ModalAlertErrorComponent,
   ],
   imports: [
     CommonModule,

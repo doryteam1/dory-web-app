@@ -1,0 +1,11 @@
+<div class="modal-body">
+  <div class="w-100 button-close">
+    <button type="button" class="btn-close" aria-describedby="modal-title" (click)="dismiss()"></button>
+  </div>
+  <p class="textocolormodal"><strong class="textocolormodal"> {{message}}</strong></p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger coloraceptar" (click)="boton1()" *ngIf="btn1.length">{{btn1}}</button>
+  <button type="button" class="btn btn-danger coloraceptar" (click)="boton2()" *ngIf="btn2.length">{{btn2}}</button>
+</div>
+

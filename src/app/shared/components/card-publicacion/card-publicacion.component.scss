@@ -1,3 +1,8 @@
+
+h5,h6,p{
+  margin-bottom: 0;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -27,11 +32,18 @@
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
-
+    padding: 15px;
+     padding-top: 0;
+     &__data{
+      display: flex;
+      flex-direction: column;
+      text-align: start !important;
+      gap: 7px;
+      cursor: pointer
+     }
     div {
       text-align: center;
       width: 100%;
-      margin-top: 10px;
     }
   }
 }
@@ -39,12 +51,12 @@
 .card__sub-title {
   font-size: 14px;
   font-weight: 500;
-  margin-top: 4px;
+
 }
 
 .card__descripction {
   font-size: 12px;
-  margin-top: 4px;
+
 }
 
 .container__icon {
