@@ -9,6 +9,7 @@ import { MODO_FILTRO_ORDER_DES } from '../../global/constants';
   providedIn: 'root',
 })
 export class SearchBuscadorService {
+  arrayx: any[] = [];
   buscarData(arraydata: any[], query: string, buscarpor: any[]) {
     let arraydatanew = arraydata.slice();
     query = query.toLowerCase();
@@ -25,6 +26,53 @@ export class SearchBuscadorService {
     });
     return newArray;
   }
+
+  /**
+   * @param items objetos del array
+   * @param term termino de busqueda (culaquier letra o palabra)
+   * @param includeList matriz de cadenas que se filtrara durante la búsqueda,ejemplo:se filtrara, por titulo,descripcion (key en el objeto)
+   */
+
+  buscarDataDos(
+    items: Array<{ [key: string]: any }>,
+    term: string,
+    includeList: any[] = []
+  ): any {
+    if (!term || !items) return items;
+    const toCompare = term?.toLowerCase()?.trim();
+    let arrayCopy = [...items];
+    return arrayCopy.filter((item: any) =>
+      this.checkInside(item, term, includeList, toCompare)
+    );
+  }
+
+  checkInside(item: any, term: string, includeList: any, toCompare: string) {
+    if (
+      typeof item === 'string' &&
+      item.toString()?.toLowerCase()?.includes(toCompare)
+    ) {
+      return true;
+    }
+
+    for (let property in item) {
+      if (
+        item[property] === null ||
+        item[property] == undefined ||
+        !includeList.includes(property)
+      ) {
+        continue;
+      }
+      if (typeof item[property] === 'object') {
+        if (this.checkInside(item[property], term, includeList, toCompare)) {
+          return true;
+        }
+      } else if (item[property].toString().toLowerCase()?.includes(toCompare)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   filterSeleccionadoList(
     arraydataabuscar: any[],
     filtroSelecOptionData: MetaFiltro
@@ -32,11 +80,11 @@ export class SearchBuscadorService {
     /* Ordena arrayas de mayor a menor , pasandole una referencia un valor numerico */
     let arraydatanew = arraydataabuscar.slice();
 
-    const orderAsc = (a:any, b:any) =>
+    const orderAsc = (a: any, b: any) =>
       Number(a[filtroSelecOptionData.datoafiltrar!]) -
       Number(b[filtroSelecOptionData.datoafiltrar!]);
 
-    const orderDes = (a:any, b:any) => {
+    const orderDes = (a: any, b: any) => {
       if (
         Number(a[filtroSelecOptionData.datoafiltrar!]) >
         Number(b[filtroSelecOptionData.datoafiltrar!])

@@ -19,13 +19,14 @@ import { Utilities } from 'src/app/utilities/utilities';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { CalcHeightNavbarService } from 'src/app/services/calc-height-navbar.service';
 declare var window: any;
 @Component({
   selector: 'app-control-bar',
   templateUrl: './control-bar.component.html',
   styleUrls: ['./control-bar.component.scss'],
 })
-export class ControlBarComponent implements OnInit,OnDestroy {
+export class ControlBarComponent implements OnInit, OnDestroy {
   @ViewChild('notifies', { read: Element }) notifies!: Element;
   @ViewChild('miModalNotificacion') miModalNotificacion!: ElementRef;
   @ViewChild('dropdownNotificacion')
@@ -46,6 +47,8 @@ export class ControlBarComponent implements OnInit,OnDestroy {
   currentRoute: string = '';
   responsibe: boolean = false;
   mediaQuerySubscripNavbar!: Subscription;
+  heightNavbar: any;
+  heightNavbarSubsz!: Subscription;
   constructor(
     private _electronService: ElectronjsService,
     private ngZone: NgZone,
@@ -57,8 +60,14 @@ export class ControlBarComponent implements OnInit,OnDestroy {
     private chatService: ChatService,
     private utilities: UtilitiesService,
     private asociacionesService: AsociacionesService,
-    public mediaQueryService: MediaQueryService
+    public mediaQueryService: MediaQueryService,
+    public calcHeightNavbarService: CalcHeightNavbarService
   ) {
+    this.heightNavbarSubsz = this.calcHeightNavbarService.currentUser.subscribe(
+      (height: any) => {
+        this.heightNavbar = height;
+      }
+    );
     /* Escucha los eventos de clic de la pantalla */
     this.renderer.listen('window', 'click', (e: Event) => {
       if (this.miModalNotificacion?.nativeElement.className.includes('show')) {
@@ -174,6 +183,7 @@ export class ControlBarComponent implements OnInit,OnDestroy {
   }
   ngOnDestroy(): void {
     this.mediaQuerySubscripNavbar.unsubscribe();
+      this.heightNavbarSubsz.unsubscribe();
   }
 
   login() {
@@ -244,9 +254,7 @@ export class ControlBarComponent implements OnInit,OnDestroy {
   eliminarInvitacion(invitacion: any) {
     invitacion.message = 'Solicitud eliminada';
     this.userService.eliminarSolicitud(invitacion.id_solicitud).subscribe(
-      (response) => {
-
-      },
+      (response) => {},
       (err) => {
         console.log(err);
         invitacion.message = undefined;
@@ -275,4 +283,5 @@ export class ControlBarComponent implements OnInit,OnDestroy {
   closeModalNotificacion() {
     this.formModal.hide();
   }
+
 }

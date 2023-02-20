@@ -77,11 +77,11 @@
         </div>
   </div>
 
-  <ng-container *ngIf="vehiculosFiltered.length > 0 && !showNotFoundDataUser && !showErrorDataUser" >
+  <ng-container *ngIf="vehiculosFiltered?.length > 0 && !showNotFoundDataUser && !showErrorDataUser" >
   <h3 class="mt-5">Vehículos</h3>
   <div class="container-card">
     <app-card-vehiculo [datos]="vehiculo" [indiceDatos]="i" *ngFor="let vehiculo of vehiculosFiltered; let i=index;"
-      (onDetalle)="goDetail(vehiculo.id_vehiculo)"></app-card-vehiculo>
+      (onDetalle)="goDetail(vehiculo?.id_vehiculo)"></app-card-vehiculo>
   </div>
 </ng-container>
 

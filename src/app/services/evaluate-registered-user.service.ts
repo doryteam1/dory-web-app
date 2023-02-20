@@ -18,9 +18,9 @@ export class EvaluateRegisteredUserService {
   ) {}
   evaluateUser(idUser: any): boolean {
     let payload: any;
-    let token = localStorage.getItem('token');
+    let token = localStorage?.getItem('token');
     if (token) {
-      payload = Utilities?.parseJwt(token!).sub;
+      payload = Utilities?.parseJwt(token!)?.sub;
     }
     return idUser != payload;
   }

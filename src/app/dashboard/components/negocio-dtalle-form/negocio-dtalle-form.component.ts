@@ -145,10 +145,8 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
       this.form.disable();
       this.cargandodata = true;
       this.faltadireccion = false;
-      console.log(this.form.getRawValue());
       this.negociosService.addNegocio(this.form.getRawValue()).subscribe(
         (response) => {
-          console.log(response);
           this.id_negocio = response.body.insertId;
           if (this.filesfinalCreate.length !== 0) {
             this.loadPhotos(this.filesfinalCreate);
@@ -189,7 +187,6 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
       this.form.disable();
       this.cargandodata = true;
       this.faltadireccion = false;
-      console.log(this.form.getRawValue());
       this.negociosService
         .updateNegocio(Number(this.negocio.id_negocio), this.form.getRawValue())
         .subscribe(
@@ -261,7 +258,6 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
     if (this.modalMode == 'update') {
       this.negociosService.detail(Number(this.negocio.id_negocio)).subscribe(
         (response) => {
-          console.log(response);
           let negocio = response.data[0];
           this.photosNegocioArray = response.data[0].fotos_negocio;
           this.id_negocio = negocio.id_negocio;
@@ -489,7 +485,6 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
           Number(this.negocio.id_negocio) +
           '/foto';
         let files: Array<any> = compressedFiles;
-        console.log(files);
         let arrayFotos: Array<any> = [];
         for (let i = 0; i < files.length; i++) {
           let nowTimestamp = new Date().getTime().toString();

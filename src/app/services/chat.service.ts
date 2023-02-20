@@ -11,9 +11,12 @@ import { Subject } from 'rxjs';
 export class ChatService {
   private socket!: Socket;
   private url = environment.doryServerUrl;
-  chatRefs: { btnChat: HTMLElement, userRefs: any } | null = null;
-  subject:Subject<string> = new Subject<string>();
-  constructor(private userService:UsuarioService, private https: HttpsService) {
+  chatRefs: { btnChat: HTMLElement; userRefs: any } | null = null;
+  subject: Subject<string> = new Subject<string>();
+  constructor(
+    private userService: UsuarioService,
+    private https: HttpsService
+  ) {
     this.connect();
   }
 
@@ -21,7 +24,7 @@ export class ChatService {
     this.socket.emit('join', data);
   }
 
-  sendMessage(data: {uid:string, mensaje:string}): void {
+  sendMessage(data: { uid: string; mensaje: string }): void {
     this.socket.emit('new-message', data);
   }
 
@@ -30,27 +33,31 @@ export class ChatService {
   }
 
   getMessage(): Observable<any> {
-    return new Observable<{ de: number;  mensaje: string, metadata:any }>((observer) => {
-      this.socket.on('new-message', (data) => {
-        observer.next(data);
-      });
+    return new Observable<{ de: number; mensaje: string; metadata: any }>(
+      (observer) => {
+        this.socket.on('new-message', (data) => {
+          observer.next(data);
+        });
 
-      return () => {
-        this.socket.disconnect();
-      };
-    });
+        return () => {
+          this.socket.disconnect();
+        };
+      }
+    );
   }
 
   getConfirmMessage(): Observable<any> {
-    return new Observable<{ de: number;  mensaje: string, metadata:any }>((observer) => {
-      this.socket.on('confirmation-message', (data) => {
-        observer.next(data);
-      });
+    return new Observable<{ de: number; mensaje: string; metadata: any }>(
+      (observer) => {
+        this.socket.on('confirmation-message', (data) => {
+          observer.next(data);
+        });
 
-      return () => {
-        this.socket.disconnect();
-      };
-    });
+        return () => {
+          this.socket.disconnect();
+        };
+      }
+    );
   }
 
   getConectedUsers(): Observable<any> {
@@ -98,71 +105,78 @@ export class ChatService {
     localStorage.setItem('chats', JSON.stringify(data));
   }
 
-  getChatMessages(idUser:number){
-    return this.https.get(environment.doryApiRestBaseUrl + '/chat/mensajes/privados/'+idUser)
+  getChatMessages(idUser: number) {
+    return this.https.get(
+      environment.doryApiRestBaseUrl + '/chat/mensajes/privados/' + idUser
+    );
   }
 
-  getUltimosMensajes(){
-    return this.https.get(environment.doryApiRestBaseUrl + '/chat/ultimos')
+  getUltimosMensajes() {
+    return this.https.get(environment.doryApiRestBaseUrl + '/chat/ultimos');
   }
 
-  disconnect(){
-    this.socket.disconnect()
+  disconnect() {
+    this.socket.disconnect();
   }
 
-  connect(){
+  connect() {
     this.socket = io(this.url, {
       transports: ['websocket', 'polling', 'flashsocket'],
       auth: {
-        token: "Bearer " + this.userService.getAuthUserToken()!
-      }
+        token: 'Bearer ' + this.userService.getAuthUserToken()!,
+      },
     });
   }
-
-  isUserAuth(){
-    if(!this.userService.isAuthenticated()){
+  reset() {
+    this.socket.connect()
+  }
+  isUserAuth() {
+    if (!this.userService.isAuthenticated()) {
       this.disconnect();
       return false;
-    }else{
-      if(this.socket.disconnected){
+    } else {
+      if (this.socket.disconnected) {
         //this.connect();
       }
       return true;
     }
   }
 
-  setChatRefs(refs:{
-    btnChat:HTMLElement,
-    userRefs:any
-  }){
-      this.chatRefs = refs;
+  setChatRefs(refs: { btnChat: HTMLElement; userRefs: any }) {
+    this.chatRefs = refs;
   }
 
-  openUser(userId:number){
-    console.log("open user")
-    this.subject.next(JSON.stringify(userId))
+  openUser(userId: number) {
+    console.log('open user');
+    this.subject.next(JSON.stringify(userId));
     //this.chatRefs?.btnChat.click();
     //this.chatRefs.userRefs[userId].click();
   }
 
-  getOpenChatUserObservable(){
+  getOpenChatUserObservable() {
     return this.subject.asObservable();
   }
 
-  setReaded(idUsuarioEmisor:number){
-    return this.https.put('https://dory-api-rest.herokuapp.com/api/chat/set/readed/all/'+idUsuarioEmisor,null)
+  setReaded(idUsuarioEmisor: number) {
+    return this.https.put(
+      'https://dory-api-rest.herokuapp.com/api/chat/set/readed/all/' +
+        idUsuarioEmisor,
+      null
+    );
   }
 
-  /*Escucha si hay nuevas solicitudes de asociaciones --> usuario o usuario --> asociaciones*/  
+  /*Escucha si hay nuevas solicitudes de asociaciones --> usuario o usuario --> asociaciones*/
   listenNewSolicitudes(): Observable<any> {
-    return new Observable<{ de: number;  mensaje: string, metadata:any }>((observer) => {
-      this.socket.on('new-solicitud', (data) => {
-        observer.next(data);
-      });
+    return new Observable<{ de: number; mensaje: string; metadata: any }>(
+      (observer) => {
+        this.socket.on('new-solicitud', (data) => {
+          observer.next(data);
+        });
 
-      return () => {
-        this.socket.disconnect();
-      };
-    });
+        return () => {
+          this.socket.disconnect();
+        };
+      }
+    );
   }
 }

@@ -57,7 +57,7 @@
       <div class="detail-container__data">
         <h4 class="detail-container__title">Información adicional de la dirección</h4>
         <span class="detail-container__value">
-          {{proveedor.informacion_adicional_direccion}}</span>
+          {{proveedor?.informacion_adicional_direccion}}</span>
       </div>
     </div>
     <div class="detail-container mt-4">
@@ -74,7 +74,7 @@
     </div>
   </div>
 
-    <ng-container *ngIf="productosUser.length > 0 && !showErrorDataUser && !showNotFoundDataUser">
+    <ng-container *ngIf="productosUser?.length > 0 && !showErrorDataUser && !showNotFoundDataUser">
         <h3  class=" mt-5">Productos</h3>
       <div class="container-card">
         <app-card-producto [producto]="producto" [indiceProducto]="i" (onDetalle)="goDetail(producto)"

@@ -6,8 +6,7 @@ import { Utilities } from 'src/app/utilities/utilities';
 import { OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { CalcHeightNavbarService } from 'src/app/services/calc-height-navbar.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+
 declare var window: any;
 @Component({
   selector: 'app-home',
@@ -20,8 +19,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   offcanvas: any;
   sidebar: boolean = false;
   closeOffCamba: boolean = false;
-  heightNavbar: any;
   MediaQuery!: Subscription;
+  heightNavbar: any;
   heightNavbarSubs!: Subscription;
   constructor(
     private socialService: SocialAuthService,
@@ -90,7 +89,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.heightNavbarSubs.unsubscribe();
-    console.log(this.heightNavbarSubs);
     this.MediaQuery.unsubscribe();
   }
 }

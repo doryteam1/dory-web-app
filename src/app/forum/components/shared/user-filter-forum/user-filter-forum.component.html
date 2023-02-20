@@ -1,0 +1,14 @@
+<div class="container-section__filter">
+  <span class="count-questions">{{ count }}</span>
+  <div class="dropdown-center">
+    <div class="filter-questions" data-bs-toggle="dropdown" aria-expanded="false" type="button">
+      <i class="bi bi-filter-left"></i>
+      <span>Ordenar por</span>
+    </div>
+    <ul class="dropdown-menu">
+      <li *ngFor="let filtro of filtros,let i = index" (click)="filter(filtro.tipo,filtro.nombre,i)">
+        <a class="dropdown-item" [ngClass]="{active: filtro.tipo === tipoFiltro}">{{filtro.nombre}}</a>
+      </li>
+    </ul>
+  </div>
+</div>

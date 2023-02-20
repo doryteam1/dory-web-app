@@ -44,6 +44,10 @@
     justify-content: center;
     gap: 5px;
   }
+     &:active {
+       background-color: var(--azul1);
+       border-color: var(--azul1);
+     }
 }
 
 /* nuevos estilos */

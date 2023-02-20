@@ -29,6 +29,7 @@ import { BuscadorComponent } from './components/buscador/buscador.component';
 import { CuerpoPaginaComponent } from './components/cuerpo-pagina/cuerpo-pagina.component';
 import { PiePaginaComponent } from './components/pie-pagina/pie-pagina.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -36,7 +37,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
     DocsComponent,
     InicioComponent,
     IntroductionComponent,
-    ObjetivoComponent,    
+    ObjetivoComponent,
     AreasSitioComponent,
     RegistroUsuarioComponent,
     RegistroGoogleComponent,
@@ -59,12 +60,8 @@ import { InicioComponent } from './components/inicio/inicio.component';
     PanelBusquedaComponent,
     BuscadorComponent,
     CuerpoPaginaComponent,
-    PiePaginaComponent
-    
+    PiePaginaComponent,
   ],
-  imports: [
-    CommonModule,
-    ManualRoutingModule
-  ]
+  imports: [CommonModule, ManualRoutingModule, SharedModule],
 })
-export class ManualModule { }
+export class ManualModule {}

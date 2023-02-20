@@ -39,9 +39,9 @@ export class FirebaseStorageService {
   }
 
   public deleteMultipleByUrls(urls:string[]){
-    urls.forEach(
+    urls?.forEach(
       (url)=>{
-        this.deleteByUrl(url).toPromise();
+        this.deleteByUrl(url)?.toPromise();
       }
     )
   }

@@ -253,13 +253,11 @@ export class ModalGallerySliderVerYElimanarFotosComponent
         let index = this.photosAppArrayCopy.indexOf(photo);
         if (index > -1) {
           this.indicePhotodelate.push(index);
-          console.log(this.indicePhotodelate);
           this.photosAppArrayCopy.splice(index, 1);
           this.filesfinalCreate.splice(index, 1);
         }
         this.ArrayFotos = this.photosAppArrayCopy;
         this.photosAppArray = this.ArrayFotos;
-        console.log(this.photosAppArray);
             this.arrayamandar = [
               this.photosAppArray,
               this.filesfinalCreate,

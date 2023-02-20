@@ -29,6 +29,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 
 
+
 const customConfig: ShareButtonsConfig = {
   include: ['whatsapp', 'email', 'copy'],
   exclude: [],

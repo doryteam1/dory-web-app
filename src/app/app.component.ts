@@ -43,8 +43,9 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
   ) {}
   ngAfterViewChecked(): void {
     //Comparamos el primer dato con el actual
-    if (this.height !== this.navbarDiv.nativeElement.clientHeight) {
-      this.height = this.navbarDiv.nativeElement.clientHeight;
+    let onNavbarDiv=this.navbarDiv?.nativeElement?.clientHeight
+    if (this.height !== onNavbarDiv) {
+      this.height = onNavbarDiv;
       //Actualizamos el primer dato y detectamos cualquier cambio en height
       this.changeDetectorRef.detectChanges();
       this.previousHeight = [`calc(100% - ${this.height}px)`, this.height];
@@ -55,7 +56,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   ngAfterViewInit(): void {
     /* Obtenemos el primer dato de height */
-    this.height = this.navbarDiv.nativeElement.clientHeight;
+    this.height = this.navbarDiv?.nativeElement?.clientHeight;
     this.previousHeight = [`calc(100% - ${this.height}px)`, this.height];
   }
   ngOnInit(): void {
@@ -72,6 +73,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
           if (event instanceof NavigationEnd) {
             let route: string = event.url;
             if (route.includes('dashboard')) {
+             /*  this.chatService.reset() */
               window.location.reload();
             }
           }

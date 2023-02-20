@@ -1,0 +1,53 @@
+<header class="header">
+  <section class="container head">
+    <h1>¿Tengo una pregunta?</h1>
+    <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar...'" [activeClaseForo]="true"
+      [valorInput]="valorInput" (keyEnterPressData)="onBuscarPalabraEvents($event)"></app-search>
+  </section>
+</header>
+
+<section class="container container-section">
+
+  <app-user-filter-forum (onFilter)="onFiltroEvents($event)"
+    [count]="preguntas.length < 2 ? preguntas.length + ' Pregunta' : preguntas.length + ' Preguntas'"
+    [filtros]="filtros" [tipoFiltro]="!filtroseleccionado ? 0 : tipoFiltro ">
+  </app-user-filter-forum>
+
+  <div class="chip" *ngIf="filtroseleccionado ">
+
+    <app-chip-con-boton-close *ngIf="filtroseleccionado" [iconoChip]="true"
+      [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+      [contenidoChip]="nombreFiltro + ' ('+preguntasCopia.length+')'" (onCloseClip)="deleteFilter()">
+    </app-chip-con-boton-close>
+
+  </div>
+
+  <app-user-question-form-forum (onShowForm)="openForm()" [showForm]="showForm">
+  </app-user-question-form-forum>
+
+  <div class="container-section__response" *ngIf="preguntasCopia.length>0 && !showNotFound && !showError && !loading">
+
+    <app-user-question-forum *ngFor="let pregunta of preguntasCopia; let i=index" [pregunta]="pregunta"
+      [authUserId]="evaluateRegisteredUserService.evaluateUser(pregunta.usuarioId)"
+      (onDelete)="deletePregunta(pregunta.id,pregunta.fotos)" (onDetalles)="goDetail(pregunta.id)">
+    </app-user-question-forum>
+
+    <ngb-pagination *ngIf="showPagination && preguntas.length>2" [collectionSize]="collectionSize" [(page)]="page"
+      (pageChange)="resetOfSearch()" [maxSize]="2" [pageSize]="pageSize" [rotate]="true" [ellipses]="false"
+      [boundaryLinks]="true" >
+      <ng-template ngbPaginationPrevious ><i class="bi bi-caret-left-fill azul1--color"></i></ng-template>
+      <ng-template ngbPaginationNext><i class="bi bi-caret-right-fill azul1--color"></i></ng-template>
+    </ngb-pagination>
+
+  </div>
+
+  <div class="container__app-not-found" *ngIf="showNotFound || showError">
+    <app-not-found message="No encontramos resultados para esta busqueda" [errorData]="showError ">
+    </app-not-found>
+  </div>
+
+  <div class="loading" *ngIf="loading && !showNotFound && !showError">
+    <div class="container__spinner spinner-border" role="status">
+    </div>
+  </div>
+</section>

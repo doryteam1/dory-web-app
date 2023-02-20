@@ -41,6 +41,11 @@ const routes: Routes = [
       import('./eventos/eventos.module').then((m) => m.EventosModule),
   },
   {
+    path: 'foro',
+    loadChildren: () =>
+      import('./forum/forum.module').then((m) => m.ForumModule),
+  },
+  {
     path: 'normatividad',
     loadChildren: () =>
       import('./normatividad/normatividad.module').then(

@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "postinstall": "ng build --extra-webpack-config webpack.partial.js",
-    "ini":  "ng serve --port 3500  --extra-webpack-config webpack.partialdev.js"   
+    "ini":  "ng serve --port 3500  --extra-webpack-config webpack.partialdev.js",
+    "ini2": "ng serve --host 0.0.0.0 --extra-webpack-config webpack.partialdev.js"
   },
   "engines": {
     "node": "14.17.3",

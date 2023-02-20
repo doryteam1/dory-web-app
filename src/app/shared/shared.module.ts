@@ -78,7 +78,7 @@ import { LinkCardComponent } from './components/link-card/link-card.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { ProductDetailsCardTemplateComponent } from './components/product-details-card-template/product-details-card-template.component';
 import { ButtonChatOpenComponent } from './components/button-chat-open/button-chat-open.component';
-
+import { VideoEmbedIframeComponent } from './components/video-embed-iframe/video-embed-iframe.component';
 
 
 @NgModule({
@@ -140,6 +140,7 @@ import { ButtonChatOpenComponent } from './components/button-chat-open/button-ch
     LinkCardComponent,
     ProductDetailsCardTemplateComponent,
     ButtonChatOpenComponent,
+    VideoEmbedIframeComponent,
   ],
   imports: [
     CommonModule,
@@ -212,6 +213,7 @@ import { ButtonChatOpenComponent } from './components/button-chat-open/button-ch
     LinkCardComponent,
     ProductDetailsCardTemplateComponent,
     ButtonChatOpenComponent,
+    VideoEmbedIframeComponent,
   ],
 
   providers: [

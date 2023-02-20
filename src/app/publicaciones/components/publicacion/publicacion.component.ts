@@ -251,7 +251,6 @@ export class PublicacionComponent implements OnInit {
   }
   delateFilterCheckbox_dos(index: number) {
     this.filtroseleccionadoCheckbox_dos.splice(index, 1);
-    console.log(this.filtroseleccionadoCheckbox_dos);
     this.searchReset();
   }
   delateFilter() {

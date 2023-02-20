@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component,OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import * as dayjs from 'dayjs';
@@ -269,21 +269,21 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
         this.chatService.setStorage(this.roomsArray);
         this.messageArray = this.roomsArray[roomIndex].chats;
         this.scrollToBottom();
-        let tempCount: number=0;
+        let tempCount: number = 0;
         let index = this.userList.findIndex((element) => {
           return element.id == this.selectedUser.id;
         });
         if (index > -1) {
-        if (
-          this.userList[index].unreadsCount == null ||
-          this.userList[index].unreadsCount == 0
-        ) {
-          this.userList[index].unreadsCount = 0;
-        } else {
-          tempCount = this.userList[index].unreadsCount;
-          this.totalUnreads -= tempCount;
-          this.userList[index].unreadsCount = 0;
-        }
+          if (
+            this.userList[index].unreadsCount == null ||
+            this.userList[index].unreadsCount == 0
+          ) {
+            this.userList[index].unreadsCount = 0;
+          } else {
+            tempCount = this.userList[index].unreadsCount;
+            this.totalUnreads -= tempCount;
+            this.userList[index].unreadsCount = 0;
+          }
         }
 
         this.chatService.setReaded(this.selectedUser.id).subscribe(
@@ -303,7 +303,6 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   }
 
   sendMessage(): void {
-
     if (!this.messageText) {
       return;
     }
@@ -372,16 +371,14 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
     );
   }
 
-  unreadFilter(){
+  unreadFilter() {
     this.showUnreads = true;
-    this.filteredUserList = this.userList.filter(
-      (element)=>{
-        return element.unreadsCount > 0;
-      }
-    )
+    this.filteredUserList = this.userList.filter((element) => {
+      return element.unreadsCount > 0;
+    });
   }
 
-  cancelUnreadFilter(){
+  cancelUnreadFilter() {
     this.showUnreads = false;
     this.onSearch();
   }
@@ -456,22 +453,19 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
     return dayjs(date).fromNow(true);
   }
 
-  getRefs(){
-    this.chatService.getOpenChatUserObservable().subscribe(
-      (userId:string)=>{
-        this.chatOpen = true;
-        setTimeout(()=>{
-          if(!this.Onlist){
-            this.back();
-          }
-          setTimeout(()=>{
-            let userRef = document.getElementById(userId);
-            userRef?.click()
-          },3)
-        },3)
-
-      }
-    )
+  getRefs() {
+    this.chatService.getOpenChatUserObservable().subscribe((userId: string) => {
+      this.chatOpen = true;
+      setTimeout(() => {
+        if (!this.Onlist) {
+          this.back();
+        }
+        setTimeout(() => {
+          let userRef = document.getElementById(userId);
+          userRef?.click();
+        }, 3);
+      }, 3);
+    });
   }
 
   setUnreadCount(idUsuarioEmisor: number) {

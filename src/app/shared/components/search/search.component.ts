@@ -1,8 +1,4 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
-/* import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
-import { AppModalService } from 'src/app/shared/services/app-modal.service';
-import { Subscription,Observable, of } from 'rxjs';
-import { ComunicacionEntreComponentesService } from '../../services/comunicacion-entre-componentes.service'; */
 
 @Component({
   selector: 'app-search',
@@ -10,11 +6,21 @@ import { ComunicacionEntreComponentesService } from '../../services/comunicacion
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-  @ViewChild('txtBuscar') txtBuscar!: ElementRef<HTMLInputElement>;
+  @ViewChild('txtBuscar') txtBuscar!: any;
   @Input() buscadorpersonalizado: boolean = false;
   @Input() placeholderbuscador!: string;
   @Input() activeClase: boolean = false;
   @Input() activeClasetwo: boolean = false;
+  @Input() activeClaseForo: boolean = false;
+
+  @Input() set valorInput(value: boolean) {
+   if (this.txtBuscar?.nativeElement) {
+     this.txtBuscar.nativeElement.value = '';
+   } else {
+     return;
+   }
+
+  }
   sinresultados: boolean = false;
 
   @Output() textSearch: EventEmitter<string> = new EventEmitter();
@@ -30,6 +36,7 @@ export class SearchComponent implements OnInit {
   onEnterPress() {
     this.keyEnterPress.emit(this.text);
   }
+
   /* andres codigo */
   search() {
     const valor = this.txtBuscar.nativeElement.value;

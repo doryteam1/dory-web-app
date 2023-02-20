@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { SocialAuthService } from 'angularx-social-login';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Utilities } from '../utilities/utilities';
 import { HttpsService } from './https.service';
-import { StorageService } from './storage.service';
 import { Subject } from 'rxjs';
-import { ElectronjsService } from './electronjs.service';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,9 +12,6 @@ export class UsuarioService {
   isAuthSubject = new Subject<boolean>();
   constructor(
     private httpsService: HttpsService,
-    private storageService: StorageService,
-    private socialAuthService: SocialAuthService,
-    private _electronService: ElectronjsService,
   ) {}
 
   registrarUsuario(usuario: any): Observable<any> {
@@ -215,6 +210,9 @@ export class UsuarioService {
       payload = Utilities.parseJwt(token!);
     }
     return payload;
+  }
+  getAuthUserId(){
+    return this.getAuthUser()?.sub;
   }
 
   getAuthUserToken(){

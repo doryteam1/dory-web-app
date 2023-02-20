@@ -1,0 +1,376 @@
+$space: 10px;
+$spaceDos: 5px;
+
+
+@mixin change($size , $sizeh1, $sizep) {
+  .container-response__avatar {
+    width: $size;
+    height: $size;
+  }
+
+  h1 {
+    font-size: $sizeh1;
+  }
+
+  p {
+    font-size: $sizep;
+  }
+}
+
+hr {
+  width: 100%;
+  margin: 0;
+}
+
+h1 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  overflow-wrap: break-word;
+  color: var(--gris-oscuro);
+  cursor: pointer;
+  width: 100%;
+}
+
+
+p {
+  margin: 0;
+  overflow-wrap: break-word;
+  color: var(--gris-oscuro);
+  cursor: pointer;
+  width: 100%;
+}
+
+button:disabled {
+  opacity: 0.3;
+}
+
+button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+}
+
+.vertical-line {
+  border-left: 1px solid;
+  height: 100%;
+  background-color: black;
+  opacity: 0.25;
+}
+
+.container-section__user-responses {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  border-radius: 20px;
+}
+
+.container-response {
+
+  display: flex;
+  gap: $space;
+  justify-content: flex-start;
+
+  &__texts {
+    display: flex;
+    gap: $space;
+  }
+
+  &__texts__data {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: $spaceDos;
+    width: calc(100% - #{$space});
+  }
+
+  &__avatar {
+    background: #e4e6eb;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.time-message {
+  display: flex;
+  gap: $spaceDos;
+  align-items: center;
+  cursor: default;
+}
+.cursor--default{
+cursor: default !important;
+}
+.cursor--pointer{
+cursor:pointer !important;
+}
+.menu-edit {
+  color: var(--gris-oscuro);
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  color: var(--gris-oscuro);
+  gap: 3px;
+
+  i {
+    color: var(--azul1);
+  }
+
+  &:active {
+    background-color: transparent !important
+  }
+}
+
+
+
+.loading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+
+  .container__spinner {
+    color: var(--azul1)
+  }
+}
+
+.span1::before {
+  content: "\F229" !important;
+  top: 2.7px !important;
+}
+
+.uploadphoto {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  &__container {
+    border: 1px solid #dcdbdb;
+    border-radius: 5px;
+    padding: $space;
+    background-color: white;
+  }
+
+  &__container__imagen {
+    width: 100%;
+    overflow-y: auto;
+    max-height: 300px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 0 !important;
+
+    &__img {
+      width: 100%;
+      height: 100%;
+      max-width: 200px;
+      max-height: 200px;
+      position: relative;
+      margin: 10px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: scale-down;
+      }
+
+      i {
+        background: white;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--azul1);
+        border-radius: 50%;
+        cursor: pointer;
+
+        &::before {
+          font-weight: 700 !important;
+          color: var(--azul1);
+        }
+      }
+
+    }
+  }
+
+  &__container__button {
+    padding: $space;
+  }
+}
+
+.h6 {
+  font-weight: 500;
+  margin: 0;
+  overflow-wrap: break-word;
+  color: var(--gris-oscuro);
+  cursor: pointer;
+  width: 100%;
+}
+
+
+.clase1 {
+  $avatarSize: 70px;
+
+  .container-response {
+    &__texts {
+      width: calc(100% - #{$avatarSize + $space})
+    }
+
+    &__avatar {
+      width: $avatarSize;
+      height: $avatarSize;
+    }
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .time-message {
+    font-size: 0.9rem;
+  }
+
+  .menu-edit {
+    font-size: 1.5rem;
+  }
+
+  .container-buttons-res-res {
+    display: flex;
+    gap: 10px;
+
+    span {
+      &:first-child {
+        &::before {
+          font-family: 'Bootstrap-icons';
+          content: "\F235";
+          /* content: "\F229"; */
+          position: relative;
+          bottom: 0;
+          left: 2px;
+        }
+
+      }
+
+      ;
+    }
+
+  }
+
+  .container-section__user-responses {
+    padding: 10px;
+  }
+
+  @media screen and (max-width: 500px) {
+    @include change($size: 55px, $sizeh1: 1.1rem, $sizep: 0.9rem);
+
+    .container-response__texts {
+      width: calc(100% - #{55px + $space})
+    }
+
+    /*    .uploadphoto__container__imagen__img {
+      width: 150px;
+      height: 150px;
+    } */
+  }
+
+  @media screen and (max-width: 370px) {
+    .h6 {
+      font-size: 0.85rem;
+    }
+
+    .time-message {
+      font-size: 0.8rem;
+    }
+
+    .container-buttons-res-res {
+      font-size: 0.8rem;
+    }
+
+    @include change($size: 35px, $sizeh1: 0.85rem, $sizep: 0.80rem);
+
+    .container-response__texts {
+      width: calc(100% - #{35px + $space})
+    }
+  }
+}
+
+.clase2 {
+  $avatarSize: 35px;
+
+  .container-response {
+    &__texts {
+      width: calc(100% - #{$avatarSize + $space})
+    }
+
+    &__avatar {
+      width: $avatarSize;
+      height: $avatarSize;
+    }
+  }
+
+  p {
+    font-size: 0.8rem;
+  }
+
+  .time-message {
+    font-size: 0.75rem;
+  }
+
+  .menu-edit {
+    font-size: 0.9rem;
+  }
+
+  .container-buttons-res-res {
+    span {
+      padding: 10px;
+
+      &::after {
+        font-family: 'Bootstrap-icons';
+        content: "\F231";
+        position: relative;
+        bottom: -2px;
+        left: -4px;
+      }
+    }
+  }
+
+  .container-section__user-responses {
+    padding: 0;
+  }
+
+  @media screen and (max-width: 500px) {
+    @include change($size: 30px, $sizeh1: 0.85rem, $sizep: 0.73rem);
+
+    .container-response__texts {
+      width: calc(100% - #{30px + $space})
+    }
+  }
+
+  @media screen and (max-width: 370px) {
+    .container-buttons-res-res {
+      font-size: 0.75rem;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-button-chat-open',
@@ -8,11 +9,23 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class ButtonChatOpenComponent implements OnInit {
   @Input() totalUnreads: any;
   @Output() onOpen: EventEmitter<any> = new EventEmitter();
-  @Input() botton1: boolean=true;
-  constructor() {}
+  routesToShow: any = ['/respuesta/pregunta/','/foro'];
+  isHidden: boolean = true;
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        let route: any = event.url;
+        let resultShow: boolean = this.routesToShow.some((element: any) =>
+          route.includes(element)
+        );
+        this.isHidden = !resultShow;
+      }
+    });
+  }
   openChat() {
     this.onOpen.emit();
   }
+  /* respuesta/pregunta/ */
 }

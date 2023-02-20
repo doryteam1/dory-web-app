@@ -1,0 +1,106 @@
+<div class="container-section__form" [ngClass]="{'container-section__form-edit': showForm}">
+  <div class="container-avatar">
+    <img [src]="isAuthUserPhoto ? isAuthUserPhoto : 'assets/images/avatar-person.svg'">
+  </div>
+
+  <div class="container-question">
+
+    <span class="container-question__button-span" (click)="openForm()" *ngIf="!showForm && !showButton">Añade una
+      pregunta...</span>
+
+    <form class="container-question__form" autocomplete="off" [formGroup]="form" *ngIf="showForm">
+
+      <div class="mb-3">
+        <label for="dateOfBirth">Título</label>
+        <div class="input-group">
+          <input id="productName" class="form-control" placeholder="Ingrese su pregunta" formControlName="titulo">
+        </div>
+        <div *ngIf="invalid('titulo')" class="container__alert-msg danger-message">
+          <div *ngIf="titulo?.errors?.['required']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="dateOfBirth">Detalles</label>
+        <div class="input-group">
+          <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
+            placeholder="Ingrese el detalle de la pregunta" formControlName="descripcion"></textarea>
+        </div>
+        <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
+          <div *ngIf="descripcion?.errors?.['required'] || descripcion?.errors?.['whiteSpace']">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+
+      <div class="uploadphoto">
+        <label for="dateOfBirth">Fotos opcional</label>
+        <div class="uploadphoto__container">
+
+          <div class="container__alert-msg danger-message" *ngIf="maxPhotosAlert">
+            <div>
+              Ha excedido el límite permitido de una foto
+            </div>
+          </div>
+
+          <div class="mb-3 uploadphoto__container__imagen" *ngIf="photos.length || previewCreatedPhotos.length">
+            <ng-container *ngFor="let photo of photos; let i =index">
+              <ng-container *ngTemplateOutlet="imagen; context: {photo: photo,typeImg:'fireStorage', idx:i}">
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngFor="let previewPhoto of previewCreatedPhotos; let i =index">
+              <ng-container *ngTemplateOutlet="imagen; context: {photo: previewPhoto,typeImg:'preview', idx:i}">
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="uploadphoto__container__button" *ngIf="!(photos.length + previewCreatedPhotos.length >= 1)">
+            <div>
+              <button [disabled]="(photos.length + previewCreatedPhotos.length >= 1) || loading" type="button"
+                class="btn btn-primary btn--azul1"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                (click)="openAddFileDialogCreate()">
+                <div>
+                  <img src="assets/icons/file_upload_black_24dp.svg">
+                  <span>
+                    Subir Fotos
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="container-question__hr">
+      <hr>
+      <div class="container-question__hr__buttons" *ngIf="showForm">
+        <button type="button" class="btn-rounded btn--grey container__btn container__btn--azul" (click)="openForm()"
+          [disabled]="loading">
+          <span>Cancelar</span>
+        </button>
+        <button type="button" class="btn-rounded btn--blue container__btn" (click)="actionData()"
+          [disabled]="!form.valid || loading">
+          <span *ngIf="!loading">{{ formMode === 'create' ? 'Preguntar' : formMode === 'update' ? 'Actualizar' : ''
+            }}</span>
+          <div class="container__spinner spinner-border" role="status" *ngIf="loading">
+          </div>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<input #fileInputCreate type="file" name="resume" accept="image/*" (change)='fileChangeCreate($event)' hidden multiple>
+
+<ng-template #imagen let-photo="photo" let-idx="idx" let-typeImg="typeImg">
+  <div class="uploadphoto__container__imagen__img">
+    <img [src]="photo ? photo: 'https://admin.moodyyc.com/img/no-image.png'">
+    <i class="bi bi-x-lg" (click)="deleteImg(idx,typeImg,photo)"></i>
+  </div>
+</ng-template>

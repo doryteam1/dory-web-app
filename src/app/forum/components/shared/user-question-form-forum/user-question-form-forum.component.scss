@@ -1,0 +1,192 @@
+$space: 10px;
+$avatarSize: 70px;
+@mixin change($size , $sizespan) {
+  .container-avatar {
+    width: $size;
+    height: $size;
+  }
+
+.container-question__button-span{
+font-size: $sizespan;
+}
+}
+hr {
+  margin: 0;
+}
+
+button:disabled {
+  opacity: 0.3;
+}
+
+button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+}
+ .container-section__form {
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   gap: 10px;
+   flex-wrap: nowrap;
+ }
+ .container-section__form-edit {
+   align-items: flex-start !important;
+
+   .container-hr {
+     margin-bottom: 10px;
+   }
+ }
+.container-avatar {
+  background: #e4e6eb;
+  width: $avatarSize;
+  height: $avatarSize;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.container-question {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--gris-oscuro);
+  width: calc(100% - #{$avatarSize + 15px});
+
+  &__button-span {
+    font-size: 1.2rem;
+    font-weight: 500;
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  &__form {
+    margin-bottom: $space;
+  }
+
+  &__hr__buttons {
+    margin-top: $space;
+    display: flex;
+    gap: $space;
+    align-items: center;
+    justify-content: flex-end;
+
+    button {
+      width: 120px;
+    }
+  }
+
+}
+
+.uploadphoto {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  &__container {
+    border: 1px solid #dcdbdb;
+    border-radius: 5px;
+    padding: $space;
+    background-color: white;
+  }
+
+  &__container__imagen {
+  width: 100%;
+    overflow-y: auto;
+    max-height: 300px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 0 !important;
+
+    &__img {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      padding: 5px;
+      margin: $space;
+      box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 32%) 0px 2px 16px 0px;
+      border-radius: 10px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: scale-down;
+      }
+
+      i {
+        background: white;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--azul1);
+        border-radius: 50%;
+        cursor: pointer;
+
+        &::before {
+          font-weight: 700 !important;
+          color: var(--azul1);
+        }
+      }
+
+    }
+  }
+
+  &__container__button {
+    padding: $space;
+  }
+}
+
+
+
+.btn--azul1 {
+  background-color: var(--azul1);
+  font-weight: 700;
+  border-color: var(--azul1);
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  &:active {
+    background-color: var(--azul1);
+    border-color: var(--azul1);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  @include change($size: 55px, $sizespan: 1.1rem);
+  .container-question {
+      width: calc(100% - #{55px + 15px});
+    }
+  .container-question__hr__buttons button {
+      width: 100px;
+      height: 35px;
+    }
+    .uploadphoto__container__imagen__img{
+      width: 150px;
+        height: 150px;
+    }
+}
+
+@media screen and (max-width: 370px) {
+
+  @include change($size: 35px, $sizespan: 0.85rem);
+    .container-question {
+        width: calc(100% - #{35px + 15px});
+      }
+}

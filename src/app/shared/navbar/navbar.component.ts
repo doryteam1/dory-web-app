@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { BreakpointObserver} from '@angular/cdk/layout';
+import { BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import { CalcHeightNavbarService } from 'src/app/services/calc-height-navbar.service';
 declare var window: any;
 @Component({
@@ -26,8 +26,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   electronjs: boolean = false;
   mediaQuerySubscripNavbarThow!: Subscription;
   innerWidth: any[] = [];
-  points: any[] = ['(min-width: 768px)', '(max-width:769px)'];
-  minWidth: any[] = [];
+  points: any[] = ['(min-width: 992px)', '(max-width:993px)'];
+  minWidth: any;
   maxWidth: any[] = [];
   offcanvas: any;
   sidebar: boolean = false;
@@ -57,26 +57,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.breakpointObserver.observe(this.points).subscribe((result: any) => {
-      this.maxWidth = [];
-      this.minWidth = [];
-      for (let index = 0; index < this.points.length; index++) {
-        const element = this.points[index];
-        if (this.points[index].includes('min-width')) {
-          this.minWidth.push(result.breakpoints[element]);
-        } else {
-          this.maxWidth.push(result.breakpoints[element]);
-        }
-        if (this.minWidth[0]) {
-          this.closeOffcanvas();
-        }
+    this.breakpointObserver.observe(this.points[0]).subscribe((result:BreakpointState) => {
+      /* https://www.digitalocean.com/community/tutorials/angular-breakpoints-angular-cdk */
+      this.minWidth = result.matches;
+      if (this.minWidth) {
+        this.closeOffcanvas();
       }
     });
-     this.heightNavbarSubsx = this.calcHeightNavbarService.currentUser.subscribe(
-       (height: any) => {
-         this.heightNavbar = height;
-       }
-     );
+
+    this.heightNavbarSubsx = this.calcHeightNavbarService.currentUser.subscribe(
+      (height: any) => {
+        this.heightNavbar = height;
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -125,7 +118,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-     this.heightNavbarSubsx.unsubscribe();
+    this.heightNavbarSubsx.unsubscribe();
     this.mediaQuerySubscripNavbarThow.unsubscribe();
   }
 }

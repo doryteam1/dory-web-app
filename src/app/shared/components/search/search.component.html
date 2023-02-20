@@ -1,16 +1,15 @@
 <div class="buscador-container" *ngIf="!buscadorpersonalizado">
   <div class="buscador-containe__div-search">
-    <div class="buscador-containe__search" [ngClass]="{stylo_heght:activeClasetwo}">
+    <div class="buscador-containe__search" [ngClass]="{stylo_heght:activeClasetwo,stylo_foro:activeClaseForo}">
       <input class="buscador-containe__search-input"   placeholder="Buscar..." [(ngModel)]="text" (ngModelChange)="onChange()"
-        (keyup.enter)="onEnterPress()">
+        (keyup.enter)="onEnterPress()" (focus)="onEnterPress()">
     </div>
   </div>
 </div>
 <div *ngIf="buscadorpersonalizado" class="buscador-container">
   <div class="buscador-containe__div-search">
-    <div class="buscador-containe__search" [ngClass]="{Myclase: activeClase,stylo_heght:activeClasetwo}">
-      <!-- buscador -->
-      <input class="buscador-containe__search-input" placeholder={{placeholderbuscador}} (keyup)="search()" #txtBuscar>
+    <div class="buscador-containe__search" [ngClass]="{Myclase: activeClase,stylo_heght:activeClasetwo,stylo_foro:activeClaseForo}">
+      <input class="buscador-containe__search-input" placeholder={{placeholderbuscador}} (keyup)="search()" #txtBuscar (focus)="search()">
     </div>
   </div>
 

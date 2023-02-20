@@ -123,22 +123,7 @@
   display: flex !important;
 }
 
-@media screen and (max-width: 992px) {
-  .nav-item--width {
-    /*  width: 100%; */
-    border-radius: 5px;
-  }
 
-  .dropdown-toogle-list {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .dropdown-menu {
-    width: 100%;
-  }
-}
 
 /* style botones  registro y login */
 .buttons-access {
@@ -234,6 +219,22 @@
     }
   }
 }
+@media screen and (max-width: 992px) {
+  .nav-item--width {
+    /*  width: 100%; */
+    border-radius: 5px;
+  }
+
+  .dropdown-toogle-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+  }
+}
 
 @media screen and (max-width: 560px) {
   .no-button {
@@ -256,7 +257,7 @@
   }
 }
 
-@media screen and (min-width: 992px) {
+/* @media screen and (min-width: 992px) {
   .navbar-collapse--pdin {
     padding: 0 !important;
   }
@@ -264,4 +265,4 @@
   .navbar-collapse-ul {
     align-items: center !important;
   }
-}
+} */

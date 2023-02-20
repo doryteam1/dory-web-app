@@ -1,0 +1,63 @@
+<div class="container-section__user-responses">
+
+  <div class="container-response" *ngIf="!edit">
+    <div class="container-response__avatar">
+      <img [src]="pregunta?.fotoUsuario? pregunta?.fotoUsuario : 'assets/images/avatar-person.svg'" alt="">
+    </div>
+
+    <div class="container-response__texts">
+      <div class="vertical-line"></div>
+      <div class="container-response__texts__data">
+
+        <div class="btn-group dropstart menu-edit" *ngIf="!authUserId">
+          <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+          <ul class="dropdown-menu">
+            <li (click)="editar()" *ngIf="pregunta?.countRespuestas<1"><a class="dropdown-item"><i
+                  class="bi bi-pencil-fill"></i> Editar</a></li>
+            <li (click)="delete()"><a class="dropdown-item"><i class="bi bi-trash-fill"></i>Eliminar</a></li>
+          </ul>
+        </div>
+        <div (click)="detalles()">
+          <h1> {{pregunta?.nombreUsuario | titlecase}}</h1>
+          <div class="time-message">
+            <i class="bi bi-clock"></i>
+            <span>{{timeToNow(pregunta?.fecha)}}</span>
+          </div>
+          <h6 class="h6">{{pregunta?.titulo}}</h6>
+          <p>{{pregunta?.descripcion | shorter:200}}</p>
+        </div>
+
+
+        <div class="container-buttons-res-res">
+          <span class="spanx" (click)="createComponent()" [ngClass]="{span1: openRespuestas}"
+            *ngIf="pregunta?.countRespuestas>0">
+            {{pregunta?.countRespuestas + (pregunta?.countRespuestas < 2 ? ' respuesta' : ' respuestas' ) }} </span>
+              <span (click)="detalles()"><i class="bi bi-reply-fill"></i> Responder</span>
+        </div>
+
+        <!-- Respuesta de una pregunta -->
+        <div class="d-flex flex-column gap-2" *ngIf="pregunta?.countRespuestas>0" (click)="detalles()">
+          <ng-container *ngIf="openRespuestas">
+            <div class="loading" *ngIf="loading">
+              <div class="container__spinner spinner-border" role="status">
+              </div>
+            </div>
+            <ng-container *ngIf="respuestasPregunta.length>0 && !loading && !showError && !showNotFound">
+              <app-user-answers-forum style="width: 100%;" [data]="respuesta" (onDetalles)="detalles()"
+                *ngFor="let respuesta of respuestasPregunta">
+              </app-user-answers-forum>
+              <div class="container-buttons-res-res">
+                <span (click)="detalles()">Ver mas</span>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <app-user-question-form-forum *ngIf="edit" (onShowForm)="editar()" [showForm]="edit" [showButton]="true"
+    [formMode]="'update'" [pregunta]="pregunta">
+  </app-user-question-form-forum>
+
+</div>

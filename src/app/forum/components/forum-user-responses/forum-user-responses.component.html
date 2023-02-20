@@ -1,0 +1,68 @@
+<section class="container container-section" [ngClass]="{heightcal: loadingQuestion}">
+  <!-- Cargando pregunta -->
+  <div class="loading" *ngIf="loadingQuestion">
+    <div class="container__spinner spinner-border" role="status">
+    </div>
+  </div>
+  <!-- Errores y no datos pregunta -->
+  <div class="container__app-not-found" *ngIf="!loadingQuestion && showErrorQuestion  || showNotFoundQuestion">
+    <app-not-found message="No encontramos resultados para esta busqueda" [errorData]="showErrorQuestion">
+    </app-not-found>
+  </div>
+
+  <!-- Pregunta -->
+  <ng-container *ngIf="!loadingQuestion && !showErrorQuestion && !showNotFoundQuestion">
+
+    <div class="container-section__response" style="margin-bottom: 0;padding: 10px;">
+      <app-user-answers-forum [data]="preguntaUser" [dataAll]="true" [activeCursor]="true">
+      </app-user-answers-forum>
+    </div>
+    <!-- Formulario responder -->
+    <app-user-answers-form-forum (onShowForm)="openForm()" [showForm]="showForm" [id_pregunta]="preguntaUser.id">
+    </app-user-answers-form-forum>
+  </ng-container>
+
+  <!-- Cargando respuestas -->
+  <div class="loading" *ngIf="loadingAnswers">
+    <div class="container__spinner spinner-border" role="status"></div>
+  </div>
+
+  <!-- Errores y no datos respueta-->
+  <div class="container__app-not-found" *ngIf="!loadingAnswers && showErrorAnswers || showNotFoundAnswers">
+    <app-not-found message="No encontramos respuestas" [errorData]="showErrorAnswers">
+    </app-not-found>
+  </div>
+
+  <!-- Respuestas -->
+  <div class="container-section__response"
+    *ngIf="!loadingAnswers && !showErrorAnswers && !showNotFoundAnswers && respuestasCopia.length > 0">
+    <div class="container-section__response__filter">
+      <app-user-filter-forum (onFilter)="onFiltroEvents($event)" [filtros]="filtros"
+        [count]="respuestas.length < 2 ? respuestas.length + ' Respuesta' : respuestas.length + ' Respuestas'"
+        [tipoFiltro]="!filtroseleccionado ? 0 : tipoFiltro ">
+      </app-user-filter-forum>
+
+      <div class="chip" *ngIf="filtroseleccionado">
+        <app-chip-con-boton-close *ngIf="filtroseleccionado" [iconoChip]="true"
+          [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
+          [contenidoChip]="nombreFiltro + ' ('+respuestasCopia.length+')'" (onCloseClip)="deleteFilter()">
+        </app-chip-con-boton-close>
+      </div>
+    </div>
+    <div class="container-section__response__answer">
+
+      <app-user-answers-forum style="width: 100%;" *ngFor="let respuesta of respuestasCopia" [activeRespuesta]="true"
+        [dataAll]="true" [authUserId]="evaluateRegisteredUserService.evaluateUser(respuesta.usuarioId)"
+        [data]="respuesta" (onDelete)="deleteRespuesta(respuesta?.id,respuesta?.fotos)" [activeCursor]="true">
+      </app-user-answers-forum>
+
+      <ngb-pagination *ngIf="showPagination && respuestas.length>2" [collectionSize]="collectionSize" [(page)]="page" (pageChange)="resetOfSearch()"
+        [maxSize]="2" [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+        <ng-template ngbPaginationPrevious><i class="bi bi-caret-left-fill azul1--color"></i></ng-template>
+        <ng-template ngbPaginationNext><i class="bi bi-caret-right-fill azul1--color"></i></ng-template>
+      </ngb-pagination>
+
+    </div>
+
+  </div>
+</section>

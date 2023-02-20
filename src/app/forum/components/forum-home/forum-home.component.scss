@@ -1,0 +1,93 @@
+/* header */
+h1 {
+  margin: 0;
+}
+
+header {
+  width: 100%;
+  height: 350px;
+  background: #EFF1F3;
+  box-shadow: rgb(17 17 26 / 10%) 0px 1px 0px;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.head {
+  text-align: center;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--gris-oscuro);
+}
+
+
+app-search {
+  width: 100%;
+}
+
+app-user-question-form-forum {
+  padding: 20px;
+  display: block;
+}
+
+.container-section__user-responses {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.container-section {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  &__response {
+    background-color: #EFF1F3;
+    padding: 10px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.container__app-not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.loading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+
+  .container__spinner {
+    color: var(--azul1)
+  }
+}
+ngb-pagination{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

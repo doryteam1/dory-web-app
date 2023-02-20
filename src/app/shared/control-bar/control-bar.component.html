@@ -1,8 +1,9 @@
 <div  #navbar class="navbar sticky-top navbar-light bg-light navbar-titlebar" style="user-select: none;">
     <div  class="navbar-titlebar__drag-region">
       <div id="window-title" class="container-navbar-titlebar">
-        <div class="container-navbar-titlebar__icono"  (click)="navegarRuta('/home')">
-          <img  class="container-navbar-titlebar__icono-img tooltip-trigger"  src="assets/icons/DoryIcon.svg" alt="DoryIcon">
+        <div class="container-navbar-titlebar__icono"  >
+          <img  class="container-navbar-titlebar__icono-img tooltip-trigger"  src="assets/icons/DoryIcon.svg" alt="DoryIcon" (click)="navegarRuta('/home')">
+          <span (click)="navegarRuta('/home')">DORY</span>
         </div>
         <!-- Botones alante y atras -->
         <app-floatin-btns-alante-atras class="no-drag" *ngIf="electronjs ">
@@ -16,10 +17,14 @@
               </path>
             </g>
           </svg>
-          <input placeholder="Search" type="search" class="group-search__input" [disabled]="true" style="cursor: pointer" (click)="search()">
+          <input placeholder="Buscar..." type="search" class="group-search__input" [disabled]="true" style="cursor: pointer" (click)="search()">
         </div>
+
         <!-- Botones registro y login -->
         <div class="buttons-access">
+            <div class="buscador--container-icon" (click)="search()">
+              <img src="/assets/icons/search.svg">
+            </div>
           <ng-container *ngTemplateOutlet="botonregistroylogintempl"></ng-container>
           <ng-container *ngTemplateOutlet="botonregistroyloginnormal" class="no-button"></ng-container>
             <div #buttonOpenModalNotify  class=" no-drag notify dropstart"
@@ -273,7 +278,7 @@
 
 <!-- modal notificacion -->
 <div #miModalNotificacion class="modal fade modalNotificacio" id="ModalNotificacion" tabindex="-1"
-  aria-labelledby="ModalNotificacionLabel" aria-hidden="true">
+  aria-labelledby="ModalNotificacionLabel" aria-hidden="true"  [style.top]="heightNavbar[1] + 'px'">
     <!-- class="modal-dialog modal-xl modal-dialog-scrollable"  tienes que verificar si es electron y colocar modal-xl-->
   <div class="modal-dialog modal-dialog-scrollable" [ngClass]="electronjs ? 'modal-xl' : 'modal-fullscreen'"
 >
@@ -283,7 +288,7 @@
           id="ModalNotificacionLabel">Notificaciones</h5>
         <button type="button" class="btn-close btn-close-modal-notify" (click)=closeModalNotificacion()></button>
       </div>
-      <div class="modal-body modal-body--edit">
+      <div class="modal-body modal-body--edit"  [style.margin-bottom]="heightNavbar[1] + 'px'">
         <div class="container-modal-data">
           <ng-container *ngTemplateOutlet="notificacionNormal"></ng-container>
         </div>

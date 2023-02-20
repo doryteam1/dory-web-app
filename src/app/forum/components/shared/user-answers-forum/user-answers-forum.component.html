@@ -1,0 +1,51 @@
+<div [ngClass]="{'clase1': dataAll, 'clase2': !dataAll}">
+  <div class="container-section__user-responses">
+    <div class="container-response" *ngIf="!edit">
+      <div class="container-response__avatar" (click)="detalles()" [ngClass]="{'cursor--pointer': activeCursor}">
+        <img [src]="data?.fotoUsuario? data?.fotoUsuario : 'assets/images/avatar-person.svg'" alt="">
+      </div>
+
+      <div class="container-response__texts">
+        <div class="vertical-line"></div>
+        <div class="container-response__texts__data">
+
+          <div class="btn-group dropstart menu-edit" *ngIf="!authUserId && activeRespuesta">
+            <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+            <ul class="dropdown-menu">
+              <li (click)="editar()"><a class="dropdown-item"><i class="bi bi-pencil-fill"></i> Editar</a></li>
+              <li (click)="delete()"><a class="dropdown-item"><i class="bi bi-trash-fill"></i>Eliminar</a></li>
+            </ul>
+          </div>
+
+          <h1 (click)="detalles()"> {{data?.nombreUsuario | titlecase}}</h1>
+
+          <div class="time-message">
+            <i class="bi bi-clock"></i>
+            <span>{{timeToNow(data?.fecha)}}</span>
+          </div>
+          <h6 class="h6" *ngIf="!activeRespuesta" [ngClass]="{'cursor--default': activeCursor}">{{data?.titulo}}</h6>
+          <p [ngClass]="{'cursor--default': activeCursor}">{{dataAll && !activeRespuesta ? data?.descripcion : !dataAll && !activeRespuesta ? (data?.respuesta |
+            shorter:200) :
+            dataAll && activeRespuesta ? data?.respuesta : ''}}</p>
+
+          <div class="mb-3 uploadphoto__container__imagen" *ngIf="dataAll">
+            <div *ngFor="let photo of data?.fotos; let i =index">
+              <div class="uploadphoto__container__imagen__img" (click)="fotoSeleLightbox()">
+                <img [src]="photo ? photo: 'https://admin.moodyyc.com/img/no-image.png'">
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- Formulario actualizar respuesta -->
+    <app-user-answers-form-forum *ngIf="edit" (onShowForm)="editar()" [showForm]="edit" [showButton]="true"
+      [formMode]="'update'" [respuesta]="data">
+    </app-user-answers-form-forum>
+  </div>
+</div>
+            <app-lightbox-imagen [thumbnails]="data?.fotos[0]" *ngIf="showLightbox"
+              (onCloseLightbox)="fotoSeleLightbox()"></app-lightbox-imagen>

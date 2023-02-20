@@ -102,14 +102,30 @@ cursor: pointer;
   width: 100%;
 
   &__icono {
-    width: 35px;
-    height: 35px;
-    -webkit-app-region: no-drag;
+      height: 35px;
+      -webkit-app-region: no-drag;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      span{
+        cursor: pointer;
+            font-weight: 700;
+            color: #C8BAA0;
+      }
+    }
+}
+.buscador--container-icon {
+  @extend .notify__icon-container;
+  display: none !important;
+  img {
+    width: 18px;
+    height: 18px;
   }
 }
-
 .container-navbar-titlebar__icono-img {
   cursor: pointer;
+  width: 35px;
   height: 100%;
 }
 
@@ -597,7 +613,6 @@ font-size: 0.8rem;
   }
 }
 
-
 @media screen and (max-width: 360px) {
   .notification-list .notification-list_content .notification-list_img img {
     height: 32px;
@@ -612,6 +627,13 @@ font-size: 0.8rem;
   .notify-button {
     font-size: 0.7rem;
   }
+     .buscador--container-icon {
+       display: flex !important;
+     }
+
+     .group-search {
+       display: none;
+     }
 }
 
 @media screen and (max-width: 290px) {
