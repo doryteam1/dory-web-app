@@ -11,7 +11,7 @@ FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 jobs:
   deploy:
-  name: dory-web-app-prod
+  name: Deploy app
   runs-on: ubuntu-latest
   steps:
     - uses: actions/checkout@v3
