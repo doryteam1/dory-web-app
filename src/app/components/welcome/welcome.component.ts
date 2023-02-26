@@ -15,7 +15,7 @@ export class WelcomeComponent implements OnInit {
   tipos: Array<any> = [];
   idTipo: number = 0;
   idMunic: number = 0;
-  idDepartamento: number = 0;
+  idDepartamento: number = 70;
   nombres: string | null = '';
   apellidos: string | null = '';
   error: string = '';
