@@ -60,8 +60,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
     nombre_vereda: new FormControl(''),
     id_departamento: new FormControl(0),
     id_municipio: new FormControl(0),
-    id_corregimiento: new FormControl(0),
-    id_vereda: new FormControl(''),
+    id_corregimiento: new FormControl(null),
+    id_vereda: new FormControl(null),
     latitud: new FormControl(''),
     longitud: new FormControl(''),
     nombre_corregimiento: new FormControl(''),
@@ -530,7 +530,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
   nomCorregVeredasubs() {
     this.nomCorreg?.valueChanges.subscribe((response) => {
-      this.idCorreg?.patchValue(0, { emitEvent: false });
+      this.idCorreg?.patchValue(null, { emitEvent: false });
       this.idCorreg?.updateValueAndValidity();
     });
 
@@ -626,8 +626,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
   }
   changeMunic() {
     this.municipiocambiado = true;
-    this.idCorreg?.setValue(0);
-    this.idVereda?.setValue(0);
+    this.idCorreg?.setValue(null);
+    this.idVereda?.setValue(null);
     this.places.getCorregimientosMunicipio(this.idMunic?.value).subscribe(
       (response) => {
         this.corregimientos = response.data;
