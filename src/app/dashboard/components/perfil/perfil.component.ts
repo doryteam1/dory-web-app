@@ -61,7 +61,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
     id_departamento: new FormControl(0),
     id_municipio: new FormControl(0),
     id_corregimiento: new FormControl(null),
-    id_vereda: new FormControl(''),
+    id_vereda: new FormControl(null),
     latitud: new FormControl(''),
     longitud: new FormControl(''),
     nombre_corregimiento: new FormControl(''),
