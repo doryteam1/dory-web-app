@@ -411,6 +411,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         this.percentUploaded2 = response;
         if (this.percentUploaded2 == 100) {
+          this.percentUploaded2 = 0;
           this.storage
             .cloudStorageRef(fileName)
             .getDownloadURL()
@@ -450,6 +451,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
             );
         }
       });
+
   }
 
   async fileChange(event: any) {

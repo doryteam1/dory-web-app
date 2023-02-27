@@ -97,7 +97,7 @@ export class SliderInicioComponent implements OnInit {
       .confirm(
         'Eliminar slide',
         'Esta seguro que desea eliminar este slide',
-        'Si',
+        'Sí',
         'No',
         nombre
       )

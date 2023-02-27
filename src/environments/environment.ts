@@ -13,14 +13,17 @@ export const environment = {
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
     messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   },
-  mapsApiKey:process.env.MAPS_API_KEY,
+  mapsApiKey: process.env.MAPS_API_KEY,
   production: false,
-  doryApiRestBaseUrl:process.env.DORY_API_REST,
-  oAuthClientId:process.env.OAUTH_CLIENT_ID,
-  doryServerUrl:process.env.DORY_SERVER_URL,
-  thisWebUrl:process.env.THIS_WEB_URL,
-  ginelectURL:process.env.GINELECT_URL,
+  doryApiRestBaseUrl: process.env.DORY_API_REST,
+  oAuthClientId: process.env.OAUTH_CLIENT_ID,
+  doryServerUrl: process.env.DORY_SERVER_URL,
+  thisWebUrl: process.env.THIS_WEB_URL,
+  ginelectURL: process.env.GINELECT_URL,
+  limitPhotosForum: process.env.LIMIT_PHOTOS_FORUM,
+  limitPhotosUserServices: process.env.LIMIT_PHOTOS_USER_SERVICES,
 };
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

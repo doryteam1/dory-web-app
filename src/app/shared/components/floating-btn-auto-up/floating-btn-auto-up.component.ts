@@ -7,6 +7,7 @@ import {
   HostBinding,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-floating-btn-auto-up',
@@ -52,7 +53,8 @@ export class FloatingBtnAutoUpComponent implements OnInit {
     '/asociaciones/municipio',
     '/grupo-asociaciones',
   ];
-  constructor(private router: Router) {}
+  isAuthUser: boolean=false;
+  constructor(private router: Router, public userService: UsuarioService) {}
   @HostListener('window:scroll', [])
   onWindowScroll() {
     if (
@@ -102,6 +104,11 @@ export class FloatingBtnAutoUpComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.isAuthUser = this.userService.isAuthenticated();
+     this.userService.getAuthObservable().subscribe((isAuth) => {
+      this.isAuthUser = isAuth;
+       })
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route: any = event.url;
@@ -112,4 +119,5 @@ export class FloatingBtnAutoUpComponent implements OnInit {
       }
     });
   }
+
 }

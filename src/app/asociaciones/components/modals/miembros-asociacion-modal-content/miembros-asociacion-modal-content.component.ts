@@ -116,7 +116,7 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
       .confirm(
         'Eliminar miembro',
         'Desea eliminar este miembro de esta asociación',
-        'Si',
+        'Sí',
         'No'
       )
       .then((result) => {

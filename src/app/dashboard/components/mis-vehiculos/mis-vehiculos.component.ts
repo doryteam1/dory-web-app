@@ -56,7 +56,7 @@ export class MisVehiculosComponent implements OnInit {
       .confirm(
         'Eliminar vehículo',
         'Esta seguro que desea eliminar el vehículo con id',
-        'Si',
+        'Sí',
         'No',
         vehiculo.modelo
       )

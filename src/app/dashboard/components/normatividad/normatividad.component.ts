@@ -55,7 +55,7 @@ export class NormatividadComponent implements OnInit {
       .confirm(
         'Eliminar norma',
         'Está seguro que desea eliminar esta norma',
-        'Si',
+        'Sí',
         'No',
         nombre
       )

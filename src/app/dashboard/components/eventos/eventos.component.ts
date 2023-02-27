@@ -73,7 +73,7 @@ export class EventosComponent implements OnInit {
       .confirm(
         'Eliminar novedad',
         'Está seguro que desea eliminar esta novedad',
-        'Si',
+        'Sí',
         'No',
         nombre
       )

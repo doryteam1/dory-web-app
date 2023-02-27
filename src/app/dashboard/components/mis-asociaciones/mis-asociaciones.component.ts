@@ -217,7 +217,7 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
       .confirm(
         'Eliminar asociación',
         'Esta seguro que desea eliminar esta asociación',
-        'Si',
+        'Sí',
         'No',
         asociacion.nombre
       )

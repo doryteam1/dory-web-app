@@ -590,7 +590,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
       .confirm(
         'Eliminar asociación',
         'Esta seguro que desea eliminar esta asociación',
-        'Si',
+        'Sí',
         'No',
         this.asociacion.nombre
       )

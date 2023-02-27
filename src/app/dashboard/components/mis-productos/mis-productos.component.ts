@@ -58,7 +58,7 @@ export class MisProductosComponent implements OnInit {
       .confirm(
         'Eliminar producto',
         'Esta seguro que desea eliminar el producto',
-        'Si',
+        'Sí',
         'No',
         nombre
       )

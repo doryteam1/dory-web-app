@@ -1,10 +1,11 @@
 import {
   Component,
   OnInit,
-  HostListener,
+  HostListener
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Gallery, GalleryRef } from 'ng-gallery';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { DashboardInicioService } from 'src/app/services/dashboard-inicio.service';
 import { EnlacesDirectosInicioService } from 'src/app/services/enlaces-directos-inicio.service';
 import { SliderInicioService } from 'src/app/services/slider-inicio.service';
@@ -15,6 +16,64 @@ import { SliderInicioService } from 'src/app/services/slider-inicio.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  isDragging: boolean = false;
+  eventOwlCarousel: any[] = [];
+  customOptions: OwlOptions = {
+    autoWidth: true,
+    mouseDrag: true,
+    touchDrag: true,
+    loop: true,
+    nav: true,
+    center: true,
+    dots: false,
+    margin: 120,
+    navText: [
+      "<i class='bi bi-chevron-left'></i>",
+      "<i class='bi bi-chevron-right'></i>",
+    ],
+
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 1,
+      },
+      740: {
+        items: 3,
+      },
+      940: {
+        items: 4,
+      },
+    },
+  };
+  sliderCard: any[] = [
+    {
+      src: 'assets/icons/gps.svg',
+      title: 'Geolocalización',
+      informacion:
+        'Desde esta sección tendrás acceso a información privilegiada del sector piscícola',
+      url: '/geolocalizacion',
+      id: '1',
+    },
+    {
+      src: 'assets/icons/shop-window.svg',
+      title: 'Plaza de mercado',
+      informacion:
+        'Desde esta sección podrá encontrar distintos tipos de peces para la venta.',
+      url: '/publicaciones',
+      id: '2',
+    },
+    {
+      src: 'assets/icons/icon_forum.svg',
+      title: 'Foro de inquietudes',
+      informacion:
+        'Desde esta sección te ayudarán a solucionar dudas referente al sector piscícola.',
+      url: '/foro',
+      id: '3',
+    },
+  ];
+  /*  */
   datosCounter = [
     { title: 'Granjas', img: 'assets/icons/granja-icon-home.svg', cantidad: 0 },
     {
@@ -62,58 +121,61 @@ export class HomeComponent implements OnInit {
   tiempoSlide: any = 0;
   electronActive: any = window.require; //verificar la disponibilidad, solo esta disponible en electronJS;
 
-  novedades:Array<any> = [
+  novedades: Array<any> = [
     {
-      title:'Artículos',
-      route:'/novedades/articulos'
+      title: 'Artículos',
+      route: '/novedades/articulos',
     },
     {
-      title:'Artículos Colombianos',
-      route:'/novedades/articulos-colombia'
+      title: 'Artículos Colombianos',
+      route: '/novedades/articulos-colombia',
     },
     {
-      title:'Revistas',
-      route:'/novedades/revistas'
+      title: 'Revistas',
+      route: '/novedades/revistas',
     },
     {
-      title:'Noticias',
-      route:'/novedades/noticias'
-    }
-  ]
+      title: 'Noticias',
+      route: '/novedades/noticias',
+    },
+  ];
 
-  eventos:Array<any> = [
+  eventos: Array<any> = [
     {
-      title:'Cursos',
-      route:'/eventos/cursos'
+      title: 'Cursos',
+      route: '/eventos/cursos',
     },
     {
-      title:'Capacitaciones',
-      route:'/eventos/capacitaciones'
+      title: 'Capacitaciones',
+      route: '/eventos/capacitaciones',
     },
     {
-      title:'Congresos',
-      route:'/eventos/congresos'
-    }
-  ]
+      title: 'Congresos',
+      route: '/eventos/congresos',
+    },
+  ];
 
-  normatividades:Array<any> = [
+  normatividades: Array<any> = [
     {
-      title:'Leyes',
-      route:'/normatividad/leyes'
+      title: 'Leyes',
+      route: '/normatividad/leyes',
     },
     {
-      title:'Decretos',
-      route:'/normatividad/decretos'
+      title: 'Decretos',
+      route: '/normatividad/decretos',
     },
     {
-      title:'Resoluciones',
-      route:'/normatividad/resoluciones'
-    }
-  ]
+      title: 'Resoluciones',
+      route: '/normatividad/resoluciones',
+    },
+  ];
 
-  urlLinkCardImgNovedades:string = "https://images.pexels.com/photos/242492/pexels-photo-242492.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
-  urlLinkCardImgEventos:string = "https://images.pexels.com/photos/4443160/pexels-photo-4443160.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
-  urlLinkCardImgNormativas:string = "https://images.pexels.com/photos/48148/document-agreement-documents-sign-48148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+  urlLinkCardImgNovedades: string =
+    'https://images.pexels.com/photos/242492/pexels-photo-242492.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+  urlLinkCardImgEventos: string =
+    'https://images.pexels.com/photos/4443160/pexels-photo-4443160.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+  urlLinkCardImgNormativas: string =
+    'https://images.pexels.com/photos/48148/document-agreement-documents-sign-48148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
   constructor(
     public gallery: Gallery,
     private sliderInicioService: SliderInicioService,
@@ -126,6 +188,7 @@ export class HomeComponent implements OnInit {
     this.cargaServiceSlaider();
     this.cargaServiceEnlacesDirc();
   }
+
   servicesDataLength() {
     this.dashboardInicioService.getDatosLenght().subscribe((response: any) => {
       let datos = Object.values(response.data);
@@ -135,6 +198,7 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
   cargaServiceSlaider() {
     this.sliderInicioService.getSliders().subscribe(
       (response) => {
@@ -152,6 +216,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
   cargaServiceEnlacesDirc() {
     this.enlacesDirectosInicioService.getTodos().subscribe(
       (response) => {
@@ -166,6 +231,10 @@ export class HomeComponent implements OnInit {
   openSlaider(slaid: any) {
     let imageData: any[] = [];
     this.lightboxRef = this.gallery.ref('homegallery');
+    this.lightboxRef.setConfig({
+      navIcon:
+        '<div><img style="width: 30px; height: 30px;" src="assets/icons/control_next_slider.svg"></div>',
+    });
     slaid.forEach((element: any) => {
       imageData.push({
         srcUrl: element.url_imagen,
@@ -184,19 +253,22 @@ export class HomeComponent implements OnInit {
       });
     }
   }
+
   clisFotoSlide(event: any) {
     if (this.sliders[event]?.url_enlace) {
       let url = this.sliders[event]?.url_enlace;
       window.open(url, '_blank');
     }
   }
+
   clisEnlaceDirect(event: any) {
     let url = event.url_enlace;
     window.open(url, '_blank');
   }
   navigate(ruta: any) {
-      this.router.navigateByUrl(`${ruta}`);
+    this.router.navigateByUrl(`${ruta}`);
   }
+
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if (event.key === 'ArrowRight') {
@@ -217,4 +289,15 @@ export class HomeComponent implements OnInit {
   prevImgGallery() {
     this.lightboxRef?.prev();
   }
+  navigateSliderCard(ruta: any, id: string) {
+   /*  let idx = this.eventOwlCarousel.findIndex(
+      (element: any) => element.center == true && element.id === id
+    );
+    if (idx != -1 && !this.isDragging) { */
+      this.router.navigateByUrl(`${ruta}`);
+  /*   } */
+  }
+ /*  sliderCardEvent(evento: any) {
+    this.eventOwlCarousel = evento;
+  } */
 }

@@ -41,7 +41,7 @@
 
           <div class="container__alert-msg danger-message" *ngIf="maxPhotosAlert">
             <div>
-              Ha excedido el límite permitido de una foto
+              Ha excedido el límite permitido de {{limitePhotos ==1 ? limitePhotos + ' foto' : limitePhotos + ' fotos'}}
             </div>
           </div>
 
@@ -56,9 +56,9 @@
               </ng-container>
             </ng-container>
           </div>
-          <div class="uploadphoto__container__button" *ngIf="!(photos.length + previewCreatedPhotos.length >= 1)">
+          <div class="uploadphoto__container__button" *ngIf="!(photos.length + previewCreatedPhotos.length >= limitePhotos)">
             <div>
-              <button [disabled]="(photos.length + previewCreatedPhotos.length >= 1) || loading" type="button"
+              <button [disabled]="(photos.length + previewCreatedPhotos.length >= limitePhotos) || loading" type="button"
                 class="btn btn-primary btn--azul1"
                 style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
                 (click)="openAddFileDialogCreate()">

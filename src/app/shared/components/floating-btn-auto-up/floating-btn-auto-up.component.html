@@ -1,4 +1,5 @@
-<a class="floating-btn scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled}" (click)="restartScroll()">
+
+<a class="floating-btn scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled,'style_botton':!isAuthUser}" (click)="restartScroll()">
   <div class=" flecha">
     <img class="svgpath" src="assets/icons/Vector.svg">
   </div>

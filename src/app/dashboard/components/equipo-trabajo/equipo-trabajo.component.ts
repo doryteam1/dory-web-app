@@ -107,7 +107,7 @@ export class EquipoTrabajoComponent implements OnInit {
       .confirm(
         'Eliminar miembro',
         'Está seguro que desea eliminar este miembro',
-        'Si',
+        'Sí',
         'No',
         nombre
       )

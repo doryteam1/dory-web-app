@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../shared/shared.module';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
     SharedModule,
     GalleryModule,
     LightboxModule,
+    CarouselModule,
   ],
 })
 export class HomeModule {}
