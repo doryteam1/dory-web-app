@@ -1,23 +1,50 @@
 
+
   <div class="basic-container" >
-    <gallery class="gallery--class"
-     [counter]="false"
-     [attr.fluid]="true"
-     [loadingStrategy]="'lazy'"
-      [imageSize]="'cover'"
-      id="homegallery"
-      [itemTemplate]="itemTemplate"
-       [thumbHeight]="70"
-      [thumbWidth]="80"
-      [thumbMode]="'free'"
-      [dots]="true"
-       [autoPlay]="tiempoSlide>0"
-      [playerInterval]="tiempoSlide"
-       [thumb]="false"
-       [nav]="true"
-        (itemClick)="clisFotoSlide($event)">
-    </gallery>
+
+      <div class="loading-slider" *ngIf="loadingSlider ">
+        <img src="assets/icons/loadingAnimate.svg" alt="">
+      </div>
+
+      <div id="carouselExampleCaptions"
+              class="carousel slide h-100 w-100"
+              [ngClass]="{'display-none': loadingSlider}">
+        <div class="carousel-indicators">
+          <button type="button"
+             *ngFor="let slid of sliders; first as isFirst, let i = index"
+             [attr.data-bs-slide-to]="i"
+             data-bs-target="#carouselExampleCaptions"
+             [attr.aria-label]="'Slide ' + i"
+             [ngClass]="{active: isFirst}">
+          </button>
+        </div>
+
+        <div class="carousel-inner h-100 w-100">
+          <div class="carousel-item h-100 w-100" *ngFor="let slid of sliders; first as isFirst"
+          [ngClass]="{active: isFirst}" (click)="clisFotoSlide(slid?.url_enlace)">
+            <img [src]="slid?.url_imagen" class="d-block w-100 h-100 object-fit-img" alt="...">
+            <ng-container *ngIf="slid?.titulo && slid?.mostrar_titulo === 1">
+              <div class="carousel-caption">
+                <h5 style="color: var(--azul1);">{{slid?.titulo}}</h5>
+              </div>
+            </ng-container>
+          </div>
+
+        </div>
+        <button class="carousel-control-prev" type="button"
+        data-bs-target="#carouselExampleCaptions"
+        (click)="prevImgGallery()">
+          <img style="width: 40px; height: 40px; transform: scaleX(-1);" src="assets/icons/control_next_slider.svg">
+        </button>
+        <button class="carousel-control-next" type="button"
+           data-bs-target="#carouselExampleCaptions"
+           (click)="nextImgGallery()">
+          <img style="width: 40px; height: 40px;" src="assets/icons/control_next_slider.svg">
+        </button>
+      </div>
+
   </div>
+
 <div class="container container-edit">
   <div class="container-statics">
     <div class="container-statics-div">
@@ -28,8 +55,7 @@
   <!-- ksl -->
 
  <div class="slider-card-services">
-  <owl-carousel-o [options]="customOptions"
-   >
+  <owl-carousel-o [options]="customOptions">
     <ng-container *ngFor="let slide of sliderCard; let i = index" >
       <ng-template carouselSlide [id]="slide.id" [width]="280" >
         <a class="slider-card-services-box" (click)="navigateSliderCard(slide.url, slide.id)" >
@@ -87,9 +113,4 @@
     </div>
   </div>
 </ng-template>
-<!-- Add custom template to image items -->
-<ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
-  <span *ngIf="type === 'image' && index === currIndex && data?.title && data?.mostrar_titulo" class="item-text animate__bounceIn item-title-gallery">
-    {{data?.title}}
-  </span>
-</ng-template>
+

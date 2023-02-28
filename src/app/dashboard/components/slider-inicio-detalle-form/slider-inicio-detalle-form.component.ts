@@ -13,7 +13,8 @@ import { SliderInicioService } from 'src/app/services/slider-inicio.service';
    url_imagen: string;
    url_enlace: string;
    titulo: string;
-   mostrar_titulo:number;
+   mostrar_titulo: number;
+   url_imagen_movil:any
  }
 @Component({
   selector: 'app-slider-inicio-detalle-form',
@@ -163,7 +164,9 @@ export class SliderInicioDetalleFormComponent implements OnInit {
       titulo: this.titulo?.value,
       url_enlace: this.url_enlace?.value,
       url_imagen: foto,
-      mostrar_titulo:this.mostrar_titulo
+      mostrar_titulo:this.mostrar_titulo,
+      url_imagen_movil:''
+
     };
     this.sliderInicioService.updateSlide(this.id_slide, newslide).subscribe(
       (response) => {
@@ -203,6 +206,7 @@ export class SliderInicioDetalleFormComponent implements OnInit {
       url_enlace: this.url_enlace?.value,
       url_imagen: this.fotoAmandar,
       mostrar_titulo: this.mostrar_titulo,
+      url_imagen_movil: '',
     };
 
     this.sliderInicioService.addSlide(newslide).subscribe(

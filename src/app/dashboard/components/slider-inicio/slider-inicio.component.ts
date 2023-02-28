@@ -68,7 +68,6 @@ export class SliderInicioComponent implements OnInit {
             }
             if (this.imagenes.length > 0) {
               this.sliders = response.data.slider;
-              console.log(this.sliders);
               this.cargarFuntionSlider(this.imagenes);
             }
             this.showError = false;
