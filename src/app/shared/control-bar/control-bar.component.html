@@ -78,8 +78,8 @@
       <i class="notify__icon bi bi-bell"></i>
     </div>
     <span class="position-absolute top-3px start-100 translate-middle badge rounded-pill bg-danger"
-      *ngIf="!notificatiosOpened && invitaciones?.length! > 0">
-      {{invitaciones.length}}
+      *ngIf="!notificatiosOpened && ( invitaciones?.length! > 0 || invitacionesFromUsers.length! > 0)">
+      {{invitaciones.length + invitacionesFromUsers.length}}
     </span>
   </div>
 </ng-template>
@@ -120,58 +120,6 @@
 </ng-template>
 
 <ng-template #invitationTemplate let-invitacion="invitacion" let-isInvitation="isInvitation" let-index="index">
-  <li class="notify__menu-item">
-    <div class="notification-list">
-      <div class="notification-list_content">
-        <div class="notification-list_img">
-        <img
-          [src]="invitacion?.foto_representante_legal ? invitacion?.foto_representante_legal : invitacion?.foto ? invitacion?.foto : 'assets/images/avatar-person.svg'">
-        </div>
-        <div class="notification-list_detail">
-          <p><b>{{isInvitation ? invitacion.representante_legal :
-          invitacion.nombre_quien_envia}}</b> {{isInvitation ? 'te ha invitado a ser miembro de' : 'ha indicado que es miembro de la asociación'}}
-          <b>{{invitacion.asociacion}}</b></p>
-          <p class="text-muted">
-            <small class="color-azul1">
-              {{timeToNow(invitacion.fecha_solicitud)}} · {{isInvitation ? '¿Te gustaria ser miembro?' : '¿Es miembro de esta asociación?'}}
-            </small>
-        </p>
-          <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
-            <button class="notify-button btn-square btn--blue" (click)="confirmarInvitacion(invitacion)">Confirmar</button>
-            <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion(invitacion)">Eliminar</button>
-          </div>
-          <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
-          <span class="danger-message" *ngIf="invitacion.error">{{invitacion.error}}</span>
-        </div>
-      </div>
-    </div>
-  </li>
-  <li class="notify__menu-item">
-    <div class="notification-list">
-      <div class="notification-list_content">
-        <div class="notification-list_img">
-        <img
-          [src]="invitacion?.foto_representante_legal ? invitacion?.foto_representante_legal : invitacion?.foto ? invitacion?.foto : 'assets/images/avatar-person.svg'">
-        </div>
-        <div class="notification-list_detail">
-          <p><b>{{isInvitation ? invitacion.representante_legal :
-          invitacion.nombre_quien_envia}}</b> {{isInvitation ? 'te ha invitado a ser miembro de' : 'ha indicado que es miembro de la asociación'}}
-          <b>{{invitacion.asociacion}}</b></p>
-          <p class="text-muted">
-            <small class="color-azul1">
-              {{timeToNow(invitacion.fecha_solicitud)}} · {{isInvitation ? '¿Te gustaria ser miembro?' : '¿Es miembro de esta asociación?'}}
-            </small>
-        </p>
-          <div class="d-flex flex-row mt-2" *ngIf="!invitacion.message">
-            <button class="notify-button btn-square btn--blue" (click)="confirmarInvitacion(invitacion)">Confirmar</button>
-            <button class="notify-button btn-square btn--grey" (click)="eliminarInvitacion(invitacion)">Eliminar</button>
-          </div>
-          <span class="notify__message" *ngIf="invitacion.message">{{invitacion.message}}</span>
-          <span class="danger-message" *ngIf="invitacion.error">{{invitacion.error}}</span>
-        </div>
-      </div>
-    </div>
-  </li>
   <li class="notify__menu-item">
     <div class="notification-list">
       <div class="notification-list_content">
