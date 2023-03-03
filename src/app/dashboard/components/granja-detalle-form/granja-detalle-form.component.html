@@ -18,7 +18,7 @@
           <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre_granja">
         </div>
         <div *ngIf="invalid('nombre_granja')" class="container__alert-msg danger-message">
-          <div *ngIf="nombreGranja?.errors?.['required']">
+          <div *ngIf="nombreGranja?.errors?.['required'] || nombreGranja?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -31,7 +31,7 @@
             formControlName="descripcion" placeholder="Descripción de la granja">Write something here</textarea>
         </div>
         <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
-          <div *ngIf="descripcion?.errors?.['required']">
+          <div *ngIf="descripcion?.errors?.['required'] || descripcion?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -80,7 +80,7 @@
         <div>
           <select class="form-control" formControlName='id_departamento'>
             <optgroup label="Escoge un departamento" value="70">
-              <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}
+              <option *ngFor="let dpto of departamentos" [ngValue]="dpto?.id_departamento">{{dpto?.nombre_departamento}}
               </option>
             </optgroup>
           </select>
@@ -137,7 +137,7 @@
             formControlName="informacion_adicional_direccion">Write something here</textarea>
         </div>
         <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
-          <div *ngIf="informacionAdicionalDireccion?.errors?.['required']">
+          <div *ngIf="informacionAdicionalDireccion?.errors?.['required'] || informacionAdicionalDireccion?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -179,7 +179,8 @@
       </div>
       <!-- Fotos mini -->
       <app-fotos-mini-detalle-form (onDetalle)="openPhotosModal()" *ngIf="photosGranjaArray.length > 0"
-        [loadingphoto]="loadingphoto" [modalMode]="modalMode"[fotos]="photosGranjaArray"></app-fotos-mini-detalle-form>
+        [loadingphoto]="loadingphoto" [modalMode]="modalMode"[fotos]="photosGranjaArray">
+      </app-fotos-mini-detalle-form>
       <div class="clasfotoMiniyBoton" *ngIf="photosGranjaArray.length <= 0">
         <div type="button" class="btn btn-primary container__btn--azul1"
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
@@ -196,13 +197,13 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading1 || !form.valid" type="button" class="btn-rounded btn--blue container__btn"
        (click)="addGranja()" *ngIf="modalMode=='create'">
         <span *ngIf="!loading1">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
         </div>
       </button>
-      <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading1 || !form.valid" type="button" class="btn-rounded btn--blue container__btn"
         (click)="updateGranja()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading1">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading1">

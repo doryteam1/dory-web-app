@@ -9,7 +9,7 @@ import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
-
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 @Component({
   selector: 'app-asociacion-detalle-form',
   templateUrl: './asociacion-detalle-form.component.html',
@@ -25,10 +25,13 @@ export class AsociacionDetalleFormComponent implements OnInit {
   previousValue: number = 0;
   form: FormGroup = new FormGroup({
     nit: new FormControl('', [Validators.required]),
-    direccion: new FormControl('', [Validators.required]),
+    direccion: new FormControl('', [Validators.required, WhiteSpaceValidator]),
     telefono: new FormControl('', [Validators.required]),
-    nombre: new FormControl('', [Validators.required]),
-    informacion_adicional_direccion: new FormControl(''),
+    nombre: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    informacion_adicional_direccion: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
     fecha_renovacion_camarac: new FormControl('', [Validators.required]),
     id_departamento: new FormControl(70, [Validators.required]),
     id_municipio: new FormControl('', [Validators.required]),

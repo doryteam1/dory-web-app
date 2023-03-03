@@ -43,7 +43,7 @@
           <input id="productName" class="form-control" placeholder="Ingrese el título " formControlName="nombre">
         </div>
         <div *ngIf="invalid('nombre')" class="container__alert-msg danger-message">
-          <div *ngIf="nombre?.errors?.['required']">
+          <div *ngIf="nombre?.errors?.['required'] || nombre?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -55,7 +55,7 @@
             placeholder="Ingrese la descripción" formControlName="resumen"></textarea>
         </div>
         <div *ngIf="invalid('resumen')" class="container__alert-msg danger-message">
-          <div *ngIf="resumen?.errors?.['required']">
+          <div *ngIf="resumen?.errors?.['required'] || resumen?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -67,7 +67,7 @@
             formControlName="organizador">
         </div>
         <div *ngIf="invalid('organizador')" class="container__alert-msg danger-message">
-          <div *ngIf="organizador?.errors?.['required']">
+          <div *ngIf="organizador?.errors?.['required'] || organizador?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -79,7 +79,7 @@
             formControlName="dirigidoa">
         </div>
         <div *ngIf="invalid('dirigidoa')" class="container__alert-msg danger-message">
-          <div *ngIf="dirigidoa?.errors?.['required']">
+          <div *ngIf="dirigidoa?.errors?.['required'] || dirigidoa?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -91,7 +91,7 @@
             formControlName="url">
         </div>
         <div *ngIf="invalid('url')" class="container__alert-msg danger-message">
-          <div *ngIf="url?.errors?.['required']">
+          <div *ngIf="url?.errors?.['required'] || url?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -132,7 +132,7 @@
                 </div>
               </div>
             </div>
-      <div class="photoAnduploadPhoto">
+      <div class="photoAnduploadPhoto mb-3">
         <label for="dateOfBirth">Foto principal</label>
         <div class="photoAnduploadPhoto-container" (click)="openAddFileDialogCreate()">
           <div class="mb-3 imagen" *ngIf="fotoEvento">
@@ -159,14 +159,13 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading" type="button"  class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading || !form.valid" type="button"  class="btn-rounded btn--blue container__btn"
         (click)="updateData()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
-
+      <button [disabled]="loading || !form.valid" type="button" class="btn-rounded btn--blue container__btn"
         (click)="addData()" *ngIf="modalMode=='create'">
         <span *ngIf="!loading">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">

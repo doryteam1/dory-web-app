@@ -1,6 +1,8 @@
 
 /* estilos del mapa */
-
+ button:disabled {
+   opacity: 0.3;
+ }
  .modal-body {
    width: 100%;
    height: 100%;

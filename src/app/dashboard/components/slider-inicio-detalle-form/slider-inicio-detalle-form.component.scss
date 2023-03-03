@@ -7,6 +7,9 @@
   margin-top: 50px;
   height: 100%;
 }
+ button:disabled {
+   opacity: 0.3;
+ }
 .checkbox-switch{
   display: flex;
   gap: 10px;

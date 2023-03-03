@@ -16,14 +16,14 @@ import { CompressImageSizeService } from 'src/app/services/compress-image-size.s
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ChatService } from 'src/app/services/chat.service';
-
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 
 const _ = require('lodash');
 
 @Component({
   selector: 'app-publicacion-detalle-form',
   templateUrl: './publicacion-detalle-form.component.html',
-  styleUrls: ['./publicacion-detalle-form.component.scss']
+  styleUrls: ['./publicacion-detalle-form.component.scss'],
 })
 export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
   formState = 'enable';
@@ -49,27 +49,30 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     id_especie: new FormControl('', [Validators.required]),
     cantidad: new FormControl(0, [Validators.required]),
     preciokilogramo: new FormControl(0, [Validators.required]),
-    titulo:new FormControl('', [Validators.required]),
-    descripcion:new FormControl('', [Validators.required]),
+    titulo: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    descripcion: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
     id_municipio: new FormControl(null),
     usuarios_id: new FormControl(null),
   });
   onMapa: boolean = false;
-  action_dos:any='ver_editar'
-  remitente:any
-  municipioRemitente:any
+  action_dos: any = 'ver_editar';
+  remitente: any;
+  municipioRemitente: any;
   authUser: any;
   constructor(
     private publicacionesService: PublicacionesService,
-    private granjasServices:GranjasService,
+    private granjasServices: GranjasService,
     private ar: ActivatedRoute,
     public platformLocation: PlatformLocation,
     private appModalService: AppModalService,
     private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
     private compressImageSizeService: CompressImageSizeService,
     private storage: FirebaseStorageService,
-    private userService:UsuarioService,
-    private chatService:ChatService
+    private userService: UsuarioService,
+    private chatService: ChatService
   ) {}
   /* agregar esto para camcelar el subscribe de  comunicacionEntreComponentesService*/
   public changeArray!: Subscription;
@@ -83,15 +86,16 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     this.remitente = this.ar.snapshot.paramMap.get('publicado_por');
     this.municipioRemitente = this.ar.snapshot.paramMap.get('municipio');
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
-      if (this.formState == 'disable') {
-        this.form.disable();
-      }else if (this.formState == 'enable') {
-        this.form.enable()
-      }
-    this.getAuthUserDetail()
-    if(action == 'update'){
-      this.publicacionesService.getPublicacionDetail(Number(this.publicacion.id_publicacion)).subscribe(
-        (response)=>{
+    if (this.formState == 'disable') {
+      this.form.disable();
+    } else if (this.formState == 'enable') {
+      this.form.enable();
+    }
+    this.getAuthUserDetail();
+    if (action == 'update') {
+      this.publicacionesService
+        .getPublicacionDetail(Number(this.publicacion.id_publicacion))
+        .subscribe((response) => {
           let publicacionTemp = this.publicacion;
           console.log(this.publicacion);
           this.publicacion = response.data[0];
@@ -106,9 +110,8 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
               console.log(err);
             }
           );
-        }
-      )
-    }else if(action == 'create'){
+        });
+    } else if (action == 'create') {
       this.prepareForm(action!, this.publicacion);
       this.granjasServices.getEspecies().subscribe(
         (response) => {
@@ -123,47 +126,49 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     this.changeArray =
       this.comunicacionEntreComponentesService.changeArray.subscribe(
         (array) => {
-          console.log("Array--> ",array)
-            if (array.length > 0) {
-              if (action == 'create') {
-                if (array[0].length > 0) {
-                  for (let index = 0; index < array[0].length; index++) {
-                    const element = array[0][index];
-                    this.photosPublicacionArray = array[0];
-                    console.log("-->",this.photosPublicacionArray);
-                  }
-                } else {
-                  this.photosPublicacionArray = [];
+          console.log('Array--> ', array);
+          if (array.length > 0) {
+            if (action == 'create') {
+              if (array[0].length > 0) {
+                for (let index = 0; index < array[0].length; index++) {
+                  const element = array[0][index];
+                  this.photosPublicacionArray = array[0];
+                  console.log('-->', this.photosPublicacionArray);
                 }
-                for (let index = 0; index < array[1].length; index++) {
-                  const element = array[1][index];
-                  this.filesfinalCreate.push(element);
-                }
-                for (let index = 0; index < array[2].length; index++) {
-                  const element = array[2][index];
-                  this.filesfinalCreate.splice(element, 1);
-                }
-              } else if (action == 'update') {
-                this.loadPhotos(array);
+              } else {
+                this.photosPublicacionArray = [];
               }
+              for (let index = 0; index < array[1].length; index++) {
+                const element = array[1][index];
+                this.filesfinalCreate.push(element);
+              }
+              for (let index = 0; index < array[2].length; index++) {
+                const element = array[2][index];
+                this.filesfinalCreate.splice(element, 1);
+              }
+            } else if (action == 'update') {
+              this.loadPhotos(array);
             }
+          }
         }
       );
     this.ArrayDelete =
       this.comunicacionEntreComponentesService.ArrayDelate.subscribe(
-        (response:any) => {
+        (response: any) => {
           this.photosDelete(response);
         }
       );
   }
 
-  async getAuthUserDetail(){
+  async getAuthUserDetail() {
     this.authUser = this.userService.getAuthUser();
     this.authUserId = this.authUser.sub;
-    let authUserDetail = await this.userService.getUsuarioByEmail(this.authUser.email).toPromise();
+    let authUserDetail = await this.userService
+      .getUsuarioByEmail(this.authUser.email)
+      .toPromise();
     authUserDetail = authUserDetail?.data[0];
-    this.municipio?.setValue(authUserDetail?.id_municipio)
-    this.usuario?.setValue(this.authUserId)
+    this.municipio?.setValue(authUserDetail?.id_municipio);
+    this.usuario?.setValue(this.authUserId);
   }
   ngOnDestroy(): void {
     /* cancelamos las subcripciones del servicio */
@@ -206,7 +211,10 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       return;
     }
     this.publicacionesService
-      .updatePublicacion(this.publicacion.id_publicacion, this.form.getRawValue())
+      .updatePublicacion(
+        this.publicacion.id_publicacion,
+        this.form.getRawValue()
+      )
       .subscribe(
         (response) => {
           this.loading1 = false;
@@ -232,8 +240,8 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     this.idEspecie?.setValue('');
     this.cantidad?.setValue(null);
     this.precio?.setValue(null);
-     this.titulo?.setValue('');
-     this.descripcion?.setValue('');
+    this.titulo?.setValue('');
+    this.descripcion?.setValue('');
   }
 
   prepareForm(action: string, publicacion?: any) {
@@ -265,7 +273,9 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       /* Se ejecuta cuando se esta creando una publicacion */
       try {
         const compressedFiles =
-          await this.compressImageSizeService.handleImageArrayUpload(filesPhotos);
+          await this.compressImageSizeService.handleImageArrayUpload(
+            filesPhotos
+          );
         let fileNameBase =
           '/publicaciones/User' +
           this.authUserId +
@@ -287,7 +297,8 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
           arrayFotos.push(downloadUrl);
         }
         this.photosPublicacionArray = [];
-        this.photosPublicacionArray = this.photosPublicacionArray.concat(arrayFotos);
+        this.photosPublicacionArray =
+          this.photosPublicacionArray.concat(arrayFotos);
         this.photosUpdate();
       } catch (err) {
         console.log(err);
@@ -296,12 +307,14 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       /* Se ejecuta cuando se esta editando una publicacion */
       try {
         const compressedFiles =
-          await this.compressImageSizeService.handleImageArrayUpload(filesPhotos);
+          await this.compressImageSizeService.handleImageArrayUpload(
+            filesPhotos
+          );
         let fileNameBase =
           '/publicaciones/User' +
           this.authUserId +
           '/publicacion' +
-         this.publicacion.id_publicacion +
+          this.publicacion.id_publicacion +
           '/foto';
         let files: Array<any> = compressedFiles;
         let arrayFotos: Array<string> = [];
@@ -317,7 +330,8 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
             .toPromise();
           arrayFotos.push(downloadUrl);
         }
-        this.photosPublicacionArray = this.photosPublicacionArray.concat(arrayFotos);
+        this.photosPublicacionArray =
+          this.photosPublicacionArray.concat(arrayFotos);
 
         /* entrega las ultimas fotos que se cargaron, las manda al componente
         que las necesite */
@@ -407,7 +421,7 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
       .catch((result) => {});
   }
 
-  sendMessage(){
+  sendMessage() {
     this.chatService.openUser(this.usuario?.value);
   }
 
@@ -423,18 +437,18 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     return this.form.get('preciokilogramo');
   }
 
-  get municipio(){
+  get municipio() {
     return this.form.get('id_municipio');
   }
 
-  get usuario(){
+  get usuario() {
     return this.form.get('usuarios_id');
   }
-  get titulo(){
+  get titulo() {
     return this.form.get('titulo');
   }
 
-  get descripcion(){
+  get descripcion() {
     return this.form.get('descripcion');
   }
 }

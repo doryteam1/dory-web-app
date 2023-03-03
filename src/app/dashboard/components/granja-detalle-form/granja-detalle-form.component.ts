@@ -17,7 +17,7 @@ import { ComunicacionEntreComponentesService } from '../../../shared/services/co
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { limiteMapa } from '../../../../models/limiteMapaGoogle.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
-
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 const _ = require('lodash');
 @Component({
   selector: 'app-granja-detalle-form',
@@ -49,15 +49,24 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
   faltadireccion: boolean = false;
   /* form declaraciones*/
   form: FormGroup = new FormGroup({
-    nombre_granja: new FormControl('', [Validators.required]),
+    nombre_granja: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
     area: new FormControl(0, [Validators.required]),
     numero_trabajadores: new FormControl(0, [Validators.required]),
     produccion_estimada_mes: new FormControl(0, [Validators.required]),
-    direccion: new FormControl('', [Validators.required]),
-    informacion_adicional_direccion: new FormControl('', [Validators.required]),
+    direccion: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    informacion_adicional_direccion: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
     latitud: new FormControl(0, [Validators.required]),
     longitud: new FormControl(0, [Validators.required]),
-    descripcion: new FormControl('', [Validators.required]),
+    descripcion: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
     id_departamento: new FormControl(70, [Validators.required]),
     id_municipio: new FormControl(0, [Validators.required]),
     id_vereda: new FormControl(0),

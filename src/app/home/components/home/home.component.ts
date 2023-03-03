@@ -186,8 +186,8 @@ export class HomeComponent implements OnInit{
     this.sliderRef = new window.bootstrap.Carousel(
       document.getElementById('carouselExampleCaptions'),
       {
-
-        
+        ride:ride,
+        interval: interval,
       }
     );
    this.loadingSlider = false;

@@ -4,11 +4,9 @@ import { PlatformLocation } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
-import { AppModalService } from 'src/app/shared/services/app-modal.service';
-import { ComunicacionEntreComponentesService } from 'src/app/shared/services/comunicacion-entre-componentes.service';
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 @Component({
   selector: 'app-mision-vision',
   templateUrl: './mision-vision.component.html',
@@ -18,9 +16,9 @@ export class MisionVisionComponent implements OnInit {
   @ViewChild('fileInputCreate') inputFileDialogCreate!: ElementRef;
   misionVision: any;
   form: FormGroup = new FormGroup({
-    entidad: new FormControl('', [Validators.required]),
-    mision: new FormControl('', [Validators.required]),
-    vision: new FormControl('', [Validators.required]),
+    entidad: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    mision: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    vision: new FormControl('', [Validators.required, WhiteSpaceValidator]),
   });
   loading: boolean = false;
   modalMode: string = 'visualize';
@@ -124,15 +122,15 @@ export class MisionVisionComponent implements OnInit {
     }
   }
   VerifyPhoto(data: string, urlFoto: string) {
-   let urlfotoVision = this.fotoVisionFinal;;
-   let urlfotoMision = this.fotoMisionFinal;
-   let urlfotoEntidad = this.fotoEntidadFinal;
+    let urlfotoVision = this.fotoVisionFinal;
+    let urlfotoMision = this.fotoMisionFinal;
+    let urlfotoEntidad = this.fotoEntidadFinal;
     if (data == 'entidad') {
-       this.storage.deleteByUrl(urlfotoEntidad);
+      this.storage.deleteByUrl(urlfotoEntidad);
       this.fotoEntidadFinal = urlFoto;
     }
     if (data == 'mision') {
-       this.storage.deleteByUrl(urlfotoMision);
+      this.storage.deleteByUrl(urlfotoMision);
       this.fotoMisionFinal = urlFoto;
     }
     if (data == 'vision') {

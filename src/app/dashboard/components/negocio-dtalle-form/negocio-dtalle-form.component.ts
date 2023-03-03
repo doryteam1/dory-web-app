@@ -22,6 +22,7 @@ import { PlatformLocation } from '@angular/common';
 import { ComunicacionEntreComponentesService } from '../../../shared/services/comunicacion-entre-componentes.service';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { limiteMapa } from '../../../../models/limiteMapaGoogle.model';
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 @Component({
   selector: 'app-negocio-dtalle-form',
   templateUrl: './negocio-dtalle-form.component.html',
@@ -45,12 +46,21 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
   inputOn: boolean = true;
   /* form declaraciones*/
   form: FormGroup = new FormGroup({
-    nombre_negocio: new FormControl('', [Validators.required]),
+    nombre_negocio: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
     direccion: new FormControl('', [Validators.required]),
-    informacion_adicional_direccion: new FormControl('', [Validators.required]),
+    informacion_adicional_direccion: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
     latitud: new FormControl(0, [Validators.required]),
     longitud: new FormControl(0, [Validators.required]),
-    descripcion_negocio: new FormControl('', [Validators.required]),
+    descripcion_negocio: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
     id_departamento: new FormControl(70, [Validators.required]),
     id_municipio: new FormControl('', [Validators.required]),
     corregimiento_vereda: new FormControl(''),

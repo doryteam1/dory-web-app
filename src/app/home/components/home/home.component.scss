@@ -1,38 +1,89 @@
 @import "../../../components/styles/enlaces_directos/enalces_directos";
-.display-none{
+
+.display-none {
   display: none;
 }
+
 h1 {
   margin: 0;
 }
-.loading-slider{
+
+.loading-slider {
   width: 50px;
   height: 50px;
-  img{
+
+  img {
     width: 100%;
     height: 100%;
   }
 }
+
 .carousel-indicators {
-button{
-  border-radius: 50%;
-  width: 12px;
-  height: 12px;
-  box-shadow: 0 0 3px #000;
-  border-top: none;
-  border-bottom: none;
-  &:disabled{
-    opacity: 0.4;
+  button {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    box-shadow: 0 0 3px #000;
+    border-top: none;
+    border-bottom: none;
+    z-index: 2;
+
+    &:disabled {
+      opacity: 0.4;
+    }
   }
 }
-}
-.object-fit-img{
-  object-fit: cover;
+
+
+.object-fit-scale-down-img {
+  object-fit:cover;
+  /* width: auto !important;
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  -webkit-mask-composite: destination-in;
+  mask-composite:intersect;
+  -webkit-mask-image:
+    -webkit-linear-gradient(to top, transparent 0.5%, black 2%),
+    -webkit-linear-gradient(to bottom, transparent 0.5%, black 2%),
+    -webkit-linear-gradient(to left, transparent 0.5%, black 2%),
+    -webkit-linear-gradient(to right, transparent 0.5%, black 2%);
+  mask-image:
+    linear-gradient(to top, transparent 0.5%, black 2%),
+    linear-gradient(to right, transparent 0.5%, black 2%),
+    linear-gradient(to bottom, transparent 0.5%, black 2%),
+    linear-gradient(to left, transparent 0.5%, black 2%);
+    border-radius: 10px; */
   cursor: pointer;
 }
-.carousel-control-prev,.carousel-control-next{
-width: 8% !important;
+
+.img-fondo-slider {
+  z-index: 1;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  cursor: pointer;
+  &::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+  }
+
+
 }
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 15% !important;
+  z-index: 2;
+}
+
+.carousel-indicators {
+  z-index: 3;
+}
+
 .container-edit {
   display: flex;
   flex-direction: column;
@@ -224,9 +275,9 @@ width: 8% !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  max-height: 400px;
+/*   max-height: 400px;
   height: 80vw;
-  min-height: 250px;
+  min-height: 250px; */
 }
 
 .item-title-gallery {

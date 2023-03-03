@@ -5,7 +5,9 @@
   margin-left: 10px;
   margin-top: 0;
 }
-
+ button:disabled {
+   opacity: 0.3;
+ }
 .container__btn--azul {
   background-color: var(azul1);
 }

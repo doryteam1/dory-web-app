@@ -263,7 +263,7 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
     if (from == 'tabSoyMiemb') {
       let url = this.router.serializeUrl(
         this.router.createUrlTree([
-          `/asociaciones/municipio/detalle/'${event.nit}`,
+          `/asociaciones/municipio/detalle/${event.nit}`,
         ])
       );
       window.open(url, '_blank');
