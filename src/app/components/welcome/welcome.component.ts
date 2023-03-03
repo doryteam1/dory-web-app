@@ -63,6 +63,7 @@ export class WelcomeComponent implements OnInit {
     }
     if (this.tipoUsuario == 'Proveedor') {
       this.loadDptos();
+      this.idDepartamento = 0;
     }else{
       this.changeDpto(70);
     }
@@ -102,10 +103,10 @@ export class WelcomeComponent implements OnInit {
       }
       usuario.id_tipo_usuario = this.idTipo;
     } else if (this.isFillName) {
-      if (!this.isOkNomApell()) {
+     /*  if (!this.isOkNomApell()) {
         this.error = 'Mmm al parecer falta tu nombre o apellido...';
         return;
-      }
+      } */
       usuario.nombres = this.nombres;
       usuario.apellidos = this.apellidos;
     }
