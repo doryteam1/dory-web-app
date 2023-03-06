@@ -105,7 +105,9 @@ export class SliderInicioComponent implements OnInit {
           this.sliderInicioService.deleteSlide(id).subscribe(
             (response) => {
               this.sliders.splice(idx, 1);
-              this.storage.deleteByUrl(imagen);
+              if (imagen.length > 0) {
+                this.storage.deleteByUrl(imagen);
+              }
               if (this.imagenes.length > 0) {
                 this.imagenes.splice(idx, 1);
                 this.lightboxRef.remove(idx);

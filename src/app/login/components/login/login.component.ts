@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MailService } from 'src/app/services/mail.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-login',
@@ -26,10 +27,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private mailService: MailService,
     private userService: UsuarioService,
-    private socialAuthService: SocialAuthService
-
+    private socialAuthService: SocialAuthService,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
@@ -66,16 +66,18 @@ export class LoginComponent implements OnInit {
     this.userService.login(data).subscribe(
       (response) => {
         localStorage.setItem('email', data.email);
-        this.userService.setLoginData(response.body.token,'email')
+        this.userService.setLoginData(response.body.token, 'email');
         if (this.recordarme == true) {
           localStorage.setItem('rememberEmail', data.email);
         } else {
           localStorage.removeItem('rememberEmail');
         }
         this.loading = false;
-        this.navigateTo(data.email)
-      },err=>{
-        if(err.status == 400 || err.status == 404){
+      this.chatService.reset();
+        this.navigateTo(data.email);
+      },
+      (err) => {
+        if (err.status == 400 || err.status == 404) {
           this.error = err.error.message;
         } else {
           this.error = 'Error inesperado';
@@ -107,26 +109,31 @@ export class LoginComponent implements OnInit {
         email = response.email;
         localStorage.setItem('email', email);
         this.userService.getUsuarioByEmail(email).subscribe(
-          response=>{
-           this.getTokenWithGoogleIdToken(idToken,email);
-          },err=>{
-            if(err.status == 404){ // el usuario no existe
-              this.userService.registrarUsuario({
-                nombres:response.firstName,
-                apellidos:response.lastName,
-                email:response.email,
-                foto:response.photoUrl,
-                latitud:this.sucreLatLng.lat,
-                longitud:this.sucreLatLng.lng,
-                creadoCon:'google'
-              }).subscribe(
-                (response)=>{
-                  this.getTokenWithGoogleIdToken(idToken,email);
-                },(err)=>{
-                  this.form.markAsUntouched();
-                  this.error = err.error.message
-                }
-              );
+          (response) => {
+            this.getTokenWithGoogleIdToken(idToken, email);
+          },
+          (err) => {
+            if (err.status == 404) {
+              // el usuario no existe
+              this.userService
+                .registrarUsuario({
+                  nombres: response.firstName,
+                  apellidos: response.lastName,
+                  email: response.email,
+                  foto: response.photoUrl,
+                  latitud: this.sucreLatLng.lat,
+                  longitud: this.sucreLatLng.lng,
+                  creadoCon: 'google',
+                })
+                .subscribe(
+                  (response) => {
+                    this.getTokenWithGoogleIdToken(idToken, email);
+                  },
+                  (err) => {
+                    this.form.markAsUntouched();
+                    this.error = err.error.message;
+                  }
+                );
             }
           }
         );
@@ -139,35 +146,31 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  getTokenWithGoogleIdToken(idToken:string,email:string){
+  getTokenWithGoogleIdToken(idToken: string, email: string) {
     this.userService.loginWithGoogle(idToken).subscribe(
       (response) => {
-        this.userService.setLoginData(response.body.token,'google')
-        this.navigateTo(email)
-      },err=>{
+        this.userService.setLoginData(response.body.token, 'google');
+        this.navigateTo(email);
+      },
+      (err) => {
         console.log(err);
         this.error = 'No se pudo iniciar sesión';
       }
     );
   }
 
-  navigateTo(email:string){
-    this.userService.getUsuarioByEmail(email).subscribe(
-      response=>{
-        let usuario = response.data[0];
-        if (
-          !usuario.tipo_usuario ||
-          !(usuario.nombres && usuario.apellidos)
-        ) {
-          this.router.navigate(['/welcome', usuario]);
-        }else{
-          this.router.navigateByUrl('/dashboard');
-        }
+  navigateTo(email: string) {
+    this.userService.getUsuarioByEmail(email).subscribe((response) => {
+      let usuario = response.data[0];
+      if (!usuario.tipo_usuario || !(usuario.nombres && usuario.apellidos)) {
+        this.router.navigate(['/welcome', usuario]);
+      } else {
+        this.router.navigateByUrl('/dashboard');
       }
-    )
+    });
   }
 
-  recordarmeOnChange(){
+  recordarmeOnChange() {
     this.recordarme = !this.recordarme;
     console.log(this.recordarme);
   }

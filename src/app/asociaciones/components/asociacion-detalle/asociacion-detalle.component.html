@@ -15,7 +15,9 @@
             <h4 class="detail-container__title">Municipio: </h4>
           </span>
           <span>
-            <h4 class="asociacion-container__title">{{asociacion?.municipio}}, {{asociacion?.departamento}}</h4>
+            <h4 class="asociacion-container__title">{{asociacion?.municipio && asociacion?.departamento ? asociacion?.municipio +'-'+ asociacion?.departamento:'Sin
+            definir'}}
+          </h4>
           </span>
         </div>
       </div>

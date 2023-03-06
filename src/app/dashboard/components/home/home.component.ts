@@ -17,7 +17,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Utilities } from 'src/app/utilities/utilities';
 import { guidedTours } from 'src/app/global/tour-steps-intros';
-import { IntroGuidedTour, IntroToursteps } from 'src/models/introJsTourt.model';
+
 declare var window: any;
 @Component({
   selector: 'app-home',

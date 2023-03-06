@@ -51,7 +51,7 @@ export class NovedadesActualidadesComponent implements OnInit {
       }
     );
   }
-  deleteNovedad(id: any, nombre: any, imagen: any, idx: any) {
+  deleteNovedad(id: any, nombre: any, imagen:string, idx: any) {
     this.appModalService
       .confirm(
         'Eliminar novedad',
@@ -65,7 +65,9 @@ export class NovedadesActualidadesComponent implements OnInit {
           this.novedadesService.deleteNovedad(id).subscribe(
             (response) => {
               this.novedades.splice(idx, 1);
-              this.storage.deleteByUrl(imagen);
+              if (imagen.length > 0) {
+                this.storage.deleteByUrl(imagen);
+              }
               if (this.novedades.length <= 0) {
                 this.showNotFound = true;
               }

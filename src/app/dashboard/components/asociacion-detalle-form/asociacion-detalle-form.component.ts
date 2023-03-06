@@ -3,7 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { PlacesService } from 'src/app/services/places.service';
-import { DatePipe, formatDate, Location, PlatformLocation } from '@angular/common';
+import {
+  DatePipe,
+  formatDate,
+  Location,
+  PlatformLocation,
+} from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
@@ -92,7 +97,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
     let action = this.ar.snapshot.paramMap.get('action')!;
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
     this.authUserTipo = this.ar.snapshot.paramMap.get('authUserTipo')!;
-    console.log(this.authUserTipo);
     if (action == 'create') {
       this.modalMode = action;
       this.form.reset();
@@ -603,6 +607,8 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
   }
   eliminarAsociacion() {
+    let url_rut: string = this.asociacion.url_rut;
+    let foto_camarac: string = this.asociacion.foto_camarac;
     this.appModalService
       .confirm(
         'Eliminar asociación',
@@ -615,6 +621,13 @@ export class AsociacionDetalleFormComponent implements OnInit {
         if (result == true) {
           this.asociacionesService.delete(this.asociacion.nit).subscribe(
             (response: any) => {
+              if (url_rut.length > 0) {
+                this.storage.deleteByUrl(url_rut);
+              }
+
+              if (foto_camarac.length > 0) {
+                this.storage.deleteByUrl(foto_camarac);
+              }
               this.goBack();
             },
             (err) => {

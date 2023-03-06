@@ -348,10 +348,12 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   }
 
   scrollToBottom(): void {
-    setTimeout(() => {
-      let el = document.querySelector('#chatBodyContainer');
-      el!.scrollTop = el?.scrollHeight!;
-    }, 50);
+    let el:any = document?.querySelector('#chatBodyContainer');
+    if (el) {
+      setTimeout(() => {
+          el.scrollTop = el?.scrollHeight!;
+      }, 50);
+    }
   }
 
   back() {

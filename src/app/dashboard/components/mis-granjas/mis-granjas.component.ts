@@ -59,7 +59,12 @@ export class MisGranjasComponent implements OnInit {
     );
   }
   deleteGranja(granja:any) {
-    let arrayFotos = granja.fotos;
+    let arrayFotos: any[] = granja.fotos.filter(
+      (foto:any) => foto !== null
+    );
+    let index = this.granjas.findIndex((granj: any) => {
+      return granja.id_granja == granj.id_granja;
+    });
     this.appModalService
       .confirm(
         'Eliminar granja',
@@ -72,11 +77,12 @@ export class MisGranjasComponent implements OnInit {
         if (result == true) {
           this.granjaService.deleteGranja(granja.id_granja).subscribe(
             (response: any) => {
-              let index = this.granjas.findIndex((granj: any) => {
-                return granja.id_granja == granj.id_granja;
-              });
-              this.storage.deleteMultipleByUrls(arrayFotos);
-              this.granjas.splice(index, 1);
+              if (index != -1) {
+                this.granjas.splice(index, 1);
+                if (arrayFotos.length > 0) {
+                  this.storage.deleteMultipleByUrls(arrayFotos);
+                }
+              }
               if (this.granjas.length <= 0) {
                 this.showNotFound = true;
               }

@@ -51,7 +51,10 @@ export class MisVehiculosComponent implements OnInit {
     );
   }
   deleteVehiculo(vehiculo:any) {
-    let arrayFotos = vehiculo.fotos;
+    let arrayFotos:any[] = vehiculo.fotos.filter((foto: any) => foto !== null);
+    let index = this.vehiculos.findIndex((vehicul: any) => {
+      return vehicul.id_vehiculo == vehiculo.id_vehiculo;
+    });
     this.appModalService
       .confirm(
         'Eliminar vehículo',
@@ -64,11 +67,12 @@ export class MisVehiculosComponent implements OnInit {
         if (result == true) {
           this.vehiculosService.deleteVehiculo(vehiculo.id_vehiculo).subscribe(
             (response) => {
-              let index = this.vehiculos.findIndex((vehicul: any) => {
-                return vehicul.id_vehiculo == vehiculo.id_vehiculo;
-              });
-              this.vehiculos.splice(index, 1);
-              this.storage.deleteMultipleByUrls(arrayFotos);
+             if (index != -1) {   
+               this.vehiculos.splice(index, 1);
+               if (arrayFotos.length>0) {
+                 this.storage.deleteMultipleByUrls(arrayFotos);
+               }
+             }
               if (this.vehiculos.length <= 0) {
                 this.showNotFound = true;
               }

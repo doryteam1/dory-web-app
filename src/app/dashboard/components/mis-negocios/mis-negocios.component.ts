@@ -62,24 +62,28 @@ export class MisNegociosComponent implements OnInit {
   }
 
   deleteNegocio(negocio: any) {
-    let arrayFotos = negocio.fotos;
+    let arrayFotos = negocio.fotos.filter((foto: any) => foto !== null);;
+    let index = this.negocios.findIndex(
+      (element) => element.id_negocio == negocio.id_negocio
+    );
     this.appModalService
       .confirm(
         'Eliminar negocio',
         'Esta seguro que desea eliminar este negocio',
-        'Eliminar',
-        'Cancelar',
+        'Sí',
+        'No',
         negocio.nombre
       )
       .then((result) => {
         if (result == true) {
           this.negociosService.deleteNegocio(negocio.id_negocio).subscribe(
             (response: any) => {
-              let index = this.negocios.findIndex(
-                (element) => element.id_negocio == negocio.id_negocio
-              );
-              this.negocios.splice(index, 1);
-              this.storage.deleteMultipleByUrls(arrayFotos);
+              if (index != -1) {
+                this.negocios.splice(index, 1);
+                if (arrayFotos.length > 0) {
+                  this.storage.deleteMultipleByUrls(arrayFotos);
+                }
+              }
               if (this.negocios.length <= 0) {
                 this.showNotFound = true;
               }

@@ -82,7 +82,9 @@ export class EventosComponent implements OnInit {
           this.eventosService.deleteEvento(id).subscribe(
             (response) => {
               this.eventos.splice(idx, 1);
-              this.storage.deleteByUrl(imagen);
+              if (imagen.length > 0) {
+                this.storage.deleteByUrl(imagen);
+              }
               if (this.eventos.length <= 0) {
                 this.showNotFound = true;
               }
@@ -128,8 +130,4 @@ export class EventosComponent implements OnInit {
     }
   }
 
-/*   hora(hora:any){
- let hor=dayjs().
-return hor
-  } */
 }

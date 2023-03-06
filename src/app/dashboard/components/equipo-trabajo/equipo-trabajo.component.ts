@@ -120,7 +120,9 @@ export class EquipoTrabajoComponent implements OnInit {
           this.equipoTrabajoService.deleteMiembroEquipo(idMiembro).subscribe(
             (response) => {
               this.equipoTrabajo.splice(idx, 1);
-              this.storage.deleteByUrl(imagen);
+              if (imagen.length > 0) {
+                this.storage.deleteByUrl(imagen);
+              }
               if (this.equipoTrabajo.length <= 0) {
                 this.showNotFound = true;
               }

@@ -61,7 +61,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
     id_tipo_usuario: new FormControl(''),
     id_area_experticia: new FormControl(0),
     nombre_negocio: new FormControl(''),
-
     fecha_registro: new FormControl(''),
     fecha_nacimiento: new FormControl(''),
     nombre_vereda: new FormControl(''),

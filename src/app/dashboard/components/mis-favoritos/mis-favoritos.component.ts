@@ -61,8 +61,8 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
       .confirm(
         'Eliminar de favoritos',
         'Esta seguro que desea quitar esta granja de mis favoritos',
-        'Eliminar',
-        'No estoy seguro'
+        'Sí',
+        'No'
       )
       .then((result) => {
         if (result == true) {

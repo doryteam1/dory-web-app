@@ -1,4 +1,4 @@
-import {  IntroToursteps } from "src/models/introJsTourt.model";
+import {IntroToursteps } from "src/models/introJsTourt.model";
 
  export const tourSteps: { [key: string]: IntroToursteps } ={
   stepWelcome: {

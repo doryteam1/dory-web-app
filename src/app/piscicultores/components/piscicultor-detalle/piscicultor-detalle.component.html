@@ -16,7 +16,7 @@
           </span>
           <span>
             <h4 class="piscicultor-container__title">
-              {{piscicultor?.municipio && piscicultor?.departamento ? piscicultor?.municipio +', '+ piscicultor?.departamento:'Sin
+              {{piscicultor?.municipio && piscicultor?.departamento ? piscicultor?.municipio +'-'+ piscicultor?.departamento:'Sin
             definir'}}
           </h4>
 
@@ -51,9 +51,8 @@
       <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Dirección</h4>
-        <span *ngIf="piscicultor?.direccion"class="detail-container__value">{{piscicultor?.direccion? 'Dir.' : ''}}
-        {{piscicultor?.direccion}} </span>
-        <span *ngIf="!piscicultor?.direccion" class="detail-container__value">Dirección indefinida</span>
+        <span class="detail-container__value">{{piscicultor?.direccion ? 'Dir. ' + piscicultor?.direccion :'Sin definir'}} </span>
+        {{piscicultor?.direccion ? 'Dir. ' + piscicultor?.direccion :'Sin definir'}}
       </div>
     </div>
     <div class="detail-container mt-4">
