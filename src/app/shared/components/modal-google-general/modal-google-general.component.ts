@@ -507,7 +507,7 @@ export class ModalGoogleGeneralComponent implements OnInit {
               'Actualizar  mi ubicación',
               'Estás a punto de cambiar tu ubicación por: ',
               'Sí',
-              'No estoy seguro',
+              'No',
               `${response.results[0].formatted_address}`
             )
             .then((result) => {

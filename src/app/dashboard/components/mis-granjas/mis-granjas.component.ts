@@ -64,8 +64,8 @@ export class MisGranjasComponent implements OnInit {
       .confirm(
         'Eliminar granja',
         'Esta seguro que desea eliminar la granja',
-        'Eliminar',
-        'No estoy seguro',
+        'Sí',
+        'No',
         granja.nombre
       )
       .then((result) => {

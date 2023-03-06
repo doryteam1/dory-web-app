@@ -3,13 +3,13 @@ import {
   OnInit
 } from '@angular/core';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
-import { Utilities } from 'src/app/utilities/utilities';
 import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.service';
 import { PlatformLocation, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { Router } from '@angular/router';
 import { OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { UsuarioService } from 'src/app/services/usuario.service';
 const _ = require('lodash');
 
 @Component({
@@ -23,6 +23,7 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
   loading1: boolean = false;
   loading2: boolean = false;
   authUserId: number = -1;
+  authUserTipo: string = '';
   selectedTab: string = 'representante';
   asociacionesIsMiembro: any;
   showNotFoundAsocMiemb: boolean = false;
@@ -32,12 +33,14 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
   isUserRep: boolean = false;
   isUserMiemb: boolean = false;
   BotonNotificacion!: Subscription;
+
   constructor(
     private asociacionesService: AsociacionesService,
     private appModalService: AppModalService,
     private router: Router,
     private asociacionService: AsociacionesService,
-    public platformLocation: PlatformLocation
+    public platformLocation: PlatformLocation,
+    private usuarioService: UsuarioService
   ) {}
   ngOnDestroy(): void {
     this.BotonNotificacion.unsubscribe();
@@ -62,19 +65,17 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit(): void {
-      this.platformLocation.onPopState(() => {
-        this.appModalService.closeModal();
-      });
+    this.platformLocation.onPopState(() => {
+      this.appModalService.closeModal();
+    });
     registerLocaleData(es);
-    let token = localStorage.getItem('token');
-    let payload = Utilities.parseJwt(token!);
-    this.authUserId = payload.sub;
-
+    let dataUserAuth = this.usuarioService.getAuthUser();
+    this.authUserId = dataUserAuth?.sub;
+    this.authUserTipo=dataUserAuth?.rol
     this.preCarga();
     /* municipios sucre */
     this.BotonNotificacion = this.asociacionService.actionBotton$.subscribe(
       (action: boolean) => {
-        console.log(action);
         if (action) {
           this.showNotFoundAsocMiemb = false;
           this.loading2 = true;
@@ -82,7 +83,6 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
             .getAsociacionesIsMiembroUser(this.authUserId)
             .subscribe(
               (response) => {
-
                 this.asociacionesIsMiembro = response.data;
                 if (this.asociacionesIsMiembro.length < 1) {
                   this.showNotFoundAsocMiemb = true;
@@ -133,7 +133,7 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
       .getAsociacionesIsMiembroUser(this.authUserId)
       .subscribe(
         (response) => {
-           console.log(response.data);
+          console.log(response.data);
           this.asociacionesIsMiembro = response.data;
           if (this.asociacionesIsMiembro.length < 1) {
             this.showNotFoundAsocMiemb = true;
@@ -152,7 +152,6 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
       );
   }
   invitarAnular(asociacion: any) {
-
     if (asociacion.estado_solicitud == 'Aceptada') {
       this.appModalService
         .confirm('Salir de la asociación', 'Está seguro', 'Aceptar', 'Cancelar')
@@ -212,7 +211,6 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
   }
 
   delete(asociacion: any) {
-
     this.appModalService
       .confirm(
         'Eliminar asociación',
@@ -255,11 +253,13 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
     }
   }
   navigate(event: any, formState: string, from: string) {
-    let object: any = {};
-    (object.nit = event.nit),
-      (object.action = 'update'),
-      (object.formState =
-        this.selectedTab == 'representante' ? 'enable' : 'disable');
+    let object: any = {
+      nit: event.nit,
+      action: 'update',
+      authUserTipo:this.authUserTipo,
+      formState: this.selectedTab == 'representante' ? 'enable' : 'disable',
+    };
+
     if (from == 'tabSoyMiemb') {
       let url = this.router.serializeUrl(
         this.router.createUrlTree([
@@ -275,11 +275,11 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
     let object = {
       action: 'create',
       formState: 'enable',
+      authUserTipo:this.authUserTipo
     };
     this.router.navigate(['/dashboard/asociacion/detalle', object]);
   }
   salirAsociacion(asociacion: any, idx: number) {
-
     this.appModalService
       .confirm(
         'Salir de la asociación',

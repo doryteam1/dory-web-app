@@ -32,7 +32,7 @@
             <optgroup label="Escoge el tipo de asociación">
               <option *ngFor="let tipoAsociacion of tiposAsociaciones"
               [value]="tipoAsociacion?.id_tipo_asociacion" [disabled]="tipoAsociacion.status == 0">
-              {{tipoAsociacion.nombre}}
+              {{tipoAsociacion?.nombre}}
             </option>
             </optgroup>
           </select>
@@ -223,7 +223,7 @@
         <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
         </div>
       </button>
-      <button [disabled]="loading1 || !form.valid" type="button" class="btn-rounded btn--blue container__btn" (click)="updateAsociacion()"
+      <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn" (click)="updateAsociacion()"
         *ngIf="modalMode=='update' && formState == 'enable'">
         <span *ngIf="!loading1">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading1">

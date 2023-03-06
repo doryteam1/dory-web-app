@@ -10,7 +10,7 @@ declare var window: any;
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   isDragging: boolean = false;
   eventOwlCarousel: any[] = [];
   customOptions: OwlOptions = {
@@ -264,15 +264,12 @@ export class HomeComponent implements OnInit{
   prevImgGallery() {
     this.sliderRef?.prev();
   }
-  navigateSliderCard(ruta: any, id: string) {
-    /*  let idx = this.eventOwlCarousel.findIndex(
-      (element: any) => element.center == true && element.id === id
-    );
-    if (idx != -1 && !this.isDragging) { */
-    this.router.navigateByUrl(`${ruta}`);
-    /*   } */
+
+  navigateSliderCard(ruta: any,owlItem:any) {
+    if (owlItem?.isCentered && !this.isDragging) {
+      this.router.navigateByUrl(`${ruta}`);
+    }
   }
-  /*  sliderCardEvent(evento: any) {
-    this.eventOwlCarousel = evento;
-  } */
+
+
 }

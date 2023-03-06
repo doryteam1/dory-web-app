@@ -47,64 +47,58 @@
     </div>
     <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/person_pin_black_24dp.svg">
-      <div class="detail-container__data detail-container__data--legal" (click)="goDetalleRepresentante()">
-        <h4 class="detail-container__title detail-container__title--legal">Representante legal</h4>
-        <span class="detail-container__value detail-container__value-legal">{{asociacion?.propietario}}</span>
+      <div class="detail-container__data detail-container__data--legal">
+          <h4 class="detail-container__title detail-container__title--legal">Representante legal</h4>
+          <span class="detail-container__value detail-container__value-legal" (click)="goDetalleRepresentante()">{{asociacion?.propietario | titlecase}}</span>
         <span class="card__description-title link" (click)="sendMessage()" *ngIf="authUserId">
           <i class="bi bi-chat-left-text-fill"></i>
           Enviar un mensaje
         </span>
       </div>
     </div>
-    <div class="detail-container mt-4" *ngIf="asociacion?.foto_camarac">
-      <img class="detail-container__image" src="assets/icons/picture_as_pdf_black_24dp.svg">
+    <div class="detail-container mt-4">
+      <img class="detail-container__image" [src]="asociacion?.foto_camarac ? 'assets/icons/picture_as_pdf_black_24dp.svg': 'assets/icons/article_black_24dp.svg'">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Documento cámara de comercio</h4>
-        <div class="detail-container__meta">
-          <img class="detail-container__meta-img" src="assets/images/pdf_camara_comercio.svg">
-          <div class="detail-container__meta-details">
-            <div class="detail-container__meta-info">
-              <a [href]="asociacion?.foto_camarac" target="_blank"><img class="detail-container__meta-info-img"
-                  src="assets/icons/download-pdf-10136 1.svg"></a>
+        <h6 class="detail-container__value" *ngIf="!asociacion?.foto_camarac">No se han cargado documentos</h6>
+        <ng-container *ngIf="asociacion?.foto_camarac">
+          <div class="detail-container__meta">
+            <img class="detail-container__meta-img" src="assets/images/pdf_camara_comercio.svg">
+            <div class="detail-container__meta-details">
+              <div class="detail-container__meta-info">
+                <a [href]="asociacion?.foto_camarac" target="_blank"><img class="detail-container__meta-info-img"
+                    src="assets/icons/download-pdf-10136 1.svg"></a>
+              </div>
             </div>
           </div>
-        </div>
-        <h6 class="detail-container__title detail-container__title--font">Fecha de renovación</h6>
-        <div class="detail-container__value">
-          {{asociacion?.fecha_renovacion_camarac.slice(0, asociacion?.fecha_renovacion_camarac.indexOf('T')) |
-          date:'dd/MM/yyyy'}}
-        </div>
+          <h6 class="detail-container__title detail-container__title--font">Fecha de renovación</h6>
+          <div class="detail-container__value">
+            {{asociacion?.fecha_renovacion_camarac.slice(0, asociacion?.fecha_renovacion_camarac.indexOf('T')) |
+            date:'dd/MM/yyyy'}}
+          </div>
+        </ng-container>
       </div>
     </div>
-    <div class="detail-container mt-4" *ngIf="!asociacion?.foto_camarac">
-      <img class="detail-container__image" src="assets/icons/article_black_24dp.svg">
-      <div class="detail-container__data">
-        <h4 class="detail-container__title">Documento cámara de comercio</h4>
-        <h6 class="detail-container__value">No se han cargado documentos</h6>
-      </div>
-    </div>
-    <div class="detail-container mt-4" *ngIf="asociacion?.url_rut">
+
+    <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/picture_as_pdf_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Documento RUT</h4>
-        <div class="detail-container__meta" style="text-align: center;">
-          <img style="width: 85%;" class="detail-container__meta-img " src="assets/images/RUT.jpg">
-          <div class="detail-container__meta-details w-100">
-            <div class="detail-container__meta-info w-100">
-              <a [href]="asociacion?.url_rut" target="_blank"><img class="detail-container__meta-info-img"
-                  src="assets/icons/download-pdf-10136 1.svg"></a>
+        <h6 class="detail-container__value" *ngIf="!asociacion?.url_rut">No se ha cargado documento</h6>
+        <ng-container  *ngIf="asociacion?.url_rut">
+          <div class="detail-container__meta" style="text-align: center;">
+            <img style="width: 85%;" class="detail-container__meta-img " src="assets/images/RUT.jpg">
+            <div class="detail-container__meta-details w-100">
+              <div class="detail-container__meta-info w-100">
+                <a [href]="asociacion?.url_rut" target="_blank"><img class="detail-container__meta-info-img"
+                    src="assets/icons/download-pdf-10136 1.svg"></a>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
       </div>
     </div>
-    <div class="detail-container mt-4" *ngIf="!asociacion?.url_rut">
-      <img class="detail-container__image" src="assets/icons/picture_as_pdf_black_24dp.svg">
-      <div class="detail-container__data">
-        <h4 class="detail-container__title">Documento RUT</h4>
-        <h6 class="detail-container__value">No se ha cargado documento</h6>
-      </div>
-    </div>
+
     <div class="detail-container mt-4" *ngIf="asociacion?.id_propietario===idEmailUser && hasDocument">
       <img class="detail-container__image" src="assets/icons/file-zipper-regular.svg">
       <div class="detail-container__data">
@@ -121,7 +115,8 @@
       <div class="detail-container__data">
         <h4 class="detail-container__title">Dirección</h4>
         <span *ngIf="asociacion?.direccion" class="detail-container__value">
-          {{asociacion?.direccion ? 'Dir.' : ''}} {{asociacion?.direccion}}</span>
+          {{asociacion?.direccion ? 'Dir. ' + asociacion?.direccion :'Sin definir'}}</span>
+
       </div>
     </div>
     <div class="detail-container mt-4" *ngIf="asociacion?.informacion_adicional_direccion">
@@ -136,14 +131,8 @@
       <img class="detail-container__image" src="assets/icons/pescador.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Pescadores que pertenecen a la asociación </h4>
-        <span class="detail-container__value" *ngIf="pescadorasociaciones?.length>1">{{pescadorasociaciones?.length}}
-          pescadores en
-          total</span>
-        <span class="detail-container__value" *ngIf="pescadorasociaciones?.length==1">{{pescadorasociaciones?.length}}
-          pescador en
-          total</span>
-        <span class="detail-container__value" *ngIf="pescadorasociaciones?.length<=0">No cuenta con pescadores
-          asociados</span>
+            <span class="detail-container__value">{{pescadorasociaciones?.length> 0 ? pescadorasociaciones?.length +
+              (pescadorasociaciones?.length > 1 ? ' pescadores en total' : ' pescador en total') : 'No cuenta con pescadores asociados' }}</span>
       </div>
     </div>
 
@@ -151,14 +140,9 @@
       <img class="detail-container__image" src="assets/icons/piscicultor.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Piscicultores que pertenecen a la asociación </h4>
-        <span class="detail-container__value"
-          *ngIf="piscicultorasociaciones?.length>1">{{piscicultorasociaciones?.length}}
-          piscicultores en total</span>
-        <span class="detail-container__value"
-          *ngIf="piscicultorasociaciones?.length==1">{{piscicultorasociaciones?.length}}
-          piscicultores en total</span>
-        <span class="detail-container__value" *ngIf="piscicultorasociaciones?.length<=0">No cuenta con piscicultores
-          asociados</span>
+            <span class="detail-container__value">{{piscicultorasociaciones?.length > 0 ? piscicultorasociaciones?.length +
+              (piscicultorasociaciones?.length > 1 ? ' piscicultores en total' : ' piscicultor en total') : 'No cuenta con
+              piscicultores asociados' }}</span>
       </div>
     </div>
 

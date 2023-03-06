@@ -7,19 +7,19 @@
                 <h4 class="detail-container__title ">Piscicultor: </h4>
               </span>
               <span>
-               <!--  <img class="detail-container__image" src="assets/icons/person_black.svg"> -->
-                <h4 class="piscicultor-container__title overflowwrap">{{piscicultor?.nombre_completo}}</h4>
+                <h4 class="piscicultor-container__title overflowwrap">{{piscicultor?.nombre_completo | titlecase}}</h4>
               </span>
-             <!--  <img class="detail-container__image" src="assets/icons/person_black.svg">
-            <h3 class="piscicultor-container__title">Piscicultor - {{piscicultor?.nombre_completo}} </h3> -->
         </div>
         <div class="piscicultor-container__detalle">
           <span>
             <h4 class="detail-container__title">Municipio: </h4>
           </span>
           <span>
-            <!--  <img class="detail-container__image" src="assets/icons/person_black.svg"> -->
-            <h4 class="piscicultor-container__title">{{piscicultor?.municipio}}, {{piscicultor?.departamento}}</h4>
+            <h4 class="piscicultor-container__title">
+              {{piscicultor?.municipio && piscicultor?.departamento ? piscicultor?.municipio +', '+ piscicultor?.departamento:'Sin
+            definir'}}
+          </h4>
+
           </span>
         </div>
         <div class="piscicultor-container__detalle">

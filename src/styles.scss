@@ -719,14 +719,15 @@ input:focus {
 }
 .slider-card-services {
   .owl-item{
-    pointer-events: none;
+    /* pointer-events: none; */
+    cursor: pointer;
   }
   .owl-item.active {
     &.center {
       .slider-card-services-box {
         transform: scale(1.15);
         opacity: 1;
-        pointer-events: auto;
+        /* pointer-events: auto; */
         cursor: pointer;
       }
     }

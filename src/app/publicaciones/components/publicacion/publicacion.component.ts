@@ -175,7 +175,7 @@ export class PublicacionComponent implements OnInit {
     if (texto.trim().length === 0) {
       result = this.publicaciones;
     } else {
-      let buscardatospor: BuscarPor[] = [{ data1: 'especie' }];
+      let buscardatospor: BuscarPor[] = [{ data1: 'especie' },{data2: 'titulo'}];
       result = this.searchBuscadorService.buscarData(
         this.publicaciones,
         texto,

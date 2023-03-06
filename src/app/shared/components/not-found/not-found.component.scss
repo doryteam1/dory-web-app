@@ -12,5 +12,26 @@
 .search-container__image {
   width: 100%;
   max-width: 75vw;
-  max-height: 250px;
+  max-height: 220px;
+}
+@media screen and (max-width: 700px) {
+h5{
+  font-size: 1.1rem;
+}
+p{
+  font-size: 0.9rem;
+}
+}
+@media screen and (max-width: 500px) {
+h5{
+  font-size: 1rem;
+}
+p {
+  font-size: 0.8rem;
+}
+}
+@media screen and (max-width: 400px) {
+h5{
+  font-size: 0.9rem;
+}
 }

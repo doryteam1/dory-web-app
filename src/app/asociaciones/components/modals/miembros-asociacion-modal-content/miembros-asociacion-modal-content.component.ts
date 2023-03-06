@@ -55,15 +55,16 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
     this.errorMessage2 = '';
   }
   preCarga() {
+    this.showError1 = false;
+    this.showNotFound1 = false;
+    this.showError2 = false;
+    this.showNotFound2 = false;
     this.reseptVariables();
-    this.activeTabClick(this.datos.tipo_asociacion);
     this.pescadoresService.getPescadoresAsociacion(this.datos.nit).subscribe(
       (response: any) => {
         if (response.data.length > 0) {
           this.pescadores = response.data;
           this.pescadoresFiltered = this.pescadores;
-          this.showError1 = false;
-          this.showNotFound1 = false;
         } else {
           this.showNotFound1 = true;
           this.showError1 = false;
@@ -71,8 +72,6 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.showNotFound1 = false;
-        this.showError1 = false;
         if (err.status == 404) {
           this.showNotFound1 = true;
         } else {
@@ -88,8 +87,6 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
           if (response.data.length > 0) {
             this.piscicultores = response.data;
             this.piscicultoresFiltered = this.piscicultores;
-            this.showError2 = false;
-            this.showNotFound2 = false;
           } else {
             this.showNotFound2 = true;
             this.showError2 = false;
@@ -97,8 +94,6 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
         },
         (err) => {
           console.log(err);
-          this.showNotFound2 = false;
-          this.showError2 = false;
           if (err.status == 404) {
             this.showNotFound2 = true;
           } else {
@@ -107,6 +102,7 @@ export class MiembrosAsociacionModalContentComponent implements OnInit {
           }
         }
       );
+       this.activeTabClick(this.datos?.tipo_asociacion);
   }
   anularInvitacion(usuario: any) {
     this.platformLocation.onPopState(() => {

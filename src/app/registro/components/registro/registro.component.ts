@@ -1,222 +1,236 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControlDirective} from '@angular/forms';
+import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegExpUtils } from '../../../utilities/regexps';
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.scss']
+  styleUrls: ['./registro.component.scss'],
 })
 export class RegistroComponent implements OnInit {
   @Output() exit: EventEmitter<any> = new EventEmitter();
-  form:FormGroup = new FormGroup({
-    cedula:new FormControl(''),
-    nombres:new FormControl(''),
-    apellidos:new FormControl(''),
-    email:new FormControl('',[Validators.required, Validators.email]),
-    tipoUsuario:new FormControl('',[Validators.required]),
-    fechaNac:new FormControl(''),
-    celular:new FormControl('',),
-    password:new FormControl('',[
+
+  form: FormGroup = new FormGroup({
+    cedula: new FormControl(''),
+    nombres: new FormControl(''),
+    apellidos: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    tipoUsuario: new FormControl('', [Validators.required]),
+    fechaNac: new FormControl(''),
+    celular: new FormControl(''),
+    password: new FormControl('', [
       Validators.required,
       Validators.pattern(RegExpUtils.eigthChar()),
       Validators.pattern(RegExpUtils.capitalcase()),
       Validators.pattern(RegExpUtils.lowercase()),
       Validators.pattern(RegExpUtils.number()),
     ]),
-    matchPassword:new FormControl('',Validators.required),
-    departamento:new FormControl(''),
-    municipio:new FormControl('',),
-    corregimiento:new FormControl('',),
-    vereda:new FormControl('',),
-    terms:new FormControl('',Validators.required),
+    matchPassword: new FormControl('', Validators.required),
+    departamento: new FormControl(''),
+    municipio: new FormControl(''),
+    corregimiento: new FormControl(''),
+    vereda: new FormControl(''),
+    terms: new FormControl('', Validators.required),
   });
 
-  tipoUsuarios:any[]=[];
-  error:string='';
-  success:boolean = false;
+  tipoUsuarios: any[] = [];
+  error: string = '';
+  success: boolean = false;
 
   sucreLatLng = {
-    lat:9.176187,
-    lng:-75.110196
-  }
+    lat: 9.176187,
+    lng: -75.110196,
+  };
 
-  constructor(private usuarioService:UsuarioService, private spinner: NgxSpinnerService, private router:Router, private socialAuthService:SocialAuthService,private modalService: NgbModal, private userService:UsuarioService) {
-
-  }
-
+  constructor(
+    private usuarioService: UsuarioService,
+    private spinner: NgxSpinnerService,
+    private router: Router,
+    private socialAuthService: SocialAuthService,
+    private modalService: NgbModal,
+    private userService: UsuarioService
+  ) {}
 
   ngOnInit(): void {
-    this.usuarioService.getTiposUsuario().subscribe(
-      (response)=>{
-        this.tipoUsuarios = response.data;
-      }
+    this.usuarioService.getTiposUsuario().subscribe((response) => {
+      this.tipoUsuarios = response.data;
+    });
+
+  }
+
+  exiting(event: any) {
+    this.exit.emit(true);
+  }
+
+  invalid(controlFormName: string) {
+    return (
+      this.form.get(controlFormName)?.invalid &&
+      (this.form.get(controlFormName)?.dirty ||
+        this.form.get(controlFormName)?.touched)
     );
   }
 
-  exiting(event:any){
-    this.exit.emit(true)
+  noMatchingPasswords() {
+    return (
+      this.password?.value != this.matchPassword?.value &&
+      (this.matchPassword?.dirty || this.matchPassword?.touched)
+    );
   }
 
-  invalid(controlFormName:string){;
-    return this.form.get(controlFormName)?.invalid && (this.form.get(controlFormName)?.dirty || this.form.get(controlFormName)?.touched)
-  }
-
-  noMatchingPasswords(){
-    return this.password?.value != this.matchPassword?.value && (this.matchPassword?.dirty || this.matchPassword?.touched);
-  }
-
-  onSubmit(){
-    if(this.form.valid && this.terms?.value){
+  onSubmit() {
+    if (this.form.valid && this.terms?.value) {
       this.spinner.show();
       let newUser = this.form.getRawValue();
       newUser.latitud = this.sucreLatLng.lat;
       newUser.longitud = this.sucreLatLng.lng;
 
       this.usuarioService.registrarUsuario(newUser).subscribe(
-        (response)=>{
+        (response) => {
           this.success = true;
-          localStorage.setItem('email',this.email?.value);
+          localStorage.setItem('email', this.email?.value);
           this.success = true;
           this.spinner.hide();
-        },(err)=>{
+        },
+        (err) => {
           this.success = false;
-          if(err.error.message == 'El registro ya existe'){
+          if (err.error.message == 'El registro ya existe') {
             this.error =
               'El usuario ya se encuentra registrado. Intente iniciar sesión';
-          }else{
-            this.error = err.error.message
+          } else {
+            this.error = err.error.message;
           }
           this.spinner.hide();
         }
       );
-    }else{
+    } else {
       this.form.markAllAsTouched();
     }
   }
-
-  onChange(){
-    this.error='';
+  
+  onChange() {
+    this.error = '';
   }
 
   loginWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+    this.socialAuthService
+      .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then(() => {
         this.regUserAuthGoogle();
-      }).catch((err)=>{
-          console.log(err);
-          this.form.markAsUntouched();
-          this.error = "No pudimos ingresar con google"
-      });
-
-  }
-
-  regUserAuthGoogle(){
-    let email:string;
-    let idToken:string;
-    this.socialAuthService.authState.subscribe(
-      (response)=>{
-        email = response.email;
-        idToken = response.idToken;
-        localStorage.setItem('email',email);
-        this.usuarioService.registrarUsuario({
-          nombres:response.firstName,
-          apellidos:response.lastName,
-          email:response.email,
-          foto:response.photoUrl,
-          latitud:this.sucreLatLng.lat,
-          longitud:this.sucreLatLng.lng,
-          creadoCon:'google'
-        }).subscribe(
-          (response)=>{
-            this.getTokenWithGoogleIdToken(idToken,email);
-          },(err)=>{
-            this.form.markAsUntouched();
-            if(err.error.message == 'El registro ya existe'){
-              this.error =
-                'El usuario ya se encuentra registrado. Intente iniciar sesión';
-            }else{
-              this.error = err.error.message
-            }
-          }
-        );
-      },(err)=>{
+      })
+      .catch((err) => {
         console.log(err);
         this.form.markAsUntouched();
-        this.error = "No pudimos ingresar con google. Intentelo nuevamente."
+        this.error = 'No pudimos ingresar con google';
+      });
+  }
+
+  regUserAuthGoogle() {
+    let email: string;
+    let idToken: string;
+    this.socialAuthService.authState.subscribe(
+      (response) => {
+        email = response.email;
+        idToken = response.idToken;
+        localStorage.setItem('email', email);
+        this.usuarioService
+          .registrarUsuario({
+            nombres: response.firstName,
+            apellidos: response.lastName,
+            email: response.email,
+            foto: response.photoUrl,
+            latitud: this.sucreLatLng.lat,
+            longitud: this.sucreLatLng.lng,
+            creadoCon: 'google',
+          })
+          .subscribe(
+            (response) => {
+              this.getTokenWithGoogleIdToken(idToken, email);
+            },
+            (err) => {
+              this.form.markAsUntouched();
+              if (err.error.message == 'El registro ya existe') {
+                this.error =
+                  'El usuario ya se encuentra registrado. Intente iniciar sesión';
+              } else {
+                this.error = err.error.message;
+              }
+            }
+          );
+      },
+      (err) => {
+        console.log(err);
+        this.form.markAsUntouched();
+        this.error = 'No pudimos ingresar con google. Intentelo nuevamente.';
       }
     );
   }
 
-  getTokenWithGoogleIdToken(idToken:string,email:string){
+  getTokenWithGoogleIdToken(idToken: string, email: string) {
     this.userService.loginWithGoogle(idToken).subscribe(
-      (response)=>{
-        this.userService.setLoginData(response.body.token,'google')
-        this.navigateTo(email)
-      },err=>{
+      (response) => {
+        this.userService.setLoginData(response.body.token, 'google');
+        this.navigateTo(email);
+      },
+      (err) => {
         console.log(err);
         this.error = 'No se pudo iniciar sesión';
       }
-    )
+    );
   }
 
-  navigateTo(email:string){
-    this.userService.getUsuarioByEmail(email).subscribe(
-      response=>{
-        let usuario = response.data[0];
-        if (
-          !usuario.tipo_usuario ||
-          !(usuario.nombres && usuario.apellidos)
-        ) {
-          this.router.navigate(['/welcome', usuario]);
-        }else{
-          this.router.navigateByUrl('/dashboard');
-        }
+  navigateTo(email: string) {
+    this.userService.getUsuarioByEmail(email).subscribe((response) => {
+      let usuario = response.data[0];
+      if (!usuario.tipo_usuario || !(usuario.nombres && usuario.apellidos)) {
+        this.router.navigate(['/welcome', usuario]);
+      } else {
+        this.router.navigateByUrl('/dashboard');
       }
-    )
+    });
   }
 
-  get nombreCompleto(){
-    return this.form.get('nombreCompleto')
+  get nombreCompleto() {
+    return this.form.get('nombreCompleto');
   }
 
-  get email(){
+  get email() {
     return this.form.get('email');
   }
 
-  get password(){
+  get password() {
     return this.form.get('password');
   }
 
-  get matchPassword(){
+  get matchPassword() {
     return this.form.get('matchPassword');
   }
 
-  get terms(){
+  get terms() {
     return this.form.get('terms');
   }
 
-  get tipoUsuario(){
+  get tipoUsuario() {
     return this.form.get('tipoUsuario');
   }
 
-  eigthChar(cad:string){
+  eigthChar(cad: string) {
     return RegExpUtils.eigthCharTest(cad);
   }
 
-  capitalcase(cad:string){
+  capitalcase(cad: string) {
     return RegExpUtils.capitalcaseTest(cad);
   }
 
-  lowercase(cad:string){
+  lowercase(cad: string) {
     return RegExpUtils.lowercaseTest(cad);
   }
 
-  number(cad:string){
+  number(cad: string) {
     return RegExpUtils.numberTest(cad);
   }
 
@@ -253,7 +267,7 @@ export class RegistroComponent implements OnInit {
     diversos medios para identificar a sus usuarios, pero la Plataforma Web Dory, NO se
     responsabilizará por la certeza de los datos personales provistos por sus usuarios. Los
     usuarios garantizan y responden, en cualquier caso, de la veracidad, exactitud, vigencia y
-    autenticidad de los datos personales ingresados.`
+    autenticidad de los datos personales ingresados.`;
 
     this.modalService.open(longContent, { scrollable: true });
   }

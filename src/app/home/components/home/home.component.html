@@ -1,8 +1,9 @@
 <div class="basic-container">
-
-  <div class="loading-slider" *ngIf="loadingSlider ">
-    <img src="assets/icons/loadingAnimate.svg" alt="">
-  </div>
+   <div *ngIf="loadingSlider" class="container-loading-slider">
+     <div class="loading-slider" >
+       <img src="assets/icons/loadingAnimate.svg" alt="">
+     </div>
+   </div>
 
   <div id="carouselExampleCaptions" class="carousel slide h-100 w-100" [ngClass]="{'display-none': loadingSlider}">
     <div class="carousel-indicators">
@@ -15,21 +16,8 @@
 
       <div class="carousel-item h-100 w-100" *ngFor="let slid of sliders; first as isFirst"
         [ngClass]="{active: isFirst}" (click)="clisFotoSlide(slid?.url_enlace)">
-
-
-      <!--   <div class="position-absolute w-100 h-100  img-fondo-slider"
-          [style.background-image]="'url(' + slid?.url_imagen + ')'">
-        </div> -->
-
-        <img [src]="slid?.url_imagen" class="d-block w-100 h-100 object-fit-scale-down-img "
-          alt="..." style="z-index: 2;">
-       <!--  <div  class="d-flex justify-content-center align-items-center w-100 h-100">
-        </div> -->
-        <!-- <ng-container *ngIf="slid?.titulo && slid?.mostrar_titulo === 1">
-              <div class="carousel-caption">
-                <h5 style="color: var(--azul1);">{{slid?.titulo}}</h5>
-              </div>
-            </ng-container> -->
+        <img [src]="slid?.url_imagen" class="d-block w-100 h-100 object-fit-scale-cover-img"
+          alt="...">
       </div>
 
     </div>
@@ -55,14 +43,14 @@
   <!-- ksl -->
 
   <div class="slider-card-services">
-    <owl-carousel-o [options]="customOptions">
-      <ng-container *ngFor="let slide of sliderCard; let i = index">
-        <ng-template carouselSlide [id]="slide.id" [width]="280">
-          <a class="slider-card-services-box" (click)="navigateSliderCard(slide.url, slide.id)">
+    <owl-carousel-o [options]="customOptions" (dragging)="isDragging = $event.dragging" #owlCar>
+      <ng-container *ngFor="let slide of sliderCard; let i = index" >
+        <ng-template carouselSlide [id]="slide.id" [width]="280" let-owlItem>
+          <a class="slider-card-services-box" (click)="navigateSliderCard(slide?.url, owlItem); owlCar.to(slide?.id)" >
             <img [src]="slide.src" alt="" class="user-img mr-2">
             <div class="slider-card-services-box__content">
-              <h3>{{slide.title}}</h3>
-              <p class="text-center">{{slide.informacion}}</p>
+              <h3>{{slide?.title}}</h3>
+              <p class="text-center">{{slide?.informacion}}</p>
             </div>
           </a>
         </ng-template>

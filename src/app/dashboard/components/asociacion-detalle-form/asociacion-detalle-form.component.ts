@@ -40,7 +40,23 @@ export class AsociacionDetalleFormComponent implements OnInit {
     url_rut: new FormControl(''),
     id_tipo_asociacion_fk: new FormControl('', [Validators.required]),
   });
-  tiposAsociaciones: any[] = [];
+  tiposAsociaciones: any[] = [
+    {
+      id_tipo_asociacion: 1,
+      nombre: 'Piscicultores',
+      status: 1,
+    },
+    {
+      id_tipo_asociacion: 2,
+      nombre: 'Pescadores',
+      status: 1,
+    },
+    {
+      id_tipo_asociacion: 3,
+      nombre: 'Mixta',
+      status: 1,
+    },
+  ];
   departamentos: any;
   municipios: any;
   fileRut: any = null;
@@ -49,6 +65,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
   verifyTypeAssociation: any;
   recargarComponen: number = 0;
   nitAsociacion: any;
+  authUserTipo: string = '';
   constructor(
     private asociacionesService: AsociacionesService,
     private storage: FirebaseStorageService,
@@ -72,13 +89,15 @@ export class AsociacionDetalleFormComponent implements OnInit {
 
   loadNgOnlnit() {
     registerLocaleData(es);
-    let action = this.ar.snapshot.paramMap.get('action');
+    let action = this.ar.snapshot.paramMap.get('action')!;
     this.formState = this.ar.snapshot.paramMap.get('formState')!;
+    this.authUserTipo = this.ar.snapshot.paramMap.get('authUserTipo')!;
+    console.log(this.authUserTipo);
     if (action == 'create') {
       this.modalMode = action;
       this.form.reset();
       this.loadDptos();
-      this.loadTiposAsociaciones('create');
+      this.loadTiposAsociaciones(this.modalMode);
     } else {
       let nit: any = this.ar.snapshot.paramMap.get('nit');
       this.nitAsociacion = nit;
@@ -367,32 +386,27 @@ export class AsociacionDetalleFormComponent implements OnInit {
   fileRutChange(event: any) {
     this.fileRut = event.target.files[0];
   }
+  loadTiposAsociaciones(action: string) {
+    const isPiscicultor = this.authUserTipo === 'Piscicultor';
 
-  loadTiposAsociaciones(action: any) {
-    this.asociacionesService.tiposAsociacion().subscribe(
-      (response) => {
-        for (let index = 0; index < response.data.length; index++) {
-          response.data[index].status = 1;
-        }
-        this.tiposAsociaciones = response.data;
-        if (action == 'update') {
-          if (
-            this.asociacion.count_pescadores != 0 &&
-            this.asociacion.count_piscicultores != 0
-          ) {
-            this.tiposAsociaciones[0].status = 0;
-            this.tiposAsociaciones[1].status = 0;
-          } else if (this.asociacion.count_pescadores != 0) {
-            this.tiposAsociaciones[0].status = 0;
-          } else if (this.asociacion.count_piscicultores != 0) {
-            this.tiposAsociaciones[1].status = 0;
-          }
-        }
-      },
-      (err) => {
-        console.log(err);
+    if (isPiscicultor) {
+      this.tiposAsociaciones[1].status = 0; // pescadores disabled
+    } else {
+      this.tiposAsociaciones[0].status = 0; // piscicultores disabled
+    }
+
+    if (action === 'update') {
+      const hasPescadores = this.asociacion.count_pescadores !== 0;
+      const hasPiscicultores = this.asociacion.count_piscicultores !== 0;
+
+      if (isPiscicultor) {
+        this.tiposAsociaciones[0].status =
+          hasPescadores && hasPiscicultores ? 0 : hasPescadores ? 0 : 1;
+      } else {
+        this.tiposAsociaciones[1].status =
+          hasPescadores && hasPiscicultores ? 0 : hasPiscicultores ? 0 : 1;
       }
-    );
+    }
   }
 
   loadDptos() {
@@ -449,7 +463,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
   agregarMiembro() {
     let datosAsociacion: any = {
       nit: this.asociacion.nit,
-      tipo_asociacion: this.asociacion.id_tipo_asociacion_fk,
+      tipo_asociacion: this.asociacion?.id_tipo_asociacion_fk,
     };
     this.asociacionesService
       .showSolicitudesModal(datosAsociacion, 'Agregar miembro')
@@ -615,20 +629,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
   onAsociacionDetalles(nit: any, action: any) {
     this.asociacionesService.getAsociacionDetalle(nit).subscribe((response) => {
       this.asociacion = response.data[0];
-      for (let index = 0; index < this.tiposAsociaciones.length; index++) {
-        this.tiposAsociaciones[index].status = 1;
-      }
-      if (
-        this.asociacion.count_pescadores != 0 &&
-        this.asociacion.count_piscicultores != 0
-      ) {
-        this.tiposAsociaciones[0].status = 0;
-        this.tiposAsociaciones[1].status = 0;
-      } else if (this.asociacion.count_pescadores != 0) {
-        this.tiposAsociaciones[0].status = 0;
-      } else if (this.asociacion.count_piscicultores != 0) {
-        this.tiposAsociaciones[1].status = 0;
-      }
+      this.loadTiposAsociaciones('update');
     });
   }
   get idDpto() {
