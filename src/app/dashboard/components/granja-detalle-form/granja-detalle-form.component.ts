@@ -69,8 +69,8 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     ]),
     id_departamento: new FormControl(70, [Validators.required]),
     id_municipio: new FormControl(0, [Validators.required]),
-    id_vereda: new FormControl(0),
-    id_corregimiento: new FormControl(0),
+    id_vereda: new FormControl(null),
+    id_corregimiento: new FormControl(null),
     corregimiento_vereda: new FormControl(''),
     arrayTiposInfraestructuras: new FormArray([], [Validators.required]),
     arrayEspecies: new FormArray([], [Validators.required]),
@@ -330,8 +330,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     this.descripcion?.setValue('');
     this.idDpto?.setValue(70);
     this.idMunic?.setValue(null);
-    this.idVereda?.setValue(0);
-    this.idCorregimiento?.setValue(0);
     this.corregimiento_vereda?.setValue('');
     this.infraestructuras.clear();
     this.especies.clear();
