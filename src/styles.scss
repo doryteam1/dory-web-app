@@ -37,6 +37,7 @@ body {
   font-family: var(--system-ui);
 }
 
+
 /*Fonts*/
 @font-face {
   font-family: "OpenSans-Regular"; //This is what we are going to call
@@ -47,6 +48,26 @@ body {
   font-family: "JosefinSans-Regular"; //This is what we are going to call
   src: url("./assets/fonts/JosefinSans-Regular.ttf");
 }
+
+@font-face {
+  font-family: 'Roboto-Regular';
+  src: url('./assets/fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('./assets/fonts/Helvetica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*
+* {
+  //font-family: var(--system-ui);
+  //font-family: "Helvetica";
+}*/
 
 .mt-40 {
   margin-top: 40px;
