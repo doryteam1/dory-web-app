@@ -1,29 +1,30 @@
-<div  class="container-list-chat" *ngIf="chatOpen">
+<div class="container-list-chat" #chaRef [ngClass]="{'dplay-none': !chatOpen}">
   <!-- Lista de usurios -->
-  <div *ngIf="Onlist" class="container__list">
+  <div class="container__list" [ngClass]="{'dplay-none': !Onlist}">
     <div class="container__list-search">
       <div class="input-wrapper">
         <div class="bi bi-search"></div>
         <input type="text" placeholder="Buscar" [(ngModel)]="textSearch" (ngModelChange)="onSearch()"
           (keyup)="onKey($event)" />
-        <i class="img-x" (click)="borrarBusqueda()" *ngIf="borrarseart && !loadingseart"></i>
+        <i class="img-x" (click)="borrarBusqueda()" [ngClass]="{'dplay-none': !borrarseart && !loadingseart}"></i>
       </div>
-      <div style="position: relative;" *ngIf="!showUnreads">
-        <i class="bi bi-envelope-check myChat-text tooltip-trigger" (click)="unreadFilter()" >
+      <div style="position: relative;" [ngClass]="{'dplay-none': showUnreads}">
+        <i class="bi bi-envelope-check myChat-text tooltip-trigger" (click)="unreadFilter()">
         </i>
         <div class="tooltip-one">
           No leídos
         </div>
-        <small class="no-read" *ngIf="totalUnreads != 0">{{totalUnreads > 5 ? '5+' : totalUnreads}}</small>
+        <small class="no-read" [ngClass]="{'dplay-none': totalUnreads < 1}">{{totalUnreads > 5 ? '5+' :
+          totalUnreads}}</small>
       </div>
-      <div style="position: relative;" *ngIf="showUnreads" >
+      <div style="position: relative;" [ngClass]="{'dplay-none': !showUnreads}">
         <i class="bi bi-envelope myChat-text tooltip-trigger" (click)="cancelUnreadFilter()"></i>
         <div class="tooltip-one">
           Mensajes
         </div>
       </div>
 
-      <button type="button" class="btn-close button_close" (click)="closeChat()" > </button>
+      <button type="button" class="btn-close button_close" (click)="closeChat()"> </button>
     </div>
     <div class="user-list-card">
       <div class="user-card" *ngFor="let user of filteredUserList; index as i" (click)="selectUserHandler(user?.id,i)"
@@ -38,7 +39,8 @@
           <span class="user-card__label2">{{user.last_message ? dateFromX(user.created_at) : ''}}</span>
           <span class="user-card__label1"></span>
         </div>
-        <span class="user-card__badge translate-middle badge rounded-pill rounded-pill--border" *ngIf="user?.unreadsCount">
+        <span class="user-card__badge translate-middle badge rounded-pill rounded-pill--border"
+          [ngClass]="{'dplay-none': !user?.unreadsCount}">
           {{user?.unreadsCount > 99 ? '99+' : user?.unreadsCount}}
         </span>
       </div>
@@ -46,9 +48,9 @@
     <div class="espaceBottom"></div>
   </div>
   <!-- Chat de usurio -->
-  <div *ngIf="!Onlist" class="container__chats">
+  <div class="container__chats" [ngClass]="{'dplay-none': Onlist}">
     <div class="chat-container">
-      <ng-container *ngIf="selectedUser">
+      <ng-container [ngClass]="{'dplay-none': !selectedUser}">
         <div class="chat-header">
           <div class="chat-header-name-avatar">
             <div class="arrow-left" (click)="back()">
@@ -67,10 +69,10 @@
         <div id="chatBodyContainer" class="chat-body scrollhide">
           <div class="chat-body-container" *ngFor="let item of messageArray"
             [ngClass]="{ 'same-user':item?.fromUserId === currentUser?.sub}">
-            <span class="_1kh65" *ngIf="item?.fromUserId === currentUser?.sub">
+            <!-- <span class="_1kh65" *ngIf="item?.fromUserId === currentUser?.sub">
             </span>
             <span class="_1kh654" *ngIf="item?.fromUserId !== currentUser?.sub">
-            </span>
+            </span> -->
             <p class="message-container" [ngClass]="{ 'border-left':item?.fromUserId !== currentUser?.sub}">
               {{item?.message}}</p>
           </div>
@@ -86,8 +88,10 @@
     </div>
 
   </div>
+
 </div>
-<!-- <a #chatFloatinBtn class="floating-btn scroll-to-top" (click)="openChat()" *ngIf="!chatOpen">
+
+<a #buttonChaRef class="floating-btn scroll-to-top" (click)="openChat()" [ngClass]="{'dplay-none': chatOpen}">
   <div class=" flecha">
     <svg class="svgpath" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#26a5b8"
       class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
@@ -96,9 +100,7 @@
     </svg>
   </div>
   <span class="translate-middle badge rounded-pill rounded-pill--border"
-    [ngClass]="{'floating-btn__badge1' : totalUnreads < 10, 'floating-btn__badge2' : totalUnreads > 9, 'floating-btn__badge3' : totalUnreads > 99}"
-    *ngIf="totalUnreads">
+    [ngClass]="{'dplay-none':!totalUnreads,'floating-btn__badge1' : totalUnreads < 10, 'floating-btn__badge2' : totalUnreads > 9, 'floating-btn__badge3' : totalUnreads > 99}">
     {{totalUnreads > 99 ? '99+' : totalUnreads}}
   </span>
-</a> -->
-<app-button-chat-open (onOpen)="openChat()" *ngIf="!chatOpen" [totalUnreads]="totalUnreads"></app-button-chat-open>
+</a>

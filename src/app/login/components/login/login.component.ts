@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MailService } from 'src/app/services/mail.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { ChatService } from 'src/app/services/chat.service';
@@ -53,7 +52,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('on change');
     if (this.form.invalid) {
       return;
     }
@@ -73,7 +71,7 @@ export class LoginComponent implements OnInit {
           localStorage.removeItem('rememberEmail');
         }
         this.loading = false;
-      this.chatService.reset();
+        this.chatService.reset();
         this.navigateTo(data.email);
       },
       (err) => {
@@ -150,6 +148,7 @@ export class LoginComponent implements OnInit {
     this.userService.loginWithGoogle(idToken).subscribe(
       (response) => {
         this.userService.setLoginData(response.body.token, 'google');
+        this.chatService.reset();
         this.navigateTo(email);
       },
       (err) => {

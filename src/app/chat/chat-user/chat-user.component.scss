@@ -81,7 +81,83 @@
     }
   }
 }
+.dplay-none {
+  display: none !important;
+}
 
+/*
+ */
+
+.floating-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border-radius: 100%;
+  z-index: 1000;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #26a5b8;
+}
+
+.floating-btn .flecha {
+  fill: #26a5b8;
+}
+
+.floating-btn .flecha {
+  fill: #26a5b8;
+}
+
+
+
+
+
+.show-scrollTop {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.rounded-pill--border {
+  border: 1px solid white;
+}
+
+.floating-btn__badge2 {
+  position: absolute;
+  top: 1px;
+  right: -27px;
+  background-color: var(--azul1);
+}
+
+
+/* boton notificacion */
+.notify__icon-container {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e4e6eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notify__icon {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+}
+
+.top-3px {
+  top: 3.5px
+}
+
+ /*  */
 .user-list-card {
   width: 100%;
   height: calc(100% - 64px);
@@ -170,9 +246,7 @@
   color: #3b4a54;
   font-size: 11px;
 }
-.rounded-pill--border{
-  border: 1px solid white;
-}
+
 .chat-container {
   background-color: white;
   border-radius: 10px;
@@ -326,24 +400,6 @@ button:focus {
 }
 
 /* btn boton abrir */
-.floating-btn {
-  position: fixed;
-  right: 20px;
-  bottom: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  border-radius: 100%;
-  z-index: 1000;
-  cursor: pointer;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #26a5b8;
-}
 
 .floating-btn__badge1 {
   position: absolute;
@@ -352,22 +408,11 @@ button:focus {
   background-color: var(--azul1);
 }
 
-.floating-btn__badge2 {
-  position: absolute;
-  top: 1px;
-  right: -27px;
-  background-color: var(--azul1);
-}
-
 .floating-btn__badge3 {
   position: absolute;
   top: 1px;
   right: -41px;
   background-color: var(--azul1);
-}
-
-.floating-btn .flecha {
-  fill: #26a5b8;
 }
 
 .flecha {
@@ -383,10 +428,7 @@ button:focus {
   height: 18px;
 }
 
-.show-scrollTop {
-  opacity: 1;
-  transition: all 0.2s ease-in-out;
-}
+
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollhide::-webkit-scrollbar {
