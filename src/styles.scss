@@ -37,6 +37,7 @@ body {
   font-family: var(--system-ui);
 }
 
+
 /*Fonts*/
 @font-face {
   font-family: "OpenSans-Regular"; //This is what we are going to call
@@ -47,6 +48,26 @@ body {
   font-family: "JosefinSans-Regular"; //This is what we are going to call
   src: url("./assets/fonts/JosefinSans-Regular.ttf");
 }
+
+@font-face {
+  font-family: 'Roboto-Regular';
+  src: url('./assets/fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('./assets/fonts/Helvetica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*
+* {
+  //font-family: var(--system-ui);
+  //font-family: "Helvetica";
+}*/
 
 .mt-40 {
   margin-top: 40px;
@@ -670,7 +691,65 @@ input:focus {
   border-bottom-color: var(--gris-oscuro);
 
 }
+ .owl-nav.disabled {
+  display: initial !important;
+}
+.owl-nav {
+  .owl-prev {
+    position: absolute;
+    top: calc(50% - 50px);
+    left: 0;
+    opacity: 0.7;
+    font-size: 40px !important;
+    color: var(--azul1) !important;
+    background: transparent !important;
+    z-index: 1;
+    i{
+      &::before{
+        font-weight: 900 !important
+      }
+    }
+  }
 
+  .owl-next {
+    @extend .owl-prev;
+    right: 0;
+    left: initial;
+  }
+}
+.slider-card-services {
+  .owl-item{
+    /* pointer-events: none; */
+    cursor: pointer;
+  }
+  .owl-item.active {
+    &.center {
+      .slider-card-services-box {
+        transform: scale(1.15);
+        opacity: 1;
+        /* pointer-events: auto; */
+        cursor: pointer;
+      }
+    }
+  }
+}
+/* .owl-dots {
+  text-align: center;
+
+  .owl-dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 8px;
+    background: #ccc !important;
+    margin-left: 5px;
+    margin-right: 5px;
+    outline: none;
+
+    &.active {
+      background: #999 !important;
+    }
+  }
+} */
 /* fin */
 @media (max-width: 900px) {
   .docs__title {
@@ -721,3 +800,5 @@ $offcanvas-backdrop-opacity: 0;
 /* @import '~ngx-sharebuttons/themes/default'; */
 
 @import '../node_modules/ngx-guided-tour/scss/guided-tour-base-theme.scss';
+@import '../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss';
+@import '../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss';

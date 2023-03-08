@@ -17,7 +17,7 @@
             <li (click)="delete()"><a class="dropdown-item"><i class="bi bi-trash-fill"></i>Eliminar</a></li>
           </ul>
         </div>
-        <div (click)="detalles()">
+        <div (click)="detalles()" class="w-100">
           <h1> {{pregunta?.nombreUsuario | titlecase}}</h1>
           <div class="time-message">
             <i class="bi bi-clock"></i>
@@ -36,7 +36,7 @@
         </div>
 
         <!-- Respuesta de una pregunta -->
-        <div class="d-flex flex-column gap-2" *ngIf="pregunta?.countRespuestas>0" (click)="detalles()">
+        <div class="d-flex flex-column gap-2 w-100" *ngIf="pregunta?.countRespuestas>0" (click)="detalles()">
           <ng-container *ngIf="openRespuestas">
             <div class="loading" *ngIf="loading">
               <div class="container__spinner spinner-border" role="status">

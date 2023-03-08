@@ -11,7 +11,7 @@
             <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre_negocio">
           </div>
           <div *ngIf="invalid('nombre_negocio')" class="container__alert-msg danger-message">
-            <div *ngIf="nombreNegocio?.errors?.['required']">
+            <div *ngIf="nombreNegocio?.errors?.['required'] || nombreNegocio?.errors?.['whiteSpace']">
               Campo requerido
             </div>
           </div>
@@ -24,7 +24,7 @@
               formControlName="descripcion_negocio">Write something here</textarea>
           </div>
           <div *ngIf="invalid('descripcion_negocio')" class="container__alert-msg danger-message">
-            <div *ngIf="descripcion?.errors?.['required']">
+            <div *ngIf="descripcion?.errors?.['required'] || descripcion?.errors?.['whiteSpace']">
               Campo requerido
             </div>
           </div>
@@ -80,7 +80,7 @@
               formControlName="informacion_adicional_direccion">Write something here</textarea>
           </div>
           <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
-            <div *ngIf="infoAdicionalDir?.errors?.['required']">
+            <div *ngIf="infoAdicionalDir?.errors?.['required'] || infoAdicionalDir?.errors?.['whiteSpace']">
               Campo requerido
             </div>
           </div>
@@ -105,13 +105,13 @@
   </div>
     <div class="modal-footer">
       <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-        <button [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn"
+        <button [disabled]="loading1 || !form.valid" type="button" class="btn-rounded btn--blue container__btn"
            (click)="addNegocio()" *ngIf="modalMode=='create'">
           <span *ngIf="!loading1">Guardar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>
         </button>
-        <button [disabled]="loading1" type="button"
+        <button [disabled]="loading1 || !form.valid" type="button"
            (click)="updateNegocio()"*ngIf="modalMode=='update'" class="btn-rounded btn--blue container__btn">
           <span *ngIf="!loading1">Actualizar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">

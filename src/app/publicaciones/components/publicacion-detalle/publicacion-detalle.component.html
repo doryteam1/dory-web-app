@@ -3,7 +3,7 @@
 [contentLoaded]="contentLoaded"
 [publicacioneDetalles]="true"
 [datos]="datos"
-(onDetalle)="goDetail(publicacion.usuarios_id)"
+(onDetalle)="goDetail(publicacion?.tipo_usuario,publicacion?.usuarios_id)"
   (onOpenChat)="sendMessage()">
 </app-product-details-card-template>
 

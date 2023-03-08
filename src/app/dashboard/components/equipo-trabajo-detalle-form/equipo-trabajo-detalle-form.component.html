@@ -11,7 +11,7 @@
           <input id="productName" class="form-control" placeholder="Nombres del miembro" formControlName="nombres">
         </div>
         <div *ngIf="invalid('nombres')" class="container__alert-msg danger-message">
-          <div *ngIf="nombres?.errors?.['required']">
+          <div *ngIf="nombres?.errors?.['required'] || nombres?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -23,7 +23,7 @@
           <input id="productName" class="form-control" placeholder="Apellidos del miembro" formControlName="apellidos">
         </div>
         <div *ngIf="invalid('apellidos')" class="container__alert-msg danger-message">
-          <div *ngIf="apellidos?.errors?.['required']">
+          <div *ngIf="apellidos?.errors?.['required'] || apellidos?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -47,7 +47,7 @@
             formControlName="pais">
         </div>
         <div *ngIf="invalid('pais')" class="container__alert-msg danger-message">
-          <div *ngIf="pais?.errors?.['required']">
+          <div *ngIf="pais?.errors?.['required'] || pais?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -59,7 +59,7 @@
             formControlName="departamento">
         </div>
         <div *ngIf="invalid('departamento')" class="container__alert-msg danger-message">
-          <div *ngIf="departamento?.errors?.['required']">
+          <div *ngIf="departamento?.errors?.['required'] || departamento?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -71,7 +71,7 @@
             formControlName="municipio">
         </div>
         <div *ngIf="invalid('municipio')" class="container__alert-msg danger-message">
-          <div *ngIf="municipio?.errors?.['required']">
+          <div *ngIf="municipio?.errors?.['required'] || municipio?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -82,7 +82,7 @@
           <input id="productName" class="form-control" placeholder="Cargo del miembro" formControlName="cargo">
         </div>
         <div *ngIf="invalid('cargo')" class="container__alert-msg danger-message">
-          <div *ngIf="cargo?.errors?.['required']">
+          <div *ngIf="cargo?.errors?.['required'] || cargo?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -95,7 +95,7 @@
             placeholder="Descripción del miembro" formControlName="descripcion"></textarea>
         </div>
         <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
-          <div *ngIf="descripcion?.errors?.['required']">
+          <div *ngIf="descripcion?.errors?.['required'] || descripcion?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -123,7 +123,7 @@
           </div>
         </div>
       </div>
-      <div class="photoAnduploadPhoto">
+      <div class="photoAnduploadPhoto mb-3">
         <label for="dateOfBirth">Foto del miembro</label>
         <div  style="cursor: pointer;" class="photoAnduploadPhoto-container" (click)="openAddFileDialogCreate()">
           <div class="mb-3 imagen" *ngIf="fotoMiembro">
@@ -150,13 +150,13 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading" type="button"class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading || !form.valid" type="button"class="btn-rounded btn--blue container__btn"
         (click)="updateData()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading || !form.valid" type="button" class="btn-rounded btn--blue container__btn"
         (click)="addMiembro()" *ngIf="modalMode=='create'">
         <span *ngIf="!loading">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">

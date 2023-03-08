@@ -12,6 +12,7 @@ import { EquipoTrabajoService } from 'src/app/services/equipo-trabajo.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { Utilities } from 'src/app/utilities/utilities';
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
  interface equipotrabajo {
    id?: number;
    nombres: string;
@@ -33,8 +34,11 @@ import { Utilities } from 'src/app/utilities/utilities';
 })
 export class EquipoTrabajoComponent implements OnInit {
   form: FormGroup = new FormGroup({
-    titulo: new FormControl('', [Validators.required]),
-    descripcion: new FormControl('', [Validators.required]),
+    titulo: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    descripcion: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
   });
   equipoTrabajo: equipotrabajo[] = [];
   datosConocenos: any;
@@ -107,7 +111,7 @@ export class EquipoTrabajoComponent implements OnInit {
       .confirm(
         'Eliminar miembro',
         'Está seguro que desea eliminar este miembro',
-        'Si',
+        'Sí',
         'No',
         nombre
       )
@@ -116,7 +120,9 @@ export class EquipoTrabajoComponent implements OnInit {
           this.equipoTrabajoService.deleteMiembroEquipo(idMiembro).subscribe(
             (response) => {
               this.equipoTrabajo.splice(idx, 1);
-              this.storage.deleteByUrl(imagen);
+              if (imagen.length > 0) {
+                this.storage.deleteByUrl(imagen);
+              }
               if (this.equipoTrabajo.length <= 0) {
                 this.showNotFound = true;
               }

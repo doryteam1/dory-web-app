@@ -9,6 +9,7 @@ import { FirebaseStorageService } from 'src/app/services/firebase-storage.servic
 import { ProveedorService } from 'src/app/services/proveedor.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { ComunicacionEntreComponentesService } from 'src/app/shared/services/comunicacion-entre-componentes.service';
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 @Component({
   selector: 'app-producto-detalle-form',
   templateUrl: './producto-detalle-form.component.html',
@@ -17,8 +18,14 @@ import { ComunicacionEntreComponentesService } from 'src/app/shared/services/com
 export class ProductoDetalleFormComponent implements OnInit {
   producto: any;
   form: FormGroup = new FormGroup({
-    nombreProducto: new FormControl('', [Validators.required]),
-    descripcion: new FormControl('', [Validators.required]),
+    nombreProducto: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
+    descripcion: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
     precio: new FormControl(0, [Validators.required]),
   });
   loading: boolean = false;
@@ -48,7 +55,7 @@ export class ProductoDetalleFormComponent implements OnInit {
     if (this.modalMode == 'update') {
       this.proveedorService
         .getProductoDetail(Number(this.producto.codigo))
-        .subscribe((response:any) => {
+        .subscribe((response: any) => {
           console.log(response);
           this.photosProducArray = response.data[0].fotos_producto;
         });
@@ -218,11 +225,11 @@ export class ProductoDetalleFormComponent implements OnInit {
         const compressedFiles =
           await this.compressImageSizeService.handleImageArrayUpload(event);
         let fileNameBase =
-             '/productos/User' +
-             this.authUserId +
-             '/producto' +
-             this.codigoProducto +
-             '/prod-';
+          '/productos/User' +
+          this.authUserId +
+          '/producto' +
+          this.codigoProducto +
+          '/prod-';
         let files: Array<any> = compressedFiles;
         let arrayFotos: Array<any> = [];
         for (let i = 0; i < files.length; i++) {
@@ -286,10 +293,10 @@ export class ProductoDetalleFormComponent implements OnInit {
             this.loading = false;
           },
           (err) => {
-              this.filesfinalCreate = [];
-              this.form.enable();
-              this.goBack();
-              this.loading = false;
+            this.filesfinalCreate = [];
+            this.form.enable();
+            this.goBack();
+            this.loading = false;
             console.log(err);
           }
         );
@@ -321,7 +328,7 @@ export class ProductoDetalleFormComponent implements OnInit {
       .subscribe(
         (response) => {
           this.photosProducArray = arraydelate.arrayFotosActualizadas;
-           this.storage.deleteMultipleByUrls(arraydelate.arrayFotosBorradas);
+          this.storage.deleteMultipleByUrls(arraydelate.arrayFotosBorradas);
           this.loading = false;
         },
         (err) => {

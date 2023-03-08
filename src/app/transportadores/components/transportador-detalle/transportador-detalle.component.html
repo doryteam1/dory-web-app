@@ -15,7 +15,8 @@
               <h4 class="detail-container__title">Municipio: </h4>
             </span>
             <span>
-              <h4 class="container__description1">{{transportador?.municipio}}-{{transportador?.departamento}}</h4>
+              <h4 class="container__description1">{{transportador?.municipio && transportador?.departamento ? transportador?.municipio +'-'+ transportador?.departamento:'Sin
+              definir'}}</h4>
             </span>
           </div>
             <div class="container__detalle">
@@ -50,9 +51,7 @@
       <img class="detail-container__image" src="assets/icons/person_pin_circle_black_24dp.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Dirección</h4>
-        <span *ngIf="transportador?.direccion" class="detail-container__value">{{transportador?.direccion? 'Dir.' : ''}}
-          {{transportador?.direccion}} </span>
-        <span *ngIf="!transportador?.direccion" class="detail-container__value">Dirección indefinida</span>
+        <span class="detail-container__value">{{transportador?.direccion ? 'Dir. ' + transportador?.direccion :'Sin definir'}} </span>
       </div>
     </div>
     <div class="detail-container mt-4" *ngIf="transportador?.informacion_adicional_direccion">

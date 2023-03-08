@@ -68,7 +68,6 @@ export class SliderInicioComponent implements OnInit {
             }
             if (this.imagenes.length > 0) {
               this.sliders = response.data.slider;
-              console.log(this.sliders);
               this.cargarFuntionSlider(this.imagenes);
             }
             this.showError = false;
@@ -97,7 +96,7 @@ export class SliderInicioComponent implements OnInit {
       .confirm(
         'Eliminar slide',
         'Esta seguro que desea eliminar este slide',
-        'Si',
+        'Sí',
         'No',
         nombre
       )
@@ -106,7 +105,9 @@ export class SliderInicioComponent implements OnInit {
           this.sliderInicioService.deleteSlide(id).subscribe(
             (response) => {
               this.sliders.splice(idx, 1);
-              this.storage.deleteByUrl(imagen);
+              if (imagen.length > 0) {
+                this.storage.deleteByUrl(imagen);
+              }
               if (this.imagenes.length > 0) {
                 this.imagenes.splice(idx, 1);
                 this.lightboxRef.remove(idx);

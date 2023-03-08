@@ -34,7 +34,7 @@
       <div class="tab-pane fade" [ngClass]="{'show active':datos.tipo_asociacion == 1 || datos.tipo_asociacion == 3}"
       id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
       <app-not-found *ngIf="showNotFound2 || showError2" message="Parece que no cuentas con mienbros"></app-not-found>
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column" *ngIf="!showNotFound2 && !showError2 && piscicultoresFiltered.length > 0">
           <div class="card" *ngFor="let piscicultor of piscicultoresFiltered">
             <div class="card__user-info d-flex flex-row">
               <img (click)="navigateDetalle(piscicultor)" class="card__image"
@@ -53,7 +53,7 @@
        [ngClass]="{'show active':datos.tipo_asociacion == 2 }"
        id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <app-not-found *ngIf="showNotFound1 || showError1" message="Parece que no cuentas con mienbros"></app-not-found>
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column" *ngIf="!showNotFound1 && !showError1 && pescadoresFiltered.length > 0">
           <div class="card" *ngFor="let pescador of pescadoresFiltered">
             <div class="card__user-info d-flex flex-row">
               <img (click)="navigateDetalle(pescador)" class="card__image"

@@ -27,7 +27,7 @@
           <input id="productName" class="form-control" placeholder="Ingrese el título " formControlName="titulo">
         </div>
         <div *ngIf="invalid('titulo')" class="container__alert-msg danger-message">
-          <div *ngIf="titulo?.errors?.['required']">
+          <div *ngIf="titulo?.errors?.['required'] || titulo?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -39,7 +39,7 @@
             placeholder="Ingrese la descripción" formControlName="resumen"></textarea>
         </div>
         <div *ngIf="invalid('resumen')" class="container__alert-msg danger-message">
-          <div *ngIf="resumen?.errors?.['required']">
+          <div *ngIf="resumen?.errors?.['required'] || resumen?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -51,7 +51,7 @@
             formControlName="autor">
         </div>
         <div *ngIf="invalid('autor')" class="container__alert-msg danger-message">
-          <div *ngIf="autor?.errors?.['required']">
+          <div *ngIf="autor?.errors?.['required'] || autor?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -63,12 +63,12 @@
             formControlName="url_novedad">
         </div>
         <div *ngIf="invalid('url_novedad')" class="container__alert-msg danger-message">
-          <div *ngIf="url_novedad?.errors?.['required']">
+          <div *ngIf="url_novedad?.errors?.['required'] || url_novedad?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
       </div>
-      <div class="photoAnduploadPhoto">
+      <div class="photoAnduploadPhoto mb-3">
         <label for="dateOfBirth">Foto principal</label>
         <div class="photoAnduploadPhoto-container" (click)="openAddFileDialogCreate()">
           <div class="mb-3 imagen" *ngIf="fotoNovedad ">
@@ -95,13 +95,13 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading || !form.valid" type="button" class="btn-rounded btn--blue container__btn"
         (click)="updateData()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading || !form.valid" type="button" class="btn-rounded btn--blue container__btn"
         (click)="addData()" *ngIf="modalMode=='create'">
         <span *ngIf="!loading">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">

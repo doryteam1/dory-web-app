@@ -16,6 +16,7 @@ export class FotosMiniDetalleFormComponent implements OnInit, OnDestroy {
   showMore: boolean = false;
   mediaQuerySubscrip!: Subscription;
 
+
   constructor(public mediaQueryService: MediaQueryService) {}
 
   ngOnInit(): void {

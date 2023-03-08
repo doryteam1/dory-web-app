@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { EnlacesDirectosInicioService } from 'src/app/services/enlaces-directos-inicio.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
-
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
  interface enlace_rapido {
    id_enlace_rapido?: number;
    url_imagen: string;
@@ -22,8 +22,8 @@ import { FirebaseStorageService } from 'src/app/services/firebase-storage.servic
 export class EnlacesDirectosInicioDetalleFormComponent implements OnInit {
   @ViewChild('fileInputCreate') inputFileDialogCreate!: ElementRef;
   form: FormGroup = new FormGroup({
-    titulo: new FormControl('', [Validators.required]),
-    url_enlace: new FormControl('', [Validators.required]),
+    titulo: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    url_enlace: new FormControl('', [Validators.required, WhiteSpaceValidator]),
   });
   loading: boolean = false;
   modalMode: string = 'visualize';
@@ -49,7 +49,6 @@ export class EnlacesDirectosInicioDetalleFormComponent implements OnInit {
     if (this.modalMode == 'update') {
       this.enlacesDirectosInicioService.getTodos().subscribe(
         (response) => {
-
           if (response.data.length > 0) {
             let index = response.data.findIndex(
               (enlaceRapido: enlace_rapido) =>
@@ -159,19 +158,21 @@ export class EnlacesDirectosInicioDetalleFormComponent implements OnInit {
       url_enlace: this.url_enlace?.value,
       url_imagen: foto,
     };
-    this.enlacesDirectosInicioService.update(this.id_enlaceRapido, newenlaceRapido).subscribe(
-      (response) => {
-        this.goBack();
-        this.loading = false;
-        this.sinFoto = false;
-      },
-      (err) => {
-        console.log(err);
-        this.goBack();
-        this.loading = false;
-        this.sinFoto = false;
-      }
-    );
+    this.enlacesDirectosInicioService
+      .update(this.id_enlaceRapido, newenlaceRapido)
+      .subscribe(
+        (response) => {
+          this.goBack();
+          this.loading = false;
+          this.sinFoto = false;
+        },
+        (err) => {
+          console.log(err);
+          this.goBack();
+          this.loading = false;
+          this.sinFoto = false;
+        }
+      );
   }
   async addData() {
     this.loading = true;

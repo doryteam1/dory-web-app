@@ -7,6 +7,7 @@ import { Component,OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NormatividadService } from 'src/app/services/normatividad.service';
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 interface normatividad {
   id_normatividad?: number;
   tipo?: string;
@@ -24,8 +25,8 @@ interface normatividad {
 })
 export class NormatividadDetalleFormComponent implements OnInit {
   form: FormGroup = new FormGroup({
-    nombre: new FormControl('', [Validators.required]),
-    contenido: new FormControl('', [Validators.required]),
+    nombre: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    contenido: new FormControl('', [Validators.required, WhiteSpaceValidator]),
     url_descarga: new FormControl(''),
     id_tipo: new FormControl('', [Validators.required]),
     /* fecha: new FormControl('', [Validators.required]), */
@@ -81,11 +82,6 @@ export class NormatividadDetalleFormComponent implements OnInit {
       this.nombre?.setValue(this.normatividad.nombre);
       this.contenido?.setValue(this.normatividad.contenido);
       this.id_tipo?.setValue(this.normatividad.id_tipo);
-   /*    if (this.normatividad?.fecha) {
-        let fecha = this.normatividad?.fecha as unknown as string;
-        fecha = fecha.split('T')[0];
-        this.fecha?.setValue(formatDate(fecha, 'yyyy-MM-dd', 'es'));
-      } */
       this.url_descarga?.setValue(this.normatividad.url_descarga);
     }
   }
@@ -171,7 +167,7 @@ export class NormatividadDetalleFormComponent implements OnInit {
   get id_tipo() {
     return this.form.get('id_tipo');
   }
-/*   get fecha() {
+  /*   get fecha() {
     return this.form.get('fecha');
   } */
   get url_descarga() {

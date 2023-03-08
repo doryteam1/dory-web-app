@@ -1,6 +1,6 @@
 <header class="header">
   <section class="container head">
-    <h1>¿Tengo una pregunta?</h1>
+    <h1>Foro de inquietudes</h1>
     <app-search [buscadorpersonalizado]="true" [placeholderbuscador]="'Buscar...'" [activeClaseForo]="true"
       [valorInput]="valorInput" (keyEnterPressData)="onBuscarPalabraEvents($event)"></app-search>
   </section>
@@ -32,8 +32,8 @@
       (onDelete)="deletePregunta(pregunta.id,pregunta.fotos)" (onDetalles)="goDetail(pregunta.id)">
     </app-user-question-forum>
 
-    <ngb-pagination *ngIf="showPagination && preguntas.length>2" [collectionSize]="collectionSize" [(page)]="page"
-      (pageChange)="resetOfSearch()" [maxSize]="2" [pageSize]="pageSize" [rotate]="true" [ellipses]="false"
+    <ngb-pagination *ngIf="showPagination && preguntas.length > pageSize" [collectionSize]="collectionSize" [(page)]="page"
+      (pageChange)="resetOfSearch()" [maxSize]="maxSize" [pageSize]="pageSize" [rotate]="true" [ellipses]="false"
       [boundaryLinks]="true" >
       <ng-template ngbPaginationPrevious ><i class="bi bi-caret-left-fill azul1--color"></i></ng-template>
       <ng-template ngbPaginationNext><i class="bi bi-caret-right-fill azul1--color"></i></ng-template>

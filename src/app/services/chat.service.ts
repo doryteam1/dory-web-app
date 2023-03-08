@@ -18,7 +18,7 @@ export class ChatService {
     private https: HttpsService
   ) {
     this.connect();
-  }
+    }
 
   joinRoom(data: any): void {
     this.socket.emit('join', data);
@@ -116,7 +116,14 @@ export class ChatService {
   }
 
   disconnect() {
+    this.socket.off('usuarios-activos');
+    this.socket.off('new-message');
+    this.socket.off('ultimo-conectado');
+    this.socket.off('ultimo-desconectado');
+    this.socket.off('confirmation-message');
+    this.socket.off('new-solicitud');
     this.socket.disconnect();
+    this.socket.close()
   }
 
   connect() {
@@ -128,7 +135,7 @@ export class ChatService {
     });
   }
   reset() {
-    this.socket.connect()
+    this.connect()
   }
   isUserAuth() {
     if (!this.userService.isAuthenticated()) {
@@ -147,7 +154,6 @@ export class ChatService {
   }
 
   openUser(userId: number) {
-    console.log('open user');
     this.subject.next(JSON.stringify(userId));
     //this.chatRefs?.btnChat.click();
     //this.chatRefs.userRefs[userId].click();

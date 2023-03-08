@@ -21,7 +21,7 @@ import { FirebaseStorageService } from 'src/app/services/firebase-storage.servic
 import { ForumService } from 'src/app/services/forum.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-user-question-form-forum',
   templateUrl: './user-question-form-forum.component.html',
@@ -51,7 +51,7 @@ export class UserQuestionFormForumComponent implements OnInit {
   id_pregunta!: number;
   photosDeleteStorage: any[] = [];
   previewCreatedPhotos: any[] = [];
-
+  limitePhotos: number = Number(environment.limitPhotosForum);
   constructor(
     private sanitizer: DomSanitizer,
     private compressImageSizeService: CompressImageSizeService,
@@ -59,7 +59,7 @@ export class UserQuestionFormForumComponent implements OnInit {
     private communicateDataService: CommunicateDataService,
     public userService: UsuarioService,
     private storage: FirebaseStorageService,
-    public location: PlatformLocation,
+    public location: PlatformLocation
   ) {}
 
   ngOnInit(): void {
@@ -179,8 +179,7 @@ export class UserQuestionFormForumComponent implements OnInit {
     let time;
     this.maxPhotosAlert = false;
     if (
-      event.target.files.length >
-      1 - (this.photos.length + this.previewCreatedPhotos.length)
+      event.target.files.length > (this.limitePhotos - (this.photos.length + this.previewCreatedPhotos.length))
     ) {
       this.maxPhotosAlert = true;
       time = setTimeout(() => {

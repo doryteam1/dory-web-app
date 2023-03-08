@@ -42,10 +42,12 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
       tipo: 1,
     },
   ];
+
   /* Paginación */
-  page = 1;
-  pageSize = 2;
-  collectionSize = 0;
+  page: number = 1;
+  pageSize: number = 10;
+  collectionSize: number = 0;
+  maxSize: number = 2;
   showPagination: boolean = false;
   SubsCommunicateData!: Subscription;
   constructor(
@@ -138,7 +140,7 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
       .confirm(
         'Eliminar respuesta',
         'Está seguro que desea eliminar esta respuesta',
-        'Si',
+        'Sí',
         'No',
         ''
       )
@@ -150,7 +152,6 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
           if (idx != -1) {
             this.forumService.deleteRespuesta(idRespuesta).subscribe(
               (response) => {
-                console.log(response)
                 this.respuestas.splice(idx, 1);
                 if (imagen.length > 0) {
                   this.storage.deleteMultipleByUrls(imagen);
@@ -177,11 +178,13 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
       this.appModalService.closeModalAlertError();
     });
     this.appModalService
-      .modalAlertError(error, 'Volver atrás')
+      .modalAlertError(error)
       .then((result: any) => {
         this.router.navigate(['/foro']);
       })
-      .catch((result) => {});
+      .catch((result) => {
+        this.router.navigate(['/foro']);
+      });
   }
   deleteFilter() {
     this.filtroseleccionado = false;
@@ -220,7 +223,7 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
     this.showNotFoundAnswers = this.respuestasCopia.length < 1;
     this.showPagination = !this.showNotFoundAnswers;
 
-    if (this.showPagination && this.respuestas.length > 2) {
+    if (this.showPagination && this.respuestas.length > this.pageSize) {
       this.collectionSize = this.respuestasCopia.length;
       this.respuestasCopia = this.paginate(
         this.respuestasCopia,
@@ -267,29 +270,7 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
       })
       .catch((result) => {});
   }
-  /*   goDetail(idPregunta: number) {
-    this.router.navigate(['/foro/respuesta/pregunta', idPregunta]);
-  } */
-  /*
- getUsers(): Observable<any> | null {
-    if (this.userType == 'pescadores') {
-      return this.pescadoresService.getPescadores();
-    } else if (this.userType == 'piscicultores') {
-      return this.piscicultoresService.getPiscicultores();
-    } else if (this.userType == 'investigadores') {
-      return this.investigadoresServices.getInvestigadoresAll();
-    } else if (this.userType == 'proveedores') {
-      return this.proveedoresService.getProveedoresAll();
-    } else if (this.userType == 'transportadores') {
-      return this.transportadoresService.getTransportadoresAll();
-    } else if (this.userType == 'comerciantes') {
-      return this.negociosService.getComerciantesAll();
-    } else if (this.userType == 'consumidores') {
-      return this.consumidorService.getConsumidoresAll();
-    }
-    return null;
-  } */
-  goDetail(user: any) {
+  goDetail(usertype: any ,idUser:any) {
     const map: any = {
       Pescador: '/pescadores/municipio/detalle/',
       Piscicultor: '/piscicultores/municipio/detalle/',
@@ -299,7 +280,9 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
       Comerciante: '/comerciantes/detalle/',
       Consumidor: '/consumidores/detalle/',
     };
-    const baseUrl: string = map[user.tipo_usuario] ?? '';
-    this.router.navigateByUrl(baseUrl + `${user.id}`);
+     if (usertype != 'Administrador') {
+       const baseUrl: string = map[usertype] ?? '';
+       this.router.navigateByUrl(baseUrl + `${idUser}`);
+     }
   }
 }

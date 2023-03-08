@@ -4,6 +4,7 @@ import { ElementRef } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ComunicacionEntreComponentesService } from '../../services/comunicacion-entre-componentes.service';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-modal-gallery-slider-ver-y-elimanar-fotos',
   templateUrl: './modal-gallery-slider-ver-y-elimanar-fotos.component.html',
@@ -43,7 +44,8 @@ export class ModalGallerySliderVerYElimanarFotosComponent
   arrayamandar: any = [];
   indicePhotodelate: number[] = [];
   cancelarseleccionphoto: boolean = false;
-  maxFotosAlert:boolean=false;
+  maxFotosAlert: boolean = false;
+  limitePhotos: number = Number(environment.limitPhotosUserServices)
   constructor(
     private _modalService: NgbActiveModal,
     private sanitizer: DomSanitizer,
@@ -83,7 +85,7 @@ export class ModalGallerySliderVerYElimanarFotosComponent
   selcCarruselImg(idx: number) {
     this.valorindicecarrucel = idx;
     localStorage.setItem('index', idx.toString());
-     this.imgselecmodal = -1;
+    this.imgselecmodal = -1;
   }
   eventClickOnPreviousOrNewSlider() {
     this.imgselecmodal = -1;
@@ -194,16 +196,19 @@ export class ModalGallerySliderVerYElimanarFotosComponent
   @HostListener('openAddFileDialogCreate')
   fileChangeCreate(event: any) {
     let time;
-    this.maxFotosAlert = false
-    if (event.target.files.length > 10- this.ArrayFotos.length) {
-      this.maxFotosAlert=true
-      time =setTimeout(() => {
+    this.maxFotosAlert = false;
+    if (
+      event.target.files.length >
+      (this.limitePhotos - this.ArrayFotos.length)
+    ) {
+      this.maxFotosAlert = true;
+      time = setTimeout(() => {
         this.maxFotosAlert = false;
-      },5000);
+      }, 5000);
       return;
     }
-    clearTimeout(time)
-   this.maxFotosAlert = false;
+    clearTimeout(time);
+    this.maxFotosAlert = false;
     if (this.action == 'create') {
       this.file = event.target.files;
       for (let index = 0; index < this.file.length; index++) {
@@ -211,7 +216,7 @@ export class ModalGallerySliderVerYElimanarFotosComponent
         this.filesfinalCreate.push(element);
         let objectURL = URL.createObjectURL(element);
         this.previewImageCreate =
-        this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          this.sanitizer.bypassSecurityTrustUrl(objectURL);
         this.ArrayFotos = this.ArrayFotos.concat(this.previewImageCreate);
         this.photosAppArray = this.ArrayFotos;
       }
@@ -225,7 +230,7 @@ export class ModalGallerySliderVerYElimanarFotosComponent
       this.filesfinalCreate = [];
       this.indicePhotodelate = [];
       this.photosAppArray = [];
-       event.srcElement.value = ''
+      event.srcElement.value = '';
     } else if (this.action == 'update') {
       this.file = [];
       this.filesfinalCreate = [];
@@ -235,12 +240,12 @@ export class ModalGallerySliderVerYElimanarFotosComponent
         this.filesfinalCreate.push(element);
         this.loading2 = true;
       }
-      if ( this.filesfinalCreate.length !== 0) {
+      if (this.filesfinalCreate.length !== 0) {
         this.comunicacionEntreComponentesService.changeMyArray(
           this.filesfinalCreate
         );
       }
-       event.srcElement.value = '';
+      event.srcElement.value = '';
     }
   }
   @HostListener('photosDeleteCreate')
@@ -258,39 +263,38 @@ export class ModalGallerySliderVerYElimanarFotosComponent
         }
         this.ArrayFotos = this.photosAppArrayCopy;
         this.photosAppArray = this.ArrayFotos;
-            this.arrayamandar = [
-              this.photosAppArray,
-              this.filesfinalCreate,
-              this.indicePhotodelate,
-            ];
-         this.comunicacionEntreComponentesService.changeMyArray(
-           this.arrayamandar
-         );
-         this.filesfinalCreate = [];
-         this.indicePhotodelate=[]
-          this.photosAppArray=[]
-          this.photosArrayUrlToDel=[]
+        this.arrayamandar = [
+          this.photosAppArray,
+          this.filesfinalCreate,
+          this.indicePhotodelate,
+        ];
+        this.comunicacionEntreComponentesService.changeMyArray(
+          this.arrayamandar
+        );
+        this.filesfinalCreate = [];
+        this.indicePhotodelate = [];
+        this.photosAppArray = [];
+        this.photosArrayUrlToDel = [];
         this.loading3 = false;
-
       });
       if (this.ArrayFotos.length == 0) {
         this.showNotFoundPhotos = true;
-        this.cancelarseleccionphoto=false
-        this.isPhotoSelectingToDel=false
-         this.photosArrayUrlToDel = [];
+        this.cancelarseleccionphoto = false;
+        this.isPhotoSelectingToDel = false;
+        this.photosArrayUrlToDel = [];
       } else {
         this.showNotFoundPhotos = false;
       }
     } else if (this.action == 'update') {
-      let newArrayFotos:any={
-           arrayFotosBorradas:[],
-           arrayFotosActualizadas:[]
-      }
+      let newArrayFotos: any = {
+        arrayFotosBorradas: [],
+        arrayFotosActualizadas: [],
+      };
       this.loading3 = true;
       this.cancelarseleccionphoto = true;
       this.photosAppArrayCopy = this.ArrayFotos.slice(0);
       this.photosArrayUrlToDel.forEach((photo) => {
-        newArrayFotos.arrayFotosBorradas.push(photo)
+        newArrayFotos.arrayFotosBorradas.push(photo);
         let index = this.photosAppArrayCopy.indexOf(photo);
         if (index > -1) {
           this.photosAppArrayCopy.splice(index, 1);
@@ -302,10 +306,10 @@ export class ModalGallerySliderVerYElimanarFotosComponent
       });
       this.comunicacionEntreComponentesService.arrayDelate(newArrayFotos);
       if (this.ArrayFotos.length == 0) {
-      this.showNotFoundPhotos = true;
-      this.cancelarseleccionphoto = false;
-      this.isPhotoSelectingToDel = false;
-      this.photosArrayUrlToDel = [];
+        this.showNotFoundPhotos = true;
+        this.cancelarseleccionphoto = false;
+        this.isPhotoSelectingToDel = false;
+        this.photosArrayUrlToDel = [];
         this.showNotFoundPhotos = true;
       } else {
         this.showNotFoundPhotos = false;
@@ -317,14 +321,14 @@ export class ModalGallerySliderVerYElimanarFotosComponent
     this.valorindicecarrucel = -1;
     this.imgselecmodal = -1;
     this.cancelarseleccionphoto = true;
-      if (this.ArrayFotos.length == 0) {
-      this.isPhotoSelectingToDel = false
-         this.showNotFoundPhotos = true;
-         this.cancelarseleccionphoto = false;
-         this.photosArrayUrlToDel = [];
-      } else {
-        this.isPhotoSelectingToDel = !this.isPhotoSelectingToDel;
-      }
+    if (this.ArrayFotos.length == 0) {
+      this.isPhotoSelectingToDel = false;
+      this.showNotFoundPhotos = true;
+      this.cancelarseleccionphoto = false;
+      this.photosArrayUrlToDel = [];
+    } else {
+      this.isPhotoSelectingToDel = !this.isPhotoSelectingToDel;
+    }
   }
   public dismiss() {
     this._modalService.dismiss(this.arrayamandar);

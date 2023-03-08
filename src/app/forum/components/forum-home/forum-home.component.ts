@@ -60,10 +60,10 @@ export class ForumHomeComponent implements OnInit, OnDestroy {
   ];
   SubsCommunicateData!: Subscription;
   /* Paginación */
-  page = 1;
-  pageSize = 2;
-  collectionSize = 0;
-  resetPage:number=1
+  page:number = 1;
+  pageSize:number = 10;
+  collectionSize:number = 0;
+  maxSize:number=2
   showPagination: boolean = false;
   constructor(
     private forumService: ForumService,
@@ -80,7 +80,7 @@ export class ForumHomeComponent implements OnInit, OnDestroy {
       this.communicateDataService.currentUser.subscribe((active: any) => {
         if (active) {
           this.reloadQuestions();
-          this.page=1
+          this.page = 1;
         }
       });
   }
@@ -128,7 +128,7 @@ export class ForumHomeComponent implements OnInit, OnDestroy {
       .confirm(
         'Eliminar pregunta',
         'Está seguro que desea eliminar esta pregunta',
-        'Si',
+        'Sí',
         'No',
         ''
       )
@@ -222,7 +222,7 @@ export class ForumHomeComponent implements OnInit, OnDestroy {
     this.showNotFound = this.preguntasCopia.length < 1;
     this.showPagination = !this.showNotFound;
 
-    if (this.showPagination && this.preguntas.length>2) {
+    if (this.showPagination && this.preguntas.length > this.pageSize) {
       this.collectionSize = this.preguntasCopia.length;
       this.preguntasCopia = this.paginate(
         this.preguntasCopia,

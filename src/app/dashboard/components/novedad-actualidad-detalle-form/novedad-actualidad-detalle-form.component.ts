@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { NovedadesService } from 'src/app/services/novedades.service';
-
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 interface noveda {
   id_novedad?: number /* no */;
   autor: string;
@@ -40,10 +40,13 @@ export class NovedadActualidadDetalleFormComponent implements OnInit {
   @ViewChild('fileInputCreate') inputFileDialogCreate!: ElementRef;
   form: FormGroup = new FormGroup({
     tipo_novedad: new FormControl('', [Validators.required]),
-    titulo: new FormControl('', [Validators.required]),
-    resumen: new FormControl('', [Validators.required]),
-    autor: new FormControl('', [Validators.required]),
-    url_novedad: new FormControl('', [Validators.required]),
+    titulo: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    resumen: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    autor: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    url_novedad: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
   });
   tipoNovedad: any = [
     { nombre: 'Artículo', id: 1 },

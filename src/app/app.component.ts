@@ -67,17 +67,6 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
       this.isAuthUser = isAuth;
       if (!this.isAuthUser) {
         this.chatService.disconnect();
-      } else {
-        //this.chatService.connect();
-        this.router.events.subscribe((event) => {
-          if (event instanceof NavigationEnd) {
-            let route: string = event.url;
-            if (route.includes('dashboard')) {
-             /*  this.chatService.reset() */
-              window.location.reload();
-            }
-          }
-        });
       }
     });
 

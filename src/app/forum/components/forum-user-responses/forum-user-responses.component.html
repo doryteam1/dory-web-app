@@ -14,7 +14,7 @@
   <ng-container *ngIf="!loadingQuestion && !showErrorQuestion && !showNotFoundQuestion">
 
     <div class="container-section__response" style="margin-bottom: 0;padding: 10px;">
-      <app-user-answers-forum [data]="preguntaUser" [dataAll]="true" [activeCursor]="true">
+      <app-user-answers-forum [data]="preguntaUser" [dataAll]="true" [activeCursor]="true" (onDetalles)="goDetail(preguntaUser?.tipoUsuario,preguntaUser?.usuarioId)">
       </app-user-answers-forum>
     </div>
     <!-- Formulario responder -->
@@ -53,11 +53,11 @@
 
       <app-user-answers-forum style="width: 100%;" *ngFor="let respuesta of respuestasCopia" [activeRespuesta]="true"
         [dataAll]="true" [authUserId]="evaluateRegisteredUserService.evaluateUser(respuesta.usuarioId)"
-        [data]="respuesta" (onDelete)="deleteRespuesta(respuesta?.id,respuesta?.fotos)" [activeCursor]="true">
+        [data]="respuesta" (onDelete)="deleteRespuesta(respuesta?.id,respuesta?.fotos)" [activeCursor]="true"(onDetalles)="goDetail(respuesta?.tipoUsuario,respuesta?.usuarioId)">
       </app-user-answers-forum>
 
-      <ngb-pagination *ngIf="showPagination && respuestas.length>2" [collectionSize]="collectionSize" [(page)]="page" (pageChange)="resetOfSearch()"
-        [maxSize]="2" [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+      <ngb-pagination *ngIf="showPagination && respuestas.length > pageSize" [collectionSize]="collectionSize" [(page)]="page" (pageChange)="resetOfSearch()"
+        [maxSize]="maxSize" [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
         <ng-template ngbPaginationPrevious><i class="bi bi-caret-left-fill azul1--color"></i></ng-template>
         <ng-template ngbPaginationNext><i class="bi bi-caret-right-fill azul1--color"></i></ng-template>
       </ngb-pagination>

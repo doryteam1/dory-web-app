@@ -1,92 +1,103 @@
-<div class="container-f" *ngIf="!success">
-<div class="container-form">
-    <div class="container-form__alert alert alert-danger" role="alert" *ngIf="error != ''">
-        {{error}}
-        </div>
-        <div class="container-form__alert alert alert alert-success" role="alert" *ngIf="success">
-            Registro exitoso!
-        </div>
-        <div class="container-form__box-title">
-            <div>
-                <h4 class="container__title">Regístrate</h4>
-                <img class="container__logo" src="assets/images/logo-no-name.svg">
+<div class="container-f" *ngIf="!success" #registroRef>
+  <div #registroRefDiv class="container-f__div"  [ngStyle]="{'margin': registroRef?.offsetHeight! <= registroRefDiv?.offsetHeight! ? '0 auto' : 'auto'}">
+    <div class="container-form">
+        <div class="container-form__alert alert alert-danger" role="alert" *ngIf="error != ''">
+            {{error}}
             </div>
-        </div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="container-form__box1">
-        <span class="container-form__label">Correo electrónico*</span>
-        <input class="container-form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="Ingresa tu correo electrónico" formControlName="email" (input)="onChange()">
-        <div *ngIf="invalid('email')" class="container__alert-msg danger-message">
-            <div *ngIf="email?.errors?.['required']">
-                No haz escrito tu email:(
+            <div class="container-form__alert alert alert alert-success" role="alert" *ngIf="success">
+                Registro exitoso!
             </div>
-            <div *ngIf="email?.errors?.['email']">
-                Escribe un email correcto!
+            <div class="container-form__box-title">
+                <div>
+                    <h4 class="container__title">Regístrate</h4>
+                    <img class="container__logo" src="assets/images/logo-no-name.svg">
+                </div>
             </div>
-        </div>
-        <label class="container-form__label" for="cars">Cual es tu rol?*</label>
-        <select class="container-form__input form-input-text-square" name="cars" id="cars" formControlName="tipoUsuario">
-        <optgroup label="Eres un">
-            <option hidden="hidden" selected="selected">Escoge uno</option>
-            <option *ngFor="let tipo of tipoUsuarios" [ngValue]="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>
-        </optgroup>
-        </select>
-        <div *ngIf="invalid('tipoUsuario')" class="container__alert-msg danger-message">
-            <div *ngIf="tipoUsuario?.errors?.['required']">
-                Escoge un tipo de usuario
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div class="container-form__box1">
+            <span class="container-form__label">Correo electrónico*</span>
+            <input class="container-form__input form-input-text-square" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" placeholder="Ingresa tu correo electrónico" formControlName="email" (input)="onChange()">
+            <div *ngIf="invalid('email')" class="container__alert-msg danger-message">
+                <div *ngIf="email?.errors?.['required']">
+                    No haz escrito tu email:(
+                </div>
+                <div *ngIf="email?.errors?.['email']">
+                    Escribe un email correcto!
+                </div>
             </div>
-        </div>
+            <label class="container-form__label" for="cars">Cual es tu rol?*</label>
+            <select class="container-form__input form-input-text-square" name="cars" id="cars" formControlName="tipoUsuario">
+            <optgroup label="Eres un">
+                <option hidden="hidden" selected="selected">Escoge uno</option>
+                <option *ngFor="let tipo of tipoUsuarios" [ngValue]="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>
+            </optgroup>
+            </select>
+            <div *ngIf="invalid('tipoUsuario')" class="container__alert-msg danger-message">
+                <div *ngIf="tipoUsuario?.errors?.['required']">
+                    Escoge un tipo de usuario
+                </div>
+            </div>
 
-        <div class="container-form__passwd-box">
-            <div class="container-form__sub-passwd-box">
-                <span class="container-form__label">Crea una contraseña*</span>
-                <input class="container-form__input container-form__input--passwd form-input-text-square" [ngClass]="invalid('password') ? 'invalid-input' : ''" type="password" placeholder="    Contraseña" formControlName="password">
-                <div *ngIf="invalid('password')" class="container__alert-msg danger-message">
-                    <div *ngIf="password?.errors?.['pattern']">
-                        <p>Introduce una contraseña segura: <span [ngClass]="eigthChar(password?.value) ? 'success': ''">Al menos 8 caracteres</span> que contengan <span [ngClass]="capitalcase(password?.value) ? 'success': ''">letras mayúsculas,</span> <span [ngClass]="lowercase(password?.value) ? 'success': ''"> minúsculas</span> <span [ngClass]="number(password?.value) ? 'success': ''"> y números.</span></p>
+            <div class="container-form__passwd-box">
+                <div class="container-form__sub-passwd-box">
+                    <span class="container-form__label">Crea una contraseña*</span>
+                    <input class="container-form__input container-form__input--passwd form-input-text-square" [ngClass]="invalid('password') ? 'invalid-input' : ''" type="password" placeholder="    Contraseña" formControlName="password">
+                    <div *ngIf="invalid('password')" class="container__alert-msg danger-message">
+                        <div *ngIf="password?.errors?.['pattern']">
+                            <p>Introduce una contraseña segura: <span [ngClass]="eigthChar(password?.value) ? 'success': ''">Al menos 8 caracteres</span> que contengan <span [ngClass]="capitalcase(password?.value) ? 'success': ''">letras mayúsculas,</span> <span [ngClass]="lowercase(password?.value) ? 'success': ''"> minúsculas</span> <span [ngClass]="number(password?.value) ? 'success': ''"> y números.</span></p>
+                        </div>
+                    </div>
+                    <div *ngIf="invalid('password')" class="container__alert-msg danger-message">
+                        <div *ngIf="password?.errors?.['required']">
+                            Escribe una contraseña
+                        </div>
                     </div>
                 </div>
-                <div *ngIf="invalid('password')" class="container__alert-msg danger-message">
-                    <div *ngIf="password?.errors?.['required']">
-                        Escribe una contraseña
+                <div class="container-form__sub-passwd-box">
+                    <span class="container-form__label">Repite la contraseña*</span>
+                    <input class="container-form__input container-form__input--passwd form-input-text-square" [ngClass]="invalid('matchPassword') ? 'invalid-input' : ''" type="password" placeholder="    Contraseña" formControlName="matchPassword">
+                    <div *ngIf="invalid('matchPassword') || noMatchingPasswords()" class="container__alert-msg danger-message">
+                        <div *ngIf="matchPassword?.errors?.['required']">
+                            Escribe nuevamente la contraseña
+                        </div>
+                        <div *ngIf="password?.value != matchPassword?.value">
+                            Las contraseñas no coinciden
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="container-form__sub-passwd-box">
-                <span class="container-form__label">Repite la contraseña*</span>
-                <input class="container-form__input container-form__input--passwd form-input-text-square" [ngClass]="invalid('matchPassword') ? 'invalid-input' : ''" type="password" placeholder="    Contraseña" formControlName="matchPassword">
-                <div *ngIf="invalid('matchPassword') || noMatchingPasswords()" class="container__alert-msg danger-message">
-                    <div *ngIf="matchPassword?.errors?.['required']">
-                        Escribe nuevamente la contraseña
-                    </div>
-                    <div *ngIf="password?.value != matchPassword?.value">
-                        Las contraseñas no coinciden
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="container-form__terms-box">
-            <input class="container-form__checkbox" type="checkbox" formControlName="terms">
-            <ngbd-modal-options></ngbd-modal-options>
-        </div>
-        <div *ngIf="invalid('terms')" class="container__alert-msg danger-message">
-            <div *ngIf="!terms?.value">
-                Debes aceptar los términos
+            <div class="container-form__terms-box">
+                <input class="container-form__checkbox" type="checkbox" formControlName="terms">
+                <ngbd-modal-options></ngbd-modal-options>
+            </div>
+            <div *ngIf="invalid('terms')" class="container__alert-msg danger-message">
+                <div *ngIf="!terms?.value">
+                    Debes aceptar los términos
+                </div>
+            </div>
+            <div class="container-form__button-box">
+              <div>
+                <button class="container-form__button btn-rounded-blue" type="submit">Registrar una cuenta</button>
+                <button class="container-form__button-white btn-rounded btn--white" (click)="loginWithGoogle()"><img class="container-form__icon" src="assets/icons/google-icon-grey.svg"><span class="container-form__button-text">Regístrate con Google</span></button>
+              </div>
+                <p class="container__message-2">¿Ya estás registrado?
+                  <a href="/login">Iniciar sesión</a>
+                </p>
             </div>
         </div>
-        <div class="container-form__button-box">
-          <div>
-            <button class="container-form__button btn-rounded-blue" type="submit">Registrar una cuenta</button>
-            <button class="container-form__button-white btn-rounded btn--white" (click)="loginWithGoogle()"><img class="container-form__icon" src="assets/icons/google-icon-grey.svg"><span class="container-form__button-text">Regístrate con Google</span></button>
-          </div>
-            <p class="container__message-2">¿Ya estás registrado?
-              <a href="/login">Iniciar sesión</a>
-            </p>
-        </div>
+        </form>
     </div>
-    </form>
-</div>
+  </div>
 </div>
 <ngx-spinner type="square-jelly-box"></ngx-spinner>
-<app-basic-message title='Registro exitoso' callToAction='Por favor ingresa a tu correo donde recibiras las instrucciones para verificar tu cuenta. No olvides revisar la bandeja de correo no deseado.' redirectTo="/login" *ngIf="success"></app-basic-message>
+
+<div *ngIf="success" class="container-basic-message" #basicMessageRef>
+  <div #basicMessageRefDiv class="container-basic-message__div"
+    [ngStyle]="{'margin': basicMessageRef?.offsetHeight! <= basicMessageRefDiv?.offsetHeight! ? '0 auto' : 'auto'}">
+    <app-basic-message class="ok" title='Registro exitoso'
+      callToAction='Por favor ingresa a tu correo donde recibiras las instrucciones para verificar tu cuenta. No olvides revisar la bandeja de correo no deseado.'
+      redirectTo="/login"></app-basic-message>
+  </div>
+</div>
+<!-- https://netbasal.com/binding-css-variables-in-angular-69dfd4136e21 -->

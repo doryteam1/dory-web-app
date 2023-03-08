@@ -53,12 +53,16 @@ export class MisProductosComponent implements OnInit {
     );
   }
   deleteProducto(codigo: number, nombre: any, index: any) {
-    let arrayFotos = this.productos[index].fotos;
+
+    let arrayFotos = this.productos[index].fotos.filter(
+      (foto: any) => foto !== null
+    );
+
     this.appModalService
       .confirm(
         'Eliminar producto',
         'Esta seguro que desea eliminar el producto',
-        'Si',
+        'Sí',
         'No',
         nombre
       )
@@ -67,7 +71,9 @@ export class MisProductosComponent implements OnInit {
           this.proveedorService.deleteProducto(codigo).subscribe(
             (response) => {
               this.productos.splice(index, 1);
-              this.storage.deleteMultipleByUrls(arrayFotos);
+              if (arrayFotos.length > 0) {
+                this.storage.deleteMultipleByUrls(arrayFotos);
+              }
               if (this.productos.length <= 0) {
                 this.showNotFound = true;
               }

@@ -85,8 +85,13 @@ export class PublicacionDetalleComponent implements OnInit {
     );
   }
 
-  goDetail(id: number) {
-    this.router.navigateByUrl('transportadores/detalle/' + id);
+  goDetail(userType:any,id:number) {
+    if (userType === "Piscicultor") {
+      this.router.navigateByUrl('/piscicultores/municipio/detalle/' + id);
+    }else{
+      this.router.navigateByUrl('/pescadores/municipio/detalle/' + id);
+    }
+
   }
   toggleContent() {
     this.showLess = !this.showLess;

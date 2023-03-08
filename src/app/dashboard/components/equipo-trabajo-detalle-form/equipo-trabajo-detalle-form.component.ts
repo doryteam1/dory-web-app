@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { EquipoTrabajoService } from 'src/app/services/equipo-trabajo.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 interface equipotrabajo {
   id?: number /* no */;
   nombres: string;
@@ -34,16 +35,22 @@ interface equipotrabajo {
 export class EquipoTrabajoDetalleFormComponent implements OnInit {
   @ViewChild('fileInputCreate') inputFileDialogCreate!: ElementRef;
   form: FormGroup = new FormGroup({
-    nombres: new FormControl('', [Validators.required]),
-    apellidos: new FormControl('', [Validators.required]),
-    descripcion: new FormControl('', [Validators.required]),
+    nombres: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    apellidos: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    descripcion: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
     fecha_nacimiento: new FormControl('', [Validators.required]),
-    cargo: new FormControl('', [Validators.required]),
+    cargo: new FormControl('', [Validators.required, WhiteSpaceValidator]),
     enlaceCvLAC: new FormControl(''),
     enlaceLinkedin: new FormControl(''),
-    pais: new FormControl('', [Validators.required]),
-    departamento: new FormControl('', [Validators.required]),
-    municipio: new FormControl('', [Validators.required]),
+    pais: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    departamento: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
+    municipio: new FormControl('', [Validators.required, WhiteSpaceValidator]),
   });
   loading: boolean = false;
   modalMode: string = 'visualize';
@@ -290,7 +297,7 @@ export class EquipoTrabajoDetalleFormComponent implements OnInit {
     var today = new Date();
     /*     var now = today.toLocaleDateString('es');
     now = formatDate(now, 'yyyy-MM-dd', 'es'); */
-    return this.datePipe.transform(today, 'yyyy-MM-dd');;
+    return this.datePipe.transform(today, 'yyyy-MM-dd');
   }
   get nombres() {
     return this.form.get('nombres');
