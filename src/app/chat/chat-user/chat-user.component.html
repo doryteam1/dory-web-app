@@ -18,9 +18,10 @@
           totalUnreads}}</small>
       </div>
       <div style="position: relative;" [ngClass]="{'dplay-none': !showUnreads}">
-        <i class="bi bi-envelope myChat-text tooltip-trigger" (click)="cancelUnreadFilter()"></i>
-        <div class="tooltip-one">
-          Mensajes
+        <!-- <i class="bi bi-envelope myChat-text tooltip-trigger" (click)="cancelUnreadFilter()"></i> -->
+        <i class="bi bi-arrow-left-circle myChat-text tooltip-trigger" (click)="cancelUnreadFilter()"></i>
+        <div class="tooltip-one" style="left: -80px; top: -3.2px;">
+          Volver
         </div>
       </div>
 

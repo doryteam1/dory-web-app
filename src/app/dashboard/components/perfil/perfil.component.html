@@ -1,380 +1,409 @@
 <div class="d-flex flex-row justify-content-center d-flex-miestilo">
-<div class="container">
+  <div class="container">
     <div class="container__box-row">
-        <div  id="foto1" class="container__box-image">
-            <img class="container__image" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
-            <div class="btn-group dropend container__image2">
-              <div id="fotoedit" data-bs-toggle="dropdown" aria-expanded="false">
-                <div *ngIf="usuario?.foto">
-                  <!-- Existe foto -->
-                  <img   class="container__image2"   src="assets/icons/camera.svg"  >
-                </div>
-              </div>
-              <!-- Icono se activa cuando no existe foto -->
-              <img class="container__image2" *ngIf="!usuario?.foto" src="assets/icons/camera.svg"   (click)="openAddFileDialog('foto')">
-              <ul class="dropdown-menu dropdown-menu-photo" aria-labelledby="fotoedit">
-                <li class="dropdown-menu--li">
-                  <img src="assets/icons/delete_black_24dp.svg">
-                  <a class="dropdown-item dropdown-item-myestilo" (click)="deletePhotoPerfil()">Eliminar </a></li>
-                <li class="dropdown-menu--li">
-                  <img src="assets/icons/update-icon-photo-perfil.svg">
-                  <a class="dropdown-item dropdown-item-myestilo" (click)="openAddFileDialog('foto')">Actualizar</a>
-                </li>
-              </ul>
+      <div id="foto1" class="container__box-image">
+        <img class="container__image" [src]="usuario?.foto ? usuario?.foto : 'assets/images/avatar-person.svg'">
+        <div class="btn-group dropend container__image2">
+          <div id="fotoedit" data-bs-toggle="dropdown" aria-expanded="false">
+            <div *ngIf="usuario?.foto">
+              <!-- Existe foto -->
+              <img class="container__image2" src="assets/icons/camera.svg">
             </div>
-            <div class="container__spinner-photo spinner-border text-info" role="status" *ngIf="loadingPhoto">
-            </div>
-            <input #fileInput type="file" accept="image/png, image/jpeg" name="resume" (change)='fileChange($event)' hidden>
-            <input #fileInputimgpdf type="file" accept="image/png, image/jpeg, .pdf" name="resume" (change)='fileChange($event)' hidden>
+          </div>
+          <!-- Icono se activa cuando no existe foto -->
+          <img class="container__image2" *ngIf="!usuario?.foto" src="assets/icons/camera.svg"
+            (click)="openAddFileDialog('foto')">
+          <ul class="dropdown-menu dropdown-menu-photo" aria-labelledby="fotoedit">
+            <li class="dropdown-menu--li">
+              <img src="assets/icons/delete_black_24dp.svg">
+              <a class="dropdown-item dropdown-item-myestilo" (click)="deletePhotoPerfil()">Eliminar </a>
+            </li>
+            <li class="dropdown-menu--li">
+              <img src="assets/icons/update-icon-photo-perfil.svg">
+              <a class="dropdown-item dropdown-item-myestilo" (click)="openAddFileDialog('foto')">Actualizar</a>
+            </li>
+          </ul>
         </div>
-        <div *ngIf="photoDelate" class="container__alert-msg danger-message">
-          Foto de perfil  eliminada
+        <div class="container__spinner-photo spinner-border text-info" role="status" *ngIf="loadingPhoto">
         </div>
-        <div *ngIf="photoUpdate" class="container__alert-msg danger-message">
-          Foto de perfil  actualizada
-        </div>
-        <div class="container__info">
-            <span class="container__label2">{{nombres?.value ? nombres?.value : '____' }} {{apellidos?.value ? apellidos?.value : '____' }}</span>
-            <span class="container__label2">{{usuario?.tipo_usuario ? usuario?.tipo_usuario : '____'}}</span>
-        </div>
+        <input #fileInput type="file" accept="image/png, image/jpeg" name="resume" (change)='fileChange($event)' hidden>
+        <input #fileInputimgpdf type="file" accept="image/png, image/jpeg, .pdf" name="resume"
+          (change)='fileChange($event)' hidden>
+      </div>
+      <div *ngIf="photoDelate" class="container__alert-msg danger-message">
+        Foto de perfil eliminada
+      </div>
+      <div *ngIf="photoUpdate" class="container__alert-msg danger-message">
+        Foto de perfil actualizada
+      </div>
+      <div class="container__info">
+        <span class="container__label2">{{nombres?.value ? nombres?.value : '____' }} {{apellidos?.value ?
+          apellidos?.value : '____' }}</span>
+        <span class="container__label2">{{usuario?.tipo_usuario ? usuario?.tipo_usuario : '____'}}</span>
+      </div>
     </div>
-    <form id="CreateForm" [formGroup]="form"  autocomplete="off"class="formControl">
+    <form id="CreateForm" [formGroup]="form" autocomplete="off" class="formControl">
 
-    <div id="basicos">
-      <div class="container__box__title">
+      <div id="basicos">
+        <div class="container__box__title">
           <span class="container__title mb-5">Datos básicos</span>
-      </div>
+        </div>
 
-      <div id="nombre" class="container-row row gx-5 align-items-center">
+        <div id="nombre" class="container-row row gx-5 align-items-center">
           <div class="col">
-              <div class="container__box" *ngIf="mostrarPorTipo('nombres')">
-                  <span class="container__label">Nombres: <span class="asterisk">*</span></span>
-                  <div class="input-wrapper">
-                      <input name= "nombr" class="container__input form-input-text-square" [ngClass]="{'container__input--color':!editarperfil}"
-                      type="text" formControlName='nombres' [placeholder]="editarperfil ? 'Ingrese su(s) nombre(s)' : ''">
-                  </div>
+            <div class="container__box" *ngIf="mostrarPorTipo('nombres')">
+              <span class="container__label">Nombres: <span class="asterisk">*</span></span>
+              <div class="input-wrapper">
+                <input name="nombr" class="container__input form-input-text-square"
+                  [ngClass]="{'container__input--color':!editarperfil}" type="text" formControlName='nombres'
+                  [placeholder]="editarperfil ? 'Ingrese su(s) nombre(s)' : ''">
               </div>
+            </div>
           </div>
 
           <div class="col">
-              <div class="container__box left" *ngIf="mostrarPorTipo('apellidos')">
-                  <span class="container__label">Apellidos: <span class="asterisk">*</span></span>
-                  <div class="input-wrapper">
-                      <input class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
-                        type="text" formControlName='apellidos' [placeholder]="editarperfil ? 'Ingrese su(s) apellido(s)' : ''">
-                  </div>
+            <div class="container__box left" *ngIf="mostrarPorTipo('apellidos')">
+              <span class="container__label">Apellidos: <span class="asterisk">*</span></span>
+              <div class="input-wrapper">
+                <input class="container__input form-input-text-square"
+                  [ngClass]="{'container__input--color':!editarperfil}" type="text" formControlName='apellidos'
+                  [placeholder]="editarperfil ? 'Ingrese su(s) apellido(s)' : ''">
               </div>
+            </div>
           </div>
-      </div>
+        </div>
 
-      <div class="container-row row align-items-center">
+        <div class="container-row row align-items-center">
           <div class="col">
-              <div class="container__box" *ngIf="mostrarPorTipo('cedula')">
-                  <span class="container__label">Cédula</span>
-                  <div class="input-wrapper">
-                      <input class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
-                       type="number"  formControlName='cedula' [placeholder]="editarperfil ? 'Ingrese su número de cédula' : ''">
-                  </div>
+            <div class="container__box" *ngIf="mostrarPorTipo('cedula')">
+              <span class="container__label">Cédula</span>
+              <div class="input-wrapper">
+                <input class="container__input form-input-text-square"
+                  [ngClass]="{'container__input--color':!editarperfil}" type="number" formControlName='cedula'
+                  [placeholder]="editarperfil ? 'Ingrese su número de cédula' : ''">
               </div>
+            </div>
           </div>
 
           <div class="col">
-              <div class="container__box left" *ngIf="mostrarPorTipo('email')">
-                  <span class="container__label">Correo electrónico</span>
-                  <div class="input-wrapper">
-                      <input class="container__input form-input-text-square"  [ngClass]="{'container__input--color':true}"
-                      type="text" formControlName='email' [placeholder]="editarperfil ? 'Ingresa tu correo electrónico' : ''">
-                  </div>
+            <div class="container__box left" *ngIf="mostrarPorTipo('email')">
+              <span class="container__label">Correo electrónico</span>
+              <div class="input-wrapper">
+                <input class="container__input form-input-text-square" [ngClass]="{'container__input--color':true}"
+                  type="text" formControlName='email'
+                  [placeholder]="editarperfil ? 'Ingresa tu correo electrónico' : ''">
               </div>
+            </div>
           </div>
-      </div>
+        </div>
 
-      <div class="container-row row align-items-center">
-        <div id="sexo" class="col">
-          <div class="container__box" *ngIf="mostrarPorTipo('sexo')">
+        <div class="container-row row align-items-center">
+          <div id="sexo" class="col">
+            <div class="container__box" *ngIf="mostrarPorTipo('sexo')">
               <span class="container__label">Sexo <span class="asterisk">*</span></span>
               <div class="input-wrapper">
-                <select class="container__input form-input-text-square" [ngClass]="{'container__input--color':!editarperfil}"
-                    formControlName='id_sexo'>
-                    <optgroup label="Escoge tu sexo">
-                        <option *ngFor="let sexo of sexos" [ngValue]="sexo.id" >{{sexo.nombre}}</option>
-                    </optgroup>
+                <select class="container__input form-input-text-square"
+                  [ngClass]="{'container__input--color':!editarperfil}" formControlName='id_sexo'>
+                  <optgroup label="Escoge tu sexo">
+                    <option *ngFor="let sexo of sexos" [ngValue]="sexo.id">{{sexo.nombre}}</option>
+                  </optgroup>
                 </select>
               </div>
+            </div>
           </div>
-        </div>
 
           <div id="etnia" class="col">
             <div class="container__box left" *ngIf="mostrarPorTipo('etnia')">
-                <span class="container__label">Población diferencial <span class="asterisk">*</span></span>
-                <div class="input-wrapper">
-                  <select class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
-                      formControlName='id_etnia'>
-                      <optgroup label="Escoge tu etnia">
-                          <option *ngFor="let etnia of etnias" [ngValue]="etnia.id" >{{etnia.nombre}}</option>
-                      </optgroup>
-                  </select>
-                </div>
+              <span class="container__label">Población diferencial <span class="asterisk">*</span></span>
+              <div class="input-wrapper">
+                <select class="container__input form-input-text-square"
+                  [ngClass]="{'container__input--color':!editarperfil}" formControlName='id_etnia'>
+                  <optgroup label="Escoge tu etnia">
+                    <option *ngFor="let etnia of etnias" [ngValue]="etnia.id">{{etnia.nombre}}</option>
+                  </optgroup>
+                </select>
+              </div>
             </div>
           </div>
-      </div>
+        </div>
 
-      <div class="container-row row align-items-center w-50">
-        <div id="celular" class="col">
-          <div  class="container__box" *ngIf="mostrarPorTipo('celular')">
+        <div class="container-row row align-items-center w-50">
+          <div id="celular" class="col">
+            <div class="container__box" *ngIf="mostrarPorTipo('celular')">
               <span class="container__label">Celular <span class="asterisk">*</span></span>
               <div class="input-wrapper">
-                  <input class="container__input form-input-text-square" [ngClass]="{'container__input--color':!editarperfil}"
-                    type="number" formControlName='celular' [placeholder]="editarperfil ? 'Ingrese su número de celular' : ''" >
+                <input class="container__input form-input-text-square"
+                  [ngClass]="{'container__input--color':!editarperfil}" type="number" formControlName='celular'
+                  [placeholder]="editarperfil ? 'Ingrese su número de celular' : ''">
               </div>
+            </div>
           </div>
-        </div>
 
-      </div>
-    </div>
-
-    <div class="container__box__title">
-      <span class="container__title">Foto de perfil</span>
-    </div>
-    <div class="d-flex flex-column justify-content-center align-items-center mb-2">
-      <div class="progress" *ngIf="percentUploaded && percentUploaded > 1 && percentUploaded < 100">
-        <div class="progress-bar" [style.width]="percentUploaded+'%'" role="progressbar"
-          [attr.aria-valuenow]="percentUploaded" aria-valuemin="0" aria-valuemax="100">{{percentUploaded | number:'':'es'}}%
         </div>
       </div>
-      <span class="text-danger" *ngIf="photoUpdate">Foto de perfil cargada</span>
-      <span class="text-danger" *ngIf="photoDelate">Foto de perfil eliminada</span>
-    </div>
 
-    <div id="foto2" class="d-flex flex-row justify-content-center align-items-center gap-2 d-flex-delate-add-photo">
-      <button class="container__btn3 btn" *ngIf="!usuario?.foto" (click)="openAddFileDialog('foto')">
-        <div class="container__btn3-div">
-          <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
-          <span>Agregar foto</span>
-        </div>
-      </button>
-      <button class="container__btn3 btn" *ngIf="usuario?.foto" (click)="openAddFileDialog('foto')">
-        <div class="container__btn3-div">
-          <img src="assets/icons/update-icon-photo-perfil.svg">
-          <span>Actualizar foto</span>
-        </div>
-      </button>
-      <button class="container__btn3 btn" *ngIf="usuario?.foto" (click)="deletePhotoPerfil()">
-        <div class="container__btn3-div">
-          <img src="assets/icons/delete_black_24dp.svg">
-          <span>Eliminar foto</span>
-        </div>
-      </button>
-    </div>
-
-    <div class="container__box__title">
-      <span class="container__title">Otros documentos</span>
-    </div>
-    <div id="otrosDocumentos">
-      <div class="d-flex flex-column justify-content-center align-items-center mb-2">
-        <div class="progress"  *ngIf="percentUploaded2! > 0 && percentUploaded2! <= 100" >
-          <div class="progress-bar" [style.width]="percentUploaded2+'%'" role="progressbar"
-            [attr.aria-valuenow]="percentUploaded2" aria-valuemin="0" aria-valuemax="100">{{percentUploaded2 | number:'':'es'}}%
-          </div>
-        </div>
-        <span class="text-danger" *ngIf="photoUpdate2 || photoDelete2">{{photoUpdate2 ? 'Documento cargado correctamente':photoDelete2 ? 'Documento eliminado':''}}</span>
-      </div>
-
-      <div  class="d-flex flex-row justify-content-center align-items-center gap-2 d-flex-delate-add-otros">
-
-        <button class="container__btn3 btn" (click)="openAddFileDialogDos('cedula')">
-          <div class="container__btn3-div">
-            <img [src]="usuario?.url_imagen_cedula ? 'assets/icons/update-icon-cedula.svg' : 'assets/icons/drive_folder_upload_animado_24dp.svg'">
-            <span>{{ usuario?.url_imagen_cedula ? 'Actualizar cédula' : 'Agregar cédula' }}</span>
-          </div>
-        </button>
-
-        <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="deleteDocument('url_imagen_cedula')">
-          <div class="container__btn3-div">
-            <img src="assets/icons/delete_black_24dp.svg">
-            <span>Eliminar cédula</span>
-          </div>
-        </button>
-
-      <button class="container__btn3 btn" (click)="openAddFileDialogDos('sisben')">
-        <div class="container__btn3-div">
-          <img
-            [src]="usuario?.url_sisben ? 'assets/icons/update-icon-docum.svg' : 'assets/icons/drive_folder_upload_animado_24dp.svg'">
-          <span>{{ usuario?.url_sisben ? 'Actualizar sisben' : 'Agregar sisben' }}</span>
-        </div>
-      </button>
-
-        <button class="container__btn3 btn" *ngIf="usuario?.url_sisben" (click)="deleteDocument('url_sisben')">
-          <div class="container__btn3-div">
-            <img src="assets/icons/delete_black_24dp.svg">
-            <span>Eliminar sisben</span>
-          </div>
-        </button>
-      </div>
-      <div class="d-flex justify-content-center flex-row mt-3 flex-wrap">
-        <a class="link rigth" [href]="usuario?.url_imagen_cedula" target="_blank" *ngIf="usuario?.url_imagen_cedula">Descargar cédula</a>
-        <a class="link rigth" [href]="usuario?.url_sisben" target="_blank" *ngIf="usuario?.url_sisben">Descargar sisben</a>
-      </div>
-    </div>
-
-    <div id="ubicacion">
       <div class="container__box__title">
-          <span class="container__title">Datos de ubicación</span>
+        <span class="container__title">Foto de perfil</span>
       </div>
-      <div class="container-row row">
+      <div class="d-flex flex-column justify-content-center align-items-center mb-2">
+        <div class="progress" *ngIf="percentUploaded && percentUploaded > 1 && percentUploaded < 100">
+          <div class="progress-bar" [style.width]="percentUploaded+'%'" role="progressbar"
+            [attr.aria-valuenow]="percentUploaded" aria-valuemin="0" aria-valuemax="100">{{percentUploaded |
+            number:'':'es'}}%
+          </div>
+        </div>
+        <span class="text-danger" *ngIf="photoUpdate">Foto de perfil cargada</span>
+        <span class="text-danger" *ngIf="photoDelate">Foto de perfil eliminada</span>
+      </div>
+
+      <div id="foto2" class="d-flex flex-row justify-content-center align-items-center gap-2 d-flex-delate-add-photo">
+        <button class="container__btn3 btn" *ngIf="!usuario?.foto" (click)="openAddFileDialog('foto')">
+          <div class="container__btn3-div">
+            <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
+            <span>Agregar foto</span>
+          </div>
+        </button>
+        <button class="container__btn3 btn" *ngIf="usuario?.foto" (click)="openAddFileDialog('foto')">
+          <div class="container__btn3-div">
+            <img src="assets/icons/update-icon-photo-perfil.svg">
+            <span>Actualizar foto</span>
+          </div>
+        </button>
+        <button class="container__btn3 btn" *ngIf="usuario?.foto" (click)="deletePhotoPerfil()">
+          <div class="container__btn3-div">
+            <img src="assets/icons/delete_black_24dp.svg">
+            <span>Eliminar foto</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="container__box__title">
+        <span class="container__title">Otros documentos</span>
+      </div>
+      <div id="otrosDocumentos">
+        <div class="d-flex flex-column justify-content-center align-items-center mb-2">
+          <div class="progress" *ngIf="percentUploaded2! > 0 && percentUploaded2! <= 100">
+            <div class="progress-bar" [style.width]="percentUploaded2+'%'" role="progressbar"
+              [attr.aria-valuenow]="percentUploaded2" aria-valuemin="0" aria-valuemax="100">{{percentUploaded2 |
+              number:'':'es'}}%
+            </div>
+          </div>
+          <span class="text-danger" *ngIf="photoUpdate2 || photoDelete2">{{photoUpdate2 ? 'Documento cargado
+            correctamente':photoDelete2 ? 'Documento eliminado':''}}</span>
+        </div>
+
+        <div class="d-flex flex-row justify-content-center align-items-center gap-2 d-flex-delate-add-otros">
+
+          <button class="container__btn3 btn" (click)="openAddFileDialogDos('cedula')">
+            <div class="container__btn3-div">
+              <img
+                [src]="usuario?.url_imagen_cedula ? 'assets/icons/update-icon-cedula.svg' : 'assets/icons/drive_folder_upload_animado_24dp.svg'">
+              <span>{{ usuario?.url_imagen_cedula ? 'Actualizar cédula' : 'Agregar cédula' }}</span>
+            </div>
+          </button>
+
+          <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula"
+            (click)="deleteDocument('url_imagen_cedula')">
+            <div class="container__btn3-div">
+              <img src="assets/icons/delete_black_24dp.svg">
+              <span>Eliminar cédula</span>
+            </div>
+          </button>
+
+          <button class="container__btn3 btn" (click)="openAddFileDialogDos('sisben')">
+            <div class="container__btn3-div">
+              <img
+                [src]="usuario?.url_sisben ? 'assets/icons/update-icon-docum.svg' : 'assets/icons/drive_folder_upload_animado_24dp.svg'">
+              <span>{{ usuario?.url_sisben ? 'Actualizar sisben' : 'Agregar sisben' }}</span>
+            </div>
+          </button>
+
+          <button class="container__btn3 btn" *ngIf="usuario?.url_sisben" (click)="deleteDocument('url_sisben')">
+            <div class="container__btn3-div">
+              <img src="assets/icons/delete_black_24dp.svg">
+              <span>Eliminar sisben</span>
+            </div>
+          </button>
+        </div>
+        <div class="d-flex justify-content-center flex-row mt-3 flex-wrap">
+          <a class="link rigth" [href]="usuario?.url_imagen_cedula" target="_blank"
+            *ngIf="usuario?.url_imagen_cedula">Descargar cédula</a>
+          <a class="link rigth" [href]="usuario?.url_sisben" target="_blank" *ngIf="usuario?.url_sisben">Descargar
+            sisben</a>
+        </div>
+      </div>
+
+      <div id="ubicacion">
+        <div class="container__box__title">
+          <span class="container__title">Datos de ubicación</span>
+        </div>
+        <div class="container-row row">
           <div class="col">
-              <div class="container__box" *ngIf="mostrarPorTipo('departamento')">
-                  <span class="container__label">Departamento</span>
-                  <div class="input-wrapper">
-                      <select class="container__input form-input-text-square"  [ngClass]="{'container__input--color':true}"
-                            formControlName='id_departamento' (ngModelChange)='changeDpto()'>
-                          <optgroup label="Escoge un departamento" value="70">
-                              <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
-                          </optgroup>
-                      </select>
-                  </div>
+            <div class="container__box" *ngIf="mostrarPorTipo('departamento')">
+              <span class="container__label">Departamento</span>
+              <div class="input-wrapper">
+                <select class="container__input form-input-text-square" [ngClass]="{'container__input--color':true}"
+                  formControlName='id_departamento' (ngModelChange)='changeDpto()'>
+                  <optgroup label="Escoge un departamento" value="70">
+                    <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">
+                      {{dpto.nombre_departamento}}</option>
+                  </optgroup>
+                </select>
               </div>
+            </div>
           </div>
 
           <div id="municipio" class="col">
-              <div class="container__box left" *ngIf="mostrarPorTipo('municipio')">
-                  <span class="container__label">Municipio <span class="asterisk">*</span></span>
-                  <div class="input-wrapper">
-                    <select class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
-                        formControlName='id_municipio' (change)='changeMunic()' >
-                        <optgroup label="Escoge un municipio">
-                            <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio" >{{municipio.nombre}}</option>
-                        </optgroup>
-                    </select>
-                  </div>
+            <div class="container__box left" *ngIf="mostrarPorTipo('municipio')">
+              <span class="container__label">Municipio <span class="asterisk">*</span></span>
+              <div class="input-wrapper">
+                <select class="container__input form-input-text-square"
+                  [ngClass]="{'container__input--color':!editarperfil}" formControlName='id_municipio'
+                  (change)='changeMunic()'>
+                  <optgroup label="Escoge un municipio">
+                    <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}
+                    </option>
+                  </optgroup>
+                </select>
               </div>
+            </div>
           </div>
-      </div>
-      <div class="container-row row">
+        </div>
+        <div class="container-row row">
           <div class="col">
-              <div class="container__box"  *ngIf="mostrarPorTipo('corregimiento')">
-                  <span class="container__label">Corregimiento</span>
-                  <div class="input-wrapper">
-                    <input class="container__input form-input-text-square"  [ngClass]="{'container__input--color':!editarperfil}"
-                      type="text" formControlName='nombre_corregimiento' [placeholder]="editarperfil ? 'Corregimiento o vereda' : ''">
-                  </div>
+            <div class="container__box" *ngIf="mostrarPorTipo('corregimiento')">
+              <span class="container__label">Corregimiento</span>
+              <div class="input-wrapper">
+                <input class="container__input form-input-text-square"
+                  [ngClass]="{'container__input--color':!editarperfil}" type="text"
+                  formControlName='nombre_corregimiento' [placeholder]="editarperfil ? 'Corregimiento o vereda' : ''">
               </div>
+            </div>
           </div>
           <div id="direccion" class="col">
-              <div class="container__box left" *ngIf="mostrarPorTipo('direccion')"  >
-                  <span class="container__label">Dirección: <span class="asterisk">*</span></span>
-                  <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}" (click)="verMap()">
-                    <input [readonly]="readonly" class="container__input form-input-text-square"
-                    [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil && usuario?.tipo_usuario !== 'Proveedor'}"
-                    type="text" formControlName='direccion' [placeholder]="editarperfil ? 'Selecciona aquí tu dirección' : ''"
-                    >
-                    <img *ngIf="editarperfil && usuario?.tipo_usuario !== 'Proveedor'" class="input-icon option" src ="assets/icons/ojoanimado.svg">
-                    <img *ngIf="!editarperfil && usuario?.tipo_usuario !== 'Proveedor'" class="input-icon option" src ="assets/icons/ojoanimadocerrado.svg">
-                  </div>
+            <div class="container__box left" *ngIf="mostrarPorTipo('direccion')">
+              <span class="container__label">Dirección: <span class="asterisk">*</span></span>
+              <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}" (click)="verMap()">
+                <input [readonly]="readonly" class="container__input form-input-text-square"
+                  [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil && usuario?.tipo_usuario !== 'Proveedor'}"
+                  type="text" formControlName='direccion'
+                  [placeholder]="editarperfil ? 'Selecciona aquí tu dirección' : ''">
+                <img *ngIf="editarperfil && usuario?.tipo_usuario !== 'Proveedor'" class="input-icon option"
+                  src="assets/icons/ojoanimado.svg">
+                <img *ngIf="!editarperfil && usuario?.tipo_usuario !== 'Proveedor'" class="input-icon option"
+                  src="assets/icons/ojoanimadocerrado.svg">
               </div>
-              <div *ngIf="faltadireccion" class="container__alert-msg danger-message">
-                  Campo requerido
-              </div>
+            </div>
+            <div *ngIf="faltadireccion" class="container__alert-msg danger-message">
+              Campo requerido
+            </div>
           </div>
-      </div>
+        </div>
 
-      <div class="container-row row">
+        <div class="container-row row">
           <div class="col">
-              <div class="container__box"  *ngIf="mostrarPorTipo('corregimiento')">
-                  <label  class="container__label" for="dateOfBirth">Información adicional de la dirección</label>
-                  <div class="input-group">
-                    <div class="input-wrapper">
-                      <textarea   class="form-control" [ngClass]="{'container__input--color':!editarperfil}"
-                        name="textarea" rows="3" cols="50"
-                        [placeholder]="editarperfil ? 'Información adicional de la ubicación seleccionada' : ''"
-                        formControlName="informacion_adicional_direccion">Escribe algo aquí</textarea>
-                    </div>
-                  </div>
+            <div class="container__box" *ngIf="mostrarPorTipo('corregimiento')">
+              <label class="container__label" for="dateOfBirth">Información adicional de la dirección</label>
+              <div class="input-group">
+                <div class="input-wrapper">
+                  <textarea class="form-control" [ngClass]="{'container__input--color':!editarperfil}" name="textarea"
+                    rows="3" cols="50"
+                    [placeholder]="editarperfil ? 'Información adicional de la ubicación seleccionada' : ''"
+                    formControlName="informacion_adicional_direccion">Escribe algo aquí</textarea>
+                </div>
               </div>
+            </div>
           </div>
           <div class="col">
           </div>
+        </div>
       </div>
-    </div>
-    <div class="container__box__title" *ngIf="mostrarPorTipo('area_experticia') || mostrarPorTipo('otra_area_experticia') || mostrarPorTipo('otra_area_experticia_descripcion') || mostrarPorTipo('sobre_mi')">
+      <div class="container__box__title"
+        *ngIf="mostrarPorTipo('area_experticia') || mostrarPorTipo('otra_area_experticia') || mostrarPorTipo('otra_area_experticia_descripcion') || mostrarPorTipo('sobre_mi')">
         <span class="container__title">Otros datos</span>
-    </div>
-<!-- readonly  -->
-    <div class="container-row row">
-        <div class="col">
+      </div>
+      <!-- readonly  -->
+      <div  class="d-flex flex-column">
+
+        <div class="container-row row  ">
+          <div class="col" *ngIf="mostrarPorTipo('area_experticia')">
             <div class="d-flex flex-column">
-                <span class="container__label" *ngIf="mostrarPorTipo('area_experticia')">Área de experticia</span>
-                <div class="container__box-row" *ngIf="mostrarPorTipo('area_experticia')">
-                    <select class="container__input form-input-text-square"
-                          formControlName='id_area_experticia' [ngClass]="{'container__input--color':!editarperfil}">
-                        <optgroup label="Escoge un área">
-                            <option *ngFor="let area of areas"[ngValue]="area.id_area">{{area.nombre}} </option>
-                            <option [ngValue]='-1'>Otra...</option>
-                        </optgroup>
-                    </select>
-                </div>
+              <span class="container__label" >Área de experticia</span>
+              <div class="container__box-row">
+                <select class="container__input form-input-text-square" formControlName='id_area_experticia'
+                  [ngClass]="{'container__input--color':!editarperfil}">
+                  <optgroup label="Escoge un área">
+                    <option *ngFor="let area of areas" [ngValue]="area.id_area">{{area.nombre}} </option>
+                    <option [ngValue]='-1'>Otra...</option>
+                  </optgroup>
+                </select>
+              </div>
             </div>
+          </div>
+          <div class="col" *ngIf="mostrarPorTipo('otra_area_experticia') && idAreaExpert?.value ==-1" [ngClass]="{left:idAreaExpert?.value ==-1}">
+            <div class="container__box" >
+              <span class="container__label">Escribe el nombre del área experticia: </span>
+              <div>
+                <input class="container__input form-input-text-square" type="text"
+                  [ngClass]="{'container__input--color':!editarperfil}" formControlName='otra_area_experticia'
+                  [placeholder]="editarperfil ? 'Tu área de experticia' : ''">
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="col">
-            <div class="container__box left" *ngIf="mostrarPorTipo('sobre_mi')">
-                <span class="container__label">Cuéntanos sobre ti: </span>
-                <div>
-                    <input class="container__input form-input-text-square"
-                    type="text" formControlName='sobre_mi' [placeholder]="editarperfil ? 'Cuéntanos sobre ti' : ''" [ngClass]="{'container__input--color':!editarperfil}">
+        <div class="container-row row  ">
+          <div class="col" *ngIf="mostrarPorTipo('otra_area_experticia_descripcion') && idAreaExpert?.value ==-1">
+            <div class="container__box">
+              <label class="container__label" for="dateOfBirth">Cuéntanos en que consiste tu área experticia:</label>
+              <div class="input-group">
+                <div class="input-wrapper">
+                  <textarea class="form-control mb15" [ngClass]="{'container__input--color':!editarperfil}" name="textarea"
+                    rows="3" cols="50" [placeholder]="editarperfil ? 'En que consiste tu área de experticia' : ''"
+                    formControlName='otra_area_experticia_descripcion'>Escribe algo aquí</textarea>
                 </div>
+              </div>
             </div>
+          </div>
+          <div class="col" *ngIf="mostrarPorTipo('sobre_mi')" [ngClass]="{left:idAreaExpert?.value ==-1}">
+            <div class="container__box " >
+              <label class="container__label" for="dateOfBirth">Cuéntanos sobre ti:</label>
+              <div class="input-group">
+                <div class="input-wrapper">
+                  <textarea class="form-control" [ngClass]="{'container__input--color':!editarperfil}" name="textarea"
+                    rows="3" cols="50" [placeholder]="editarperfil ? 'Cuéntanos sobre ti' : ''"
+                    formControlName='sobre_mi'>Escribe algo aquí</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
 
-    <div class="container-row row">
-        <div class="col">
-            <div class="container__box" *ngIf="mostrarPorTipo('otra_area_experticia_descripcion') && idAreaExpert?.value ==-1">
-                <span class="container__label">Cuéntanos en que consiste tu área experticia: </span>
-                <div>
-                    <input class="container__input form-input-text-square"  type="text-area"
-                    formControlName='otra_area_experticia_descripcion'
-                     [placeholder]="editarperfil ? 'En que consiste tu área de experticia' : ''"
-                     [ngClass]="{'container__input--color':!editarperfil}">
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="container__box left" *ngIf="mostrarPorTipo('otra_area_experticia') && idAreaExpert?.value ==-1">
-                <span class="container__label">Escribe el nombre del área experticia: </span>
-                <div>
-                    <input class="container__input form-input-text-square"  type="text"
-                     [ngClass]="{'container__input--color':!editarperfil}"
-                    formControlName='otra_area_experticia'
-                    [placeholder]="editarperfil ? 'Tu área de experticia' : ''">
-                </div>
-            </div>
-        </div>
-    </div>
+      </div>
     </form>
 
-<div class="d-flex  d-flex-edit-cancel-perfil flex-row justify-content-center align-items-center gap-2 mt-3">
-  <button class="container__btn3 btn" *ngIf="!editarperfil" (click)="editarPerfi()">
-    <div class="container__btn3-div">
-      <img src="assets/icons/edit_note_azul1_24dp.svg">
-      <span>Editar perfil</span>
+    <div class="d-flex  d-flex-edit-cancel-perfil flex-row justify-content-center align-items-center gap-2 mt-3">
+      <button class="container__btn3 btn" *ngIf="!editarperfil" (click)="editarPerfi()">
+        <div class="container__btn3-div">
+          <img src="assets/icons/edit_note_azul1_24dp.svg">
+          <span>Editar perfil</span>
+        </div>
+      </button>
+      <button class="container__btn3  btn" *ngIf="editarperfil" (click)="cancelProfileEditing()">
+        <div class="container__btn3-div">
+          <img src="assets/icons/clear_azul1_24dp.svg">
+          <span>Cancelar edición</span>
+        </div>
+      </button>
+      <button class="container__btn3 btn" *ngIf="editarperfil" (click)="onSubmit()">
+        <div class="container__btn3-div">
+          <img src="assets/icons/save_as_azul1_24dp.svg">
+          <span>Guardar</span>
+        </div>
+      </button>
     </div>
-  </button>
-    <button class="container__btn3  btn" *ngIf="editarperfil" (click)="cancelProfileEditing()">
-      <div class="container__btn3-div">
-        <img src="assets/icons/clear_azul1_24dp.svg">
-        <span>Cancelar edición</span>
-      </div>
-    </button>
-  <button class="container__btn3 btn"   *ngIf="editarperfil" (click)="onSubmit()">
-    <div class="container__btn3-div">
-      <img src="assets/icons/save_as_azul1_24dp.svg">
-      <span>Guardar</span>
-    </div>
-  </button>
-</div>
 
- </div>
+  </div>
 </div>
 <ngx-spinner type="square-jelly-box"></ngx-spinner>
-

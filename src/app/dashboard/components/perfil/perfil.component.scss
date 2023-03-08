@@ -11,7 +11,15 @@
   width: 100%;
 }
 
-
+.gap15{
+  gap: 15px;
+}
+.gap10{
+  gap: 10px;
+}
+.mb15{
+  margin-bottom: 15px;
+}
 .container__box {
   display: flex;
   flex-direction: column;
@@ -109,7 +117,6 @@
 
 .container__input {
   margin-bottom: 15px;
-  margin-right: 5px;
   border-radius: 4px;
   padding-right: 25px;
   width: 100%;
