@@ -592,12 +592,14 @@ export class PerfilComponent implements OnInit, OnDestroy {
   }
 
   changeDpto() {
-    this.form.get('id_municipio')?.setValue(0);
     this.places
-      .getMunicipiosDepartamentos(this.form.get('id_departamento')?.value)
-      .subscribe(
-        (response) => {
-          this.municipios = response.data;
+    .getMunicipiosDepartamentos(this.form.get('id_departamento')?.value)
+    .subscribe(
+      (response) => {
+        this.municipios = response.data;
+        this.form
+          .get('id_municipio')
+          ?.setValue(this.municipios[0]?.id_municipio);
         },
         (err) => {
           console.log(err);
@@ -701,7 +703,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
             .then((result) => {
               this.updateData=true
                this.myNgOnInit()
-              /* window.location.reload(); */
             })
             .catch((result) => {
                this.updateData = true;
@@ -831,13 +832,15 @@ export class PerfilComponent implements OnInit, OnDestroy {
   editarPerfi() {
     this.editarperfil = true;
     if (this.usuario?.tipo_usuario == 'Proveedor') {
-      this.mensajedirecion = 'Escriba aquí su direción';
+      this.mensajedirecion = 'Escriba aquí su dirección';
       this.readonly = false;
+      this.direccion?.enable();
       this.idDpto?.enable();
     } else if (this.usuario?.tipo_usuario !== 'Proveedor') {
       this.idDpto?.disable();
+       this.direccion?.disable();
       this.readonly = true;
-      this.mensajedirecion = 'Escoja aquí su direción';
+      this.mensajedirecion = 'Escoja aquí su dirección';
     }
     this.nombres?.enable();
     this.cedula?.enable();

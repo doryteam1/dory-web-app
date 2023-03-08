@@ -52,6 +52,7 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   borrarseart: boolean = false;
   loadingseart: boolean = false;
   showUnreads: boolean = false;
+  clickOpenChatUserObservable: boolean=false;
   constructor(
     private chatService: ChatService,
     private userService: UsuarioService,
@@ -59,6 +60,10 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2
   ) {
     this.renderer.listen('window', 'click', (e: any) => {
+      if (!this.chatOpen || this.clickOpenChatUserObservable) {
+        this.clickOpenChatUserObservable=false
+        return;
+      }
       if (this.chatOpen) {
           if (
             !this.chaRef?.nativeElement.contains(e?.target) &&
@@ -474,7 +479,8 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
 
   getRefs() {
     this.chatService.getOpenChatUserObservable().subscribe((userId: string) => {
-      this.chatOpen = true;
+      this.openChat();
+      this.clickOpenChatUserObservable=true
       setTimeout(() => {
         if (!this.Onlist) {
           this.back();

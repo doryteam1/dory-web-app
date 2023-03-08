@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChi
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SearchIndexService } from 'src/app/services/search-index.service';
 import { environment } from 'src/environments/environment';
-import {DomSanitizer} from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-search',
@@ -19,9 +19,8 @@ export class ModalSearchComponent implements OnInit {
   text: string = '';
   constructor(
     private _modalService: NgbActiveModal,
-    private renderer: Renderer2,
     private searchIdxService: SearchIndexService,
-    private sanitizer: DomSanitizer
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,45 +34,21 @@ export class ModalSearchComponent implements OnInit {
     this._modalService.dismiss();
   }
 
-  sanitize(url: string) {
-    return this.sanitizer.bypassSecurityTrustUrl(url);
-  }
 
-  mouseoverCart(idx: number) {
-    /*    if (idx == this.idxCard) {
-      this.idxCard = -1;
-    } else {
-      this.idxCard = idx;
-    } */
-    /*    if (this.mouseOverCart) {
-       this.mouseOverCart=false
-    }else{
-       this.mouseOverCart=true
-    } */
-    /*   console.log(
-      this.items.forEach((item: ElementRef<any>, index: number) => {
-        console.log(item);
-      })
-    ); */
-    //     let valor = this.items?.get(idx);
-    // console.log(valor)
-    //     let card = valor?.nativeElement;
-    //     if (card.className.includes('active')) {
-    //       this.renderer.removeClass(card, 'active');
-    //     } else {
-    //    /*    this.mouseOverCart = true; */
-    //       this.renderer.addClass(card, 'active');
-    //     }
-  }
+
+  mouseoverCart(idx: number) {}
 
   onChange() {
-    console.log(this.text);
     this.indexFiltered = this.index.filter((element) => {
       return element?.title?.toLowerCase().includes(this.text?.toLowerCase());
     });
   }
+  goUrl(url: any) {
+    this.router.navigateByUrl(`${url}`);
+    this.dismiss();
+  }
   borrarBusqueda() {
     this.text = '';
-    this.onChange()
+    this.onChange();
   }
 }

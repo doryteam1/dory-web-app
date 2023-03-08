@@ -19,7 +19,7 @@
 <div class="modalconteni">
   <ul>
     <li class="DocSearch-Hit"  role="option" aria-selected="false" *ngFor="let entry of indexFiltered; let i=index;" >
-      <a #Mycard [href]="baseUrl + entry?.href" class="active">
+      <a #Mycard class="active" (click)="goUrl(entry?.href)">
         <div class="DocSearch-Hit-Container">
           <div class="DocSearch-Hit-icon">
             <svg width="20" height="20" viewBox="0 0 20 20">
