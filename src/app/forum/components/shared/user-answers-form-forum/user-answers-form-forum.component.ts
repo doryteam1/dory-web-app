@@ -24,7 +24,7 @@ import { ForumService } from 'src/app/services/forum.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-user-answers-form-forum',
   templateUrl: './user-answers-form-forum.component.html',
@@ -51,7 +51,7 @@ export class UserAnswersFormForumComponent implements OnInit {
   messageError: string = 'No encontramos resultados para esta busqueda';
   photosDeleteStorage: any[] = [];
   previewCreatedPhotos: any[] = [];
-
+  limitePhotos: number = Number(environment.limitPhotosForum);
   constructor(
     private sanitizer: DomSanitizer,
     private compressImageSizeService: CompressImageSizeService,
@@ -67,7 +67,6 @@ export class UserAnswersFormForumComponent implements OnInit {
   ngOnInit(): void {
     this.prepareForm();
     this.isAuthUserPhoto = this.userService.getAuthUserPhoto();
-
   }
 
   async actionData() {
@@ -110,7 +109,7 @@ export class UserAnswersFormForumComponent implements OnInit {
       }
 
       this.communicateDataService.updateData(true);
-    } catch (err:any) {
+    } catch (err: any) {
       console.error(err);
       if (err.status == 404) {
         this.messageError = err.error.message;
@@ -181,16 +180,18 @@ export class UserAnswersFormForumComponent implements OnInit {
     this.onShowForm.emit(this.showForm);
   }
 
-  modalError(error:string) {
+  modalError(error: string) {
     this.location.onPopState(() => {
       this.appModalService.closeModalAlertError();
     });
     this.appModalService
-      .modalAlertError(error, 'Volver atrás')
+      .modalAlertError(error)
       .then((result: any) => {
         this.router.navigate(['/foro']);
       })
-      .catch((result) => {});
+      .catch((result) => {
+        this.router.navigate(['/foro']);
+      });
   }
 
   openAddFileDialogCreate() {
@@ -202,8 +203,7 @@ export class UserAnswersFormForumComponent implements OnInit {
     let time;
     this.maxPhotosAlert = false;
     if (
-      event.target.files.length >
-      1 - (this.photos.length + this.previewCreatedPhotos.length)
+      event.target.files.length > (this.limitePhotos - (this.photos.length + this.previewCreatedPhotos.length))
     ) {
       this.maxPhotosAlert = true;
       time = setTimeout(() => {

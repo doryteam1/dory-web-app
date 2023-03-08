@@ -64,24 +64,28 @@ export class MisPublicacionesComponent implements OnInit {
     let index = this.publicaciones.findIndex(
       (element) => element.id_publicacion == id
     );
-    let fotosArray = this.publicaciones[index].fotos;
+    let fotosArray:any[] = this.publicaciones[index].fotos.filter(
+      (foto: any) => foto !== null
+    );
+
     this.appModalService
       .confirm(
         'Eliminar publicación',
         'Esta seguro que desea eliminar la publicación',
-        'Eliminar',
-        'Cancelar',
+        'Sí',
+        'No',
         this.publicaciones[index].especie
       )
       .then((result) => {
         if (result == true) {
           this.publicacionService.deletePublicacion(id).subscribe(
             (response: any) => {
-              let index = this.publicaciones.findIndex(
-                (element) => element.id_publicacion == id
-              );
-              this.publicaciones.splice(index, 1);
-              this.storage.deleteMultipleByUrls(fotosArray);
+              if (index != -1) {
+                this.publicaciones.splice(index, 1);
+                if (fotosArray.length > 0) {
+                  this.storage.deleteMultipleByUrls(fotosArray);
+                }
+              }
               if (this.publicaciones.length <= 0) {
                 this.showNotFound = true;
               }

@@ -12,7 +12,7 @@
               <input id="productName" class="form-control" placeholder="Título publicación" formControlName="titulo">
             </div>
             <div *ngIf="invalid('titulo')" class="container__alert-msg danger-message">
-              <div *ngIf="titulo?.errors?.['required']">
+              <div *ngIf="titulo?.errors?.['required'] || titulo?.errors?.['whiteSpace']">
                 Campo requerido
               </div>
             </div>
@@ -66,7 +66,7 @@
               formControlName="descripcion">Write something here</textarea>
           </div>
           <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
-            <div *ngIf="descripcion?.errors?.['required']">
+            <div *ngIf="descripcion?.errors?.['required'] || descripcion?.errors?.['whiteSpace']">
               Campo requerido
             </div>
           </div>
@@ -106,13 +106,13 @@
     </div>
     <div class="modal-footer">
       <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-        <button [disabled]="loading1" type="button"  class="btn-rounded btn--blue container__btn"
+        <button [disabled]="loading1 || !form.valid" type="button"  class="btn-rounded btn--blue container__btn"
          (click)="addPublicacion()" *ngIf="modalMode=='create' && formState=='enable'">
           <span *ngIf="!loading1">Guardar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">
           </div>
         </button>
-        <button [disabled]="loading1" type="button"  class="btn-rounded btn--blue container__btn"
+        <button [disabled]="loading1 || !form.valid" type="button"  class="btn-rounded btn--blue container__btn"
           (click)="updatePublicacion()" *ngIf="modalMode=='update' && formState=='enable'">
           <span *ngIf="!loading1">Actualizar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading1">

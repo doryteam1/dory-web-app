@@ -27,7 +27,7 @@
           <input id="productName" class="form-control" placeholder="Ingrese el título " formControlName="nombre">
         </div>
         <div *ngIf="invalid('nombre')" class="container__alert-msg danger-message">
-          <div *ngIf="nombre?.errors?.['required']">
+          <div *ngIf="nombre?.errors?.['required'] || nombre?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -39,7 +39,7 @@
             placeholder="Ingrese el resumen de la norma" formControlName="contenido"></textarea>
         </div>
         <div *ngIf="invalid('contenido')" class="container__alert-msg danger-message">
-          <div *ngIf="contenido?.errors?.['required']">
+          <div *ngIf="contenido?.errors?.['required'] || contenido?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -60,13 +60,13 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading" type="button"class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading || !form.valid" type="button"class="btn-rounded btn--blue container__btn"
         (click)="updateData()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading || !form.valid" type="button" class="btn-rounded btn--blue container__btn"
         (click)="addData()" *ngIf="modalMode=='create'">
         <span *ngIf="!loading">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">

@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { EventosService } from 'src/app/services/eventos.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 interface evento {
   id_evento?: number;
   nombre: string;
@@ -38,14 +39,17 @@ interface evento {
 export class EventosDetalleFormComponent implements OnInit {
   @ViewChild('fileInputCreate') inputFileDialogCreate!: ElementRef;
   form: FormGroup = new FormGroup({
-    nombre: new FormControl('', [Validators.required]),
-    resumen: new FormControl('', [Validators.required]),
-    organizador: new FormControl('', [Validators.required]),
-    dirigidoa: new FormControl('', [Validators.required]),
-    url: new FormControl('', [Validators.required]),
-    costo: new FormControl('', ),
-    fecha: new FormControl('', ),
-    hora: new FormControl(null, ),
+    nombre: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    resumen: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    organizador: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
+    dirigidoa: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    url: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    costo: new FormControl(''),
+    fecha: new FormControl(''),
+    hora: new FormControl(null),
     id_modalidad_fk: new FormControl('', [Validators.required]),
     id_tipo_evento_fk: new FormControl('', [Validators.required]),
   });
@@ -65,8 +69,8 @@ export class EventosDetalleFormComponent implements OnInit {
   fotoEventoFinal: any[] = [];
   fotoAmandar: string = '';
   file: any = null;
-  evento!:evento;
-  id_evento:number=-1
+  evento!: evento;
+  id_evento: number = -1;
   constructor(
     private storage: FirebaseStorageService,
     public platformLocation: PlatformLocation,
@@ -83,10 +87,10 @@ export class EventosDetalleFormComponent implements OnInit {
       this.eventosService.getEventos().subscribe(
         (response) => {
           let index = response.data.findIndex(
-            (evento:evento) => evento.id_evento == idEvento
+            (evento: evento) => evento.id_evento == idEvento
           );
           this.evento = response.data[index];
-          this.id_evento=this.evento.id_evento!
+          this.id_evento = this.evento.id_evento!;
           this.prepareForm();
         },
         (err) => {
@@ -193,7 +197,7 @@ export class EventosDetalleFormComponent implements OnInit {
     this.form.disable();
     await this.loadPhotos();
     if (this.fotoAmandar && urlFoto.includes('firebasestorage')) {
-      console.log("Foto eliminada de firebase")
+      console.log('Foto eliminada de firebase');
       this.storage.deleteByUrl(urlFoto);
     }
     if (this.fotoAmandar) {
@@ -203,7 +207,7 @@ export class EventosDetalleFormComponent implements OnInit {
       console.log('Foto cargada de DB');
       foto = this.evento?.imagen;
     }
-    let newEvento:evento = {
+    let newEvento: evento = {
       url: this.url?.value,
       nombre: this.nombre?.value,
       resumen: this.resumen?.value,
@@ -216,17 +220,17 @@ export class EventosDetalleFormComponent implements OnInit {
       id_tipo_evento: Number(this.id_tipo_evento_fk?.value),
       imagen: foto,
     };
-    console.log(newEvento)
+    console.log(newEvento);
     this.eventosService
       .updateEvento(this.evento.id_evento!, newEvento)
       .subscribe(
         (response) => {
-           this.goBack();
+          this.goBack();
           this.loading = false;
         },
         (err) => {
           console.log(err);
-           this.goBack();
+          this.goBack();
           this.loading = false;
         }
       );
@@ -240,7 +244,7 @@ export class EventosDetalleFormComponent implements OnInit {
     }
     this.form.disable();
     await this.loadPhotos();
-    let newEvento:evento = {
+    let newEvento: evento = {
       url: this.url?.value,
       nombre: this.nombre?.value,
       resumen: this.resumen?.value,
@@ -257,7 +261,7 @@ export class EventosDetalleFormComponent implements OnInit {
       (response) => {
         console.log(response);
         this.loading = false;
-         this.goBack();
+        this.goBack();
       },
       (err) => {
         console.log(err);

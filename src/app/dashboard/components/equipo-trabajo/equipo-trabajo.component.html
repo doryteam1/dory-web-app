@@ -10,7 +10,7 @@
             <input id="productName" class="form-control" placeholder="Título del resumen de los miembros" formControlName="titulo">
           </div>
           <div *ngIf="invalid('titulo')" class="container__alert-msg danger-message">
-            <div *ngIf="titulo?.errors?.['required']">
+            <div *ngIf="titulo?.errors?.['required'] || titulo?.errors?.['whiteSpace']">
               Campo requerido
             </div>
           </div>
@@ -22,7 +22,7 @@
               placeholder="Resumen de los miembros" formControlName="descripcion"></textarea>
           </div>
           <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
-            <div *ngIf="descripcion?.errors?.['required']">
+            <div *ngIf="descripcion?.errors?.['required'] || descripcion?.errors?.['whiteSpace']">
               Campo requerido
             </div>
           </div>
@@ -38,7 +38,7 @@
           </div>
     <div class="modal-footer" *ngIf="modalMode == 'update'">
       <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-        <button [disabled]="loading" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
+        <button [disabled]="loading || !form.valid" type="button" class="btn-rounded btn--grey container__btn container__btn--azul"
           (click)="updateData()" *ngIf="modalMode=='update'">
           <span *ngIf="!loading">Actualizar</span>
           <div class="container__spinner spinner-border" role="status" *ngIf="loading"></div>

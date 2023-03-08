@@ -11,7 +11,7 @@
           <input id="modelo" class="form-control" placeholder="Modelo" formControlName="modelo">
         </div>
         <div *ngIf="invalid('modelo')" class="container__alert-msg danger-message">
-          <div *ngIf="modelo?.errors?.['required']">
+          <div *ngIf="modelo?.errors?.['required'] || modelo?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -56,7 +56,7 @@
           </div>
         </div>
         <div *ngIf="invalid('descripcion')" class="container__alert-msg danger-message">
-          <div *ngIf="descripcion?.errors?.['required']">
+          <div *ngIf="descripcion?.errors?.['required'] || descripcion?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -81,13 +81,13 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn" (click)="addVehiculo()"
+      <button [disabled]="loading || !form.valid" type="button" class="btn-rounded btn--blue container__btn" (click)="addVehiculo()"
         *ngIf="modalMode=='create'">
         <span *ngIf="!loading">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn" (click)="updateVehiculo()"
+      <button [disabled]="loading || !form.valid" type="button" class="btn-rounded btn--blue container__btn" (click)="updateVehiculo()"
         *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">

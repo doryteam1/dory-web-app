@@ -19,7 +19,7 @@
           <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre">
         </div>
         <div *ngIf="invalid('nombre')" class="container__alert-msg danger-message">
-          <div *ngIf="nombre?.errors?.['required']">
+          <div *ngIf="nombre?.errors?.['required'] || nombre?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -32,7 +32,7 @@
             <optgroup label="Escoge el tipo de asociación">
               <option *ngFor="let tipoAsociacion of tiposAsociaciones"
               [value]="tipoAsociacion?.id_tipo_asociacion" [disabled]="tipoAsociacion.status == 0">
-              {{tipoAsociacion.nombre}}
+              {{tipoAsociacion?.nombre}}
             </option>
             </optgroup>
           </select>
@@ -98,7 +98,7 @@
             formControlName="corregimiento_vereda">
         </div>
         <div *ngIf="invalid('corregimiento_vereda')" class="container__alert-msg danger-message">
-          <div *ngIf="corregVereda?.errors?.['required']">
+          <div *ngIf="corregVereda?.errors?.['required'] || corregVereda?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -111,7 +111,7 @@
             formControlName="direccion">
         </div>
         <div *ngIf="invalid('direccion')" class="container__alert-msg danger-message">
-          <div *ngIf="direccion?.errors?.['required']">
+          <div *ngIf="direccion?.errors?.['required'] || direccion?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -140,7 +140,7 @@
           </div>
         </div>
         <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
-          <div *ngIf="infoAdicionalDir?.errors?.['required']">
+          <div *ngIf="infoAdicionalDir?.errors?.['required'] || infoAdicionalDir?.errors?.['whiteSpace']">
             Campo requerido
           </div>
         </div>
@@ -217,7 +217,7 @@
   </div>
   <div class="modal-footer">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
-      <button  [disabled]="loading1" type="button" class="btn-rounded btn--blue container__btn" (click)="addAsociaciones()"
+      <button  [disabled]="loading1 || !form.valid" type="button" class="btn-rounded btn--blue container__btn" (click)="addAsociaciones()"
         *ngIf="modalMode=='create' && formState == 'enable'">
         <span *ngIf="!loading1">Guardar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading1">

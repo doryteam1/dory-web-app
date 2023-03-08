@@ -9,6 +9,7 @@ import { FirebaseStorageService } from 'src/app/services/firebase-storage.servic
 import { VehiculosService } from 'src/app/services/vehiculos.service';
 import { AppModalService } from 'src/app/shared/services/app-modal.service';
 import { ComunicacionEntreComponentesService } from 'src/app/shared/services/comunicacion-entre-componentes.service';
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
 @Component({
   selector: 'app-vehiculo-detalle-form',
   templateUrl: './vehiculo-detalle-form.component.html',
@@ -17,10 +18,13 @@ import { ComunicacionEntreComponentesService } from 'src/app/shared/services/com
 export class VehiculoDetalleFormComponent implements OnInit {
   vehiculo: any;
   form: FormGroup = new FormGroup({
-    modelo: new FormControl('', [Validators.required]),
+    modelo: new FormControl('', [Validators.required, WhiteSpaceValidator]),
     capacidad: new FormControl(0, [Validators.required]),
     transporte_alimento: new FormControl('', [Validators.required]),
-    descripcion: new FormControl('', [Validators.required]),
+    descripcion: new FormControl('', [
+      Validators.required,
+      WhiteSpaceValidator,
+    ]),
   });
   loading: boolean = false;
   /* showErrorNotImageSelected: boolean = false; */

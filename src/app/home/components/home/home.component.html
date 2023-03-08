@@ -1,78 +1,95 @@
-<div class="container" style="    margin-top: 20px;">
+<div class="basic-container">
+   <div *ngIf="loadingSlider" class="container-loading-slider">
+     <div class="loading-slider" >
+       <img src="assets/icons/loadingAnimate.svg" alt="">
+     </div>
+   </div>
 
-  <div class="basic-container" (mouseover)="stopGalerry()" (mouseout)=" playGalery()">
-    <gallery class="gallery--class"
-     [counter]="false"
-     [attr.fluid]="false"
-     [loadingStrategy]="'lazy'"
-      [imageSize]="'contain'"
-      id="homegallery"
-      [itemTemplate]="itemTemplate"
-       [thumbHeight]="70"
-      [thumbWidth]="80"
-      [thumbMode]="'free'"
-      [dots]="true"
-       [autoPlay]="tiempoSlide>0"
-      [playerInterval]="tiempoSlide"
-       [thumb]="false"
-       [nav]="true"
-        (itemClick)="clisFotoSlide($event)">
-    </gallery>
-  </div>
-
- <div class="container container-information">
-  <div class="row align-items-center row--miestilo">
-    <div class="col-12  container-publicacion">
-      <div class="text-publicacion">
-        <div>
-          <h3 class="mb-3">Surtipez</h3>
-          <p style="margin:0 ;">En esta sección podrá encontrar distintos tipos de peces para la venta, ofrecidos por piscicultores y/o pescadores.</p>
-          <p class="mb-4">Los peces aquí ofrecidos, se encuentran en el departamento de Sucre, aquí puede contactar al piscicultor o pescador si
-          se encuentra interesado.</p>
-        </div>
-          <div class="imagen-publicacion2">
-            <img class="publicacion-img" src="assets/images/wave-efect.svg">
-          </div>
-        <div class="container-publicacion-button">
-          <button class="btn-square-blue"  (click)=" navigate('/publicaciones')"> Más Información</button>
-        </div>
-      </div>
-      <div class="imagen-publicacion">
-        <img class="publicacion-img" src="assets/images/wave-efect.svg">
-      </div>
+  <div id="carouselExampleCaptions" class="carousel slide h-100 w-100" [ngClass]="{'display-none': loadingSlider}">
+    <div class="carousel-indicators">
+      <button type="button" *ngFor="let slid of sliders; first as isFirst, let i = index" [attr.data-bs-slide-to]="i"
+        data-bs-target="#carouselExampleCaptions" [attr.aria-label]="'Slide ' + i" [ngClass]="{active: isFirst}">
+      </button>
     </div>
+
+    <div class="carousel-inner h-100 w-100">
+
+      <div class="carousel-item h-100 w-100" *ngFor="let slid of sliders; first as isFirst"
+        [ngClass]="{active: isFirst}" (click)="clisFotoSlide(slid?.url_enlace)">
+        <img [src]="slid?.url_imagen" class="d-block w-100 h-100 object-fit-scale-cover-img"
+          alt="...">
+      </div>
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+      (click)="prevImgGallery()">
+      <img style="width: 40px; height: 40px; transform: scaleX(-1);" src="assets/icons/control_next_slider.svg">
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+      (click)="nextImgGallery()">
+      <img style="width: 40px; height: 40px;" src="assets/icons/control_next_slider.svg">
+    </button>
   </div>
- </div>
+
+</div>
+
+<div class="container container-edit">
   <div class="container-statics">
     <div class="container-statics-div">
       <ng-container *ngTemplateOutlet="miniCard"></ng-container>
     </div>
   </div>
+
+  <!-- ksl -->
+
+  <div class="slider-card-services">
+    <owl-carousel-o [options]="customOptions" (dragging)="isDragging = $event.dragging" #owlCar>
+      <ng-container *ngFor="let slide of sliderCard; let i = index" >
+        <ng-template carouselSlide [id]="slide.id" [width]="280" let-owlItem>
+          <a class="slider-card-services-box" (click)="navigateSliderCard(slide?.url, owlItem); owlCar.to(slide?.id)" >
+            <img [src]="slide.src" alt="" class="user-img mr-2">
+            <div class="slider-card-services-box__content">
+              <h3>{{slide?.title}}</h3>
+              <p class="text-center">{{slide?.informacion}}</p>
+            </div>
+          </a>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+
+  <!-- ndn -->
+
   <div class="title d-flex flex-column">
     <h1 class="align-self-center">Visita los siguientes enlaces...</h1>
   </div>
+
   <div class="container-card">
     <div class="view-content">
       <div class="views-row view--current item-{{i}}" *ngFor="let item of enlaceRapido; index as i">
-        <div class="container-target-link" >
+        <div class="container-target-link">
         </div>
         <div class="container-title" (click)="clisEnlaceDirect(item)">
           <div class="front-botones">
           </div>
-          <h4 class="container-title-h4" >{{item.titulo}}</h4>
+          <h4 class="container-title-h4">{{item.titulo}}</h4>
         </div>
         <img [src]="item.url_imagen" width="100%" height="100%" alt="Imagen{i}">
       </div>
     </div>
   </div>
+
   <div class="title d-flex flex-column">
     <h1 class="align-self-center">También puedes explorar...</h1>
   </div>
+
   <div class="link-cards-container">
-      <app-link-card title="Novedades y Actualidad" [links]="novedades" [urlImagen]="urlLinkCardImgNovedades"></app-link-card>
-      <app-link-card title="Eventos" [links]="eventos" [urlImagen]="urlLinkCardImgEventos"></app-link-card>
-      <app-link-card title="Normatividad" [links]="normatividades" [urlImagen]="urlLinkCardImgNormativas"></app-link-card>
+    <app-link-card title="Novedades y Actualidad" [links]="novedades"
+      [urlImagen]="urlLinkCardImgNovedades"></app-link-card>
+    <app-link-card title="Eventos" [links]="eventos" [urlImagen]="urlLinkCardImgEventos"></app-link-card>
+    <app-link-card title="Normatividad" [links]="normatividades" [urlImagen]="urlLinkCardImgNormativas"></app-link-card>
   </div>
+
 </div>
 <app-footer></app-footer>
 
@@ -84,10 +101,4 @@
       <p class="container-statics__value-description">{{item.title}}</p>
     </div>
   </div>
-</ng-template>
-<!-- Add custom template to image items -->
-<ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
-  <span *ngIf="type === 'image' && index === currIndex && data?.title && data?.mostrar_titulo" class="item-text animate__bounceIn item-title-gallery">
-    {{data?.title}}
-  </span>
 </ng-template>

@@ -7,13 +7,14 @@ import { ActivatedRoute } from '@angular/router';
 import { CompressImageSizeService } from 'src/app/services/compress-image-size.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { SliderInicioService } from 'src/app/services/slider-inicio.service';
-
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
  interface slide {
    id_slid?: number;
    url_imagen: string;
    url_enlace: string;
    titulo: string;
-   mostrar_titulo:number;
+   mostrar_titulo: number;
+   url_imagen_movil:any
  }
 @Component({
   selector: 'app-slider-inicio-detalle-form',
@@ -24,7 +25,7 @@ export class SliderInicioDetalleFormComponent implements OnInit {
   @ViewChild('fileInputCreate') inputFileDialogCreate!: ElementRef;
   form: FormGroup = new FormGroup({
     titulo: new FormControl(''),
-    url_enlace: new FormControl('', [Validators.required]),
+    url_enlace: new FormControl('', [Validators.required, WhiteSpaceValidator]),
   });
   loading: boolean = false;
   modalMode: string = 'visualize';
@@ -35,7 +36,7 @@ export class SliderInicioDetalleFormComponent implements OnInit {
   slide!: slide;
   sinFoto: boolean = false;
   id_slide: number = -1;
-  mostrar_titulo:number=0
+  mostrar_titulo: number = 0;
   constructor(
     private storage: FirebaseStorageService,
     public platformLocation: PlatformLocation,
@@ -77,7 +78,7 @@ export class SliderInicioDetalleFormComponent implements OnInit {
       this.loading = false;
       this.sinFoto = false;
       this.fotoAmandar = '';
-      this.mostrar_titulo=0
+      this.mostrar_titulo = 0;
     } else if (this.modalMode == 'update') {
       this.titulo?.setValue(this.slide?.titulo);
       this.url_enlace?.setValue(this.slide?.url_enlace);
@@ -156,14 +157,15 @@ export class SliderInicioDetalleFormComponent implements OnInit {
       console.log('Foto cargada de DB');
       foto = this.slide?.url_imagen;
     }
-       if (!this.titulo?.value.trim()) {
-         this.mostrar_titulo = 0;
-       }
+    if (!this.titulo?.value.trim()) {
+      this.mostrar_titulo = 0;
+    }
     let newslide: slide = {
       titulo: this.titulo?.value,
       url_enlace: this.url_enlace?.value,
       url_imagen: foto,
-      mostrar_titulo:this.mostrar_titulo
+      mostrar_titulo: this.mostrar_titulo,
+      url_imagen_movil: '',
     };
     this.sliderInicioService.updateSlide(this.id_slide, newslide).subscribe(
       (response) => {
@@ -196,13 +198,14 @@ export class SliderInicioDetalleFormComponent implements OnInit {
     this.form.disable();
     await this.loadPhotos();
     if (!this.titulo?.value.trim()) {
-     this.mostrar_titulo=0
+      this.mostrar_titulo = 0;
     }
     let newslide: slide = {
       titulo: this.titulo?.value,
       url_enlace: this.url_enlace?.value,
       url_imagen: this.fotoAmandar,
       mostrar_titulo: this.mostrar_titulo,
+      url_imagen_movil: '',
     };
 
     this.sliderInicioService.addSlide(newslide).subscribe(
@@ -226,7 +229,7 @@ export class SliderInicioDetalleFormComponent implements OnInit {
     this.prepareForm();
   }
   checkbokSwitch(event: number) {
-    this.mostrar_titulo=event
+    this.mostrar_titulo = event;
   }
   goBack() {
     this.platformLocation.back();

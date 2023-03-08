@@ -1,4 +1,5 @@
-<div class="container-f">
+<div class="container-f" #contactRef>
+  <div #contactRefDiv class="container-f__div" [ngStyle]="{'margin': contactRef?.offsetHeight! <= contactRefDiv?.offsetHeight! ? '0 auto' : 'auto'}">
     <div class="container-form">
         <h4 class="container__title">Formulario de contacto</h4>
         <img class="container__logo"  src="assets/images/logo-no-name.svg">
@@ -68,4 +69,5 @@
         </form>
 
     </div>
-    </div>
+  </div>
+</div>

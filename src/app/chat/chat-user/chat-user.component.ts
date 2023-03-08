@@ -1,4 +1,4 @@
-import { AfterViewInit, Component,OnInit } from '@angular/core';
+import { AfterViewInit,Component,ElementRef,OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import * as dayjs from 'dayjs';
@@ -13,6 +13,10 @@ dayjs.extend(relativeTime);
 })
 export class ChatUserComponent implements OnInit, AfterViewInit {
   messageText!: string;
+  @ViewChild('chaRef', { read: ElementRef, static: false })
+  chaRef!: ElementRef<HTMLElement>;
+  @ViewChild('buttonChaRef', { read: ElementRef, static: false })
+  buttonChaRef!: ElementRef<HTMLElement>;
   messageArray: { fromUserId: number; message: string }[] = [];
   private roomsArray: {
     roomId: number;
@@ -47,15 +51,28 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   userChatRefs: any;
   borrarseart: boolean = false;
   loadingseart: boolean = false;
-  showUnreads:boolean = false;
+  showUnreads: boolean = false;
   constructor(
     private chatService: ChatService,
     private userService: UsuarioService,
-    private utilities: UtilitiesService
-  ) {}
+    private utilities: UtilitiesService,
+    private renderer: Renderer2
+  ) {
+    this.renderer.listen('window', 'click', (e: any) => {
+      if (this.chatOpen) {
+          if (
+            !this.chaRef?.nativeElement.contains(e?.target) &&
+            !this.buttonChaRef?.nativeElement.contains(e?.target)
+          ) {
+            this.closeChat()
+          }
+      }
+    });
+  }
   ngAfterViewInit(): void {
     this.getRefs();
   }
+
   subscriptions: Subscription[] = [];
   ngOnInit(): void {
     let tempSub: Subscription;
@@ -348,10 +365,12 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   }
 
   scrollToBottom(): void {
-    setTimeout(() => {
-      let el = document.querySelector('#chatBodyContainer');
-      el!.scrollTop = el?.scrollHeight!;
-    }, 50);
+    let el: any = document?.querySelector('#chatBodyContainer');
+    if (el) {
+      setTimeout(() => {
+        el.scrollTop = el?.scrollHeight!;
+      }, 50);
+    }
   }
 
   back() {

@@ -18,11 +18,11 @@
         <h2>Información general</h2>
         <div class="card__description-container-infor-1  shorterTextOverflowHidden ">
           <div class="card__description-container-infor-1-div">
-            <span class="munici shorterTextAuto">{{asociacion?.municipio}}-{{asociacion?.departamento}}</span>
+            <span class="munici shorterTextAuto">{{asociacion?.municipio && asociacion?.departamento ? asociacion?.municipio +'-'+ asociacion?.departamento:'Sin
+            definir'}}</span>
           </div>
           <div class="card__description-container-infor-1-div">
-            <span class="direccion shorterTextAuto">{{asociacion?.direccion ? 'Dir.' : ''}}
-              {{asociacion?.direccion}}</span>
+            <span class="direccion shorterTextAuto">{{asociacion?.direccion ? 'Dir. ' + asociacion?.direccion :'Sin definir'}}</span>
           </div>
           <div class="card__description-container-infor-1-div" *ngIf="!delatecard">
             <span class="email shorterTextAuto">{{asociacion?.email? asociacion?.email : 'Correo sin definir'}}</span>

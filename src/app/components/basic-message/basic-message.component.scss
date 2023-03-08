@@ -1,10 +1,5 @@
 
- html,
- body {
-   height: 100%;
-   margin: 0;
-   padding: 5px;
- }
+
 
  .container {
    display: flex;
@@ -20,11 +15,8 @@
    align-items: center;
    flex-direction: column;
    height: 100%;
-   margin: 20px;
-   padding-top: 10px;
-   padding-bottom: 20px;
-   padding-left: 30px;
-   padding-right: 30px;
+  margin: 15px;
+    padding: 15px;
    border-radius: 12px;
    background-color: #f8f8f8;
    box-shadow: 0 1px 15px 5px var(--shadow-2);

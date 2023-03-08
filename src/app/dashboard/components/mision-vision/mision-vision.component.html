@@ -31,7 +31,7 @@
       </div>
     </form>
   </div>
-  <div class="modal-footer">
+  <div class="modal-footer mb-3">
     <div class="d-flex flex-direction-row justify-content-center align-items-center d-flex-button-footer">
       <button [disabled]="loading" type="button"  class="btn-rounded btn--blue container__btn"
         *ngIf="modalMode=='visualize'" (click)="editarData()">
@@ -39,7 +39,7 @@
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
         </div>
       </button>
-      <button [disabled]="loading" type="button" class="btn-rounded btn--blue container__btn"
+      <button [disabled]="loading || !form.valid" type="button" class="btn-rounded btn--blue container__btn"
         (click)="updateData()" *ngIf="modalMode=='update'">
         <span *ngIf="!loading">Actualizar</span>
         <div class="container__spinner spinner-border" role="status" *ngIf="loading">
@@ -61,14 +61,14 @@
      [formControl]=forControl></textarea>
   </div>
   <div *ngIf="invalid(invali)" class="container__alert-msg danger-message">
-    <div *ngIf="forControl?.errors?.['required']">
+    <div *ngIf="forControl?.errors?.['required'] || forControl?.errors?.['whiteSpace']">
       Campo requerido
     </div>
   </div>
 </div>
 </ng-template>
 <ng-template #photoAndupload let-title="title" let-ngif="ngif" let-img="img" let-boton="boton">
-<div class="photoAnduploadPhoto">
+<div class="photoAnduploadPhoto mb-3">
   <label for="dateOfBirth">{{title}}</label>
   <div class="photoAnduploadPhoto-container">
     <div class="mb-3 imagen" *ngIf="ngif">
@@ -93,9 +93,4 @@
   </div>
 </div>
 </ng-template>
-<!-- <ng-container [ngTemplateOutlet]="miPlantilla" [ngTemplateOutletContext]="{clases: 'rojo verde'}"></ng-container>
 
-<ng-template #miPlantilla let-clases>
-  <div [ngClass]="clases">Contenido de la ng-template</div>
-</ng-template>
- -->

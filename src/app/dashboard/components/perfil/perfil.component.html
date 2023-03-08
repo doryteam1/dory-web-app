@@ -136,7 +136,7 @@
     <div class="container__box__title">
       <span class="container__title">Foto de perfil</span>
     </div>
-    <div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="d-flex flex-column justify-content-center align-items-center mb-2">
       <div class="progress" *ngIf="percentUploaded && percentUploaded > 1 && percentUploaded < 100">
         <div class="progress-bar" [style.width]="percentUploaded+'%'" role="progressbar"
           [attr.aria-valuenow]="percentUploaded" aria-valuemin="0" aria-valuemax="100">{{percentUploaded | number:'':'es'}}%
@@ -171,28 +171,24 @@
       <span class="container__title">Otros documentos</span>
     </div>
     <div id="otrosDocumentos">
-      <div class="d-flex flex-column justify-content-center align-items-center">
-        <div class="progress" *ngIf="percentUploaded2 && percentUploaded2 > 1 && percentUploaded2 < 100">
+      <div class="d-flex flex-column justify-content-center align-items-center mb-2">
+        <div class="progress"  *ngIf="percentUploaded2! > 0 && percentUploaded2! <= 100" >
           <div class="progress-bar" [style.width]="percentUploaded2+'%'" role="progressbar"
-            [attr.aria-valuenow]="percentUploaded2" aria-valuemin="0" aria-valuemax="100">{{percentUploaded | number:'':'es'}}%
+            [attr.aria-valuenow]="percentUploaded2" aria-valuemin="0" aria-valuemax="100">{{percentUploaded2 | number:'':'es'}}%
           </div>
         </div>
-        <span class="text-danger" *ngIf="photoUpdate2">Documento cargado correctamente</span>
-        <span class="text-danger" *ngIf="photoDelete2">Docuemento eliminado</span>
+        <span class="text-danger" *ngIf="photoUpdate2 || photoDelete2">{{photoUpdate2 ? 'Documento cargado correctamente':photoDelete2 ? 'Documento eliminado':''}}</span>
       </div>
+
       <div  class="d-flex flex-row justify-content-center align-items-center gap-2 d-flex-delate-add-otros">
-        <button class="container__btn3 btn" *ngIf="!usuario?.url_imagen_cedula" (click)="openAddFileDialogDos('cedula')">
+
+        <button class="container__btn3 btn" (click)="openAddFileDialogDos('cedula')">
           <div class="container__btn3-div">
-            <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
-            <span>Agregar cédula</span>
+            <img [src]="usuario?.url_imagen_cedula ? 'assets/icons/update-icon-cedula.svg' : 'assets/icons/drive_folder_upload_animado_24dp.svg'">
+            <span>{{ usuario?.url_imagen_cedula ? 'Actualizar cédula' : 'Agregar cédula' }}</span>
           </div>
         </button>
-        <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="openAddFileDialogDos('cedula')">
-          <div class="container__btn3-div">
-            <img src="assets/icons/update-icon-photo-perfil.svg">
-            <span>Actualizar cédula</span>
-          </div>
-        </button>
+
         <button class="container__btn3 btn" *ngIf="usuario?.url_imagen_cedula" (click)="deleteDocument('url_imagen_cedula')">
           <div class="container__btn3-div">
             <img src="assets/icons/delete_black_24dp.svg">
@@ -200,18 +196,14 @@
           </div>
         </button>
 
-        <button class="container__btn3 btn" *ngIf="!usuario?.url_sisben" (click)="openAddFileDialogDos('sisben')">
-          <div class="container__btn3-div">
-            <img src="assets/icons/drive_folder_upload_animado_24dp.svg">
-            <span>Agregar sisben</span>
-          </div>
-        </button>
-        <button class="container__btn3 btn" *ngIf="usuario?.url_sisben" (click)="openAddFileDialogDos('sisben')">
-          <div class="container__btn3-div">
-            <img src="assets/icons/update-icon-photo-perfil.svg">
-            <span>Actualizar sisben</span>
-          </div>
-        </button>
+      <button class="container__btn3 btn" (click)="openAddFileDialogDos('sisben')">
+        <div class="container__btn3-div">
+          <img
+            [src]="usuario?.url_sisben ? 'assets/icons/update-icon-docum.svg' : 'assets/icons/drive_folder_upload_animado_24dp.svg'">
+          <span>{{ usuario?.url_sisben ? 'Actualizar sisben' : 'Agregar sisben' }}</span>
+        </div>
+      </button>
+
         <button class="container__btn3 btn" *ngIf="usuario?.url_sisben" (click)="deleteDocument('url_sisben')">
           <div class="container__btn3-div">
             <img src="assets/icons/delete_black_24dp.svg">
@@ -219,7 +211,7 @@
           </div>
         </button>
       </div>
-      <div class="d-flex justify-content-center flex-row mt-3">
+      <div class="d-flex justify-content-center flex-row mt-3 flex-wrap">
         <a class="link rigth" [href]="usuario?.url_imagen_cedula" target="_blank" *ngIf="usuario?.url_imagen_cedula">Descargar cédula</a>
         <a class="link rigth" [href]="usuario?.url_sisben" target="_blank" *ngIf="usuario?.url_sisben">Descargar sisben</a>
       </div>

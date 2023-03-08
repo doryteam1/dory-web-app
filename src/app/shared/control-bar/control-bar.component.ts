@@ -165,12 +165,14 @@ export class ControlBarComponent implements OnInit, OnDestroy {
 
   updateAsocRequest() {
     this.userService.solicitudesDeAsociaciones().subscribe((response) => {
+      console.log(response)
       this.invitaciones = response.data;
     });
 
     this.userService
       .solicitudesParaAsociacionesRepresentante()
       .subscribe((response) => {
+        console.log(response);
         this.invitacionesFromUsers = response.data;
       });
   }

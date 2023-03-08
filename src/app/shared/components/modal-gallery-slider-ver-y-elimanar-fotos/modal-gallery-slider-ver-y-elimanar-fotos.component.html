@@ -8,7 +8,7 @@
           <h4 class="modal-title box__title" id="modal-basic-title" *ngIf="isPhotoSelectingToDel">
            Seleccionar fotos</h4>
           <h4 class="modal-title" id="modal-basic-title" *ngIf="!isPhotoSelectingToDel">Fotos</h4>
-          <h5 class="modal-title" id="modal-basic-title" *ngIf="!isPhotoSelectingToDel && veryadicionar">{{ArrayFotos.length}}/10</h5>
+          <h5 class="modal-title" id="modal-basic-title" *ngIf="!isPhotoSelectingToDel && veryadicionar">{{ArrayFotos.length}}/{{limitePhotos}}</h5>
           <div *ngIf="maxFotosAlert && !isPhotoSelectingToDel && veryadicionar" class="container__alert-msg danger-message">
             <div>
               Ha exedido el limite de fotos permitidas
@@ -107,7 +107,7 @@
       <span>Cancelar</span>
     </div>
   </button>
-  <button [disabled]="loading2 || ArrayFotos.length>9" type="button" class="btn btn-secondary container__btn1"
+  <button [disabled]="loading2 || ArrayFotos.length >= limitePhotos" type="button" class="btn btn-secondary container__btn1"
     (click)="openAddFileDialogCreate()" *ngIf="!isPhotoSelectingToDel  || ArrayFotos.length == 0">
     <div>
       <svg *ngIf="!loading2" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
