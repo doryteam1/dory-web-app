@@ -57,10 +57,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     numero_trabajadores: new FormControl(0, [Validators.required]),
     produccion_estimada_mes: new FormControl(0, [Validators.required]),
     direccion: new FormControl('', [Validators.required, WhiteSpaceValidator]),
-    informacion_adicional_direccion: new FormControl('', [
-      Validators.required,
-      WhiteSpaceValidator,
-    ]),
+    informacion_adicional_direccion: new FormControl(''),
     latitud: new FormControl(0, [Validators.required]),
     longitud: new FormControl(0, [Validators.required]),
     descripcion: new FormControl('', [

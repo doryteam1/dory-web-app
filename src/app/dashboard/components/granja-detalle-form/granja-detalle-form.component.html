@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Nombre</label>
+        <label for="dateOfBirth">Nombre <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre_granja">
         </div>
@@ -25,7 +25,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Descripción</label>
+        <label for="dateOfBirth">Descripción <span class="asterisk">*</span></label>
         <div class="input-group">
           <textarea class="form-control" name="textarea" rows="5" cols="50"
             formControlName="descripcion" placeholder="Descripción de la granja">Write something here</textarea>
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Área(m2)</label>
+        <label for="dateOfBirth">Área(m2) <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" type="number" min="0" class="form-control" placeholder="Área de la granja"
             formControlName="area" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
@@ -50,7 +50,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Numero de trabajadores</label>
+        <label for="dateOfBirth">Numero de trabajadores <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" type="number" min="0" class="form-control"
             placeholder="Personas que trabajan en la granja" formControlName="numero_trabajadores" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
@@ -63,7 +63,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Produccion estimada (kg/mes)</label>
+        <label for="dateOfBirth">Produccion estimada (kg/mes) <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" type="number" min="0" class="form-control" placeholder="Cuanto produce la granja al mes"
             formControlName="produccion_estimada_mes" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
@@ -76,7 +76,7 @@
       </div>
 
       <div class="mb-3">
-        <span class="container__title">Departamento</span>
+        <span class="container__title">Departamento <span class="asterisk">*</span></span>
         <div>
           <select class="form-control" formControlName='id_departamento'>
             <optgroup label="Escoge un departamento" value="70">
@@ -93,7 +93,7 @@
       </div>
 
       <div class="mb-3">
-        <span class="container__title">Municipio</span>
+        <span class="container__title">Municipio <span class="asterisk">*</span></span>
         <div>
           <select class="form-control" formControlName='id_municipio' (change)="idmunicipioselec()">
             <optgroup label="Escoge un municipio">
@@ -118,7 +118,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Dirección</label>
+        <label for="dateOfBirth">Dirección <span class="asterisk">*</span></label>
         <div class="input-group" (click)="verMapaDireccion()">
           <input [readonly]="true" id="productName" class="form-control direccion-class"
             placeholder="Selecciona aquí la dirreción de la granja en el mapa" formControlName="direccion">
@@ -136,15 +136,15 @@
             placeholder="Información adicional de la ubicación seleccionada"
             formControlName="informacion_adicional_direccion">Write something here</textarea>
         </div>
-        <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
+      <!--   <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
           <div *ngIf="informacionAdicionalDireccion?.errors?.['required'] || informacionAdicionalDireccion?.errors?.['whiteSpace']">
             Campo requerido
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="mb-3" >
-        <label class="mb-2" for="dateOfBirth">Tipos de infraestructura:</label>
+        <label class="mb-2" for="dateOfBirth"><span class="asterisk">*</span> Tipos de infraestructura:</label>
         <div *ngFor="let data of infraestructurasData; let i=index">
           <label>
             <input type="checkbox" [value]="data.id_infraestructura"
@@ -161,7 +161,7 @@
       </div>
 
       <div class="mb-3" >
-        <label class="mb-2" for="dateOfBirth">Especies cultivadas:</label>
+        <label class="mb-2" for="dateOfBirth"><span class="asterisk">*</span> Especies cultivadas:</label>
         <div  class="row row-cols-1 row-cols-sm-3 row-cols-lg-4" >
           <div *ngFor="let data of especiesData; let i=index">
             <label>

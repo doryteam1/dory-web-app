@@ -135,7 +135,6 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
       .getAsociacionesIsMiembroUser(this.authUserId)
       .subscribe(
         (response) => {
-          console.log(response.data);
           this.asociacionesIsMiembro = response.data;
           if (this.asociacionesIsMiembro.length < 1) {
             this.showNotFoundAsocMiemb = true;
@@ -263,6 +262,7 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
       this.activeclass3 = true;
     }
   }
+
   navigate(event: any, formState: string, from: string) {
     let object: any = {
       nit: event.nit,
@@ -272,12 +272,7 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
     };
 
     if (from == 'tabSoyMiemb') {
-      let url = this.router.serializeUrl(
-        this.router.createUrlTree([
-          `/asociaciones/municipio/detalle/${event.nit}`,
-        ])
-      );
-      window.open(url, '_blank');
+      this.router.navigateByUrl(`/asociaciones/municipio/detalle/${event.nit}`);
     } else {
       this.router.navigate(['/dashboard/asociacion/detalle', object]);
     }

@@ -254,14 +254,16 @@
           </div>
 
           <div id="municipio" class="col">
-            <div class="container__box left" *ngIf="mostrarPorTipo('municipio')">
+            <div class="container__box left" *ngIf="mostrarPorTipo('municipio')" >
               <span class="container__label">Municipio <span class="asterisk">*</span></span>
               <div class="input-wrapper">
+
                 <select class="container__input form-input-text-square"
                   [ngClass]="{'container__input--color':!editarperfil}" formControlName='id_municipio'
                   (change)='changeMunic()'>
-                  <optgroup label="Escoge un municipio">
-                    <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio?.nombre}}
+                  <optgroup>
+                    <option value="null" disabled>Seleccione municipio</option>
+                    <option *ngFor="let municipio of municipios" [ngValue]="municipio?.id_municipio">{{municipio?.nombre}}
                     </option>
                   </optgroup>
                 </select>

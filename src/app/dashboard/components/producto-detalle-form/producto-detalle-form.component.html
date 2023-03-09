@@ -6,7 +6,7 @@
   <div class="modal-body">
     <form [formGroup]="form" autocomplete="off">
       <div class="mb-3">
-        <label for="dateOfBirth">Nombre</label>
+        <label for="dateOfBirth">Nombre <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombreProducto">
         </div>
@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Descripción</label>
+        <label for="dateOfBirth">Descripción <span class="asterisk">*</span></label>
         <div class="input-group">
           <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Descripción"
             formControlName="descripcion">Write something here</textarea>
@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Precio</label>
+        <label for="dateOfBirth">Precio <span class="asterisk">*</span></label>
         <div class="input-group">
           <span class="input-group-text">$</span>
           <input id="productName" type="number" min="0" class="form-control" placeholder="Ej. 50000"

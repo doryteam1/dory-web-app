@@ -13,6 +13,9 @@
       </div>
     </div>
   </div>
+  <app-not-found class="app-not-found" *ngIf="showNotFound"
+    [message]="'No hay equipo de trabajo asignado'"></app-not-found>
+  <app-not-found [genericError]="showError" *ngIf="showError"></app-not-found>
 </div>
 <app-footer></app-footer>
 <ng-template #content let-modal>
@@ -47,6 +50,5 @@
     </div>
   </div>
 </ng-template>
-<app-not-found class="app-not-found" *ngIf="showNotFound" [message]="'No hay equipo de trabajo asignado'"></app-not-found>
-<app-not-found [genericError]="showError" *ngIf="showError"></app-not-found>
+
 

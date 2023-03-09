@@ -7,7 +7,7 @@
     <div class="modal-body">
       <form [formGroup]="form" autocomplete="off">
           <div class="mb-3">
-            <label for="dateOfBirth">Título</label>
+            <label for="dateOfBirth">Título <span class="asterisk">*</span></label>
             <div class="input-group">
               <input id="productName" class="form-control" placeholder="Título publicación" formControlName="titulo">
             </div>
@@ -18,7 +18,7 @@
             </div>
           </div>
         <div class="mb-3">
-            <span class="container__title">Especie</span>
+            <span class="container__title">Especie <span class="asterisk">*</span></span>
             <div>
               <select class="form-control" formControlName='id_especie'>
                 <optgroup label="Escoge una especie">
@@ -35,7 +35,7 @@
           </div>
 
         <div class="mb-3">
-          <label for="dateOfBirth">Cantidad(Kg)</label>
+          <label for="dateOfBirth">Cantidad(Kg) <span class="asterisk">*</span></label>
           <div class="input-group">
             <input id="productName" type="number" min="0" class="form-control" placeholder="Cantidad disponible"
               formControlName="cantidad" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
@@ -47,7 +47,7 @@
           </div>
         </div>
         <div class="mb-3">
-          <label for="dateOfBirth">Precio(COP)</label>
+          <label for="dateOfBirth">Precio(COP) <span class="asterisk">*</span></label>
           <div class="input-group">
             <input id="productName" type="number" min="0" class="form-control" placeholder="Precio por kilogramo"
               formControlName="preciokilogramo"
@@ -60,7 +60,7 @@
           </div>
         </div>
         <div class="mb-3">
-          <label for="dateOfBirth">Descripción</label>
+          <label for="dateOfBirth">Descripción <span class="asterisk">*</span></label>
           <div class="input-group">
             <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" placeholder="Descripción publicación"
               formControlName="descripcion">Write something here</textarea>

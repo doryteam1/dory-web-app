@@ -41,7 +41,7 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
   valorindicecarrucel!: number;
   sinfotos: boolean = false;
   userToken: string | null = '';
-  authUserId: number = -1;
+  authUserId:boolean =false;
   miresena: any;
   editedDescResena: string = '';
   editingMiResena: boolean = false;
@@ -68,13 +68,9 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isAuthUser = this.userService.isAuthenticated();
     this.rating = -1;
-    this.selectedGranjaId = Number(
-      this.activatedRoute.snapshot.paramMap.get('id')!
-    );
+    this.selectedGranjaId = Number(this.activatedRoute.snapshot.paramMap.get('id')!);
     this.userToken = localStorage.getItem('token');
     if (this.userToken) {
-      let payload = Utilities.parseJwt(this.userToken);
-      this.authUserId = payload.sub;
       this.granjasService
       .resenasUserByIdGranja(this.selectedGranjaId)
       .subscribe(

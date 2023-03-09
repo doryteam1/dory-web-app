@@ -6,7 +6,7 @@
   <div class="modal-body">
       <form [formGroup]="form" autocomplete="off">
         <div class="mb-3">
-          <label for="dateOfBirth">Nombre</label>
+          <label for="dateOfBirth">Nombre <span class="asterisk">*</span></label>
           <div class="input-group">
             <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre_negocio">
           </div>
@@ -18,7 +18,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="dateOfBirth">Descripción</label>
+          <label for="dateOfBirth">Descripción <span class="asterisk">*</span></label>
           <div class="input-group">
             <textarea class="form-control" name="textarea" rows="5" cols="50"
               formControlName="descripcion_negocio">Write something here</textarea>
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="mb-3">
-          <span class="container__title">Departamento</span>
+          <span class="container__title">Departamento <span class="asterisk">*</span></span>
           <div>
             <select class="form-control" formControlName='id_departamento'>
               <optgroup label="Escoge un departamento" value="70">
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="mb-3">
-          <span class="container__title">Municipio</span>
+          <span class="container__title">Municipio <span class="asterisk">*</span></span>
           <div>
             <select class="form-control" formControlName='id_municipio' (change)="idmunicipioselec()">
               <optgroup label="Escoge un municipio">
@@ -61,7 +61,7 @@
           </div>
         </div>
         <div class="mb-3">
-          <label for="dateOfBirth">Dirección</label>
+          <label for="dateOfBirth">Dirección <span class="asterisk">*</span></label>
           <div class="input-group" (click)="verMapaDireccion()">
             <input [readonly]="true" id="productName" class="form-control direccion-class"
               placeholder="Selecciona aquí la dirección del negocio" formControlName="direccion">
@@ -79,11 +79,11 @@
               placeholder="Información adicional de la ubicación seleccionada"
               formControlName="informacion_adicional_direccion">Write something here</textarea>
           </div>
-          <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
+         <!--  <div *ngIf="invalid('informacion_adicional_direccion')" class="container__alert-msg danger-message">
             <div *ngIf="infoAdicionalDir?.errors?.['required'] || infoAdicionalDir?.errors?.['whiteSpace']">
               Campo requerido
             </div>
-          </div>
+          </div> -->
         </div>
             <!-- Fotos mini -->
             <app-fotos-mini-detalle-form (onDetalle)="openPhotosModal()" *ngIf="photosNegocioArray.length > 0"

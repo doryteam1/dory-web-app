@@ -39,11 +39,12 @@
 </div>
 <app-not-found *ngIf="showNotFound" objectName="granjas"></app-not-found>
 <div  class="container-card mb-4" *ngIf="!showNotFound">
-  <app-card-granjas [granja]="granja"
+  <app-card-granjas *ngFor="let granja of granjasFiltered; let i = index"
+    [granja]="granja"
     [favorita]="granja?.favorita"
     [botonFavorito]="botonFavori"
     [resena]="granja?.count_resenas"
-    *ngFor="let granja of granjasFiltered; let i = index" [index]="i"
+     [index]="i"
     (onDetalle)="goDetailFarm(granja)"
     (onChangeFavorite)="changeFavorite(i)"
     (onShowResenas)="showResenas(granja?.id_granja)"

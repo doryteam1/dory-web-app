@@ -62,7 +62,7 @@ export class MisNegociosComponent implements OnInit {
   }
 
   deleteNegocio(negocio: any) {
-    let arrayFotos = negocio.fotos.filter((foto: any) => foto !== null);;
+    let arrayFotos = negocio.fotos.filter((foto: any) => foto !== null);
     let index = this.negocios.findIndex(
       (element) => element.id_negocio == negocio.id_negocio
     );

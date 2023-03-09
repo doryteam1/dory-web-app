@@ -14,7 +14,7 @@
   <div class="modal-body">
     <form [formGroup]="form" autocomplete="off">
       <div class="mb-3">
-        <label for="dateOfBirth">Nombre</label>
+        <label for="dateOfBirth">Nombre <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Nombre" formControlName="nombre">
         </div>
@@ -26,7 +26,7 @@
       </div>
 
       <div class="mb-3">
-        <span class="container__title">Tipo de asociación</span>
+        <span class="container__title">Tipo de asociación <span class="asterisk">*</span></span>
         <div>
           <select class="form-control" formControlName='id_tipo_asociacion_fk'>
             <optgroup label="Escoge el tipo de asociación">
@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Nit</label>
+        <label for="dateOfBirth">Nit <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Nit" formControlName="nit"
             onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
@@ -57,7 +57,7 @@
       </div>
 
       <div class="mb-3">
-        <span class="container__title">Departamento</span>
+        <span class="container__title">Departamento <span class="asterisk">*</span></span>
         <div>
           <select class="form-control" formControlName='id_departamento'>
             <optgroup label="Escoge un departamento" value="70">
@@ -74,7 +74,7 @@
       </div>
 
       <div class="mb-3">
-        <span class="container__title">Municipio</span>
+        <span class="container__title">Municipio <span class="asterisk">*</span></span>
         <div>
           <select class="form-control" formControlName='id_municipio'>
             <optgroup label="Escoge un municipio">
@@ -105,7 +105,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Dirección</label>
+        <label for="dateOfBirth">Dirección <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Dirección de asociación"
             formControlName="direccion">
@@ -118,7 +118,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Teléfono</label>
+        <label for="dateOfBirth">Teléfono <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Teléfono" formControlName="telefono"
             onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
@@ -131,7 +131,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Información adicional de la dirección</label>
+        <label for="dateOfBirth">Información adicional de la dirección <span class="asterisk">*</span></label>
         <div class="input-group">
           <div class="input-wrapper">
             <textarea id="productName" class="form-control" name="textarea" rows="3" cols="50"
@@ -147,7 +147,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Fecha renovación cámara de comercio</label>
+        <label for="dateOfBirth">Fecha renovación cámara de comercio <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" type="date" [max]="fechaActual" placeholder="Fecha renovación"
             formControlName="fecha_renovacion_camarac">
@@ -182,7 +182,7 @@
       </div>
       <div class="mb-2" *ngIf="formState!='disable'">
         <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.foto_camarac ? 'Actualizar cámara de comercio '
-          : 'Subir cámara de comercio' }}</label>
+          : 'Subir cámara de comercio' }} <span class="asterisk" *ngIf="modalMode == 'create'">*</span> </label>
         <div class="input-group">
           <input id="productName" type="file" class="form-control" placeholder="Seleccionar documento"
             formControlName="foto_camarac" (change)='fileChange($event)'>

@@ -39,7 +39,7 @@
           <!-- header modal -->
           <div class="input-wrapper">
             <div class="bi bi-search"></div>
-            <input type="text"  placeholder="Buscar..." (keyup)="onKey($event)" (keyup.enter)="buscar()"
+            <input type="text"  placeholder="Buscar y seleccionar la dirección en el mapa" (keyup)="onKey($event)" (keyup.enter)="buscar()"
               [(ngModel)]="buscarx" [disabled]="!loadDataMapa" />
             <i class="img-x" (click)="borrarBusqueda()" *ngIf="borrarseart && !loadingseart"></i>
             <img style="width: 26px; height: 26px;" src="assets/icons/loadingseart.svg" *ngIf="loadingseart">

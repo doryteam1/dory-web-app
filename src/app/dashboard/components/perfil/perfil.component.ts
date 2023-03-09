@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -211,8 +212,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
   updatingDocument: string = '';
   photoUpdate2: boolean = false;
   photoDelete2: boolean = false;
-  emailUser!:string | null
-  updateData:boolean=false
+  emailUser!: string | null;
+  updateData: boolean = false;
   public modaGoogleMapa!: Subscription;
   constructor(
     private us: UsuarioService,
@@ -229,8 +230,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
     this.modaGoogleMapa?.unsubscribe();
   }
   ngOnInit(): void {
-      registerLocaleData(es);
-      this.emailUser = localStorage.getItem('email');
+    registerLocaleData(es);
+    this.emailUser = localStorage.getItem('email');
     this.modaGoogleMapa =
       this.comunicacionEntreComponentesService.changeArray.subscribe(
         (array) => {
@@ -245,6 +246,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
   }
 
   setValueForm(data: any) {
+    /* this.form.reset() */
     this.form.get('id')?.setValue(data.id);
     this.form.get('cedula')?.setValue(data.cedula);
     this.form.get('nombres')?.setValue(data.nombres);
@@ -282,7 +284,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
     } else {
       this.form.get('id_departamento')?.setValue(data.id_departamento);
     }
-    this.form.get('id_municipio')?.setValue(data.id_municipio);
+    this.idMunic?.setValue(data?.id_municipio);
   }
   restoreUserData() {
     this.form.disable();
@@ -305,11 +307,14 @@ export class PerfilComponent implements OnInit, OnDestroy {
           this.loadEtnias();
         }
         if (this.updateData) {
-          this.updateData=false
+          this.updateData = false;
         }
         this.storageService.add('photoUser', this.usuario.foto);
         this.storageService.add('tipoUser', this.usuario.tipo_usuario);
-        this.storageService.add('nomApell',this.getNomApell(this.usuario.nombres, this.usuario.apellidos));
+        this.storageService.add(
+          'nomApell',
+          this.getNomApell(this.usuario.nombres, this.usuario.apellidos)
+        );
         this.us.setAuthUserPhoto(this.usuario.foto);
         this.tempDir = this.form.get('direccion')?.value;
         this.tempMunicId = this.form.get('id_municipio')?.value;
@@ -593,13 +598,14 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
   changeDpto() {
     this.places
-    .getMunicipiosDepartamentos(this.form.get('id_departamento')?.value)
-    .subscribe(
-      (response) => {
-        this.municipios = response.data;
-        this.form
-          .get('id_municipio')
-          ?.setValue(this.municipios[0]?.id_municipio);
+      .getMunicipiosDepartamentos(this.form.get('id_departamento')?.value)
+      .subscribe(
+        (response) => {
+          this.municipios = response.data;
+          if (this.editarperfil) {
+            this.form.get('id_municipio')?.setValue(null);
+          }
+
         },
         (err) => {
           console.log(err);
@@ -701,12 +707,12 @@ export class PerfilComponent implements OnInit, OnDestroy {
           this.appModalService
             .modalAlertActualizadoComponent('Perfil actualizado correctamente')
             .then((result) => {
-              this.updateData=true
-               this.myNgOnInit()
+              this.updateData = true;
+              this.myNgOnInit();
             })
             .catch((result) => {
-               this.updateData = true;
-               this.myNgOnInit();
+              this.updateData = true;
+              this.myNgOnInit();
             });
         },
         (err) => {
@@ -838,7 +844,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
       this.idDpto?.enable();
     } else if (this.usuario?.tipo_usuario !== 'Proveedor') {
       this.idDpto?.disable();
-       this.direccion?.disable();
+      this.direccion?.disable();
       this.readonly = true;
       this.mensajedirecion = 'Escoja aquí su dirección';
     }
@@ -903,7 +909,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
   get nombreNegocio() {
     return this.form.get('nombre_negocio');
   }
-
 
   get fechaRegistro() {
     return this.form.get('fecha_registro');

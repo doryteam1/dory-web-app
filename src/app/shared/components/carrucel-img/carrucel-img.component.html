@@ -1,12 +1,11 @@
 
-<div id="{{id}}" data-bs-ride="false" class="carousel "
-  #myCarousel >
-  <div class="carousel-indicators  puntosindicators" *ngIf="imagenes.length > 1">
+<div id="{{id}}" data-bs-ride="false" class="carousel" #myCarousel >
+  <div class="carousel-indicators  puntosindicators" *ngIf="fotos.length > 1">
     <div class="puntosindicators__container" [ngStyle]="{'justify-content': justyfycentercontent}" (click)="clickDivIndicadorSlider()">
       <div [ngStyle]="{'left.px': widthExp}">
         <button  type="button"
           [attr.data-bs-target]="idnumeral"
-          *ngFor="let item of imagenes; let i= index; let isFirst = first"
+          *ngFor="let item of fotos; let i= index; let isFirst = first"
           [attr.data-bs-slide-to]="i"
           [ngClass]="{'active':isFirst}" aria-current="true"
           aria-label="Slide"
@@ -16,19 +15,17 @@
     </div>
   </div>
   <div class="carousel-inner  imagenes-carrucel">
-
-    <div class="carousel-item" *ngFor="let img of imagenes;let index = index; let isFirst = first"
-      [ngClass]="{active: isFirst }" (click)="clickImagenItemSlider()" >
-      <img
-      [class]="getImgClasses(imagenes.length, rounded, scale, efect, cover, scaledown)"
-        [src]="img? img: 'https://admin.moodyyc.com/img/no-image.png'" (click)="clickImagen()">
-    </div>
-
-    <img [class]="getImgClasses(imagenes.length, rounded, scale, efect, cover, scaledown)"
-      src='https://admin.moodyyc.com/img/no-image.png' *ngIf="imagenes.length == 0" (click)="clickImagen()">
+    <ng-container *ngIf="fotos.length >0">
+      <div class="carousel-item" *ngFor="let img of fotos;let index = index; let isFirst = first" [ngClass]="{active: isFirst }" (click)="clickImagenItemSlider()" >
+        <img [class]="getImgClasses(fotos.length, rounded, scale, efect, cover, scaledown)" [src]="img? img: 'https://admin.moodyyc.com/img/no-image.png'" (click)="clickImagen()">
+      </div>
+    </ng-container>
+     <div *ngIf="fotos.length == 0" class="carousel-item active" >
+       <img [class]="getImgClasses(fotos.length, rounded, scale, efect, cover, scaledown)" src='https://admin.moodyyc.com/img/no-image.png'  (click)="clickImagen()">
+     </div>
 
     <button class="carousel-control-prev" type="button" [attr.data-bs-target]="idnumeral" data-bs-slide="prev"
-      (click)="clickButtonPrevious()" *ngIf="imagenes.length > 1">
+      (click)="clickButtonPrevious()" *ngIf="fotos.length > 1">
       <span class="icon" aria-hidden="true">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false">
           <g fill="none">
@@ -39,7 +36,7 @@
       </span>
     </button>
     <button class="carousel-control-next" type="button" [attr.data-bs-target]="idnumeral" data-bs-slide="next"
-      (click)="clickButtonNext()" *ngIf="imagenes.length > 1">
+      (click)="clickButtonNext()" *ngIf="fotos.length > 1">
       <span class="icon" aria-hidden="true">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false">
           <g fill="none">

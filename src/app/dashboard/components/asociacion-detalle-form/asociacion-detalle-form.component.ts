@@ -155,11 +155,13 @@ export class AsociacionDetalleFormComponent implements OnInit {
     this.fotoCamc?.setValidators([Validators.required]);
     this.fotoCamc?.updateValueAndValidity();
     if (this.fotoCamc?.invalid) {
+
       //No cargó un nuevo archivo de camara de comercio
       let updatedAsociacion = { ...this.form.getRawValue() };
       updatedAsociacion.foto_camarac = this.asociacion.foto_camarac;
       this.sendAsociacionUpdated(updatedAsociacion, this.asociacion.nit);
     } else {
+
       let ext = this.file.name.split('.')[1];
       let basePath = '/asociaciones/camaracomercio/todas/';
       let fileName =
@@ -188,6 +190,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
                 (downloadUrl) => {
                   let updatedAsociacion = { ...this.form.getRawValue() };
                   updatedAsociacion.foto_camarac = downloadUrl;
+                  updatedAsociacion.url_rut = this.asociacion.url_rut;
                   this.sendAsociacionUpdated(
                     updatedAsociacion,
                     this.asociacion.nit
@@ -206,6 +209,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
   async sendAsociacionUpdated(updatedAsociacion: any, nit: number) {
     if (this.fileRut == null) {
       //No hay archivo rut para subir
+
       this.asociacionesService.updateParcial(nit, updatedAsociacion).subscribe(
         (response) => {
           this.onAsociacionDetalles(nit, 'update');
@@ -510,7 +514,8 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
   }
   goBack() {
-    this.location.back();
+     this.router.navigateByUrl('/dashboard/mis-asociaciones');
+   /*  this.location.back(); */
   }
   download() {
     try {
@@ -619,11 +624,11 @@ export class AsociacionDetalleFormComponent implements OnInit {
         if (result == true) {
           this.asociacionesService.delete(this.asociacion.nit).subscribe(
             (response: any) => {
-              if (url_rut.length > 0) {
+              if (url_rut?.length > 0 && url_rut != null) {
                 this.storage.deleteByUrl(url_rut);
               }
 
-              if (foto_camarac.length > 0) {
+              if (foto_camarac?.length > 0 && foto_camarac != null) {
                 this.storage.deleteByUrl(foto_camarac);
               }
               this.goBack();

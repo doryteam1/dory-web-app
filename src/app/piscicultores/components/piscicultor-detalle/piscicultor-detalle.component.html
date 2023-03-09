@@ -22,8 +22,8 @@
 
           </span>
         </div>
-        <div class="piscicultor-container__detalle">
-        <span class="card__description-title link" (click)="sendMessage()" *ngIf="authUserId">
+        <div class="piscicultor-container__detalle"*ngIf="authUserId">
+        <span class="card__description-title link" (click)="sendMessage()" >
           <i class="bi bi-chat-left-text-fill"></i>
           Enviar un mensaje
         </span>
@@ -52,7 +52,6 @@
       <div class="detail-container__data">
         <h4 class="detail-container__title">Dirección</h4>
         <span class="detail-container__value">{{piscicultor?.direccion ? 'Dir. ' + piscicultor?.direccion :'Sin definir'}} </span>
-        {{piscicultor?.direccion ? 'Dir. ' + piscicultor?.direccion :'Sin definir'}}
       </div>
     </div>
     <div class="detail-container mt-4">

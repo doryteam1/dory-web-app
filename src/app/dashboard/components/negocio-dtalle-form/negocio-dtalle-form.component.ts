@@ -51,10 +51,7 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
       WhiteSpaceValidator,
     ]),
     direccion: new FormControl('', [Validators.required]),
-    informacion_adicional_direccion: new FormControl('', [
-      Validators.required,
-      WhiteSpaceValidator,
-    ]),
+    informacion_adicional_direccion: new FormControl(''),
     latitud: new FormControl(0, [Validators.required]),
     longitud: new FormControl(0, [Validators.required]),
     descripcion_negocio: new FormControl('', [

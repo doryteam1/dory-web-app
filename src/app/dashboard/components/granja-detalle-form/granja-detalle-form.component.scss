@@ -11,7 +11,9 @@
  .direccion-class {
    cursor: pointer;
  }
-
+.asterisk {
+  color: red;
+}
  .direccion-class:hover {
    background-color: #e4f4ff;
  }
