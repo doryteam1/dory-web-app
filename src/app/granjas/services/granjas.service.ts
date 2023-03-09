@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-/* import { Subject,Observable, pipe } from 'rxjs'; */
 import { HttpsService } from 'src/app/services/https.service';
 import { environment } from 'src/environments/environment';
 import { ResenasModalContentComponent } from '../components/modals/resenas-modal-content/resenas-modal-content.component';
-/* import {tap  } from "rxjs/operators"; */
 @Injectable({
   providedIn: 'root',
 })
@@ -41,10 +39,7 @@ export class GranjasService {
   }
 
   addGranja(newGranja: any) {
-    return this.https.post(
-      '//dory-api-rest.herokuapp.com/api/granjas/',
-      newGranja
-    );
+    return this.https.post( environment.doryApiRestBaseUrl + '/granjas/', newGranja);
   }
 
   getGranjaByUserId(userId: string) {

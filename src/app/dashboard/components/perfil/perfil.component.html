@@ -261,7 +261,7 @@
                   [ngClass]="{'container__input--color':!editarperfil}" formControlName='id_municipio'
                   (change)='changeMunic()'>
                   <optgroup label="Escoge un municipio">
-                    <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}
+                    <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio?.nombre}}
                     </option>
                   </optgroup>
                 </select>
@@ -283,15 +283,14 @@
           <div id="direccion" class="col">
             <div class="container__box left" *ngIf="mostrarPorTipo('direccion')">
               <span class="container__label">Dirección: <span class="asterisk">*</span></span>
-              <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}" (click)="verMap()">
-                <input [readonly]="readonly" class="container__input form-input-text-square"
+              <div class="input-wrapper" ngbTooltip="{{mensajedirecion}}" >
+                <div *ngIf="usuario?.tipo_usuario !== 'Proveedor'" class="input-falso" (click)="verMap()" [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil}"></div>
+                <input class="container__input form-input-text-square"
                   [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil && usuario?.tipo_usuario !== 'Proveedor'}"
                   type="text" formControlName='direccion'
                   [placeholder]="editarperfil ? 'Selecciona aquí tu dirección' : ''">
-                <img *ngIf="editarperfil && usuario?.tipo_usuario !== 'Proveedor'" class="input-icon option"
-                  src="assets/icons/ojoanimado.svg">
-                <img *ngIf="!editarperfil && usuario?.tipo_usuario !== 'Proveedor'" class="input-icon option"
-                  src="assets/icons/ojoanimadocerrado.svg">
+                  <img [src]="(usuario?.tipo_usuario !== 'Proveedor') ? (editarperfil ? 'assets/icons/ojoanimado.svg' : 'assets/icons/ojoanimadocerrado.svg') : null"
+                    class="input-icon option">
               </div>
             </div>
             <div *ngIf="faltadireccion" class="container__alert-msg danger-message">

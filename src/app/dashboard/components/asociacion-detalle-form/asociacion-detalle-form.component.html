@@ -159,21 +159,27 @@
         </div>
       </div>
 
-      <div class="download-cam" *ngIf="modalMode=='update'">
-        <span *ngIf="asociacion?.foto_camarac && asociacion?.foto_camarac!='null'">
+      <div class="download-cam" *ngIf="modalMode=='update' && asociacion?.foto_camarac && asociacion?.foto_camarac!='null'">
+        <span>
           <a class="link" [href]="asociacion?.foto_camarac" target="_blank">Descargar cámara de comercio
             <img src="assets/icons/download_for_offline_blue1_24dp.svg">
           </a>
         </span>
       </div>
-      <div class="download-cam" *ngIf="modalMode=='update'">
-        <span *ngIf="hasDocument" class="link">
+      <div class="download-cam" *ngIf="modalMode=='update' && hasDocument">
+        <span class="link">
           <a (click)="download()">Descargar documentos de los miembros
             <img src="assets/icons/download_for_offline_blue1_24dp.svg">
           </a>
         </span>
       </div>
-
+      <div class="download-cam" *ngIf="modalMode=='update' && asociacion?.url_rut && asociacion?.url_rut!='null'">
+        <span>
+          <a [href]="asociacion?.url_rut" target="_blank" class="link">Descargar RUT
+            <img src="assets/icons/download_for_offline_blue1_24dp.svg">
+          </a>
+        </span>
+      </div>
       <div class="mb-2" *ngIf="formState!='disable'">
         <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.foto_camarac ? 'Actualizar cámara de comercio '
           : 'Subir cámara de comercio' }}</label>
@@ -188,13 +194,7 @@
         </div>
       </div>
 
-      <div class="download-cam" *ngIf="modalMode=='update'">
-        <span *ngIf="asociacion?.url_rut && asociacion?.url_rut!='null'">
-          <a [href]="asociacion?.url_rut" target="_blank">Descargar RUT
-            <img src="assets/icons/download_for_offline_blue1_24dp.svg">
-          </a>
-        </span>
-      </div>
+
 
       <div class="mb-5" *ngIf="formState!='disable'">
         <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.url_rut ? 'Actualizar RUT ' : 'Subir RUT'

@@ -108,8 +108,15 @@
   /* font-size: 30px; */
 }
 
-.container__title {}
 
+
+.input-falso{
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  height: 40px;
+  background-color: transparent !important;
+}
 .form__box {
   display: flex;
   flex-direction: column;

@@ -164,11 +164,7 @@ export class ChatService {
   }
 
   setReaded(idUsuarioEmisor: number) {
-    return this.https.put(
-      'https://dory-api-rest.herokuapp.com/api/chat/set/readed/all/' +
-        idUsuarioEmisor,
-      null
-    );
+    return this.https.put(environment.doryApiRestBaseUrl + '/chat/set/readed/all/' + idUsuarioEmisor, null);
   }
 
   /*Escucha si hay nuevas solicitudes de asociaciones --> usuario o usuario --> asociaciones*/

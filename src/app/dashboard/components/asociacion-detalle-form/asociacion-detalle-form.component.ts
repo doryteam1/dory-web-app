@@ -148,7 +148,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
 
     if (!this.form.valid) {
-      console.log('Not valid!');
       this.form.markAllAsTouched();
       this.loading1 = false;
       return;
@@ -230,7 +229,6 @@ export class AsociacionDetalleFormComponent implements OnInit {
           await this.storage.deleteByUrl(this.asociacion?.url_rut).toPromise();
         } catch (err) {}
       }
-
       this.storage
         .cloudStorageTask(filePath, this.fileRut)
         .percentageChanges()
@@ -243,7 +241,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
                 (downloadUrl) => {
                   updatedAsociacion.url_rut = downloadUrl;
                   this.asociacionesService
-                    .update(nit, updatedAsociacion)
+                    .updateParcial(nit, updatedAsociacion)
                     .subscribe(
                       (response) => {
                         this.onAsociacionDetalles(nit, 'update');

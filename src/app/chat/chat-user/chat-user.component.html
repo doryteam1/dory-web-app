@@ -92,7 +92,7 @@
 
 </div>
 
-<a #buttonChaRef class="floating-btn scroll-to-top" (click)="openChat()" [ngClass]="{'dplay-none': chatOpen}">
+<a #buttonChaRef class="floating-btn scroll-to-top" (click)="openChat()" [ngClass]="{'dplay-none': chatOpen || !isHidden}">
   <div class=" flecha">
     <svg class="svgpath" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#26a5b8"
       class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">

@@ -5,6 +5,7 @@ import * as dayjs from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
 import { Subscription } from 'rxjs';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { NavigationEnd, Router } from '@angular/router';
 dayjs.extend(relativeTime);
 @Component({
   selector: 'app-chat-user',
@@ -52,25 +53,37 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   borrarseart: boolean = false;
   loadingseart: boolean = false;
   showUnreads: boolean = false;
-  clickOpenChatUserObservable: boolean=false;
+  clickOpenChatUserObservable: boolean = false;
+  routesToShow: any = ['/respuesta/pregunta/', '/foro'];
+  isHidden: boolean = true;
   constructor(
     private chatService: ChatService,
     private userService: UsuarioService,
     private utilities: UtilitiesService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router
   ) {
     this.renderer.listen('window', 'click', (e: any) => {
       if (!this.chatOpen || this.clickOpenChatUserObservable) {
-        this.clickOpenChatUserObservable=false
+        this.clickOpenChatUserObservable = false;
         return;
       }
       if (this.chatOpen) {
-          if (
-            !this.chaRef?.nativeElement.contains(e?.target) &&
-            !this.buttonChaRef?.nativeElement.contains(e?.target)
-          ) {
-            this.closeChat()
-          }
+        if (
+          !this.chaRef?.nativeElement.contains(e?.target) &&
+          !this.buttonChaRef?.nativeElement.contains(e?.target)
+        ) {
+          this.closeChat();
+        }
+      }
+    });
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        let route: any = event.url;
+        let resultShow: boolean = this.routesToShow.some((element: any) =>
+          route.includes(element)
+        );
+        this.isHidden = !resultShow;
       }
     });
   }
@@ -480,7 +493,7 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   getRefs() {
     this.chatService.getOpenChatUserObservable().subscribe((userId: string) => {
       this.openChat();
-      this.clickOpenChatUserObservable=true
+      this.clickOpenChatUserObservable = true;
       setTimeout(() => {
         if (!this.Onlist) {
           this.back();
