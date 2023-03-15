@@ -3,7 +3,7 @@
       <div id="window-title" class="container-navbar-titlebar">
         <div class="container-navbar-titlebar__icono"  >
           <img  class="container-navbar-titlebar__icono-img tooltip-trigger"  src="assets/icons/DoryIcon.svg" alt="DoryIcon" (click)="navegarRuta('/home')">
-          <span (click)="navegarRuta('/home')">DORY</span>
+          <span (click)="navegarRuta('/home')"><span style="font-size: 1.4rem;">D</span>ORY</span>
         </div>
         <!-- Botones alante y atras -->
         <app-floatin-btns-alante-atras class="no-drag" *ngIf="electronjs ">
@@ -221,7 +221,7 @@
 <!-- Botones registro y login mayor 560px-->
 <ng-template #botonregistroyloginnormal>
   <button class="no-drag buttons-access__login no-button" (click)="login()" *ngIf="!authenticated()">Ingresar</button>
-  <button class=" no-drag ms-2 buttons-access__registration no-button" (click)="navegarRuta('/registro')"
+  <button class="no-drag buttons-access__registration no-button" (click)="navegarRuta('/registro')"
     *ngIf="!authenticated()">Regístrate</button>
 </ng-template>
 
