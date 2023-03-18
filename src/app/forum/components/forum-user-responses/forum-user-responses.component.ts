@@ -30,7 +30,7 @@ export class ForumUserResponsesComponent implements OnInit, OnDestroy {
   preguntaUser: any;
   tipoFiltro: number = 0;
   nombreFiltro: string = '';
-  messageError: string = 'No encontramos resultados para esta busqueda';
+  messageError: string = 'No encontramos resultados para esta búsqueda';
 
   filtros: any[] = [
     /*   {

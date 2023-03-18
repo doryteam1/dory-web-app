@@ -16,6 +16,7 @@
     <div class="container-section__response" style="margin-bottom: 0;padding: 10px;">
       <app-user-answers-forum [data]="preguntaUser" [dataAll]="true" [activeCursor]="true" (onDetalles)="goDetail(preguntaUser?.tipoUsuario,preguntaUser?.usuarioId)">
       </app-user-answers-forum>
+      <a class="black-arrow" [routerLink]="['/foro']"><i class="bi bi-arrow-left-circle-fill"></i> Ver todas las preguntas</a>
     </div>
     <!-- Formulario responder -->
     <app-user-answers-form-forum (onShowForm)="openForm()" [showForm]="showForm" [id_pregunta]="preguntaUser.id">

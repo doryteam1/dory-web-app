@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 declare var window: any;
 @Component({
   selector: 'app-docs',
@@ -12,7 +12,7 @@ export class DocsComponent implements OnInit{
   onResize() {
     this.innerWidth = window.innerWidth;
   }
-  constructor() { 
+  constructor() {
   }
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class DocsComponent implements OnInit{
       {
         backdrop: true,
       }
-    );    
+    );
   }
 
   openOffcanvas() {

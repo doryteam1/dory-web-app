@@ -24,9 +24,14 @@
             <span>{{timeToNow(data?.fecha)}}</span>
           </div>
           <h6 class="h6" *ngIf="!activeRespuesta" [ngClass]="{'cursor--default': activeCursor}">{{data?.titulo}}</h6>
-          <p [ngClass]="{'cursor--default': activeCursor}">{{dataAll && !activeRespuesta ? data?.descripcion : !dataAll && !activeRespuesta ? (data?.respuesta |
-            shorter:200) :
-            dataAll && activeRespuesta ? data?.respuesta : ''}}</p>
+          <p [ngClass]="{'cursor--default': activeCursor}" *ngIf="dataAll && !activeRespuesta">{{data?.descripcion}}</p>
+          <p [ngClass]="{'cursor--default': activeCursor}" *ngIf="!dataAll && !activeRespuesta">{{data?.respuesta | shorter:200}}</p>
+          <p [ngClass]="{'cursor--default': activeCursor}" *ngIf="dataAll && activeRespuesta">{{data?.respuesta | shorter: (showLess ? 200 : data?.respuesta?.length)}}
+          </p>
+          <h1  style="color:var(--azul1)" (click)="toggleContent()" *ngIf="data?.respuesta?.length >=200 && dataAll && activeRespuesta">
+            {{ showLess ? 'Leer más' : 'Leer menos' }}
+          </h1>
+
 
           <div class="mb-3 uploadphoto__container__imagen" *ngIf="dataAll">
             <div *ngFor="let photo of data?.fotos; let i =index">
@@ -47,5 +52,5 @@
     </app-user-answers-form-forum>
   </div>
 </div>
-            <app-lightbox-imagen [thumbnails]="data?.fotos[0]" *ngIf="showLightbox"
-              (onCloseLightbox)="fotoSeleLightbox()"></app-lightbox-imagen>
+<app-lightbox-imagen [thumbnails]="data?.fotos[0]" *ngIf="showLightbox"
+  (onCloseLightbox)="fotoSeleLightbox()"></app-lightbox-imagen>

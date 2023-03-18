@@ -8,7 +8,14 @@
 .heightcal{
   height: calc(100% - 60px);
 }
-
+.black-arrow{
+  display: flex;
+    text-decoration: none;
+    gap: 5px;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--azul1);
+}
 app-user-answers-form-forum{
   padding: 20px;
 }

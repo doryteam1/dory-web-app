@@ -43,7 +43,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
   ) {}
   ngAfterViewChecked(): void {
     //Comparamos el primer dato con el actual
-    let onNavbarDiv=this.navbarDiv?.nativeElement?.clientHeight
+    let onNavbarDiv=this.navbarDiv?.nativeElement?.clientHeight;
     if (this.height !== onNavbarDiv) {
       this.height = onNavbarDiv;
       //Actualizamos el primer dato y detectamos cualquier cambio en height
@@ -72,6 +72,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
+        this.divMain!.nativeElement!.scrollTo(0, 0);
         let route: string = event.url;
         if (route.includes('welcome') || route.includes('politica')) {
           this.show = false;

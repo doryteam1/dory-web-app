@@ -48,10 +48,11 @@ export class UserAnswersFormForumComponent implements OnInit {
   loading: boolean = false;
   isAuthUserPhoto: any;
   id_respuesta!: number;
-  messageError: string = 'No encontramos resultados para esta busqueda';
+  messageError: string = 'No encontramos resultados para esta búsqueda';
   photosDeleteStorage: any[] = [];
   previewCreatedPhotos: any[] = [];
   limitePhotos: number = Number(environment.limitPhotosForum);
+
   constructor(
     private sanitizer: DomSanitizer,
     private compressImageSizeService: CompressImageSizeService,
@@ -85,6 +86,7 @@ export class UserAnswersFormForumComponent implements OnInit {
             idpregunta: this.id_pregunta,
             respuesta: this.respuestaUser?.value,
           };
+          console.log(newRespuesta);
           response = await this.forumService
             .addRespuesta(newRespuesta)
             .toPromise();
@@ -120,7 +122,7 @@ export class UserAnswersFormForumComponent implements OnInit {
       this.openForm();
     }
   }
-
+  
   async loadPhotos(event: any) {
     try {
       const compressedFiles =
@@ -203,7 +205,9 @@ export class UserAnswersFormForumComponent implements OnInit {
     let time;
     this.maxPhotosAlert = false;
     if (
-      event.target.files.length > (this.limitePhotos - (this.photos.length + this.previewCreatedPhotos.length))
+      event.target.files.length >
+      this.limitePhotos -
+        (this.photos.length + this.previewCreatedPhotos.length)
     ) {
       this.maxPhotosAlert = true;
       time = setTimeout(() => {

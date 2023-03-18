@@ -295,8 +295,6 @@ export class EquipoTrabajoDetalleFormComponent implements OnInit {
   }
   get fechaActual() {
     var today = new Date();
-    /*     var now = today.toLocaleDateString('es');
-    now = formatDate(now, 'yyyy-MM-dd', 'es'); */
     return this.datePipe.transform(today, 'yyyy-MM-dd');
   }
   get nombres() {

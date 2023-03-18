@@ -16,11 +16,13 @@ export class UserAnswersForumComponent implements OnInit {
   @Output() onDelete: EventEmitter<boolean> = new EventEmitter();
   @Output() onDetalles: EventEmitter<boolean> = new EventEmitter();
   @Input() authUserId: boolean = false;
-  showLightbox: boolean=false;
-
+  showLightbox: boolean = false;
+  showLess: boolean = true;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.data)
+  }
   editar() {
     if (!this.edit) {
       this.edit = true;
@@ -40,5 +42,8 @@ export class UserAnswersForumComponent implements OnInit {
   }
   fotoSeleLightbox() {
     this.showLightbox = !this.showLightbox;
+  }
+  toggleContent() {
+    this.showLess = !this.showLess;
   }
 }
