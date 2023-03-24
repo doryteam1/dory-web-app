@@ -33,9 +33,6 @@
   --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-body {
-  font-family: var(--system-ui);
-}
 
 
 /*Fonts*/
@@ -63,12 +60,14 @@ body {
   font-style: normal;
 }
 
-/*
+
 * {
   //font-family: var(--system-ui);
-  //font-family: "Helvetica";
-}*/
-
+  font-family: "JosefinSans-Regular"; //This is what we are going to call
+}
+body {
+  font-family: "JosefinSans-Regular"; //This is what we are going to call
+}
 .mt-40 {
   margin-top: 40px;
 }

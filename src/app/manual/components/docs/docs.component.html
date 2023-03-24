@@ -1,10 +1,15 @@
-<div class="d-flex justify-start" *ngIf="innerWidth < 997">
-    <button class="btn float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
-        <i class="bi bi-list fs-3"  style="font-size: 2rem !important;" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
-    </button>
-</div>
+
 <div class="containerx">
-    <div *ngIf="innerWidth > 996" class="container-menu-fixed">
+  <div  *ngIf="innerWidth < 997" class="buttonOpenOffCamvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" [style.top]="(heightNavbar[1]+10) + 'px'" >
+    <svg width="100%" height="100%" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="25" cy="25" r="25" fill="#26A5B8" />
+      <rect x="9" y="14" width="32" height="4" rx="2" fill="white" />
+      <rect x="9" y="23" width="32" height="4" rx="2" fill="white" />
+      <rect x="9" y="32" width="32" height="4" rx="2" fill="white" />
+    </svg>
+  </div>
+
+    <div *ngIf="innerWidth > 996" class="container-menu-fixed" [style.top]="heightNavbar[1] + 'px'" [style.height] = "heightNavbar[0]">
         <ng-container *ngTemplateOutlet="menu">
         </ng-container>
     </div>
@@ -13,9 +18,8 @@
     </div>
 </div>
 
-<div class="offcanvas offcanvas-start offcanvas-start--edit" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+<div  [ngClass]="{'disp-none': innerWidth > 997}" class="offcanvas offcanvas-start offcanvas-start--edit" tabindex="-1" id="offcanvas" data-bs-keyboard="false"  [style.top]="heightNavbar[1] + 'px'">
     <div class="offcanvas-header">
-        <h6 class="offcanvas-title  d-sm-block">Menu</h6>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body px-0 offcanvas-body--edit" [ngClass]="{ 'flex-center': innerWidth < 997 }">
@@ -26,12 +30,12 @@
 
 <ng-template #menu>
     <div class="container__menu" [ngClass]="{ 'container__menu--center': innerWidth < 997 }">
-        <span class="container__item-title" routerLink="inicio"  routerLinkActive="active" (click)="closeOffcanvas()">
+        <span class="container__item-title item-inicio" routerLink="inicio"  routerLinkActive="active" (click)="closeOffcanvas()">
             Inicio
         </span>
         <span class="container__item" routerLink="introduccion"  routerLinkActive="active" (click)="closeOffcanvas()">
             Introducción
-        </span>        
+        </span>
         <span class="container__item" routerLink="areas-sitio" routerLinkActive="active" (click)="closeOffcanvas()">
             Áreas del sitio web
         </span>

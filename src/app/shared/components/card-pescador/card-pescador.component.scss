@@ -7,7 +7,6 @@
   flex-direction: column;
   background: #fff;
   line-height: 1.4;
-  font-family: sans-serif;
   border-radius: 10px;
   overflow: hidden;
   z-index: 0;
@@ -105,11 +104,6 @@
     justify-content: space-evenly;
     align-items: stretch;
     z-index: 1;
-
-    h1,
-    h2 {
-      font-family: Poppins, sans-serif;
-    }
 
     h1 {
       line-height: 1;

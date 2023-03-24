@@ -39,7 +39,6 @@ export class ControlBarComponent implements OnInit, OnDestroy {
   invitaciones: Array<any> = [];
   notificatiosOpened: boolean = false;
   invitacionesFromUsers: Array<any> = [];
-  tests: string[] = [];
   rutaActiva: string = '';
   formModal: any;
   isHidden: boolean = false;
@@ -165,24 +164,17 @@ export class ControlBarComponent implements OnInit, OnDestroy {
 
   updateAsocRequest() {
     this.userService.solicitudesDeAsociaciones().subscribe((response) => {
-      console.log(response)
       this.invitaciones = response.data;
     });
 
     this.userService
       .solicitudesParaAsociacionesRepresentante()
       .subscribe((response) => {
-        console.log(response);
         this.invitacionesFromUsers = response.data;
       });
   }
 
-  test() {
-    setTimeout(() => {
-      this.tests.push('test');
-      this.test();
-    }, 2000);
-  }
+
   ngOnDestroy(): void {
     this.mediaQuerySubscripNavbar.unsubscribe();
       this.heightNavbarSubsz.unsubscribe();

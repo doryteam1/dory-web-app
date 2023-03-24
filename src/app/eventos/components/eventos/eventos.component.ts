@@ -21,7 +21,8 @@ export class EventosComponent implements OnInit {
   loading: boolean = false;
   palabra: string = '';
   eventos: Evento[] = [];
-
+  showLightbox: boolean = false;
+  foto:string=''
   constructor(
     private activatedRoute: ActivatedRoute,
     private eService: EventosService,
@@ -65,20 +66,20 @@ export class EventosComponent implements OnInit {
     this.showNotFound = this.eventos.length < 1 ? true : false;
   }
   buscarData(texto: string): any {
-      if (texto.trim().length === 0) {
-        return this.eventsFiltered;
-      }
-      const buscardatospor: BuscarPor[] = [
-        { data1: 'nombre' },
-        { data2: 'resumen' },
-        { data3: 'organizador' },
-        { data4: 'dirigidoa' },
-      ];
-      return this.searchBuscadorService.buscarData(
-        this.eventsFiltered,
-        texto,
-        buscardatospor
-      );
+    if (texto.trim().length === 0) {
+      return this.eventsFiltered;
+    }
+    const buscardatospor: BuscarPor[] = [
+      { data1: 'nombre' },
+      { data2: 'resumen' },
+      { data3: 'organizador' },
+      { data4: 'dirigidoa' },
+    ];
+    return this.searchBuscadorService.buscarData(
+      this.eventsFiltered,
+      texto,
+      buscardatospor
+    );
   }
   FechaPipe(fecha: any): any {
     if (fecha) {
@@ -95,6 +96,13 @@ export class EventosComponent implements OnInit {
       return '$' + number;
     } else {
       return 'Gratis';
+    }
+  }
+  fotoSeleLightbox(img:any) {
+    this.showLightbox = !this.showLightbox;
+    if (img !== 'close') {
+      this.foto=''
+      this.foto=img
     }
   }
 }

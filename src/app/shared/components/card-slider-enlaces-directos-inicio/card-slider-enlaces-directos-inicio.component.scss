@@ -9,7 +9,6 @@ li {
 
 h2,
 h4 {
-  font-family: "Oswald", sans-serif;
   text-transform: uppercase;
   color: #333333;
 }
@@ -23,7 +22,6 @@ h2 {
 
 p,
 li {
-  font-family: "Roboto", sans-serif;
   font-weight: 400;
   color: #555;
   line-height: 22px;
@@ -42,7 +40,7 @@ ul {
 
 .cardContainer {
   position: relative;
-  width: 100vw;
+  width: 95vw;
   height: 350px;
   max-width: 300px;
   margin: 4px;

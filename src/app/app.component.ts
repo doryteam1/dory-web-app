@@ -58,6 +58,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
     /* Obtenemos el primer dato de height */
     this.height = this.navbarDiv?.nativeElement?.clientHeight;
     this.previousHeight = [`calc(100% - ${this.height}px)`, this.height];
+    this.calcHeightNavbarService.updateData(this.previousHeight);
   }
   ngOnInit(): void {
     this.isAuthUser = this.userService.isAuthenticated();
@@ -72,7 +73,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.divMain!.nativeElement!.scrollTo(0, 0);
+        this.divMain!.nativeElement!.scroll(0, 0);
         let route: string = event.url;
         if (route.includes('welcome') || route.includes('politica')) {
           this.show = false;
