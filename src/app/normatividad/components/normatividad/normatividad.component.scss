@@ -57,9 +57,7 @@ app-not-found {
   display: block;
   margin-top: 20px;
 }
-.urlActiva{
-  background-color: var(--azul4) !important;
-}
+
 
 /*  */
 .btn-outline-black{
@@ -78,7 +76,9 @@ app-not-found {
   box-shadow: inset 4px 4px 12px #c5c5c5,
     inset -4px -4px 12px #ffffff;
 }
-
+.button--edit.active {
+  background-color: var(--azul4) !important;
+}
 @media screen and (max-width: 480px) {
 .filters-container {
   flex-direction: column;

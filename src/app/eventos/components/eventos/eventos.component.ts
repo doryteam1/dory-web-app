@@ -1,7 +1,7 @@
 import {  DecimalPipe, formatDate, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EventosService } from 'src/app/services/eventos.service';
 import { SearchBuscadorService } from 'src/app/shared/services/search-buscador.service';
@@ -21,13 +21,18 @@ export class EventosComponent implements OnInit {
   loading: boolean = false;
   palabra: string = '';
   eventos: Evento[] = [];
-  showLightbox: boolean = false;
-  foto:string=''
+  /*  showLightbox: boolean = false;
+  foto:string='' */
+  filtersButton: any[] = [
+    { label: 'Cursos', route: '/eventos/cursos' },
+    { label: 'Capacitaciones', route: '/eventos/capacitaciones' },
+    { label: 'Congresos', route: '/eventos/congresos' },
+  ];
   constructor(
     private activatedRoute: ActivatedRoute,
     private eService: EventosService,
     private decimalPipe: DecimalPipe,
-    private searchBuscadorService: SearchBuscadorService
+    private searchBuscadorService: SearchBuscadorService,
   ) {}
 
   ngOnInit(): void {
@@ -98,11 +103,11 @@ export class EventosComponent implements OnInit {
       return 'Gratis';
     }
   }
-  fotoSeleLightbox(img:any) {
+  /*  fotoSeleLightbox(img:any) {
     this.showLightbox = !this.showLightbox;
     if (img !== 'close') {
       this.foto=''
       this.foto=img
     }
-  }
+  } */
 }

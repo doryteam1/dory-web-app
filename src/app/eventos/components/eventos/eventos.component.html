@@ -1,14 +1,20 @@
 <app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)" [activeClasetwo]="true"></app-search>
+<div class="filters-container ">
+  <button *ngFor="let filter of filtersButton"
+    [routerLink]="[filter.route]" class="btn-outline-black button--edit"  routerLinkActive="active">
+    {{filter.label}}
+  </button>
+</div>
 <div *ngIf="eventsFiltered.length > 0 && eventos.length > 0 " class="container-card">
   <div class="card" *ngFor="let evento of eventos">
     <a class="card__link"  href="{{evento?.url}}" target="_blank">
         <div class="container-card__imagen"  style="position: relative;">
-          <img src="assets/icons/ampliar.svg" alt="Amplir imagen" (click)="fotoSeleLightbox(evento?.imagen)" style="width: 50px;
+        <!--   <img src="assets/icons/ampliar.svg" alt="Amplir imagen" (click)="fotoSeleLightbox(evento?.imagen)" style="width: 50px;
     position: absolute;
     right: 0;
     cursor: pointer;
-    z-index: 1;">
-         <img class="card__image"  [src]="evento?.imagen ? evento?.imagen: 'assets/images/no-image-photography.svg'" >
+    z-index: 1;"> -->
+         <img class="card__image"  [src]="evento?.imagen ? evento?.imagen: 'assets/images/no-image-photography1080x856.svg'" >
         </div>
       <div class="container-data shorterTextOverflowHidden">
         <h6 class="card__title w-100 shorterTextAuto">{{evento?.nombre}}</h6>
@@ -40,5 +46,5 @@
     </div>
 </div>
 <app-footer></app-footer>
-<app-lightbox-imagen [thumbnails]="foto" *ngIf="showLightbox"
-  (onCloseLightbox)="fotoSeleLightbox('close')"></app-lightbox-imagen>
+<!-- <app-lightbox-imagen [thumbnails]="foto" *ngIf="showLightbox"
+  (onCloseLightbox)="fotoSeleLightbox('close')"></app-lightbox-imagen> -->

@@ -37,6 +37,12 @@ export class NovedadesComponent implements OnInit {
       ],
     },
   ];
+  filtersButton: any[] = [
+    { label: 'Artículos', route: '/novedades/articulos' },
+    { label: 'Artículos colombianos', route: '/novedades/articulos-colombia' },
+    { label: 'Revistas', route: '/novedades/revistas' },
+    { label: 'Noticias', route: '/novedades/noticias' },
+  ];
   constructor(
     private activatedRoute: ActivatedRoute,
     private nService: NovedadesService,
@@ -44,7 +50,7 @@ export class NovedadesComponent implements OnInit {
     private searchBuscadorService: SearchBuscadorService,
     private appModalService: AppModalService,
     public location2: PlatformLocation,
-    private router: Router
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +65,7 @@ export class NovedadesComponent implements OnInit {
     this.cargarTodos();
   }
   onFiltroChange() {
-    let filtro:any = this.filtro[0].data[0];
+    let filtro: any = this.filtro[0].data[0];
     this.filtroseleccionado = filtro;
     this.reseteoDeBusqueda();
   }
@@ -148,28 +154,30 @@ export class NovedadesComponent implements OnInit {
     window.open(urlNovedad, '_blank');
   }
   buscarData(texto: string): any {
-       if (texto.trim().length === 0) {
-         return this.novedadesFiltered;
-       }
-       const buscardatospor: BuscarPor[] = [
-         { data1: 'titulo' },
-         { data2: 'autor' },
-         { data3: 'resumen' },
-       ];
-       return this.searchBuscadorService.buscarData(
-         this.novedadesFiltered,
-         texto,
-         buscardatospor
-       );
+    if (texto.trim().length === 0) {
+      return this.novedadesFiltered;
+    }
+    const buscardatospor: BuscarPor[] = [
+      { data1: 'titulo' },
+      { data2: 'autor' },
+      { data3: 'resumen' },
+    ];
+    return this.searchBuscadorService.buscarData(
+      this.novedadesFiltered,
+      texto,
+      buscardatospor
+    );
   }
   onBuscarPalabra(palabra: string) {
     this.palabra = palabra;
     this.reseteoDeBusqueda();
   }
   reseteoDeBusqueda() {
-   const resultados = this.buscarData(this.palabra);
-  const filtrado = this.filtroseleccionado ? this.filtradoData(this.filtroseleccionado, resultados) : resultados;
-  this.novedades = filtrado;
-  this.showNotFound = !this.novedades.length;
-}
+    const resultados = this.buscarData(this.palabra);
+    const filtrado = this.filtroseleccionado
+      ? this.filtradoData(this.filtroseleccionado, resultados)
+      : resultados;
+    this.novedades = filtrado;
+    this.showNotFound = !this.novedades.length;
+  }
 }

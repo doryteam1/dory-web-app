@@ -165,8 +165,6 @@ share-buttons {
 
 app-search {
   display: block;
-  margin-bottom: 10px;
-  margin-top: 10px;
   width: 100%;
 }
 
@@ -181,24 +179,63 @@ app-search {
 .buscadoryfiltro {
   display: flex;
   flex-direction: column;
+
   .buscador-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-margin: 30px 15px 20px;
+    margin: 30px 15px 20px;
+    gap: 10px;
   }
 }
+
 .btn-filter {
   height: 45px;
   color: rgba(0, 0, 0, 0.55) !important;
   display: flex;
-    align-items: center;
+  align-items: center;
 }
-.filtroStilo{
+
+.filtroStilo {
   margin: 0 !important;
 }
+
+.filters-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  padding: 0 20px;
+
+  button {
+    width: 200px;
+    text-align: center;
+  }
+}
+
+.button--edit.active{
+  background-color: var(--azul4) !important;
+}
+.btn-outline-black {
+  border-radius: 20px;
+  padding: 5px 15px;
+  color: rgba(0, 0, 0, 0.55) !important;
+  background: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  transition: all .3s;
+  box-shadow: 2px 2px 12px #c5c5c5,
+    -6px -6px 12px #ffffff;
+}
+
+.btn-outline-black:active {
+  color: #666;
+  box-shadow: inset 4px 4px 12px #c5c5c5,
+    inset -4px -4px 12px #ffffff;
+}
+
 @media screen and (max-width: 978px) {
   .container {
     flex-wrap: wrap;

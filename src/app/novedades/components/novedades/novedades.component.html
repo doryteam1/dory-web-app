@@ -2,7 +2,7 @@
 
     <div class="buscadoryfiltro">
       <div class="buscador-container">
-        <app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)" [activeClasetwo]="true"></app-search>
+        <app-search [placeholderbuscador]="'Buscar...'" (textSearch)="onBuscarPalabra($event)" [activeClasetwo]="true" ></app-search>
         <button class="btn-filter"
         *ngIf="userService.isAuthenticated()"
         type="button"
@@ -20,6 +20,12 @@
           (onCloseClip)="delateFilter()">
         </app-chip-con-boton-close>
       </div>
+    </div>
+    <div class="filters-container ">
+      <button *ngFor="let filter of filtersButton" 
+        [routerLink]="[filter.route]" class="btn-outline-black button--edit" routerLinkActive="active">
+        {{filter.label}}
+      </button>
     </div>
 <div  *ngIf="novedades.length > 0 && novedadesFiltered.length > 0 "class="container">
   <div class="card" *ngFor="let novedad of novedades; let i=index;">

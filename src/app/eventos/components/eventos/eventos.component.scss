@@ -21,7 +21,7 @@
 
     .container-card__imagen {
       width: 100%;
-      height: 280px;
+      /* height: 280px; */
       overflow: hidden;
 
       .card__image {
@@ -100,7 +100,43 @@ app-search {
   margin: 30px 15px;
 
 }
+.filters-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom:  30px;
+  flex-wrap: wrap;
+  padding: 0 20px;
 
+  button {
+    width: 140px;
+    text-align: center;
+  }
+}
+
+.urlActiva {
+  background-color: var(--azul4) !important;
+}
+
+.btn-outline-black {
+  border-radius: 20px;
+  padding: 5px 15px;
+  color: rgba(0, 0, 0, 0.55) !important;
+  background: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  transition: all .3s;
+  box-shadow: 2px 2px 12px #c5c5c5,
+    -6px -6px 12px #ffffff;
+}
+
+.btn-outline-black:active {
+  color: #666;
+  box-shadow: inset 4px 4px 12px #c5c5c5,
+    inset -4px -4px 12px #ffffff;
+}
+.button--edit.active {
+  background-color: var(--azul4) !important;
+}
 @media screen and (max-width: 450px) {
   .card__icon-box {
     flex-direction: column;

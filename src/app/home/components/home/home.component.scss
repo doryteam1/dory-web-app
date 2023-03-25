@@ -98,7 +98,7 @@ h1 {
   position: relative;
   max-width: 280px;
   height: 230px;
-  padding: 90px 35px 10px;
+  padding: 10px 35px;
   margin-bottom: 18px;
   transform: scale(0.9);
   opacity: 0.5;
@@ -116,33 +116,39 @@ h1 {
   }
 
   img {
-    position: absolute;
-    top: 30px;
-    left: 25px;
     width: 60px;
-    height: 60px;
+    height: auto;
+    margin-bottom: 5px;
     transition: .3s;
   }
 
-  &__content {
-    h3 {
-      margin-bottom: 15px;
-      font-size: 1.1rem;
-      color: #595959;
+    &__content {
+      h3 {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+        color: #595959;
         font-weight: 800;
+      }
+
+      p {
+        display: inline;
+        font-size: .8rem;
+        line-height: 18px;
+        color: #595959;
+        text-align: justify !important;
+
+        @media screen and (max-width: 400px) {
+          font-size: .75rem;
+        }
+
+      }
     }
 
-    p {
-      display: inline;
-      font-size: .91429rem;
-      line-height: 18px;
-      color: #595959;
-      text-align: justify !important;
-
+    @media screen and (max-width: 370px) {
+      align-items: center;
+      text-align: center;
     }
-  }
-
-}
+    }
 
 
 /* ggg */

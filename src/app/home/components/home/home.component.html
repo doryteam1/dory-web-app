@@ -47,7 +47,7 @@
       <ng-container *ngFor="let slide of sliderCard; let i = index" >
         <ng-template carouselSlide [id]="slide.id" [width]="280" let-owlItem>
           <a class="slider-card-services-box" (click)="navigateSliderCard(slide?.url, owlItem); owlCar.to(slide?.id)" >
-            <img [src]="slide.src" alt="" class="user-img mr-2">
+              <img [src]="slide.src" alt="" class="user-img mr-2">
             <div class="slider-card-services-box__content">
               <h3>{{slide?.title}}</h3>
               <p class="text-center">{{slide?.informacion}}</p>

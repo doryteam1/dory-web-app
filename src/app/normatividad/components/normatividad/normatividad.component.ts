@@ -25,8 +25,7 @@ export class NormatividadComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private nService: NormatividadService,
-    private searchBuscadorService: SearchBuscadorService,
-    public _router: Router
+    private searchBuscadorService: SearchBuscadorService
   ) {}
 
   ngOnInit(): void {
