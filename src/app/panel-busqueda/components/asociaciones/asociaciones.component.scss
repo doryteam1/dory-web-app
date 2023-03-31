@@ -99,6 +99,29 @@ small {
   flex-wrap: nowrap;
   justify-content: center;
 }
+.container__title {
+  font-size: 30px;
+  margin: 0;
+  overflow-wrap: break-word;
+  color: var(--gris-oscuro);
+}
+
+.container__description {
+  margin: 0;
+  font-size: 16px;
+  overflow-wrap: break-word;
+  color: var(--gris-oscuro);
+  text-align: justify;
+}
+
+.container-inform {
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 @media screen and (max-width: 730px) {
   app-search {
     width: 100%;

@@ -53,3 +53,26 @@
 .form__input-select{
     width: 122px;
 }
+.container__titlex {
+  font-size: 30px;
+  margin: 0;
+  overflow-wrap: break-word;
+  color: var(--gris-oscuro);
+}
+
+.container__description {
+  margin: 0;
+  font-size: 16px;
+  overflow-wrap: break-word;
+  color: var(--gris-oscuro);
+  text-align: justify;
+}
+
+.container-inform {
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}

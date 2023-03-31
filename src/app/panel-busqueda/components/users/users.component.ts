@@ -43,6 +43,8 @@ export class UsersComponent implements OnInit {
   ];
   userType: string = '';
   resultFiltroPorMunicipio: any[] = [];
+  informacionP: string = '';
+  tiuloh4: string = '';
   constructor(
     private pescadoresService: PescadoresService,
     private piscicultoresService: PiscicultoresService,
@@ -94,36 +96,56 @@ export class UsersComponent implements OnInit {
   }
   getUsers(): Observable<any> | null {
     if (this.userType == 'pescadores') {
+      this.informacionP =
+        'En esta sección, encontrarás información sobre los pescadores registrados en nuestra aplicación DORY que hacen parte de las actividades del sector piscícola, lo cual puede resultar de gran ayuda para la identificación y el seguimiento de los actores clave en la producción de peces.';
+      this.tiuloh4 = 'Pescadores';
       return this.pescadoresService.getPescadores();
     } else if (this.userType == 'piscicultores') {
+      this.informacionP =
+        'En esta sección, encontrarás información sobre los piscicultores registrados en la plataforma DORY que hacen parte de las actividades del sector piscícola, lo cual puede resultar de gran ayuda para la identificación y el seguimiento de los actores clave en la producción de peces.';
+      this.tiuloh4 = 'Piscicultores';
       return this.piscicultoresService.getPiscicultores();
     } else if (this.userType == 'investigadores') {
+      this.informacionP =
+        'En esta sección, encontrarás información sobre los investigadores que hacen parte del sector piscícola, lo cual puede resultar útil para la identificación de expertos y contactarlos para obtener información valiosa sobre el sector.';
+      this.tiuloh4 = 'Investigadores';
       return this.investigadoresServices.getInvestigadoresAll();
     } else if (this.userType == 'proveedores') {
+      this.informacionP =
+        'En esta sección, encontrarás información sobre los proveedores destinados a prestar servicios relacionados con el sector piscícola, lo cual puede resultar de gran ayuda para la identificación y poder tener contactar con estos actores.';
+      this.tiuloh4 = 'Proveedores';
       return this.proveedoresService.getProveedoresAll();
     } else if (this.userType == 'transportadores') {
+      this.informacionP =
+        'En esta sección, encontrarás información sobre los transportadores destinados a prestar servicios relacionados con el sector piscícola, lo cual puede resultar de gran ayuda para poder contactarlos.';
+      this.tiuloh4 = 'Transportadores';
       return this.transportadoresService.getTransportadoresAll();
     } else if (this.userType == 'comerciantes') {
+      this.informacionP =
+        'En esta sección, encontrarás información sobre los comerciantes que hacen parte del sector piscícola, lo cual puede resultar útil para la identificación de los actores clave en la cadena de suministro de la producción de peces.';
+      this.tiuloh4 = 'Comerciantes';
       return this.negociosService.getComerciantesAll();
     } else if (this.userType == 'consumidores') {
+      this.informacionP =
+        'En esta sección, encontrarás información sobre los consumidores que hacen parte del sector piscícola, lo cual puede resultar útil para la identificación de los actores clave en la cadena de suministro de la producción de peces.';
+      this.tiuloh4 = 'Consumidores';
       return this.consumidorService.getConsumidoresAll();
     }
     return null;
   }
 
   goDetail(user: any) {
-  const map:any =
-    {
-      'Pescador': '/pescadores/municipio/detalle/',
-      'Piscicultor': '/piscicultores/municipio/detalle/',
-      'Proveedor': '/proveedores/detalle/',
+    const map: any = {
+      Pescador: '/pescadores/municipio/detalle/',
+      Piscicultor: '/piscicultores/municipio/detalle/',
+      Proveedor: '/proveedores/detalle/',
       'Investigador Experto': '/investigadores/detalle/',
-      'Transportador': '/transportadores/detalle/',
-      'Comerciante': '/comerciantes/detalle/',
-      'Consumidor': '/consumidores/detalle/',
-    }
-   const baseUrl: string = map[user.tipo_usuario] ?? '';
-      this.router.navigateByUrl(baseUrl + `${user.id}`);
+      Transportador: '/transportadores/detalle/',
+      Comerciante: '/comerciantes/detalle/',
+      Consumidor: '/consumidores/detalle/',
+    };
+    const baseUrl: string = map[user.tipo_usuario] ?? '';
+    this.router.navigateByUrl(baseUrl + `${user.id}`);
   }
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);

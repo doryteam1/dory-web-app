@@ -10,10 +10,30 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-margin: 30px 15px 20px;
+  margin: 30px 15px 20px;
 }
 
+.container__title {
+  font-size: 30px;
+  margin: 0;
+  overflow-wrap: break-word;
+  color: var(--gris-oscuro);
+}
 
+.container__description {
+ margin: 0;
+  font-size: 16px;
+  overflow-wrap: break-word;
+  color: var(--gris-oscuro);
+  text-align: justify;
+}
+.container-inform {
+  flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 30px;
+}
 .chip-container{
   display: flex;
   flex-direction: row;
