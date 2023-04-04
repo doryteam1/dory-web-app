@@ -1,18 +1,22 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegExpUtils } from '../../../utilities/regexps';
+import { Utilities } from 'src/app/utilities/utilities';
+import { environment } from 'src/environments/environment';
+import { PromptMomentNotification } from 'google-one-tap';
 
+declare var google: any;
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.scss'],
 })
-export class RegistroComponent implements OnInit {
+export class RegistroComponent implements OnInit, AfterViewInit {
   @Output() exit: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup = new FormGroup({
@@ -54,13 +58,35 @@ export class RegistroComponent implements OnInit {
     private socialAuthService: SocialAuthService,
     private modalService: NgbModal,
     private userService: UsuarioService
-  ) {}
+  ) { }
+
+  ngAfterViewInit(): void {
+     google.accounts.id.renderButton(
+      document.getElementById("buttonDiv2"),
+      {
+        size: "large",
+        shape: "pill",
+        text: "Iniciar con google",
+        type: "standard",
+        prompt: "select_account"
+      }  // customization attributes
+    );
+  }
 
   ngOnInit(): void {
     this.usuarioService.getTiposUsuario().subscribe((response) => {
       this.tipoUsuarios = response.data;
     });
 
+    //google button setup
+    google.accounts.id.initialize({
+      client_id: environment.oAuthClientId,
+      callback: (response: any) => {
+        let payload = Utilities.parseJwt(response.credential);
+        console.log(payload)
+        this.regUserAuthGoogle(response.credential)
+      }
+    });
   }
 
   exiting(event: any) {
@@ -111,13 +137,13 @@ export class RegistroComponent implements OnInit {
       this.form.markAllAsTouched();
     }
   }
-  
+
   onChange() {
     this.error = '';
   }
 
   loginWithGoogle(): void {
-    this.socialAuthService
+    /*this.socialAuthService
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then(() => {
         this.regUserAuthGoogle();
@@ -126,11 +152,52 @@ export class RegistroComponent implements OnInit {
         console.log(err);
         this.form.markAsUntouched();
         this.error = 'No pudimos ingresar con google';
-      });
+      });*/
+    //console.log("register")
+    /*google.accounts.id.prompt((notification: PromptMomentNotification) => {
+      console.log('Google prompt event triggered...');
+  
+      if (notification.getDismissedReason() === 'credential_returned') {
+        console.log('Welcome back!');
+      }
+    });*/
   }
 
-  regUserAuthGoogle() {
-    let email: string;
+  regUserAuthGoogle(idToken: string) {
+    let payload = Utilities.parseJwt(idToken);
+    console.log("regUserAuthGoogle Payload idToken ", payload)
+    let email = payload.email;
+    localStorage.setItem('email', email);
+    this.userService.getUsuarioByEmail(email).subscribe(
+      (response) => {
+        this.getTokenWithGoogleIdToken(idToken, email);
+      },
+      (err) => {
+        if (err.status == 404) {
+          // el usuario no existe
+          this.userService
+            .registrarUsuario({
+              nombres: payload.given_name,
+              apellidos: payload.family_name,
+              email: payload.email,
+              foto: payload.picture,
+              latitud: this.sucreLatLng.lat,
+              longitud: this.sucreLatLng.lng,
+              creadoCon: 'google',
+            })
+            .subscribe(
+              (response) => {
+                this.getTokenWithGoogleIdToken(idToken, email);
+              },
+              (err) => {
+                this.form.markAsUntouched();
+                this.error = err.error.message;
+              }
+            );
+        }
+      }
+    );
+    /*let email: string;
     let idToken: string;
     this.socialAuthService.authState.subscribe(
       (response) => {
@@ -167,7 +234,7 @@ export class RegistroComponent implements OnInit {
         this.form.markAsUntouched();
         this.error = 'No pudimos ingresar con google. Intentelo nuevamente.';
       }
-    );
+    );*/
   }
 
   getTokenWithGoogleIdToken(idToken: string, email: string) {

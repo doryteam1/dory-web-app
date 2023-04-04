@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { ChatService } from 'src/app/services/chat.service';
+import { environment } from 'src/environments/environment';
+import { Utilities } from 'src/app/utilities/utilities';
 
+declare var google: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
@@ -29,7 +32,19 @@ export class LoginComponent implements OnInit {
     private userService: UsuarioService,
     private socialAuthService: SocialAuthService,
     private chatService: ChatService
-  ) {}
+  ) { }
+  ngAfterViewInit(): void {
+    google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      {
+        size: "large",
+        shape: "pill",
+        text: "Iniciar con google",
+        type: "standard",
+        prompt: "select_account"
+      }  // customization attributes
+    );
+  }
 
   ngOnInit(): void {
     let remEmail = localStorage.getItem('rememberEmail');
@@ -37,6 +52,16 @@ export class LoginComponent implements OnInit {
       this.form.get('email')?.setValue(remEmail);
       this.recordarme = true;
     }
+
+    //google button setup
+    google.accounts.id.initialize({
+      client_id: environment.oAuthClientId,
+      callback: (response: any) => {
+        let payload = Utilities.parseJwt(response.credential);
+        console.log(payload)
+        this.regUserAuthGoogle(response.credential)
+      }
+    });
   }
 
   invalid(controlFormName: string) {
@@ -86,22 +111,62 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGoogle(): void {
-    this.socialAuthService
-      .signIn(GoogleLoginProvider.PROVIDER_ID)
-      .then(() => {
-        this.regUserAuthGoogle();
-      })
-      .catch((err) => {
-        console.log(err);
-        this.form.markAsUntouched();
-        this.error = 'No pudimos ingresar con google';
-      });
+    /*  this.socialAuthService
+     .signIn(GoogleLoginProvider.PROVIDER_ID)
+     .then(() => {
+       this.regUserAuthGoogle();
+     })
+     .catch((err) => {
+       console.log(err);
+       this.form.markAsUntouched();
+       this.error = 'No pudimos ingresar con google';
+     }); */
+
+
+    /*const googleButton = document.getElementById("buttonDiv")
+    console.log("login with google", googleButton)
+    googleButton?.click()
+    google.accounts.id.prompt()*/
   }
 
-  regUserAuthGoogle() {
-    let email: string;
-    let idToken: string;
-    this.socialAuthService.authState.subscribe(
+  regUserAuthGoogle(idToken: string) {
+    let payload = Utilities.parseJwt(idToken);
+    console.log("regUserAuthGoogle Payload idToken ", payload)
+    let email = payload.email;
+    localStorage.setItem('email', email);
+    this.userService.getUsuarioByEmail(email).subscribe(
+      (response) => {
+        this.getTokenWithGoogleIdToken(idToken, email);
+      },
+      (err) => {
+        if (err.status == 404) {
+          // el usuario no existe
+          this.userService
+            .registrarUsuario({
+              nombres: payload.given_name,
+              apellidos: payload.family_name,
+              email: payload.email,
+              foto: payload.picture,
+              latitud: this.sucreLatLng.lat,
+              longitud: this.sucreLatLng.lng,
+              creadoCon: 'google',
+            })
+            .subscribe(
+              (response) => {
+                this.getTokenWithGoogleIdToken(idToken, email);
+              },
+              (err) => {
+                this.form.markAsUntouched();
+                this.error = err.error.message;
+              }
+            );
+        }
+      }
+    );
+
+
+
+    /*this.socialAuthService.authState.subscribe(
       (response) => {
         idToken = response.idToken;
         email = response.email;
@@ -141,7 +206,7 @@ export class LoginComponent implements OnInit {
         this.form.markAsUntouched();
         this.error = 'No pudimos ingresar con google';
       }
-    );
+    );*/
   }
 
   getTokenWithGoogleIdToken(idToken: string, email: string) {
