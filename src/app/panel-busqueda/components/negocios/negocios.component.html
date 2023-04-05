@@ -9,13 +9,13 @@
     (onArrayCheckboxSelec)="onFiltroChangeCheckbox($event)" [arrayCheckboxSelec]="filtroseleccionadoCheckbox">
   </app-filtro>
 </div>
-<app-not-found *ngIf="showNotFound" objectName="negocios"></app-not-found>
 <div class="chip">
       <app-chip-con-boton-close *ngFor="let  resultado of resultFiltroPorMunicipio; let i =index" [iconoChip]="true"
         [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'"
         [contenidoChip]="resultado.nombre +' '+ resultado.datos.length" (onCloseClip)="deleteFilterCheckbox(i)">
       </app-chip-con-boton-close>
 </div>
+<app-not-found *ngIf="showNotFound" objectName="negocios" [imgType]="'negocio'"></app-not-found>
 
 <div class="container mb-4">
   <app-card-negocio

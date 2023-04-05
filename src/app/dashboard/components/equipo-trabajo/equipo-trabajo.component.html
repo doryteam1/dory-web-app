@@ -5,7 +5,7 @@
     <div class="modal-body">
       <form [formGroup]="form" *ngIf="modalMode == 'update'" autocomplete="off">
         <div class="mb-3">
-          <label for="dateOfBirth">Título</label>
+          <label for="dateOfBirth">Título <span class="asterisk">*</span></label>
           <div class="input-group">
             <input id="productName" class="form-control" placeholder="Título del resumen de los miembros" formControlName="titulo">
           </div>
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="mb-3">
-          <label for="dateOfBirth">Descripción</label>
+          <label for="dateOfBirth">Descripción <span class="asterisk">*</span></label>
           <div class="input-group">
             <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
               placeholder="Resumen de los miembros" formControlName="descripcion"></textarea>

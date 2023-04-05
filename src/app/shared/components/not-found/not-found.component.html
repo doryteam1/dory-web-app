@@ -3,6 +3,8 @@
       <img class="search-container__image" *ngIf="imgType == 'default'" src="assets/images/searching.svg">
       <img class="search-container__image" *ngIf="imgType == 'vehiculo'" src="assets/images/searchVehi.svg">
       <img class="search-container__image" *ngIf="imgType == 'pez'" src="assets/images/searchPez.svg">
+      <img class="search-container__image" *ngIf="imgType == 'negocio'" src="assets/images/searchnegoc.svg">
+      <img class="search-container__image" *ngIf="imgType == 'producto'" src="assets/images/searchprodu.svg">
       <h5 style="color:var(--gris-oscuro);">No se han encontrado resultados</h5>
       <p *ngIf="!message" style="color:var(--gris-oscuro);">No se encontraron {{objectName}} con esta búsqueda</p>
       <p *ngIf="message" style="color:var(--gris-oscuro);">{{message}}</p>

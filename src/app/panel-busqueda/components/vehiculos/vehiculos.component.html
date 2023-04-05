@@ -16,7 +16,6 @@
      [deleteRadioFilter1]="selectedFilter"
     (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
 </div>
-<app-not-found *ngIf="showNotFound" objectName="vehiculos" [imgType]="'vehiculo'"></app-not-found>
 <div class="chip">
   <app-chip-con-boton-close *ngIf="selectedFilter" [iconoChip]="true"
     [imgIconoChip]="'assets/icons/filter_alt_black_24dp.svg'" [contenidoChip]="selectedFilter.nombrefiltro + ' ('+ vehiculosFiltered.length +')'"
@@ -35,6 +34,7 @@
     >
   </app-chip-con-boton-close>
 </div>
+<app-not-found *ngIf="showNotFound" objectName="vehiculos" [imgType]="'vehiculo'"></app-not-found>
 
 <div class="container mb-4">
   <app-card-vehiculo [datos]="vehiculo" [indiceDatos]="i" *ngFor="let vehiculo of vehiculosFiltered; let i=index;" (onDetalle)="goDetail(vehiculo.id_vehiculo)"></app-card-vehiculo>

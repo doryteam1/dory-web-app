@@ -46,8 +46,13 @@
 }
 
 .btn-filter {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
   height: 45px;
   color: rgba(0, 0, 0, 0.55) !important;
+
 }
 
 .btn-close:focus {

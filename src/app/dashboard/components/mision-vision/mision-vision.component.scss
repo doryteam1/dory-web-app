@@ -10,7 +10,9 @@
 .container__btn--azul {
   background-color: var(azul1);
 }
-
+ .asterisk {
+   color: red;
+ }
 .container__spinner {
   width: 20px;
   height: 20px;
@@ -92,16 +94,6 @@ button:focus {
   .container-mis-vis__item {
     width: calc(50% - 15px);
   }
-
-  /*   &>div:nth-of-type(1) {
-    background-color: rgb(255, 183, 0);
-    // Estilos específicos para el primer elemento hijo
-  }
-
-  &>div:nth-of-type(2) {
-    background-color: aqua;
-    // Estilos específicos para el segundo elemento hijo
-  } */
 }
 
 @media screen and (max-width: 800px) {

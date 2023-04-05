@@ -6,7 +6,7 @@
   <div class="modal-body">
     <form [formGroup]="form" autocomplete="off">
       <div class="mb-3">
-        <span class="container__title">Tipo de eventos</span>
+        <span class="container__title">Tipo de eventos <span class="asterisk">*</span></span>
         <div>
           <select class="form-control" formControlName='id_tipo_evento_fk'>
             <optgroup label="Escoge el tipo de evento">
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <span class="container__title">Modalidad</span>
+        <span class="container__title">Modalidad <span class="asterisk">*</span></span>
         <div>
           <select class="form-control" formControlName='id_modalidad_fk'>
             <optgroup label="Modalidad">
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Título</label>
+        <label for="dateOfBirth">Título <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Ingrese el título " formControlName="nombre">
         </div>
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Descripción</label>
+        <label for="dateOfBirth">Descripción <span class="asterisk">*</span></label>
         <div class="input-group">
           <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
             placeholder="Ingrese la descripción" formControlName="resumen"></textarea>
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Organizador (es)</label>
+        <label for="dateOfBirth">Organizador (es) <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Organizador"
             formControlName="organizador">
@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Dirigido a</label>
+        <label for="dateOfBirth">Dirigido a <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="¿ A quién va dirigido el evento ?"
             formControlName="dirigidoa">
@@ -85,7 +85,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Url</label>
+        <label for="dateOfBirth">Url <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Ingrese la url del evento"
             formControlName="url">

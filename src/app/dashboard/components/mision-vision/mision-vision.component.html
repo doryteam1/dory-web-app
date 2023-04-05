@@ -55,7 +55,7 @@
 
 <ng-template #inputData let-title="title" let-forControl=forControl let-invali="invali">
 <div class="mb-3">
-  <label for="dateOfBirth">{{title}}</label>
+  <label for="dateOfBirth">{{title}} <span class="asterisk">*</span></label>
   <div class="input-group">
     <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50" [placeholder]="title"
      [formControl]=forControl></textarea>

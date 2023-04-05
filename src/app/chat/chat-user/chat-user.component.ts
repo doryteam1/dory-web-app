@@ -54,14 +54,11 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
   loadingseart: boolean = false;
   showUnreads: boolean = false;
   clickOpenChatUserObservable: boolean = false;
-  routesToShow: any = ['/respuesta/pregunta/', '/foro'];
-  isHidden: boolean = true;
   constructor(
     private chatService: ChatService,
     private userService: UsuarioService,
     private utilities: UtilitiesService,
     private renderer: Renderer2,
-    private router: Router
   ) {
     this.renderer.listen('window', 'click', (e: any) => {
       if (!this.chatOpen || this.clickOpenChatUserObservable) {
@@ -75,15 +72,6 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
         ) {
           this.closeChat();
         }
-      }
-    });
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        let route: any = event.url;
-        let resultShow: boolean = this.routesToShow.some((element: any) =>
-          route.includes(element)
-        );
-        this.isHidden = !resultShow;
       }
     });
   }

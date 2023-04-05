@@ -15,7 +15,6 @@
     (filtersAplied)="onFiltersAplied($event)"></app-modal-multi-filters>
   </div>
 </div>
-<app-not-found class="app-not-found" *ngIf="showNotFound" objectName="productos"></app-not-found>
 <div class="chip-container" >
   <app-chip-con-boton-close class="chip-container__element"
   *ngIf="filtroseleccionado"
@@ -42,6 +41,7 @@
       >
   </app-chip-con-boton-close>
 </div>
+<app-not-found class="app-not-found" *ngIf="showNotFound" objectName="productos" [imgType]="'producto'"></app-not-found>
 <div class="container mb-4">
   <app-card-producto
   [producto]="producto"

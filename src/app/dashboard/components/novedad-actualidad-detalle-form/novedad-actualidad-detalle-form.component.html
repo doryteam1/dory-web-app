@@ -6,7 +6,7 @@
   <div class="modal-body">
     <form [formGroup]="form" autocomplete="off">
       <div class="mb-3">
-        <span class="container__title">Tipo de novedad</span>
+        <span class="container__title">Tipo de novedad <span class="asterisk">*</span></span>
         <div>
           <select class="form-control" formControlName='tipo_novedad'>
             <optgroup label="Escoge el tipo de novedad">
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Título</label>
+        <label for="dateOfBirth">Título <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Ingrese el título " formControlName="titulo">
         </div>
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Descripción</label>
+        <label for="dateOfBirth">Descripción <span class="asterisk">*</span></label>
         <div class="input-group">
           <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
             placeholder="Ingrese la descripción" formControlName="resumen"></textarea>
@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Autor</label>
+        <label for="dateOfBirth">Autor <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Ingrese el nombre del autor"
             formControlName="autor">
@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Url</label>
+        <label for="dateOfBirth">Url <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Ingrese la url de la novedad"
             formControlName="url_novedad">

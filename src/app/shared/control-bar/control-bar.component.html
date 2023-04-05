@@ -76,7 +76,7 @@
     [attr.data-bs-auto-close]="responsibe ? '' : 'outside'" (click)="handleNotificationClick()"
     *ngIf="!responsibe || responsibe">
     <div class="notify__icon-container">
-      <i class="notify__icon bi bi-bell"></i>
+      <img src="assets/icons/notic.svg" alt="notificacion">
     </div>
     <span class="position-absolute top-3px start-100 translate-middle badge rounded-pill bg-danger"
       *ngIf="!notificatiosOpened && ( invitaciones?.length! > 0 || invitacionesFromUsers.length! > 0)">

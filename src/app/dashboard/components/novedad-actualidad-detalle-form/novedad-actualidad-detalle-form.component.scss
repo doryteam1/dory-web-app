@@ -7,9 +7,15 @@
   margin-top: 50px;
   height: 100%;
 }
- button:disabled {
-   opacity: 0.3;
- }
+
+.asterisk {
+  color: red;
+}
+
+button:disabled {
+  opacity: 0.3;
+}
+
 .container__btn {
   width: 200px;
   height: 38px;

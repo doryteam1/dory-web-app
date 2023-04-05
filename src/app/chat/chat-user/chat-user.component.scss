@@ -1,6 +1,6 @@
 .container-list-chat {
   position: fixed;
-  right: 0px;
+  right: 10px;
   bottom: 20px;
   width: 100vw;
   height: 70vh;
@@ -250,7 +250,7 @@
 .chat-container {
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
   height: 100%;
   position: relative;
   display: flex;

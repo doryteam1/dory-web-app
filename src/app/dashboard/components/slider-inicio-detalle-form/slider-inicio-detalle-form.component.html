@@ -6,7 +6,7 @@
   <div class="modal-body">
     <form [formGroup]="form" autocomplete="off">
       <div class="mb-3">
-        <label for="dateOfBirth">Título</label>
+        <label for="dateOfBirth">Título <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Ingrese el título " formControlName="titulo">
         </div>
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Url</label>
+        <label for="dateOfBirth">Url <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Ingrese la url de redireccionamiento"
             formControlName="url_enlace">

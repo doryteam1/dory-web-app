@@ -6,7 +6,7 @@
   <div class="modal-body">
     <form [formGroup]="form" autocomplete="off">
       <div class="mb-3">
-        <label for="dateOfBirth">Nombres</label>
+        <label for="dateOfBirth">Nombres <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Nombres del miembro" formControlName="nombres">
         </div>
@@ -18,7 +18,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Apellidos</label>
+        <label for="dateOfBirth">Apellidos <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Apellidos del miembro" formControlName="apellidos">
         </div>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">País</label>
+        <label for="dateOfBirth">País <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" type="text"  placeholder="País de nacimiento"
             formControlName="pais">
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Departamento</label>
+        <label for="dateOfBirth">Departamento <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" type="text"  placeholder="Departamento de nacimiento"
             formControlName="departamento">
@@ -65,7 +65,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Municipio</label>
+        <label for="dateOfBirth">Municipio <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" type="text"  placeholder="Municipio de nacimiento"
             formControlName="municipio">
@@ -77,7 +77,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Cargo</label>
+        <label for="dateOfBirth">Cargo <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Cargo del miembro" formControlName="cargo">
         </div>
@@ -89,7 +89,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Descripción</label>
+        <label for="dateOfBirth">Descripción <span class="asterisk">*</span></label>
         <div class="input-group">
           <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
             placeholder="Descripción del miembro" formControlName="descripcion"></textarea>
@@ -124,7 +124,7 @@
         </div>
       </div>
       <div class="photoAnduploadPhoto mb-3">
-        <label for="dateOfBirth">Foto del miembro</label>
+        <label for="dateOfBirth">Foto del miembro <span class="asterisk">*</span></label>
         <div  style="cursor: pointer;" class="photoAnduploadPhoto-container" (click)="openAddFileDialogCreate()">
           <div class="mb-3 imagen" *ngIf="fotoMiembro">
             <div class="imagen-container" >

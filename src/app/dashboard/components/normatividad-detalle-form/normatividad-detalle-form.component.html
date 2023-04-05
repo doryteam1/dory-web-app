@@ -6,7 +6,7 @@
   <div class="modal-body">
     <form [formGroup]="form" autocomplete="off">
       <div class="mb-3">
-        <span class="container__title">Tipo de normatividad</span>
+        <span class="container__title">Tipo de normatividad <span class="asterisk">*</span></span>
         <div>
           <select class="form-control" formControlName='id_tipo'>
             <optgroup label="Seleccione el tipo de normatividad">
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Título</label>
+        <label for="dateOfBirth">Título <span class="asterisk">*</span></label>
         <div class="input-group">
           <input id="productName" class="form-control" placeholder="Ingrese el título " formControlName="nombre">
         </div>
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth">Resumen</label>
+        <label for="dateOfBirth">Resumen <span class="asterisk">*</span></label>
         <div class="input-group">
           <textarea id="productName" class="form-control" name="textarea" rows="5" cols="50"
             placeholder="Ingrese el resumen de la norma" formControlName="contenido"></textarea>

@@ -69,7 +69,6 @@ export class ConsumosComponent implements OnInit {
   }
 
   onChange(year:number){
-    console.log("change year!",year)
     this.loading = true;
     this.showNotFound = false;
     this.consumidorService.getConsumosDepartamento(70,year).subscribe(
