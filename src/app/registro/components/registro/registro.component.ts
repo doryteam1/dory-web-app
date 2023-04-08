@@ -50,7 +50,8 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     lat: 9.176187,
     lng: -75.110196,
   };
-
+  visiblePass: boolean = false;
+  visiblePassDos: boolean = false;
   constructor(
     private usuarioService: UsuarioService,
     private spinner: NgxSpinnerService,
@@ -58,18 +59,18 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     private socialAuthService: SocialAuthService,
     private modalService: NgbModal,
     private userService: UsuarioService
-  ) { }
+  ) {}
 
   ngAfterViewInit(): void {
-     google.accounts.id.renderButton(
-      document.getElementById("buttonDiv2"),
+    google.accounts.id.renderButton(
+      document.getElementById('buttonDiv2'),
       {
-        size: "large",
-        shape: "pill",
-        text: "Iniciar con google",
-        type: "standard",
-        prompt: "select_account"
-      }  // customization attributes
+        size: 'large',
+        shape: 'pill',
+        text: 'Iniciar con google',
+        type: 'standard',
+        prompt: 'select_account',
+      } // customization attributes
     );
   }
 
@@ -83,9 +84,9 @@ export class RegistroComponent implements OnInit, AfterViewInit {
       client_id: environment.oAuthClientId,
       callback: (response: any) => {
         let payload = Utilities.parseJwt(response.credential);
-        console.log(payload)
-        this.regUserAuthGoogle(response.credential)
-      }
+        console.log(payload);
+        this.regUserAuthGoogle(response.credential);
+      },
     });
   }
 
@@ -156,7 +157,7 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     //console.log("register")
     /*google.accounts.id.prompt((notification: PromptMomentNotification) => {
       console.log('Google prompt event triggered...');
-  
+
       if (notification.getDismissedReason() === 'credential_returned') {
         console.log('Welcome back!');
       }
@@ -165,7 +166,7 @@ export class RegistroComponent implements OnInit, AfterViewInit {
 
   regUserAuthGoogle(idToken: string) {
     let payload = Utilities.parseJwt(idToken);
-    console.log("regUserAuthGoogle Payload idToken ", payload)
+    console.log('regUserAuthGoogle Payload idToken ', payload);
     let email = payload.email;
     localStorage.setItem('email', email);
     this.userService.getUsuarioByEmail(email).subscribe(

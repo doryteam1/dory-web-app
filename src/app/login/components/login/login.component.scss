@@ -22,7 +22,7 @@
 
 .container-form {
   width: 100%;
-  max-width: 400px;
+  max-width: max-content;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,11 +70,13 @@
 }
 
 .container-form__button {
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
   width: 170px;
   font-size: 12px;
+
 }
 
 .container-form__input {
