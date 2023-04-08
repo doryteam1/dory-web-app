@@ -248,6 +248,10 @@
     div {
       flex-direction: column;
       gap: 10px;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      max-width: 100%;
     }
   }
 

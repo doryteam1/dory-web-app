@@ -163,6 +163,12 @@
   .container-box {
     flex-direction: column;
     gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    button{
+      width: 100%;
+    }
   }
 
   .container__link {
