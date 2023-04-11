@@ -1,14 +1,12 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component,EventEmitter, OnInit, Output} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegExpUtils } from '../../../utilities/regexps';
 import { Utilities } from 'src/app/utilities/utilities';
 import { environment } from 'src/environments/environment';
-import { PromptMomentNotification } from 'google-one-tap';
 
 declare var google: any;
 @Component({
@@ -18,7 +16,6 @@ declare var google: any;
 })
 export class RegistroComponent implements OnInit, AfterViewInit {
   @Output() exit: EventEmitter<any> = new EventEmitter();
-
   form: FormGroup = new FormGroup({
     cedula: new FormControl(''),
     nombres: new FormControl(''),
@@ -52,26 +49,17 @@ export class RegistroComponent implements OnInit, AfterViewInit {
   };
   visiblePass: boolean = false;
   visiblePassDos: boolean = false;
+  googleButton: any;
   constructor(
     private usuarioService: UsuarioService,
     private spinner: NgxSpinnerService,
     private router: Router,
-    private socialAuthService: SocialAuthService,
     private modalService: NgbModal,
     private userService: UsuarioService
   ) {}
 
   ngAfterViewInit(): void {
-    google.accounts.id.renderButton(
-      document.getElementById('buttonDiv2'),
-      {
-        size: 'large',
-        shape: 'pill',
-        text: 'Iniciar con google',
-        type: 'standard',
-        prompt: 'select_account',
-      } // customization attributes
-    );
+    this.googleButton = this.crearBotonFalsoGoogle();
   }
 
   ngOnInit(): void {
@@ -101,7 +89,31 @@ export class RegistroComponent implements OnInit, AfterViewInit {
         this.form.get(controlFormName)?.touched)
     );
   }
-
+  iniciarGoogleLogin() {
+    this.googleButton.click();
+  }
+  crearBotonFalsoGoogle() {
+    //Crea un nuevo elemento HTML en el documento actual que se está visualizando en el navegador.
+    const googleLogin: any = document.createElement('div');
+    // Ocultamos el el elmento nuevo
+    googleLogin.style.display = 'none';
+    // Agregamos el nuevo elemento,se inserta como un elemento secundario del elemento "body" de la página
+    document.body.appendChild(googleLogin);
+    // Pasamos las propiedades a renderButton, el cual creara un boton de google
+    google.accounts.id.renderButton(googleLogin, {
+      type: 'icon',
+      width: '200',
+      prompt: 'select_account',
+    });
+    //Se adentra dentro de las propidades html del googleLogin y seleciona el div con rol de boton
+    const googleLoginRoleButton = googleLogin.querySelector('div[role=button]');
+    //Retornamos una funcion llamada clic () esta ejecuta un evento propio de div[role=button]
+    return {
+      click: () => {
+        googleLoginRoleButton.click();
+      },
+    };
+  }
   noMatchingPasswords() {
     return (
       this.password?.value != this.matchPassword?.value &&
@@ -303,39 +315,7 @@ export class RegistroComponent implements OnInit, AfterViewInit {
   }
 
   openScrollableContent() {
-    let longContent = `TERMINOS Y CONDICIONES DE LA PLATAFORMA WEB DORY
-    CUALQUIER PERSONA QUE NO ACEPTE ESTOS TÉRMINOS Y CONDICIONES GENERALES,
-    LOS CUALES TIENEN UN CARÁCTER OBLIGATORIO Y VINCULANTE, DEBERÁ ABSTENERSE
-    DE UTILIZAR EL SITIO Y/O LOS SERVICIOS.
-    Es requisito necesario para la adquisición de los servicios suministrados que ofrece este
-    sitio Web, que lea, entienda y acepte los siguientes términos y condiciones establecidos
-    de privacidad de la Plataforma Web que a continuación se redactan.
-    El uso de los servicios prestados por la Plataforma Web Dory, como la información acerca
-    del sector piscícola y todo lo relacionado a la misma como los cursos, capacitaciones,
-    congresos, entre otros y las normatividades correspondientes al mismo, implicara que
-    usted ha leído y aceptado los términos y condiciones de uso en el presente documento.
-    Todos los servicios que son ofrecidos por la página web y para poder adquirirlos, será
-    necesario realizar un registro por parte del usuario, con ingreso de datos personales
-    fidedignos y por ende la definición de una contraseña, dentro del sitio web https://dory-
-    web-app-tests.herokuapp.com/
-    El usuario puede elegir y cambiar la clave para su acceso de administración de la cuenta
-    en cualquier momento, en caso de que se haya registrado y en caso de que sea necesario
-    para la compra de algunos de los servicios que son ofertados por la página, como cursos,
-    congresos o capacitaciones, no se asume la responsabilidad en caso de que entregue
-    dicha clave a terceros, por ende, ccualquier persona que desee acceder o usar el sitio, o
-    los servicios que la pagina entrega, podrá hacerlo sujetándose a los términos y
-    condiciones generales, junto a las demás políticas y principios que rige la plataforma web
-    Dory.
-    Es obligatorio completar el formulario de inscripción en todos sus campos con datos
-    válidos, debe tener al menos, el municipio, nombre completo, fecha de nacimiento, correo
-    electrónico, como un acuerdo de vinculación, para poder utilizar los servicios que brinda la
-    Plataforma Dory, el usuario deberá completarlo con su información personal de manera
-    exacta, precisa y verdadera (Datos personales) y asumirá el compromiso de actualizar los
-    datos personales conforme resulte necesario. La Plataforma Web Dory, podrá utilizar
-    diversos medios para identificar a sus usuarios, pero la Plataforma Web Dory, NO se
-    responsabilizará por la certeza de los datos personales provistos por sus usuarios. Los
-    usuarios garantizan y responden, en cualquier caso, de la veracidad, exactitud, vigencia y
-    autenticidad de los datos personales ingresados.`;
+    let longContent = ``;
 
     this.modalService.open(longContent, { scrollable: true });
   }

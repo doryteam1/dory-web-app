@@ -26,24 +26,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
     lat: 9.176187,
     lng: -75.110196,
   };
-
+  googleButton: any;
   constructor(
     private router: Router,
     private userService: UsuarioService,
     private socialAuthService: SocialAuthService,
     private chatService: ChatService
-  ) { }
+  ) {}
   ngAfterViewInit(): void {
-    google.accounts.id.renderButton(
-      document.getElementById("buttonDiv"),
-      {
-        size: "large",
-        shape: "pill",
-        text: "Iniciar con google",
-        type: "standard",
-        prompt: "select_account"
-      }  // customization attributes
-    );
+    this.googleButton = this.crearBotonFalsoGoogle();
   }
 
   ngOnInit(): void {
@@ -58,9 +49,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       client_id: environment.oAuthClientId,
       callback: (response: any) => {
         let payload = Utilities.parseJwt(response.credential);
-        console.log(payload)
-        this.regUserAuthGoogle(response.credential)
-      }
+        console.log(payload);
+        this.regUserAuthGoogle(response.credential);
+      },
     });
   }
 
@@ -71,7 +62,31 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.form.get(controlFormName)?.touched)
     );
   }
-
+  iniciarGoogleLogin() {
+    this.googleButton.click();
+  }
+  crearBotonFalsoGoogle() {
+    //Crea un nuevo elemento HTML en el documento actual que se está visualizando en el navegador.
+    const googleLogin: any = document.createElement('div');
+    // Ocultamos el el elmento nuevo
+    googleLogin.style.display = 'none';
+    // Agregamos el nuevo elemento,se inserta como un elemento secundario del elemento "body" de la página
+    document.body.appendChild(googleLogin);
+    // Pasamos las propiedades a renderButton, el cual creara un boton de google
+    google.accounts.id.renderButton(googleLogin, {
+      type: 'icon',
+      width: '200',
+      prompt: 'select_account',
+    });
+    //Se adentra dentro de las propidades html del googleLogin y seleciona el div con rol de boton
+    const googleLoginRoleButton = googleLogin.querySelector('div[role=button]');
+    //Retornamos una funcion llamada clic () esta ejecuta un evento propio de div[role=button]
+    return {
+      click: () => {
+        googleLoginRoleButton.click();
+      },
+    };
+  }
   onChange() {
     console.log('on change');
   }
@@ -121,8 +136,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
        this.form.markAsUntouched();
        this.error = 'No pudimos ingresar con google';
      }); */
-
-
     /*const googleButton = document.getElementById("buttonDiv")
     console.log("login with google", googleButton)
     googleButton?.click()
@@ -131,7 +144,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   regUserAuthGoogle(idToken: string) {
     let payload = Utilities.parseJwt(idToken);
-    console.log("regUserAuthGoogle Payload idToken ", payload)
+    console.log('regUserAuthGoogle Payload idToken ', payload);
     let email = payload.email;
     localStorage.setItem('email', email);
     this.userService.getUsuarioByEmail(email).subscribe(
@@ -163,8 +176,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
       }
     );
-
-
 
     /*this.socialAuthService.authState.subscribe(
       (response) => {

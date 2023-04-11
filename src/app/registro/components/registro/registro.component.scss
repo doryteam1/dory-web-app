@@ -34,7 +34,7 @@
     display: inline-block;
 }
 .container-form {
-  max-width: max-content;
+  max-width: 460px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,6 +129,7 @@
 
 .container-form__button-text {
   margin-left: 8px;
+  line-height: normal;
 }
 
 .container-form__button-box {
@@ -143,6 +144,7 @@
   div {
     width: 100%;
     display: flex;
+    gap: 10px;
   }
 }
 .glyphicon {
@@ -248,10 +250,6 @@
     div {
       flex-direction: column;
       gap: 10px;
-      justify-content: center;
-      align-items: center;
-      width: fit-content;
-      max-width: 100%;
     }
   }
 

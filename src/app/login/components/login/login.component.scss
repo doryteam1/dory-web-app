@@ -22,7 +22,7 @@
 
 .container-form {
   width: 100%;
-  max-width: max-content;
+  max-width: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,6 +109,7 @@
   flex-direction: row;
   align-items: center;
   margin-top: 20px;
+      gap: 10px;
 }
 
 .spinner {
@@ -143,6 +144,7 @@
 
 .container-form__button-text {
   margin-left: 8px;
+  line-height: normal;
 }
 
 .container-form-title {
@@ -163,17 +165,15 @@
   .container-box {
     flex-direction: column;
     gap: 10px;
-    justify-content: center;
-    align-items: center;
-    width: fit-content;
-    button{
+  }
+  .container-form__button-white{
+    width: 100%;
+    }
+    .container-form__button{
       width: 100%;
     }
-  }
-
   .container__link {
     font-size: 0.8rem;
   }
 }
-
 
