@@ -9,11 +9,6 @@
   <div class="card" *ngFor="let evento of eventos">
     <a class="card__link"  href="{{evento?.url}}" target="_blank">
         <div class="container-card__imagen"  style="position: relative;">
-        <!--   <img src="assets/icons/ampliar.svg" alt="Amplir imagen" (click)="fotoSeleLightbox(evento?.imagen)" style="width: 50px;
-    position: absolute;
-    right: 0;
-    cursor: pointer;
-    z-index: 1;"> -->
          <img class="card__image"  [src]="evento?.imagen ? evento?.imagen: 'assets/images/no-image-photography1080x856.svg'" >
         </div>
       <div class="container-data shorterTextOverflowHidden">

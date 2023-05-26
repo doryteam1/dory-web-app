@@ -70,11 +70,7 @@ export class BarraNotificacionDetalleFormComponent implements OnInit {
       ],
       [
         'fontSize',
-        //'textColor',
         'backgroundColor',
-        //'customClasses',
-        // 'link',
-        // 'unlink',
         'insertImage',
         'insertVideo',
         'insertHorizontalRule',

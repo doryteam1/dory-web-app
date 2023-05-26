@@ -98,7 +98,7 @@ export class WelcomeComponent implements OnInit {
     };
     if (this.isFillUserType) {
       if (this.idTipo < 1) {
-        this.error = 'Ayudanos a con esta información';
+        this.error = 'Ayudanos con esta información';
         return;
       }
       usuario.id_tipo_usuario = this.idTipo;
