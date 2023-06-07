@@ -16,6 +16,57 @@
             </div>
             <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
                 <div class="container-form__box1">
+                    <span class="container-form__label">Nombre*</span>
+                    <input class="container-form__input form-input-text-square" type="text"
+                        placeholder="Ingresa tu nombre" formControlName="nombres">
+                        <div *ngIf="invalid('nombres')" class="container__alert-msg danger-message">
+                          <div *ngIf="nombres?.errors?.['required'] || nombres?.errors?.['whiteSpace']">
+                            Campo requerido
+                          </div>
+                        </div>
+
+                    <span class="container-form__label">Apellidos*</span>
+                    <input class="container-form__input form-input-text-square" type="text"
+                        placeholder="Ingresa tus apellidos" formControlName="apellidos">
+                        <div *ngIf="invalid('apellidos')" class="container__alert-msg danger-message">
+                          <div *ngIf="apellidos?.errors?.['required'] || apellidos?.errors?.['whiteSpace']">
+                            Campo requerido
+                          </div>
+                        </div>
+
+                       <ng-container  *ngIf="tipoUsuario?.value == 2">
+                         <span  class="container-form__label" >Selecciona tu departamento</span>
+                         <div >
+                           <select class="container-form__input form-input-text-square container__input"  formControlName='id_departamento' (ngModelChange)='loadMuni() '>
+                             <optgroup label="Escoge un departamento">
+                              <option hidden="hidden" selected="selected"></option>
+                               <option *ngFor="let dpto of departamentos" [ngValue]="dpto.id_departamento">{{dpto.nombre_departamento}}</option>
+                             </optgroup>
+                           </select>
+                            <div *ngIf="invalid('id_departamento')" class="container__alert-msg danger-message">
+                            <div *ngIf="id_departamento?.errors?.['required']">
+                              Escoge un departamento
+                            </div>
+                          </div>
+                         </div>
+                       </ng-container>
+
+                        <span class="container-form__label" >Selecciona el municipio de tu residencia</span>
+                        <div>
+                          <select class="container-form__input form-input-text-square container__input" formControlName="id_municipio" >
+                            <optgroup label="Escoge un municipio">
+                              <option hidden="hidden" selected="selected"></option>
+                              <option *ngFor="let municipio of municipios" [ngValue]="municipio.id_municipio">{{municipio.nombre}}</option>
+                            </optgroup>
+                          </select>
+                          <div *ngIf="invalid('id_municipio')" class="container__alert-msg danger-message">
+                            <div *ngIf="id_municipio?.errors?.['required']">
+                              Escoge un municipio
+                            </div>
+                          </div>
+
+                        </div>
+
                     <span class="container-form__label">Correo electrónico*</span>
                     <input class="container-form__input form-input-text-square"
                         [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text"
@@ -30,11 +81,10 @@
                     </div>
                     <label class="container-form__label" for="cars">Cual es tu rol?*</label>
                     <select class="container-form__input form-input-text-square" name="cars" id="cars"
-                        formControlName="tipoUsuario">
+                        formControlName="tipoUsuario" (ngModelChange)="changeRol()">
                         <optgroup label="Eres un">
-                            <option hidden="hidden" selected="selected">Escoge uno</option>
-                            <option *ngFor="let tipo of tipoUsuarios" [ngValue]="tipo.id_tipo_usuario">
-                                {{tipo.nombre_tipo_usuario}}</option>
+                          <option hidden="hidden" selected="selected"></option>
+                            <option *ngFor="let tipo of tipoUsuarios" [ngValue]="tipo.id_tipo_usuario">{{tipo.nombre_tipo_usuario}}</option>
                         </optgroup>
                     </select>
                     <div *ngIf="invalid('tipoUsuario')" class="container__alert-msg danger-message">

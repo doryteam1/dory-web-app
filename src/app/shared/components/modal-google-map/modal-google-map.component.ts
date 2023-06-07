@@ -65,7 +65,6 @@ export class ModalGoogleMapComponent implements OnInit {
       east: -74.324908,
     };
       this.misfavoritas = this.atributos;
-      console.log(this.misfavoritas)
       this.extractLatLong();
       this.options = {
         center: {
@@ -180,8 +179,8 @@ export class ModalGoogleMapComponent implements OnInit {
           .confirm(
             'Eliminar de favoritos',
             'Esta seguro que desea quitar esta granja de mis favoritos',
-            'Eliminar',
-            'No estoy seguro'
+            'Sí',
+            'No'
           )
           .then((result) => {
             if (result == true) {
@@ -192,7 +191,6 @@ export class ModalGoogleMapComponent implements OnInit {
                 .subscribe(
                   (response) => {
                     this.misfavoritas.splice(i, 1);
-                    /* console.log(this.markerPositions.splice(i,1)) */
                     console.log(this.markersInfo.splice(i, 1));
                     if (this.misfavoritas.length <= 0) {
                       this.appModalService.CloseGoogleMapModal();

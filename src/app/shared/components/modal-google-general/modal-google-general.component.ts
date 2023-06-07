@@ -130,7 +130,6 @@ export class ModalGoogleGeneralComponent implements OnInit {
   }
   mapainiciado() {
     /* https://www.freakyjolly.com/angular-google-maps-integration-with-markers-info-windows-tutorial/ */
-    console.log('mapa iniciado');
     this.loadDataMapa = true;
     if (!this.mapaSeach) {
       this.openInfoWindow(this.marker);

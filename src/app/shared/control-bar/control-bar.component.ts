@@ -20,6 +20,7 @@ import { AsociacionesService } from 'src/app/asociaciones/services/asociaciones.
 import { MediaQueryService } from 'src/app/services/media-query.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { CalcHeightNavbarService } from 'src/app/services/calc-height-navbar.service';
+import { UrlActualService } from 'src/app/services/url-actual.service';
 declare var window: any;
 @Component({
   selector: 'app-control-bar',
@@ -41,13 +42,12 @@ export class ControlBarComponent implements OnInit, OnDestroy {
   invitacionesFromUsers: Array<any> = [];
   rutaActiva: string = '';
   formModal: any;
-  isHidden: boolean = false;
   electronjs: boolean = false;
-  currentRoute: string = '';
   responsibe: boolean = false;
   mediaQuerySubscripNavbar!: Subscription;
   heightNavbar: any;
   heightNavbarSubsz!: Subscription;
+  urlActualSusc3!: Subscription;
   constructor(
     private _electronService: ElectronjsService,
     private ngZone: NgZone,
@@ -60,7 +60,8 @@ export class ControlBarComponent implements OnInit, OnDestroy {
     private utilities: UtilitiesService,
     private asociacionesService: AsociacionesService,
     public mediaQueryService: MediaQueryService,
-    public calcHeightNavbarService: CalcHeightNavbarService
+    public calcHeightNavbarService: CalcHeightNavbarService,
+    private urlActualService: UrlActualService
   ) {
     this.heightNavbarSubsz = this.calcHeightNavbarService.currentUser.subscribe(
       (height: any) => {
@@ -88,18 +89,14 @@ export class ControlBarComponent implements OnInit, OnDestroy {
       this.photoUser = response.photoUser;
       this.nomCom = response.nomApell;
     });
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        let route: string = event.url;
-        this.rutaActiva = event.url;
-        this.currentRoute = event.url;
-        if (route.includes('welcome') || route.includes('politica')) {
-          this.isHidden = true;
-        } else {
-          this.isHidden = false;
+      this.urlActualSusc3 = this.urlActualService.currentUrl$.subscribe(
+        (route) => {
+          if (route) {
+            this.rutaActiva = route;
+          }
         }
-      }
-    });
+      );
+
     if (this.userService.isAuthenticated()) {
       this.updateAsocRequest();
     }
@@ -174,10 +171,10 @@ export class ControlBarComponent implements OnInit, OnDestroy {
       });
   }
 
-
   ngOnDestroy(): void {
     this.mediaQuerySubscripNavbar.unsubscribe();
-      this.heightNavbarSubsz.unsubscribe();
+    this.heightNavbarSubsz.unsubscribe();
+    this.urlActualSusc3.unsubscribe();
   }
 
   login() {
@@ -277,5 +274,4 @@ export class ControlBarComponent implements OnInit, OnDestroy {
   closeModalNotificacion() {
     this.formModal.hide();
   }
-
 }

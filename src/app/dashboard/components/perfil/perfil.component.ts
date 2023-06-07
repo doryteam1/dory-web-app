@@ -20,6 +20,8 @@ import { CompressImageSizeService } from 'src/app/services/compress-image-size.s
 import { ComunicacionEntreComponentesService } from 'src/app/shared/services/comunicacion-entre-componentes.service';
 import { Subscription } from 'rxjs';
 import { limiteMapa } from 'src/models/limiteMapaGoogle.model';
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-perfil',
@@ -53,8 +55,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
   form: FormGroup = new FormGroup({
     id: new FormControl(''),
     cedula: new FormControl(''),
-    nombres: new FormControl(''),
-    apellidos: new FormControl(''),
+    nombres: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    apellidos: new FormControl('', [Validators.required, WhiteSpaceValidator]),
     celular: new FormControl(''),
     direccion: new FormControl(''),
     informacion_adicional_direccion: new FormControl(''),
@@ -217,6 +219,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
   public modaGoogleMapa!: Subscription;
   constructor(
     private us: UsuarioService,
+    private spinner: NgxSpinnerService,
     private aes: AreasExperticiaService,
     private places: PlacesService,
     private storageService: StorageService,
@@ -224,7 +227,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
     private appModalService: AppModalService,
     private compressImageSizeService: CompressImageSizeService,
     public platformLocation: PlatformLocation,
-    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService,
+    private comunicacionEntreComponentesService: ComunicacionEntreComponentesService
   ) {}
   ngOnDestroy(): void {
     this.modaGoogleMapa?.unsubscribe();
@@ -605,19 +608,25 @@ export class PerfilComponent implements OnInit, OnDestroy {
           if (this.editarperfil) {
             this.form.get('id_municipio')?.setValue(null);
           }
-
         },
         (err) => {
           console.log(err);
         }
       );
   }
-  invalid(datos: any) {
+  /*  invalid(datos: any) {
     if (!this.form.get('direccion')?.value) {
       this.faltadireccion = true;
     } else {
       this.faltadireccion = false;
     }
+  } */
+  invalid(controlFormName: string) {
+    return (
+      this.form.get(controlFormName)?.invalid &&
+      (this.form.get(controlFormName)?.dirty ||
+        this.form.get(controlFormName)?.touched)
+    );
   }
   changeMunic() {
     this.municipiocambiado = true;
@@ -687,9 +696,11 @@ export class PerfilComponent implements OnInit, OnDestroy {
     this.latitud?.enable();
     this.longitud?.enable();
     this.loading = true;
+       this.spinner.show();
     this.editarperfil = false;
     if (this.form.invalid) {
       this.loading = false;
+       this.spinner.hide();
       return;
     }
     this.us
@@ -697,6 +708,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
       .subscribe(
         (response) => {
           this.loading = false;
+           this.spinner.hide();
           this.form.disable();
           this.mensajedirecion = '';
           this.EditedInputValue = false;
@@ -704,6 +716,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
             'nomApell',
             this.getNomApell(this.nombres?.value, this.apellidos?.value)
           );
+
           this.appModalService
             .modalAlertActualizadoComponent('Perfil actualizado correctamente')
             .then((result) => {
@@ -719,6 +732,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
           this.loading = false;
           console.log(err);
           this.form.disable();
+           this.spinner.hide();
           this.mensajedirecion = '';
           this.EditedInputValue = false;
           this.appModalService

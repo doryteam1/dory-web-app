@@ -157,10 +157,10 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
       }
       this.connectedUsers = data.map((element: any) => {
         return {
-          id: element.id,
-          name: element.nombre_completo,
-          phone: element.celular,
-          image: element.foto,
+          id: element?.id,
+          name: element?.nombre_completo,
+          phone: element?.celular,
+          image: element?.foto,
           status: true,
         };
       });

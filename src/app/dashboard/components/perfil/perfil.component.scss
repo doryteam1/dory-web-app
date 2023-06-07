@@ -10,7 +10,9 @@
   /* padding-left: 35px; */
   width: 100%;
 }
-
+button:disabled {
+  opacity: 0.3;
+}
 .gap15{
   gap: 15px;
 }

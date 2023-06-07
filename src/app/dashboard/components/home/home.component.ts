@@ -127,25 +127,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     let token = localStorage.getItem('token');
     if (token && token != 'undefined') {
       this.tipoUsuario = Utilities.parseJwt(token!).rol;
-      if (
-        !this.tipoUsuario &&
-        this.userService.authenticatedWith() == 'google'
-      ) {
-        this.socialService.authState.subscribe((response) => {
-          let idToken = response.idToken;
-          this.userService.loginWithGoogle(idToken).subscribe(
-            (response) => {
-              localStorage.setItem('token', response.body.token);
-              this.userService.setAuthWith('google');
-              this.tipoUsuario = Utilities.parseJwt(response.body.token).rol;
-            },
-            (err) => {
-              console.log(err);
-              this.error = 'No se pudoIniciar sesión';
-            }
-          );
-        });
-      }
     }
   }
   ngOnDestroy() {

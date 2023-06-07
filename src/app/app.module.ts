@@ -12,7 +12,7 @@ import { CondicionesComponent } from './components/condiciones/condiciones.compo
 import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
@@ -26,6 +26,7 @@ import { ChatModule } from './chat/chat.module';
 import { DatePipe, DecimalPipe, TitleCasePipe } from '@angular/common';
 import { NoSanitizePipe } from './pipes/noSanitize.pipe';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { ProcessAbortRegisterComponent } from './components/process-abort-register/process-abort-register.component';
 
 
 
@@ -60,11 +61,13 @@ const customConfig: ShareButtonsConfig = {
     CondicionesComponent,
     WelcomeComponent,
     VerifyAccountComponent,
+    ProcessAbortRegisterComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     RegistroModule,

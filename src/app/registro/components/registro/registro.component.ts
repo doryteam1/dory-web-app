@@ -1,4 +1,11 @@
-import { AfterViewInit, Component,EventEmitter, OnInit, Output} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  NgZone,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -7,6 +14,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegExpUtils } from '../../../utilities/regexps';
 import { Utilities } from 'src/app/utilities/utilities';
 import { environment } from 'src/environments/environment';
+import { WhiteSpaceValidator } from 'src/app/validators/white-space.validator';
+import { PlacesService } from 'src/app/services/places.service';
+
 
 declare var google: any;
 @Component({
@@ -18,8 +28,8 @@ export class RegistroComponent implements OnInit, AfterViewInit {
   @Output() exit: EventEmitter<any> = new EventEmitter();
   form: FormGroup = new FormGroup({
     cedula: new FormControl(''),
-    nombres: new FormControl(''),
-    apellidos: new FormControl(''),
+    nombres: new FormControl('', [Validators.required, WhiteSpaceValidator]),
+    apellidos: new FormControl('', [Validators.required, WhiteSpaceValidator]),
     email: new FormControl('', [Validators.required, Validators.email]),
     tipoUsuario: new FormControl('', [Validators.required]),
     fechaNac: new FormControl(''),
@@ -36,6 +46,10 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     municipio: new FormControl(''),
     corregimiento: new FormControl(''),
     vereda: new FormControl(''),
+    id_departamento: new FormControl(''),
+    id_municipio: new FormControl('', Validators.required),
+    latitud: new FormControl(''),
+    longitud: new FormControl(''),
     terms: new FormControl('', Validators.required),
   });
 
@@ -47,15 +61,22 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     lat: 9.176187,
     lng: -75.110196,
   };
+
   visiblePass: boolean = false;
   visiblePassDos: boolean = false;
   googleButton: any;
+  municipios: any[] = [];
+  departamentos: any[] = [];
+  tipoUserId: number = 0;
+  muniSucre: any[] = [];
   constructor(
     private usuarioService: UsuarioService,
     private spinner: NgxSpinnerService,
     private router: Router,
     private modalService: NgbModal,
-    private userService: UsuarioService
+    private userService: UsuarioService,
+    private places: PlacesService,
+    private ngZone: NgZone
   ) {}
 
   ngAfterViewInit(): void {
@@ -67,12 +88,33 @@ export class RegistroComponent implements OnInit, AfterViewInit {
       this.tipoUsuarios = response.data;
     });
 
+    this.changeDpto(70);
+    this.loadDptos();
+
+    this.id_municipio?.valueChanges.subscribe((value) => {
+      if (this.tipoUsuario?.value != 2) {
+        this.places.getMunicipioById(value).subscribe(
+          (response) => {
+            if (response.data != 0) {
+              this.latitud?.setValue(Number(response.data[0].latitud));
+              this.longitud?.setValue(Number(response.data[0].longitud));
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      } else {
+        this.latitud?.setValue(0);
+        this.longitud?.setValue(0);
+      }
+    });
+
     //google button setup
     google.accounts.id.initialize({
       client_id: environment.oAuthClientId,
       callback: (response: any) => {
         let payload = Utilities.parseJwt(response.credential);
-        console.log(payload);
         this.regUserAuthGoogle(response.credential);
       },
     });
@@ -89,9 +131,11 @@ export class RegistroComponent implements OnInit, AfterViewInit {
         this.form.get(controlFormName)?.touched)
     );
   }
+
   iniciarGoogleLogin() {
     this.googleButton.click();
   }
+
   crearBotonFalsoGoogle() {
     //Crea un nuevo elemento HTML en el documento actual que se está visualizando en el navegador.
     const googleLogin: any = document.createElement('div');
@@ -114,6 +158,7 @@ export class RegistroComponent implements OnInit, AfterViewInit {
       },
     };
   }
+
   noMatchingPasswords() {
     return (
       this.password?.value != this.matchPassword?.value &&
@@ -125,12 +170,8 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     if (this.form.valid && this.terms?.value) {
       this.spinner.show();
       let newUser = this.form.getRawValue();
-      newUser.latitud = this.sucreLatLng.lat;
-      newUser.longitud = this.sucreLatLng.lng;
-
       this.usuarioService.registrarUsuario(newUser).subscribe(
         (response) => {
-          this.success = true;
           localStorage.setItem('email', this.email?.value);
           this.success = true;
           this.spinner.hide();
@@ -155,35 +196,25 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     this.error = '';
   }
 
-  loginWithGoogle(): void {
-    /*this.socialAuthService
-      .signIn(GoogleLoginProvider.PROVIDER_ID)
-      .then(() => {
-        this.regUserAuthGoogle();
-      })
-      .catch((err) => {
-        console.log(err);
-        this.form.markAsUntouched();
-        this.error = 'No pudimos ingresar con google';
-      });*/
-    //console.log("register")
-    /*google.accounts.id.prompt((notification: PromptMomentNotification) => {
-      console.log('Google prompt event triggered...');
-
-      if (notification.getDismissedReason() === 'credential_returned') {
-        console.log('Welcome back!');
-      }
-    });*/
-  }
-
   regUserAuthGoogle(idToken: string) {
     let payload = Utilities.parseJwt(idToken);
-    console.log('regUserAuthGoogle Payload idToken ', payload);
+    localStorage.setItem('idTokenGoogle', idToken);
     let email = payload.email;
     localStorage.setItem('email', email);
     this.userService.getUsuarioByEmail(email).subscribe(
       (response) => {
-        this.getTokenWithGoogleIdToken(idToken, email);
+        if (response.data[0].id_tipo_usuario == null) {
+          localStorage.setItem('dataUserComplete', 'false');
+          localStorage.setItem('idUsuario', response.data[0].id);
+          localStorage.setItem('nombres', response.data[0].nombres);
+          localStorage.setItem('apellidos', response.data[0].apellidos);
+          this.ngZone.run(() => {
+            this.router.navigate(['/welcome']);
+          });
+        } else {
+          localStorage.setItem('dataUserComplete', 'true');
+          this.getTokenWithGoogleIdToken(idToken, email);
+        }
       },
       (err) => {
         if (err.status == 404) {
@@ -200,7 +231,13 @@ export class RegistroComponent implements OnInit, AfterViewInit {
             })
             .subscribe(
               (response) => {
-                this.getTokenWithGoogleIdToken(idToken, email);
+                localStorage.setItem('nombres', payload.given_name);
+                localStorage.setItem('apellidos', payload.family_name);
+                localStorage.setItem('idUsuario', response.body.insertId);
+                localStorage.setItem('dataUserComplete', 'false');
+                this.ngZone.run(() => {
+                  this.router.navigate(['/welcome']);
+                });
               },
               (err) => {
                 this.form.markAsUntouched();
@@ -210,50 +247,12 @@ export class RegistroComponent implements OnInit, AfterViewInit {
         }
       }
     );
-    /*let email: string;
-    let idToken: string;
-    this.socialAuthService.authState.subscribe(
-      (response) => {
-        email = response.email;
-        idToken = response.idToken;
-        localStorage.setItem('email', email);
-        this.usuarioService
-          .registrarUsuario({
-            nombres: response.firstName,
-            apellidos: response.lastName,
-            email: response.email,
-            foto: response.photoUrl,
-            latitud: this.sucreLatLng.lat,
-            longitud: this.sucreLatLng.lng,
-            creadoCon: 'google',
-          })
-          .subscribe(
-            (response) => {
-              this.getTokenWithGoogleIdToken(idToken, email);
-            },
-            (err) => {
-              this.form.markAsUntouched();
-              if (err.error.message == 'El registro ya existe') {
-                this.error =
-                  'El usuario ya se encuentra registrado. Intente iniciar sesión';
-              } else {
-                this.error = err.error.message;
-              }
-            }
-          );
-      },
-      (err) => {
-        console.log(err);
-        this.form.markAsUntouched();
-        this.error = 'No pudimos ingresar con google. Intentelo nuevamente.';
-      }
-    );*/
   }
 
   getTokenWithGoogleIdToken(idToken: string, email: string) {
     this.userService.loginWithGoogle(idToken).subscribe(
       (response) => {
-        this.userService.setLoginData(response.body.token, 'google');
+        this.userService.setLoginData(response.body.token, 'google', idToken);
         this.navigateTo(email);
       },
       (err) => {
@@ -264,16 +263,90 @@ export class RegistroComponent implements OnInit, AfterViewInit {
   }
 
   navigateTo(email: string) {
-    this.userService.getUsuarioByEmail(email).subscribe((response) => {
-      let usuario = response.data[0];
-      if (!usuario.tipo_usuario || !(usuario.nombres && usuario.apellidos)) {
-        this.router.navigate(['/welcome', usuario]);
-      } else {
-        this.router.navigateByUrl('/dashboard');
-      }
+    this.ngZone.run(() => {
+      this.userService.getUsuarioByEmail(email).subscribe((response) => {
+        let usuario = response.data[0];
+        if (!usuario.tipo_usuario || !(usuario.nombres && usuario.apellidos)) {
+          this.router.navigate(['/welcome']);
+        } else {
+          this.router.navigateByUrl('/dashboard');
+        }
+      });
     });
   }
 
+  changeRol() {
+    this.municipios = [];
+    if (this.tipoUsuario?.value == 2) {
+      this.id_municipio?.setValue('');
+      this.id_departamento?.setValue('');
+    } else {
+      if (this.id_municipio?.value != '' && this.id_departamento?.value != '') {
+        this.id_municipio?.setValue('');
+        this.id_departamento?.setValue('');
+      } else if (
+        this.id_municipio?.value == '' &&
+        this.id_departamento?.value != ''
+      ) {
+        this.id_departamento?.setValue('');
+      }
+      this.municipios = [...this.muniSucre];
+    }
+  }
+
+  loadDptos() {
+    this.places.getDepartamentos().subscribe(
+      (response) => {
+        this.departamentos = response.data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  loadMuni() {
+    if (this.tipoUsuario?.value == 2) {
+      this.id_municipio?.setValue('');
+      this.municipios = [];
+      this.changeDpto(this.id_departamento?.value);
+    }
+  }
+
+  changeDpto(idDepart: number) {
+    this.places.getMunicipiosDepartamentos(idDepart).subscribe(
+      (response) => {
+        this.municipios = response.data;
+        if (idDepart == 70) {
+          this.muniSucre = [...this.municipios];
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  get apellidos() {
+    return this.form.get('apellidos');
+  }
+  get nombres() {
+    return this.form.get('nombres');
+  }
+
+  get id_departamento() {
+    return this.form.get('id_departamento');
+  }
+  get id_municipio() {
+    return this.form.get('id_municipio');
+  }
+
+  get latitud() {
+    return this.form.get('latitud');
+  }
+  get longitud() {
+    return this.form.get('longitud');
+  }
   get nombreCompleto() {
     return this.form.get('nombreCompleto');
   }
@@ -316,7 +389,6 @@ export class RegistroComponent implements OnInit, AfterViewInit {
 
   openScrollableContent() {
     let longContent = ``;
-
     this.modalService.open(longContent, { scrollable: true });
   }
 }

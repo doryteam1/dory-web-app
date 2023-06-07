@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanLoad } from '@angular/router';
 import { PoliticaComponent } from './components/politica/politica.component';
 import { CondicionesComponent } from './components/condiciones/condiciones.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { BasicMessageComponent } from './components/basic-message/basic-message.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
-import { AuthGuard } from './guards/auth.guard';
+import { WelcomeGuard } from './guards/welcome.guard';
 import { AsociacionesComponent } from './panel-busqueda/components/asociaciones/asociaciones.component';
+import {IsAuthenticatedGuard } from './guards/isAuthenticated.guard';
+import { ProcessAbortRegisterComponent } from './components/process-abort-register/process-abort-register.component';
+import { IsLoggedInGuard } from './guards/is-logged-in.guard';
+
 
 
 
@@ -63,6 +67,7 @@ const routes: Routes = [
     path: 'registro',
     loadChildren: () =>
       import('./registro/registro.module').then((m) => m.RegistroModule),
+    canActivate: [IsAuthenticatedGuard],
   },
   {
     path: 'piscicultores',
@@ -101,7 +106,8 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () =>
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-    canActivate: [AuthGuard],
+    canLoad: [IsLoggedInGuard],
+    canActivate:[IsLoggedInGuard],
   },
   {
     path: 'panel-busqueda',
@@ -126,6 +132,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
+    canActivate: [IsAuthenticatedGuard],
   },
   {
     path: 'reset-password',
@@ -209,15 +216,17 @@ const routes: Routes = [
   {
     path: 'welcome',
     component: WelcomeComponent,
+    canActivate: [WelcomeGuard],
   },
   {
     path: 'basic-message',
     component: BasicMessageComponent,
   },
-  /*   {
-    path: 'resource-dory',
-    component: DownloadResourceDoryComponent,
-  }, */
+  {
+    path: 'abort-register',
+    component: ProcessAbortRegisterComponent,
+    canActivate: [WelcomeGuard],
+  }
 ];
 
 @NgModule({

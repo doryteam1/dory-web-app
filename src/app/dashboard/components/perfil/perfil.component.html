@@ -57,6 +57,11 @@
                 <input name="nombr" class="container__input form-input-text-square"
                   [ngClass]="{'container__input--color':!editarperfil}" type="text" formControlName='nombres'
                   [placeholder]="editarperfil ? 'Ingrese su(s) nombre(s)' : ''">
+                  <div *ngIf="invalid('nombres')" class="container__alert-msg danger-message">
+                    <div *ngIf="nombres?.errors?.['required'] || nombres?.errors?.['whiteSpace']">
+                      Campo requerido
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -68,6 +73,11 @@
                 <input class="container__input form-input-text-square"
                   [ngClass]="{'container__input--color':!editarperfil}" type="text" formControlName='apellidos'
                   [placeholder]="editarperfil ? 'Ingrese su(s) apellido(s)' : ''">
+                  <div *ngIf="invalid('apellidos')" class="container__alert-msg danger-message">
+                    <div *ngIf="apellidos?.errors?.['required'] || apellidos?.errors?.['whiteSpace']">
+                      Campo requerido
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -291,8 +301,10 @@
                   [ngClass]="{'container__input--color':!editarperfil , 'container__input--direccion': editarperfil && usuario?.tipo_usuario !== 'Proveedor'}"
                   type="text" formControlName='direccion'
                   [placeholder]="editarperfil ? 'Selecciona aquí tu dirección' : ''">
-                  <img [src]="(usuario?.tipo_usuario !== 'Proveedor') ? (editarperfil ? 'assets/icons/ojoanimado.svg' : 'assets/icons/ojoanimadocerrado.svg') : null"
-                    class="input-icon option">
+                  <ng-container *ngIf="usuario?.tipo_usuario !== 'Proveedor'">
+                    <img [src]="editarperfil ? 'assets/icons/ojoanimado.svg' : 'assets/icons/ojoanimadocerrado.svg'"
+                      class="input-icon option">
+                  </ng-container>
               </div>
             </div>
             <div *ngIf="faltadireccion" class="container__alert-msg danger-message">
@@ -397,7 +409,7 @@
           <span>Cancelar edición</span>
         </div>
       </button>
-      <button class="container__btn3 btn" *ngIf="editarperfil" (click)="onSubmit()">
+      <button [disabled]="loading || !form.valid" class="container__btn3 btn" *ngIf="editarperfil" (click)="onSubmit()">
         <div class="container__btn3-div">
           <img src="assets/icons/save_as_azul1_24dp.svg">
           <span>Guardar</span>

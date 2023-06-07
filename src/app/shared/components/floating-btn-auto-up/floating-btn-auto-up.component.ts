@@ -5,8 +5,10 @@ import {
   Input,
   ElementRef,
   HostBinding,
+  OnDestroy,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { UrlActualService } from 'src/app/services/url-actual.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -14,12 +16,12 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   templateUrl: './floating-btn-auto-up.component.html',
   styleUrls: ['./floating-btn-auto-up.component.scss'],
 })
-export class FloatingBtnAutoUpComponent implements OnInit {
+export class FloatingBtnAutoUpComponent implements OnInit,OnDestroy {
   @HostBinding('hidden')
   isHidden: boolean = true;
   @Input() parentContainer: ElementRef | undefined;
   windowScrolled: boolean | undefined;
-
+  urlActualSusc2!: Subscription;
   routesToShow: any = [
     '/geolocalizacion/asociaciones',
     '/novedades/',
@@ -53,8 +55,14 @@ export class FloatingBtnAutoUpComponent implements OnInit {
     '/asociaciones/municipio',
     '/grupo-asociaciones',
   ];
-  isAuthUser: boolean=false;
-  constructor(private router: Router, public userService: UsuarioService) {}
+  isAuthUser: boolean = false;
+  constructor(
+    public userService: UsuarioService,
+    private urlActualService: UrlActualService
+  ) {}
+  ngOnDestroy(): void {
+    this.urlActualSusc2.unsubscribe()
+  }
   @HostListener('window:scroll', [])
   onWindowScroll() {
     if (
@@ -103,21 +111,16 @@ export class FloatingBtnAutoUpComponent implements OnInit {
       this.scrollToBottomContainer();
     }
   }
+
   ngOnInit(): void {
     this.isAuthUser = this.userService.isAuthenticated();
-     this.userService.getAuthObservable().subscribe((isAuth) => {
+    this.userService.getAuthObservable().subscribe((isAuth) => {
       this.isAuthUser = isAuth;
-       })
-
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        let route: any = event.url;
-        let resultShow: boolean = this.routesToShow.some((element: any) =>
-          route.includes(element)
-        );
-        this.isHidden = !resultShow;
-      }
     });
+  this.urlActualSusc2 = this.urlActualService.currentUrl$.subscribe(
+      (route) => {
+      let resultShow: boolean = this.routesToShow.some((element: any) =>route?.includes(element));
+      this.isHidden = !resultShow;
+      })
   }
-
 }

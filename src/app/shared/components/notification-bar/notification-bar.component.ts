@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, HostListener, OnInit, Output, ViewChild } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, HostBinding,OnDestroy,OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { TopAlertNotifyService } from 'src/app/services/top-alert-notify.service';
+import { UrlActualService } from 'src/app/services/url-actual.service';
 interface alert {
   texto: string;
   status: number;
@@ -12,7 +13,7 @@ interface alert {
   templateUrl: './notification-bar.component.html',
   styleUrls: ['./notification-bar.component.scss'],
 })
-export class NotificationBarComponent implements OnInit{
+export class NotificationBarComponent implements OnInit, OnDestroy {
   hasAlert: boolean = true;
   @HostBinding('hidden')
   isHidden: boolean = false;
@@ -21,43 +22,45 @@ export class NotificationBarComponent implements OnInit{
   toggle: boolean = false;
   onPublicar: number = 0;
   publicacion!: alert;
+  urlActualSusc!: Subscription;
+
+  hiddenRoutes:string[] = [
+    'dashboard',
+    'contacto',
+    'update-password',
+    'login',
+    'registro',
+    'pescadores',
+    'granjas',
+    'piscicultores',
+    'panel-busqueda',
+    'proveedores/producto/detalle',
+    'politica',
+    'manual',
+  ];
   constructor(
-    private router: Router,
-    private topAlertNotifyService: TopAlertNotifyService
+    private topAlertNotifyService: TopAlertNotifyService,
+    private urlActualService: UrlActualService
   ) {}
 
   ngOnInit(): void {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        let route: string = event.url;
-        if (
-          route.includes('dashboard') ||
-          route.includes('contacto') ||
-          route.includes('update-password') ||
-          route.includes('update-password') ||
-          route.includes('login') ||
-          route.includes('registro') ||
-          route.includes('pescadores') ||
-          route.includes('granjas') ||
-          route.includes('piscicultores') ||
-          route.includes('panel-busqueda') ||
-          route.includes('proveedores/producto/detalle') ||
-          route.includes('politica') ||
-          route.includes('manual')
-        ) {
-          this.isHidden = true;
+    this.urlActualSusc = this.urlActualService.currentUrl$.subscribe(
+      (route) => {
+        if (route) {
+          this.isHidden = this.hiddenRoutes.some((hiddenRoute) =>route?.includes(hiddenRoute));
         } else {
-          this.isHidden = false;
+          this.isHidden = true;
         }
       }
-    });
+    );
     this.cargaService();
   }
-
+  ngOnDestroy(): void {
+    this.urlActualSusc.unsubscribe();
+  }
   cargaService() {
     this.topAlertNotifyService.getTopAlert().subscribe(
       (response) => {
-        console.log(response);
         if (response.data.length > 0) {
           this.publicacion = response.data[0];
           this.onPublicar = this.publicacion.status;

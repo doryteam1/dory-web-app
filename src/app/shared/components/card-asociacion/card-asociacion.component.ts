@@ -32,7 +32,6 @@ export class CardAsociacionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.asociacion)
     let email = localStorage.getItem('email');
     this.us.getUsuarioByEmail(email).subscribe((response) => {
       this.idEmailUser = response.data[0].id;

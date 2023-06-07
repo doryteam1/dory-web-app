@@ -1,7 +1,6 @@
 import {
-  AfterViewChecked,
+  AfterContentChecked,
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
@@ -13,6 +12,9 @@ import { ChatService } from './services/chat.service';
 import { UsuarioService } from './services/usuario.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { CalcHeightNavbarService } from './services/calc-height-navbar.service';
+import { Subscription } from 'rxjs';
+import { UrlActualService } from './services/url-actual.service';
+
 declare const process: any;
 
 @Component({
@@ -20,7 +22,12 @@ declare const process: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class AppComponent
+  implements
+    OnInit,
+    AfterViewInit,
+    AfterContentChecked
+{
   title = 'web-app-dory';
   isRegistering: boolean = false;
   customTitleBarElectron: boolean = false;
@@ -29,9 +36,11 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @ViewChild('main') divMain!: ElementRef;
   @ViewChild('navbarDiv') navbarDiv!: ElementRef;
   isAuthUser: boolean = false;
-  show: boolean = true;
+  show: boolean = false;
   height: any;
-  previousHeight: any[] = [];
+
+  rutasSusc!: Subscription;
+  urlActual: string = '';
 
   constructor(
     private _electronService: ElectronjsService,
@@ -39,31 +48,34 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
     private chatService: ChatService,
     private router: Router,
     public calcHeightNavbarService: CalcHeightNavbarService,
-    private changeDetectorRef: ChangeDetectorRef
+    private urlActualService: UrlActualService,
   ) {}
-  ngAfterViewChecked(): void {
-    //Comparamos el primer dato con el actual
-    let onNavbarDiv=this.navbarDiv?.nativeElement?.clientHeight;
-    if (this.height !== onNavbarDiv) {
-      this.height = onNavbarDiv;
-      //Actualizamos el primer dato y detectamos cualquier cambio en height
-      this.changeDetectorRef.detectChanges();
-      this.previousHeight = [`calc(100% - ${this.height}px)`, this.height];
-      //Creamos un array y lo enviamos atravez del servico
-      this.calcHeightNavbarService.updateData(this.previousHeight);
-    }
+  ngAfterContentChecked(): void {
+   if (this.height !== this.navbarDiv?.nativeElement?.clientHeight) {
+     this.height = this.navbarDiv?.nativeElement?.clientHeight;
+     this.calcHeightNavbarService.updateData([
+       `calc(100% - ${this.height}px)`,
+       this.height,
+     ]);
+   }
   }
+
+
+
 
   ngAfterViewInit(): void {
     /* Obtenemos el primer dato de height */
     this.height = this.navbarDiv?.nativeElement?.clientHeight;
-    this.previousHeight = [`calc(100% - ${this.height}px)`, this.height];
-    this.calcHeightNavbarService.updateData(this.previousHeight);
+    this.calcHeightNavbarService.updateData([
+      `calc(100% - ${this.height}px)`,
+      this.height,
+    ]);
   }
+
   ngOnInit(): void {
     this.isAuthUser = this.userService.isAuthenticated();
-    //console.log("process.env.FIREBASE_PROJECT_ID ", process.env.FIREBASE_PROJECT_ID)
     this.customTitleBarElectron = this._electronService.ipcActivo;
+
     this.userService.getAuthObservable().subscribe((isAuth) => {
       this.isAuthUser = isAuth;
       if (!this.isAuthUser) {
@@ -71,14 +83,46 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
       }
     });
 
-    this.router.events.subscribe((event) => {
+    this.rutasSusc = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.divMain!.nativeElement!.scroll(0, 0);
-        let route: string = event.url;
-        if (route.includes('welcome') || route.includes('politica')) {
-          this.show = false;
+        this.urlActual = event.url;
+        this.urlActualService.setCurrentUrl(event.url);
+        this.divMain?.nativeElement?.scroll(0, 0);
+        if (!this.isAuthUser) {
+          if (
+            localStorage.getItem('urlPrevious') ||
+            localStorage.getItem('urlPrevious-abort')
+          ) {
+            if (localStorage.getItem('urlPrevious') === '/welcome') {
+              //Estvo dentro de /welcome
+              localStorage.removeItem('urlPrevious');
+              this.router.navigateByUrl('/abort-register');
+              return;
+            }
+
+            if (
+              localStorage.getItem('urlPrevious-abort') === '/abort-register' &&
+              this.urlActual !== '/welcome' &&
+              this.urlActual !== '/abort-register'
+            ) {
+              //Estuvo dentro /abort-register, ahora esta en url distanta  a /welcome o /abort-register
+              this.userService.removeLocalStorage(true);
+              return;
+            }
+
+            if (
+              localStorage.getItem('urlPrevious-abort') === '/abort-register' &&
+              this.urlActual === '/welcome'
+            ) {
+              //Está dentro de /welcome y anterior estuvo en /abort-register
+              localStorage.removeItem('urlPrevious-abort');
+              return;
+            }
+          }
         } else {
-          this.show = true;
+          localStorage.removeItem('urlPrevious-abort');
+          localStorage.removeItem('urlPrevious');
+          this.show = !this.urlActual.includes('politica');
         }
       }
     });
