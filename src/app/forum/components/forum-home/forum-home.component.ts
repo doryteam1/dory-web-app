@@ -274,7 +274,5 @@ export class ForumHomeComponent implements OnInit, OnDestroy {
 
   goDetail(idPregunta: number) {
     this.router.navigate(['/foro/respuesta/pregunta', idPregunta]);
-    /* const url = `/foro/respuesta/pregunta/${idPregunta}`;
-    this.router.navigate([url]); */
   }
 }
