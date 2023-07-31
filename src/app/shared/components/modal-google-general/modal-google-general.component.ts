@@ -67,7 +67,7 @@ export class ModalGoogleGeneralComponent implements OnInit {
     visible: true,
   };
   vertices = vertices;
-  mapaOpen:boolean=false
+  mapaOpen: boolean = false;
   constructor(
     httpClient: HttpClient,
     private _modalService: NgbActiveModal,
@@ -89,9 +89,8 @@ export class ModalGoogleGeneralComponent implements OnInit {
       );
   }
   ngOnInit(): void {
-      this.apiLoaded.subscribe((loadMapa) => {
+    this.apiLoaded.subscribe((loadMapa) => {
       this.mapaOpen = loadMapa;
-      console.log(loadMapa);
     });
     if (this.mapaSeach) {
       this.iniciarMapaSearch();
@@ -122,6 +121,7 @@ export class ModalGoogleGeneralComponent implements OnInit {
       },
       streetViewControl: false,
       fullscreenControl: false,
+      mapTypeId: 'satellite',
     };
     this.markerPosition = {
       lat: parseFloat(this.atributos.longAndLat.lat),
@@ -203,63 +203,52 @@ export class ModalGoogleGeneralComponent implements OnInit {
       );
     }
   }
+
   iniciarMapaSearch() {
-    if (this.limiteMapa.id_departamento !== 'Todos') {
-      /* Solo sucre */
-      const sucreColombia = {
+    const departamento = this.limiteMapa.id_departamento;
+    const latitud = parseFloat(this.atributos.longAndLat.lat);
+    const longitud = parseFloat(this.atributos.longAndLat.lng);
+    let bounds;
+
+    if (departamento !== 'Todos') {
+      /* Solo Sucre, Colombia */
+      bounds = {
         north: 10.184454,
         south: 8.136442,
         west: -75.842392,
         east: -74.324908,
       };
-      this.markerPosition = {
-        lat: parseFloat(this.atributos.longAndLat.lat),
-        lng: parseFloat(this.atributos.longAndLat.lng),
-      };
-
-      this.options = {
-        center: {
-          lat: parseFloat(this.atributos.longAndLat.lat),
-          lng: parseFloat(this.atributos.longAndLat.lng),
-        },
-        restriction: {
-          latLngBounds: sucreColombia,
-          strictBounds: false,
-        },
-        zoom: 14,
-        scrollwheel: true,
-      };
-    } else if (this.limiteMapa.id_departamento == 'Todos') {
-      /* Todo colombia */
-      const Colombia = {
+    } else {
+      /* Todo Colombia */
+      bounds = {
         north: 12.655134,
         south: -4.243646,
         west: -79.359935,
         east: -67.099192,
       };
-      this.markerPosition = {
-        lat: parseFloat(this.atributos.longAndLat.lat),
-        lng: parseFloat(this.atributos.longAndLat.lng),
-      };
-
-      this.options = {
-        center: {
-          lat: parseFloat(this.atributos.longAndLat.lat),
-          lng: parseFloat(this.atributos.longAndLat.lng),
-        },
-        restriction: {
-          latLngBounds: Colombia,
-          strictBounds: false,
-        },
-        zoom: 14,
-        scrollwheel: true,
-      };
     }
+
+    this.markerPosition = { lat: latitud, lng: longitud };
+
+    this.options = {
+      center: { lat: latitud, lng: longitud },
+      restriction: {
+        latLngBounds: bounds,
+        strictBounds: false,
+      },
+      zoom: 14,
+      scrollwheel: true,
+      streetViewControl: false,
+      fullscreenControl: false,
+      mapTypeId: 'satellite',
+    };
   }
+
   closeMap() {
     this._modalService.dismiss();
   }
-  buscar() {
+
+  async buscar() {
     this.loadingseart = true;
     const valor = this.buscarx;
     this.valorbuscarx = this.buscarx;
@@ -267,140 +256,140 @@ export class ModalGoogleGeneralComponent implements OnInit {
       this.loadingseart = false;
       return;
     }
-
-    this.geocoder
-      .geocode({
-        address: `${valor}`,
-      })
-      .subscribe(({ results }) => {
-        if (results.length === 0) {
-          this.loadingseart = false;
-          this.noexistendatos = true;
-          this.fueraDirecion = false;
-          setTimeout(() => {
-            this.noexistendatos = false;
-          }, 10000);
-        } else {
-          this.loadingseart = false;
-          this.fueraDirecion = false;
-          const point: google.maps.LatLngLiteral = {
-            lat: results[0].geometry.location.toJSON().lat!,
-            lng: results[0].geometry.location.toJSON().lng!,
-          };
-          this.places.geocodeLatLng(point).then((response) => {
-            if (response.status == 'OK') {
-              let limites: any[] = [
-                {
-                  Pais: [],
-                  Departamento: [],
-                  Municipio: [],
-                },
-              ];
-              for (let index = 0; index < response.results.length; index++) {
-                /* Paises */
-                const pais = response.results[index].address_components;
-                let indexPais = pais.findIndex((element) =>
-                  element.types.includes('country')
-                );
-                if (pais[indexPais]?.long_name !== undefined) {
-                  limites[0].Pais.push(pais[indexPais]?.long_name);
-                }
-                /* Departamentos */
-                const departamento = response.results[index].address_components;
-                let indexDpto = departamento.findIndex((element) =>
-                  element.types.includes('administrative_area_level_1')
-                );
-                if (departamento[indexDpto]?.long_name !== undefined) {
-                  limites[0].Departamento.push(
-                    departamento[indexDpto]?.long_name
-                  );
-                }
-                /* Municipios */
-                const municipio = response.results[index].address_components;
-                let indexMunic = departamento.findIndex((element) =>
-                  element.types.includes('administrative_area_level_2')
-                );
-                if (municipio[indexMunic]?.long_name !== undefined) {
-                  limites[0].Municipio.push(municipio[indexMunic]?.long_name);
-                }
+    try {
+      let geocodeResult: any = await this.geocoder.geocode({ address: `${valor}` }).toPromise();
+      if (geocodeResult.results.length === 0) {
+        this.loadingseart = false;
+        this.noexistendatos = true;
+        this.fueraDirecion = false;
+        setTimeout(() => {
+          this.noexistendatos = false;
+        }, 10000);
+      } else {
+        this.loadingseart = false;
+        this.fueraDirecion = false;
+        const point: google.maps.LatLngLiteral = {
+          lat: geocodeResult.results[0].geometry.location.toJSON().lat!,
+          lng: geocodeResult.results[0].geometry.location.toJSON().lng!,
+        };
+        this.places.geocodeLatLng(point).then((response) => {
+          if (response.status == 'OK') {
+            let limites: any[] = [
+              {
+                Pais: [],
+                Departamento: [],
+                Municipio: [],
+              },
+            ];
+            for (let index = 0; index < response.results.length; index++) {
+              /* Paises */
+              const pais = response.results[index].address_components;
+              let indexPais = pais.findIndex((element) =>
+                element.types.includes('country')
+              );
+              if (pais[indexPais]?.long_name !== undefined) {
+                limites[0].Pais.push(pais[indexPais]?.long_name);
               }
-              /* Elinar datos duplicados */
-              limites[0].Pais = limites[0].Pais.filter(
-                (item: any, index: any) => {
-                  return limites[0].Pais.indexOf(item) === index;
-                }
+              /* Departamentos */
+              const departamento = response.results[index].address_components;
+              let indexDpto = departamento.findIndex((element) =>
+                element.types.includes('administrative_area_level_1')
               );
-              limites[0].Departamento = limites[0].Departamento.filter(
-                (item: any, index: any) => {
-                  return limites[0].Departamento.indexOf(item) === index;
-                }
+              if (departamento[indexDpto]?.long_name !== undefined) {
+                limites[0].Departamento.push(
+                  departamento[indexDpto]?.long_name
+                );
+              }
+              /* Municipios */
+              const municipio = response.results[index].address_components;
+              let indexMunic = departamento.findIndex((element) =>
+                element.types.includes('administrative_area_level_2')
               );
-              limites[0].Municipio = limites[0].Municipio.filter(
-                (item: any, index: any) => {
-                  return limites[0].Municipio.indexOf(item) === index;
-                }
-              );
-              /* Asignacion de ids */
-              let indDpto = this.departamentos.findIndex((dpto) => {
-                let valor;
-                for (
-                  let index = 0;
-                  index < limites[0].Departamento.length;
-                  index++
-                ) {
-                  valor =
-                    limites[0].Departamento[index] == dpto.nombre_departamento;
-                }
-                return valor;
-              });
-
-              let idMunicipio = this.municipios.findIndex((munic) => {
-                let valor;
-                for (
-                  let index = 0;
-                  index < limites[0].Municipio.length;
-                  index++
-                ) {
-                  valor = limites[0].Municipio[index] == munic.nombre;
-                }
-                return valor;
-              });
-              let idDepartamento = this.departamentos[indDpto]?.id_departamento;
-              let idMunipio = this.municipios[idMunicipio]?.id_municipio;
-              /* Limitaciones */
-              if (
-                limites[0][this.limiteMapa.nivDivAdm].includes(
-                  this.limiteMapa.limite
-                )
-              ) {
-                if (
-                  results[0].geometry.location.toJSON().lat! &&
-                  results[0].geometry.location.toJSON().lng!
-                ) {
-                  this.markerPosition = {
-                    lat: results[0].geometry.location.toJSON().lat!,
-                    lng: results[0].geometry.location.toJSON().lng!,
-                  };
-                  this.options = {
-                    center: {
-                      lat: results[0].geometry.location.toJSON().lat!,
-                      lng: results[0].geometry.location.toJSON().lng!,
-                    },
-                    zoom: 13,
-                  };
-                }
-              } else {
-                this.loadingseart = false;
-                this.fueraDirecion = true;
-                this.noexistendatos = false;
-                setTimeout(() => {
-                  this.fueraDirecion = false;
-                }, 5000);
+              if (municipio[indexMunic]?.long_name !== undefined) {
+                limites[0].Municipio.push(municipio[indexMunic]?.long_name);
               }
             }
-          });
-        }
-      });
+            /* Elinar datos duplicados */
+            limites[0].Pais = limites[0].Pais.filter(
+              (item: any, index: any) => {
+                return limites[0].Pais.indexOf(item) === index;
+              }
+            );
+            limites[0].Departamento = limites[0].Departamento.filter(
+              (item: any, index: any) => {
+                return limites[0].Departamento.indexOf(item) === index;
+              }
+            );
+            limites[0].Municipio = limites[0].Municipio.filter(
+              (item: any, index: any) => {
+                return limites[0].Municipio.indexOf(item) === index;
+              }
+            );
+            /* Asignacion de ids */
+            let indDpto = this.departamentos.findIndex((dpto) => {
+              let valor;
+              for (
+                let index = 0;
+                index < limites[0].Departamento.length;
+                index++
+              ) {
+                valor =
+                  limites[0].Departamento[index] == dpto.nombre_departamento;
+              }
+              return valor;
+            });
+
+            let idMunicipio = this.municipios.findIndex((munic) => {
+              let valor;
+              for (
+                let index = 0;
+                index < limites[0].Municipio.length;
+                index++
+              ) {
+                valor = limites[0].Municipio[index] == munic.nombre;
+              }
+              return valor;
+            });
+            let idDepartamento = this.departamentos[indDpto]?.id_departamento;
+            let idMunipio = this.municipios[idMunicipio]?.id_municipio;
+            /* Limitaciones */
+            if (
+              limites[0][this.limiteMapa.nivDivAdm].includes(
+                this.limiteMapa.limite
+              )
+            ) {
+              if (
+                geocodeResult.results[0].geometry.location.toJSON().lat! &&
+                geocodeResult.results[0].geometry.location.toJSON().lng!
+              ) {
+                this.markerPosition = {
+                  lat: geocodeResult.results[0].geometry.location.toJSON().lat!,
+                  lng: geocodeResult.results[0].geometry.location.toJSON().lng!,
+                };
+                this.options = {
+                  center: {
+                    lat: geocodeResult.results[0].geometry.location.toJSON().lat!,
+                    lng: geocodeResult.results[0].geometry.location.toJSON().lng!,
+                  },
+                  zoom: 13,
+                  mapTypeId: 'satellite',
+                };
+              }
+            } else {
+              this.loadingseart = false;
+              this.fueraDirecion = true;
+              this.noexistendatos = false;
+              setTimeout(() => {
+                this.fueraDirecion = false;
+              }, 5000);
+            }
+          }
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      this.loadingseart = false;
+    }
   }
 
   borrarBusqueda() {

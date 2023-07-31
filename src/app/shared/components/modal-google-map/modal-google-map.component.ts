@@ -79,6 +79,7 @@ export class ModalGoogleMapComponent implements OnInit {
         },
         streetViewControl: false,
         fullscreenControl: false,
+
         /* https://developers.google.com/maps/documentation/javascript/controls */
       };
       this.markerPosition = {
