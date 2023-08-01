@@ -121,7 +121,8 @@ export class ModalGoogleGeneralComponent implements OnInit {
       },
       streetViewControl: false,
       fullscreenControl: false,
-      mapTypeId: 'satellite',
+     // mapTypeId: 'mapa',
+      /* mapTypeId: 'satellite', */
     };
     this.markerPosition = {
       lat: parseFloat(this.atributos.longAndLat.lat),
@@ -180,6 +181,7 @@ export class ModalGoogleGeneralComponent implements OnInit {
   }
   loadMunic() {
     if (this.limiteMapa.id_departamento !== 'Todos') {
+
       this.places
         .getMunicipiosDepartamentos(this.limiteMapa.id_departamento)
         .subscribe(
@@ -193,6 +195,7 @@ export class ModalGoogleGeneralComponent implements OnInit {
       return;
     }
     if (this.limiteMapa.id_departamento == 'Todos') {
+
       this.places.getMunicipiosTodos().subscribe(
         (response) => {
           this.municipios = response.data;
@@ -240,7 +243,7 @@ export class ModalGoogleGeneralComponent implements OnInit {
       scrollwheel: true,
       streetViewControl: false,
       fullscreenControl: false,
-      mapTypeId: 'satellite',
+      //mapTypeId: 'mapa',
     };
   }
 
@@ -372,7 +375,7 @@ export class ModalGoogleGeneralComponent implements OnInit {
                     lng: geocodeResult.results[0].geometry.location.toJSON().lng!,
                   },
                   zoom: 13,
-                  mapTypeId: 'satellite',
+                  //mapTypeId: 'mapa',
                 };
               }
             } else {

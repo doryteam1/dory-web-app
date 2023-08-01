@@ -129,7 +129,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
                   for (let index = 0; index < array[0].length; index++) {
                     const element = array[0][index];
                     this.photosGranjaArray = array[0];
-                    console.log(this.photosGranjaArray);
                   }
                 } else {
                   this.photosGranjaArray = [];
@@ -147,7 +146,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
               }
             }
           } else {
-            console.log(array);
             this.latitud?.setValue(array[0].latitud);
             this.longitud?.setValue(array[0].longitud);
             this.direccion?.setValue(array[0].direccion);
@@ -595,7 +593,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
           this.granja.id_granja +
           '/foto';
         let files: Array<any> = compressedFiles;
-        console.log(files);
         let arrayFotos: Array<any> = [];
         for (let i = 0; i < files.length; i++) {
           let nowTimestamp = new Date().getTime().toString();
@@ -683,7 +680,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
     } else if (this.modalMode == 'update') {
       filesCreate = -1;
     }
-    console.log(filesCreate);
     this.appModalService
       .modalGalleryVerAdiconarEliminarFoto(
         -1,
