@@ -3,9 +3,9 @@
     <h4 class="modal-title" id="modal-basic-title" *ngIf="formState=='enable'">{{modalMode == 'create' ? 'Nueva
       Asociación' : 'Actualizar Asociación'}}</h4>
     <div class="d-flex flex-row  d-flex-button">
-      <button [disabled]="!nit?.value || asociacion.id_tipo_asociacion_fk != idTipoAsoc?.value" class="btn-show btn-square btn--blue btn-mi-estilo" (click)="verMiembros()"
+      <button [disabled]="asociacion.id_tipo_asociacion_fk != idTipoAsoc?.value" class="btn-show btn-square btn--blue btn-mi-estilo" (click)="verMiembros()"
         *ngIf="formState == 'enable' && modalMode == 'update' && asociacion?.count_miembros > 0">Ver miembros</button>
-      <button [disabled]="!nit?.value ||   asociacion.id_tipo_asociacion_fk != idTipoAsoc?.value" class="btn-square btn--blue btn-mi-estilo" (click)="agregarMiembro()"
+      <button [disabled]="asociacion.id_tipo_asociacion_fk != idTipoAsoc?.value" class="btn-square btn--blue btn-mi-estilo" (click)="agregarMiembro()"
         *ngIf="formState == 'enable' && modalMode == 'update'"><i class="icon-add bi bi-person-plus"></i>Agregar
         miembros</button>
     </div>
