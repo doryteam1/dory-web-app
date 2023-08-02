@@ -33,15 +33,12 @@ export class AsociacionDetalleFormComponent implements OnInit {
     direccion: new FormControl('', [Validators.required, WhiteSpaceValidator]),
     telefono: new FormControl('', [Validators.required]),
     nombre: new FormControl('', [Validators.required, WhiteSpaceValidator]),
-    informacion_adicional_direccion: new FormControl('', [
-      Validators.required,
-      WhiteSpaceValidator,
-    ]),
+    informacion_adicional_direccion: new FormControl(''),
     fecha_renovacion_camarac: new FormControl('', [Validators.required]),
     id_departamento: new FormControl(70, [Validators.required]),
     id_municipio: new FormControl('', [Validators.required]),
     corregimiento_vereda: new FormControl(''),
-    foto_camarac: new FormControl('', [Validators.required]),
+    foto_camarac: new FormControl(''),
     url_rut: new FormControl(''),
     id_tipo_asociacion_fk: new FormControl('', [Validators.required]),
   });
@@ -155,13 +152,11 @@ export class AsociacionDetalleFormComponent implements OnInit {
     this.fotoCamc?.setValidators([Validators.required]);
     this.fotoCamc?.updateValueAndValidity();
     if (this.fotoCamc?.invalid) {
-
       //No cargó un nuevo archivo de camara de comercio
       let updatedAsociacion = { ...this.form.getRawValue() };
       updatedAsociacion.foto_camarac = this.asociacion.foto_camarac;
       this.sendAsociacionUpdated(updatedAsociacion, this.asociacion.nit);
     } else {
-
       let ext = this.file.name.split('.')[1];
       let basePath = '/asociaciones/camaracomercio/todas/';
       let fileName =
@@ -267,107 +262,273 @@ export class AsociacionDetalleFormComponent implements OnInit {
         });
     }
   }
-  addAsociaciones() {
+
+  /*   async addAsociaciones() {
     this.loading1 = true;
+
     if (!this.form.valid) {
       console.log('Not valid!');
       this.form.markAllAsTouched();
       this.loading1 = false;
       return;
     }
-    this.fotoCamc?.setValidators([Validators.required]);
-    this.fotoCamc?.updateValueAndValidity();
-    let ext = this.file.name.split('.')[1];
-    let token = localStorage.getItem('token');
-    let basePath = '/asociaciones/camaracomercio/todas/';
-    let fileName = 'camc-asociacion-' + this.form.getRawValue().nit + '.' + ext;
-    let filePath = basePath + fileName;
-    this.storage
-      .cloudStorageTask(filePath, this.file)
-      .percentageChanges()
-      .subscribe((response) => {
-        if (response == 100) {
-          //porcentaje de carga de la camara de comercio
-          this.storage
-            .cloudStorageRef(filePath)
-            .getDownloadURL()
-            .subscribe(
-              (downloadUrl) => {
-                let asociacion = { ...this.form.getRawValue() };
-                asociacion.legalconstituida = 0;
-                asociacion.foto_camarac = downloadUrl;
-                this.sendAsociacionToAdd(asociacion);
-              },
-              (err) => {
-                this.loading1 = false;
-                //this.error = 'A ocurrido un error al subir la camara de comercio'
-                console.log(err);
-              }
-            );
-        }
-      });
+    let asociacion = { ...this.form.getRawValue() };
+    if (!this.file && !this.fileRut) {
+      console.log('sin rut ni camara');
+      // No hay archivo rut ni cámara para subir
+      asociacion.legalconstituida = 0;
+      this.addAsociacion(asociacion);
+    } else if (this.file && this.fileRut) {
+      console.log('camarra y rut ');
+      try {
+        this.fotoCamc?.setValidators([Validators.required]);
+        this.fotoCamc?.updateValueAndValidity();
+        asociacion.foto_camarac = await this.camaraComercioUrlStorage();
+        asociacion.url_rut = await this.rutUrlStorage();
+        asociacion.legalconstituida = 0;
+        this.addAsociacion(asociacion);
+      } catch (error: any) {
+        this.loading1 = false;
+        console.log(error);
+        this.error =
+          'Ha ocurrido un error al subir los documentos, por favor inténtalo de nuevo';
+      }
+    } else if (this.file && !this.fileRut) {
+      console.log('camarra ');
+      try {
+        this.fotoCamc?.setValidators([Validators.required]);
+        this.fotoCamc?.updateValueAndValidity();
+        asociacion.foto_camarac = await this.camaraComercioUrlStorage();
+        asociacion.legalconstituida = 0;
+        this.addAsociacion(asociacion);
+      } catch (error: any) {
+        this.loading1 = false;
+        console.log(error);
+        this.error =
+          'Ha ocurrido un error al subir el documento de la cámara de comercio, por favor inténtalo de nuevo';
+      }
+    } else if (!this.file && this.fileRut) {
+      console.log(' rut ');
+      try {
+        asociacion.url_rut = await this.rutUrlStorage();
+        asociacion.legalconstituida = 0;
+        this.addAsociacion(asociacion);
+      } catch (error: any) {
+        this.loading1 = false;
+        console.log(error);
+        this.error =
+          'Ha ocurrido un error al subir el documento del rut, por favor inténtalo de nuevo';
+      }
+    }
   }
 
-  async sendAsociacionToAdd(asociacion: any) {
-    if (this.fileRut == null) {
-      //No hay archivo rut para subir
-      this.asociacionesService.add(asociacion).subscribe(
-        (response) => {
-          this.UpdatedRouter(response.body.message.nit);
-        },
-        (err) => {
-          this.loading1 = false;
-          console.log(err);
-          if (err.status == 400) {
-            this.error = err.error.message;
-          } else {
-            this.error = 'A ocurrido un error';
-          }
-        }
+  async camaraComercioUrlStorage() {
+    try {
+      let ext = this.file.name.split('.')[1];
+      let basePath = '/asociaciones/camaracomercio/todas/';
+      let fileName =
+        'camc-asociacion-' + this.form.getRawValue().nit + '.' + ext;
+      let filePath = basePath + fileName;
+
+      const percentageChanges = this.storage
+        .cloudStorageTask(filePath, this.file)
+        .percentageChanges()
+        .toPromise();
+      const response = await percentageChanges;
+
+      if (response === 100) {
+        const downloadUrl = await this.storage
+          .cloudStorageRef(filePath)
+          .getDownloadURL()
+          .toPromise();
+        return downloadUrl;
+      } else {
+        throw new Error(
+          'No se pudo completar la carga de la cámara de comercio.'
+        );
+      }
+    } catch (err) {
+      this.loading1 = false;
+      console.error(
+        'Ha ocurrido un error al subir la cámara de comercio:',
+        err
       );
-    } else {
+      throw err; // Propaga el error para que se pueda manejar en el contexto que llama a esta función.
+    }
+  }
+
+  async rutUrlStorage() {
+    try {
       let ext = this.fileRut.name.split('.')[1];
       let basePath = '/asociaciones/rut/todos/';
       let fileName =
         'rut-asociacion-' + this.form.getRawValue().nit + '.' + ext;
       let filePath = basePath + fileName;
-      this.storage
+
+      const percentageChanges = this.storage
         .cloudStorageTask(filePath, this.fileRut)
         .percentageChanges()
-        .subscribe((response) => {
-          if (response == 100) {
-            this.storage
-              .cloudStorageRef(filePath)
-              .getDownloadURL()
-              .subscribe(
-                (downloadUrl) => {
-                  asociacion.url_rut = downloadUrl;
-                  this.asociacionesService.add(asociacion).subscribe(
-                    (response) => {
-                      this.UpdatedRouter(response.body.message.nit);
-                    },
-                    (err) => {
-                      this.loading1 = false;
-                      console.log(err);
-                      if (err.status == 400) {
-                        this.error = err.error.message;
-                      } else {
-                        this.error = 'A ocurrido un error';
-                      }
-                    }
-                  );
-                },
-                (err) => {
-                  this.loading1 = false;
-                  console.log(err);
-                  //this.error = 'A ocurrido un error al subir el documento RUT';
-                }
-              );
-          }
-        });
+        .toPromise();
+      const response = await percentageChanges;
+
+      if (response === 100) {
+        const downloadUrl = await this.storage
+          .cloudStorageRef(filePath)
+          .getDownloadURL()
+          .toPromise();
+        return downloadUrl;
+      } else {
+        throw new Error('No se pudo completar la carga del rut.');
+      }
+    } catch (err) {
+      this.loading1 = false;
+      console.error('Ha ocurrido un error al subir el rut:', err);
+      throw err; // Propaga el error para que se pueda manejar en el contexto que llama a esta función.
+    }
+  } */
+
+  async addAsociaciones() {
+    try {
+      this.loading1 = true;
+
+      if (!this.form.valid) {
+        console.log('Not valid!');
+        this.form.markAllAsTouched();
+        this.loading1 = false;
+        return;
+      }
+
+      let asociacion = { ...this.form.getRawValue() };
+      asociacion.legalconstituida = 0;
+      asociacion.foto_camarac = null;
+      asociacion.url_rut = null;
+      let asociacionUpdate: any = {};
+
+      /*  */
+      if (this.file && this.fileRut) {
+        await this.addAsociacion(asociacion);
+        asociacionUpdate.foto_camarac = await this.uploadFileToStorage(
+          this.file,
+          '/asociaciones/camaracomercio/todas/',
+          'camc-asociacion-'
+        );
+        asociacionUpdate.url_rut = await this.uploadFileToStorage(
+          this.fileRut,
+          '/asociaciones/rut/todos/',
+          'rut-asociacion-'
+        );
+        await this.actualizarParcialAsociacion(asociacionUpdate);
+      } else if (this.file) {
+        await this.addAsociacion(asociacion);
+        asociacionUpdate.foto_camarac = await this.uploadFileToStorage(
+          this.file,
+          '/asociaciones/camaracomercio/todas/',
+          'camc-asociacion-'
+        );
+        await this.actualizarParcialAsociacion(asociacionUpdate);
+      } else if (this.fileRut) {
+        await this.addAsociacion(asociacion);
+        asociacionUpdate.url_rut = await this.uploadFileToStorage(
+          this.fileRut,
+          '/asociaciones/rut/todos/',
+          'rut-asociacion-'
+        );
+        await this.actualizarParcialAsociacion(asociacionUpdate);
+      } else {
+        await this.addAsociacion(asociacion);
+         this.UpdatedRouter(this.form.getRawValue().nit);
+      }
+    } catch (error: any) {
+      this.loading1 = false;
+      console.log(error);
+
+      if (error.status ==400 || error.status == 401) {
+        this.error = error.error.message;
+         setTimeout(() => {
+           this.error = '';
+         }, 6000);
+        return
+      }
+
+
+      if (error.message == 'ERR_FILE') {
+        this.file=null;
+        this.fileRut=null;
+        this.UpdatedRouter(this.form.getRawValue().nit);
+        this.error =
+          'No se pudo completar la carga del archivo, por favor inténtalo de nuevo';
+        setTimeout(() => {
+          this.error=''
+        }, 6000);
+      }else {
+        this.error = 'Ha ocurrido un error, por favor inténtalo de nuevo';
+         setTimeout(() => {
+           this.error = '';
+         }, 6000);
+      }
     }
   }
+
+  async uploadFileToStorage(
+    file: File,
+    basePath: string,
+    fileBase: string
+  ): Promise<string> {
+    try {
+      const ext = file.name.split('.')[1];
+      const fileName = fileBase + this.form.getRawValue().nit + '.' + ext;
+      const filePath = basePath + fileName;
+
+      const percentageChanges = this.storage
+        .cloudStorageTask(filePath, file)
+        .percentageChanges()
+        .toPromise();
+      const response = await percentageChanges;
+      if (response === 100) {
+        const downloadUrl = await this.storage
+          .cloudStorageRef(filePath)
+          .getDownloadURL()
+          .toPromise();
+        return downloadUrl;
+      } else {
+        throw new Error(
+          'ERR_FILE'
+        );
+      }
+    } catch (err) {
+      console.error('Ha ocurrido un error al subir el archivo:', err);
+       throw new Error(
+          'ERR_FILE'
+        );
+        // Propagate the error to be handled in the calling context.
+    }
+  }
+
+  async addAsociacion(asociacion: any): Promise<any> {
+    try {
+      return await this.asociacionesService.add(asociacion).toPromise();
+    } catch (err: any) {
+      console.log(err);
+      throw err; // Propagate the error to be handled in the calling context.
+    }
+  }
+
+  async actualizarParcialAsociacion(updateAsociacion: any): Promise<any> {
+    try {
+      await this.asociacionesService
+        .updateParcial(this.form.getRawValue().nit, updateAsociacion)
+        .toPromise();
+      this.UpdatedRouter(this.form.getRawValue().nit);
+    } catch (err) {
+      console.log(err);
+      throw err; // Propagate the error to be handled in the calling contex
+    }
+  }
+
+
+
   UpdatedRouter(nit: any) {
+    console.log('paracial');
     if (nit) {
       let object: any = {};
       (object.nit = nit),
@@ -385,6 +546,7 @@ export class AsociacionDetalleFormComponent implements OnInit {
       this.loading1 = false;
     }
   }
+
   fileChange(event: any) {
     this.file = event.target.files[0];
   }
@@ -514,8 +676,8 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
   }
   goBack() {
-     this.router.navigateByUrl('/dashboard/mis-asociaciones');
-   /*  this.location.back(); */
+    this.router.navigateByUrl('/dashboard/mis-asociaciones');
+    /*  this.location.back(); */
   }
   download() {
     try {
@@ -610,8 +772,9 @@ export class AsociacionDetalleFormComponent implements OnInit {
     }
   }
   eliminarAsociacion() {
-    let url_rut: string = this.asociacion.url_rut;
-    let foto_camarac: string = this.asociacion.foto_camarac;
+    console.log(this.asociacion);
+    let url_rut: string = this.asociacion?.url_rut;
+    let foto_camarac: string = this.asociacion?.foto_camarac;
     this.appModalService
       .confirm(
         'Eliminar asociación',

@@ -131,7 +131,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="dateOfBirth">Información adicional de la dirección <span class="asterisk">*</span></label>
+        <label for="dateOfBirth">Información adicional de la dirección </label>
         <div class="input-group">
           <div class="input-wrapper">
             <textarea id="productName" class="form-control" name="textarea" rows="3" cols="50"
@@ -182,7 +182,7 @@
       </div>
       <div class="mb-2" *ngIf="formState!='disable'">
         <label for="dateOfBirth">{{ modalMode == 'update' && asociacion?.foto_camarac ? 'Actualizar cámara de comercio '
-          : 'Subir cámara de comercio' }} <span class="asterisk" *ngIf="modalMode == 'create'">*</span> </label>
+          : 'Subir cámara de comercio' }}</label>
         <div class="input-group">
           <input id="productName" type="file" class="form-control" placeholder="Seleccionar documento"
             formControlName="foto_camarac" (change)='fileChange($event)'>

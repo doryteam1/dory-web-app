@@ -212,8 +212,8 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
   }
 
   delete(asociacion: any) {
-     let url_rut: string = asociacion.url_rut;
-     let foto_camarac: string = asociacion.foto_camarac;
+     let url_rut: string = asociacion?.url_rut;
+     let foto_camarac: string = asociacion?.foto_camarac;
     this.appModalService
       .confirm(
         'Eliminar asociación',
@@ -224,15 +224,16 @@ export class MisAsociacionesComponent implements OnInit, OnDestroy {
       )
       .then((result) => {
         if (result == true) {
-          this.asociacionesService.delete(asociacion.nit).subscribe(
+          this.asociacionesService.delete(asociacion?.nit).subscribe(
             (response: any) => {
-              if (url_rut.length > 0) {
+              if (url_rut?.length > 0 && url_rut != null) {
                 this.storage.deleteByUrl(url_rut);
               }
 
-              if (foto_camarac.length > 0) {
+              if (foto_camarac?.length > 0 && foto_camarac != null) {
                 this.storage.deleteByUrl(foto_camarac);
               }
+              this.showNotFound = true;
               this.preCarga();
             },
             (err) => {
