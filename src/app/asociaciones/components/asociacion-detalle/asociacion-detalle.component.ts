@@ -174,7 +174,6 @@ export class AsociacionDetalleComponent implements OnInit {
         .getPescadoresPorAsociacion(this.selectedAsociacionnit)
         .toPromise();
       this.pescadorasociaciones = response.data;
-      console.log(this.pescadorasociaciones);
       await this.piscicultorPorAsociacion();
       this.activeTabVerifi();
       if (response.data.length > 0) {
@@ -360,6 +359,7 @@ export class AsociacionDetalleComponent implements OnInit {
     this.numeroHombres = 0;
     this.numeroMujeres = 0;
     this.pescadorasociaciones.forEach((pescador: any) => {
+      console.log(pescador)
       if (pescador.sexo == 'Femenino') {
         this.numeroMujeres++;
       } else if (pescador.sexo == 'Masculino') {
@@ -368,12 +368,15 @@ export class AsociacionDetalleComponent implements OnInit {
     });
 
     this.piscicultorasociaciones.forEach((piscicultor: any) => {
+      console.log(piscicultor)
       if (piscicultor.sexo == 'Femenino') {
         this.numeroMujeres++;
       } else if (piscicultor.sexo == 'Masculino') {
         this.numeroHombres++;
       }
     });
+    console.log(this.numeroMujeres);
+    console.log(this.numeroHombres);
   }
   download() {
     try {

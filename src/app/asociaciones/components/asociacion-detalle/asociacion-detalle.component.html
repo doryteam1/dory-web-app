@@ -161,7 +161,7 @@
       <img class="detail-container__image" src="assets/icons/venus-solid.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Mujeres en la asociación</h4>
-        <span *ngIf="asociacion?.direccion" class="detail-container__value">
+        <span class="detail-container__value">
           {{numeroMujeres > 0 ? numeroMujeres : 'No hay mujeres asociadas' }}</span>
       </div>
     </div>
@@ -170,7 +170,7 @@
       <img class="detail-container__image" src="assets/icons/mars-solid.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Hombres en la asociación</h4>
-        <span *ngIf="asociacion?.direccion" class="detail-container__value">
+        <span class="detail-container__value">
           {{numeroHombres > 0 ? numeroHombres : 'No hay hombres asociados'}}</span>
       </div>
     </div>
