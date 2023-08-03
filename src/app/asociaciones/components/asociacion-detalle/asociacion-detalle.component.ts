@@ -222,7 +222,6 @@ export class AsociacionDetalleComponent implements OnInit {
         this.errorMessage = 'Error inesperado';
       }
     }
-    this.calcNumberoHombresMujeres();
   }
 
   activeTabVerifi() {
@@ -351,27 +350,7 @@ export class AsociacionDetalleComponent implements OnInit {
     }
   }
 
-  calcNumberoHombresMujeres() {
-    const countHombresMujeres = (contador: any, persona: any) => {
-      if (persona.id_sexo == 1) {
-        //Mujer
-        contador.mujeres++;
-      } else if (persona.id_sexo == 2) {
-        //Hombre
-        contador.hombres++;
-      }
-      return contador;
-    };
-
-    const contadorInicial = { hombres: 0, mujeres: 0 };
-    const resultado = [
-      ...this.pescadorasociaciones,
-      ...this.piscicultorasociaciones,
-    ].reduce(countHombresMujeres, contadorInicial);
-    this.numeroHombres = resultado.hombres;
-    this.numeroMujeres = resultado.mujeres;
-  }
-
+ 
 
   download() {
     try {

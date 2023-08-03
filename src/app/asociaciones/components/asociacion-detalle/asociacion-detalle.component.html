@@ -162,16 +162,15 @@
       <div class="detail-container__data">
         <h4 class="detail-container__title">Mujeres en la asociación</h4>
         <span class="detail-container__value">
-          {{numeroMujeres > 0 ? numeroMujeres : 'No hay mujeres asociadas' }}</span>
+          {{  asociacion?.count_miembros_femeninos > 0 ? asociacion?.count_miembros_femeninos : 'No hay mujeres asociadas' }}</span>
       </div>
     </div>
-
     <div class="detail-container mt-4">
       <img class="detail-container__image" src="assets/icons/mars-solid.svg">
       <div class="detail-container__data">
         <h4 class="detail-container__title">Hombres en la asociación</h4>
         <span class="detail-container__value">
-          {{numeroHombres > 0 ? numeroHombres : 'No hay hombres asociados'}}</span>
+          {{asociacion?.count_miembros_masculinos > 0 ? asociacion?.count_miembros_masculinos : 'No hay hombres asociados'}}</span>
       </div>
     </div>
   </div>
