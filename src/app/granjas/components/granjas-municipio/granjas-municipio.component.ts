@@ -256,7 +256,6 @@ export class GranjasMunicipioComponent implements OnInit, OnDestroy {
         .esFavorita(this.granjasFiltered[i].id_granja)
         .subscribe(
           (response) => {
-            console.log(response);
           },
           (err) => {
             console.log(err);

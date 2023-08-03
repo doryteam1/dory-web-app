@@ -74,7 +74,6 @@ export class ProveedorDetalleComponent implements OnInit {
         } else {
           this.showErrorDataUser = true;
           this.errorMessage = err.error.message;
-          console.log(this.errorMessage);
         }
       }
     );

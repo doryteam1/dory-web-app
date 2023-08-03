@@ -154,7 +154,6 @@ export class PescadoresMunicipioComponent implements OnInit {
         title: pescador.nombre,
       });
     });
-    /*  console.log(JSON.stringify(this.markersInfo)); */
   }
   onMouseCard(pescador: any, indexSelected: number) {
     this.indexSelected = indexSelected;

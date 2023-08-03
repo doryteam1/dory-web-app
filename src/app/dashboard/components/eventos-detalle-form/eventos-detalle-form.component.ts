@@ -259,7 +259,6 @@ export class EventosDetalleFormComponent implements OnInit {
     };
     this.eventosService.addEvento(newEvento).subscribe(
       (response) => {
-        console.log(response);
         this.loading = false;
         this.goBack();
       },

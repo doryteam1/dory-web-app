@@ -76,10 +76,8 @@ export class PiscicultoresMunicipioComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     registerLocaleData(es);
-    console.log('url ', this.activatedRoute.snapshot.url);
     let path = this.activatedRoute.snapshot.url[0].path;
     let id = this.activatedRoute.snapshot.params.id;
-    console.log(path);
     if (path == 'asociacion') {
       this.piscicultoresService
         .getPiscicultoresAsociacion(id)
@@ -94,7 +92,6 @@ export class PiscicultoresMunicipioComponent implements OnInit,OnDestroy {
         .subscribe((response) => {
           this.piscicultoresFiltered = response.data;
           this.piscicultores = response.data;
-          console.log(this.piscicultoresFiltered);
           if (this.piscicultoresFiltered.length !== 0) {
             this.showNotFound = false;
           } else {
@@ -139,7 +136,7 @@ export class PiscicultoresMunicipioComponent implements OnInit,OnDestroy {
     );
   }
   ngOnDestroy() {
- 
+
   }
   extractLatLong() {
     this.markerPositions = [];
@@ -152,8 +149,6 @@ export class PiscicultoresMunicipioComponent implements OnInit,OnDestroy {
       this.markerPositions.push(markerPosition);
       this.markersInfo.push({ markerPosition: markerPosition });
     });
-
-    /* console.log(JSON.stringify(this.markersInfo)); */
   }
   onMouseCard(piscicultor: any, indexSelected: number) {
     this.indexSelected = indexSelected;

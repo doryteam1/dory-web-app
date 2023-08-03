@@ -382,7 +382,7 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         this.form.disable();
       }
     }
-    /*   console.log('granjas cargada en form ', this.form.getRawValue()); */
+
   }
   goBack() {
     this.platformLocation.back();
@@ -627,7 +627,6 @@ export class GranjaDetalleFormComponent implements OnInit, OnDestroy {
         .subscribe(
           (response) => {
             console.log('fotos guardadas: ');
-            console.log(response);
             this.loading1 = false;
           },
           (err) => {

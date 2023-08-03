@@ -168,7 +168,6 @@ export class PiscicultorDetalleComponent implements OnInit {
       .esFavorita(this.piscicultorgranjas[i].id_granja)
       .subscribe(
         (response) => {
-          console.log(response);
         },
         (err) => {
           console.log(err);

@@ -42,7 +42,6 @@ export class BarraNotificacionGeneralComponent implements OnInit {
   cargaService() {
     this.topAlertNotifyService.getTopAlert().subscribe(
       (response) => {
-        console.log(response);
         if (response.data.length > 0) {
           this.publicacion = response.data[0];
           this.onPublicar = this.publicacion.status;

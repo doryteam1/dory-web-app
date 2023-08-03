@@ -313,7 +313,6 @@ export class GranjaDetalleComponent implements OnInit, OnDestroy {
       this.appModalService.CloseModalGalleryVerAdiconarEliminarFotos();
       //  detecta  cuando se da click atras detecta y cierra la cualquiera modal activa
     });
-    //  console.log( this.location.pushState(null, '', location.pathname))
 
     let showconteslaider = false;
     let veryadicionar = false;

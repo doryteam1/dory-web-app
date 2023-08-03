@@ -64,7 +64,7 @@ export class AppComponent
 
 
   ngAfterViewInit(): void {
-     const observer = new MutationObserver((mutaciones) => {
+   /*   const observer = new MutationObserver((mutaciones) => {
        this.height = this.navbarDiv?.nativeElement?.clientHeight;
      });
 
@@ -73,7 +73,8 @@ export class AppComponent
        //attributes: true,
        //childList:true,
        attributeFilter: ['class', 'style'],
-     });
+     }); */
+
     /* Obtenemos el primer dato de height */
     this.height = this.navbarDiv?.nativeElement?.clientHeight;
     this.calcHeightNavbarService.updateData([

@@ -175,37 +175,31 @@ export class ModalGoogleMapComponent implements OnInit {
       window.open(url, '_blank');
 
   }
-  changeFavorite(i: number) {
-        this.appModalService
-          .confirm(
-            'Eliminar de favoritos',
-            'Esta seguro que desea quitar esta granja de mis favoritos',
-            'Sí',
-            'No'
-          )
-          .then((result) => {
-            if (result == true) {
-              this.misfavoritas[i].esfavorita =
-                this.misfavoritas[i].esfavorita == 1 ? 0 : 1;
-              this.granjasService
-                .esFavorita(this.misfavoritas[i].id_granja)
-                .subscribe(
-                  (response) => {
-                    this.misfavoritas.splice(i, 1);
-                    console.log(this.markersInfo.splice(i, 1));
-                    if (this.misfavoritas.length <= 0) {
-                      this.appModalService.CloseGoogleMapModal();
-                    }
-                  },
-                  (err) => {
-                    console.log(err);
-                    this.misfavoritas[i].esfavorita =
-                      this.misfavoritas[i].esfavorita == 1 ? 0 : 1;
-                  }
-                );
-            }
-          })
-          .catch((result) => {});
+ async changeFavorite(i: number) {
+    const confirmed: boolean = await this.appModalService.confirm(
+      'Eliminar de favoritos',
+      '¿Está seguro que desea quitar esta granja de mis favoritos?',
+      'Sí',
+      'No'
+    );
+
+    if (confirmed) {
+      const granja = this.misfavoritas[i];
+      granja.esfavorita = granja.esfavorita === 1 ? 0 : 1;
+
+      try {
+        await this.granjasService.esFavorita(granja?.id_granja).toPromise();
+        this.misfavoritas.splice(i, 1);
+        this.markersInfo.splice(i, 1);
+
+        if (this.misfavoritas.length <= 0) {
+          this.appModalService.CloseGoogleMapModal();
+        }
+      } catch (err) {
+        console.log(err);
+        granja.esfavorita = granja.esfavorita === 1 ? 0 : 1;
+      }
+    }
   }
   showResenas(idGranja: number) {
     this.granjasService.showResenasModal('Reseñas', 'Cerrar', idGranja);

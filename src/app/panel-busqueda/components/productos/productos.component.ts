@@ -124,7 +124,6 @@ export class ProductosComponent implements OnInit{
 
   delateFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
-    console.log(this.filtroseleccionadoCheckbox);
     this.searchReset();
   }
   searchReset() {
@@ -241,7 +240,6 @@ export class ProductosComponent implements OnInit{
 
   priceFilter(productos: Array<any>) {
     let result = productos.slice();
-    console.log(this.selectedPriceFilter.id);
     if (this.selectedPriceFilter.id == 0) {
       //0-100
       result = productos.filter((element) => {

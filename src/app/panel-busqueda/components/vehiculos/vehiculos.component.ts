@@ -103,7 +103,6 @@ export class VehiculosComponent implements OnInit {
 
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
-    console.log(this.filtroseleccionadoCheckbox);
     this.searchReset();
   }
 
@@ -153,7 +152,6 @@ export class VehiculosComponent implements OnInit {
         this.filtroseleccionadoCheckbox,
         result
       );
-      console.log(result);
       this.resultFiltroPorMunicipio = this.searchBuscadorService.filterEspecial(
         result,
         this.filtroseleccionadoCheckbox,

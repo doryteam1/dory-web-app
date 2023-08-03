@@ -56,7 +56,6 @@ export class ProductoDetalleFormComponent implements OnInit {
       this.proveedorService
         .getProductoDetail(Number(this.producto.codigo))
         .subscribe((response: any) => {
-          console.log(response);
           this.photosProducArray = response.data[0].fotos_producto;
         });
     }

@@ -49,13 +49,10 @@ export class ModalCheckboxListComponent implements OnInit {
   public decline() {
     if (this.arrayCheckboxSelec.length == 0) {
       this.checkArray=[]
-      console.log(this.checkArray);
       this._modalService.close(this.checkArray);
     }else{
-      console.log(this.arrayCheckboxSelec);
       if (this.arrayCheckboxSelec.length !== 0 && this.checkArray.length==0) {
          this.checkArray = [];
-         console.log(this.checkArray);
          this._modalService.close(this.checkArray);
       }else{
         this._modalService.dismiss();

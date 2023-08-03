@@ -152,7 +152,6 @@ export class BarraNotificacionDetalleFormComponent implements OnInit {
   cargaService() {
     this.topAlertNotifyService.getTopAlert().subscribe(
       (response) => {
-        console.log(response);
         if (response.data.length > 0) {
           this.publicacion = response.data[0];
           if (this.publicacion.texto) {

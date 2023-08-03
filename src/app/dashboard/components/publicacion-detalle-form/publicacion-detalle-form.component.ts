@@ -97,7 +97,6 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
         .getPublicacionDetail(Number(this.publicacion.id_publicacion))
         .subscribe((response) => {
           let publicacionTemp = this.publicacion;
-          console.log(this.publicacion);
           this.publicacion = response.data[0];
           this.publicacion.formState = publicacionTemp.formState;
           this.publicacion.action = publicacionTemp.action;
@@ -126,14 +125,12 @@ export class PublicacionDetalleFormComponent implements OnInit, OnDestroy {
     this.changeArray =
       this.comunicacionEntreComponentesService.changeArray.subscribe(
         (array) => {
-          console.log('Array--> ', array);
           if (array.length > 0) {
             if (action == 'create') {
               if (array[0].length > 0) {
                 for (let index = 0; index < array[0].length; index++) {
                   const element = array[0][index];
                   this.photosPublicacionArray = array[0];
-                  console.log('-->', this.photosPublicacionArray);
                 }
               } else {
                 this.photosPublicacionArray = [];

@@ -14,7 +14,7 @@ export class UpdatePasswordComponent implements OnInit {
   visiblePass:boolean = false;
   visibleNewPass:boolean = false;
   visibleMatchPass:boolean = false;
-  
+
   form:FormGroup = new FormGroup({
     oldPassword:new FormControl('',Validators.required),
     password:new FormControl('',[
@@ -34,7 +34,7 @@ export class UpdatePasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.token = this.activatedRoute.snapshot.queryParamMap.get('token')!;
-    
+
     if(this.activatedRoute.snapshot.paramMap.keys.length>0){
       if(this.activatedRoute.snapshot.paramMap.get('token') == 'true')
       this.token = localStorage.getItem('token')!;
@@ -71,7 +71,6 @@ export class UpdatePasswordComponent implements OnInit {
       },err=>{
         this.error = err.error.message;
         this.loading = false;
-        console.log(this.error)
         console.log(err);
       }
     )

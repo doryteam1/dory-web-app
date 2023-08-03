@@ -52,7 +52,6 @@ export class PescadoresComponent implements OnInit {
   }
 
   munClick(mun:number){
-    console.log(mun)
     this.changeSelected(mun);
     this.router.navigateByUrl('/pescadores/municipio/'+mun)
   }

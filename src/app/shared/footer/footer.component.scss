@@ -72,13 +72,15 @@
 .container-footer__subtitle {
   font-size: 15px;
   font-weight: 500;
+  cursor:default;
   color: var(--gris-oscuro)
 }
 
 .container-footer__description {
   font-size: 15px;
   font-weight: 400;
-  color: var(--gris-oscuro)
+  color: var(--gris-oscuro);
+
 }
 
 .line {

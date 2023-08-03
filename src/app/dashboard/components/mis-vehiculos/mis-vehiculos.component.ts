@@ -30,7 +30,6 @@ export class MisVehiculosComponent implements OnInit {
       (respose) => {
         this.loading = false;
         this.vehiculos = respose.data;
-        console.log(this.vehiculos);
         if (this.vehiculos.length < 1 || this.vehiculos.length == 0) {
           this.showNotFound = true;
         } else {
@@ -67,7 +66,7 @@ export class MisVehiculosComponent implements OnInit {
         if (result == true) {
           this.vehiculosService.deleteVehiculo(vehiculo.id_vehiculo).subscribe(
             (response) => {
-             if (index != -1) {   
+             if (index != -1) {
                this.vehiculos.splice(index, 1);
                if (arrayFotos.length>0) {
                  this.storage.deleteMultipleByUrls(arrayFotos);

@@ -86,7 +86,6 @@ export class UserAnswersFormForumComponent implements OnInit {
             idpregunta: this.id_pregunta,
             respuesta: this.respuestaUser?.value,
           };
-          console.log(newRespuesta);
           response = await this.forumService
             .addRespuesta(newRespuesta)
             .toPromise();
@@ -122,7 +121,7 @@ export class UserAnswersFormForumComponent implements OnInit {
       this.openForm();
     }
   }
-  
+
   async loadPhotos(event: any) {
     try {
       const compressedFiles =

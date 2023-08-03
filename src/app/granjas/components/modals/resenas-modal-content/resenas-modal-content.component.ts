@@ -13,7 +13,7 @@ export class ResenasModalContentComponent implements OnInit {
   @Input() btnCancelText: string = 'Cerrar';
   @Input() granjaId: number = -1;
   resenas:any = [];
-  puntuacion:number = -1; 
+  puntuacion:number = -1;
   showNotFound:boolean = false;
   showErrorFound:boolean = false;
   constructor(private _modalService: NgbActiveModal, private granjasService:GranjasService) { }
@@ -22,7 +22,6 @@ export class ResenasModalContentComponent implements OnInit {
     this.granjasService.resenasById(this.granjaId).subscribe(
       (response)=>{
         this.resenas = response.data.resenas;
-        console.log("Reseñas ",this.resenas)
         this.puntuacion = response.data.puntaje;
         if(this.resenas.length < 1){
           this.showNotFound = true;

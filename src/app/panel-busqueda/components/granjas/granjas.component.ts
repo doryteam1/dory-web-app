@@ -164,7 +164,6 @@ export class GranjasComponent implements OnInit {
 
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
-    console.log(this.filtroseleccionadoCheckbox);
     this.searchReset();
   }
 
@@ -350,7 +349,6 @@ export class GranjasComponent implements OnInit {
         .esFavorita(this.granjasFiltered[i].id_granja)
         .subscribe(
           (response) => {
-            console.log(response);
           },
           (err) => {
             console.log(err);

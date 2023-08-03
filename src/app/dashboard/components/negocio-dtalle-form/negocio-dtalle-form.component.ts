@@ -574,7 +574,6 @@ export class NegocioDtalleFormComponent implements OnInit, OnDestroy {
     } else if (this.modalMode == 'update') {
       filesCreate = -1;
     }
-    console.log(filesCreate);
     this.appModalService
       .modalGalleryVerAdiconarEliminarFoto(
         -1,

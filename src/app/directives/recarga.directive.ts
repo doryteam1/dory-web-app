@@ -20,7 +20,6 @@ export class RecargaDirective implements OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['appRecarga']) {
-      console.log(changes)
       this.viewContainerRef.clear();
       this.viewContainerRef.createEmbeddedView(this.templateRef);
     }

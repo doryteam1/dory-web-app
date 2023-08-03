@@ -53,7 +53,6 @@ export class MiConsumoComponent implements OnInit, AfterViewInit {
 
   updateConsumo() {
     this.loading = true;
-    console.log(this.consumos);
     let consumosFiltered = this.consumos.filter((consumo) => {
       return consumo.check;
     });
@@ -63,7 +62,6 @@ export class MiConsumoComponent implements OnInit, AfterViewInit {
         (response) => {
           this.loading = false;
           this.goBack()
-          console.log(response);
         },
         (err) => {
           this.loading = false;

@@ -42,7 +42,6 @@ export class NegociosComponent implements OnInit {
   ) {
     this.negociosService.getNegociosAll().subscribe((response) => {
       this.negocios = response.data;
-      console.log(this.negocios);
       this.negociosFiltered = this.negocios;
       if (this.negociosFiltered.length < 1) {
         this.showNotFound = true;
@@ -95,7 +94,7 @@ export class NegociosComponent implements OnInit {
         this.filtroseleccionadoCheckbox,
         'nombre_municipio'
       );
-      console.log(this.resultFiltroPorMunicipio);
+
     }
     this.negociosFiltered = results;
     if (this.negociosFiltered.length < 1) {
@@ -134,7 +133,6 @@ export class NegociosComponent implements OnInit {
 
   deleteFilterCheckbox(index: number) {
     this.filtroseleccionadoCheckbox.splice(index, 1);
-    console.log(this.filtroseleccionadoCheckbox);
     this.searchReset();
   }
 }

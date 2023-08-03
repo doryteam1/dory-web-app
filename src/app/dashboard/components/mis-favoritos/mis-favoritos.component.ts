@@ -76,7 +76,6 @@ export class MisFavoritosComponent implements OnInit, OnDestroy {
                 if (this.misGranjaFavoritas.length <= 0) {
                   this.sinfavoritos = true;
                 }
-                console.log(response);
               },
               (err) => {
                 console.log(err);

@@ -12,7 +12,6 @@ export class UtilitiesService {
   constructor() { }
 
   compressFileToZip(urls: {data:string,url:string,image:string}[]){
-    console.log("urls ",urls)
     const zip = new JSZip();
     const img = zip.folder("documentos");
     for(let i=0; i<urls.length; i++){
@@ -30,7 +29,6 @@ export class UtilitiesService {
   .then(blob => new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onloadend = () => {
-      console.log("image; ",reader.result)
       resolve(reader.result)
     }
     reader.onerror = reject
@@ -61,9 +59,9 @@ export class UtilitiesService {
         resolve(dataURL);
       };
     });
-    
 
-    // set attributes and src 
+
+    // set attributes and src
     img.setAttribute('crossOrigin', 'anonymous'); //
     img.src = imgUrl;
 

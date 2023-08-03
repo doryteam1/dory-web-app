@@ -32,7 +32,6 @@ export class InvestigadorDetalleComponent implements OnInit {
       (response: any) => {
         if (response.data.length > 0) {
           this.investigador = response.data[0];
-          console.log(this.investigador);
           this.showError = false;
           this.showNotFound = false;
         } else {
