@@ -353,16 +353,13 @@ export class AsociacionDetalleComponent implements OnInit {
 
   calcNumberoHombresMujeres() {
     const countHombresMujeres = (contador: any, persona: any) => {
-      console.log(persona);
-      console.log(contador);
-      if (persona.sexo === 'Femenino') {
-        console.log('Mujer');
+      if (persona.id_sexo == 1) {
+        //Mujer
         contador.mujeres++;
-      } else if (persona.sexo === 'Masculino') {
-        console.log('Hombre');
+      } else if (persona.id_sexo == 2) {
+        //Hombre
         contador.hombres++;
       }
-      console.log(contador);
       return contador;
     };
 
@@ -371,39 +368,11 @@ export class AsociacionDetalleComponent implements OnInit {
       ...this.pescadorasociaciones,
       ...this.piscicultorasociaciones,
     ].reduce(countHombresMujeres, contadorInicial);
-    console.log(resultado);
     this.numeroHombres = resultado.hombres;
     this.numeroMujeres = resultado.mujeres;
-
-    console.log(this.numeroMujeres);
-    console.log(this.numeroHombres);
   }
 
-  /*  calcNumberoHombresMujeres() {
-    this.numeroHombres = this.pescadorasociaciones
-      .concat(this.piscicultorasociaciones)
-      .reduce((totalHombres: number, persona: any) => {
-        console.log(persona)
-        if (persona.sexo === 'Masculino') {
-          totalHombres++;
-        }
-        return totalHombres;
-      }, 0);
 
-    this.numeroMujeres = this.pescadorasociaciones
-      .concat(this.piscicultorasociaciones)
-      .reduce((totalMujeres: number, persona: any) => {
-         console.log(persona);
-        if (persona.sexo === 'Femenino') {
-          totalMujeres++;
-        }
-        return totalMujeres;
-      }, 0);
-
-    console.log(this.numeroMujeres);
-    console.log(this.numeroHombres);
-  }
- */
   download() {
     try {
       this.asociacionesService
