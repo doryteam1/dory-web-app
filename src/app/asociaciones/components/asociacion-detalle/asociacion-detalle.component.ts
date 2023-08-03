@@ -143,7 +143,6 @@ export class AsociacionDetalleComponent implements OnInit {
       .getGranjasByNitAsociacion(this.selectedAsociacionnit)
       .subscribe(
         (response) => {
-          console.log(response);
           this.granjasAsociacion = response.data;
           if (response.data.length > 0) {
             this.granjaShowError = false;
@@ -243,7 +242,6 @@ export class AsociacionDetalleComponent implements OnInit {
       this.piscicultorasociaciones.length <= 0 &&
       this.pescadorasociaciones.length > 0
     ) {
-      console.log('hello3');
       this.activatelistpiscicultores = false;
       this.activatelistpescadores = true;
     }
@@ -265,13 +263,11 @@ export class AsociacionDetalleComponent implements OnInit {
     }
   }
   gopiscicultorDetail(piscicultor: any) {
-    console.log(piscicultor);
     this.router.navigateByUrl(
       'piscicultores/municipio/detalle/' + piscicultor.id
     );
   }
   gopescadorDetail(pescador: any) {
-    console.log(pescador);
     this.router.navigateByUrl('pescadores/municipio/detalle/' + pescador.id);
   }
   goDetalleRepresentante() {
@@ -356,28 +352,58 @@ export class AsociacionDetalleComponent implements OnInit {
   }
 
   calcNumberoHombresMujeres() {
-    this.numeroHombres = 0;
-    this.numeroMujeres = 0;
-    this.pescadorasociaciones.forEach((pescador: any) => {
-      console.log(pescador)
-      if (pescador.sexo == 'Femenino') {
-        this.numeroMujeres++;
-      } else if (pescador.sexo == 'Masculino') {
-        this.numeroHombres++;
+    const countHombresMujeres = (contador: any, persona: any) => {
+      console.log(persona);
+      console.log(contador);
+      if (persona.sexo === 'Femenino') {
+        console.log('Mujer');
+        contador.mujeres++;
+      } else if (persona.sexo === 'Masculino') {
+        console.log('Hombre');
+        contador.hombres++;
       }
-    });
+      console.log(contador);
+      return contador;
+    };
 
-    this.piscicultorasociaciones.forEach((piscicultor: any) => {
-      console.log(piscicultor)
-      if (piscicultor.sexo == 'Femenino') {
-        this.numeroMujeres++;
-      } else if (piscicultor.sexo == 'Masculino') {
-        this.numeroHombres++;
-      }
-    });
+    const contadorInicial = { hombres: 0, mujeres: 0 };
+    const resultado = [
+      ...this.pescadorasociaciones,
+      ...this.piscicultorasociaciones,
+    ].reduce(countHombresMujeres, contadorInicial);
+    console.log(resultado);
+    this.numeroHombres = resultado.hombres;
+    this.numeroMujeres = resultado.mujeres;
+
     console.log(this.numeroMujeres);
     console.log(this.numeroHombres);
   }
+
+  /*  calcNumberoHombresMujeres() {
+    this.numeroHombres = this.pescadorasociaciones
+      .concat(this.piscicultorasociaciones)
+      .reduce((totalHombres: number, persona: any) => {
+        console.log(persona)
+        if (persona.sexo === 'Masculino') {
+          totalHombres++;
+        }
+        return totalHombres;
+      }, 0);
+
+    this.numeroMujeres = this.pescadorasociaciones
+      .concat(this.piscicultorasociaciones)
+      .reduce((totalMujeres: number, persona: any) => {
+         console.log(persona);
+        if (persona.sexo === 'Femenino') {
+          totalMujeres++;
+        }
+        return totalMujeres;
+      }, 0);
+
+    console.log(this.numeroMujeres);
+    console.log(this.numeroHombres);
+  }
+ */
   download() {
     try {
       this.asociacionesService
