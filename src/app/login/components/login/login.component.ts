@@ -68,25 +68,26 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.googleButton.click();
   }
 
+
   crearBotonFalsoGoogle() {
     //Crea un nuevo elemento HTML en el documento actual que se está visualizando en el navegador.
-    const googleLogin: any = document.createElement('div');
+    const googleLogin: HTMLElement = document.createElement('div');
     // Ocultamos el el elmento nuevo
     googleLogin.style.display = 'none';
     // Agregamos el nuevo elemento,se inserta como un elemento secundario del elemento "body" de la página
     document.body.appendChild(googleLogin);
     // Pasamos las propiedades a renderButton, el cual creara un boton de google
-    google.accounts.id.renderButton(googleLogin, {
+    google?.accounts?.id?.renderButton(googleLogin, {
       type: 'icon',
-      width: '200',
       prompt: 'select_account',
     });
     //Se adentra dentro de las propidades html del googleLogin y seleciona el div con rol de boton
-    const googleLoginRoleButton = googleLogin.querySelector('div[role=button]');
+    const googleLoginRoleButton: any =
+      googleLogin.querySelector('div[role=button]');
     //Retornamos una funcion llamada clic () esta ejecuta un evento propio de div[role=button]
     return {
       click: () => {
-        googleLoginRoleButton.click();
+        googleLoginRoleButton?.click();
       },
     };
   }
@@ -128,7 +129,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
               (response) => {
                 localStorage.setItem('nombres', payload.given_name);
                 localStorage.setItem('apellidos', payload.family_name);
-                 localStorage.setItem('idUsuario', response.body.insertId);
+                localStorage.setItem('idUsuario', response.body.insertId);
                 localStorage.setItem('dataUserComplete', 'false');
                 this.ngZone.run(() => {
                   this.router.navigate(['/welcome']);
@@ -158,9 +159,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     );
   }
 
-  onChange() {
-    console.log('on change');
-  }
+
 
   onSubmit() {
     if (this.form.invalid) {

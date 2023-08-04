@@ -169,12 +169,11 @@ export class ChatService {
 
   /*Escucha si hay nuevas solicitudes de asociaciones --> usuario o usuario --> asociaciones*/
   listenNewSolicitudes(): Observable<any> {
-    return new Observable<{ de: number; mensaje: string; metadata: any }>(
+    return new Observable<any>(
       (observer) => {
         this.socket.on('new-solicitud', (data) => {
           observer.next(data);
         });
-
         return () => {
           this.socket.disconnect();
         };

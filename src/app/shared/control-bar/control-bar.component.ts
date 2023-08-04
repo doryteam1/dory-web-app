@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   NgZone,
@@ -8,7 +7,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ElectronjsService } from 'src/app/services/electronjs.service';
@@ -48,6 +47,7 @@ export class ControlBarComponent implements OnInit, OnDestroy {
   heightNavbar: any;
   heightNavbarSubsz!: Subscription;
   urlActualSusc3!: Subscription;
+  notifiSolicitudAsocia!: Subscription;
   constructor(
     private _electronService: ElectronjsService,
     private ngZone: NgZone,
@@ -72,8 +72,8 @@ export class ControlBarComponent implements OnInit, OnDestroy {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (this.miModalNotificacion?.nativeElement.className.includes('show')) {
         if (
-          this.navbar?.nativeElement.contains(e.target) &&
-          !this.buttonOpenModalNotify?.nativeElement.contains(e.target)
+          this.navbar?.nativeElement.contains(e?.target) &&
+          !this.buttonOpenModalNotify?.nativeElement.contains(e?.target)
         ) {
           this.closeModalNotificacion();
         }
@@ -89,21 +89,35 @@ export class ControlBarComponent implements OnInit, OnDestroy {
       this.photoUser = response.photoUser;
       this.nomCom = response.nomApell;
     });
-      this.urlActualSusc3 = this.urlActualService.currentUrl$.subscribe(
-        (route) => {
-          if (route) {
-            this.rutaActiva = route;
-          }
+    this.urlActualSusc3 = this.urlActualService.currentUrl$.subscribe(
+      (route) => {
+        if (route) {
+          this.rutaActiva = route;
         }
-      );
-
+      }
+    );
     if (this.userService.isAuthenticated()) {
       this.updateAsocRequest();
     }
-    this.chatService.listenNewSolicitudes().subscribe((data) => {
-      this.notificatiosOpened = false;
-      this.utilities.playSound('assets/sounds/sendmessage.wav');
-      this.updateAsocRequest();
+
+    this.notifiSolicitudAsocia = this.chatService
+      .listenNewSolicitudes()
+      .subscribe((data) => {
+        this.notificatiosOpened = false;
+        this.utilities.playSound('assets/sounds/sendmessage.wav');
+        this.updateAsocRequest();
+      });
+
+
+    this.userService.getAuthObservable().subscribe((isAuth) => {
+      console.log('autenticate Observable');
+      if (isAuth) {
+        this.updateAsocRequest();
+      } else {
+        this.invitaciones = [];
+        this.invitacionesFromUsers = [];
+        this.notificatiosOpened = false;
+      }
     });
     /* https://www.learmoreseekmore.com/2022/01/usage-of-bootstrap-v5-modal-in-angularv13.html */
     this.formModal = new window.bootstrap.Modal(
@@ -135,7 +149,7 @@ export class ControlBarComponent implements OnInit, OnDestroy {
   }
   handleNotificationClick() {
     if (this.responsibe) {
-      if (this.miModalNotificacion?.nativeElement.className.includes('show')) {
+      if (this.miModalNotificacion?.nativeElement?.className.includes('show')) {
         this.closeModalNotificacion();
       } else {
         this.notificatiosOpened = true;
@@ -175,6 +189,7 @@ export class ControlBarComponent implements OnInit, OnDestroy {
     this.mediaQuerySubscripNavbar.unsubscribe();
     this.heightNavbarSubsz.unsubscribe();
     this.urlActualSusc3.unsubscribe();
+    this.notifiSolicitudAsocia.unsubscribe();
   }
 
   login() {
@@ -201,6 +216,7 @@ export class ControlBarComponent implements OnInit, OnDestroy {
   authWith() {
     return this.userService.authenticatedWith();
   }
+
   logout() {
     this.ngZone.run(() => {
       if (
@@ -212,6 +228,7 @@ export class ControlBarComponent implements OnInit, OnDestroy {
       if (this.authWith() == 'google' && this.electronjs) {
         this.userService.logoutElectron();
       }
+
       this.router.navigateByUrl('/home');
     });
   }

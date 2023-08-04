@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   NgZone,
   OnInit,
@@ -81,6 +82,7 @@ export class RegistroComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.googleButton = this.crearBotonFalsoGoogle();
+
   }
 
   ngOnInit(): void {
@@ -138,23 +140,22 @@ export class RegistroComponent implements OnInit, AfterViewInit {
 
   crearBotonFalsoGoogle() {
     //Crea un nuevo elemento HTML en el documento actual que se está visualizando en el navegador.
-    const googleLogin: any = document.createElement('div');
+    const googleLogin: HTMLElement = document.createElement('div');
     // Ocultamos el el elmento nuevo
     googleLogin.style.display = 'none';
     // Agregamos el nuevo elemento,se inserta como un elemento secundario del elemento "body" de la página
     document.body.appendChild(googleLogin);
     // Pasamos las propiedades a renderButton, el cual creara un boton de google
-    google.accounts.id.renderButton(googleLogin, {
+    google?.accounts?.id?.renderButton(googleLogin, {
       type: 'icon',
-      width: '200',
       prompt: 'select_account',
     });
     //Se adentra dentro de las propidades html del googleLogin y seleciona el div con rol de boton
-    const googleLoginRoleButton = googleLogin.querySelector('div[role=button]');
+    const googleLoginRoleButton:any  = googleLogin.querySelector('div[role=button]');
     //Retornamos una funcion llamada clic () esta ejecuta un evento propio de div[role=button]
     return {
       click: () => {
-        googleLoginRoleButton.click();
+        googleLoginRoleButton?.click();
       },
     };
   }

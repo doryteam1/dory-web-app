@@ -8,7 +8,7 @@
         <form [formGroup]="form" autocomplete="off" class="w-100">
             <div class="container-form__box">
                 <span class="container-form__label">Correo electrónico: <span class="container-form__simbol">*</span></span>
-                <input class="container-form__input" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" formControlName="email" (input)="onChange()">
+                <input class="container-form__input" [ngClass]="invalid('email') ? 'invalid-input' : ''" type="text" formControlName="email" >
                 <div *ngIf="invalid('email')" class="container__alert-msg danger-message">
                     <div *ngIf="email?.errors?.['required']">
                         *Campo obligatorio
@@ -24,7 +24,7 @@
                 <div class="input-glyphicon">
                     <i class="glyphicon bi bi-eye-slash" (click)="visiblePass = !visiblePass" *ngIf="!visiblePass"></i>
                     <i class="glyphicon bi bi-eye" (click)="visiblePass = !visiblePass" *ngIf="visiblePass"></i>
-                    <input class="container-form__input" [ngClass]="invalid('password') ? 'invalid-input' : ''" [type]="visiblePass  ? 'text' : 'password'" formControlName="password" (input)="onChange()">
+                    <input class="container-form__input" [ngClass]="invalid('password') ? 'invalid-input' : ''" [type]="visiblePass  ? 'text' : 'password'" formControlName="password" >
                 </div>
 
                 <div *ngIf="invalid('password')" class="container__alert-msg danger-message">
@@ -51,7 +51,7 @@
                     </div>
                     <span *ngIf="!loading">Iniciar sesión</span>
                 </button>
-                <button class="container-form__button-white btn-rounded btn--white" (click)="iniciarGoogleLogin()"><img class="container-form__icon" src="assets/icons/google-icon-grey.svg"><span class="container-form__button-text">Iniciar con Google</span></button>
+                <button type="button" class="container-form__button-white btn-rounded btn--white" (click)="iniciarGoogleLogin()"><img class="container-form__icon" src="assets/icons/google-icon-grey.svg"><span class="container-form__button-text">Iniciar con Google</span></button>
             </div>
 
         </form>

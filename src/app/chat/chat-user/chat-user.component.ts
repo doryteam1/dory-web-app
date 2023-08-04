@@ -58,7 +58,7 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
     private chatService: ChatService,
     private userService: UsuarioService,
     private utilities: UtilitiesService,
-    private renderer: Renderer2,
+    private renderer: Renderer2
   ) {
     this.renderer.listen('window', 'click', (e: any) => {
       if (!this.chatOpen || this.clickOpenChatUserObservable) {
@@ -86,10 +86,10 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
     this.userService.getTodosUsuarioAll().subscribe((response) => {
       this.userList = response.data.map((element: any) => {
         return {
-          id: element.id,
-          name: element.nombre_completo,
-          phone: element.celular,
-          image: element.foto,
+          id: element?.id,
+          name: element?.nombre_completo,
+          phone: element?.celular,
+          image: element?.foto,
           status: false,
         };
       });
@@ -207,7 +207,11 @@ export class ChatUserComponent implements OnInit, AfterViewInit {
     this.syncConnected = true;
     this.orderRecentChats();
   }
-
+  isValidUrl(url: string): boolean {
+    // Expresión regular para verificar si la cadena es una URL válida
+    const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
+    return urlPattern.test(url);
+  }
   orderRecentChats() {
     this.chatService.getUltimosMensajes().subscribe(
       (response) => {
