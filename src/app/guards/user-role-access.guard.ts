@@ -11,6 +11,7 @@ export class UserRoleAccessGuard implements CanActivateChild {
       const userRole: string = this.userService.getAuthUserRol(); // Obtener el rol del usuario actual
       const rolRuta: string[] = childRoute.data?.['rol']; // Obtener el rol asignado a la ruta actual
       const deniedRol: string = childRoute.data?.['denied'];
+      console.log("rolRuta ",rolRuta)
       if (
         (childRoute.data && rolRuta && rolRuta?.includes(userRole)) || rolRuta?.includes('all')
       ) {

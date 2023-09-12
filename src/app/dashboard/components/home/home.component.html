@@ -52,7 +52,7 @@
               Mis granjas
             </a>
           </li>
-          <li id="misproductos" class="nav-item" *ngIf="tipoUsuario == 'Proveedor'" (click)="closeOffcanvas()">
+          <li id="misproductos" class="nav-item" *ngIf="tipoUsuario == 'Proveedor' || tipoUsuario == 'Comerciante'" (click)="closeOffcanvas()">
             <a class="nav-link"
               [ngClass]="{'miclase':_router.url.includes('/dashboard/producto/detalle'),'disabled':disableTags }"
               [routerLink]="['/dashboard/mis-productos']" routerLinkActive="active">
@@ -83,7 +83,7 @@
               Mis favoritos
             </a>
           </li>
-          <li id="misnegocios" class="nav-item" *ngIf="tipoUsuario == 'Comerciante'" (click)="closeOffcanvas()">
+          <li id="misnegocios" class="nav-item" *ngIf="tipoUsuario == 'Comerciante' || tipoUsuario == 'Proveedor'" (click)="closeOffcanvas()">
             <a class="nav-link"
               [ngClass]="{'miclase':_router.url.includes('/dashboard/negocio/detalle'),'disabled':disableTags }"
                aria-current="page"

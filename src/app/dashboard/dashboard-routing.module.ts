@@ -94,14 +94,14 @@ const routes: Routes = [
         path: 'mis-productos',
         component: MisProductosComponent,
         data: {
-          rol: [userRoles[5]],
+          rol: [userRoles[5],userRoles[8]],
         },
       },
       {
         path: 'producto/detalle',
         component: ProductoDetalleFormComponent,
         data: {
-          rol: [userRoles[5]],
+          rol: [userRoles[5],userRoles[8]],
         },
       },
 
@@ -139,14 +139,14 @@ const routes: Routes = [
         path: 'mis-negocios',
         component: MisNegociosComponent,
         data: {
-          rol: [userRoles[8]],
+          rol: [userRoles[5], userRoles[8]],
         },
       },
       {
         path: 'negocio/detalle',
         component: NegocioDtalleFormComponent,
         data: {
-          rol: [userRoles[8]],
+          rol: [userRoles[5], userRoles[8]],
         },
       },
 
