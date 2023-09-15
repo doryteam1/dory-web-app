@@ -65,9 +65,7 @@ export class AsociacionDetalleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.selectedAsociacionnit = Number(
-      this.activatedRoute.snapshot.paramMap.get('id')!
-    );
+    this.selectedAsociacionnit = this.activatedRoute.snapshot.paramMap.get('id')!
     let token = localStorage.getItem('token');
     if (token && token != 'undefined') {
       this.tipoUsuario = Utilities.parseJwt(token!).rol;
@@ -78,11 +76,11 @@ export class AsociacionDetalleComponent implements OnInit {
         this.idEmailUser = response.data[0].id;
       });
     }
-
     this.asociacionesService
       .getAsociacionDetalle(this.selectedAsociacionnit)
       .subscribe(
         (response) => {
+          console.log(response)
           this.asociacion = response.data[0];
           this.authUserId = this.evaluateRegisteredUserService.evaluateUser(
             this.asociacion.id_propietario
@@ -96,6 +94,7 @@ export class AsociacionDetalleComponent implements OnInit {
           }
         },
         (err) => {
+          console.log("Error")
           console.log(err);
           this.asociacionesshowNotFound = false;
           this.asociacionesshowError = false;
